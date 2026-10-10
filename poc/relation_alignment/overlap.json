@@ -1,0 +1,1282 @@
+{
+  "scope": "WarSampo owl:sameAs-linked actors with hasConflict; Wikidata P607",
+  "warsampo_relation_rows": 93,
+  "linked_actor_qids_with_hasConflict": 77,
+  "candidate_shared_relation_pairs": 87,
+  "actor_qids_with_candidate_shared_pair": 75,
+  "qualifier_properties_on_matching_p607": {},
+  "rows": [
+    {
+      "warsampo_actor": "http://ldf.fi/warsa/actors/actor_313",
+      "wikidata_actor": "Q10240708",
+      "warsampo_conflict": "http://ldf.fi/warsa/conflicts/WinterWar",
+      "wikidata_conflict": "Q134949",
+      "wikidata_label_en": null,
+      "wikidata_description_en": "Wikimedia category",
+      "p607_statements": []
+    },
+    {
+      "warsampo_actor": "http://ldf.fi/warsa/actors/actor_1266",
+      "wikidata_actor": "Q11849429",
+      "warsampo_conflict": "http://ldf.fi/warsa/conflicts/WinterWar",
+      "wikidata_conflict": "Q134949",
+      "wikidata_label_en": "2nd Division",
+      "wikidata_description_en": "fake division of the Finnish Army during the Winter War",
+      "p607_statements": [
+        {
+          "id": "Q11849429$29b0316e-44c6-a789-cb61-cbb3185e1121",
+          "qualifier_properties": []
+        }
+      ]
+    },
+    {
+      "warsampo_actor": "http://ldf.fi/warsa/actors/actor_1749",
+      "wikidata_actor": "Q11849478",
+      "warsampo_conflict": "http://ldf.fi/warsa/conflicts/WinterWar",
+      "wikidata_conflict": "Q134949",
+      "wikidata_label_en": null,
+      "wikidata_description_en": null,
+      "p607_statements": [
+        {
+          "id": "Q11849478$092f105f-4e2b-b568-f57b-a033f13c07c9",
+          "qualifier_properties": []
+        }
+      ]
+    },
+    {
+      "warsampo_actor": "http://ldf.fi/warsa/actors/actor_800",
+      "wikidata_actor": "Q11849480",
+      "warsampo_conflict": "http://ldf.fi/warsa/conflicts/WinterWar",
+      "wikidata_conflict": "Q134949",
+      "wikidata_label_en": null,
+      "wikidata_description_en": null,
+      "p607_statements": [
+        {
+          "id": "Q11849480$59b05700-4c16-84d4-d1b8-c0c729c7fab4",
+          "qualifier_properties": []
+        }
+      ]
+    },
+    {
+      "warsampo_actor": "http://ldf.fi/warsa/actors/actor_1385",
+      "wikidata_actor": "Q11849482",
+      "warsampo_conflict": "http://ldf.fi/warsa/conflicts/WinterWar",
+      "wikidata_conflict": "Q134949",
+      "wikidata_label_en": "23rd Division",
+      "wikidata_description_en": "division of the Finnish Army during the Winter War",
+      "p607_statements": [
+        {
+          "id": "Q11849482$e19bf918-4102-bfff-5c93-858a13f5026b",
+          "qualifier_properties": []
+        }
+      ]
+    },
+    {
+      "warsampo_actor": "http://ldf.fi/warsa/actors/actor_2468",
+      "wikidata_actor": "Q11849506",
+      "warsampo_conflict": "http://ldf.fi/warsa/conflicts/WinterWar",
+      "wikidata_conflict": "Q134949",
+      "wikidata_label_en": "3rd Division",
+      "wikidata_description_en": "1940 division of the Finnish Army",
+      "p607_statements": [
+        {
+          "id": "Q11849506$e438d3e1-46ad-a80d-503c-9c23eed18c93",
+          "qualifier_properties": []
+        }
+      ]
+    },
+    {
+      "warsampo_actor": "http://ldf.fi/warsa/actors/actor_1488",
+      "wikidata_actor": "Q11849566",
+      "warsampo_conflict": "http://ldf.fi/warsa/conflicts/WinterWar",
+      "wikidata_conflict": "Q134949",
+      "wikidata_label_en": "5th Division",
+      "wikidata_description_en": "division of the Finnish Army during the Winter War",
+      "p607_statements": [
+        {
+          "id": "Q11849566$fc0115a1-446f-7c7b-25f3-01938d71e6c9",
+          "qualifier_properties": []
+        }
+      ]
+    },
+    {
+      "warsampo_actor": "http://ldf.fi/warsa/actors/actor_1677",
+      "wikidata_actor": "Q11849602",
+      "warsampo_conflict": "http://ldf.fi/warsa/conflicts/WinterWar",
+      "wikidata_conflict": "Q134949",
+      "wikidata_label_en": "7th Division (Finland, Winter War)",
+      "wikidata_description_en": "military unit",
+      "p607_statements": [
+        {
+          "id": "Q11849602$3be9d95d-433d-cdf0-0abe-974a618de7e2",
+          "qualifier_properties": []
+        }
+      ]
+    },
+    {
+      "warsampo_actor": "http://ldf.fi/warsa/actors/actor_1826",
+      "wikidata_actor": "Q11849623",
+      "warsampo_conflict": "http://ldf.fi/warsa/conflicts/WinterWar",
+      "wikidata_conflict": "Q134949",
+      "wikidata_label_en": "8th Division (Finland, Winter War)",
+      "wikidata_description_en": null,
+      "p607_statements": [
+        {
+          "id": "Q11849623$36d6d56e-44a9-9092-ab25-f097bc808c82",
+          "qualifier_properties": []
+        }
+      ]
+    },
+    {
+      "warsampo_actor": "http://ldf.fi/warsa/actors/actor_2524",
+      "wikidata_actor": "Q11849638",
+      "warsampo_conflict": "http://ldf.fi/warsa/conflicts/WinterWar",
+      "wikidata_conflict": "Q134949",
+      "wikidata_label_en": "9th Division",
+      "wikidata_description_en": "division of the Finnish Army during the Winter War",
+      "p607_statements": [
+        {
+          "id": "Q11849638$fbd5b028-43d7-28ce-5286-dd17693c937b",
+          "qualifier_properties": []
+        }
+      ]
+    },
+    {
+      "warsampo_actor": "http://ldf.fi/warsa/actors/actor_769",
+      "wikidata_actor": "Q11858210",
+      "warsampo_conflict": "http://ldf.fi/warsa/conflicts/WinterWar",
+      "wikidata_conflict": "Q134949",
+      "wikidata_label_en": "Erillinen pataljoona 10 (talvisota)",
+      "wikidata_description_en": "Finnish battallion in the Winter War",
+      "p607_statements": [
+        {
+          "id": "Q11858210$4d5519ac-48ba-8d89-2eca-8acc32cb029a",
+          "qualifier_properties": []
+        }
+      ]
+    },
+    {
+      "warsampo_actor": "http://ldf.fi/warsa/actors/actor_2003",
+      "wikidata_actor": "Q11858212",
+      "warsampo_conflict": "http://ldf.fi/warsa/conflicts/WinterWar",
+      "wikidata_conflict": "Q134949",
+      "wikidata_label_en": "Erillinen pataljoona 17",
+      "wikidata_description_en": "Finnish battallion in the Winter War",
+      "p607_statements": [
+        {
+          "id": "Q11858212$cce1a5db-4ece-eb28-3c0f-10ab80a92830",
+          "qualifier_properties": []
+        }
+      ]
+    },
+    {
+      "warsampo_actor": "http://ldf.fi/warsa/actors/actor_1878",
+      "wikidata_actor": "Q11858213",
+      "warsampo_conflict": "http://ldf.fi/warsa/conflicts/WinterWar",
+      "wikidata_conflict": "Q134949",
+      "wikidata_label_en": null,
+      "wikidata_description_en": null,
+      "p607_statements": [
+        {
+          "id": "Q11858213$d2e0657c-4add-97ea-cb33-657c89176745",
+          "qualifier_properties": []
+        }
+      ]
+    },
+    {
+      "warsampo_actor": "http://ldf.fi/warsa/actors/actor_168",
+      "wikidata_actor": "Q11858220",
+      "warsampo_conflict": "http://ldf.fi/warsa/conflicts/WinterWar",
+      "wikidata_conflict": "Q134949",
+      "wikidata_label_en": null,
+      "wikidata_description_en": null,
+      "p607_statements": [
+        {
+          "id": "Q11858220$c5e3354b-418b-5dc9-59da-7a059909514b",
+          "qualifier_properties": []
+        }
+      ]
+    },
+    {
+      "warsampo_actor": "http://ldf.fi/warsa/actors/actor_947",
+      "wikidata_actor": "Q11864193",
+      "warsampo_conflict": "http://ldf.fi/warsa/conflicts/WinterWar",
+      "wikidata_conflict": "Q134949",
+      "wikidata_label_en": null,
+      "wikidata_description_en": null,
+      "p607_statements": [
+        {
+          "id": "Q11864193$d9e78ab8-4e13-5cbc-cd2d-56f6c82a2e00",
+          "qualifier_properties": []
+        }
+      ]
+    },
+    {
+      "warsampo_actor": "http://ldf.fi/warsa/actors/actor_967",
+      "wikidata_actor": "Q11864195",
+      "warsampo_conflict": "http://ldf.fi/warsa/conflicts/WinterWar",
+      "wikidata_conflict": "Q134949",
+      "wikidata_label_en": null,
+      "wikidata_description_en": null,
+      "p607_statements": [
+        {
+          "id": "Q11864195$6d18edeb-4fb9-e0fd-b4ee-bb3ca904987b",
+          "qualifier_properties": []
+        }
+      ]
+    },
+    {
+      "warsampo_actor": "http://ldf.fi/warsa/actors/actor_1728",
+      "wikidata_actor": "Q11864198",
+      "warsampo_conflict": "http://ldf.fi/warsa/conflicts/WinterWar",
+      "wikidata_conflict": "Q134949",
+      "wikidata_label_en": null,
+      "wikidata_description_en": null,
+      "p607_statements": [
+        {
+          "id": "Q11864198$5db9933a-42e7-5b30-e016-29ff4d9a14ad",
+          "qualifier_properties": []
+        }
+      ]
+    },
+    {
+      "warsampo_actor": "http://ldf.fi/warsa/actors/actor_953",
+      "wikidata_actor": "Q11864213",
+      "warsampo_conflict": "http://ldf.fi/warsa/conflicts/WinterWar",
+      "wikidata_conflict": "Q134949",
+      "wikidata_label_en": null,
+      "wikidata_description_en": null,
+      "p607_statements": [
+        {
+          "id": "Q11864213$616dd59a-4eef-52ea-c6d9-092c29654fe6",
+          "qualifier_properties": []
+        }
+      ]
+    },
+    {
+      "warsampo_actor": "http://ldf.fi/warsa/actors/actor_1729",
+      "wikidata_actor": "Q11864216",
+      "warsampo_conflict": "http://ldf.fi/warsa/conflicts/WinterWar",
+      "wikidata_conflict": "Q134949",
+      "wikidata_label_en": null,
+      "wikidata_description_en": null,
+      "p607_statements": [
+        {
+          "id": "Q11864216$219714f9-459a-7b60-73e3-68e270400e9d",
+          "qualifier_properties": []
+        }
+      ]
+    },
+    {
+      "warsampo_actor": "http://ldf.fi/warsa/actors/actor_998",
+      "wikidata_actor": "Q11864217",
+      "warsampo_conflict": "http://ldf.fi/warsa/conflicts/WinterWar",
+      "wikidata_conflict": "Q134949",
+      "wikidata_label_en": null,
+      "wikidata_description_en": null,
+      "p607_statements": [
+        {
+          "id": "Q11864217$6b9a4f34-4b5d-c768-c3d2-97849d14f817",
+          "qualifier_properties": []
+        }
+      ]
+    },
+    {
+      "warsampo_actor": "http://ldf.fi/warsa/actors/actor_977",
+      "wikidata_actor": "Q11864218",
+      "warsampo_conflict": "http://ldf.fi/warsa/conflicts/WinterWar",
+      "wikidata_conflict": "Q134949",
+      "wikidata_label_en": null,
+      "wikidata_description_en": null,
+      "p607_statements": [
+        {
+          "id": "Q11864218$24d9fc2c-481c-3cbb-a5ec-2e60ba20381d",
+          "qualifier_properties": []
+        }
+      ]
+    },
+    {
+      "warsampo_actor": "http://ldf.fi/warsa/actors/actor_1440",
+      "wikidata_actor": "Q11865733",
+      "warsampo_conflict": "http://ldf.fi/warsa/conflicts/WinterWar",
+      "wikidata_conflict": "Q134949",
+      "wikidata_label_en": "Infantry Regiment 11 (Winter War)",
+      "wikidata_description_en": "Finnish Army regiment during the Winter War",
+      "p607_statements": [
+        {
+          "id": "Q11865733$700bc303-47cb-3947-534f-edcbd79d0ee5",
+          "qualifier_properties": []
+        }
+      ]
+    },
+    {
+      "warsampo_actor": "http://ldf.fi/warsa/actors/actor_1686",
+      "wikidata_actor": "Q11865744",
+      "warsampo_conflict": "http://ldf.fi/warsa/conflicts/WinterWar",
+      "wikidata_conflict": "Q134949",
+      "wikidata_label_en": null,
+      "wikidata_description_en": null,
+      "p607_statements": [
+        {
+          "id": "Q11865744$92e75115-4b34-31d7-0f72-e57c295e6bf2",
+          "qualifier_properties": []
+        }
+      ]
+    },
+    {
+      "warsampo_actor": "http://ldf.fi/warsa/actors/actor_1704",
+      "wikidata_actor": "Q11865745",
+      "warsampo_conflict": "http://ldf.fi/warsa/conflicts/WinterWar",
+      "wikidata_conflict": "Q134949",
+      "wikidata_label_en": null,
+      "wikidata_description_en": null,
+      "p607_statements": [
+        {
+          "id": "Q11865745$cfda3385-4563-3561-7edf-1098454ac683",
+          "qualifier_properties": []
+        }
+      ]
+    },
+    {
+      "warsampo_actor": "http://ldf.fi/warsa/actors/actor_825",
+      "wikidata_actor": "Q11865747",
+      "warsampo_conflict": "http://ldf.fi/warsa/conflicts/WinterWar",
+      "wikidata_conflict": "Q134949",
+      "wikidata_label_en": null,
+      "wikidata_description_en": null,
+      "p607_statements": [
+        {
+          "id": "Q11865747$0e1ee050-4652-a39b-c488-b1872114b839",
+          "qualifier_properties": []
+        }
+      ]
+    },
+    {
+      "warsampo_actor": "http://ldf.fi/warsa/actors/actor_1709",
+      "wikidata_actor": "Q11865750",
+      "warsampo_conflict": "http://ldf.fi/warsa/conflicts/WinterWar",
+      "wikidata_conflict": "Q134949",
+      "wikidata_label_en": null,
+      "wikidata_description_en": null,
+      "p607_statements": [
+        {
+          "id": "Q11865750$e00f2ef2-4752-b0fb-384f-1fb4655f438d",
+          "qualifier_properties": []
+        }
+      ]
+    },
+    {
+      "warsampo_actor": "http://ldf.fi/warsa/actors/actor_850",
+      "wikidata_actor": "Q11865753",
+      "warsampo_conflict": "http://ldf.fi/warsa/conflicts/WinterWar",
+      "wikidata_conflict": "Q134949",
+      "wikidata_label_en": "34th Infantry Regiment",
+      "wikidata_description_en": "regiment of the Finnish Army during the Winter War",
+      "p607_statements": [
+        {
+          "id": "Q11865753$9e6517ba-4625-f858-9b24-0c5ea31e02a9",
+          "qualifier_properties": []
+        }
+      ]
+    },
+    {
+      "warsampo_actor": "http://ldf.fi/warsa/actors/actor_869",
+      "wikidata_actor": "Q11865756",
+      "warsampo_conflict": "http://ldf.fi/warsa/conflicts/WinterWar",
+      "wikidata_conflict": "Q134949",
+      "wikidata_label_en": "35th Infantry Regiment (Finland, Winter War)",
+      "wikidata_description_en": null,
+      "p607_statements": [
+        {
+          "id": "Q11865756$98f79506-41b6-3253-6452-7c2e05c64a2d",
+          "qualifier_properties": []
+        }
+      ]
+    },
+    {
+      "warsampo_actor": "http://ldf.fi/warsa/actors/actor_888",
+      "wikidata_actor": "Q11865759",
+      "warsampo_conflict": "http://ldf.fi/warsa/conflicts/WinterWar",
+      "wikidata_conflict": "Q134949",
+      "wikidata_label_en": "36th Infantry Regiment",
+      "wikidata_description_en": "regiment of the Finnish Army during the Winter War",
+      "p607_statements": [
+        {
+          "id": "Q11865759$eb8c1a12-43b3-ee42-24d6-af0cb6265eb3",
+          "qualifier_properties": []
+        }
+      ]
+    },
+    {
+      "warsampo_actor": "http://ldf.fi/warsa/actors/actor_3042",
+      "wikidata_actor": "Q11870948",
+      "warsampo_conflict": "http://ldf.fi/warsa/conflicts/WinterWar",
+      "wikidata_conflict": "Q134949",
+      "wikidata_label_en": "Kenttätykistörykmentti 10 (Finland, Winter War)",
+      "wikidata_description_en": null,
+      "p607_statements": [
+        {
+          "id": "Q11870948$f1aa3324-4d9e-3e7d-a04e-97d294bb8b79",
+          "qualifier_properties": []
+        }
+      ]
+    },
+    {
+      "warsampo_actor": "http://ldf.fi/warsa/actors/actor_3041",
+      "wikidata_actor": "Q11871240",
+      "warsampo_conflict": "http://ldf.fi/warsa/conflicts/WinterWar",
+      "wikidata_conflict": "Q134949",
+      "wikidata_label_en": null,
+      "wikidata_description_en": null,
+      "p607_statements": [
+        {
+          "id": "Q11871240$f21086e8-4be4-192f-9a99-29ae687fb95d",
+          "qualifier_properties": []
+        }
+      ]
+    },
+    {
+      "warsampo_actor": "http://ldf.fi/warsa/actors/actor_1927",
+      "wikidata_actor": "Q11888487",
+      "warsampo_conflict": "http://ldf.fi/warsa/conflicts/WinterWar",
+      "wikidata_conflict": "Q134949",
+      "wikidata_label_en": "North Finland Group",
+      "wikidata_description_en": "Finnish military unit in the Winter War",
+      "p607_statements": [
+        {
+          "id": "Q11702574$8398a764-4c9f-251c-1a35-5ad980a75f38",
+          "qualifier_properties": []
+        }
+      ]
+    },
+    {
+      "warsampo_actor": "http://ldf.fi/warsa/actors/actor_2428",
+      "wikidata_actor": "Q11889455",
+      "warsampo_conflict": "http://ldf.fi/warsa/conflicts/ContinuationWar",
+      "wikidata_conflict": "Q122100",
+      "wikidata_label_en": "Finnish Army Head Quarters",
+      "wikidata_description_en": "during Second World War",
+      "p607_statements": [
+        {
+          "id": "Q11889455$c3958df1-434f-1d2c-aa8b-1def3916f522",
+          "qualifier_properties": []
+        }
+      ]
+    },
+    {
+      "warsampo_actor": "http://ldf.fi/warsa/actors/actor_2428",
+      "wikidata_actor": "Q11889455",
+      "warsampo_conflict": "http://ldf.fi/warsa/conflicts/WinterWar",
+      "wikidata_conflict": "Q134949",
+      "wikidata_label_en": "Finnish Army Head Quarters",
+      "wikidata_description_en": "during Second World War",
+      "p607_statements": [
+        {
+          "id": "Q11889455$6ca21032-4133-72d5-ce17-ba0a5977f970",
+          "qualifier_properties": []
+        }
+      ]
+    },
+    {
+      "warsampo_actor": "http://ldf.fi/warsa/actors/actor_747",
+      "wikidata_actor": "Q11891540",
+      "warsampo_conflict": "http://ldf.fi/warsa/conflicts/WinterWar",
+      "wikidata_conflict": "Q134949",
+      "wikidata_label_en": "Group Talvela",
+      "wikidata_description_en": "Finnish military unit during the Winter War",
+      "p607_statements": [
+        {
+          "id": "Q11891540$722604fb-42f4-e1e5-b046-6225459b30e3",
+          "qualifier_properties": []
+        }
+      ]
+    },
+    {
+      "warsampo_actor": "http://ldf.fi/warsa/actors/actor_446",
+      "wikidata_actor": "Q16824084",
+      "warsampo_conflict": "http://ldf.fi/warsa/conflicts/ContinuationWar",
+      "wikidata_conflict": "Q122100",
+      "wikidata_label_en": "Squadron 12",
+      "wikidata_description_en": "1939–1944 Finnish Air Force reconnaissance squadron",
+      "p607_statements": [
+        {
+          "id": "Q16824084$b1a3aa3a-4c78-8e57-4797-28e7a47d09c4",
+          "qualifier_properties": []
+        }
+      ]
+    },
+    {
+      "warsampo_actor": "http://ldf.fi/warsa/actors/actor_446",
+      "wikidata_actor": "Q16824084",
+      "warsampo_conflict": "http://ldf.fi/warsa/conflicts/WinterWar",
+      "wikidata_conflict": "Q134949",
+      "wikidata_label_en": "Squadron 12",
+      "wikidata_description_en": "1939–1944 Finnish Air Force reconnaissance squadron",
+      "p607_statements": [
+        {
+          "id": "Q16824084$96318977-440f-44eb-5c28-165fecb1cc4d",
+          "qualifier_properties": []
+        }
+      ]
+    },
+    {
+      "warsampo_actor": "http://ldf.fi/warsa/actors/actor_2018",
+      "wikidata_actor": "Q18693458",
+      "warsampo_conflict": "http://ldf.fi/warsa/conflicts/WinterWar",
+      "wikidata_conflict": "Q134949",
+      "wikidata_label_en": null,
+      "wikidata_description_en": "Finnish military unit during the Winter War",
+      "p607_statements": [
+        {
+          "id": "Q18693458$3d2460d9-4d51-a64b-2f2f-5a5b563aa8df",
+          "qualifier_properties": []
+        }
+      ]
+    },
+    {
+      "warsampo_actor": "http://ldf.fi/warsa/actors/actor_2477",
+      "wikidata_actor": "Q18693478",
+      "warsampo_conflict": "http://ldf.fi/warsa/conflicts/WinterWar",
+      "wikidata_conflict": "Q134949",
+      "wikidata_label_en": "17th Infantry Regiment",
+      "wikidata_description_en": "Finnish regiment during the Winter War",
+      "p607_statements": [
+        {
+          "id": "Q18693478$aead0dfe-4843-ccda-1ea9-e28515e7acec",
+          "qualifier_properties": []
+        }
+      ]
+    },
+    {
+      "warsampo_actor": "http://ldf.fi/warsa/actors/actor_940",
+      "wikidata_actor": "Q18693480",
+      "warsampo_conflict": "http://ldf.fi/warsa/conflicts/WinterWar",
+      "wikidata_conflict": "Q134949",
+      "wikidata_label_en": "37th Infantry Regiment (Finland, Winter War)",
+      "wikidata_description_en": null,
+      "p607_statements": [
+        {
+          "id": "Q18693480$85ba2c0a-4cda-c825-0512-592d03d3696d",
+          "qualifier_properties": []
+        }
+      ]
+    },
+    {
+      "warsampo_actor": "http://ldf.fi/warsa/actors/actor_802",
+      "wikidata_actor": "Q18693482",
+      "warsampo_conflict": "http://ldf.fi/warsa/conflicts/WinterWar",
+      "wikidata_conflict": "Q134949",
+      "wikidata_label_en": null,
+      "wikidata_description_en": null,
+      "p607_statements": [
+        {
+          "id": "Q18693482$5fe90423-4530-82e0-58d9-56d59b340b3c",
+          "qualifier_properties": []
+        }
+      ]
+    },
+    {
+      "warsampo_actor": "http://ldf.fi/warsa/actors/actor_507",
+      "wikidata_actor": "Q18693484",
+      "warsampo_conflict": "http://ldf.fi/warsa/conflicts/WinterWar",
+      "wikidata_conflict": "Q134949",
+      "wikidata_label_en": "69th Infantry Regiment",
+      "wikidata_description_en": "regiment of the Finnish Army during the Winter War",
+      "p607_statements": [
+        {
+          "id": "Q18693484$2ed23937-467d-1a59-00f6-f4a94310e4e2",
+          "qualifier_properties": []
+        }
+      ]
+    },
+    {
+      "warsampo_actor": "http://ldf.fi/warsa/actors/actor_972",
+      "wikidata_actor": "Q18693486",
+      "warsampo_conflict": "http://ldf.fi/warsa/conflicts/WinterWar",
+      "wikidata_conflict": "Q134949",
+      "wikidata_label_en": null,
+      "wikidata_description_en": null,
+      "p607_statements": [
+        {
+          "id": "Q18693486$686fbb2b-4f76-a920-d52e-73249d99764e",
+          "qualifier_properties": []
+        }
+      ]
+    },
+    {
+      "warsampo_actor": "http://ldf.fi/warsa/actors/actor_993",
+      "wikidata_actor": "Q18693488",
+      "warsampo_conflict": "http://ldf.fi/warsa/conflicts/WinterWar",
+      "wikidata_conflict": "Q134949",
+      "wikidata_label_en": null,
+      "wikidata_description_en": null,
+      "p607_statements": [
+        {
+          "id": "Q18693488$5ddeeb23-4c5b-ac92-c176-87a014032cca",
+          "qualifier_properties": []
+        }
+      ]
+    },
+    {
+      "warsampo_actor": "http://ldf.fi/warsa/actors/actor_1003",
+      "wikidata_actor": "Q18693494",
+      "warsampo_conflict": "http://ldf.fi/warsa/conflicts/WinterWar",
+      "wikidata_conflict": "Q134949",
+      "wikidata_label_en": "13th Field Artillery Regiment",
+      "wikidata_description_en": null,
+      "p607_statements": [
+        {
+          "id": "Q18693494$2bf78e0c-4f1f-00b6-6332-ee5aee438ac6",
+          "qualifier_properties": []
+        }
+      ]
+    },
+    {
+      "warsampo_actor": "http://ldf.fi/warsa/actors/actor_1861",
+      "wikidata_actor": "Q20251899",
+      "warsampo_conflict": "http://ldf.fi/warsa/conflicts/WinterWar",
+      "wikidata_conflict": "Q134949",
+      "wikidata_label_en": null,
+      "wikidata_description_en": null,
+      "p607_statements": [
+        {
+          "id": "Q20251899$318508a8-4546-8270-bc37-44e42eb7b658",
+          "qualifier_properties": []
+        }
+      ]
+    },
+    {
+      "warsampo_actor": "http://ldf.fi/warsa/actors/actor_2250",
+      "wikidata_actor": "Q2299865",
+      "warsampo_conflict": "http://ldf.fi/warsa/conflicts/ContinuationWar",
+      "wikidata_conflict": "Q122100",
+      "wikidata_label_en": "Ilmarinen",
+      "wikidata_description_en": "1931 Väinämöinen-class coastal defence ship",
+      "p607_statements": []
+    },
+    {
+      "warsampo_actor": "http://ldf.fi/warsa/actors/actor_2250",
+      "wikidata_actor": "Q2299865",
+      "warsampo_conflict": "http://ldf.fi/warsa/conflicts/WinterWar",
+      "wikidata_conflict": "Q134949",
+      "wikidata_label_en": "Ilmarinen",
+      "wikidata_description_en": "1931 Väinämöinen-class coastal defence ship",
+      "p607_statements": [
+        {
+          "id": "Q2299865$97513f4c-4a65-33aa-ad7c-d0da39151f01",
+          "qualifier_properties": []
+        }
+      ]
+    },
+    {
+      "warsampo_actor": "http://ldf.fi/warsa/actors/actor_2245",
+      "wikidata_actor": "Q2332854",
+      "warsampo_conflict": "http://ldf.fi/warsa/conflicts/ContinuationWar",
+      "wikidata_conflict": "Q122100",
+      "wikidata_label_en": "Sisu-class motor torpedo boat",
+      "wikidata_description_en": null,
+      "p607_statements": []
+    },
+    {
+      "warsampo_actor": "http://ldf.fi/warsa/actors/actor_2245",
+      "wikidata_actor": "Q2332854",
+      "warsampo_conflict": "http://ldf.fi/warsa/conflicts/WinterWar",
+      "wikidata_conflict": "Q134949",
+      "wikidata_label_en": "Sisu-class motor torpedo boat",
+      "wikidata_description_en": null,
+      "p607_statements": [
+        {
+          "id": "Q2332854$9a75e9c6-4466-c49a-2d25-e1428097f63a",
+          "qualifier_properties": []
+        }
+      ]
+    },
+    {
+      "warsampo_actor": "http://ldf.fi/warsa/actors/actor_746",
+      "wikidata_actor": "Q2383264",
+      "warsampo_conflict": "http://ldf.fi/warsa/conflicts/ContinuationWar",
+      "wikidata_conflict": "Q122100",
+      "wikidata_label_en": "Finnish Army",
+      "wikidata_description_en": "land warfare branch of Finland's military",
+      "p607_statements": [
+        {
+          "id": "Q2383264$0b02602c-44f9-1b87-a3a5-499157c61e79",
+          "qualifier_properties": []
+        }
+      ]
+    },
+    {
+      "warsampo_actor": "http://ldf.fi/warsa/actors/actor_746",
+      "wikidata_actor": "Q2383264",
+      "warsampo_conflict": "http://ldf.fi/warsa/conflicts/WinterWar",
+      "wikidata_conflict": "Q134949",
+      "wikidata_label_en": "Finnish Army",
+      "wikidata_description_en": "land warfare branch of Finland's military",
+      "p607_statements": [
+        {
+          "id": "Q2383264$0d975379-4e5a-752b-4eb4-9acad1853d75",
+          "qualifier_properties": []
+        }
+      ]
+    },
+    {
+      "warsampo_actor": "http://ldf.fi/warsa/actors/actor_2791",
+      "wikidata_actor": "Q2997776",
+      "warsampo_conflict": "http://ldf.fi/warsa/conflicts/WinterWar",
+      "wikidata_conflict": "Q134949",
+      "wikidata_label_en": "Swedish Volunteer Corps",
+      "wikidata_description_en": "organization",
+      "p607_statements": [
+        {
+          "id": "Q2997776$264658ad-48a0-8cd9-f771-17210c259fee",
+          "qualifier_properties": []
+        }
+      ]
+    },
+    {
+      "warsampo_actor": "http://ldf.fi/warsa/actors/actor_457",
+      "wikidata_actor": "Q3496954",
+      "warsampo_conflict": "http://ldf.fi/warsa/conflicts/WinterWar",
+      "wikidata_conflict": "Q134949",
+      "wikidata_label_en": "Flying Regiment 19",
+      "wikidata_description_en": "1940 Finnish Air Force fighter regiment manned by Swedish volunteers",
+      "p607_statements": [
+        {
+          "id": "Q3496954$db8f22cf-41e2-f475-6f86-1d49585e3526",
+          "qualifier_properties": []
+        }
+      ]
+    },
+    {
+      "warsampo_actor": "http://ldf.fi/warsa/actors/actor_1135",
+      "wikidata_actor": "Q3824946",
+      "warsampo_conflict": "http://ldf.fi/warsa/conflicts/WinterWar",
+      "wikidata_conflict": "Q134949",
+      "wikidata_label_en": "1st Division",
+      "wikidata_description_en": "division of the Finnish Army during the Winter War",
+      "p607_statements": [
+        {
+          "id": "Q3824946$7c68939e-47a7-44a8-28f7-4bcbd3ae57e6",
+          "qualifier_properties": []
+        }
+      ]
+    },
+    {
+      "warsampo_actor": "http://ldf.fi/warsa/actors/actor_3039",
+      "wikidata_actor": "Q3825644",
+      "warsampo_conflict": "http://ldf.fi/warsa/conflicts/WinterWar",
+      "wikidata_conflict": "Q134949",
+      "wikidata_label_en": "10th Division",
+      "wikidata_description_en": "division of the Finnish Army during the Winter War",
+      "p607_statements": [
+        {
+          "id": "Q3825644$b77b6170-4940-e00d-679a-23c560ba16f6",
+          "qualifier_properties": []
+        }
+      ]
+    },
+    {
+      "warsampo_actor": "http://ldf.fi/warsa/actors/actor_1266",
+      "wikidata_actor": "Q3866521",
+      "warsampo_conflict": "http://ldf.fi/warsa/conflicts/WinterWar",
+      "wikidata_conflict": "Q134949",
+      "wikidata_label_en": null,
+      "wikidata_description_en": null,
+      "p607_statements": [
+        {
+          "id": "Q3866521$eb568f6f-450a-8256-623f-68de9ab23e5f",
+          "qualifier_properties": []
+        }
+      ]
+    },
+    {
+      "warsampo_actor": "http://ldf.fi/warsa/actors/actor_836",
+      "wikidata_actor": "Q3867972",
+      "warsampo_conflict": "http://ldf.fi/warsa/conflicts/WinterWar",
+      "wikidata_conflict": "Q134949",
+      "wikidata_label_en": "12th Division",
+      "wikidata_description_en": "division of the Finnish Army during the Winter War",
+      "p607_statements": [
+        {
+          "id": "Q3867972$a73df266-4672-9e28-846a-62d0ea6a7b6c",
+          "qualifier_properties": []
+        }
+      ]
+    },
+    {
+      "warsampo_actor": "http://ldf.fi/warsa/actors/actor_928",
+      "wikidata_actor": "Q3868564",
+      "warsampo_conflict": "http://ldf.fi/warsa/conflicts/WinterWar",
+      "wikidata_conflict": "Q134949",
+      "wikidata_label_en": "13th Division (Finland, Winter War)",
+      "wikidata_description_en": null,
+      "p607_statements": [
+        {
+          "id": "Q3868564$420487a3-4414-bdf9-bb49-26413dc17607",
+          "qualifier_properties": []
+        }
+      ]
+    },
+    {
+      "warsampo_actor": "http://ldf.fi/warsa/actors/actor_2240",
+      "wikidata_actor": "Q4114968",
+      "warsampo_conflict": "http://ldf.fi/warsa/conflicts/ContinuationWar",
+      "wikidata_conflict": "Q122100",
+      "wikidata_label_en": "Louhi",
+      "wikidata_description_en": "1916 minelayer of the Russian and Finnish navies",
+      "p607_statements": []
+    },
+    {
+      "warsampo_actor": "http://ldf.fi/warsa/actors/actor_2240",
+      "wikidata_actor": "Q4114968",
+      "warsampo_conflict": "http://ldf.fi/warsa/conflicts/WinterWar",
+      "wikidata_conflict": "Q134949",
+      "wikidata_label_en": "Louhi",
+      "wikidata_description_en": "1916 minelayer of the Russian and Finnish navies",
+      "p607_statements": [
+        {
+          "id": "Q4114968$26ec0097-400f-998f-5955-33728a8434bd",
+          "qualifier_properties": []
+        }
+      ]
+    },
+    {
+      "warsampo_actor": "http://ldf.fi/warsa/actors/actor_459",
+      "wikidata_actor": "Q4356342",
+      "warsampo_conflict": "http://ldf.fi/warsa/conflicts/ContinuationWar",
+      "wikidata_conflict": "Q122100",
+      "wikidata_label_en": "Squadron 24",
+      "wikidata_description_en": "1933-1944 Finnish Air Force fighter squadron",
+      "p607_statements": []
+    },
+    {
+      "warsampo_actor": "http://ldf.fi/warsa/actors/actor_459",
+      "wikidata_actor": "Q4356342",
+      "warsampo_conflict": "http://ldf.fi/warsa/conflicts/WinterWar",
+      "wikidata_conflict": "Q134949",
+      "wikidata_label_en": "Squadron 24",
+      "wikidata_description_en": "1933-1944 Finnish Air Force fighter squadron",
+      "p607_statements": []
+    },
+    {
+      "warsampo_actor": "http://ldf.fi/warsa/actors/actor_2257",
+      "wikidata_actor": "Q4411558",
+      "warsampo_conflict": "http://ldf.fi/warsa/conflicts/WinterWar",
+      "wikidata_conflict": "Q134949",
+      "wikidata_label_en": "Finnish escort Aura II",
+      "wikidata_description_en": "Finnish escort vessel",
+      "p607_statements": [
+        {
+          "id": "Q4411558$4fda7b90-4246-dcf0-52c0-d8f2ad06cec6",
+          "qualifier_properties": []
+        }
+      ]
+    },
+    {
+      "warsampo_actor": "http://ldf.fi/warsa/actors/actor_1089",
+      "wikidata_actor": "Q4794347",
+      "warsampo_conflict": "http://ldf.fi/warsa/conflicts/WinterWar",
+      "wikidata_conflict": "Q134949",
+      "wikidata_label_en": "Army of the Isthmus",
+      "wikidata_description_en": "Finnish field army during the Winter War",
+      "p607_statements": [
+        {
+          "id": "Q4794347$3a489c32-4226-22ec-5cc2-117d7ab6e362",
+          "qualifier_properties": []
+        }
+      ]
+    },
+    {
+      "warsampo_actor": "http://ldf.fi/warsa/actors/actor_439",
+      "wikidata_actor": "Q5412831",
+      "warsampo_conflict": "http://ldf.fi/warsa/conflicts/ContinuationWar",
+      "wikidata_conflict": "Q122100",
+      "wikidata_label_en": "No. 42 Squadron",
+      "wikidata_description_en": "1940s Finnish Air Force bomber squadron",
+      "p607_statements": [
+        {
+          "id": "Q5412831$ecfcb517-440c-c508-f218-9a079127fbb9",
+          "qualifier_properties": []
+        }
+      ]
+    },
+    {
+      "warsampo_actor": "http://ldf.fi/warsa/actors/actor_439",
+      "wikidata_actor": "Q5412831",
+      "warsampo_conflict": "http://ldf.fi/warsa/conflicts/WinterWar",
+      "wikidata_conflict": "Q134949",
+      "wikidata_label_en": "No. 42 Squadron",
+      "wikidata_description_en": "1940s Finnish Air Force bomber squadron",
+      "p607_statements": [
+        {
+          "id": "Q5412831$3e0d2fcc-4c19-d74c-ddc6-2e0d4bc3d6ba",
+          "qualifier_properties": []
+        }
+      ]
+    },
+    {
+      "warsampo_actor": "http://ldf.fi/warsa/actors/actor_1414",
+      "wikidata_actor": "Q5450747",
+      "warsampo_conflict": "http://ldf.fi/warsa/conflicts/WinterWar",
+      "wikidata_conflict": "Q134949",
+      "wikidata_label_en": "4th Division",
+      "wikidata_description_en": "Finnish Army infantry division in the Winter War",
+      "p607_statements": [
+        {
+          "id": "Q5450747$72d297ce-4a7e-e3d8-7825-0558213ff268",
+          "qualifier_properties": []
+        }
+      ]
+    },
+    {
+      "warsampo_actor": "http://ldf.fi/warsa/actors/actor_2468",
+      "wikidata_actor": "Q5450751",
+      "warsampo_conflict": "http://ldf.fi/warsa/conflicts/WinterWar",
+      "wikidata_conflict": "Q134949",
+      "wikidata_label_en": "6th Division",
+      "wikidata_description_en": "1939-1940 Finnish Army division",
+      "p607_statements": [
+        {
+          "id": "Q5450751$4523bdbd-42f9-ebe6-1827-4b3ee1dd94c2",
+          "qualifier_properties": []
+        }
+      ]
+    },
+    {
+      "warsampo_actor": "http://ldf.fi/warsa/actors/actor_1674",
+      "wikidata_actor": "Q5450781",
+      "warsampo_conflict": "http://ldf.fi/warsa/conflicts/WinterWar",
+      "wikidata_conflict": "Q134949",
+      "wikidata_label_en": "III Corps",
+      "wikidata_description_en": "corps of the Finnish Army during the Winter War",
+      "p607_statements": [
+        {
+          "id": "Q5450781$313fd510-4c4d-f204-9e31-b6abeadea0d3",
+          "qualifier_properties": []
+        }
+      ]
+    },
+    {
+      "warsampo_actor": "http://ldf.fi/warsa/actors/actor_1134",
+      "wikidata_actor": "Q5450783",
+      "warsampo_conflict": "http://ldf.fi/warsa/conflicts/WinterWar",
+      "wikidata_conflict": "Q134949",
+      "wikidata_label_en": "II Corps",
+      "wikidata_description_en": "corps of the Finnish Army during the Winter War",
+      "p607_statements": [
+        {
+          "id": "Q5450783$7fcc3111-4f40-833c-48ce-7d2b44ad2d22",
+          "qualifier_properties": []
+        }
+      ]
+    },
+    {
+      "warsampo_actor": "http://ldf.fi/warsa/actors/actor_832",
+      "wikidata_actor": "Q5450784",
+      "warsampo_conflict": "http://ldf.fi/warsa/conflicts/WinterWar",
+      "wikidata_conflict": "Q134949",
+      "wikidata_label_en": "IV Corps",
+      "wikidata_description_en": "corps of the Finnish Army during the Winter War",
+      "p607_statements": [
+        {
+          "id": "Q5450784$a2413a43-43af-639b-c7d2-17fc0bf46300",
+          "qualifier_properties": []
+        }
+      ]
+    },
+    {
+      "warsampo_actor": "http://ldf.fi/warsa/actors/actor_828",
+      "wikidata_actor": "Q5450786",
+      "warsampo_conflict": "http://ldf.fi/warsa/conflicts/WinterWar",
+      "wikidata_conflict": "Q134949",
+      "wikidata_label_en": "I Corps",
+      "wikidata_description_en": "corps of the Finnish Army during the Winter War",
+      "p607_statements": [
+        {
+          "id": "Q5450786$9813de3f-473d-ddf0-abfd-5d7f5b566037",
+          "qualifier_properties": []
+        }
+      ]
+    },
+    {
+      "warsampo_actor": "http://ldf.fi/warsa/actors/actor_442",
+      "wikidata_actor": "Q5463495",
+      "warsampo_conflict": "http://ldf.fi/warsa/conflicts/ContinuationWar",
+      "wikidata_conflict": "Q122100",
+      "wikidata_label_en": "Flying Regiment 1",
+      "wikidata_description_en": "1938–1952 Finnish Air Force regiment",
+      "p607_statements": [
+        {
+          "id": "Q5463495$02b82b87-4efe-926b-6a6f-45e2464fa06b",
+          "qualifier_properties": []
+        }
+      ]
+    },
+    {
+      "warsampo_actor": "http://ldf.fi/warsa/actors/actor_442",
+      "wikidata_actor": "Q5463495",
+      "warsampo_conflict": "http://ldf.fi/warsa/conflicts/WinterWar",
+      "wikidata_conflict": "Q134949",
+      "wikidata_label_en": "Flying Regiment 1",
+      "wikidata_description_en": "1938–1952 Finnish Air Force regiment",
+      "p607_statements": [
+        {
+          "id": "Q5463495$78d36367-45cb-fe0e-3f27-059dbd199709",
+          "qualifier_properties": []
+        }
+      ]
+    },
+    {
+      "warsampo_actor": "http://ldf.fi/warsa/actors/actor_458",
+      "wikidata_actor": "Q5463497",
+      "warsampo_conflict": "http://ldf.fi/warsa/conflicts/ContinuationWar",
+      "wikidata_conflict": "Q122100",
+      "wikidata_label_en": "Flying Regiment 2",
+      "wikidata_description_en": "Finnish Air Force regiment",
+      "p607_statements": [
+        {
+          "id": "Q5463497$4a961095-4b04-d440-5d64-5a1238dca879",
+          "qualifier_properties": []
+        }
+      ]
+    },
+    {
+      "warsampo_actor": "http://ldf.fi/warsa/actors/actor_458",
+      "wikidata_actor": "Q5463497",
+      "warsampo_conflict": "http://ldf.fi/warsa/conflicts/WinterWar",
+      "wikidata_conflict": "Q134949",
+      "wikidata_label_en": "Flying Regiment 2",
+      "wikidata_description_en": "Finnish Air Force regiment",
+      "p607_statements": [
+        {
+          "id": "Q5463497$2debb56b-4775-d2ed-c813-4f02b58b6cb2",
+          "qualifier_properties": []
+        }
+      ]
+    },
+    {
+      "warsampo_actor": "http://ldf.fi/warsa/actors/actor_463",
+      "wikidata_actor": "Q5463498",
+      "warsampo_conflict": "http://ldf.fi/warsa/conflicts/ContinuationWar",
+      "wikidata_conflict": "Q122100",
+      "wikidata_label_en": "Flying Regiment 4",
+      "wikidata_description_en": "1938–1940s Finnish Air Force bomber regiment",
+      "p607_statements": [
+        {
+          "id": "Q5463498$f7e2c566-45ac-afed-7d1b-15482b2a06d9",
+          "qualifier_properties": []
+        }
+      ]
+    },
+    {
+      "warsampo_actor": "http://ldf.fi/warsa/actors/actor_463",
+      "wikidata_actor": "Q5463498",
+      "warsampo_conflict": "http://ldf.fi/warsa/conflicts/WinterWar",
+      "wikidata_conflict": "Q134949",
+      "wikidata_label_en": "Flying Regiment 4",
+      "wikidata_description_en": "1938–1940s Finnish Air Force bomber regiment",
+      "p607_statements": [
+        {
+          "id": "Q5463498$f00029fa-480a-8d39-7577-aa77b8d7d9fe",
+          "qualifier_properties": []
+        }
+      ]
+    },
+    {
+      "warsampo_actor": "http://ldf.fi/warsa/actors/actor_1572",
+      "wikidata_actor": "Q5478508",
+      "warsampo_conflict": "http://ldf.fi/warsa/conflicts/WinterWar",
+      "wikidata_conflict": "Q134949",
+      "wikidata_label_en": null,
+      "wikidata_description_en": null,
+      "p607_statements": [
+        {
+          "id": "Q5478508$2684aaeb-4ee1-2bc5-1811-db79a008b045",
+          "qualifier_properties": []
+        }
+      ]
+    },
+    {
+      "warsampo_actor": "http://ldf.fi/warsa/actors/actor_846",
+      "wikidata_actor": "Q5485993",
+      "warsampo_conflict": "http://ldf.fi/warsa/conflicts/WinterWar",
+      "wikidata_conflict": "Q134949",
+      "wikidata_label_en": null,
+      "wikidata_description_en": null,
+      "p607_statements": [
+        {
+          "id": "Q5485993$0975961d-48be-cd63-c05c-4f6cabe731e6",
+          "qualifier_properties": []
+        }
+      ]
+    },
+    {
+      "warsampo_actor": "http://ldf.fi/warsa/actors/actor_2251",
+      "wikidata_actor": "Q578073",
+      "warsampo_conflict": "http://ldf.fi/warsa/conflicts/ContinuationWar",
+      "wikidata_conflict": "Q122100",
+      "wikidata_label_en": "Väinämöinen",
+      "wikidata_description_en": "Finnish Navy coastal defence ship built in 1932, later in Soviet service",
+      "p607_statements": [
+        {
+          "id": "Q578073$044ad34c-46e7-4d8b-8ca1-de70dfbf84fc",
+          "qualifier_properties": []
+        }
+      ]
+    },
+    {
+      "warsampo_actor": "http://ldf.fi/warsa/actors/actor_2251",
+      "wikidata_actor": "Q578073",
+      "warsampo_conflict": "http://ldf.fi/warsa/conflicts/WinterWar",
+      "wikidata_conflict": "Q134949",
+      "wikidata_label_en": "Väinämöinen",
+      "wikidata_description_en": "Finnish Navy coastal defence ship built in 1932, later in Soviet service",
+      "p607_statements": [
+        {
+          "id": "Q578073$e163b8be-416d-c934-5997-089bc96b32d4",
+          "qualifier_properties": []
+        }
+      ]
+    },
+    {
+      "warsampo_actor": "http://ldf.fi/warsa/actors/actor_1988",
+      "wikidata_actor": "Q6488283",
+      "warsampo_conflict": "http://ldf.fi/warsa/conflicts/WinterWar",
+      "wikidata_conflict": "Q134949",
+      "wikidata_label_en": "Lapland Group",
+      "wikidata_description_en": "formation of the Finnish Army during the Winter War between Finland and the Soviet Union",
+      "p607_statements": [
+        {
+          "id": "Q6488283$384370b9-4b28-e5f6-2624-2c9ffbffa330",
+          "qualifier_properties": []
+        }
+      ]
+    },
+    {
+      "warsampo_actor": "http://ldf.fi/warsa/actors/actor_443",
+      "wikidata_actor": "Q7042856",
+      "warsampo_conflict": "http://ldf.fi/warsa/conflicts/ContinuationWar",
+      "wikidata_conflict": "Q122100",
+      "wikidata_label_en": "Squadron 10",
+      "wikidata_description_en": "1939-1941 Finnish Air Force dive bomber squadron",
+      "p607_statements": [
+        {
+          "id": "Q7042856$386f63a9-4b1c-1a6e-b73f-ef3dc4340668",
+          "qualifier_properties": []
+        }
+      ]
+    },
+    {
+      "warsampo_actor": "http://ldf.fi/warsa/actors/actor_443",
+      "wikidata_actor": "Q7042856",
+      "warsampo_conflict": "http://ldf.fi/warsa/conflicts/WinterWar",
+      "wikidata_conflict": "Q134949",
+      "wikidata_label_en": "Squadron 10",
+      "wikidata_description_en": "1939-1941 Finnish Air Force dive bomber squadron",
+      "p607_statements": [
+        {
+          "id": "Q7042856$902b9f73-477c-311a-f23f-508f72ba24f0",
+          "qualifier_properties": []
+        }
+      ]
+    },
+    {
+      "warsampo_actor": "http://ldf.fi/warsa/actors/actor_435",
+      "wikidata_actor": "Q7043025",
+      "warsampo_conflict": "http://ldf.fi/warsa/conflicts/ContinuationWar",
+      "wikidata_conflict": "Q122100",
+      "wikidata_label_en": "Squadron 16",
+      "wikidata_description_en": "1939–1944 Finnish Air Force reconnaissance squadron",
+      "p607_statements": [
+        {
+          "id": "Q7043025$46d8c559-4897-dcdf-afd3-6188dd8e6fff",
+          "qualifier_properties": []
+        }
+      ]
+    },
+    {
+      "warsampo_actor": "http://ldf.fi/warsa/actors/actor_435",
+      "wikidata_actor": "Q7043025",
+      "warsampo_conflict": "http://ldf.fi/warsa/conflicts/WinterWar",
+      "wikidata_conflict": "Q134949",
+      "wikidata_label_en": "Squadron 16",
+      "wikidata_description_en": "1939–1944 Finnish Air Force reconnaissance squadron",
+      "p607_statements": [
+        {
+          "id": "Q7043025$1916b0c0-43fb-0a46-604c-93a9ece298cd",
+          "qualifier_properties": []
+        }
+      ]
+    },
+    {
+      "warsampo_actor": "http://ldf.fi/warsa/actors/actor_438",
+      "wikidata_actor": "Q7043434",
+      "warsampo_conflict": "http://ldf.fi/warsa/conflicts/WinterWar",
+      "wikidata_conflict": "Q134949",
+      "wikidata_label_en": "Squadron 36",
+      "wikidata_description_en": "1940s Finnish Air Force maritime reconnaissance squadron",
+      "p607_statements": [
+        {
+          "id": "Q7043434$5886eb8d-4741-bce8-0c47-8c930c1f57f1",
+          "qualifier_properties": []
+        }
+      ]
+    },
+    {
+      "warsampo_actor": "http://ldf.fi/warsa/actors/actor_464",
+      "wikidata_actor": "Q7043512",
+      "warsampo_conflict": "http://ldf.fi/warsa/conflicts/ContinuationWar",
+      "wikidata_conflict": "Q122100",
+      "wikidata_label_en": "Squadron 44",
+      "wikidata_description_en": "1940s Finnish Air Force bomber squadron",
+      "p607_statements": [
+        {
+          "id": "Q7043512$b3639d36-4bd7-cd0f-1083-cfd0726afa1b",
+          "qualifier_properties": []
+        }
+      ]
+    },
+    {
+      "warsampo_actor": "http://ldf.fi/warsa/actors/actor_464",
+      "wikidata_actor": "Q7043512",
+      "warsampo_conflict": "http://ldf.fi/warsa/conflicts/WinterWar",
+      "wikidata_conflict": "Q134949",
+      "wikidata_label_en": "Squadron 44",
+      "wikidata_description_en": "1940s Finnish Air Force bomber squadron",
+      "p607_statements": [
+        {
+          "id": "Q7043512$84f00365-4715-cc88-5721-638886d3b6b3",
+          "qualifier_properties": []
+        }
+      ]
+    },
+    {
+      "warsampo_actor": "http://ldf.fi/warsa/actors/actor_465",
+      "wikidata_actor": "Q7043537",
+      "warsampo_conflict": "http://ldf.fi/warsa/conflicts/ContinuationWar",
+      "wikidata_conflict": "Q122100",
+      "wikidata_label_en": "Squadron 46",
+      "wikidata_description_en": "1940s Finnish Air Force bomber squadron",
+      "p607_statements": [
+        {
+          "id": "Q7043537$73f91c26-454b-4715-d995-d8469930977d",
+          "qualifier_properties": []
+        }
+      ]
+    },
+    {
+      "warsampo_actor": "http://ldf.fi/warsa/actors/actor_465",
+      "wikidata_actor": "Q7043537",
+      "warsampo_conflict": "http://ldf.fi/warsa/conflicts/WinterWar",
+      "wikidata_conflict": "Q134949",
+      "wikidata_label_en": "Squadron 46",
+      "wikidata_description_en": "1940s Finnish Air Force bomber squadron",
+      "p607_statements": [
+        {
+          "id": "Q7043537$b34265c3-4d5d-b77d-6cfe-f167276a9879",
+          "qualifier_properties": []
+        }
+      ]
+    }
+  ]
+}
