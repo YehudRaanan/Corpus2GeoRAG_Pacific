@@ -1,6 +1,6 @@
 {
-  "started_utc": "2026-10-10T22:39:14.488826+00:00",
-  "finished_utc": "2026-10-10T22:39:16.551307+00:00",
+  "started_utc": "2026-10-10T23:02:52.687126+00:00",
+  "finished_utc": "2026-10-10T23:02:52.820247+00:00",
   "warsampo_endpoint": "https://ldf.fi/warsa/sparql",
   "wikidata_api": "https://www.wikidata.org/w/api.php",
   "wikidata_revision_policy": "per-item lastrevid in identity_candidates.csv; not one atomic snapshot",

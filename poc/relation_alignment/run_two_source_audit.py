@@ -445,6 +445,7 @@ def main() -> None:
     )
     screened_rows = []
     shared_endpoint_pairs: set[tuple[str, str]] = set()
+    screened_qids = set(screened.values())
     for row in overlap_rows:
         predicate, property_id, direction = (
             row["war_predicate"],
@@ -487,6 +488,15 @@ def main() -> None:
                 "shared_pairs": len(matches),
                 "eligible_war_pairs": sum(
                     p == predicate for _, p, _ in screened_source_pairs
+                ),
+                "eligible_wd_pairs": sum(
+                    p == property_id
+                    and s in screened_qids
+                    and o in screened_qids
+                    and any(
+                        statement["rank"] != "deprecated" for statement in statements
+                    )
+                    for (s, p, o), statements in wd_pairs.items()
                 ),
                 "time_qualified_pairs": time_qualified_pairs,
                 "qualifier_ids": "; ".join(sorted(qualifier_ids)),

@@ -1,6 +1,6 @@
 # WarSampo ↔ Wikidata relation alignment: executed audit
 
-Run: 2026-10-10 22:29–22:39 UTC, with cached HTTP responses reused during review. This audits relation **types** on shared Finnish WWII objects. It does not import facts into the Pacific graph. EventKG was not needed for this two-source test.
+Data retrieved: 2026-10-10 22:29–22:39 UTC. Ranking rerun at 23:02 UTC from cached responses. This audits relation **types** on shared Finnish WWII objects. It does not import facts into the Pacific graph. EventKG was not needed for this two-source test.
 
 ## Scope and method
 
@@ -28,6 +28,21 @@ Counts are **shared QID endpoint pairs after the stated identity screen**, not v
 | `hasUpperUnit` → [`P749`](https://www.wikidata.org/wiki/Property:P749) | **0 observed** | **Unresolved, definition-based candidate** | P749 expressly means parent organization or unit and may be closer than P361. No P749 item-valued claim occurred among these candidate Wikidata items. The WarSampo property definition is still missing. |
 
 For the seven observed combinations: **1 accepted, 1 related, 2 rejected, 3 unresolved**. The three extra definition-based candidates remain unresolved. The five checked `hasConflict` examples and all three `hasUpperUnit` pairs had compatible endpoint identities, but only `hasConflict` passed the predicate-definition review. None of the shared Wikidata statements had P580/P582/P585 time qualifiers; dates are attributes of claims or events, never a new relation type.
+
+## Wikidata-side ranking
+
+Here the denominator is the number of that Wikidata property's item-to-item pairs **within the 250 screened or reviewed identities**, excluding deprecated statements. These percentages answer a different question from the WarSampo-side coverage in the registry. Rows are ordered by Wikidata-side percentage; equal percentages with few pairs are not strong evidence.
+
+| Wikidata property | Possible WarSampo predicate(s), ranked within property | Shared / Wikidata pairs |
+| --- | --- | ---: |
+| `P527` | `hasUpperUnit`, reverse direction | **3 / 3 = 100%** |
+| `P2348` | `P10_falls_within`, same direction | **2 / 2 = 100%** |
+| `P607` | `hasConflict`, same direction | **115 / 198 = 58.1%** |
+| `P155` | `owl:differentFrom`, same direction; **false semantic match** | **1 / 4 = 25%** |
+| `P156` | `owl:differentFrom`, reverse direction; **false semantic match** | **1 / 4 = 25%** |
+| `P361` | `hasUpperUnit`, same direction; `P10_falls_within`, same direction | **3 / 25 = 12% each** |
+
+WarSampo predicates with more than one Wikidata candidate: `hasUpperUnit` → `P527` (3/3) and `P361` (3/25); `P10_falls_within` → `P2348` (2/2) and `P361` (3/25); `owl:differentFrom` → `P155` and `P156` (1/4 each, both rejected). The 117-property Wikidata inventory contains **111 more properties with no observed WarSampo predicate overlap in this screened scope**. The 100% results have only two or three shared pairs; `hasConflict` ↔ `P607` has the strongest repeated-pair support.
 
 ## Success check and limits
 
