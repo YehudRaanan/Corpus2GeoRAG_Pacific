@@ -1,5 +1,9 @@
 # Finnish WWII relation-type alignment POC
 
+The [executed two-source overlap audit](audit_2026-10-11/REPORT.md) checks the
+broader WarSampo–Wikidata candidate set and records the remaining identity and
+event-link gaps. This README preserves the original smaller POC.
+
 The [full WarSampo–Wikidata mapping process](../../docs/WARSAMPO_WIKIDATA_RELATION_MAPPING_PROCESS.md)
 defines the complete-coverage audit. This file records the smaller POC.
 

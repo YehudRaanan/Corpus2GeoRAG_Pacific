@@ -1,0 +1,31 @@
+{
+  "started_utc": "2026-10-10T22:39:14.488826+00:00",
+  "finished_utc": "2026-10-10T22:39:16.551307+00:00",
+  "warsampo_endpoint": "https://ldf.fi/warsa/sparql",
+  "wikidata_api": "https://www.wikidata.org/w/api.php",
+  "wikidata_revision_policy": "per-item lastrevid in identity_candidates.csv; not one atomic snapshot",
+  "warsampo_iri_predicates": 145,
+  "warsampo_direct_wikidata_subjects": 159,
+  "war_unit_wikipedia_sitelink_subjects": 488,
+  "war_period_bridges": 5,
+  "warsampo_event_resources": 154,
+  "event_resources_with_wikidata_sameas": 0,
+  "event_resources_with_wikipedia_page": 0,
+  "identity_candidate_rows": 576,
+  "identity_review_statuses": {
+    "screened": 243,
+    "unresolved": 323,
+    "reviewed": 7,
+    "rejected": 3
+  },
+  "ambiguous_warsampo_identities": 4,
+  "screened_warsampo_identities": 250,
+  "screened_warsampo_relation_pairs": 202,
+  "screened_shared_endpoint_pairs": 122,
+  "war_outgoing_incident_predicates": 16,
+  "war_pairs_with_both_endpoints_crosswalked": 326,
+  "wikidata_outgoing_item_predicates": 117,
+  "wikidata_pairs_with_both_endpoints_crosswalked": 584,
+  "provisional_predicate_matches": 7,
+  "query_scope_limit": "direct sameAs actors, Wikipedia-linked units, and five period candidates; Wikidata outgoing claims only"
+}
