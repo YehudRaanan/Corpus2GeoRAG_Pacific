@@ -1,5 +1,8 @@
 # Finnish WWII relation-type alignment POC
 
+The [full WarSampo–Wikidata mapping process](../../docs/WARSAMPO_WIKIDATA_RELATION_MAPPING_PROCESS.md)
+defines the complete-coverage audit. This file records the smaller POC.
+
 ## Purpose
 
 Find rules that translate **relation types** between WarSampo, Wikidata, and
