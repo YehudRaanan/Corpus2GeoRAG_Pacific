@@ -1,0 +1,8 @@
+war_predicate,wd_property,direction,shared_pairs,war_co_connected_pairs,wd_co_connected_pairs,pct_of_war_co_connected,pct_of_wd_co_connected
+http://ldf.fi/schema/warsa/actors/hasConflict,P607,same,115,115,115,100.0,100.0
+http://ldf.fi/warsa/actors/hasUpperUnit,P361,same,3,3,6,100.0,50.0
+http://ldf.fi/warsa/actors/hasUpperUnit,P527,reverse,3,3,3,100.0,100.0
+http://www.cidoc-crm.org/cidoc-crm/P10_falls_within,P2348,same,2,3,2,66.7,100.0
+http://www.cidoc-crm.org/cidoc-crm/P10_falls_within,P361,same,3,3,6,100.0,50.0
+http://www.w3.org/2002/07/owl#differentFrom,P155,same,1,1,1,100.0,100.0
+http://www.w3.org/2002/07/owl#differentFrom,P156,reverse,1,1,1,100.0,100.0

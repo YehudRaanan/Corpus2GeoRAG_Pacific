@@ -157,6 +157,32 @@ def item_values(entity: dict, property_id: str) -> list[str]:
     return values
 
 
+def rank_joint_rows(rows: list[dict]) -> list[dict]:
+    """Rank predicate matches only where both graphs relate the same QID pair."""
+    mappings: dict[tuple[str, str, str], set[tuple[str, str]]] = defaultdict(set)
+    war_pairs: dict[str, set[tuple[str, str]]] = defaultdict(set)
+    wd_pairs: dict[str, set[tuple[str, str]]] = defaultdict(set)
+    for row in rows:
+        pair = (row["war_subject_qid"], row["war_object_qid"])
+        key = (row["war_predicate"], row["wd_property"], row["direction"])
+        mappings[key].add(pair)
+        war_pairs[row["war_predicate"]].add(pair)
+        wd_pairs[row["wd_property"]].add((row["wd_subject_qid"], row["wd_object_qid"]))
+    return [
+        {
+            "war_predicate": war_predicate,
+            "wd_property": wd_property,
+            "direction": direction,
+            "shared_pairs": len(pairs),
+            "war_co_connected_pairs": len(war_pairs[war_predicate]),
+            "wd_co_connected_pairs": len(wd_pairs[wd_property]),
+            "pct_of_war_co_connected": round(100 * len(pairs) / len(war_pairs[war_predicate]), 1),
+            "pct_of_wd_co_connected": round(100 * len(pairs) / len(wd_pairs[wd_property]), 1),
+        }
+        for (war_predicate, wd_property, direction), pairs in sorted(mappings.items())
+    ]
+
+
 def wikipedia_unit_links() -> dict[str, set[str]]:
     rows = sparql(
         "SELECT DISTINCT ?s ?page WHERE { ?s a <http://ldf.fi/schema/warsa/MilitaryUnit> ; "
@@ -444,6 +470,7 @@ def main() -> None:
         overlap_rows,
     )
     screened_rows = []
+    joint_rows = []
     shared_endpoint_pairs: set[tuple[str, str]] = set()
     screened_qids = set(screened.values())
     for row in overlap_rows:
@@ -466,6 +493,20 @@ def main() -> None:
             ]
             if statements:
                 shared_endpoint_pairs.add((s, o))
+                joint_rows.append(
+                    {
+                        "war_subject_uri": source_ids[0][0],
+                        "war_subject_qid": s,
+                        "war_predicate": predicate,
+                        "war_object_uri": source_ids[0][1],
+                        "war_object_qid": o,
+                        "wd_subject_qid": wd_s,
+                        "wd_property": property_id,
+                        "wd_object_qid": wd_o,
+                        "direction": direction,
+                        "wd_statement_id": statements[0]["id"],
+                    }
+                )
                 qualifiers = {
                     key for statement in statements for key in statement["qualifiers"]
                 }
@@ -504,6 +545,9 @@ def main() -> None:
             }
         )
     write_csv("screened_overlap.csv", list(screened_rows[0]), screened_rows)
+    write_csv("joint_relation_pairs.csv", list(joint_rows[0]), joint_rows)
+    ranked_rows = rank_joint_rows(joint_rows)
+    write_csv("type_mapping_ranking.csv", list(ranked_rows[0]), ranked_rows)
     write_csv(
         "wikidata_predicates.csv",
         ["property", "outgoing_item_statements", "eligible_pair_count"],

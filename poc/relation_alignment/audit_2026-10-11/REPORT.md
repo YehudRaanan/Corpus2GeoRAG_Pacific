@@ -1,6 +1,6 @@
 # WarSampo ↔ Wikidata relation alignment: executed audit
 
-Data retrieved: 2026-10-10 22:29–22:39 UTC. Ranking rerun at 23:02 UTC from cached responses. This audits relation **types** on shared Finnish WWII objects. It does not import facts into the Pacific graph. EventKG was not needed for this two-source test.
+Data retrieved: 2026-10-10 22:29–22:39 UTC. Type mapping rerun at 23:18 UTC from cached responses. This audits relation **types** on shared Finnish WWII objects. It does not import facts into the Pacific graph. EventKG was not needed for this two-source test.
 
 ## Scope and method
 
@@ -12,7 +12,7 @@ The rejected links include WarSampo's individual boat [`actor_2245`](http://ldf.
 
 ## Mapping registry
 
-Counts are **shared QID endpoint pairs after the stated identity screen**, not validated facts. The full provisional counts and up to five source statement IDs per candidate are in `provisional_overlap.csv` and `screened_overlap.csv`. All seven observed predicate combinations are listed here. Three definition-based candidates with no shared endpoint pair follow them.
+Counts are **shared QID endpoint pairs after the stated identity screen**, not validated facts. The denominators in this table measure source coverage, not type mapping quality; the co-connected ranking is below. The full provisional counts and up to five source statement IDs per candidate are in `provisional_overlap.csv` and `screened_overlap.csv`. All seven observed predicate combinations are listed here. Three definition-based candidates with no shared endpoint pair follow them.
 
 | WarSampo predicate → Wikidata property | Shared pairs / eligible WarSampo pairs | Decision | Direction, meaning, and evidence |
 | --- | ---: | --- | --- |
@@ -29,20 +29,23 @@ Counts are **shared QID endpoint pairs after the stated identity screen**, not v
 
 For the seven observed combinations: **1 accepted, 1 related, 2 rejected, 3 unresolved**. The three extra definition-based candidates remain unresolved. The five checked `hasConflict` examples and all three `hasUpperUnit` pairs had compatible endpoint identities, but only `hasConflict` passed the predicate-definition review. None of the shared Wikidata statements had P580/P582/P585 time qualifiers; dates are attributes of claims or events, never a new relation type.
 
-## Wikidata-side ranking
+## Empirical type mapping on shared endpoint pairs
 
-Here the denominator is the number of that Wikidata property's item-to-item pairs **within the 250 screened or reviewed identities**, excluding deprecated statements. These percentages answer a different question from the WarSampo-side coverage in the registry. Rows are ordered by Wikidata-side percentage; equal percentages with few pairs are not strong evidence.
+The denominator here includes only QID endpoint pairs on which **both graphs have a relation**. An absent statement in one graph does not count against a predicate mapping. The [full pair-level evidence](joint_relation_pairs.csv) has 128 predicate combinations on 122 distinct endpoint pairs; the [machine-readable ranking](type_mapping_ranking.csv) contains both source-side percentages. Multiple properties on the same endpoint pair are separate candidates, not independent identity checks.
 
-| Wikidata property | Possible WarSampo predicate(s), ranked within property | Shared / Wikidata pairs |
-| --- | --- | ---: |
-| `P527` | `hasUpperUnit`, reverse direction | **3 / 3 = 100%** |
-| `P2348` | `P10_falls_within`, same direction | **2 / 2 = 100%** |
-| `P607` | `hasConflict`, same direction | **115 / 198 = 58.1%** |
-| `P155` | `owl:differentFrom`, same direction; **false semantic match** | **1 / 4 = 25%** |
-| `P156` | `owl:differentFrom`, reverse direction; **false semantic match** | **1 / 4 = 25%** |
-| `P361` | `hasUpperUnit`, same direction; `P10_falls_within`, same direction | **3 / 25 = 12% each** |
+| Wikidata property | WarSampo candidate and direction | Shared pairs / Wikidata pairs with a WarSampo relation | Assessment |
+| --- | --- | ---: | --- |
+| `P607` | `hasConflict`, same | **115 / 115 = 100%** | Strongest repeated mapping, within military-unit → conflict scope. |
+| `P361` | `hasUpperUnit`, same | **3 / 6 = 50%** | Unit hierarchy candidate; small sample. |
+| `P361` | `P10_falls_within`, same | **3 / 6 = 50%** | War/period candidate; different scope from unit hierarchy. |
+| `P527` | `hasUpperUnit`, reverse | **3 / 3 = 100%** | Same three unit pairs as its `P361` candidate, not three additional pairs. |
+| `P2348` | `P10_falls_within`, same | **2 / 2 = 100%** | Two war/period pairs; too few to settle a general rule. |
+| `P155` | `owl:differentFrom`, same | **1 / 1 = 100%** | Accidental overlap: non-identity does not mean succession. Reject. |
+| `P156` | `owl:differentFrom`, reverse | **1 / 1 = 100%** | Same accidental pair in reverse. Reject. |
 
-WarSampo predicates with more than one Wikidata candidate: `hasUpperUnit` → `P527` (3/3) and `P361` (3/25); `P10_falls_within` → `P2348` (2/2) and `P361` (3/25); `owl:differentFrom` → `P155` and `P156` (1/4 each, both rejected). The 117-property Wikidata inventory contains **111 more properties with no observed WarSampo predicate overlap in this screened scope**. The 100% results have only two or three shared pairs; `hasConflict` ↔ `P607` has the strongest repeated-pair support.
+In the WarSampo-to-Wikidata view, `hasConflict` has `P607` on **115/115** co-connected pairs. `hasUpperUnit` has both `P361` and reverse `P527` on the **same 3/3** pairs. `P10_falls_within` has `P361` on **3/3** and `P2348` on **2/3** pairs. `owl:differentFrom` has `P155` and reverse `P156` on its single co-connected pair; both are false type mappings. This is a **one-to-many candidate map** where scope or multiple Wikidata assertions require it. The seven observed combinations are the full output for the current screened crosswalk; the other 111 inventoried Wikidata properties had no co-connected WarSampo pair here.
+
+These percentages describe the **observed shared pairs**, not mapping accuracy on all source facts. For example, the earlier `P607` count of 115/198 measures source coverage within the screened QIDs; its 83 Wikidata-only pairs do not contradict the `P607` ↔ `hasConflict` type mapping. The 115 `P607` pairs involve 108 Wikidata subjects but only two conflict objects, so the evidence is concentrated in those wars. A 100% value from one or two pairs has little support. The identity screen is provisional, so even the 115-pair mapping remains scoped to this audit.
 
 ## Success check and limits
 
@@ -52,4 +55,4 @@ This is an executed **bounded overlap audit**, not a claim of complete two-sourc
 
 ## Reproduction and evidence files
 
-Run `python poc/relation_alignment/run_two_source_audit.py`. The output directory contains `manifest.json`, all 145 WarSampo IRI predicates in `warsampo_predicates.csv`, all 576 identity candidates with screening reasons and Wikidata revisions in `identity_candidates.csv`, all 117 Wikidata item-valued predicates in `wikidata_predicates.csv`, and both provisional and screened overlap tables with source URIs, QIDs, statement IDs, ranks, qualifier IDs, and reference counts. Re-running the script uses its temporary HTTP cache; remove that cache or change the output date for a fresh source retrieval.
+Run `python poc/relation_alignment/run_two_source_audit.py`. The output directory contains `manifest.json`, all 145 WarSampo IRI predicates in `warsampo_predicates.csv`, all 576 identity candidates with screening reasons and Wikidata revisions in `identity_candidates.csv`, all 117 Wikidata item-valued predicates in `wikidata_predicates.csv`, both provisional and screened overlap tables, `joint_relation_pairs.csv` with source IDs for all observed shared pairs, and `type_mapping_ranking.csv` with co-connected denominators. Re-running the script uses its temporary HTTP cache; remove that cache or change the output date for a fresh source retrieval.
