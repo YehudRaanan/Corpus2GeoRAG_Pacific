@@ -1,0 +1,264 @@
+{
+  "eventkg_role": "hasPlace",
+  "eventkg_graph": "event_kg",
+  "scope": "non_wikidata_source_pairs",
+  "all_fused_pairs": 462,
+  "wikidata_only_source_pairs_total": 145,
+  "wikidata_only_pairs_with_selected_code": 138,
+  "wikidata_only_source_pairs_excluded": 145,
+  "non_wikidata_graph_rule": "has yago or dbpedia_en hasPlace graph",
+  "pairs": 317,
+  "objects": 74,
+  "observed_signatures": {
+    "unrecorded": 216,
+    "P276": 43,
+    "P17": 16,
+    "P710": 33,
+    "P17|P276": 2,
+    "P17|P710": 5,
+    "P17|P276|P710": 1,
+    "P276|P710": 1
+  },
+  "largest_object": [
+    "Q7318",
+    56
+  ],
+  "historical_country_pairs": 217,
+  "context_features": 31,
+  "feature_support_floor": 10,
+  "cluster_observed_signatures": {
+    "0": {
+      "unrecorded": 17,
+      "P17|P710": 2,
+      "P710": 5,
+      "P17|P276|P710": 1,
+      "P17": 5,
+      "P17|P276": 1
+    },
+    "1": {
+      "unrecorded": 156,
+      "P276": 39,
+      "P17": 10,
+      "P710": 20,
+      "P17|P276": 1,
+      "P17|P710": 3,
+      "P276|P710": 1
+    },
+    "2": {
+      "unrecorded": 43,
+      "P710": 8,
+      "P17": 1,
+      "P276": 4
+    }
+  },
+  "tree": "|--- object_type_Q3024240 <= 0.50\n|   |--- source_dbpedia_en <= 0.50\n|   |   |--- class: P276\n|   |--- source_dbpedia_en >  0.50\n|   |   |--- class: P276\n|--- object_type_Q3024240 >  0.50\n|   |--- source_dbpedia_en <= 0.50\n|   |   |--- class: P710\n|   |--- source_dbpedia_en >  0.50\n|   |   |--- class: P276\n",
+  "tree_leaf_observed_signatures": {
+    "2": {
+      "unrecorded": 34,
+      "P276": 12,
+      "P710": 1
+    },
+    "3": {
+      "unrecorded": 29,
+      "P276": 21,
+      "P276|P710": 1,
+      "P17": 2
+    },
+    "5": {
+      "unrecorded": 113,
+      "P17": 9,
+      "P710": 26,
+      "P17|P276": 2,
+      "P17|P710": 4,
+      "P17|P276|P710": 1,
+      "P276": 3
+    },
+    "6": {
+      "unrecorded": 40,
+      "P710": 6,
+      "P276": 7,
+      "P17|P710": 1,
+      "P17": 5
+    }
+  },
+  "labeled_pairs": 101,
+  "labeled_objects": 41,
+  "grouped_cv_all_features": {
+    "folds": [
+      {
+        "fold": 1,
+        "train_pairs": 78,
+        "test_pairs": 23,
+        "test_objects": 1,
+        "baseline_exact_match": 0.0,
+        "tree_exact_match": 0.0
+      },
+      {
+        "fold": 2,
+        "train_pairs": 81,
+        "test_pairs": 20,
+        "test_objects": 7,
+        "baseline_exact_match": 0.3,
+        "tree_exact_match": 0.45
+      },
+      {
+        "fold": 3,
+        "train_pairs": 81,
+        "test_pairs": 20,
+        "test_objects": 8,
+        "baseline_exact_match": 0.5,
+        "tree_exact_match": 0.65
+      },
+      {
+        "fold": 4,
+        "train_pairs": 82,
+        "test_pairs": 19,
+        "test_objects": 12,
+        "baseline_exact_match": 0.632,
+        "tree_exact_match": 0.632
+      },
+      {
+        "fold": 5,
+        "train_pairs": 82,
+        "test_pairs": 19,
+        "test_objects": 13,
+        "baseline_exact_match": 0.053,
+        "tree_exact_match": 0.737
+      }
+    ],
+    "baseline_exact_match": 0.287,
+    "tree_exact_match": 0.475,
+    "observed_signatures": {
+      "P17": 16,
+      "P710": 33,
+      "P17|P710": 5,
+      "P276": 43,
+      "P17|P276|P710": 1,
+      "P17|P276": 2,
+      "P276|P710": 1
+    },
+    "predicted_signatures": {
+      "P276": 69,
+      "P710": 32
+    }
+  },
+  "grouped_cv_types_only": {
+    "folds": [
+      {
+        "fold": 1,
+        "train_pairs": 78,
+        "test_pairs": 23,
+        "test_objects": 1,
+        "baseline_exact_match": 0.0,
+        "tree_exact_match": 0.0
+      },
+      {
+        "fold": 2,
+        "train_pairs": 81,
+        "test_pairs": 20,
+        "test_objects": 7,
+        "baseline_exact_match": 0.3,
+        "tree_exact_match": 0.5
+      },
+      {
+        "fold": 3,
+        "train_pairs": 81,
+        "test_pairs": 20,
+        "test_objects": 8,
+        "baseline_exact_match": 0.5,
+        "tree_exact_match": 0.65
+      },
+      {
+        "fold": 4,
+        "train_pairs": 82,
+        "test_pairs": 19,
+        "test_objects": 12,
+        "baseline_exact_match": 0.632,
+        "tree_exact_match": 0.684
+      },
+      {
+        "fold": 5,
+        "train_pairs": 82,
+        "test_pairs": 19,
+        "test_objects": 13,
+        "baseline_exact_match": 0.053,
+        "tree_exact_match": 0.737
+      }
+    ],
+    "baseline_exact_match": 0.287,
+    "tree_exact_match": 0.495,
+    "observed_signatures": {
+      "P17": 16,
+      "P710": 33,
+      "P17|P710": 5,
+      "P276": 43,
+      "P17|P276|P710": 1,
+      "P17|P276": 2,
+      "P276|P710": 1
+    },
+    "predicted_signatures": {
+      "P276": 60,
+      "P710": 41
+    }
+  },
+  "grouped_cv_sources_only": {
+    "folds": [
+      {
+        "fold": 1,
+        "train_pairs": 78,
+        "test_pairs": 23,
+        "test_objects": 1,
+        "baseline_exact_match": 0.0,
+        "tree_exact_match": 0.0
+      },
+      {
+        "fold": 2,
+        "train_pairs": 81,
+        "test_pairs": 20,
+        "test_objects": 7,
+        "baseline_exact_match": 0.3,
+        "tree_exact_match": 0.35
+      },
+      {
+        "fold": 3,
+        "train_pairs": 81,
+        "test_pairs": 20,
+        "test_objects": 8,
+        "baseline_exact_match": 0.5,
+        "tree_exact_match": 0.6
+      },
+      {
+        "fold": 4,
+        "train_pairs": 82,
+        "test_pairs": 19,
+        "test_objects": 12,
+        "baseline_exact_match": 0.632,
+        "tree_exact_match": 0.316
+      },
+      {
+        "fold": 5,
+        "train_pairs": 82,
+        "test_pairs": 19,
+        "test_objects": 13,
+        "baseline_exact_match": 0.053,
+        "tree_exact_match": 0.526
+      }
+    ],
+    "baseline_exact_match": 0.287,
+    "tree_exact_match": 0.347,
+    "observed_signatures": {
+      "P17": 16,
+      "P710": 33,
+      "P17|P710": 5,
+      "P276": 43,
+      "P17|P276|P710": 1,
+      "P17|P276": 2,
+      "P276|P710": 1
+    },
+    "predicted_signatures": {
+      "P276": 51,
+      "P710": 38,
+      "P17": 12
+    }
+  }
+}

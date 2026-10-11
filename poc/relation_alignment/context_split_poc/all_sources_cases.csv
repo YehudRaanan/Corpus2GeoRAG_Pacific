@@ -1,0 +1,463 @@
+event_qid,event_label,object_qid,object_label,eventkg_ids,eventkg_graphs,subject_p31,object_p31,wikidata_observed,cluster,tree_leaf,cv_predicted_signature
+Q101113024,1944 Grafenberg Wald Avro Lancaster shootdown,Q7318,Nazi Germany,event_1945854,event_kg|wikidata,Q3002150,Q11514315|Q3024240|Q317|Q3624078,P17,2,5,P17
+Q10130,Operation Harpoon,Q43056,Axis Powers,event_248904,event_kg|yago,Q1261499,Q1127126,unrecorded,0,3,
+Q1032395,Jewish skeleton collection,Q7318,Nazi Germany,event_2740603,event_kg|wikidata,Q173462|Q701673,Q11514315|Q3024240|Q317|Q3624078,P17,2,5,P17
+Q1047674,Novi Sad raid,Q986843,Hungarian occupation of Yugoslav territories,event_509531,event_kg|yago,Q177716,Q188686,unrecorded,0,3,
+Q1048684,Matsue Incident,Q188712,Empire of Japan,event_618273,event_kg|wikidata,Q25906438,Q3024240|Q48349,P17,0,5,P17
+Q1052651,Battle of Madagascar,Q188712,Empire of Japan,event_132055,event_kg|yago,Q178561,Q3024240|Q48349,unrecorded,0,6,
+Q105570,20 July plot,Q157153,Wolf's Lair,event_2617788,event_kg|wikidata|yago,Q1344887|Q25906438|Q81672|Q930164,Q47272186|Q811979,P276,0,3,P276
+Q1057207,Operation Fortitude,Q7318,Nazi Germany,event_161219,event_kg|yago,Q2832578,Q11514315|Q3024240|Q317|Q3624078,unrecorded,2,6,
+Q106103572,1942 Anti-Partisan Offensive in Montenegro,Q616992,Governorate of Montenegro,event_2766713,dbpedia_en|event_kg|yago,Q2001676,Q3024240,unrecorded,0,6,
+Q107751208,Battle of the Nijmegen Salient,Q706454,Netherlands in World War II,event_2715170,dbpedia_en|event_kg,Q178561,Q109473326|Q18340514|Q3024240,unrecorded,0,5,
+Q1091132,Operation Agreement,Q284568,Italian Libya,event_718416,dbpedia_en|event_kg,Q645883,Q133156,unrecorded,0,2,
+Q1099058,SAIMAN 202,Q172579,Kingdom of Italy,event_2749018,event_kg|wikidata,Q15056995,Q20181813|Q3024240|Q3624078,P17,0,5,P17
+Q11050010,Operation Rübezahl,Q16838852,German-occupied territory of Montenegro,event_1678630,dbpedia_en|event_kg,Q582956|Q645883,Q15642541,unrecorded,0,2,
+Q11154841,Operation Clay,Q152750,Protectorate of Bohemia and Moravia,event_589879,event_kg|wikidata,Q645883,Q164142|Q3024240,P17,0,5,P17
+Q11155940,Operation Silver A,Q152750,Protectorate of Bohemia and Moravia,event_618932,event_kg|wikidata,Q645883,Q164142|Q3024240,P17,0,5,P17
+Q1130522,Operation Mincemeat,Q7318,Nazi Germany,event_835507,event_kg|yago,Q2832578|Q645883,Q11514315|Q3024240|Q317|Q3624078,unrecorded,2,6,
+Q11378048,Bombing of Sendai during World War II,Q188712,Empire of Japan,event_2725625,event_kg|wikidata,Q4688003,Q3024240|Q48349,P17,0,5,P17
+Q11391098,Bombing of Yawata on June 1944,Q188712,Empire of Japan,event_818110,event_kg|wikidata|yago,Q4688003,Q3024240|Q48349,P17,0,6,P710
+Q1141380,Battle of Wake Island,Q188712,Empire of Japan,event_218560,event_kg|yago,Q178561,Q3024240|Q48349,P710,0,6,P710
+Q1141380,Battle of Wake Island,Q43296,Wake Island,event_218560,dbpedia_en|event_kg|wikidata|yago,Q178561,Q139595919|Q42523|Q462778|Q56061|Q783733,P276,0,3,P276
+Q11419970,Bombing of Yokkaichi,Q188712,Empire of Japan,event_2731289,event_kg|wikidata,Q4688003,Q3024240|Q48349,P17,0,5,P17
+Q11423432,Bombing of Akita in World War II,Q188712,Empire of Japan,event_2731486,event_kg|wikidata,Q4688003,Q3024240|Q48349,P17,0,5,P17
+Q11437534,Bombing of Ōminato,Q188712,Empire of Japan,event_2732492,event_kg|wikidata,Q2380335,Q3024240|Q48349,P17,0,5,P17
+Q11437534,Bombing of Ōminato,Q2407436,Ōminato Guard District,event_2732492,event_kg|wikidata,Q2380335,Q6981985,P276,0,2,P276
+Q11471867,Bombing of Gifu,Q188712,Empire of Japan,event_2736028,event_kg|wikidata,Q4688003,Q3024240|Q48349,P17,0,5,P17
+Q11472974,Bombing of Okazaki in World War II,Q188712,Empire of Japan,event_2736177,event_kg|wikidata,Q4688003,Q3024240|Q48349,P17,0,5,P17
+Q1154689,Battle of the Mareth Line,Q702360,Mareth Line,event_965193,event_kg|wikidata,Q178561|Q645883,Q2973801,P276,0,2,P276
+Q11568827,Bombing of Kumagaya in World War II,Q188712,Empire of Japan,event_2746915,event_kg|wikidata,Q4688003,Q3024240|Q48349,P17,0,5,P17
+Q1158759,Operation Ladbroke,Q172579,Kingdom of Italy,event_298199,event_kg|yago,Q645883,Q20181813|Q3024240|Q3624078,unrecorded,0,6,
+Q11591717,Bombing of Fukui,Q188712,Empire of Japan,event_2749647,event_kg|wikidata,Q4688003,Q3024240|Q48349,P17,0,5,P17
+Q11636595,Battle of Boulogne,Q70802,French Third Republic,event_352705,dbpedia_en|event_kg,Q178561|Q188055,Q17152708|Q3024240|Q3624078,unrecorded,0,5,
+Q11652138,Bombing of Nagaoka in World War II,Q188712,Empire of Japan,event_1015699,event_kg|wikidata,Q4688003,Q3024240|Q48349,P17,0,5,P17
+Q11662049,Bombing of Aomori in World War II,Q188712,Empire of Japan,event_1017313,event_kg|wikidata,Q4688003,Q3024240|Q48349,P17,0,5,P17
+Q117571,Porajmos,Q7318,Nazi Germany,event_840759,event_kg|wikidata,Q41397|Q750215,Q11514315|Q3024240|Q317|Q3624078,P17|P276,2,5,P17
+Q12029011,"Kaunas massacre of October 29, 1941",Q665266,Ninth Fort,event_274290,event_kg|wikidata,Q3199915,Q328468|Q5003624,P276,0,2,P276
+Q122100,Continuation War,Q172579,Kingdom of Italy,event_834917,event_kg|yago,Q198,Q20181813|Q3024240|Q3624078,unrecorded,0,6,
+Q122100,Continuation War,Q1763,Murmansk,event_834917,dbpedia_en|event_kg|yago,Q198,Q1549591|Q2264924|Q5123997|Q7930989|Q97660032,unrecorded,0,3,
+Q1241187,Donbass Strategic Offensive,Q15180,Soviet Union,event_786145,dbpedia_en|event_kg,Q178561,Q113393649|Q1323642|Q1335818|Q160016|Q17007978|Q3024240|Q3624078|Q512187|Q6256|Q6688521|Q7275|Q842112|Q849866,unrecorded,1,5,
+Q1242698,Operation Frantic,Q44700,European Theater of World War II,event_614691,event_kg|yago,Q645883,Q718893,unrecorded,0,3,
+Q1259926,Battle of Lijevče Field,Q153128,Independent State of Croatia,event_421454,dbpedia_en|event_kg|yago,Q178561,Q208164|Q3024240,unrecorded,0,6,
+Q12748958,Battle of Banja Koviljača,Q701914,Territory of the Military Commander in Serbia,event_254688,dbpedia_en|event_kg|yago,Q178561,Q2577883|Q3024240,unrecorded,0,6,
+Q12748962,attack on Kruševac,Q701914,Territory of the Military Commander in Serbia,event_1647720,dbpedia_en|event_kg,Q2001676,Q2577883|Q3024240,unrecorded,0,5,
+Q12748965,Attack on Šabac,Q701914,Territory of the Military Commander in Serbia,event_1936211,dbpedia_en|event_kg,Q178561,Q2577883|Q3024240,unrecorded,0,5,
+Q12757672,Partisan Long March,Q153128,Independent State of Croatia,event_2634198,dbpedia_en|event_kg,Q13418847,Q208164|Q3024240,unrecorded,0,5,
+Q12760414,June 1941 uprising in eastern Herzegovina,Q153128,Independent State of Croatia,event_817856,dbpedia_en|event_kg|yago,Q124734,Q208164|Q3024240,unrecorded,0,6,
+Q12761193,Battle for Novi Pazar,Q701914,Territory of the Military Commander in Serbia,event_252001,dbpedia_en|event_kg,Q178561,Q2577883|Q3024240,unrecorded,0,5,
+Q1278544,World War II persecution of Serbs,Q153128,Independent State of Croatia,event_631251,event_kg|wikidata,Q851824,Q208164|Q3024240,P17|P276,0,5,P17
+Q1290410,Glina massacres,Q153128,Independent State of Croatia,event_954699,event_kg|wikidata|yago,Q3199915,Q208164|Q3024240,P17|P276,0,6,P710
+Q1294142,Foibe massacres,Q172579,Kingdom of Italy,event_2771091,event_kg|wikidata,Q135010|Q154278|Q3199915,Q20181813|Q3024240|Q3624078,P17,0,5,P17
+Q12958349,Kraljevo massacre,Q701914,Territory of the Military Commander in Serbia,event_715793,event_kg|yago,Q3199915,Q2577883|Q3024240,unrecorded,0,6,
+Q1324428,Baltic Operation,Q15180,Soviet Union,event_640276,dbpedia_en|event_kg,Q178561,Q113393649|Q1323642|Q1335818|Q160016|Q17007978|Q3024240|Q3624078|Q512187|Q6256|Q6688521|Q7275|Q842112|Q849866,unrecorded,1,5,
+Q13423520,Battle of the Oder–Neisse,Q7318,Nazi Germany,event_66483,dbpedia_en|event_kg|yago,Q178561,Q11514315|Q3024240|Q317|Q3624078,unrecorded,2,6,
+Q134301,Katyn massacre,Q42308,Kharkiv,event_64619,event_kg|wikidata|yago,Q135010|Q2235125|Q3199915|Q750215,Q12131624|Q12134916,P276,0,3,P276
+Q134949,Winter War,Q15180,Soviet Union,event_735887,event_kg|wikidata|yago,Q198,Q113393649|Q1323642|Q1335818|Q160016|Q17007978|Q3024240|Q3624078|Q512187|Q6256|Q6688521|Q7275|Q842112|Q849866,P17|P710,1,6,P710
+Q1378468,Yakovlev Yak-10,Q15180,Soviet Union,event_2784317,event_kg|wikidata,Q15056995,Q113393649|Q1323642|Q1335818|Q160016|Q17007978|Q3024240|Q3624078|Q512187|Q6256|Q6688521|Q7275|Q842112|Q849866,unrecorded,1,5,
+Q1402078,Warsaw Uprising,Q156111,General Government,event_191430,event_kg|yago,Q1323212,Q2577883|Q99541706,unrecorded,0,3,
+Q1410792,Second Battle of Amba Alagi,Q172579,Kingdom of Italy,event_628492,event_kg|yago,Q178561,Q20181813|Q3024240|Q3624078,unrecorded,0,6,
+Q14565619,Battle of Shumshu,Q188712,Empire of Japan,event_809302,event_kg|wikidata,Q178561,Q3024240|Q48349,P17,0,5,P17
+Q1475679,Battle of Tassafaronga,Q188712,Empire of Japan,event_398308,event_kg|yago,Q1261499,Q3024240|Q48349,P710,0,6,P710
+Q150812,1939 Invasion of Poland,Q15180,Soviet Union,event_2629978,event_kg|yago,Q467011|Q645883|Q831663,Q113393649|Q1323642|Q1335818|Q160016|Q17007978|Q3024240|Q3624078|Q512187|Q6256|Q6688521|Q7275|Q842112|Q849866,unrecorded,1,6,
+Q150812,1939 Invasion of Poland,Q154401,Slovak Republic,event_2629978,event_kg|yago,Q467011|Q645883|Q831663,Q1151405|Q3024240|Q317,unrecorded,0,6,
+Q150812,1939 Invasion of Poland,Q7318,Nazi Germany,event_2629978,event_kg|yago,Q467011|Q645883|Q831663,Q11514315|Q3024240|Q317|Q3624078,P710,2,6,P710
+Q151052,Operation Bagration,Q7318,Nazi Germany,event_39980,event_kg|yago,Q2001676,Q11514315|Q3024240|Q317|Q3624078,unrecorded,2,6,
+Q151340,Battle of France,Q70802,French Third Republic,event_498953,dbpedia_en|event_kg,Q178561,Q17152708|Q3024240|Q3624078,P710,0,5,P17
+Q15264163,Operation Hydra (1943),Q897509,Peenemünde Army Research Center,event_575936,dbpedia_en|event_kg|wikidata|yago,Q645883|Q678146,Q18691599|Q1933026|Q31855,P276,0,3,P276
+Q1527609,Koriukivka massacre,Q46315,Reichskommissariat Ukraine,event_121730,event_kg|wikidata,Q3199915|Q6983405,Q543813|Q56061,P276,0,2,P276
+Q15310269,Battle of Beda Fomm,Q1892829,Beda Fomm,event_2698445,dbpedia_en|event_kg,Q178561,Q2264924|Q515,unrecorded,0,2,
+Q153113,Afrika Korps,Q7318,Nazi Germany,event_2631344,event_kg|wikidata|yago,Q11743865|Q1384330,Q11514315|Q3024240|Q317|Q3624078,unrecorded,2,6,
+Q153325,Operation Harvest Festival,Q160135,Lublin-Majdanek concentration camp,event_964071,event_kg|wikidata,Q2763|Q645883,Q153813|Q2772772|Q328468|Q811165,P276,0,2,P276
+Q1538855,Battle of Angaur,Q188712,Empire of Japan,event_1103111,event_kg|yago,Q178561,Q3024240|Q48349,unrecorded,0,6,
+Q154182,Battle of Berlin,Q15180,Soviet Union,event_274641,event_kg|yago,Q178561,Q113393649|Q1323642|Q1335818|Q160016|Q17007978|Q3024240|Q3624078|Q512187|Q6256|Q6688521|Q7275|Q842112|Q849866,P710,1,6,P710
+Q154720,Battle of Britain,Q7318,Nazi Germany,event_49091,event_kg|yago,Q830494,Q11514315|Q3024240|Q317|Q3624078,P710,2,6,P710
+Q154860,Siege of Sevastopol,Q15180,Soviet Union,event_894077,dbpedia_en|event_kg,Q188055,Q113393649|Q1323642|Q1335818|Q160016|Q17007978|Q3024240|Q3624078|Q512187|Q6256|Q6688521|Q7275|Q842112|Q849866,P710,1,5,P17
+Q155103,Siege of Budapest,Q15180,Soviet Union,event_442488,event_kg|yago,Q178561|Q188055,Q113393649|Q1323642|Q1335818|Q160016|Q17007978|Q3024240|Q3624078|Q512187|Q6256|Q6688521|Q7275|Q842112|Q849866,unrecorded,1,6,
+Q1551794,Japanese invasion of Manchuria,Q188712,Empire of Japan,event_656916,event_kg|yago,Q467011,Q3024240|Q48349,P710,0,6,P710
+Q155620,Second Battle of Kharkov,Q42308,Kharkiv,event_600203,event_kg|wikidata|yago,Q178561,Q12131624|Q12134916,P276,0,3,P276
+Q155995,Operation Spring Awakening,Q15180,Soviet Union,event_235501,event_kg|yago,Q645883,Q113393649|Q1323642|Q1335818|Q160016|Q17007978|Q3024240|Q3624078|Q512187|Q6256|Q6688521|Q7275|Q842112|Q849866,unrecorded,1,6,
+Q155995,Operation Spring Awakening,Q600018,Kingdom of Hungary,event_235501,dbpedia_en|event_kg,Q645883,Q1151405|Q2577883|Q3024240,unrecorded,0,5,
+Q155995,Operation Spring Awakening,Q7318,Nazi Germany,event_235501,event_kg|yago,Q645883,Q11514315|Q3024240|Q317|Q3624078,unrecorded,2,6,
+Q1563435,Battle of Loznica,Q701914,Territory of the Military Commander in Serbia,event_130501,dbpedia_en|event_kg|yago,Q178561,Q2577883|Q3024240,unrecorded,0,6,
+Q1566835,Uprising in Montenegro,Q616992,Governorate of Montenegro,event_665166,dbpedia_en|event_kg|wikidata|yago,Q124734,Q3024240,P276,0,6,P710
+Q1567696,Operation Mihailovic,Q701914,Territory of the Military Commander in Serbia,event_281470,dbpedia_en|event_kg|wikidata|yago,Q645883,Q2577883|Q3024240,P276,0,6,P710
+Q1573520,Operation Teardrop,Q7318,Nazi Germany,event_920485,event_kg|yago,Q178561,Q11514315|Q3024240|Q317|Q3624078,unrecorded,2,6,
+Q157627,Battle of the Atlantic,Q172579,Kingdom of Italy,event_2632388,event_kg|yago,Q1261499|Q831663,Q20181813|Q3024240|Q3624078,unrecorded,0,6,
+Q157627,Battle of the Atlantic,Q43056,Axis Powers,event_2632388,event_kg|yago,Q1261499|Q831663,Q1127126,unrecorded,0,3,
+Q157627,Battle of the Atlantic,Q7318,Nazi Germany,event_2632388,event_kg|yago,Q1261499|Q831663,Q11514315|Q3024240|Q317|Q3624078,P710,2,6,P710
+Q157627,Battle of the Atlantic,Q8680,British Empire,event_2632388,event_kg|yago,Q1261499|Q831663,Q1790360,unrecorded,0,3,
+Q157873,Third Battle of Kharkov,Q42308,Kharkiv,event_630660,dbpedia_en|event_kg|wikidata|yago,Q178561,Q12131624|Q12134916,P276,0,3,P276
+Q158044,Operation Reinhard,Q156111,General Government,event_900048,event_kg|yago,Q154278|Q2763,Q2577883|Q99541706,unrecorded,0,3,
+Q158287,Case Blue,Q153128,Independent State of Croatia,event_611002,event_kg|yago,Q2001676,Q208164|Q3024240,unrecorded,0,6,
+Q15894754,Battle of Centuripe,Q172579,Kingdom of Italy,event_562566,event_kg|yago,Q178561,Q20181813|Q3024240|Q3624078,unrecorded,0,6,
+Q160161,Warsaw Ghetto Uprising,Q116080,Polish Underground State,event_322211,event_kg|yago,Q1323212,Q3024240|Q43229,unrecorded,0,6,
+Q160161,Warsaw Ghetto Uprising,Q156111,General Government,event_322211,dbpedia_en|event_kg|yago,Q1323212,Q2577883|Q99541706,unrecorded,0,3,
+Q160167,Der Stürmer,Q7318,Nazi Germany,event_2632703,event_kg|wikidata,Q106677807|Q11032|Q5681203,Q11514315|Q3024240|Q317|Q3624078,P17,2,5,P17
+Q161227,Yalta Conference,Q15180,Soviet Union,event_2632855,event_kg|wikidata|yago,Q1072326,Q113393649|Q1323642|Q1335818|Q160016|Q17007978|Q3024240|Q3624078|Q512187|Q6256|Q6688521|Q7275|Q842112|Q849866,P17|P710,1,6,P710
+Q16208443,Operation Caravan,Q284568,Italian Libya,event_900705,dbpedia_en|event_kg|yago,Q645883,Q133156,unrecorded,0,3,
+Q162250,First Battle of El Alamein,Q172579,Kingdom of Italy,event_123840,event_kg|yago,Q178561,Q20181813|Q3024240|Q3624078,unrecorded,0,6,
+Q162250,First Battle of El Alamein,Q7318,Nazi Germany,event_123840,event_kg|yago,Q178561,Q11514315|Q3024240|Q317|Q3624078,unrecorded,2,6,
+Q162333,Italian Campaign,Q172579,Kingdom of Italy,event_2632913,dbpedia_en|event_kg,Q831663,Q20181813|Q3024240|Q3624078,unrecorded,0,5,
+Q162362,World War II in the Balkans,Q1448131,Italian protectorate of Albania,event_2632915,dbpedia_en|event_kg,Q831663,Q164142|Q3024240,unrecorded,0,5,
+Q163605,1st Ski Division,Q7318,Nazi Germany,event_2632973,event_kg|wikidata|yago,Q62671332,Q11514315|Q3024240|Q317|Q3624078,P17,2,6,P710
+Q163780,Slovak National Uprising,Q154401,Slovak Republic,event_106138,dbpedia_en|event_kg|wikidata|yago,Q124734,Q1151405|Q3024240|Q317,P276,0,6,P710
+Q163780,Slovak National Uprising,Q7318,Nazi Germany,event_106138,event_kg|yago,Q124734,Q11514315|Q3024240|Q317|Q3624078,unrecorded,2,6,
+Q16846678,Imber friendly fire incident,Q3303474,Imber,event_770791,event_kg|wikidata|yago,Q1303061,Q1115575|Q120170641|Q532,P276,0,3,P276
+Q169436,Battle of Rostov,Q154401,Slovak Republic,event_426923,event_kg|yago,Q178561,Q1151405|Q3024240|Q317,unrecorded,0,6,
+Q170314,Second Sino-Japanese War,Q188712,Empire of Japan,event_96077,event_kg|yago,Q198,Q3024240|Q48349,P710,0,6,P710
+Q170314,Second Sino-Japanese War,Q697837,Mengjiang,event_96077,event_kg|yago,Q198,Q208164|Q3024240,unrecorded,0,6,
+Q170360,Armistice of 22 June 1940,Q70802,French Third Republic,event_2633516,event_kg|yago,Q107706|Q131569,Q17152708|Q3024240|Q3624078,unrecorded,0,6,
+Q17152091,Operation Hurry,Q172579,Kingdom of Italy,event_203686,dbpedia_en|event_kg|yago,Q5136361|Q645883,Q20181813|Q3024240|Q3624078,unrecorded,0,6,
+Q173034,Battle of Midway,Q188712,Empire of Japan,event_703361,event_kg|yago,Q1261499,Q3024240|Q48349,P710,0,6,P710
+Q1748121,Operation Star,Q15180,Soviet Union,event_699779,event_kg|yago,Q645883,Q113393649|Q1323642|Q1335818|Q160016|Q17007978|Q3024240|Q3624078|Q512187|Q6256|Q6688521|Q7275|Q842112|Q849866,unrecorded,1,6,
+Q1754443,Battle of Edson's Ridge,Q188712,Empire of Japan,event_232008,event_kg|yago,Q178561,Q3024240|Q48349,unrecorded,0,6,
+Q1766984,Operation Crossbow,Q706454,Netherlands in World War II,event_2833123,event_kg|yago,Q645883,Q109473326|Q18340514|Q3024240,unrecorded,0,6,
+Q1766984,Operation Crossbow,Q7318,Nazi Germany,event_2833123,dbpedia_en|event_kg|wikidata|yago,Q645883,Q11514315|Q3024240|Q317|Q3624078,P276,2,6,P710
+Q176915,Battle of Tinian,Q188712,Empire of Japan,event_122763,event_kg|yago,Q178561,Q3024240|Q48349,unrecorded,0,6,
+Q1789376,Battle of Kwajalein,Q188712,Empire of Japan,event_661316,event_kg|yago,Q178561,Q3024240|Q48349,unrecorded,0,6,
+Q17985130,1943 Saint-Donat RCAF Liberator III Crash,Q745257,Gander,event_866468,event_kg|wikidata,Q3002150,Q44529188,unrecorded,0,2,
+Q180182,Battle of Iwo Jima,Q188712,Empire of Japan,event_379927,event_kg|wikidata|yago,Q178561,Q3024240|Q48349,P17|P710,0,6,P710
+Q18395258,Wolfpack West,Q7318,Nazi Germany,event_2817143,event_kg|yago,Q254266,Q11514315|Q3024240|Q317|Q3624078,unrecorded,2,6,
+Q184425,Pacific War,Q188712,Empire of Japan,event_176822,event_kg|yago,Q718893,Q3024240|Q48349,P710,0,6,P710
+Q184425,Pacific War,Q43056,Axis Powers,event_176822,event_kg|yago,Q718893,Q1127126,unrecorded,0,3,
+Q184425,Pacific War,Q696251,Occupation of Japan,event_176822,event_kg|yago,Q718893,Q1048835|Q188686|Q19953632|Q2577883,unrecorded,0,3,
+Q184425,Pacific War,Q715197,Azad Hind,event_176822,event_kg|yago,Q718893,Q59281,unrecorded,0,3,
+Q184425,Pacific War,Q7318,Nazi Germany,event_176822,event_kg|yago,Q718893,Q11514315|Q3024240|Q317|Q3624078,unrecorded,2,6,
+Q1861428,Battle of the Heligoland Bight,Q7318,Nazi Germany,event_857043,dbpedia_en|event_kg|yago,Q830494,Q11514315|Q3024240|Q317|Q3624078,P710,2,6,P710
+Q18639608,Wolfpack Eisteufel,Q7318,Nazi Germany,event_2850949,event_kg|yago,Q254266,Q11514315|Q3024240|Q317|Q3624078,unrecorded,2,6,
+Q1888550,Operation K,Q127091,Pearl Harbor,event_2855622,event_kg|yago,Q645883,Q187223|Q283202,unrecorded,0,3,
+Q188925,Battles of Khalkhin Gol,Q188712,Empire of Japan,event_10223,event_kg|yago,Q178561,Q3024240|Q48349,P710,0,6,P710
+Q189266,Eastern Front,Q15180,Soviet Union,event_498327,event_kg|wikidata|yago,Q198|Q842332,Q113393649|Q1323642|Q1335818|Q160016|Q17007978|Q3024240|Q3624078|Q512187|Q6256|Q6688521|Q7275|Q842112|Q849866,P17|P276|P710,1,6,P710
+Q189266,Eastern Front,Q7318,Nazi Germany,event_498327,dbpedia_en|event_kg,Q198|Q842332,Q11514315|Q3024240|Q317|Q3624078,P710,2,5,P17
+Q189930,Operation Market Garden,Q2401707,Dutch government-in-exile,event_304163,dbpedia_en|event_kg,Q645883,Q678116,unrecorded,0,2,
+Q1907376,Caiazzo massacre,Q172579,Kingdom of Italy,event_1211407,event_kg|wikidata,Q3199915,Q20181813|Q3024240|Q3624078,P17,0,5,P17
+Q190882,Phoney War,Q154504,Siegfried Line,event_279271,event_kg|wikidata|yago,Q11514315|Q350604,Q2973801,P276,0,3,P276
+Q190882,Phoney War,Q162746,Maginot Line,event_279271,event_kg|wikidata|yago,Q11514315|Q350604,Q2973801,P276,0,3,P276
+Q192660,Battle of Okinawa,Q188712,Empire of Japan,event_468713,dbpedia_en|event_kg|wikidata|yago,Q178561,Q3024240|Q48349,P17|P710,0,6,P710
+Q1927362,Operation Pedestal,Q7318,Nazi Germany,event_226182,event_kg|yago,Q113782315|Q131656428|Q178561,Q11514315|Q3024240|Q317|Q3624078,unrecorded,2,6,
+Q1935947,Battle of Eniwetok,Q188712,Empire of Japan,event_385492,event_kg|yago,Q178561,Q3024240|Q48349,P710,0,6,P710
+Q1935947,Battle of Eniwetok,Q649190,Enewetak Atoll,event_385492,dbpedia_en|event_kg|wikidata|yago,Q178561,Q139595919|Q42523|Q56061,P276,0,3,P276
+Q195232,The Death Match,Q15180,Soviet Union,event_463892,event_kg|wikidata,Q109623729,Q113393649|Q1323642|Q1335818|Q160016|Q17007978|Q3024240|Q3624078|Q512187|Q6256|Q6688521|Q7275|Q842112|Q849866,P17,1,5,P17
+Q195232,The Death Match,Q46315,Reichskommissariat Ukraine,event_463892,event_kg|yago,Q109623729,Q543813|Q56061,unrecorded,0,3,
+Q1953194,Raid on Souda Bay,Q2633779,Souda Bay,event_733122,dbpedia_en|event_kg|wikidata|yago,Q2001676,Q39594,P276,0,3,P276
+Q1980039,Union of Armed Struggle,Q7318,Nazi Germany,event_2868487,event_kg|wikidata,Q138796|Q1673189|Q17149090,Q11514315|Q3024240|Q317|Q3624078,P276,2,5,P17
+Q1984212,Defense of the Adzhimushkay quarry,Q15180,Soviet Union,event_790293,event_kg|yago,Q178561,Q113393649|Q1323642|Q1335818|Q160016|Q17007978|Q3024240|Q3624078|Q512187|Q6256|Q6688521|Q7275|Q842112|Q849866,P17,1,6,P710
+Q19871484,Wolfpack Brandenburg,Q7318,Nazi Germany,event_2737122,event_kg|yago,Q254266,Q11514315|Q3024240|Q317|Q3624078,unrecorded,2,6,
+Q1993476,death of Adolf Hitler,Q153491,Führerbunker,event_386729,event_kg|wikidata,Q10737|Q20127274,Q1686959|Q389959|Q91122,P276,0,2,P276
+Q19947679,Siege of Saïo,Q207521,Ethiopian Empire,event_984685,event_kg|wikidata,Q188055,Q3024240|Q48349|Q6256,P17,0,5,P17
+Q20036717,Wolfpack Breslau,Q7318,Nazi Germany,event_2757094,event_kg|yago,Q254266,Q11514315|Q3024240|Q317|Q3624078,unrecorded,2,6,
+Q2026138,Operation Hailstone,Q188712,Empire of Japan,event_799808,event_kg|yago,Q645883,Q3024240|Q48349,unrecorded,0,6,
+Q2065606,Przebraże Defence,Q116080,Polish Underground State,event_1261524,event_kg|yago,Q178561,Q3024240|Q43229,unrecorded,0,6,
+Q2070989,Operation Roundup,Q7318,Nazi Germany,event_448518,event_kg|yago,Q114350932,Q11514315|Q3024240|Q317|Q3624078,unrecorded,2,6,
+Q207165,Battle of the Coral Sea,Q188712,Empire of Japan,event_424195,event_kg|yago,Q1261499,Q3024240|Q48349,P710,0,6,P710
+Q208529,Battle of Dunkirk,Q70802,French Third Republic,event_908322,dbpedia_en|event_kg,Q178561,Q17152708|Q3024240|Q3624078,unrecorded,0,5,
+Q208529,Battle of Dunkirk,Q7318,Nazi Germany,event_908322,event_kg|yago,Q178561,Q11514315|Q3024240|Q317|Q3624078,unrecorded,2,6,
+Q20977783,Crash of Halifax V9977,Q7275272,RAF Defford,event_313780,event_kg|wikidata,Q744913,Q695850|Q7373622,unrecorded,0,2,
+Q21012148,Bombing of Utsunomiya during World War II,Q188712,Empire of Japan,event_2603093,event_kg|wikidata,Q4688003,Q3024240|Q48349,P17,0,5,P17
+Q21040697,German Military Mission in Romania,Q7318,Nazi Germany,event_2610607,event_kg|wikidata,Q645883,Q11514315|Q3024240|Q317|Q3624078,P17,2,5,P17
+Q2111093,Comet line,Q3557876,German occupation of Belgium during World War II,event_1635899,dbpedia_en|event_kg,Q138796|Q85759610,,unrecorded,0,2,
+Q2165376,Battle of Tarakan,Q188712,Empire of Japan,event_649691,event_kg|yago,Q178561,Q3024240|Q48349,unrecorded,0,6,
+Q21661391,Jewish refugees from Nazism,Q7318,Nazi Germany,event_2702758,event_kg|wikidata,Q12373086|Q131572|Q1430466|Q187668,Q11514315|Q3024240|Q317|Q3624078,P17,2,5,P17
+Q21665141,Iwaniec Uprising,Q116080,Polish Underground State,event_430836,event_kg|yago,Q124734,Q3024240|Q43229,unrecorded,0,6,
+Q217981,Allied invasion of Sicily,Q172579,Kingdom of Italy,event_2642844,dbpedia_en|event_kg|yago,Q831663,Q20181813|Q3024240|Q3624078,unrecorded,0,6,
+Q218678,North African campaign,Q284568,Italian Libya,event_2642922,dbpedia_en|event_kg|wikidata,Q831663,Q133156,P276|P710,0,2,P276
+Q220602,Soviet–Japanese War,Q30623,Manchukuo,event_830532,dbpedia_en|event_kg,Q645883,Q208164|Q3024240,P276,0,5,P17
+Q220602,Soviet–Japanese War,Q503585,Korea under Japanese rule,event_830532,dbpedia_en|event_kg,Q645883,Q1048835|Q133156|Q19953632,P276,0,2,P276
+Q220602,Soviet–Japanese War,Q697837,Mengjiang,event_830532,dbpedia_en|event_kg,Q645883,Q208164|Q3024240,unrecorded,0,5,
+Q22115602,Landing at Amchitka,Q460282,Amchitka,event_577793,dbpedia_en|event_kg|wikidata|yago,,Q23442,P276,0,3,P276
+Q2229399,Bombing of Nijmegen,Q47887,Nijmegen,event_542375,dbpedia_en|event_kg|wikidata|yago,Q678146,Q2039348,P276,0,3,P276
+Q2236679,Battle of the Sea of Azov,Q43056,Axis Powers,event_176021,event_kg|yago,Q178561,Q1127126,unrecorded,0,3,
+Q22796,destruction of Warsaw,Q156111,General Government,event_136539,event_kg|wikidata,Q17781833|Q3123011,Q2577883|Q99541706,P17,0,2,P276
+Q22947785,Battle of Mersa Matruh,Q5506046,Frontier Wire,event_897924,dbpedia_en|event_kg|yago,Q178561,Q245016,unrecorded,0,3,
+Q2295068,British Commonwealth Occupation Force,Q696251,Occupation of Japan,event_2638525,event_kg|wikidata,Q11430650,Q1048835|Q188686|Q19953632|Q2577883,P17,0,2,P276
+Q2305266,Soviet invasion of Poland,Q15180,Soviet Union,event_566040,event_kg|yago,Q467011,Q113393649|Q1323642|Q1335818|Q160016|Q17007978|Q3024240|Q3624078|Q512187|Q6256|Q6688521|Q7275|Q842112|Q849866,P710,1,6,P710
+Q2338734,Battle of Batina,Q986843,Hungarian occupation of Yugoslav territories,event_798606,dbpedia_en|event_kg,Q1081138|Q178561,Q188686,unrecorded,0,2,
+Q2354459,3rd Belorussian Front,Q15180,Soviet Union,event_2651183,event_kg|wikidata|yago,Q899192,Q113393649|Q1323642|Q1335818|Q160016|Q17007978|Q3024240|Q3624078|Q512187|Q6256|Q6688521|Q7275|Q842112|Q849866,P17,1,6,P710
+Q2354840,Battle of Ilomantsi,Q15180,Soviet Union,event_956333,event_kg|yago,Q178561,Q113393649|Q1323642|Q1335818|Q160016|Q17007978|Q3024240|Q3624078|Q512187|Q6256|Q6688521|Q7275|Q842112|Q849866,unrecorded,1,6,
+Q2426368,Battle of Bardia,Q284568,Italian Libya,event_334097,dbpedia_en|event_kg,Q178561,Q133156,unrecorded,0,2,
+Q2440134,Second Battle of the Java Sea,Q188712,Empire of Japan,event_537804,event_kg|yago,Q178561,Q3024240|Q48349,unrecorded,0,6,
+Q2444934,Operation Berlin,Q7318,Nazi Germany,event_358188,event_kg|yago,Q178561,Q11514315|Q3024240|Q317|Q3624078,unrecorded,2,6,
+Q249068,South Tyrol Option Agreement,Q172579,Kingdom of Italy,event_2650519,event_kg|wikidata,Q93288,Q20181813|Q3024240|Q3624078,P17,0,5,P17
+Q249068,South Tyrol Option Agreement,Q7318,Nazi Germany,event_2650519,event_kg|wikidata,Q93288,Q11514315|Q3024240|Q317|Q3624078,P17,2,5,P17
+Q250309,Battle of Tarawa,Q188712,Empire of Japan,event_575499,event_kg|yago,Q178561,Q3024240|Q48349,unrecorded,0,6,
+Q2525563,Marocchinate,Q172579,Kingdom of Italy,event_1091826,event_kg|wikidata,Q135010|Q19841484,Q20181813|Q3024240|Q3624078,P17,0,5,P17
+Q254599,Battle of Shanghai,Q188712,Empire of Japan,event_529370,event_kg|yago,Q11371169|Q178561,Q3024240|Q48349,unrecorded,0,6,
+Q2554609,Wehrkraftzersetzung,Q7318,Nazi Germany,event_2677714,event_kg|wikidata,Q1184244,Q11514315|Q3024240|Q317|Q3624078,P17,2,5,P17
+Q2566364,Second Battle of Târgu Frumos,Q7318,Nazi Germany,event_674706,event_kg|yago,Q178561,Q11514315|Q3024240|Q317|Q3624078,unrecorded,2,6,
+Q257026,Northwestern Front,Q15180,Soviet Union,event_2651167,event_kg|wikidata|yago,Q899192,Q113393649|Q1323642|Q1335818|Q160016|Q17007978|Q3024240|Q3624078|Q512187|Q6256|Q6688521|Q7275|Q842112|Q849866,P17|P276,1,6,P710
+Q2628423,Białystok Ghetto Uprising,Q702654,Białystok Ghetto,event_444070,dbpedia_en|event_kg|wikidata,Q6107280,Q2583015,P276,0,2,P276
+Q2663546,Battle of Vuosalmi,Q15180,Soviet Union,event_966968,event_kg|yago,Q178561,Q113393649|Q1323642|Q1335818|Q160016|Q17007978|Q3024240|Q3624078|Q512187|Q6256|Q6688521|Q7275|Q842112|Q849866,unrecorded,1,6,
+Q269207,Battle of Sedan,Q70802,French Third Republic,event_257396,dbpedia_en|event_kg,Q178561,Q17152708|Q3024240|Q3624078,unrecorded,0,5,
+Q2701353,Finnish reconquest of the Karelian Isthmus,Q15180,Soviet Union,event_98086,dbpedia_en|event_kg,Q1361229,Q113393649|Q1323642|Q1335818|Q160016|Q17007978|Q3024240|Q3624078|Q512187|Q6256|Q6688521|Q7275|Q842112|Q849866,unrecorded,1,5,
+Q2704274,Defence of the Reich,Q1320053,German-occupied Europe,event_841513,dbpedia_en|event_kg|wikidata,Q830494,Q2577883|Q618123,P276,0,2,P276
+Q2748708,German military administration in occupied France during World War II,Q7318,Nazi Germany,event_1683153,event_kg|wikidata,Q11514315|Q2889084,Q11514315|Q3024240|Q317|Q3624078,P17,2,5,P17
+Q2756240,Battle of Tienhaara,Q15180,Soviet Union,event_388369,event_kg|yago,Q178561,Q113393649|Q1323642|Q1335818|Q160016|Q17007978|Q3024240|Q3624078|Q512187|Q6256|Q6688521|Q7275|Q842112|Q849866,unrecorded,1,6,
+Q2756517,Finnish reconquest of Ladoga Karelia,Q15180,Soviet Union,event_1683380,dbpedia_en|event_kg,Q1361229,Q113393649|Q1323642|Q1335818|Q160016|Q17007978|Q3024240|Q3624078|Q512187|Q6256|Q6688521|Q7275|Q842112|Q849866,unrecorded,1,5,
+Q2756836,Operation Skorpion,Q1570971,Halfaya Pass,event_794296,dbpedia_en|event_kg,Q645883,Q133056,unrecorded,0,2,
+Q27628023,Attack on Clark Field,Q1095676,Clark Air Base,event_148292,event_kg|wikidata|yago,Q2380335,Q62447|Q695850,P276,0,3,P276
+Q2763,The Holocaust,Q1320053,German-occupied Europe,event_980259,event_kg|wikidata,Q13634374|Q173462|Q2245405|Q41397|Q459409|Q8461|Q857833,Q2577883|Q618123,P276,0,2,P276
+Q2763,The Holocaust,Q7318,Nazi Germany,event_980259,event_kg|wikidata|yago,Q13634374|Q173462|Q2245405|Q41397|Q459409|Q8461|Q857833,Q11514315|Q3024240|Q317|Q3624078,P276,2,6,P710
+Q27998934,Siege of Rogatica,Q153128,Independent State of Croatia,event_490372,dbpedia_en|event_kg|yago,Q188055,Q208164|Q3024240,unrecorded,0,6,
+Q2813858,bombing of Nagoya,Q188712,Empire of Japan,event_1158927,event_kg|wikidata,Q4688003,Q3024240|Q48349,P17,0,5,P17
+Q2814395,Bombing of Osaka,Q188712,Empire of Japan,event_1159008,event_kg|wikidata,Q4688003,Q3024240|Q48349,P17,0,5,P17
+Q282438,Battle of Halbe,Q7318,Nazi Germany,event_37102,dbpedia_en|event_kg|yago,Q178561,Q11514315|Q3024240|Q317|Q3624078,unrecorded,2,6,
+Q28404145,Rašića Gaj massacres,Q153128,Independent State of Croatia,event_1727958,event_kg|yago,Q3199915,Q208164|Q3024240,unrecorded,0,6,
+Q28408103,Bukovica massacre,Q616992,Governorate of Montenegro,event_1728173,dbpedia_en|event_kg|yago,Q3199915,Q3024240,unrecorded,0,6,
+Q286474,German AB-Aktion in Poland,Q156111,General Government,event_469777,event_kg|yago,Q645883,Q2577883|Q99541706,unrecorded,0,3,
+Q286474,German AB-Aktion in Poland,Q3117935,Palmiry,event_469777,event_kg|yago,Q645883,Q3558970,unrecorded,0,3,
+Q28703,Brécourt Manor Assault,Q7318,Nazi Germany,event_673997,event_kg|yago,Q12840408|Q178561,Q11514315|Q3024240|Q317|Q3624078,unrecorded,2,6,
+Q2898371,Hitler Oath,Q7318,Nazi Germany,event_2715652,event_kg|wikidata,Q381045,Q11514315|Q3024240|Q317|Q3624078,P17,2,5,P17
+Q29665,Einsatzgruppen Trial,Q128652,Palace of Justice,event_987087,event_kg|wikidata,Q1265353,Q1137809|Q1497364,P276,0,2,P276
+Q2985697,Kozara Offensive,Q7318,Nazi Germany,event_251046,event_kg|yago,Q2001676|Q582956,Q11514315|Q3024240|Q317|Q3624078,unrecorded,2,6,
+Q2998523,Operation Jupiter,Q7318,Nazi Germany,event_776042,event_kg|yago,Q645883,Q11514315|Q3024240|Q317|Q3624078,unrecorded,2,6,
+Q300879,Operation Downfall,Q188712,Empire of Japan,event_793585,event_kg|wikidata|yago,Q114350932|Q646740,Q3024240|Q48349,P17,0,6,P710
+Q30120149,Battle of Nijmegen,Q47887,Nijmegen,event_658299,dbpedia_en|event_kg|wikidata,Q178561,Q2039348,P276,0,2,P276
+Q3054185,Cowra breakout,Q55608508,Cowra Prisoner of War Camp Site,event_526059,event_kg|wikidata,Q2920604|Q598041,Q1070290,P276,0,2,P276
+Q3076812,Inspectorate General of Military Training,Q188712,Empire of Japan,event_2735622,event_kg|wikidata,Q2385804|Q2609280|Q66736173,Q3024240|Q48349,P17,0,5,P17
+Q311765,Jassy–Kishinev Offensive,Q15180,Soviet Union,event_62480,event_kg|wikidata,Q2001676,Q113393649|Q1323642|Q1335818|Q160016|Q17007978|Q3024240|Q3624078|Q512187|Q6256|Q6688521|Q7275|Q842112|Q849866,P17,1,5,P17
+Q3118964,Italian Civil War,Q172579,Kingdom of Italy,event_206851,dbpedia_en|event_kg|wikidata|yago,Q8465,Q20181813|Q3024240|Q3624078,P276,0,6,P710
+Q313442,Operation Silver Fox,Q15180,Soviet Union,event_868453,event_kg|yago,Q645883,Q113393649|Q1323642|Q1335818|Q160016|Q17007978|Q3024240|Q3624078|Q512187|Q6256|Q6688521|Q7275|Q842112|Q849866,unrecorded,1,6,
+Q316843,Battle of Bautzen,Q7318,Nazi Germany,event_537297,event_kg|yago,Q178561,Q11514315|Q3024240|Q317|Q3624078,unrecorded,2,6,
+Q317295,Big Week,Q7318,Nazi Germany,event_802266,dbpedia_en|event_kg|wikidata|yago,Q645883,Q11514315|Q3024240|Q317|Q3624078,P276,2,6,P710
+Q323772,Donbass Strategic Offensive (August 1943),Q15180,Soviet Union,event_217812,dbpedia_en|event_kg,Q2001676,Q113393649|Q1323642|Q1335818|Q160016|Q17007978|Q3024240|Q3624078|Q512187|Q6256|Q6688521|Q7275|Q842112|Q849866,P710,1,5,P17
+Q324977,Fort Driant,Q154504,Siegfried Line,event_911737,event_kg|yago,Q178561,Q2973801,unrecorded,0,3,
+Q327035,Battle of Gazala,Q284568,Italian Libya,event_642576,event_kg|yago,Q178561,Q133156,unrecorded,0,3,
+Q327085,Operation Crusader,Q284568,Italian Libya,event_934680,event_kg|yago,Q645883,Q133156,unrecorded,0,3,
+Q3270927,Battle of Ushant,Q7318,Nazi Germany,event_418034,event_kg|yago,Q1261499,Q11514315|Q3024240|Q317|Q3624078,P710,2,6,P710
+Q327099,Battle of Kasserine Passe,Q43056,Axis Powers,event_635337,event_kg|yago,Q178561,Q1127126,unrecorded,0,3,
+Q327401,German resistance to Nazism,Q7318,Nazi Germany,event_103775,event_kg|wikidata,Q138796|Q49773,Q11514315|Q3024240|Q317|Q3624078,P17,2,5,P17
+Q3274745,evacuation of Manchukuo,Q30623,Manchukuo,event_881372,event_kg|wikidata,Q606332,Q208164|Q3024240,P17,0,5,P17
+Q3293566,Battle of Cape Gloucester,Q188712,Empire of Japan,event_888507,event_kg|yago,Q178561,Q3024240|Q48349,unrecorded,0,6,
+Q3297473,Sant'Anna di Stazzema massacre,Q519954,Sant'Anna di Stazzema,event_462093,event_kg|wikidata|yago,Q135010|Q750215,Q1134686,P276,0,3,P276
+Q335288,Battle of Monte Cassino,Q172579,Kingdom of Italy,event_673305,dbpedia_en|event_kg,Q178561,Q20181813|Q3024240|Q3624078,unrecorded,0,5,
+Q3355265,Sonderabteilung Lola,Q7318,Nazi Germany,event_2767793,event_kg|wikidata,Q156744|Q90280577,Q11514315|Q3024240|Q317|Q3624078,P17,2,5,P17
+Q3391133,Operation Cockade,Q216184,Western Front,event_2771085,dbpedia_en|event_kg|wikidata,Q2832578,Q842332,P276,0,2,P276
+Q3395221,foreign relations of Nazi Germany,Q7318,Nazi Germany,event_2771330,event_kg|wikidata,Q610018,Q11514315|Q3024240|Q317|Q3624078,P17,2,5,P17
+Q3395224,relations between Nazi Germany and the Arab world,Q7318,Nazi Germany,event_2771332,event_kg|wikidata,Q103284341,Q11514315|Q3024240|Q317|Q3624078,P17,2,5,P17
+Q3403811,Battle of Bologna,Q7318,Nazi Germany,event_645333,event_kg|yago,Q178561,Q11514315|Q3024240|Q317|Q3624078,unrecorded,2,6,
+Q3424276,Nazi–Soviet economic relations,Q15180,Soviet Union,event_2775346,event_kg|wikidata,Q112228169,Q113393649|Q1323642|Q1335818|Q160016|Q17007978|Q3024240|Q3624078|Q512187|Q6256|Q6688521|Q7275|Q842112|Q849866,P17,1,5,P17
+Q3424276,Nazi–Soviet economic relations,Q7318,Nazi Germany,event_2775346,event_kg|wikidata,Q112228169,Q11514315|Q3024240|Q317|Q3624078,P17,2,5,P17
+Q3487920,Intelligenzaktion,Q7318,Nazi Germany,event_2789865,event_kg|wikidata,Q750215,Q11514315|Q3024240|Q317|Q3624078,P17,2,5,P17
+Q3489610,Out Distance,Q152750,Protectorate of Bohemia and Moravia,event_946525,event_kg|wikidata,Q645883,Q164142|Q3024240,P17,0,5,P17
+Q3501165,Battle of Odžak,Q153128,Independent State of Croatia,event_32599,dbpedia_en|event_kg|yago,Q178561,Q208164|Q3024240,unrecorded,0,6,
+Q3507323,Battle of Kupres,Q153128,Independent State of Croatia,event_69532,dbpedia_en|event_kg|yago,Q178561,Q208164|Q3024240,unrecorded,0,6,
+Q3557530,Italian Spring Offensive,Q1448131,Italian protectorate of Albania,event_210023,event_kg|wikidata,Q2001676,Q164142|Q3024240,P276,0,5,P17
+Q362,World War II,Q11223330,Indian Ocean in World War II,event_58557,dbpedia_en|event_kg,Q103495|Q11514315,,unrecorded,0,2,
+Q362,World War II,Q15180,Soviet Union,event_58557,event_kg|yago,Q103495|Q11514315,Q113393649|Q1323642|Q1335818|Q160016|Q17007978|Q3024240|Q3624078|Q512187|Q6256|Q6688521|Q7275|Q842112|Q849866,unrecorded,1,6,
+Q362,World War II,Q154401,Slovak Republic,event_58557,event_kg|yago,Q103495|Q11514315,Q1151405|Q3024240|Q317,unrecorded,0,6,
+Q362,World War II,Q172579,Kingdom of Italy,event_58557,event_kg|yago,Q103495|Q11514315,Q20181813|Q3024240|Q3624078,unrecorded,0,6,
+Q362,World War II,Q188712,Empire of Japan,event_58557,event_kg|yago,Q103495|Q11514315,Q3024240|Q48349,unrecorded,0,6,
+Q362,World War II,Q2632857,American Theater,event_58557,dbpedia_en|event_kg,Q103495|Q11514315,Q718893,unrecorded,0,2,
+Q362,World War II,Q43056,Axis Powers,event_58557,event_kg|yago,Q103495|Q11514315,Q1127126,P710,0,3,P276
+Q362,World War II,Q44700,European Theater of World War II,event_58557,dbpedia_en|event_kg|yago,Q103495|Q11514315,Q718893,unrecorded,0,3,
+Q362,World War II,Q616992,Governorate of Montenegro,event_58557,event_kg|yago,Q103495|Q11514315,Q3024240,unrecorded,0,6,
+Q362,World War II,Q696817,Mediterranean and Middle East Theater of World War II,event_58557,dbpedia_en|event_kg,Q103495|Q11514315,Q718893,unrecorded,0,2,
+Q362,World War II,Q697837,Mengjiang,event_58557,event_kg|yago,Q103495|Q11514315,Q208164|Q3024240,unrecorded,0,6,
+Q362,World War II,Q7318,Nazi Germany,event_58557,event_kg|yago,Q103495|Q11514315,Q11514315|Q3024240|Q317|Q3624078,P710,2,6,P710
+Q362,World War II,Q8680,British Empire,event_58557,event_kg|yago,Q103495|Q11514315,Q1790360,unrecorded,0,3,
+Q3636346,First Battle of Bir el Gubi,Q284568,Italian Libya,event_607148,dbpedia_en|event_kg,Q178561,Q133156,unrecorded,0,2,
+Q3636347,Second Battle of Bir el Gubi,Q284568,Italian Libya,event_274002,dbpedia_en|event_kg,Q178561,Q133156,unrecorded,0,2,
+Q3636616,Operation Fustian,Q172579,Kingdom of Italy,event_234424,event_kg|yago,Q178561,Q20181813|Q3024240|Q3624078,unrecorded,0,6,
+Q3636632,Battle of Tarnova,Q172579,Kingdom of Italy,event_331885,event_kg|yago,Q178561,Q20181813|Q3024240|Q3624078,P17|P710,0,6,P710
+Q3641947,Bombing of Foggia,Q172579,Kingdom of Italy,event_1946901,event_kg|yago,Q678146,Q20181813|Q3024240|Q3624078,unrecorded,0,6,
+Q36756,Kristallnacht,Q7318,Nazi Germany,event_988921,event_kg|wikidata|yago,Q177716,Q11514315|Q3024240|Q317|Q3624078,P276,2,6,P710
+Q372958,Battle of Medenine,Q43056,Axis Powers,event_352465,event_kg|yago,Q645883,Q1127126,unrecorded,0,3,
+Q3828009,Soviet deportations from Bessarabia and Northern Bukovina,Q15180,Soviet Union,event_505760,event_kg|wikidata,Q379693|Q837556,Q113393649|Q1323642|Q1335818|Q160016|Q17007978|Q3024240|Q3624078|Q512187|Q6256|Q6688521|Q7275|Q842112|Q849866,P17,1,5,P17
+Q387093,Battle of Arnhem,Q706454,Netherlands in World War II,event_128088,dbpedia_en|event_kg,Q178561,Q109473326|Q18340514|Q3024240,unrecorded,0,5,
+Q38789,Battle of Stalingrad,Q172579,Kingdom of Italy,event_746669,event_kg|yago,Q178561,Q20181813|Q3024240|Q3624078,P710,0,6,P710
+Q38789,Battle of Stalingrad,Q7318,Nazi Germany,event_746669,event_kg|yago,Q178561,Q11514315|Q3024240|Q317|Q3624078,unrecorded,2,6,
+Q3883953,Operation Donnerkeil,Q7318,Nazi Germany,event_657506,dbpedia_en|event_kg|wikidata|yago,Q645883,Q11514315|Q3024240|Q317|Q3624078,unrecorded,2,6,
+Q3883979,Operation Konrad,Q15180,Soviet Union,event_163833,event_kg|yago,Q645883,Q113393649|Q1323642|Q1335818|Q160016|Q17007978|Q3024240|Q3624078|Q512187|Q6256|Q6688521|Q7275|Q842112|Q849866,unrecorded,1,6,
+Q3951255,Landings at Cape Torokina,Q188712,Empire of Japan,event_902282,event_kg|yago,Q178561,Q3024240|Q48349,unrecorded,0,6,
+Q3975705,Murder of the family of Robert Einstein,Q172579,Kingdom of Italy,event_712381,event_kg|wikidata,Q135010,Q20181813|Q3024240|Q3624078,P17,0,5,P17
+Q40765,German Offensive Against Serbian Uprising,Q5589262,Government of National Salvation,event_277865,event_kg|yago,Q135010|Q582956|Q645883,Q208164|Q4383245,unrecorded,0,3,
+Q4087306,Battle of Zvornik,Q153128,Independent State of Croatia,event_668445,dbpedia_en|event_kg|yago,Q178561,Q208164|Q3024240,unrecorded,0,6,
+Q4087316,Battle of Pljevlja,Q616992,Governorate of Montenegro,event_822322,dbpedia_en|event_kg|yago,Q178561,Q3024240,unrecorded,0,6,
+Q4159131,Soviet assault on Tōro,Q188712,Empire of Japan,event_33136,event_kg|wikidata,Q178561,Q3024240|Q48349,P17,0,5,P17
+Q4200362,Imperial Japanese Navy in World War II,Q188712,Empire of Japan,event_2596087,event_kg|wikidata,Q106518893,Q3024240|Q48349,P17,0,5,P17
+Q422376,Operation Tempest,Q156111,General Government,event_186572,dbpedia_en|event_kg,Q645883,Q2577883|Q99541706,unrecorded,0,2,
+Q4345915,Crimean resistance movement during World War II,Q15180,Soviet Union,event_2630784,event_kg|wikidata,Q1673189|Q313830|Q6056746,Q113393649|Q1323642|Q1335818|Q160016|Q17007978|Q3024240|Q3624078|Q512187|Q6256|Q6688521|Q7275|Q842112|Q849866,P17,1,5,P17
+Q4348117,German occupation of Latvia during World War II,Q7318,Nazi Germany,event_482391,event_kg|wikidata,Q188686,Q11514315|Q3024240|Q317|Q3624078,P17,2,5,P17
+Q4366849,Battle of the Border,Q7318,Nazi Germany,event_529707,event_kg|yago,Q178561,Q11514315|Q3024240|Q317|Q3624078,unrecorded,2,6,
+Q4382266,Krasnodar Trial,Q15180,Soviet Union,event_2636279,event_kg|wikidata,Q1265353,Q113393649|Q1323642|Q1335818|Q160016|Q17007978|Q3024240|Q3624078|Q512187|Q6256|Q6688521|Q7275|Q842112|Q849866,P17,1,5,P17
+Q4390509,Medvedev Forest massacre,Q15180,Soviet Union,event_695612,event_kg|wikidata,Q3199915|Q39614,Q113393649|Q1323642|Q1335818|Q160016|Q17007978|Q3024240|Q3624078|Q512187|Q6256|Q6688521|Q7275|Q842112|Q849866,P17,1,5,P17
+Q4463887,Trophy case in USSR,Q15180,Soviet Union,event_747621,event_kg|wikidata,Q2334719,Q113393649|Q1323642|Q1335818|Q160016|Q17007978|Q3024240|Q3624078|Q512187|Q6256|Q6688521|Q7275|Q842112|Q849866,P17,1,5,P17
+Q4564768,Soviet ultimatum to Lithuania,Q15180,Soviet Union,event_367933,event_kg|wikidata,,Q113393649|Q1323642|Q1335818|Q160016|Q17007978|Q3024240|Q3624078|Q512187|Q6256|Q6688521|Q7275|Q842112|Q849866,P17,1,5,P17
+Q460025,Italian participation in the Eastern Front,Q172579,Kingdom of Italy,event_2678025,event_kg|wikidata,Q831663,Q20181813|Q3024240|Q3624078,P17,0,5,P17
+Q4732616,Allied naval bombardments of Japan during World War II,Q188712,Empire of Japan,event_1677584,event_kg|wikidata,Q6982006,Q3024240|Q48349,P17,0,5,P17
+Q4818013,Attack on Yokosuka,Q188712,Empire of Japan,event_138071,dbpedia_en|event_kg|yago,Q178561|Q678146,Q3024240|Q48349,unrecorded,0,6,
+Q4870916,Battle of Dražgoše,Q7318,Nazi Germany,event_965229,dbpedia_en|event_kg|yago,Q178561,Q11514315|Q3024240|Q317|Q3624078,unrecorded,2,6,
+Q4871764,Battle of Mokra,Q769361,"Mokra, Gmina Miedźno",event_850078,dbpedia_en|event_kg|wikidata|yago,Q178561,Q3558970,P276,0,3,P276
+Q4871829,Battle of Murowana Oszmianka,Q116080,Polish Underground State,event_138513,event_kg|yago,Q178561,Q3024240|Q43229,unrecorded,0,6,
+Q4871958,Battle of Osuchy,Q116080,Polish Underground State,event_489937,event_kg|yago,Q178561,Q3024240|Q43229,unrecorded,0,6,
+Q4872082,Battle of Porkuni,Q15180,Soviet Union,event_622388,event_kg|yago,Q178561,Q113393649|Q1323642|Q1335818|Q160016|Q17007978|Q3024240|Q3624078|Q512187|Q6256|Q6688521|Q7275|Q842112|Q849866,unrecorded,1,6,
+Q4872333,Battle of Schoenfeld,Q7318,Nazi Germany,event_808154,event_kg|yago,Q178561,Q11514315|Q3024240|Q317|Q3624078,unrecorded,2,6,
+Q4872596,Battle of Troina,Q172579,Kingdom of Italy,event_630095,event_kg|yago,Q178561,Q20181813|Q3024240|Q3624078,unrecorded,0,6,
+Q48734760,Raid on Sidi Haneish Airfield,Q7508735,Sidi Haneish Airfield,event_516569,dbpedia_en|event_kg|wikidata,Q2380335,Q695850,P276,0,2,P276
+Q488,atomic bombings of Hiroshima and Nagasaki,Q188712,Empire of Japan,event_256221,event_kg|wikidata,Q29431432|Q4688003,Q3024240|Q48349,P17|P710,0,5,P17
+Q488,atomic bombings of Hiroshima and Nagasaki,Q34664,Hiroshima,event_256221,dbpedia_en|event_kg|wikidata,Q29431432|Q4688003,Q1549591|Q1749269|Q2264924|Q494721|Q65589340,P276,0,2,P276
+Q48815905,Imperial Japanese Army during the Pacific War,Q188712,Empire of Japan,event_2690586,event_kg|wikidata,Q106518893,Q3024240|Q48349,P17,0,5,P17
+Q48853614,Kitów massacre,Q156111,General Government,event_1949468,event_kg|wikidata,Q324618|Q750215,Q2577883|Q99541706,P17,0,2,P276
+Q4940507,Bombardment of Fort Stevens,Q1438734,Fort Stevens,event_311796,dbpedia_en|event_kg|wikidata|yago,Q678146,Q1785071,P276,0,3,P276
+Q4940693,Bombing of Chiba in World War II,Q188712,Empire of Japan,event_2710810,event_kg|wikidata,Q4688003,Q3024240|Q48349,P17,0,5,P17
+Q4940701,Bombing of Hamamatsu in World War II,Q188712,Empire of Japan,event_2710809,event_kg|wikidata,Q4688003,Q3024240|Q48349,P17,0,5,P17
+Q4940706,Bombing of Hiratsuka in World War II,Q188712,Empire of Japan,event_2710815,event_kg|wikidata,Q4688003,Q3024240|Q48349,P17,0,5,P17
+Q4940711,bombing of Kobe in World War II,Q188712,Empire of Japan,event_1688389,event_kg|wikidata,Q4688003,Q3024240|Q48349,P17,0,5,P17
+Q4940713,Bombing of Kōfu in World War II,Q188712,Empire of Japan,event_2710812,event_kg|wikidata,Q4688003,Q3024240|Q48349,P17,0,5,P17
+Q4940716,Bombing of Numazu in World War II,Q188712,Empire of Japan,event_2710814,event_kg|wikidata,Q4688003,Q3024240|Q48349,P17,0,5,P17
+Q4940721,Bombing of Shizuoka in World War II,Q188712,Empire of Japan,event_1165913,event_kg|wikidata,Q4688003,Q3024240|Q48349,P17,0,5,P17
+Q4940725,Bombing of Toyokawa in World War II,Q188712,Empire of Japan,event_448283,event_kg|wikidata,Q2380335,Q3024240|Q48349,P17,0,5,P17
+Q4940725,Bombing of Toyokawa in World War II,Q2753675,Toyokawa Naval Arsenal,event_448283,event_kg|wikidata,Q2380335,Q1745026,P276,0,2,P276
+Q4940734,Bombing of Yawata,Q188712,Empire of Japan,event_1688390,event_kg|wikidata,Q4688003,Q3024240|Q48349,P17,0,5,P17
+Q4997775,Bunker Tragedy,Q153713,Herzogenbusch concentration camp,event_1819,event_kg|wikidata|yago,Q16738832,Q328468|Q43229|Q5996900,P276,0,3,P276
+Q506022,USS Arizona (BB-39),Q127091,Pearl Harbor,event_1109386,event_kg|wikidata,Q839954|Q847109,Q187223|Q283202,unrecorded,0,2,
+Q513760,forced labour under German rule during World War II,Q7318,Nazi Germany,event_2681856,event_kg|wikidata,Q173462,Q11514315|Q3024240|Q317|Q3624078,P17,2,5,P17
+Q515168,Battle off Horaniu,Q188712,Empire of Japan,event_368691,event_kg|yago,Q1261499,Q3024240|Q48349,P710,0,6,P710
+Q52418,Attack on Pearl Harbor,Q127091,Pearl Harbor,event_154125,event_kg|wikidata|yago,Q133868917|Q178561|Q4698343|Q6982012,Q187223|Q283202,P276,0,3,P276
+Q52418,Attack on Pearl Harbor,Q15261194,Naval Station Pearl Harbor,event_154125,event_kg|yago,Q133868917|Q178561|Q4698343|Q6982012,Q331367,unrecorded,0,3,
+Q52418,Attack on Pearl Harbor,Q188712,Empire of Japan,event_154125,event_kg|yago,Q133868917|Q178561|Q4698343|Q6982012,Q3024240|Q48349,P710,0,6,P710
+Q524272,South-East Asian theater of World War II,Q715197,Azad Hind,event_359891,event_kg|yago,Q645883|Q718893,Q59281,unrecorded,0,3,
+Q5301756,Douglas MacArthur's escape from the Philippines,Q928075,Corregidor,event_997141,event_kg|wikidata,Q12373086|Q61509,Q23442,unrecorded,0,2,
+Q533034,Battle of Westerplatte,Q517081,Westerplatte,event_1115004,dbpedia_en|event_kg|wikidata|yago,Q178561|Q188055,Q34763,P276,0,3,P276
+Q543075,Battle of Dutch Harbor,Q188712,Empire of Japan,event_443040,event_kg|yago,Q178561,Q3024240|Q48349,unrecorded,0,6,
+Q5470224,Formosa Air Battle,Q188712,Empire of Japan,event_99566,event_kg|yago,Q830494,Q3024240|Q48349,unrecorded,0,6,
+Q549305,Battle of Pęcice,Q116080,Polish Underground State,event_585588,event_kg|yago,Q178561,Q3024240|Q43229,unrecorded,0,6,
+Q549305,Battle of Pęcice,Q156111,General Government,event_585588,event_kg|yago,Q178561,Q2577883|Q99541706,unrecorded,0,3,
+Q552727,Kerch–Eltigen Operation,Q15180,Soviet Union,event_193140,dbpedia_en|event_kg|wikidata,Q178561|Q646740,Q113393649|Q1323642|Q1335818|Q160016|Q17007978|Q3024240|Q3624078|Q512187|Q6256|Q6688521|Q7275|Q842112|Q849866,P17,1,5,P17
+Q552727,Kerch–Eltigen Operation,Q7318,Nazi Germany,event_193140,event_kg|wikidata,Q178561|Q646740,Q11514315|Q3024240|Q317|Q3624078,P17,2,5,P17
+Q5544194,George S. Patton slapping incidents,Q172579,Kingdom of Italy,event_1067277,event_kg|wikidata,Q1190554|Q192909,Q20181813|Q3024240|Q3624078,P17,0,5,P17
+Q55615911,Kharkov Trial,Q42308,Kharkiv,event_990602,event_kg|wikidata,Q1265353,Q12131624|Q12134916,P276,0,2,P276
+Q55964484,Wolfpack Prien,Q7318,Nazi Germany,event_2794775,event_kg|yago,Q254266,Q11514315|Q3024240|Q317|Q3624078,unrecorded,2,6,
+Q5599739,Great Papago Escape,Q5027488,Camp Papago Park,event_1076541,event_kg|wikidata|yago,Q1190554,Q18691599,P276,0,3,P276
+Q560410,Operation Trio,Q153128,Independent State of Croatia,event_891913,event_kg|yago,Q582956|Q645883,Q208164|Q3024240,P276,0,6,P710
+Q56057027,escape of Viktor Pestek and Siegfried Lederer from Auschwitz,Q15850658,Theresienstadt family camp,event_1101338,event_kg|wikidata,Q598041,Q152081,P276,0,2,P276
+Q5614677,Gudovac massacre,Q153128,Independent State of Croatia,event_125542,event_kg|wikidata|yago,Q135010|Q3199915|Q750215,Q208164|Q3024240,P17,0,6,P710
+Q56392502,Wolfpack Pfadfinder,Q7318,Nazi Germany,event_2851253,event_kg|yago,Q254266,Q11514315|Q3024240|Q317|Q3624078,unrecorded,2,6,
+Q565674,Flick Trial,Q128652,Palace of Justice,event_942265,event_kg|wikidata,Q1265353,Q1137809|Q1497364,P276,0,2,P276
+Q565686,High Command Trial,Q128652,Palace of Justice,event_153507,event_kg|wikidata,Q1265353,Q1137809|Q1497364,P276,0,2,P276
+Q566859,Operation Regenbogen,Q7318,Nazi Germany,event_133569,event_kg|wikidata,Q645883,Q11514315|Q3024240|Q317|Q3624078,P17,2,5,P17
+Q56685959,Transport and murder of Białystok children,Q702654,Białystok Ghetto,event_215722,event_kg|wikidata,Q750215,Q2583015,P276,0,2,P276
+Q569689,Bombing of Singapore,Q715645,Japanese occupation of Singapore,event_2689333,event_kg|wikidata,Q2380335|Q831663,Q188686,P17,0,2,P276
+Q570100,Hitler's Obersalzberg Speech,Q163181,Berghof,event_1123972,event_kg|wikidata,Q861911,Q16884952,P276,0,2,P276
+Q582953,Battle of Debrecen,Q15180,Soviet Union,event_183034,event_kg|yago,Q178561,Q113393649|Q1323642|Q1335818|Q160016|Q17007978|Q3024240|Q3624078|Q512187|Q6256|Q6688521|Q7275|Q842112|Q849866,P710,1,6,P710
+Q590545,air raids on Japan,Q188712,Empire of Japan,event_857358,event_kg|wikidata,Q2380335|Q831663,Q3024240|Q48349,P17,0,5,P17
+Q60776363,Air raids on the Hong Kong area,Q701967,Japanese occupation of Hong Kong,event_2884648,event_kg|wikidata,Q4688003,Q188686|Q2577883,P17,0,2,P276
+Q60790147,Bombing of Kure,Q188712,Empire of Japan,event_2888667,event_kg|wikidata,Q2380335,Q3024240|Q48349,P17,0,5,P17
+Q60790653,Attack on Kure,Q188712,Empire of Japan,event_1927176,dbpedia_en|event_kg|wikidata,Q2380335,Q3024240|Q48349,P17,0,5,P17
+Q609030,Battle of Peleliu,Q188712,Empire of Japan,event_1134075,event_kg|yago,Q178561,Q3024240|Q48349,P710,0,6,P710
+Q610048,Battle of Balikpapan,Q188712,Empire of Japan,event_695463,event_kg|yago,Q178561,Q3024240|Q48349,P710,0,6,P710
+Q610242,Battle of Rennell Island,Q59580,Rennell Island,event_617607,dbpedia_en|event_kg|wikidata|yago,Q1261499,Q139595932|Q23442,P276,0,3,P276
+Q611089,Siege of Tobruk,Q284568,Italian Libya,event_651788,dbpedia_en|event_kg|yago,Q188055,Q133156,unrecorded,0,3,
+Q611089,Siege of Tobruk,Q430161,Czechoslovak government-in-exile,event_651788,event_kg|yago,Q188055,Q678116,unrecorded,0,3,
+Q61135507,Đurđevdan uprising,Q153128,Independent State of Croatia,event_1663379,dbpedia_en|event_kg|yago,Q124734,Q208164|Q3024240,unrecorded,0,6,
+Q611789,Defense of Brest Fortress,Q23868,Brest Fortress,event_427724,event_kg|wikidata,Q188055,Q12057999|Q2319498|Q33506|Q57831,P276,0,2,P276
+Q6165880,Soviet invasion of Manchuria,Q30623,Manchukuo,event_427637,event_kg|yago,Q467011|Q645883,Q208164|Q3024240,P710,0,6,P710
+Q6165880,Soviet invasion of Manchuria,Q697837,Mengjiang,event_427637,event_kg|yago,Q467011|Q645883,Q208164|Q3024240,unrecorded,0,6,
+Q625798,Western Desert campaign,Q284568,Italian Libya,event_2698172,dbpedia_en|event_kg,Q831663,Q133156,unrecorded,0,2,
+Q6403604,Operation Kikusui,Q188712,Empire of Japan,event_614668,event_kg|wikidata|yago,Q217327|Q645883,Q3024240|Q48349,P17,0,6,P710
+Q644827,Pohl Trial,Q128652,Palace of Justice,event_518746,event_kg|wikidata,Q1265353,Q1137809|Q1497364,P276,0,2,P276
+Q6461523,Knin Offensive,Q153128,Independent State of Croatia,event_443736,dbpedia_en|event_kg|yago,Q178561,Q208164|Q3024240,unrecorded,0,6,
+Q65061541,proposed Soviet invasion of Hokkaido,Q188712,Empire of Japan,event_2604732,event_kg|wikidata,Q149377|Q646740,Q3024240|Q48349,P17,0,5,P17
+Q653470,Battle of the Caucasus,Q172579,Kingdom of Italy,event_526674,event_kg|yago,Q178561,Q20181813|Q3024240|Q3624078,unrecorded,0,6,
+Q6540361,surrender of Japan,Q188712,Empire of Japan,event_740609,event_kg|wikidata,Q217901,Q3024240|Q48349,P17,0,5,P17
+Q664017,Aryanization,Q7318,Nazi Germany,event_1144543,event_kg|wikidata,Q192581|Q22649|Q2727213|Q328376,Q11514315|Q3024240|Q317|Q3624078,unrecorded,2,5,
+Q665554,Japanese Instrument of Surrender,Q272560,USS Missouri,event_1950380,event_kg|wikidata,Q625298,Q130326199|Q473094|Q575727,P276,0,2,P276
+Q666414,Western Allied invasion of Germany,Q7318,Nazi Germany,event_351322,event_kg|yago,Q467011,Q11514315|Q3024240|Q317|Q3624078,P710,2,6,P710
+Q666778,Prague Uprising,Q7318,Nazi Germany,event_790770,event_kg|yago,Q124734,Q11514315|Q3024240|Q317|Q3624078,unrecorded,2,6,
+Q668634,Battle of Modlin,Q47796,Modlin Fortress,event_316148,dbpedia_en|event_kg|yago,Q178561|Q188055,Q12057999|Q57831,unrecorded,0,3,
+Q673265,Crimean Offensive,Q15180,Soviet Union,event_809086,dbpedia_en|event_kg,Q178561|Q2001676,Q113393649|Q1323642|Q1335818|Q160016|Q17007978|Q3024240|Q3624078|Q512187|Q6256|Q6688521|Q7275|Q842112|Q849866,P17,1,5,P17
+Q6736673,Continental Policy,Q188712,Empire of Japan,event_2676082,event_kg|wikidata,Q1667082,Q3024240|Q48349,P17,0,5,P17
+Q677740,Krupp Trial,Q128652,Palace of Justice,event_1149709,event_kg|wikidata,Q1265353,Q1137809|Q1497364,P276,0,2,P276
+Q682399,Operation Battleaxe,Q284568,Italian Libya,event_266975,event_kg|yago,Q645883,Q133156,unrecorded,0,3,
+Q685201,Kragujevac massacre,Q701914,Territory of the Military Commander in Serbia,event_451416,event_kg|yago,Q3199915|Q6983405,Q2577883|Q3024240,unrecorded,0,6,
+Q694416,Battle of Brześć Litewski,Q23868,Brest Fortress,event_795087,event_kg|wikidata,Q178561|Q188055,Q12057999|Q2319498|Q33506|Q57831,P276,0,2,P276
+Q696018,Operation Compass,Q284568,Italian Libya,event_366290,dbpedia_en|event_kg|yago,Q645883,Q133156,unrecorded,0,3,
+Q696256,Soviet–Japanese Neutrality Pact,Q188712,Empire of Japan,event_2703460,event_kg|wikidata,Q625298|Q9557810,Q3024240|Q48349,P17|P710,0,5,P17
+Q696438,Naval Battle of Guadalcanal,Q188712,Empire of Japan,event_719608,event_kg|yago,Q1261499,Q3024240|Q48349,P710,0,6,P710
+Q696557,Bombing of Darwin,Q275180,Australia,event_728448,dbpedia_en|event_kg,Q178561|Q4688003,Q11424,unrecorded,0,2,
+Q696931,Battle of Manila,Q188712,Empire of Japan,event_90212,event_kg|yago,Q178561,Q3024240|Q48349,unrecorded,0,6,
+Q697658,First Battle of Kharkov,Q42308,Kharkiv,event_743682,dbpedia_en|event_kg|wikidata|yago,Q178561,Q12131624|Q12134916,P276,0,3,P276
+Q698292,Volcano and Ryukyu Islands campaign,Q188712,Empire of Japan,event_2703655,event_kg|wikidata,Q831663,Q3024240|Q48349,P17,0,5,P17
+Q698421,Italian invasion of Egypt,Q284568,Italian Libya,event_973870,event_kg|yago,Q467011,Q133156,unrecorded,0,3,
+Q698778,Gran Sasso raid,Q3752897,Kingdom of the South,event_627198,event_kg|yago,Q476807,,unrecorded,0,3,
+Q699897,Battle of Guam,Q188712,Empire of Japan,event_876391,event_kg|yago,Q178561,Q3024240|Q48349,unrecorded,0,6,
+Q700530,Battle of Cape St. George,Q188712,Empire of Japan,event_606015,event_kg|yago,Q178561,Q3024240|Q48349,unrecorded,0,6,
+Q700547,Operation Vengeance,Q12296445,Asiatic-Pacific Theater,event_692019,event_kg|yago,Q15104954|Q3882219|Q645883,Q718893,unrecorded,0,3,
+Q700710,Battle of Villers-Bocage,Q7318,Nazi Germany,event_93914,event_kg|yago,Q178561,Q11514315|Q3024240|Q317|Q3624078,unrecorded,2,6,
+Q700937,Crimean Campaign,Q15180,Soviet Union,event_2703920,dbpedia_en|event_kg|wikidata,Q831663,Q113393649|Q1323642|Q1335818|Q160016|Q17007978|Q3024240|Q3624078|Q512187|Q6256|Q6688521|Q7275|Q842112|Q849866,P17,1,5,P17
+Q700937,Crimean Campaign,Q7318,Nazi Germany,event_2703920,event_kg|wikidata,Q831663,Q11514315|Q3024240|Q317|Q3624078,unrecorded,2,5,
+Q702142,Battle of Vella Gulf,Q188712,Empire of Japan,event_396477,event_kg|yago,Q178561,Q3024240|Q48349,unrecorded,0,6,
+Q702460,Ministries Trial,Q128652,Palace of Justice,event_1153666,event_kg|wikidata,Q1265353,Q1137809|Q1497364,P276,0,2,P276
+Q702638,Operation Tannenberg,Q156111,General Government,event_1153693,event_kg|wikidata,Q645883|Q750215,Q2577883|Q99541706,P276,0,2,P276
+Q7039209,Ninth Fort massacres of November 1941,Q665266,Ninth Fort,event_224771,event_kg|wikidata|yago,Q3199915,Q328468|Q5003624,P276,0,3,P276
+Q703962,Battle of Luzon,Q188712,Empire of Japan,event_168368,event_kg|yago,Q178561,Q3024240|Q48349,unrecorded,0,6,
+Q704194,Milch Trial,Q128652,Palace of Justice,event_400398,event_kg|wikidata,Q2334719|Q8016240,Q1137809|Q1497364,P276,0,2,P276
+Q704237,IG Farben Trial,Q128652,Palace of Justice,event_1153883,event_kg|wikidata,Q1265353|Q8016240,Q1137809|Q1497364,P276,0,2,P276
+Q704959,Four Year Plan,Q7318,Nazi Germany,event_2704607,event_kg|wikidata,Q582577,Q11514315|Q3024240|Q317|Q3624078,P17,2,5,P17
+Q708223,Operation Sonnenblume,Q284568,Italian Libya,event_3785,dbpedia_en|event_kg,Q178561,Q133156,P17,0,2,P276
+Q709333,Battle of Changsha,Q188712,Empire of Japan,event_902329,event_kg|yago,Q178561,Q3024240|Q48349,unrecorded,0,6,
+Q709352,Japan Campaign,Q188712,Empire of Japan,event_2706789,event_kg|wikidata|yago,Q831663,Q3024240|Q48349,P17,0,6,P710
+Q709370,Kuril Islands landing operation,Q188712,Empire of Japan,event_542777,event_kg|wikidata,Q646740,Q3024240|Q48349,P17,0,5,P17
+Q709484,Belgorod–Kharkov offensive operation,Q42308,Kharkiv,event_163537,dbpedia_en|event_kg,Q178561,Q12131624|Q12134916,unrecorded,0,2,
+Q7096811,Operation Bigamy,Q284568,Italian Libya,event_62993,dbpedia_en|event_kg,Q645883,Q133156,P17,0,2,P276
+Q7096947,Operation Culverin,Q188712,Empire of Japan,event_935983,event_kg|yago,Q114350932,Q3024240|Q48349,unrecorded,0,6,
+Q7096986,Operation Diadem,Q172579,Kingdom of Italy,event_951551,event_kg|wikidata,Q178561|Q645883,Q20181813|Q3024240|Q3624078,P17,0,5,P17
+Q7097219,Operation Kutschera,Q116080,Polish Underground State,event_1184538,event_kg|yago,Q3882219,Q3024240|Q43229,unrecorded,0,6,
+Q7097219,Operation Kutschera,Q156111,General Government,event_1184538,event_kg|yago,Q3882219,Q2577883|Q99541706,unrecorded,0,3,
+Q7097356,Operation Osprey,Q7318,Nazi Germany,event_1184547,event_kg|wikidata,Q645883,Q11514315|Q3024240|Q317|Q3624078,P17,2,5,P17
+Q710000,Battle of Ramree Island,Q188712,Empire of Japan,event_395109,event_kg|yago,Q178561,Q3024240|Q48349,unrecorded,0,6,
+Q710614,Bombing of Kure,Q188712,Empire of Japan,event_259371,dbpedia_en|event_kg|wikidata,Q2380335,Q3024240|Q48349,P17,0,5,P17
+Q712826,Nanjing Massacre denial,Q188712,Empire of Japan,event_1686501,event_kg|wikidata,Q17524420|Q339452,Q3024240|Q48349,P17,0,5,P17
+Q713006,Battle of Corregidor,Q928075,Corregidor,event_253740,dbpedia_en|event_kg|wikidata|yago,Q178561,Q23442,P276,0,3,P276
+Q713540,comfort woman,Q188712,Empire of Japan,event_2707419,event_kg|wikidata,Q135010|Q16335296|Q83464,Q3024240|Q48349,P17,0,5,P17
+Q713540,comfort woman,Q30623,Manchukuo,event_2707419,event_kg|wikidata,Q135010|Q16335296|Q83464,Q208164|Q3024240,P17,0,5,P17
+Q714211,Yelnya Offensive,Q15180,Soviet Union,event_517097,dbpedia_en|event_kg,Q2001676,Q113393649|Q1323642|Q1335818|Q160016|Q17007978|Q3024240|Q3624078|Q512187|Q6256|Q6688521|Q7275|Q842112|Q849866,unrecorded,1,5,
+Q714265,Battle of Gembloux,Q7318,Nazi Germany,event_644885,event_kg|yago,Q178561,Q11514315|Q3024240|Q317|Q3624078,unrecorded,2,6,
+Q714288,Battle of Fort Eben-Emael,Q223608,Fortified Position of Liège,event_852489,event_kg|yago,Q178561,Q18247357|Q2973801,unrecorded,0,3,
+Q714288,Battle of Fort Eben-Emael,Q7318,Nazi Germany,event_852489,event_kg|yago,Q178561,Q11514315|Q3024240|Q317|Q3624078,unrecorded,2,6,
+Q714288,Battle of Fort Eben-Emael,Q947912,Fort Eben-Emael,event_852489,dbpedia_en|event_kg|wikidata|yago,Q178561,Q1785071|Q2772772,P276,0,3,P276
+Q714644,Italian invasion of Albania,Q172579,Kingdom of Italy,event_878976,event_kg|yago,Q188686|Q467011,Q20181813|Q3024240|Q3624078,unrecorded,0,6,
+Q715182,Battle of Salla,Q15180,Soviet Union,event_307638,event_kg|yago,Q178561,Q113393649|Q1323642|Q1335818|Q160016|Q17007978|Q3024240|Q3624078|Q512187|Q6256|Q6688521|Q7275|Q842112|Q849866,unrecorded,1,6,
+Q716144,Sook Ching,Q715645,Japanese occupation of Singapore,event_63223,event_kg|wikidata,Q1262732|Q135010|Q3199915|Q4817637,Q188686,P17,0,2,P276
+Q719515,Operation Ostra Brama,Q116080,Polish Underground State,event_326004,event_kg|yago,Q178561,Q3024240|Q43229,unrecorded,0,6,
+Q7207923,Point 175,Q284568,Italian Libya,event_715951,dbpedia_en|event_kg|yago,Q178561,Q133156,unrecorded,0,3,
+Q72298,Victory Banner,Q15180,Soviet Union,event_280234,event_kg|wikidata,Q14660,Q113393649|Q1323642|Q1335818|Q160016|Q17007978|Q3024240|Q3624078|Q512187|Q6256|Q6688521|Q7275|Q842112|Q849866,P17,1,5,P17
+Q7261217,Purge,Q696251,Occupation of Japan,event_2734495,event_kg|wikidata,Q1262732,Q1048835|Q188686|Q19953632|Q2577883,P17,0,2,P276
+Q74109,World War II in Albania,Q1448131,Italian protectorate of Albania,event_157136,event_kg|wikidata,Q198,Q164142|Q3024240,P276|P710,0,5,P17
+Q7493863,Shelling of Johnston and Palmyra,Q123076,Palmyra Atoll,event_560500,dbpedia_en|event_kg,Q678146,Q139595919|Q26934845|Q42523|Q462778,unrecorded,0,2,
+Q757871,Indian Ocean raid,Q188712,Empire of Japan,event_743768,event_kg|yago,Q1261499,Q3024240|Q48349,P710,0,6,P710
+Q7582396,Srb uprising,Q153128,Independent State of Croatia,event_313749,dbpedia_en|event_kg|yago,Q1190554,Q208164|Q3024240,unrecorded,0,6,
+Q760028,Sobibór uprising,Q152658,Sobibór Extermination Camp,event_891771,event_kg|wikidata,Q124734|Q6107280,Q152081|Q153813,P276,0,2,P276
+Q760029,Treblinka uprising,Q152010,Treblinka extermination camp,event_780379,event_kg|wikidata,Q124734,Q153813|Q328468|Q811165,P276,0,2,P276
+Q7733472,Farrer Park address,Q188712,Empire of Japan,event_170417,event_kg|wikidata,Q861911,Q3024240|Q48349,P17,0,5,P17
+Q7830654,Toyohashi Air Raid,Q188712,Empire of Japan,event_447080,event_kg|wikidata,Q4688003,Q3024240|Q48349,P17,0,5,P17
+Q7919085,Veljun massacre,Q153128,Independent State of Croatia,event_1125709,event_kg|wikidata|yago,Q3199915,Q208164|Q3024240,P17,0,6,P710
+Q797939,Invasion of Salamaua–Lae,Q188712,Empire of Japan,event_799632,event_kg|yago,Q645883,Q3024240|Q48349,unrecorded,0,6,
+Q80130,Nuremberg trials,Q128652,Palace of Justice,event_1004459,event_kg|wikidata,Q1265353,Q1137809|Q1497364,P276,0,2,P276
+Q8029934,Wolfpack Borkum,Q7318,Nazi Germany,event_2828926,event_kg|yago,Q254266,Q11514315|Q3024240|Q317|Q3624078,unrecorded,2,6,
+Q8029937,Wolfpack Blücher,Q7318,Nazi Germany,event_2828923,event_kg|yago,Q254266,Q11514315|Q3024240|Q317|Q3624078,unrecorded,2,6,
+Q8029942,Wolfpack Leuthen,Q7318,Nazi Germany,event_2828924,event_kg|yago,Q254266,Q11514315|Q3024240|Q317|Q3624078,unrecorded,2,6,
+Q8029946,Wolfpack Seewolf,Q7318,Nazi Germany,event_2828911,event_kg|yago,Q254266,Q11514315|Q3024240|Q317|Q3624078,unrecorded,2,6,
+Q8029948,Wolfpack Steinbrinck,Q7318,Nazi Germany,event_2828917,event_kg|yago,Q254266,Q11514315|Q3024240|Q317|Q3624078,unrecorded,2,6,
+Q8030184,Wolfpack Schill,Q7318,Nazi Germany,event_2829005,event_kg|yago,Q254266,Q11514315|Q3024240|Q317|Q3624078,unrecorded,2,6,
+Q8065947,Zamość Uprising,Q116080,Polish Underground State,event_108179,event_kg|yago,Q124734,Q3024240|Q43229,unrecorded,0,6,
+Q8065947,Zamość Uprising,Q156111,General Government,event_108179,dbpedia_en|event_kg|yago,Q124734,Q2577883|Q99541706,unrecorded,0,3,
+Q820192,Judges' Trial,Q128652,Palace of Justice,event_1188956,event_kg|wikidata,Q1265353,Q1137809|Q1497364,P276,0,2,P276
+Q83055,Operation Barbarossa,Q156111,General Government,event_859965,event_kg|wikidata,Q467011,Q2577883|Q99541706,P276,0,2,P276
+Q836128,Battle of Bir Hakeim,Q284568,Italian Libya,event_47164,dbpedia_en|event_kg|yago,Q178561,Q133156,unrecorded,0,3,
+Q836476,Hostages Trial,Q128652,Palace of Justice,event_355469,event_kg|wikidata,Q1265353,Q1137809|Q1497364,P276,0,2,P276
+Q83780345,Liberation of Auschwitz concentration camp,Q7341,Auschwitz,event_1900743,event_kg|wikidata,Q24238946|Q645883,Q1497375|Q153813|Q328468|Q33506,P276,0,2,P276
+Q839710,Lidice massacre,Q152750,Protectorate of Bohemia and Moravia,event_599680,event_kg|wikidata,Q3199915,Q164142|Q3024240,P17,0,5,P17
+Q845203,Operation Chastise,Q677151,Möhne Reservoir,event_746215,event_kg|yago,Q645883,Q131681,unrecorded,0,3,
+Q879829,Ehrenfeld Group,Q7318,Nazi Germany,event_1221666,event_kg|wikidata,Q138796,Q11514315|Q3024240|Q317|Q3624078,P17,2,5,P17
+Q903876,Singapore strategy,Q8680,British Empire,event_2726680,event_kg|wikidata,Q1667082|Q219087,Q1790360,P17,0,2,P276
+Q9052602,Operation Lusty,Q7271378,Querqueville Airfield,event_841580,event_kg|wikidata,Q645883,Q62447,P276,0,2,P276
+Q911972,Dunkirk evacuation,Q70802,French Third Republic,event_778980,dbpedia_en|event_kg|yago,Q1261499|Q30129955|Q645883,Q17152708|Q3024240|Q3624078,P710,0,6,P710
+Q9172440,Battle of Muranów Square,Q116080,Polish Underground State,event_425429,event_kg|yago,Q178561,Q3024240|Q43229,unrecorded,0,6,
+Q9172440,Battle of Muranów Square,Q156111,General Government,event_425429,event_kg|yago,Q178561,Q2577883|Q99541706,unrecorded,0,3,
+Q929991,Operation Sledgehammer,Q7318,Nazi Germany,event_464691,event_kg|yago,Q114350932,Q11514315|Q3024240|Q317|Q3624078,unrecorded,2,6,
+Q931125,Raid on Drvar,Q153128,Independent State of Croatia,event_550382,event_kg|yago,Q645883,Q208164|Q3024240,unrecorded,0,6,
+Q9323623,Resistance movement in Auschwitz,Q7341,Auschwitz,event_1248084,event_kg|wikidata,Q138796,Q1497375|Q153813|Q328468|Q33506,P276,0,2,P276
+Q934889,Operation Slapstick,Q172579,Kingdom of Italy,event_332774,event_kg|yago,Q645883,Q20181813|Q3024240|Q3624078,unrecorded,0,6,
+Q96143234,Soviet deportations from Latvia,Q15180,Soviet Union,event_2833797,event_kg|wikidata,Q379693|Q837556,Q113393649|Q1323642|Q1335818|Q160016|Q17007978|Q3024240|Q3624078|Q512187|Q6256|Q6688521|Q7275|Q842112|Q849866,P17,1,5,P17
+Q980853,Battle of Gela,Q172579,Kingdom of Italy,event_176388,event_kg|yago,Q178561,Q20181813|Q3024240|Q3624078,unrecorded,0,6,
