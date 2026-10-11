@@ -6,6 +6,9 @@ tests broader three-source evidence and records the decision logic and gaps.
 The [context split POC](CONTEXT_SPLIT_POC_2026-10-11.md) tests clustering and a
 small tree on EventKG `hasPlace` collisions with Wikidata relation codes.
 
+The [incremental grouping POC](INCREMENTAL_DISTINCT_POC_2026-10-11.md) tests
+whether adding context fields makes those code groups reusable on new objects.
+
 The [executed two-source overlap audit](audit_2026-10-11/REPORT.md) checks the
 broader WarSampo–Wikidata candidate set and records the remaining identity and
 event-link gaps. This README preserves the original smaller POC.

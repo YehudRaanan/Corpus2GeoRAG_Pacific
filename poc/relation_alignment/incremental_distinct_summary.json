@@ -1,0 +1,80 @@
+{
+  "source_role": "EventKG hasPlace",
+  "pairs": 317,
+  "coded_pairs": 101,
+  "unrecorded_pairs": 216,
+  "minimum_rule_support": 3,
+  "test": "5-fold object-QID-held-out; exact recorded Wikidata code set",
+  "stages": [
+    {
+      "stage": "no context",
+      "fields": [],
+      "groups": 1,
+      "singleton_pairs": 0,
+      "mixed_pairs": 101,
+      "supported_consistent_pairs": 0,
+      "supported_pairs_across_objects": 0,
+      "held_out_rules_applied": 0,
+      "held_out_correct_code_sets": 0
+    },
+    {
+      "stage": "object types",
+      "fields": [
+        "object_p31"
+      ],
+      "groups": 38,
+      "singleton_pairs": 27,
+      "mixed_pairs": 62,
+      "supported_consistent_pairs": 4,
+      "supported_pairs_across_objects": 0,
+      "held_out_rules_applied": 0,
+      "held_out_correct_code_sets": 0
+    },
+    {
+      "stage": "object types + source",
+      "fields": [
+        "object_p31",
+        "source"
+      ],
+      "groups": 48,
+      "singleton_pairs": 35,
+      "mixed_pairs": 56,
+      "supported_consistent_pairs": 0,
+      "supported_pairs_across_objects": 0,
+      "held_out_rules_applied": 0,
+      "held_out_correct_code_sets": 0
+    },
+    {
+      "stage": "object types + source + event types",
+      "fields": [
+        "object_p31",
+        "source",
+        "subject_p31"
+      ],
+      "groups": 82,
+      "singleton_pairs": 72,
+      "mixed_pairs": 15,
+      "supported_consistent_pairs": 6,
+      "supported_pairs_across_objects": 0,
+      "held_out_rules_applied": 0,
+      "held_out_correct_code_sets": 0
+    },
+    {
+      "stage": "plus both IDs (overfit check)",
+      "fields": [
+        "object_p31",
+        "source",
+        "subject_p31",
+        "event_qid",
+        "object_qid"
+      ],
+      "groups": 101,
+      "singleton_pairs": 101,
+      "mixed_pairs": 0,
+      "supported_consistent_pairs": 0,
+      "supported_pairs_across_objects": 0,
+      "held_out_rules_applied": 0,
+      "held_out_correct_code_sets": 0
+    }
+  ]
+}
