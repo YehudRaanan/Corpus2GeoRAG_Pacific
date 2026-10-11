@@ -39,18 +39,20 @@ numbers.
 
 | Candidate and scope | Same-pair evidence | What it teaches the mapping process |
 | --- | ---: | --- |
-| DBpedia English `battle` → Wikidata `P607`, entity → event, same direction | 7,178 / 7,263 co-connected DBpedia pairs; 20,484 DBpedia pairs with both QIDs | Strong candidate, but not proof of equivalent meaning. 78.4% of matching pairs target WWII Q362. After removing Q362, the co-connected match rate is still 94.9%. Test subject types and other conflicts before accepting a scoped rule. |
-| DBpedia English `usedInWar` → `P607`, entity → event | 507 / 507 co-connected; 686 total; 84.6% of matches target Q362 | A perfect local match can be narrow, concentrated, or describe a different role. `usedInWar` must not be equated with military participation from frequency alone. |
+| DBpedia English `battle` → Wikidata `P607`, entity → event, same direction | 7,178 / 7,263 co-connected DBpedia pairs; 20,484 DBpedia pairs with both QIDs | [DBpedia explicitly declares `owl:equivalentProperty` to `P607`](https://dbpedia.org/ontology/battle). This is a published schema alignment, not an independent observation derived from these pairs. 78.4% of matching pairs target WWII Q362. After removing Q362, the co-connected match rate is still 94.9%. Check source versions and instance scope before compiling the declared alignment into an operational rule. |
+| DBpedia English `usedInWar` → `P607`, entity → event | 507 / 507 co-connected; 686 total; 84.6% of matches target Q362 | [DBpedia defines `usedInWar` for weapons and conflicts](https://dbpedia.org/ontology/usedInWar), not as an equivalent property of `P607`. A perfect local match cannot override that narrower meaning. |
 | EventKG `subEventOf` → `P361`, event → event, same direction | 1,244 / 1,270 co-connected; 1,821 EventKG pairs | Promising event-only rule. The inverse EventKG `hasSubEvent` gives the same 1,244 pairs in reverse, not independent support. These direct triples lack a named source graph, so their derivation must be checked. |
-| DBpedia English `commander` → reverse `P607` | 320 / 417 co-connected | A commander and a participant can be the same person and conflict, but command is a different role. This is a semantic counterexample to pair-frequency equivalence. |
-| EventKG `hasPlace` → Wikidata `P17`, `P276`, or `P710` | 125, 86, and 43 same-direction pairs in the `event_kg` graph | One broad EventKG role collides with country, location, and participant statements. For example, Winter War Q134949 and Soviet Union Q15180 are connected by both EventKG `hasPlace` and Wikidata `P710`. Pair overlap alone cannot select the intended Agent edge. |
+| DBpedia English `commander` → reverse `P607` | 320 / 417 co-connected | [DBpedia `commander` has a person as its object](https://dbpedia.org/ontology/commander). A commander and a participant can be the same person and conflict, but command is a different role. This is a semantic counterexample to pair-frequency equivalence. |
+| EventKG `hasPlace` → Wikidata `P17`, `P276`, or `P710` | 125, 86, and 43 same-direction pairs in the `event_kg` graph | [EventKG calls `hasPlace` an event location](https://eventkg.l3s.uni-hannover.de/tutorial.html), while Wikidata defines [`P17` as country](https://www.wikidata.org/wiki/Property:P17), [`P276` as location](https://www.wikidata.org/wiki/Property:P276), and [`P710` as active participant](https://www.wikidata.org/wiki/Property:P710). For example, Winter War Q134949 and Soviet Union Q15180 are connected by both EventKG `hasPlace` and Wikidata `P710`. Pair overlap alone cannot select the intended Agent edge. |
 | YAGO `participatedIn` → reverse `P710` | 179 / 213 co-connected | Plausible inverse candidate. Check active/passive role and event granularity before accepting it. |
 
 The earlier WarSampo–Wikidata audit already accepted `hasConflict` ↔ `P607`
-**only for military unit → conflict**. This wider scan did **not** accept a new
-rule. It confirms why a global predicate-to-predicate dictionary would be
-unsafe. The older `owl:differentFrom` versus succession-property match also
-shows that even a 100% rate on one shared pair can be false.
+**only for military unit → conflict**. This wider scan found **one published
+schema alignment**, DBpedia `battle` ↔ Wikidata `P607`, but has not yet
+validated it as an operational rule on all subject classes. It confirms why a
+global predicate-to-predicate dictionary would be unsafe. The older
+`owl:differentFrom` versus succession-property match also shows that even a
+100% rate on one shared pair can be false.
 
 Time needs a separate rule. Among 4,054 EventKG event/date-field combinations
 with local values, 1,002 have multiple values **within at least one source
@@ -76,11 +78,15 @@ do not choose an arbitrary date.
    time qualifiers, precision, and source revision. Deduplicate copied
    Wikidata claims across EventKG. Do not turn literals or dates into relation
    types.
-3. **Generate candidates automatically.** For each exact approved QID pair,
-   compare same and reverse directions. Group by endpoint class and event
-   granularity. Compare direct relations only with direct relations; compare
-   event paths under a separate path-rule hypothesis. Keep rare predicates
-   and zero-overlap properties in the coverage report.
+3. **Generate candidates automatically from two channels.** First harvest
+   published ontology links such as `owl:equivalentProperty`, inverses,
+   subproperties, domain, and range. Record the ontology version; an ontology
+   declaration is a candidate rule, not independent instance evidence. Then,
+   for each exact approved QID pair, compare same and reverse directions.
+   Group by endpoint class and event granularity. Compare direct relations
+   only with direct relations; compare event paths under a separate path-rule
+   hypothesis. Keep rare predicates and zero-overlap properties in the
+   coverage report.
 4. **Rank, then challenge.** Calculate shared distinct pairs, both eligible
    source denominators, number of subjects and targets, largest-target share,
    and rates after the dominant target is removed. Split evaluation by whole
