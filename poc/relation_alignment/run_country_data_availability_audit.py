@@ -32,6 +32,10 @@ COMMENT = re.compile(r"<!--.*?-->", re.S)
 HTML_TAG = re.compile(r"<[^>]+>")
 EXTERNAL_LINK = re.compile(r"\[(?:https?://|//)[^\s\]]+(?:\s+([^\]]+))?\]")
 TABLE = re.compile(r"\{\|.*?\|\}", re.S)
+NON_ARTICLE_TAIL = re.compile(
+    r"^==+\s*(?:see also|notes|references|sources|bibliography|further reading|external links)\s*==+\s*$",
+    re.I | re.M,
+)
 TARGETS = {"P17", "P8047"}
 
 
@@ -262,6 +266,36 @@ def plain_wikitext(wikitext: str) -> str:
     return text
 
 
+def article_body_wikitext(wikitext: str, infobox: str) -> str:
+    body = wikitext.replace(infobox, "", 1) if infobox else wikitext
+    tail = NON_ARTICLE_TAIL.search(body)
+    return body[: tail.start()] if tail else body
+
+
+def object_spans(text: str, object_aliases: list[str]) -> list[dict]:
+    """Return body sentences that identify the object; the page identifies the subject."""
+    spans = []
+    seen = set()
+    for paragraph_index, paragraph in enumerate(reference.split_paragraphs(text)):
+        sentences = [part.strip() for part in reference.SENTENCE_BOUNDARY.split(paragraph)]
+        for sentence_index, sentence in enumerate(part for part in sentences if part):
+            match = reference.matching_alias(sentence, object_aliases)
+            if not match or sentence in seen:
+                continue
+            seen.add(sentence)
+            spans.append(
+                {
+                    "paragraph_index": paragraph_index,
+                    "sentence_start": sentence_index,
+                    "sentence_end": sentence_index,
+                    "span_level": "sentence",
+                    "object_match": match,
+                    "evidence_text": sentence,
+                }
+            )
+    return spans
+
+
 def field_matches(
     fields: dict[str, str], target_title: str, object_aliases: list[str]
 ) -> dict[str, str]:
@@ -281,6 +315,8 @@ def availability_status(row: dict) -> str:
         return "ALTERNATIVE_WIKIDATA_RELATION_OBSERVED"
     if row["qualifier_relation_paths"]:
         return "WIKIDATA_QUALIFIER_RELATION_OBSERVED"
+    if row["page_anchored_evidence_text"]:
+        return "PAGE_ANCHORED_BODY_TEXT_EVIDENCE_OBSERVED"
     if row["infobox_matching_fields"]:
         return "INFOBOX_ENTITY_EVIDENCE_OBSERVED"
     if row["full_article_object_link_anchors"]:
@@ -341,8 +377,11 @@ def audit_rows(rows: list[dict[str, str]]) -> tuple[list[dict], dict[str, str]]:
         infobox = balanced_template(wikitext)
         fields = field_matches(template_fields(infobox), target_title, object_aliases)
         anchors = linked_anchors(wikitext, target_title)
+        body_wikitext = article_body_wikitext(wikitext, infobox)
+        body_anchors = linked_anchors(body_wikitext, target_title)
+        body_text = plain_wikitext(body_wikitext)
         spans = reference.minimal_spans(
-            plain_wikitext(wikitext), subject_aliases, sorted(set(object_aliases + anchors))
+            body_text, subject_aliases, sorted(set(object_aliases + body_anchors))
         )
         span = min(
             spans,
@@ -351,6 +390,12 @@ def audit_rows(rows: list[dict[str, str]]) -> tuple[list[dict], dict[str, str]]:
                 len(value["evidence_text"]),
             ),
         ) if spans else {}
+        page_spans = object_spans(
+            body_text, sorted(set(object_aliases + body_anchors))
+        )
+        page_span = min(
+            page_spans, key=lambda value: len(value["evidence_text"])
+        ) if page_spans else {}
         result = {
             "subject_qid": subject,
             "subject_label": source["subject_label"],
@@ -372,10 +417,14 @@ def audit_rows(rows: list[dict[str, str]]) -> tuple[list[dict], dict[str, str]]:
             "infobox_matching_fields": "|".join(sorted(fields)),
             "infobox_matching_values": json.dumps(fields, ensure_ascii=False),
             "full_article_object_link_anchors": "|".join(anchors),
+            "body_object_link_anchors": "|".join(body_anchors),
             "full_article_span_level": span.get("span_level", ""),
             "full_article_subject_match": span.get("subject_match", ""),
             "full_article_object_match": span.get("object_match", ""),
             "full_article_evidence_text": span.get("evidence_text", ""),
+            "page_anchored_span_level": page_span.get("span_level", ""),
+            "page_anchored_object_match": page_span.get("object_match", ""),
+            "page_anchored_evidence_text": page_span.get("evidence_text", ""),
             "lead_evidence_status": source["evidence_status"],
             "lead_evidence_text": source["evidence_text"],
         }
@@ -437,6 +486,9 @@ def make_summary(rows: list[dict], labels: dict[str, str]) -> dict:
         ),
         "full_article_complete_span_pairs": sum(
             bool(row["full_article_evidence_text"]) for row in rows
+        ),
+        "page_anchored_body_span_pairs": sum(
+            bool(row["page_anchored_evidence_text"]) for row in rows
         ),
         "lead_complete_span_pairs": sum(
             row["lead_evidence_status"] == "COOCCURRENCE_IN_LEAD_ONLY"
@@ -511,6 +563,7 @@ def write_report(summary: dict, rows: list[dict]) -> None:
         f"- A Wikipedia infobox field contains the object identity for **{summary['infobox_entity_evidence_pairs']:,}** pairs.",
         f"- The complete article links to the object identity for **{summary['full_article_object_link_pairs']:,}** pairs.",
         f"- The complete article has a minimal sentence-to-paragraph span for **{summary['full_article_complete_span_pairs']:,}** pairs.",
+        f"- With the page QID as the subject anchor, the article body has an object sentence for **{summary['page_anchored_body_span_pairs']:,}** pairs.",
         f"- The earlier lead-only run had such a span for **{summary['lead_complete_span_pairs']:,}** pairs.",
         f"- A known structured Wikidata property resolves **{summary['resolved_by_structured_wikidata_pairs']:,}** pairs.",
         f"- **{summary['unresolved_with_checked_evidence_pairs']:,}** unresolved pairs have evidence for later classification.",
@@ -519,6 +572,8 @@ def write_report(summary: dict, rows: list[dict]) -> None:
         "These groups overlap. They are evidence-availability checks, not relation",
         "labels. A direct Wikidata property resolves its own typed relation. Infobox",
         "fields, links, qualifier paths, and text still need semantic classification.",
+        "The page-anchored rule treats the article QID as the subject and requires the",
+        "object identity in the body sentence.",
         "",
         "## Primary availability status",
         "",
@@ -579,6 +634,7 @@ def write_report(summary: dict, rows: list[dict]) -> None:
             row["current_target_relations"]
             or row["alternative_forward_properties"]
             or row["infobox_matching_fields"]
+            or row["page_anchored_evidence_text"]
             or row["full_article_object_link_anchors"]
             or row["full_article_evidence_text"]
         )

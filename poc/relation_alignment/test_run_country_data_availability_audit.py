@@ -1,6 +1,8 @@
 from run_country_data_availability_audit import (
+    article_body_wikitext,
     balanced_template,
     linked_anchors,
+    object_spans,
     plain_wikitext,
     relation_paths,
     template_fields,
@@ -36,3 +38,25 @@ def test_infobox_and_link_extraction() -> None:
 def test_plain_wikitext_keeps_link_anchor_and_removes_infobox() -> None:
     text = "{{Infobox ship|country=Germany}}\nU-1 served [[Nazi Germany|Germany]]."
     assert plain_wikitext(text).strip() == "U-1 served Germany."
+
+
+def test_page_subject_allows_object_only_sentence() -> None:
+    spans = object_spans(
+        "It served under Nazi Germany. It later surrendered.", ["Nazi Germany"]
+    )
+    assert spans == [
+        {
+            "paragraph_index": 0,
+            "sentence_start": 0,
+            "sentence_end": 0,
+            "span_level": "sentence",
+            "object_match": "Nazi Germany",
+            "evidence_text": "It served under Nazi Germany.",
+        }
+    ]
+
+
+def test_article_body_excludes_reference_tail() -> None:
+    text = "{{Infobox x\n| country = Germany\n}}\nBody text.\n== References ==\nGermany"
+    infobox = balanced_template(text)
+    assert article_body_wikitext(text, infobox).strip() == "Body text."

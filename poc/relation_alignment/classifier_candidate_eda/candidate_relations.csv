@@ -1,11 +1,11 @@
 level2_relation,label,level1_family,description,structured_seed_assertions,unresolved_candidate_pairs
-P17,country,SPATIAL,sovereign state that this subject item is in (not to be used for human beings),1376,291
+P17,country,SPATIAL,sovereign state that this subject item is in (not to be used for human beings),1376,305
 P8047,country of registry,SPATIAL,country where a ship is or has been registered,1140,129
 P495,country of origin,SPATIAL,"country of origin of this item (creative work, food, phrase, product, etc.)",20,85
-P945,allegiance,AFFILIATION_STATUS,country (or other power) that the person or group serves,16,89
-P27,country of citizenship,AFFILIATION_STATUS,the object is a country that recognizes the subject as its citizen,5,6
+P945,allegiance,AFFILIATION_STATUS,country (or other power) that the person or group serves,16,93
+P27,country of citizenship,AFFILIATION_STATUS,the object is a country that recognizes the subject as its citizen,5,7
 P1532,country for sport,SPATIAL,country a person or a team represents when playing a sport,2,5
 P361,part of,PART_WHOLE_HIERARCHY,"object of which the subject is a part (if this subject is already part of object A which is a part of object B, then please only make the subject part of object A), inverse property of ""has part"" (P527, see also ""has parts of the class"" (P2670))",2,2
 P137,operator,OWNERSHIP_CONTROL,"person, profession, organization or entity that operates the equipment, facility, or service",1,46
-P276,location,SPATIAL,"location of the object, structure or event; use P131 to indicate the containing administrative entity, P8138 for statistical entities, or P706 for geographic entities; use P7153 for locations associated with the object",1,13
+P276,location,SPATIAL,"location of the object, structure or event; use P131 to indicate the containing administrative entity, P8138 for statistical entities, or P706 for geographic entities; use P7153 for locations associated with the object",1,15
 P840,narrative location,SPATIAL,the narrative of the work is set in this location,1,2

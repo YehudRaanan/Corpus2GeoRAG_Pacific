@@ -15,26 +15,28 @@ the data needed to observe it?
 - A Wikidata qualifier path connects the same QIDs for **8** pairs.
 - A Wikipedia infobox field contains the object identity for **285** pairs.
 - The complete article links to the object identity for **366** pairs.
-- The complete article has a minimal sentence-to-paragraph span for **213** pairs.
+- The complete article has a minimal sentence-to-paragraph span for **217** pairs.
+- With the page QID as the subject anchor, the article body has an object sentence for **296** pairs.
 - The earlier lead-only run had such a span for **154** pairs.
 - A known structured Wikidata property resolves **43** pairs.
-- **357** unresolved pairs have evidence for later classification.
-- **200** unresolved pairs have no evidence in the checked sources.
+- **371** unresolved pairs have evidence for later classification.
+- **186** unresolved pairs have no evidence in the checked sources.
 
 These groups overlap. They are evidence-availability checks, not relation
 labels. A direct Wikidata property resolves its own typed relation. Infobox
 fields, links, qualifier paths, and text still need semantic classification.
+The page-anchored rule treats the article QID as the subject and requires the
+object identity in the body sentence.
 
 ## Primary availability status
 
 | Status | Pairs |
 |---|---:|
 | `ALTERNATIVE_WIKIDATA_RELATION_OBSERVED` | 43 |
-| `DATA_NOT_OBSERVED_IN_CHECKED_SOURCES` | 200 |
-| `FULL_ARTICLE_ENTITY_LINK_OBSERVED` | 82 |
-| `FULL_ARTICLE_TEXT_COOCCURRENCE_OBSERVED` | 11 |
-| `INFOBOX_ENTITY_EVIDENCE_OBSERVED` | 259 |
-| `LEAD_TEXT_COOCCURRENCE_OBSERVED` | 3 |
+| `DATA_NOT_OBSERVED_IN_CHECKED_SOURCES` | 186 |
+| `FULL_ARTICLE_ENTITY_LINK_OBSERVED` | 4 |
+| `INFOBOX_ENTITY_EVIDENCE_OBSERVED` | 99 |
+| `PAGE_ANCHORED_BODY_TEXT_EVIDENCE_OBSERVED` | 266 |
 | `WIKIDATA_QUALIFIER_RELATION_OBSERVED` | 2 |
 
 ## Common alternative Wikidata properties
@@ -94,14 +96,14 @@ The classifier was not run.
 
 ## Examples
 
-- **66th Division -> Empire of Japan**: `INFOBOX_ENTITY_EVIDENCE_OBSERVED`; country
-- **Lötzen Infantry Brigade -> Nazi Germany**: `INFOBOX_ENTITY_EVIDENCE_OBSERVED`; allegiance
+- **66th Division -> Empire of Japan**: `PAGE_ANCHORED_BODY_TEXT_EVIDENCE_OBSERVED`; country
+- **Lötzen Infantry Brigade -> Nazi Germany**: `PAGE_ANCHORED_BODY_TEXT_EVIDENCE_OBSERVED`; allegiance
 - **Ambra -> Kingdom of Italy**: `ALTERNATIVE_WIKIDATA_RELATION_OBSERVED`; P495
 - **Come and See -> Soviet Union**: `ALTERNATIVE_WIKIDATA_RELATION_OBSERVED`; P495|P840
-- **NMS Regele Ferdinand I -> Soviet Union**: `FULL_ARTICLE_ENTITY_LINK_OBSERVED`; Soviet Union
+- **NMS Regele Ferdinand I -> Soviet Union**: `PAGE_ANCHORED_BODY_TEXT_EVIDENCE_OBSERVED`; In early 1944 the Soviets were able to cut off and surround the port of Sevastopol on the Crimean Peninsula.
 - **Curt Bruns -> Nazi Germany**: `INFOBOX_ENTITY_EVIDENCE_OBSERVED`; allegiance
-- **61st Division -> Empire of Japan**: `INFOBOX_ENTITY_EVIDENCE_OBSERVED`; country
-- **47th Division -> Empire of Japan**: `INFOBOX_ENTITY_EVIDENCE_OBSERVED`; country
+- **61st Division -> Empire of Japan**: `PAGE_ANCHORED_BODY_TEXT_EVIDENCE_OBSERVED`; country
+- **47th Division -> Empire of Japan**: `PAGE_ANCHORED_BODY_TEXT_EVIDENCE_OBSERVED`; country
 
 ## Files
 

@@ -136,6 +136,8 @@ def evidence_channels(row: dict[str, str]) -> list[str]:
         channels.append("ENTITY_LINK")
     if row["full_article_evidence_text"]:
         channels.append("FULL_ARTICLE_SPAN")
+    if row["page_anchored_evidence_text"]:
+        channels.append("PAGE_ANCHORED_BODY_SPAN")
     if row["lead_evidence_status"] == "COOCCURRENCE_IN_LEAD_ONLY":
         channels.append("LEAD_SPAN")
     return channels
@@ -144,6 +146,8 @@ def evidence_channels(row: dict[str, str]) -> list[str]:
 def classifier_input_status(row: dict[str, str]) -> str:
     if row["full_article_evidence_text"]:
         return "TEXT_SPAN_READY"
+    if row["page_anchored_evidence_text"]:
+        return "PAGE_ANCHORED_TEXT_READY"
     if row["lead_evidence_status"] == "COOCCURRENCE_IN_LEAD_ONLY":
         return "LEAD_SPAN_READY"
     if row["infobox_matching_fields"]:
@@ -282,6 +286,7 @@ def build() -> tuple[list[dict], list[dict], list[dict], list[dict], dict]:
                 "infobox_matching_fields": source["infobox_matching_fields"],
                 "qualifier_relation_paths": source["qualifier_relation_paths"],
                 "evidence_text": source["full_article_evidence_text"]
+                or source["page_anchored_evidence_text"]
                 or source["lead_evidence_text"],
                 "wikipedia_revision_id": source["wikipedia_revision_id"],
                 "classifier_selected_relations": "",
@@ -317,7 +322,11 @@ def build() -> tuple[list[dict], list[dict], list[dict], list[dict], dict]:
             "pair_count": len(members),
             "text_span_ready_pairs": sum(
                 row["classifier_input_status"]
-                in {"TEXT_SPAN_READY", "LEAD_SPAN_READY"}
+                in {
+                    "TEXT_SPAN_READY",
+                    "PAGE_ANCHORED_TEXT_READY",
+                    "LEAD_SPAN_READY",
+                }
                 for row in members
             ),
         }
@@ -362,7 +371,11 @@ def build() -> tuple[list[dict], list[dict], list[dict], list[dict], dict]:
         row
         for row in cases
         if row["classifier_input_status"]
-        in {"TEXT_SPAN_READY", "LEAD_SPAN_READY"}
+        in {
+            "TEXT_SPAN_READY",
+            "PAGE_ANCHORED_TEXT_READY",
+            "LEAD_SPAN_READY",
+        }
     ]
     summary = {
         "unresolved_pairs_with_checked_evidence": len(cases),
@@ -422,6 +435,8 @@ def write_report(summary: dict, relations: list[dict]) -> None:
         f"The EDA covers **{summary['unresolved_pairs_with_checked_evidence']:,}** unresolved pairs that have checked evidence.",
         "It uses resolved structured pairs only to create possible Level 2 choices.",
         "It does not select a relation and does not run a classifier.",
+        "The Wikipedia page QID defines the subject. A page-anchored evidence",
+        "sentence therefore needs to identify only the object in the article body.",
         "",
         "## Candidate construction",
         "",
@@ -483,6 +498,8 @@ def write_report(summary: dict, relations: list[dict]) -> None:
         "- Type compatibility creates an allowed list. It does not prove a relation.",
         "- A broad `P279` match can add unrelated choices.",
         "- A candidate with one seed example is weak.",
+        "- A page-anchored sentence can discuss another entity on the page. The",
+        "  classifier must be allowed to return `UNRESOLVED`.",
         "- An infobox field or entity link is not a complete co-appearance text span.",
         "- `NO_TYPE_MATCHED_CANDIDATE` means that the seed data do not cover the type pair.",
         "",

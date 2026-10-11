@@ -1,5 +1,5 @@
 {
-  "unresolved_pairs_with_checked_evidence": 357,
+  "unresolved_pairs_with_checked_evidence": 371,
   "structured_seed_assertions": 2564,
   "structured_seed_relations": 10,
   "candidate_relation_ids": [
@@ -15,43 +15,44 @@
     "P945"
   ],
   "candidate_match_tiers": {
-    "DIRECT_P31": 268,
-    "P279_DEPTH_2": 24,
+    "DIRECT_P31": 281,
+    "P279_DEPTH_2": 25,
     "P279_DEPTH_1": 63,
     "NO_TYPE_MATCH": 2
   },
   "review_status_counts": {
-    "MULTIPLE_CANDIDATES": 178,
-    "SINGLE_SUPPORTED_CANDIDATE": 134,
+    "MULTIPLE_CANDIDATES": 183,
+    "SINGLE_SUPPORTED_CANDIDATE": 143,
     "SINGLE_LOW_SUPPORT_CANDIDATE": 43,
     "NO_TYPE_MATCHED_CANDIDATE": 2
   },
   "candidate_count_distribution": {
     "0": 2,
-    "1": 177,
-    "2": 89,
-    "3": 43,
+    "1": 186,
+    "2": 92,
+    "3": 45,
     "4": 46
   },
   "classifier_input_status_counts": {
-    "TEXT_SPAN_READY": 194,
-    "INFOBOX_ONLY": 126,
-    "LEAD_SPAN_READY": 22,
-    "ENTITY_LINK_ONLY": 13,
+    "TEXT_SPAN_READY": 195,
+    "PAGE_ANCHORED_TEXT_READY": 71,
+    "INFOBOX_ONLY": 98,
+    "ENTITY_LINK_ONLY": 4,
+    "LEAD_SPAN_READY": 1,
     "WIKIDATA_QUALIFIER_ONLY": 2
   },
-  "pairs_with_one_or_more_candidates": 355,
+  "pairs_with_one_or_more_candidates": 369,
   "pairs_without_type_matched_candidates": 2,
-  "pairs_with_one_candidate": 177,
-  "pairs_with_multiple_candidates": 178,
-  "exact_type_pair_candidate_pairs": 268,
-  "hierarchy_expanded_candidate_pairs": 87,
-  "text_span_ready_pairs": 216,
-  "text_span_ready_with_candidates": 214,
-  "text_span_ready_multiple_candidates": 105,
-  "text_span_ready_single_supported_candidate": 93,
-  "non_text_evidence_pairs": 141,
-  "type_pair_groups": 168,
+  "pairs_with_one_candidate": 186,
+  "pairs_with_multiple_candidates": 183,
+  "exact_type_pair_candidate_pairs": 281,
+  "hierarchy_expanded_candidate_pairs": 88,
+  "text_span_ready_pairs": 267,
+  "text_span_ready_with_candidates": 265,
+  "text_span_ready_multiple_candidates": 130,
+  "text_span_ready_single_supported_candidate": 113,
+  "non_text_evidence_pairs": 104,
+  "type_pair_groups": 175,
   "classifier_run": false,
   "selection_rule": "Use the narrowest P31/P279 tier with structured examples. Candidate support ranks options but does not select a relation."
 }

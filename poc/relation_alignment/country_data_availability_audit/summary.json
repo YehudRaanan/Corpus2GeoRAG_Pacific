@@ -1,12 +1,11 @@
 {
   "pairs": 600,
   "status_counts": {
-    "INFOBOX_ENTITY_EVIDENCE_OBSERVED": 259,
-    "DATA_NOT_OBSERVED_IN_CHECKED_SOURCES": 200,
+    "PAGE_ANCHORED_BODY_TEXT_EVIDENCE_OBSERVED": 266,
+    "DATA_NOT_OBSERVED_IN_CHECKED_SOURCES": 186,
     "ALTERNATIVE_WIKIDATA_RELATION_OBSERVED": 43,
-    "FULL_ARTICLE_ENTITY_LINK_OBSERVED": 82,
-    "FULL_ARTICLE_TEXT_COOCCURRENCE_OBSERVED": 11,
-    "LEAD_TEXT_COOCCURRENCE_OBSERVED": 3,
+    "INFOBOX_ENTITY_EVIDENCE_OBSERVED": 99,
+    "FULL_ARTICLE_ENTITY_LINK_OBSERVED": 4,
     "WIKIDATA_QUALIFIER_RELATION_OBSERVED": 2
   },
   "current_wikidata_target_relation_pairs": 0,
@@ -15,12 +14,13 @@
   "qualifier_relation_pairs": 8,
   "infobox_entity_evidence_pairs": 285,
   "full_article_object_link_pairs": 366,
-  "full_article_complete_span_pairs": 213,
+  "full_article_complete_span_pairs": 217,
+  "page_anchored_body_span_pairs": 296,
   "lead_complete_span_pairs": 154,
   "relation_semantics_unresolved_pairs": 557,
   "resolved_by_structured_wikidata_pairs": 43,
-  "unresolved_with_checked_evidence_pairs": 357,
-  "unresolved_without_checked_evidence_pairs": 200,
+  "unresolved_with_checked_evidence_pairs": 371,
+  "unresolved_without_checked_evidence_pairs": 186,
   "top_forward_properties": [
     {
       "property": "P495",
