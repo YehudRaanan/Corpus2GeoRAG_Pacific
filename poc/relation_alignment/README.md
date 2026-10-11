@@ -51,6 +51,11 @@ event-link gaps. This README preserves the original smaller POC.
 The [full WarSampo–Wikidata mapping process](../../docs/WARSAMPO_WIKIDATA_RELATION_MAPPING_PROCESS.md)
 defines the complete-coverage audit. This file records the smaller POC.
 
+The [EventKG-Wikidata declared mapping audit](EVENTKG_WIKIDATA_DECLARED_MAPPING_AUDIT_2026-10-11.md)
+checks EventKG predicates that had no local QID-pair overlap against published
+Wikidata, DBpedia, EventKG, and PARIS ontology mappings. It keeps exact,
+conflicting, grouped, and broader mappings separate.
+
 ## Purpose
 
 Find rules that translate **relation types** between WarSampo, Wikidata, and

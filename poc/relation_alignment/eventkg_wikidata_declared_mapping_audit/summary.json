@@ -1,0 +1,27 @@
+{
+  "generated_at": "2026-10-11T19:53:29.482312+00:00",
+  "scope": "EventKG NO_QID_PAIR_OVERLAP predicates",
+  "predicate_count": 217,
+  "occurrence_count": 9207,
+  "predicates_with_any_declared_or_candidate_mapping": 53,
+  "occurrences_with_any_declared_or_candidate_mapping": 5359,
+  "status_counts": {
+    "AUTOMATIC_ALIGNMENT_CANDIDATE": 4,
+    "BROADER_OR_NARROWER_ONLY": 3,
+    "DECLARED_EXACT_CONFLICT": 2,
+    "DECLARED_EXACT_SINGLE": 43,
+    "NORMALIZED_MULTI_OPTION": 1,
+    "NO_DECLARED_MAPPING_FOUND": 164
+  },
+  "status_occurrence_counts": {
+    "AUTOMATIC_ALIGNMENT_CANDIDATE": 428,
+    "BROADER_OR_NARROWER_ONLY": 63,
+    "DECLARED_EXACT_CONFLICT": 88,
+    "DECLARED_EXACT_SINGLE": 1658,
+    "NORMALIZED_MULTI_OPTION": 3122,
+    "NO_DECLARED_MAPPING_FOUND": 3848
+  },
+  "eventkg_repository_commit": "0face5765ffc3e16a8746f9ed98877dc86de2bef",
+  "eventkg_v3_2_wikidata_snapshot": "2023-02-27",
+  "eventkg_v3_2_dbpedia_snapshot": "2022-12-01"
+}

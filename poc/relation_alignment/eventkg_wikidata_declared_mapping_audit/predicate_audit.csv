@@ -1,0 +1,218 @@
+eventkg_predicate,eventkg_label,source_occurrence_count,audit_status,exact_wikidata_options,normalization_options,automatic_options,broader_narrower_options,candidate_row_count
+http://dbpedia.org/ontology/academicDiscipline,academic Discipline,162,NO_DECLARED_MAPPING_FOUND,,,,,0
+http://dbpedia.org/ontology/administrativeCenter,administrative Center,4,NO_DECLARED_MAPPING_FOUND,,,,,0
+http://dbpedia.org/ontology/affiliation,affiliation,46,DECLARED_EXACT_SINGLE,P1416,,,,1
+http://dbpedia.org/ontology/aircraftAttack,aircraft Attack,143,NO_DECLARED_MAPPING_FOUND,,,,,0
+http://dbpedia.org/ontology/aircraftElectronic,aircraft Electronic,24,NO_DECLARED_MAPPING_FOUND,,,,,0
+http://dbpedia.org/ontology/aircraftHelicopter,aircraft Helicopter,31,NO_DECLARED_MAPPING_FOUND,,,,,0
+http://dbpedia.org/ontology/aircraftHelicopterAttack,aircraft Helicopter Attack,11,NO_DECLARED_MAPPING_FOUND,,,,,0
+http://dbpedia.org/ontology/aircraftHelicopterMultirole,aircraft Helicopter Multirole,8,NO_DECLARED_MAPPING_FOUND,,,,,0
+http://dbpedia.org/ontology/aircraftHelicopterUtility,aircraft Helicopter Utility,2,NO_DECLARED_MAPPING_FOUND,,,,,0
+http://dbpedia.org/ontology/aircraftInterceptor,aircraft Interceptor,5,NO_DECLARED_MAPPING_FOUND,,,,,0
+http://dbpedia.org/ontology/aircraftTransport,aircraft Transport,134,NO_DECLARED_MAPPING_FOUND,,,,,0
+http://dbpedia.org/ontology/album,album,2,NO_DECLARED_MAPPING_FOUND,,,,,0
+http://dbpedia.org/ontology/alumni,alumni,3,NO_DECLARED_MAPPING_FOUND,,,,,0
+http://dbpedia.org/ontology/anthem,anthem,18,DECLARED_EXACT_SINGLE,P85,,,,1
+http://dbpedia.org/ontology/archipelago,archipelago,1,NO_DECLARED_MAPPING_FOUND,,,,,0
+http://dbpedia.org/ontology/architecturalStyle,architectural Style,27,DECLARED_EXACT_SINGLE,P149,,,,1
+http://dbpedia.org/ontology/areaOfSearch,area Of Search,1,NO_DECLARED_MAPPING_FOUND,,,,,0
+http://dbpedia.org/ontology/artist,artist,25,DECLARED_EXACT_SINGLE,P175,,,,2
+http://dbpedia.org/ontology/assembly,assembly,6,NO_DECLARED_MAPPING_FOUND,,,,,0
+http://dbpedia.org/ontology/associate,associate,4,NO_DECLARED_MAPPING_FOUND,,,,,0
+http://dbpedia.org/ontology/basedOn,based On,3,DECLARED_EXACT_SINGLE,P144,,,,1
+http://dbpedia.org/ontology/beatifiedBy,beatified By,2,NO_DECLARED_MAPPING_FOUND,,,,,0
+http://dbpedia.org/ontology/beatifiedPlace,beatified Place,46,NO_DECLARED_MAPPING_FOUND,,,,,0
+http://dbpedia.org/ontology/billed,billed,4,NO_DECLARED_MAPPING_FOUND,,,,,0
+http://dbpedia.org/ontology/board,board,13,NO_DECLARED_MAPPING_FOUND,,,,,0
+http://dbpedia.org/ontology/bodyDiscovered,body Discovered,1,NO_DECLARED_MAPPING_FOUND,,,,,0
+http://dbpedia.org/ontology/bodyStyle,body Style,1,NO_DECLARED_MAPPING_FOUND,,,,,0
+http://dbpedia.org/ontology/breeder,breeder,17,NO_DECLARED_MAPPING_FOUND,,,,,0
+http://dbpedia.org/ontology/broadcastArea,broadcast Area,10,NO_DECLARED_MAPPING_FOUND,,,,,0
+http://dbpedia.org/ontology/broadcastNetwork,broadcast Network,7,NO_DECLARED_MAPPING_FOUND,,,,,0
+http://dbpedia.org/ontology/bronzeMedalist,bronze Medalist,11,NO_DECLARED_MAPPING_FOUND,,,,,0
+http://dbpedia.org/ontology/campus,campus,3,NO_DECLARED_MAPPING_FOUND,,,,,0
+http://dbpedia.org/ontology/canonizedBy,canonized By,4,NO_DECLARED_MAPPING_FOUND,,,,,0
+http://dbpedia.org/ontology/canonizedPlace,canonized Place,13,NO_DECLARED_MAPPING_FOUND,,,,,0
+http://dbpedia.org/ontology/capital,capital,47,DECLARED_EXACT_SINGLE,P36,,,,1
+http://dbpedia.org/ontology/ceremonialCounty,ceremonial County,3,NO_DECLARED_MAPPING_FOUND,,,,,0
+http://dbpedia.org/ontology/chain,chain,3,NO_DECLARED_MAPPING_FOUND,,,,,0
+http://dbpedia.org/ontology/chairman,chairman,3,NO_DECLARED_MAPPING_FOUND,,,,,0
+http://dbpedia.org/ontology/chairperson,chairperson,2,NO_DECLARED_MAPPING_FOUND,,,,,0
+http://dbpedia.org/ontology/champion,champion,1,NO_DECLARED_MAPPING_FOUND,,,,,0
+http://dbpedia.org/ontology/championInDoubleMale,champion In Double Male,2,NO_DECLARED_MAPPING_FOUND,,,,,0
+http://dbpedia.org/ontology/championInSingleMale,champion In Single Male,1,NO_DECLARED_MAPPING_FOUND,,,,,0
+http://dbpedia.org/ontology/chancellor,chancellor,4,NO_DECLARED_MAPPING_FOUND,,,,,0
+http://dbpedia.org/ontology/channel,channel,15,NO_DECLARED_MAPPING_FOUND,,,,,0
+http://dbpedia.org/ontology/club,club,7,NO_DECLARED_MAPPING_FOUND,,,,,0
+http://dbpedia.org/ontology/coach,coach,13,NO_DECLARED_MAPPING_FOUND,,,,,0
+http://dbpedia.org/ontology/college,college,9,NO_DECLARED_MAPPING_FOUND,,,,,0
+http://dbpedia.org/ontology/colour,colour,41,DECLARED_EXACT_SINGLE,P462,,,,1
+http://dbpedia.org/ontology/company,company,33,NO_DECLARED_MAPPING_FOUND,,,,,0
+http://dbpedia.org/ontology/composer,composer,40,DECLARED_EXACT_SINGLE,P86,,,,1
+http://dbpedia.org/ontology/computingPlatform,computing Platform,17,DECLARED_EXACT_SINGLE,P400,,,,1
+http://dbpedia.org/ontology/convictionPenalty,conviction Penalty,60,NO_DECLARED_MAPPING_FOUND,,,,,0
+http://dbpedia.org/ontology/councilArea,council Area,1,NO_DECLARED_MAPPING_FOUND,,,,,0
+http://dbpedia.org/ontology/countryOrigin,country Origin,12,NO_DECLARED_MAPPING_FOUND,,,,,0
+http://dbpedia.org/ontology/creator,creator,122,DECLARED_EXACT_SINGLE,P170,,,,2
+http://dbpedia.org/ontology/crewMember,crew Member,2,DECLARED_EXACT_SINGLE,P1029,,,,1
+http://dbpedia.org/ontology/crosses,crosses,5,DECLARED_EXACT_SINGLE,P177,,,,1
+http://dbpedia.org/ontology/curator,curator,2,DECLARED_EXACT_SINGLE,P1640,,,,1
+http://dbpedia.org/ontology/currency,currency,30,DECLARED_EXACT_SINGLE,P38,,,,1
+http://dbpedia.org/ontology/dean,dean,1,NO_DECLARED_MAPPING_FOUND,,,,,0
+http://dbpedia.org/ontology/debutTeam,debut Team,5,NO_DECLARED_MAPPING_FOUND,,,,,0
+http://dbpedia.org/ontology/depiction,depiction,2,NO_DECLARED_MAPPING_FOUND,,,,,0
+http://dbpedia.org/ontology/deputy,deputy,3,NO_DECLARED_MAPPING_FOUND,,,,,0
+http://dbpedia.org/ontology/designCompany,design Company,4,NO_DECLARED_MAPPING_FOUND,,,,,0
+http://dbpedia.org/ontology/destination,destination,7,NO_DECLARED_MAPPING_FOUND,,,,,0
+http://dbpedia.org/ontology/developer,developer,10,DECLARED_EXACT_SINGLE,P178,,,,1
+http://dbpedia.org/ontology/diocese,diocese,8,DECLARED_EXACT_SINGLE,P708,,,,1
+http://dbpedia.org/ontology/discipline,discipline,14,DECLARED_EXACT_SINGLE,P101,,,,1
+http://dbpedia.org/ontology/district,district,3,DECLARED_EXACT_SINGLE,P131,,,,1
+http://dbpedia.org/ontology/division,division,1,NO_DECLARED_MAPPING_FOUND,,,,,0
+http://dbpedia.org/ontology/editor,editor,17,DECLARED_EXACT_SINGLE,P98,,,,2
+http://dbpedia.org/ontology/engine,engine,2,NO_DECLARED_MAPPING_FOUND,,,,,0
+http://dbpedia.org/ontology/era,era,3,DECLARED_EXACT_SINGLE,P2348,,,,1
+http://dbpedia.org/ontology/ethnicGroup,ethnic Group,5,NO_DECLARED_MAPPING_FOUND,,,,,0
+http://dbpedia.org/ontology/executiveProducer,executive Producer,31,NO_DECLARED_MAPPING_FOUND,,,,,0
+http://dbpedia.org/ontology/fastestDriver,fastest Driver,3,NO_DECLARED_MAPPING_FOUND,,,,,0
+http://dbpedia.org/ontology/federalState,federal State,1,NO_DECLARED_MAPPING_FOUND,,,,,0
+http://dbpedia.org/ontology/firstAscentPerson,first Ascent Person,12,NO_DECLARED_MAPPING_FOUND,,,,,0
+http://dbpedia.org/ontology/firstDriver,first Driver,5,NO_DECLARED_MAPPING_FOUND,,,,,0
+http://dbpedia.org/ontology/firstLeader,first Leader,114,NO_DECLARED_MAPPING_FOUND,,,,,0
+http://dbpedia.org/ontology/firstRace,first Race,1,NO_DECLARED_MAPPING_FOUND,,,,,0
+http://dbpedia.org/ontology/formerBandMember,former Band Member,3,NO_DECLARED_MAPPING_FOUND,,,,,0
+http://dbpedia.org/ontology/formerCoach,former Coach,1,NO_DECLARED_MAPPING_FOUND,,,,,0
+http://dbpedia.org/ontology/formerTeam,former Team,11,NO_DECLARED_MAPPING_FOUND,,,,,0
+http://dbpedia.org/ontology/frazioni,frazioni,3,NO_DECLARED_MAPPING_FOUND,,,,,0
+http://dbpedia.org/ontology/gameArtist,game Artist,1,NO_DECLARED_MAPPING_FOUND,,,,,0
+http://dbpedia.org/ontology/goldMedalist,gold Medalist,23,NO_DECLARED_MAPPING_FOUND,,,,,0
+http://dbpedia.org/ontology/governingBody,governing Body,2,NO_DECLARED_MAPPING_FOUND,,,,,0
+http://dbpedia.org/ontology/governor,governor,2,NO_DECLARED_MAPPING_FOUND,,,,,0
+http://dbpedia.org/ontology/ground,ground,26,NO_DECLARED_MAPPING_FOUND,,,,,0
+http://dbpedia.org/ontology/head,head,3,NO_DECLARED_MAPPING_FOUND,,,,,0
+http://dbpedia.org/ontology/highschool,highschool,7,NO_DECLARED_MAPPING_FOUND,,,,,0
+http://dbpedia.org/ontology/homeport,homeport,234,DECLARED_EXACT_SINGLE,P504,,,,1
+http://dbpedia.org/ontology/ideology,ideology,323,DECLARED_EXACT_SINGLE,P1142,,,,1
+http://dbpedia.org/ontology/incumbent,incumbent,1,NO_DECLARED_MAPPING_FOUND,,,,,0
+http://dbpedia.org/ontology/industry,industry,52,DECLARED_EXACT_SINGLE,P452,,,,1
+http://dbpedia.org/ontology/inflow,inflow,1,DECLARED_EXACT_SINGLE,P200,,,,2
+http://dbpedia.org/ontology/instrument,instrument,10,DECLARED_EXACT_SINGLE,P1303,,,,1
+http://dbpedia.org/ontology/intercommunality,intercommunality,1,NO_DECLARED_MAPPING_FOUND,,,,,0
+http://dbpedia.org/ontology/internationalAffiliation,international Affiliation,1,NO_DECLARED_MAPPING_FOUND,,,,,0
+http://dbpedia.org/ontology/island,island,2,NO_DECLARED_MAPPING_FOUND,,,,,0
+http://dbpedia.org/ontology/language,language,148,DECLARED_EXACT_SINGLE,P407,,,,1
+http://dbpedia.org/ontology/largestCity,largest City,5,NO_DECLARED_MAPPING_FOUND,,,,,0
+http://dbpedia.org/ontology/lastRace,last Race,1,NO_DECLARED_MAPPING_FOUND,,,,,0
+http://dbpedia.org/ontology/leaderName,leader Name,1,NO_DECLARED_MAPPING_FOUND,,,,,0
+http://dbpedia.org/ontology/leaderParty,leader Party,1,NO_DECLARED_MAPPING_FOUND,,,,,0
+http://dbpedia.org/ontology/legislature,legislature,4,NO_DECLARED_MAPPING_FOUND,,,,,0
+http://dbpedia.org/ontology/lieutenant,lieutenant,3,NO_DECLARED_MAPPING_FOUND,,,,,0
+http://dbpedia.org/ontology/locatedInArea,located In Area,17,DECLARED_EXACT_SINGLE,P131,,,,1
+http://dbpedia.org/ontology/locationCity,location City,29,BROADER_OR_NARROWER_ONLY,,,,P276,1
+http://dbpedia.org/ontology/locationCountry,location Country,18,BROADER_OR_NARROWER_ONLY,,,,P276,1
+http://dbpedia.org/ontology/logo,logo,2,NO_DECLARED_MAPPING_FOUND,,,,,0
+http://dbpedia.org/ontology/maidenFlightRocket,maiden Flight Rocket,6,NO_DECLARED_MAPPING_FOUND,,,,,0
+http://dbpedia.org/ontology/mainInterest,main Interest,26,NO_DECLARED_MAPPING_FOUND,,,,,0
+http://dbpedia.org/ontology/mainOrgan,main Organ,2,NO_DECLARED_MAPPING_FOUND,,,,,0
+http://dbpedia.org/ontology/manager,manager,2,DECLARED_EXACT_SINGLE,P286,,,,1
+http://dbpedia.org/ontology/managerClub,manager Club,3,NO_DECLARED_MAPPING_FOUND,,,,,0
+http://dbpedia.org/ontology/map,map,10,NO_DECLARED_MAPPING_FOUND,,,,,0
+http://dbpedia.org/ontology/material,material,2,DECLARED_EXACT_SINGLE,P186,,,,1
+http://dbpedia.org/ontology/mergedWith,merged With,8,NO_DECLARED_MAPPING_FOUND,,,,,0
+http://dbpedia.org/ontology/mission,mission,1,NO_DECLARED_MAPPING_FOUND,,,,,0
+http://dbpedia.org/ontology/monarch,monarch,35,NO_DECLARED_MAPPING_FOUND,,,,,0
+http://dbpedia.org/ontology/mother,mother,6,DECLARED_EXACT_SINGLE,P25,,,,1
+http://dbpedia.org/ontology/mouthMountain,mouth Mountain,3,NO_DECLARED_MAPPING_FOUND,,,,,0
+http://dbpedia.org/ontology/mouthPlace,mouth Place,3,NO_DECLARED_MAPPING_FOUND,,,,,0
+http://dbpedia.org/ontology/movement,movement,28,DECLARED_EXACT_SINGLE,P135,,,,1
+http://dbpedia.org/ontology/museum,museum,8,NO_DECLARED_MAPPING_FOUND,,,,,0
+http://dbpedia.org/ontology/musicType,music Type,1,NO_DECLARED_MAPPING_FOUND,,,,,0
+http://dbpedia.org/ontology/nearestCity,nearest City,40,NO_DECLARED_MAPPING_FOUND,,,,,0
+http://dbpedia.org/ontology/network,network,26,NO_DECLARED_MAPPING_FOUND,,,,,0
+http://dbpedia.org/ontology/nextEvent,next Event,16,BROADER_OR_NARROWER_ONLY,,,,P156,1
+http://dbpedia.org/ontology/notableIdea,notable Idea,2,NO_DECLARED_MAPPING_FOUND,,,,,0
+http://dbpedia.org/ontology/notableStudent,notable Student,22,NO_DECLARED_MAPPING_FOUND,,,,,0
+http://dbpedia.org/ontology/officialLanguage,official Language,6,NO_DECLARED_MAPPING_FOUND,,,,,0
+http://dbpedia.org/ontology/openingTheme,opening Theme,1,NO_DECLARED_MAPPING_FOUND,,,,,0
+http://dbpedia.org/ontology/opponent,opponent,9,NO_DECLARED_MAPPING_FOUND,,,,,0
+http://dbpedia.org/ontology/otherParty,other Party,3,NO_DECLARED_MAPPING_FOUND,,,,,0
+http://dbpedia.org/ontology/outflow,outflow,1,DECLARED_EXACT_SINGLE,P201,,,,1
+http://dbpedia.org/ontology/owningCompany,owning Company,10,NO_DECLARED_MAPPING_FOUND,,,,,0
+http://dbpedia.org/ontology/owningOrganisation,owning Organisation,1,DECLARED_EXACT_SINGLE,P1830,,,P127,2
+http://dbpedia.org/ontology/parentCompany,parent Company,61,NO_DECLARED_MAPPING_FOUND,,,,,0
+http://dbpedia.org/ontology/partner,partner,25,NO_DECLARED_MAPPING_FOUND,,,,,0
+http://dbpedia.org/ontology/person,person,8,NO_DECLARED_MAPPING_FOUND,,,,,0
+http://dbpedia.org/ontology/philosophicalSchool,philosophical School,11,NO_DECLARED_MAPPING_FOUND,,,,,0
+http://dbpedia.org/ontology/picture,picture,9,DECLARED_EXACT_SINGLE,P18,,,P1442|P1766,3
+http://dbpedia.org/ontology/placeOfBurial,place Of Burial,7,DECLARED_EXACT_SINGLE,P119,,,,1
+http://dbpedia.org/ontology/populationPlace,population Place,4,NO_DECLARED_MAPPING_FOUND,,,,,0
+http://dbpedia.org/ontology/portrayer,portrayer,5,NO_DECLARED_MAPPING_FOUND,,,,,0
+http://dbpedia.org/ontology/position,position,30,DECLARED_EXACT_CONFLICT,P1545|P413,,,,2
+http://dbpedia.org/ontology/premierePlace,premiere Place,1,NO_DECLARED_MAPPING_FOUND,,,,,0
+http://dbpedia.org/ontology/president,president,62,NO_DECLARED_MAPPING_FOUND,,,,,0
+http://dbpedia.org/ontology/previousEditor,previous Editor,2,NO_DECLARED_MAPPING_FOUND,,,,,0
+http://dbpedia.org/ontology/previousEvent,previous Event,9,NO_DECLARED_MAPPING_FOUND,,,,,0
+http://dbpedia.org/ontology/primeMinister,prime Minister,27,DECLARED_EXACT_SINGLE,P6,,,,1
+http://dbpedia.org/ontology/principal,principal,1,NO_DECLARED_MAPPING_FOUND,,,,,0
+http://dbpedia.org/ontology/profession,profession,83,DECLARED_EXACT_SINGLE,P512,,,,1
+http://dbpedia.org/ontology/province,province,1,DECLARED_EXACT_SINGLE,P131,,,,1
+http://dbpedia.org/ontology/race,race,2,NO_DECLARED_MAPPING_FOUND,,,,,0
+http://dbpedia.org/ontology/raceHorse,race Horse,2,NO_DECLARED_MAPPING_FOUND,,,,,0
+http://dbpedia.org/ontology/railwayLineUsingTunnel,railway Line Using Tunnel,1,NO_DECLARED_MAPPING_FOUND,,,,,0
+http://dbpedia.org/ontology/railwayRollingStock,railway Rolling Stock,1,NO_DECLARED_MAPPING_FOUND,,,,,0
+http://dbpedia.org/ontology/rebuilder,rebuilder,1,NO_DECLARED_MAPPING_FOUND,,,,,0
+http://dbpedia.org/ontology/recordLabel,record Label,27,DECLARED_EXACT_SINGLE,P264,,,,2
+http://dbpedia.org/ontology/region,region,15,NO_DECLARED_MAPPING_FOUND,,,,,0
+http://dbpedia.org/ontology/regionalLanguage,regional Language,22,NO_DECLARED_MAPPING_FOUND,,,,,0
+http://dbpedia.org/ontology/related,related,4,NO_DECLARED_MAPPING_FOUND,,,,,0
+http://dbpedia.org/ontology/relatedMeanOfTransportation,related Mean Of Transportation,1,NO_DECLARED_MAPPING_FOUND,,,,,0
+http://dbpedia.org/ontology/religion,religion,33,DECLARED_EXACT_SINGLE,P140,,,,1
+http://dbpedia.org/ontology/retiredRocket,retired Rocket,5,NO_DECLARED_MAPPING_FOUND,,,,,0
+http://dbpedia.org/ontology/river,river,1,NO_DECLARED_MAPPING_FOUND,,,,,0
+http://dbpedia.org/ontology/routeEnd,route End,29,NO_DECLARED_MAPPING_FOUND,,,,,0
+http://dbpedia.org/ontology/routeJunction,route Junction,13,NO_DECLARED_MAPPING_FOUND,,,,,0
+http://dbpedia.org/ontology/routeStart,route Start,20,NO_DECLARED_MAPPING_FOUND,,,,,0
+http://dbpedia.org/ontology/routeStartLocation,route Start Location,1,NO_DECLARED_MAPPING_FOUND,,,,,0
+http://dbpedia.org/ontology/school,school,19,NO_DECLARED_MAPPING_FOUND,,,,,0
+http://dbpedia.org/ontology/secondDriver,second Driver,4,NO_DECLARED_MAPPING_FOUND,,,,,0
+http://dbpedia.org/ontology/secondLeader,second Leader,56,NO_DECLARED_MAPPING_FOUND,,,,,0
+http://dbpedia.org/ontology/service,service,2,NO_DECLARED_MAPPING_FOUND,,,,,0
+http://dbpedia.org/ontology/servingRailwayLine,serving Railway Line,4,NO_DECLARED_MAPPING_FOUND,,,,,0
+http://dbpedia.org/ontology/significantBuilding,significant Building,9,NO_DECLARED_MAPPING_FOUND,,,,,0
+http://dbpedia.org/ontology/significantDesign,significant Design,4,NO_DECLARED_MAPPING_FOUND,,,,,0
+http://dbpedia.org/ontology/silverMedalist,silver Medalist,14,NO_DECLARED_MAPPING_FOUND,,,,,0
+http://dbpedia.org/ontology/sisterNewspaper,sister Newspaper,2,NO_DECLARED_MAPPING_FOUND,,,,,0
+http://dbpedia.org/ontology/sisterStation,sister Station,1,NO_DECLARED_MAPPING_FOUND,,,,,0
+http://dbpedia.org/ontology/splitFromParty,split From Party,3,NO_DECLARED_MAPPING_FOUND,,,,,0
+http://dbpedia.org/ontology/spokenIn,spoken In,5,NO_DECLARED_MAPPING_FOUND,,,,,0
+http://dbpedia.org/ontology/stadium,stadium,2,NO_DECLARED_MAPPING_FOUND,,,,,0
+http://dbpedia.org/ontology/state,state,5,NO_DECLARED_MAPPING_FOUND,,,,,0
+http://dbpedia.org/ontology/structuralSystem,structural System,1,NO_DECLARED_MAPPING_FOUND,,,,,0
+http://dbpedia.org/ontology/subdivision,subdivision,95,NO_DECLARED_MAPPING_FOUND,,,,,0
+http://dbpedia.org/ontology/subject,subject,44,NO_DECLARED_MAPPING_FOUND,,,,,0
+http://dbpedia.org/ontology/subsidiary,subsidiary,18,DECLARED_EXACT_SINGLE,P355,,,,1
+http://dbpedia.org/ontology/targetAirport,target Airport,62,NO_DECLARED_MAPPING_FOUND,,,,,0
+http://dbpedia.org/ontology/team,team,141,DECLARED_EXACT_SINGLE,P54,,,,1
+http://dbpedia.org/ontology/tenant,tenant,7,NO_DECLARED_MAPPING_FOUND,,,,,0
+http://dbpedia.org/ontology/thirdDriver,third Driver,4,NO_DECLARED_MAPPING_FOUND,,,,,0
+http://dbpedia.org/ontology/timeZone,time Zone,4,NO_DECLARED_MAPPING_FOUND,,,,,0
+http://dbpedia.org/ontology/trainer,trainer,4,NO_DECLARED_MAPPING_FOUND,,,,,0
+http://dbpedia.org/ontology/training,training,37,NO_DECLARED_MAPPING_FOUND,,,,,0
+http://dbpedia.org/ontology/translator,translator,7,DECLARED_EXACT_SINGLE,P655,,,,1
+http://dbpedia.org/ontology/university,university,2,NO_DECLARED_MAPPING_FOUND,,,,,0
+http://dbpedia.org/ontology/usingCountry,using Country,15,NO_DECLARED_MAPPING_FOUND,,,,,0
+http://dbpedia.org/ontology/veneratedIn,venerated In,5,NO_DECLARED_MAPPING_FOUND,,,,,0
+http://dbpedia.org/ontology/vicePresident,vice President,1,NO_DECLARED_MAPPING_FOUND,,,,,0
+http://dbpedia.org/ontology/voice,voice,58,DECLARED_EXACT_CONFLICT,P725|P990,,,,2
+http://schema.org/containedInPlace,contained In Place,3122,NORMALIZED_MULTI_OPTION,,P131|P1376|P1383|P150|P17|P3018|P36|P706,,P131,9
+http://yago-knowledge.org/resource/dealsWith,deals With,24,NO_DECLARED_MAPPING_FOUND,,,,,0
+http://yago-knowledge.org/resource/edited,edited,105,NO_DECLARED_MAPPING_FOUND,,,,,0
+http://yago-knowledge.org/resource/graduatedFrom,graduated From,355,AUTOMATIC_ALIGNMENT_CANDIDATE,,,P69,,1
+http://yago-knowledge.org/resource/hasCapital,has Capital,26,AUTOMATIC_ALIGNMENT_CANDIDATE,,,P36,,1
+http://yago-knowledge.org/resource/hasCurrency,has Currency,18,AUTOMATIC_ALIGNMENT_CANDIDATE,,,P38,,2
+http://yago-knowledge.org/resource/hasOfficialLanguage,has Official Language,29,AUTOMATIC_ALIGNMENT_CANDIDATE,,,P407,,1
+http://yago-knowledge.org/resource/isConnectedTo,is Connected To,1036,NO_DECLARED_MAPPING_FOUND,,,,,0
+http://yago-knowledge.org/resource/isInterestedIn,is Interested In,21,NO_DECLARED_MAPPING_FOUND,,,,,0
+http://yago-knowledge.org/resource/isKnownFor,is Known For,2,NO_DECLARED_MAPPING_FOUND,,,,,0
+http://yago-knowledge.org/resource/playsFor,plays For,289,NO_DECLARED_MAPPING_FOUND,,,,,0
+http://yago-knowledge.org/resource/wroteMusicFor,wrote Music For,285,NO_DECLARED_MAPPING_FOUND,,,,,0
