@@ -15,6 +15,11 @@ The pair-overlap test missed published schema mappings.
 
 Do not merge all candidates as exact mappings. Add the single exact mappings to the review queue. Keep conflicts, grouped mappings, and broader mappings as allowed options.
 
+**Follow-up:** The five conflicts or broader cases were resolved for the current
+data with endpoint types and public ontology paths. The grouped
+`containedInPlace` case now has one direction-aware combined Level 2 key. See
+[EventKG conflict and broader-mapping resolution](EVENTKG_CONFLICT_BROADER_RESOLUTION_2026-10-11.md).
+
 ## Highest-volume recovered cases
 
 | EventKG Level 2 | Observations | Result | Wikidata option(s) |

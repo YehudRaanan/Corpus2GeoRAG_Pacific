@@ -56,6 +56,11 @@ checks EventKG predicates that had no local QID-pair overlap against published
 Wikidata, DBpedia, EventKG, and PARIS ontology mappings. It keeps exact,
 conflicting, grouped, and broader mappings separate.
 
+The [EventKG conflict and broader-mapping resolution](EVENTKG_CONFLICT_BROADER_RESOLUTION_2026-10-11.md)
+uses public ontology paths and observed endpoint types to resolve the two
+conflicts and three broader cases. It also defines the direction-aware combined
+Level 2 key for `schema:containedInPlace`.
+
 ## Purpose
 
 Find rules that translate **relation types** between WarSampo, Wikidata, and
