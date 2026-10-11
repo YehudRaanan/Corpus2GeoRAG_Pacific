@@ -1,0 +1,169 @@
+subject_p31,subject_type_labels,object_p31,object_type_labels,candidate_match_tier,candidate_level2_ids,pair_count,text_span_ready_pairs
+Q428661,U-boat,Q11514315|Q3024240|Q317|Q3624078,historical period|historical country|dictatorship|sovereign state,DIRECT_P31,P8047|P17|P495|P137,22,18
+Q52371,regiment,Q11514315|Q3024240|Q317|Q3624078,historical period|historical country|dictatorship|sovereign state,DIRECT_P31,P17,21,21
+Q169534,military division,Q3024240|Q48349,historical country|empire,DIRECT_P31,P17,19,14
+Q174736,destroyer,Q113393649|Q1323642|Q1335818|Q160016|Q17007978|Q3024240|Q3624078|Q512187|Q6256|Q6688521|Q7275|Q842112|Q849866,cratonym|transcontinental country|supranational union|member states of the United Nations|counterintelligence state|historical country|sovereign state|federal republic|country|permanent members of the United Nations Security Council|state|socialist state|communist state,DIRECT_P31,P8047|P495,10,5
+Q176799,military unit,Q3024240|Q48349,historical country|empire,DIRECT_P31,P17|P945,9,5
+Q176799,military unit,Q100906234|Q109473326|Q1127126|Q19953632,multinational military coalition|country in World War II|military alliance|former administrative territorial entity,P279_DEPTH_1,P17|P945,9,7
+Q828569,Wehrmacht infantry division,Q11514315|Q3024240|Q317|Q3624078,historical period|historical country|dictatorship|sovereign state,DIRECT_P31,P17|P945|P276,9,5
+Q428661,U-boat,Q113393649|Q1323642|Q1335818|Q160016|Q17007978|Q3024240|Q3624078|Q512187|Q6256|Q6688521|Q7275|Q842112|Q849866,cratonym|transcontinental country|supranational union|member states of the United Nations|counterintelligence state|historical country|sovereign state|federal republic|country|permanent members of the United Nations Security Council|state|socialist state|communist state,DIRECT_P31,P8047|P17|P495|P137,8,3
+Q66737903,Imperial Japanese Army infantry division,Q3024240|Q48349,historical country|empire,DIRECT_P31,P17,8,6
+Q744967,submarine chaser,Q3024240|Q48349,historical country|empire,P279_DEPTH_1,P8047,8,0
+Q176799,military unit,Q113393649|Q1323642|Q1335818|Q160016|Q17007978|Q3024240|Q3624078|Q512187|Q6256|Q6688521|Q7275|Q842112|Q849866,cratonym|transcontinental country|supranational union|member states of the United Nations|counterintelligence state|historical country|sovereign state|federal republic|country|permanent members of the United Nations Security Council|state|socialist state|communist state,DIRECT_P31,P17|P945,7,5
+Q2811|Q852190,submarine|shipwreck,Q11514315|Q3024240|Q317|Q3624078,historical period|historical country|dictatorship|sovereign state,DIRECT_P31,P17|P8047|P495,7,7
+Q324233,torpedo boat,Q11514315|Q3024240|Q317|Q3624078,historical period|historical country|dictatorship|sovereign state,P279_DEPTH_2,P8047|P17|P495|P137,7,0
+Q176799,military unit,Q11514315|Q3024240|Q317|Q3624078,historical period|historical country|dictatorship|sovereign state,DIRECT_P31,P17|P945,6,4
+Q11446,ship,Q113393649|Q1323642|Q1335818|Q160016|Q17007978|Q3024240|Q3624078|Q512187|Q6256|Q6688521|Q7275|Q842112|Q849866,cratonym|transcontinental country|supranational union|member states of the United Nations|counterintelligence state|historical country|sovereign state|federal republic|country|permanent members of the United Nations Security Council|state|socialist state|communist state,DIRECT_P31,P17|P8047,5,3
+Q62933249,area army,Q3024240|Q48349,historical country|empire,DIRECT_P31,P17,5,4
+Q66746269,U-boat flotilla,Q11514315|Q3024240|Q317|Q3624078,historical period|historical country|dictatorship|sovereign state,DIRECT_P31,P17,5,4
+Q778129,light cruiser,Q11514315|Q3024240|Q317|Q3624078,historical period|historical country|dictatorship|sovereign state,DIRECT_P31,P8047,5,0
+Q2811,submarine,Q113393649|Q1323642|Q1335818|Q160016|Q17007978|Q3024240|Q3624078|Q512187|Q6256|Q6688521|Q7275|Q842112|Q849866,cratonym|transcontinental country|supranational union|member states of the United Nations|counterintelligence state|historical country|sovereign state|federal republic|country|permanent members of the United Nations Security Council|state|socialist state|communist state,DIRECT_P31,P17|P495|P8047,4,2
+Q682386,German heavy tank battalion,Q11514315|Q3024240|Q317|Q3624078,historical period|historical country|dictatorship|sovereign state,DIRECT_P31,P17,4,4
+NO_P31,no direct P31 type,Q100906234|Q109473326|Q1127126|Q19953632,multinational military coalition|country in World War II|military alliance|former administrative territorial entity,P279_DEPTH_1,P17,3,1
+Q15704239,infantry battalion,Q100906234|Q109473326|Q1127126|Q19953632,multinational military coalition|country in World War II|military alliance|former administrative territorial entity,P279_DEPTH_1,P17,3,2
+Q174736,destroyer,Q11514315|Q3024240|Q317|Q3624078,historical period|historical country|dictatorship|sovereign state,DIRECT_P31,P8047|P495,3,1
+Q898771,heavy cruiser,Q11514315|Q3024240|Q317|Q3624078,historical period|historical country|dictatorship|sovereign state,DIRECT_P31,P8047,3,3
+Q9248092,infantry division,Q100906234|Q109473326|Q1127126|Q19953632,multinational military coalition|country in World War II|military alliance|former administrative territorial entity,P279_DEPTH_1,P17|P945,3,0
+NO_P31,no direct P31 type,Q113393649|Q1323642|Q1335818|Q160016|Q17007978|Q3024240|Q3624078|Q512187|Q6256|Q6688521|Q7275|Q842112|Q849866,cratonym|transcontinental country|supranational union|member states of the United Nations|counterintelligence state|historical country|sovereign state|federal republic|country|permanent members of the United Nations Security Council|state|socialist state|communist state,DIRECT_P31,P17,2,2
+Q11119902,rifle corps,Q113393649|Q1323642|Q1335818|Q160016|Q17007978|Q3024240|Q3624078|Q512187|Q6256|Q6688521|Q7275|Q842112|Q849866,cratonym|transcontinental country|supranational union|member states of the United Nations|counterintelligence state|historical country|sovereign state|federal republic|country|permanent members of the United Nations Security Council|state|socialist state|communist state,DIRECT_P31,P17,2,1
+Q11446,ship,Q11514315|Q3024240|Q317|Q3624078,historical period|historical country|dictatorship|sovereign state,DIRECT_P31,P17|P8047,2,1
+Q1569963,armed merchantman,Q11514315|Q3024240|Q317|Q3624078,historical period|historical country|dictatorship|sovereign state,DIRECT_P31,P8047,2,1
+Q169534,military division,Q113393649|Q1323642|Q1335818|Q160016|Q17007978|Q3024240|Q3624078|Q512187|Q6256|Q6688521|Q7275|Q842112|Q849866,cratonym|transcontinental country|supranational union|member states of the United Nations|counterintelligence state|historical country|sovereign state|federal republic|country|permanent members of the United Nations Security Council|state|socialist state|communist state,DIRECT_P31,P17,2,2
+Q176799,military unit,Q208164|Q4383245,puppet state|public authority,DIRECT_P31,P17,2,1
+Q176799,military unit,Q20181813|Q3024240|Q3624078,colonial power|historical country|sovereign state,DIRECT_P31,P17|P945,2,1
+Q176799,military unit,Q59281|Q678116,provisional government|government-in-exile,DIRECT_P31,P17,2,1
+Q176799,military unit,Q1127126,military alliance,P279_DEPTH_2,P17|P945|P361,2,0
+Q176799,military unit,Q3024240|Q43229,historical country|organization,DIRECT_P31,P17|P945,2,0
+Q176799,military unit,Q1790360,colonial empire,DIRECT_P31,P17,2,1
+Q176799,military unit,Q164142|Q3024240,protectorate|historical country,DIRECT_P31,P17|P945,2,2
+Q182531,battleship,Q113393649|Q1323642|Q1335818|Q160016|Q17007978|Q3024240|Q3624078|Q512187|Q6256|Q6688521|Q7275|Q842112|Q849866,cratonym|transcontinental country|supranational union|member states of the United Nations|counterintelligence state|historical country|sovereign state|federal republic|country|permanent members of the United Nations Security Council|state|socialist state|communist state,DIRECT_P31,P8047,2,2
+Q207320,paramilitary organization,Q11514315|Q3024240|Q317|Q3624078,historical period|historical country|dictatorship|sovereign state,DIRECT_P31,P17,2,2
+Q2304194,coastal defense ship,Q11514315|Q3024240|Q317|Q3624078,historical period|historical country|dictatorship|sovereign state,P279_DEPTH_1,P8047,2,0
+Q2811,submarine,Q11514315|Q3024240|Q317|Q3624078,historical period|historical country|dictatorship|sovereign state,DIRECT_P31,P17|P495|P8047,2,0
+Q37726,army,Q5,human,P279_DEPTH_2,P17|P945,2,2
+Q428661,U-boat,Q3024240|Q48349,historical country|empire,DIRECT_P31,P8047|P17|P495|P137,2,2
+Q4508,navy,Q5,human,P279_DEPTH_1,P945,2,1
+Q640078,minelayer,Q11514315|Q3024240|Q317|Q3624078,historical period|historical country|dictatorship|sovereign state,DIRECT_P31,P8047,2,0
+Q9248092,infantry division,Q3024240|Q48349,historical country|empire,DIRECT_P31,P17,2,1
+NO_P31,no direct P31 type,Q164142|Q3024240,protectorate|historical country,DIRECT_P31,P17,1,1
+NO_P31,no direct P31 type,Q11514315|Q3024240|Q317|Q3624078,historical period|historical country|dictatorship|sovereign state,DIRECT_P31,P17,1,0
+NO_P31,no direct P31 type,Q1790360,colonial empire,DIRECT_P31,P17,1,0
+NO_P31,no direct P31 type,Q208164|Q3024240,puppet state|historical country,DIRECT_P31,P17,1,1
+Q102356,brigade,Q11514315|Q3024240|Q317|Q3624078,historical period|historical country|dictatorship|sovereign state,DIRECT_P31,P17,1,0
+Q102356,brigade,Q3024240,historical country,DIRECT_P31,P17,1,1
+Q10358588,infantry regiment,Q1790360,colonial empire,P279_DEPTH_1,P17,1,0
+Q10358588|Q117757219,infantry regiment|Freiwilligen Legion,Q11514315|Q3024240|Q3624078|Q816829|Q895526,historical period|historical country|sovereign state|periodization|governing body,DIRECT_P31,P17|P945,1,0
+Q10358588|Q117757219|Q176799,infantry regiment|Freiwilligen Legion|military unit,Q5,human,P279_DEPTH_1,P945,1,0
+Q105016636,British Army Infantry Division,Q1790360,colonial empire,P279_DEPTH_2,P17|P945,1,0
+Q105267234|Q106036398,special forces brigade|multinational military formation,Q100906234|Q109473326|Q1127126|Q19953632,multinational military coalition|country in World War II|military alliance|former administrative territorial entity,P279_DEPTH_1,P17|P945,1,0
+Q105764048,German moutain division,Q208164|Q3024240,puppet state|historical country,DIRECT_P31,P17,1,1
+Q105999,cargo ship,Q11514315|Q3024240|Q317|Q3624078,historical period|historical country|dictatorship|sovereign state,DIRECT_P31,P8047,1,0
+Q105999|Q1569963|Q852190,cargo ship|armed merchantman|shipwreck,Q11514315|Q3024240|Q317|Q3624078,historical period|historical country|dictatorship|sovereign state,DIRECT_P31,P8047|P17|P495,1,1
+Q1140332|Q13366014,military district in the Soviet Union|military district of Russia,Q113393649|Q1323642|Q1335818|Q160016|Q17007978|Q3024240|Q3624078|Q512187|Q6256|Q6688521|Q7275|Q842112|Q849866,cratonym|transcontinental country|supranational union|member states of the United Nations|counterintelligence state|historical country|sovereign state|federal republic|country|permanent members of the United Nations Security Council|state|socialist state|communist state,DIRECT_P31,P17,1,1
+Q11424,film,Q11514315|Q3024240|Q317|Q3624078,historical period|historical country|dictatorship|sovereign state,DIRECT_P31,P495|P840,1,1
+Q115365853,military task force,Q100906234|Q109473326|Q1127126|Q19953632,multinational military coalition|country in World War II|military alliance|former administrative territorial entity,P279_DEPTH_1,P17|P945,1,0
+Q11636247|Q852190,super-dreadnought|shipwreck,Q113393649|Q1323642|Q1335818|Q160016|Q17007978|Q3024240|Q3624078|Q512187|Q6256|Q6688521|Q7275|Q842112|Q849866,cratonym|transcontinental country|supranational union|member states of the United Nations|counterintelligence state|historical country|sovereign state|federal republic|country|permanent members of the United Nations Security Council|state|socialist state|communist state,DIRECT_P31,P8047|P17|P495,1,1
+Q11743865,army corps of the Third Reich,Q11514315|Q3024240|Q317|Q3624078,historical period|historical country|dictatorship|sovereign state,DIRECT_P31,P17,1,1
+Q117555377|Q63074831|Q828569|Q9248092,volunteer division|Wehrmacht division|Wehrmacht infantry division|infantry division,Q11514315|Q3024240|Q3624078|Q816829|Q895526,historical period|historical country|sovereign state|periodization|governing body,DIRECT_P31,P17|P945|P276,1,1
+Q117555377|Q63074831|Q828569|Q9248092,volunteer division|Wehrmacht division|Wehrmacht infantry division|infantry division,Q11514315|Q3024240|Q317|Q3624078,historical period|historical country|dictatorship|sovereign state,DIRECT_P31,P17|P945|P276,1,1
+Q117757219|Q169534,Freiwilligen Legion|military division,Q11514315|Q3024240|Q317|Q3624078,historical period|historical country|dictatorship|sovereign state,DIRECT_P31,P17|P945,1,1
+Q117757219|Q176799,Freiwilligen Legion|military unit,Q11514315|Q3024240|Q317|Q3624078,historical period|historical country|dictatorship|sovereign state,DIRECT_P31,P17|P945,1,1
+Q1201097,detachment,Q100906234|Q109473326|Q1127126|Q19953632,multinational military coalition|country in World War II|military alliance|former administrative territorial entity,P279_DEPTH_1,P17|P945,1,1
+Q12859788,steamship,Q11514315|Q3024240|Q317|Q3624078,historical period|historical country|dictatorship|sovereign state,DIRECT_P31,P8047|P17,1,1
+Q12859788|Q15888|Q697196,steamship|hospital ship|ocean liner,Q11514315|Q3024240|Q317|Q3624078,historical period|historical country|dictatorship|sovereign state,DIRECT_P31,P8047|P17,1,0
+Q130326199|Q1863818|Q428661,preserved watercraft|maritime museum|U-boat,Q11514315|Q3024240|Q317|Q3624078,historical period|historical country|dictatorship|sovereign state,DIRECT_P31,P8047|P17|P495|P137,1,1
+Q130326199|Q216057,preserved watercraft|barque,Q113393649|Q1323642|Q1335818|Q160016|Q17007978|Q3024240|Q3624078|Q512187|Q6256|Q6688521|Q7275|Q842112|Q849866,cratonym|transcontinental country|supranational union|member states of the United Nations|counterintelligence state|historical country|sovereign state|federal republic|country|permanent members of the United Nations Security Council|state|socialist state|communist state,DIRECT_P31,P495,1,1
+Q130326199|Q428661,preserved watercraft|U-boat,Q11514315|Q3024240|Q317|Q3624078,historical period|historical country|dictatorship|sovereign state,DIRECT_P31,P8047|P17|P495|P137,1,1
+Q130326199|Q428661|Q480500,preserved watercraft|U-boat|Type IX submarine,Q11514315|Q3024240|Q317|Q3624078,historical period|historical country|dictatorship|sovereign state,DIRECT_P31,P8047|P17|P495|P137,1,0
+Q13257647,service award,Q11514315|Q3024240|Q317|Q3624078,historical period|historical country|dictatorship|sovereign state,P279_DEPTH_1,P17,1,0
+Q1410980|Q898771,ironclad warship|heavy cruiser,Q11514315|Q3024240|Q317|Q3624078,historical period|historical country|dictatorship|sovereign state,DIRECT_P31,P8047,1,0
+Q14330231|Q304673,Camel cavalry|platoon,Q59281|Q678116,provisional government|government-in-exile,P279_DEPTH_1,P17,1,1
+Q153936|Q207320,militia|paramilitary organization,Q11514315|Q3024240|Q317|Q3624078,historical period|historical country|dictatorship|sovereign state,DIRECT_P31,P17,1,1
+Q15627509|Q47272186,military organization|headquarters,Q100906234|Q109473326|Q1127126|Q19953632,multinational military coalition|country in World War II|military alliance|former administrative territorial entity,P279_DEPTH_1,P17|P945,1,1
+Q1593564,army aviation component,Q3024240|Q48349,historical country|empire,P279_DEPTH_1,P17|P945,1,1
+Q1630695,motor torpedo boat,Q11514315|Q3024240|Q317|Q3624078,historical period|historical country|dictatorship|sovereign state,P279_DEPTH_1,P17,1,0
+Q1678285,Jagdgeschwader,Q1127126,military alliance,P279_DEPTH_2,P17|P945,1,0
+Q1678285,Jagdgeschwader,Q11514315|Q3024240|Q317|Q3624078,historical period|historical country|dictatorship|sovereign state,DIRECT_P31,P17|P27,1,1
+Q16847158,independent mixed brigade,Q3024240|Q48349,historical country|empire,DIRECT_P31,P17,1,0
+Q169534,military division,Q5,human,P279_DEPTH_2,P17|P945,1,0
+Q169534,military division,Q11514315|Q3024240|Q317|Q3624078,historical period|historical country|dictatorship|sovereign state,DIRECT_P31,P17,1,1
+Q169534,military division,Q208164|Q4383245,puppet state|public authority,P279_DEPTH_2,P17|P945|P276,1,1
+Q169534|Q4443691,military division|rifle division,Q113393649|Q1323642|Q1335818|Q160016|Q17007978|Q3024240|Q3624078|Q512187|Q6256|Q6688521|Q7275|Q842112|Q849866,cratonym|transcontinental country|supranational union|member states of the United Nations|counterintelligence state|historical country|sovereign state|federal republic|country|permanent members of the United Nations Security Council|state|socialist state|communist state,DIRECT_P31,P17,1,1
+Q174736|Q19627817,destroyer|patrol boats of the Imperial Japanese Navy,Q3024240|Q48349,historical country|empire,DIRECT_P31,P8047|P495,1,0
+Q174736|Q852190,destroyer|shipwreck,Q59281|Q678116,provisional government|government-in-exile,P279_DEPTH_2,P8047|P17|P495|P137,1,1
+Q176799,military unit,Q543813,Reichskommissariat,P279_DEPTH_1,P17|P945,1,1
+Q176799,military unit,Q43229,organization,P279_DEPTH_2,P17|P945,1,1
+Q176799,military unit,Q2577883|Q99541706,occupied territory|historical unrecognized state,DIRECT_P31,P17,1,0
+Q176799,military unit,Q11514315|Q3024240|Q3624078|Q816829|Q895526,historical period|historical country|sovereign state|periodization|governing body,DIRECT_P31,P17|P945,1,0
+Q176799|Q695836,military unit|Ostlegionen,Q113393649|Q1323642|Q1335818|Q160016|Q17007978|Q3024240|Q3624078|Q512187|Q6256|Q6688521|Q7275|Q842112|Q849866,cratonym|transcontinental country|supranational union|member states of the United Nations|counterintelligence state|historical country|sovereign state|federal republic|country|permanent members of the United Nations Security Council|state|socialist state|communist state,DIRECT_P31,P17|P945,1,1
+Q178193,steamboat,Q11514315|Q3024240|Q317|Q3624078,historical period|historical country|dictatorship|sovereign state,DIRECT_P31,P17,1,1
+Q182531|Q214190,battleship|battlecruiser,Q11514315|Q3024240|Q317|Q3624078,historical period|historical country|dictatorship|sovereign state,DIRECT_P31,P8047,1,0
+Q18642164,functional command,Q3024240|Q48349,historical country|empire,P279_DEPTH_1,P17,1,1
+Q188497,corps,Q113393649|Q1323642|Q1335818|Q160016|Q17007978|Q3024240|Q3624078|Q512187|Q6256|Q6688521|Q7275|Q842112|Q849866,cratonym|transcontinental country|supranational union|member states of the United Nations|counterintelligence state|historical country|sovereign state|federal republic|country|permanent members of the United Nations Security Council|state|socialist state|communist state,DIRECT_P31,P17,1,1
+Q188497,corps,Q59281|Q678116,provisional government|government-in-exile,P279_DEPTH_1,P17,1,1
+Q202527,minesweeper,Q11514315|Q3024240|Q317|Q3624078,historical period|historical country|dictatorship|sovereign state,P279_DEPTH_1,P8047,1,0
+Q202527,minesweeper,Q3024240|Q48349,historical country|empire,P279_DEPTH_1,P8047,1,0
+Q204310,gendarmerie,Q208164|Q4383245,puppet state|public authority,DIRECT_P31,P17,1,0
+Q204310,gendarmerie,Q11514315|Q3024240|Q317|Q3624078,historical period|historical country|dictatorship|sovereign state,DIRECT_P31,P17,1,1
+Q20642011,guerrilla organization,Q20181813|Q3024240|Q3624078,colonial power|historical country|sovereign state,P279_DEPTH_1,P17,1,1
+Q207320,paramilitary organization,Q5,human,P279_DEPTH_2,P17|P945,1,1
+Q208109,army group,Q100906234|Q109473326|Q1127126|Q19953632,multinational military coalition|country in World War II|military alliance|former administrative territorial entity,P279_DEPTH_1,P17|P945,1,1
+Q214196,gunboat,Q11514315|Q3024240|Q317|Q3624078,historical period|historical country|dictatorship|sovereign state,P279_DEPTH_1,P8047,1,0
+Q21528930,network or movement of the French Resistance,Q59281|Q678116,provisional government|government-in-exile,P279_DEPTH_1,P17,1,0
+Q2304194,coastal defense ship,Q113393649|Q1323642|Q1335818|Q160016|Q17007978|Q3024240|Q3624078|Q512187|Q6256|Q6688521|Q7275|Q842112|Q849866,cratonym|transcontinental country|supranational union|member states of the United Nations|counterintelligence state|historical country|sovereign state|federal republic|country|permanent members of the United Nations Security Council|state|socialist state|communist state,P279_DEPTH_1,P8047,1,1
+Q2304194|Q852190,coastal defense ship|shipwreck,Q11514315|Q3024240|Q317|Q3624078,historical period|historical country|dictatorship|sovereign state,DIRECT_P31,P8047|P17|P495,1,1
+Q234497,special forces,Q678116,government-in-exile,P279_DEPTH_2,P17|P945,1,0
+Q234497,special forces,Q100906234|Q109473326|Q1127126|Q19953632,multinational military coalition|country in World War II|military alliance|former administrative territorial entity,P279_DEPTH_1,P17,1,1
+Q24047611,Air division (Luftwaffe),Q11514315|Q3024240|Q317|Q3624078,historical period|historical country|dictatorship|sovereign state,P279_DEPTH_1,P17,1,0
+Q2811,submarine,Q17152708|Q3024240|Q3624078,republic regime in France|historical country|sovereign state,DIRECT_P31,P17|P495|P8047,1,0
+Q2811|Q852190,submarine|shipwreck,Q113393649|Q1323642|Q1335818|Q160016|Q17007978|Q3024240|Q3624078|Q512187|Q6256|Q6688521|Q7275|Q842112|Q849866,cratonym|transcontinental country|supranational union|member states of the United Nations|counterintelligence state|historical country|sovereign state|federal republic|country|permanent members of the United Nations Security Council|state|socialist state|communist state,DIRECT_P31,P17|P8047|P495,1,0
+Q2997711,tank corps,Q113393649|Q1323642|Q1335818|Q160016|Q17007978|Q3024240|Q3624078|Q512187|Q6256|Q6688521|Q7275|Q842112|Q849866,cratonym|transcontinental country|supranational union|member states of the United Nations|counterintelligence state|historical country|sovereign state|federal republic|country|permanent members of the United Nations Security Council|state|socialist state|communist state,DIRECT_P31,P17,1,1
+Q3032351,armored division,Q3024240|Q48349,historical country|empire,P279_DEPTH_1,P17|P945,1,1
+Q3032351|Q66737912,armored division|Imperial Japanese Army division,Q3024240|Q48349,historical country|empire,DIRECT_P31,P17,1,0
+Q324233,torpedo boat,Q20181813|Q3024240|Q3624078,colonial power|historical country|sovereign state,P279_DEPTH_2,P8047|P17|P495|P137,1,0
+Q329484,Luftwaffe Field Division,Q11514315|Q3024240|Q317|Q3624078,historical period|historical country|dictatorship|sovereign state,DIRECT_P31,P17,1,1
+Q37726,army,Q208164|Q4383245,puppet state|public authority,DIRECT_P31,P17,1,1
+Q37726,army,Q3024240|Q48349,historical country|empire,DIRECT_P31,P17,1,1
+Q37726,army,Q1790360,colonial empire,P279_DEPTH_1,P17,1,1
+Q37726|Q781132,army|military branch,Q5,human,DIRECT_P31,P945,1,1
+Q4070280,artillery boat,Q3024240|Q48349,historical country|empire,P279_DEPTH_1,P8047,1,0
+Q428661|Q852190,U-boat|shipwreck,Q11514315|Q3024240|Q317|Q3624078,historical period|historical country|dictatorship|sovereign state,DIRECT_P31,P8047|P17|P495|P137,1,0
+Q43229,organization,Q11514315|Q3024240|Q317|Q3624078,historical period|historical country|dictatorship|sovereign state,DIRECT_P31,P17,1,1
+Q43229,organization,Q208164|Q3024240,puppet state|historical country,DIRECT_P31,P17,1,0
+Q47307043,Motorized Rifle Division,Q113393649|Q1323642|Q1335818|Q160016|Q17007978|Q3024240|Q3624078|Q512187|Q6256|Q6688521|Q7275|Q842112|Q849866,cratonym|transcontinental country|supranational union|member states of the United Nations|counterintelligence state|historical country|sovereign state|federal republic|country|permanent members of the United Nations Security Council|state|socialist state|communist state,DIRECT_P31,P17,1,1
+Q47331656,motorized infantry brigade,Q678116,government-in-exile,P279_DEPTH_2,P17,1,0
+Q4818021,attack submarine,Q11514315|Q3024240|Q3624078|Q816829|Q895526,historical period|historical country|sovereign state|periodization|governing body,DIRECT_P31,P8047|P495|P17,1,1
+Q495430,general staff,Q5,human,P279_DEPTH_2,P17|P945,1,1
+Q5,human,Q11514315|Q3024240|Q317|Q3624078,historical period|historical country|dictatorship|sovereign state,DIRECT_P31,P27|P1532|P945,1,0
+Q5,human,Q59281|Q678116,provisional government|government-in-exile,P279_DEPTH_2,P27|P1532|P945,1,0
+Q5,human,Q17152708|Q3024240|Q3624078,republic regime in France|historical country|sovereign state,DIRECT_P31,P27|P1532|P945,1,0
+Q5,human,Q3024240|Q48349,historical country|empire,DIRECT_P31,P27|P1532|P945,1,1
+Q5,human,Q164142|Q3024240,protectorate|historical country,DIRECT_P31,P27|P1532|P945,1,1
+Q51977,field army,Q113393649|Q1323642|Q1335818|Q160016|Q17007978|Q3024240|Q3624078|Q512187|Q6256|Q6688521|Q7275|Q842112|Q849866,cratonym|transcontinental country|supranational union|member states of the United Nations|counterintelligence state|historical country|sovereign state|federal republic|country|permanent members of the United Nations Security Council|state|socialist state|communist state,DIRECT_P31,P17,1,0
+Q5458453,fleet submarine,Q11514315|Q3024240|Q317|Q3624078,historical period|historical country|dictatorship|sovereign state,P279_DEPTH_1,P8047|P17|P495|P137,1,1
+Q618779,award,Q3024240|Q48349,historical country|empire,DIRECT_P31,P17,1,1
+Q61883,air force,Q5,human,P279_DEPTH_1,P945,1,1
+Q62671000,military police battalion,Q543813,Reichskommissariat,P279_DEPTH_1,P17,1,0
+Q62933249|Q88806674,area army|army,Q3024240|Q48349,historical country|empire,DIRECT_P31,P17,1,1
+Q62933756,military unit branch-type-size class,Q3024240|Q48349,historical country|empire,DIRECT_P31,P17,1,0
+Q63074217,Grenadier Division,Q11514315|Q3024240|Q317|Q3624078,historical period|historical country|dictatorship|sovereign state,DIRECT_P31,P17|P945,1,1
+Q6382533,battalion,Q543813|Q56061,Reichskommissariat|administrative territorial entity,P279_DEPTH_1,P17|P945,1,0
+Q679165,squadron,NO_P31,no direct P31 type,NO_TYPE_MATCH,,1,1
+Q697196,ocean liner,Q113393649|Q1323642|Q1335818|Q160016|Q17007978|Q3024240|Q3624078|Q512187|Q6256|Q6688521|Q7275|Q842112|Q849866,cratonym|transcontinental country|supranational union|member states of the United Nations|counterintelligence state|historical country|sovereign state|federal republic|country|permanent members of the United Nations Security Council|state|socialist state|communist state,DIRECT_P31,P8047,1,1
+Q697196,ocean liner,Q11514315|Q3024240|Q317|Q3624078,historical period|historical country|dictatorship|sovereign state,DIRECT_P31,P8047,1,0
+Q768855|Q973011,"orders, decorations, and medals of the United Kingdom|campaign medal",Q1790360,colonial empire,P279_DEPTH_2,P495|P17|P840,1,0
+Q778129,light cruiser,Q113393649|Q1323642|Q1335818|Q160016|Q17007978|Q3024240|Q3624078|Q512187|Q6256|Q6688521|Q7275|Q842112|Q849866,cratonym|transcontinental country|supranational union|member states of the United Nations|counterintelligence state|historical country|sovereign state|federal republic|country|permanent members of the United Nations Security Council|state|socialist state|communist state,DIRECT_P31,P8047,1,0
+Q778129,light cruiser,Q20181813|Q3024240|Q3624078,colonial power|historical country|sovereign state,DIRECT_P31,P8047,1,1
+Q778129|Q852190,light cruiser|shipwreck,Q3024240|Q48349,historical country|empire,DIRECT_P31,P8047|P17|P495,1,0
+Q828569,Wehrmacht infantry division,Q208164|Q3024240,puppet state|historical country,DIRECT_P31,P17|P945|P276,1,1
+Q830335,protected cruiser,Q113393649|Q1323642|Q1335818|Q160016|Q17007978|Q3024240|Q3624078|Q512187|Q6256|Q6688521|Q7275|Q842112|Q849866,cratonym|transcontinental country|supranational union|member states of the United Nations|counterintelligence state|historical country|sovereign state|federal republic|country|permanent members of the United Nations Security Council|state|socialist state|communist state,P279_DEPTH_1,P8047,1,0
+Q839954,archaeological site,Q3024240|Q48349,historical country|empire,P279_DEPTH_1,P8047|P17|P495,1,1
+Q8473,military,Q3024240|Q48349,historical country|empire,DIRECT_P31,P17,1,1
+Q852190,shipwreck,Q113393649|Q1323642|Q1335818|Q160016|Q17007978|Q3024240|Q3624078|Q512187|Q6256|Q6688521|Q7275|Q842112|Q849866,cratonym|transcontinental country|supranational union|member states of the United Nations|counterintelligence state|historical country|sovereign state|federal republic|country|permanent members of the United Nations Security Council|state|socialist state|communist state,DIRECT_P31,P8047|P17|P495,1,1
+Q88806674,army,Q3024240|Q48349,historical country|empire,DIRECT_P31,P17,1,0
+Q88806674|Q9822982,army|area command,Q3024240|Q48349,historical country|empire,DIRECT_P31,P17,1,0
+Q88815192,air division,Q3024240|Q48349,historical country|empire,DIRECT_P31,P17,1,0
+Q88904619,United States Army infantry division,Q37726,army,NO_TYPE_MATCH,,1,1
+Q898771,heavy cruiser,Q113393649|Q1323642|Q1335818|Q160016|Q17007978|Q3024240|Q3624078|Q512187|Q6256|Q6688521|Q7275|Q842112|Q849866,cratonym|transcontinental country|supranational union|member states of the United Nations|counterintelligence state|historical country|sovereign state|federal republic|country|permanent members of the United Nations Security Council|state|socialist state|communist state,DIRECT_P31,P8047,1,1
+Q955920,squadron (naval fleet),Q1790360,colonial empire,P279_DEPTH_1,P17,1,0
+Q9822982,area command,Q100906234|Q109473326|Q1127126|Q19953632,multinational military coalition|country in World War II|military alliance|former administrative territorial entity,P279_DEPTH_1,P17,1,1

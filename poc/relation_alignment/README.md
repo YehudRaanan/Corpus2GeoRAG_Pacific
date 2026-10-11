@@ -8,6 +8,10 @@ The [country data-availability audit](COUNTRY_DATA_AVAILABILITY_AUDIT_2026-10-11
 checks those unresolved pairs against current Wikidata statements, Wikipedia
 infoboxes, entity links, and complete article text before classification.
 
+The [classifier candidate EDA](CLASSIFIER_CANDIDATE_EDA_2026-10-11.md) builds
+type-matched Level 2 choices for evidence-bearing unresolved pairs and stops
+before relation classification.
+
 The [automatic mapping discovery](MAPPING_AUTOMATION_DISCOVERY_2026-10-11.md)
 tests broader three-source evidence and records the decision logic and gaps.
 

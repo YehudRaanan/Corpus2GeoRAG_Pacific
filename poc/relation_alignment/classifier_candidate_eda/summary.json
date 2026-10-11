@@ -1,0 +1,57 @@
+{
+  "unresolved_pairs_with_checked_evidence": 357,
+  "structured_seed_assertions": 2564,
+  "structured_seed_relations": 10,
+  "candidate_relation_ids": [
+    "P137",
+    "P1532",
+    "P17",
+    "P27",
+    "P276",
+    "P361",
+    "P495",
+    "P8047",
+    "P840",
+    "P945"
+  ],
+  "candidate_match_tiers": {
+    "DIRECT_P31": 268,
+    "P279_DEPTH_2": 24,
+    "P279_DEPTH_1": 63,
+    "NO_TYPE_MATCH": 2
+  },
+  "review_status_counts": {
+    "MULTIPLE_CANDIDATES": 178,
+    "SINGLE_SUPPORTED_CANDIDATE": 134,
+    "SINGLE_LOW_SUPPORT_CANDIDATE": 43,
+    "NO_TYPE_MATCHED_CANDIDATE": 2
+  },
+  "candidate_count_distribution": {
+    "0": 2,
+    "1": 177,
+    "2": 89,
+    "3": 43,
+    "4": 46
+  },
+  "classifier_input_status_counts": {
+    "TEXT_SPAN_READY": 194,
+    "INFOBOX_ONLY": 126,
+    "LEAD_SPAN_READY": 22,
+    "ENTITY_LINK_ONLY": 13,
+    "WIKIDATA_QUALIFIER_ONLY": 2
+  },
+  "pairs_with_one_or_more_candidates": 355,
+  "pairs_without_type_matched_candidates": 2,
+  "pairs_with_one_candidate": 177,
+  "pairs_with_multiple_candidates": 178,
+  "exact_type_pair_candidate_pairs": 268,
+  "hierarchy_expanded_candidate_pairs": 87,
+  "text_span_ready_pairs": 216,
+  "text_span_ready_with_candidates": 214,
+  "text_span_ready_multiple_candidates": 105,
+  "text_span_ready_single_supported_candidate": 93,
+  "non_text_evidence_pairs": 141,
+  "type_pair_groups": 168,
+  "classifier_run": false,
+  "selection_rule": "Use the narrowest P31/P279 tier with structured examples. Candidate support ranks options but does not select a relation."
+}
