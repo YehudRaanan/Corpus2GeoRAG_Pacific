@@ -1,0 +1,28 @@
+{
+  "scope": {
+    "wikidata_population_qids": 53857,
+    "eventkg_mapped_qids": 38517,
+    "warsampo_scope": "full local release"
+  },
+  "source_predicate_rows": 1661,
+  "eligible_source_relation_rows": 1520,
+  "excluded_source_predicate_rows": 141,
+  "eligible_rows_represented_in_map": 1520,
+  "distinct_level2_relations": 1106,
+  "distinct_level1_families": 14,
+  "existing_family_assignments": 229,
+  "ranked_review_assignments": 877,
+  "unmapped_level2_relations": 0,
+  "evaluation_groups": 1,
+  "evaluation_group_members": 3,
+  "family_ranking_validation": {
+    "method": "4-fold stratified cross-validation on existing catalog families",
+    "training_rows": 229,
+    "accuracy": 0.847162,
+    "macro_f1": 0.820644,
+    "top3_accuracy": 0.956332
+  },
+  "family_rankings_are_accepted_mappings": false,
+  "entity_pair_classifier_run": false,
+  "source_data_modified": false
+}

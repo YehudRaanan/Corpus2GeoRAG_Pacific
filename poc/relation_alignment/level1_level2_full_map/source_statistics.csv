@@ -1,0 +1,4 @@
+source,predicate_rows,eligible_relation_rows,excluded_rows,observed_rows,defined_not_observed_rows,canonical_level2_ids,eligible_occurrences_sum,independent_occurrences_sum
+EventKG,826,808,18,826,0,801,1033433,237090
+WarSampo,165,111,54,145,20,111,4113814,4113814
+Wikidata,670,601,69,670,0,601,470404,470404

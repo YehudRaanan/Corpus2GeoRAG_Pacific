@@ -1,5 +1,10 @@
 # Finnish WWII relation-type alignment POC
 
+The [full Level 1 to Level 2 map](FULL_LEVEL1_LEVEL2_MAP_2026-10-11.md)
+contains every eligible relation in the current three-source inventory. It
+keeps distinct Level 2 meanings separate and ranks Level 1 options for cases
+that still need review.
+
 The [country reference dataset EDA](COUNTRY_REFERENCE_DATASET_EDA_2026-10-11.md)
 separates resolved Wikidata assertions from unresolved EventKG `country` pairs
 and measures minimal Wikipedia lead-span coverage before text classification.
