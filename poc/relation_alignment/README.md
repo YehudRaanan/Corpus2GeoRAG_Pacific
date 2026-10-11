@@ -1,5 +1,9 @@
 # Finnish WWII relation-type alignment POC
 
+The [country reference dataset EDA](COUNTRY_REFERENCE_DATASET_EDA_2026-10-11.md)
+separates resolved Wikidata assertions from unresolved EventKG `country` pairs
+and measures minimal Wikipedia lead-span coverage before text classification.
+
 The [automatic mapping discovery](MAPPING_AUTOMATION_DISCOVERY_2026-10-11.md)
 tests broader three-source evidence and records the decision logic and gaps.
 

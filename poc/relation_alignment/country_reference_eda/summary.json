@@ -1,0 +1,45 @@
+{
+  "scope": "EventKG DBpedia English country pairs in the local WWII population",
+  "source_pairs": 3099,
+  "resolved_pairs": 2499,
+  "resolved_relation_assertions": 2517,
+  "resolved_unique_relation_edges": 2516,
+  "resolved_assertions_with_wikidata_references": 1735,
+  "resolved_level2_relations": {
+    "P8047": 1141,
+    "P17": 1376
+  },
+  "unresolved_pairs": 600,
+  "unresolved_unique_subject_pages": 584,
+  "unresolved_pages_retrieved": 584,
+  "unresolved_pairs_with_subject_name": 522,
+  "unresolved_pairs_with_object_name": 169,
+  "unresolved_pairs_with_both_names_anywhere": 154,
+  "unresolved_pairs_with_minimal_span": 154,
+  "unresolved_pair_text_coverage": 0.2567,
+  "unresolved_reference_spans": 154,
+  "span_levels": {
+    "multi_sentence": 43,
+    "sentence": 103,
+    "paragraph": 8
+  },
+  "context_suggestions_by_pair": {
+    "P17": 464,
+    "P8047": 136
+  },
+  "text_coverage_by_context_suggestion": {
+    "P17": {
+      "pairs": 464,
+      "pairs_with_minimal_span": 105,
+      "coverage": 0.2263
+    },
+    "P8047": {
+      "pairs": 136,
+      "pairs_with_minimal_span": 49,
+      "coverage": 0.3603
+    }
+  },
+  "pairs_without_minimal_span": 446,
+  "classifier_run": false,
+  "acceptance_note": "Text spans show co-occurrence only. They do not accept P17 or P8047."
+}
