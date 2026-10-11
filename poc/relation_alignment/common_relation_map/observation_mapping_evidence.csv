@@ -1,0 +1,16 @@
+source,source_predicate,source_role,context,candidate_common_relation_id,direction_to_common,shared_pairs,evidence_score,score_margin,example_qid_pairs,map_action
+EventKG,http://dbpedia.org/ontology/author,author,dbpedia_en|entity|entity|reified,wd:P50,same,38,91.9,78.8,Q1248574>Q1274205|Q17009491>Q158629|Q19572999>Q468466,CONFIRMS_EXISTING_MAPPING
+EventKG,http://dbpedia.org/ontology/award,award,dbpedia_en|entity|entity|reified,wd:P166,same,719,98.5,97.7,Q10393047>Q165558|Q1045940>Q178473|Q1046009>Q178473,NEW_PROVISIONAL_COMMON_MAPPING
+EventKG,http://dbpedia.org/ontology/battle,battle,dbpedia_en|entity|entity|reified,wd:P607,same,83,90.3,89.1,Q1007810>Q626006|Q11213744>Q626006|Q12064293>Q2423295,NEW_PROVISIONAL_COMMON_MAPPING
+EventKG,http://dbpedia.org/ontology/battle,battle,dbpedia_en|entity|event|reified,wd:P607,same,7178,98.1,90.5,Q100254>Q362|Q1002923>Q170314|Q100341>Q362,NEW_PROVISIONAL_COMMON_MAPPING
+EventKG,http://semanticweb.cs.vu.nl/2009/11/sem/hasSubEvent,hasSubEvent,source_unknown|event|event|direct,wd:P361,reverse,1244,98.2,80.2,Q1052120>Q1202078|Q1052120>Q1970141|Q1052120>Q19947679,EXISTING_MAPPING_PRESERVED_FOR_REVIEW
+EventKG,http://yago-knowledge.org/resource/hasWonPrize,hasWonPrize,yago|entity|entity|reified,wd:P166,same,409,100.0,100.0,Q100254>Q555104|Q10393605>Q165558|Q106014>Q165558,NEW_PROVISIONAL_COMMON_MAPPING
+EventKG,http://dbpedia.org/ontology/manufacturer,manufacturer,dbpedia_en|entity|entity|reified,wd:P176,same,149,97.6,35.0,Q1050716>Q965259|Q1116425>Q1116315|Q11404728>Q1476227,CONFIRMS_EXISTING_MAPPING
+EventKG,http://dbpedia.org/ontology/militaryBranch,militaryBranch,dbpedia_en|entity|entity|reified,wd:P241,same,3611,93.9,80.1,Q100254>Q151701|Q1002923>Q276535|Q100363>Q2564009,CONFIRMS_EXISTING_MAPPING
+EventKG,http://dbpedia.org/ontology/nonFictionSubject,nonFictionSubject,dbpedia_en|entity|event|reified,wd:P921,same,22,92.2,92.2,Q17014869>Q184425|Q17018078>Q362|Q17040989>Q150812,NEW_PROVISIONAL_COMMON_MAPPING
+EventKG,http://dbpedia.org/ontology/operator,operator,dbpedia_en|entity|entity|reified,wd:P137,same,144,97.4,96.2,Q1026780>Q172771|Q10853538>Q165862|Q113173110>Q172771,CONFIRMS_EXISTING_MAPPING
+EventKG,http://dbpedia.org/ontology/origin,origin,dbpedia_en|entity|entity|reified,wd:P495,same,209,93.0,83.1,Q1061494>Q15180|Q1066792>Q15180|Q1072694>Q15180,NEW_PROVISIONAL_COMMON_MAPPING
+EventKG,http://dbpedia.org/ontology/restingPlace,restingPlace,dbpedia_en|entity|entity|reified,wd:P119,same,76,92.4,88.4,Q111050996>Q3676901|Q11657944>Q982473|Q12301520>Q3359393,NEW_PROVISIONAL_COMMON_MAPPING
+EventKG,http://semanticweb.cs.vu.nl/2009/11/sem/subEventOf,subEventOf,source_unknown|event|event|direct,wd:P361,same,1244,98.2,81.4,Q10130>Q702176|Q1035922>Q362|Q10396694>Q170314,CONFIRMS_EXISTING_MAPPING
+EventKG,http://dbpedia.org/ontology/usedInWar,usedInWar,dbpedia_en|entity|event|reified,wd:P607,same,507,100.0,100.0,Q1002203>Q362|Q1008040>Q170314|Q1008040>Q362,NEW_PROVISIONAL_COMMON_MAPPING
+WarSampo,http://ldf.fi/schema/warsa/actors/hasConflict,hasConflict,screened QID endpoint pairs,wd:P607,same,115,100.0,,,CONFIRMS_EXISTING_MAPPING

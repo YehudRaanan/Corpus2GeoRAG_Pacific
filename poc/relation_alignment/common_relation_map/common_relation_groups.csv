@@ -1,0 +1,1100 @@
+common_relation_id,common_relation_label,level1_family,level1_candidate,level1_assignment_status,sources,source_count,source_predicate_count,source_predicates,source_occurrence_sum,has_provisional_mapping
+http://dbpedia.org/ontology/academicAdvisor,academic Advisor,EDUCATION_EMPLOYMENT,EDUCATION_EMPLOYMENT,EXISTING_CATALOG_ASSIGNMENT,EventKG,1,1,http://dbpedia.org/ontology/academicAdvisor,46,False
+http://dbpedia.org/ontology/academicDiscipline,academic Discipline,UNRESOLVED,EDUCATION_EMPLOYMENT,RANKED_REVIEW_REQUIRED,EventKG,1,1,http://dbpedia.org/ontology/academicDiscipline,162,False
+http://dbpedia.org/ontology/administrativeCenter,administrative Center,UNRESOLVED,SPATIAL,RANKED_REVIEW_REQUIRED,EventKG,1,1,http://dbpedia.org/ontology/administrativeCenter,4,False
+http://dbpedia.org/ontology/affiliation,affiliation,AFFILIATION_STATUS,AFFILIATION_STATUS,EXISTING_CATALOG_ASSIGNMENT,EventKG,1,1,http://dbpedia.org/ontology/affiliation,46,False
+http://dbpedia.org/ontology/aircraftAttack,aircraft Attack,UNRESOLVED,FAMILY_PERSONAL,RANKED_REVIEW_REQUIRED,EventKG,1,1,http://dbpedia.org/ontology/aircraftAttack,143,False
+http://dbpedia.org/ontology/aircraftBomber,aircraft Bomber,UNRESOLVED,FAMILY_PERSONAL,RANKED_REVIEW_REQUIRED,EventKG,1,1,http://dbpedia.org/ontology/aircraftBomber,230,False
+http://dbpedia.org/ontology/aircraftElectronic,aircraft Electronic,UNRESOLVED,AFFILIATION_STATUS,RANKED_REVIEW_REQUIRED,EventKG,1,1,http://dbpedia.org/ontology/aircraftElectronic,24,False
+http://dbpedia.org/ontology/aircraftFighter,aircraft Fighter,UNRESOLVED,SPATIAL,RANKED_REVIEW_REQUIRED,EventKG,1,1,http://dbpedia.org/ontology/aircraftFighter,330,False
+http://dbpedia.org/ontology/aircraftHelicopter,aircraft Helicopter,UNRESOLVED,SPATIAL,RANKED_REVIEW_REQUIRED,EventKG,1,1,http://dbpedia.org/ontology/aircraftHelicopter,31,False
+http://dbpedia.org/ontology/aircraftHelicopterAttack,aircraft Helicopter Attack,UNRESOLVED,SPATIAL,RANKED_REVIEW_REQUIRED,EventKG,1,1,http://dbpedia.org/ontology/aircraftHelicopterAttack,11,False
+http://dbpedia.org/ontology/aircraftHelicopterMultirole,aircraft Helicopter Multirole,UNRESOLVED,SPATIAL,RANKED_REVIEW_REQUIRED,EventKG,1,1,http://dbpedia.org/ontology/aircraftHelicopterMultirole,8,False
+http://dbpedia.org/ontology/aircraftHelicopterUtility,aircraft Helicopter Utility,UNRESOLVED,AFFILIATION_STATUS,RANKED_REVIEW_REQUIRED,EventKG,1,1,http://dbpedia.org/ontology/aircraftHelicopterUtility,2,False
+http://dbpedia.org/ontology/aircraftInterceptor,aircraft Interceptor,UNRESOLVED,SPATIAL,RANKED_REVIEW_REQUIRED,EventKG,1,1,http://dbpedia.org/ontology/aircraftInterceptor,5,False
+http://dbpedia.org/ontology/aircraftPatrol,aircraft Patrol,UNRESOLVED,FAMILY_PERSONAL,RANKED_REVIEW_REQUIRED,EventKG,1,1,http://dbpedia.org/ontology/aircraftPatrol,164,False
+http://dbpedia.org/ontology/aircraftRecon,aircraft Recon,UNRESOLVED,FAMILY_PERSONAL,RANKED_REVIEW_REQUIRED,EventKG,1,1,http://dbpedia.org/ontology/aircraftRecon,78,False
+http://dbpedia.org/ontology/aircraftTrainer,aircraft Trainer,UNRESOLVED,SPATIAL,RANKED_REVIEW_REQUIRED,EventKG,1,1,http://dbpedia.org/ontology/aircraftTrainer,150,False
+http://dbpedia.org/ontology/aircraftTransport,aircraft Transport,UNRESOLVED,SPATIAL,RANKED_REVIEW_REQUIRED,EventKG,1,1,http://dbpedia.org/ontology/aircraftTransport,134,False
+http://dbpedia.org/ontology/album,album,UNRESOLVED,FAMILY_PERSONAL,RANKED_REVIEW_REQUIRED,EventKG,1,1,http://dbpedia.org/ontology/album,2,False
+http://dbpedia.org/ontology/almaMater,alma Mater,UNRESOLVED,SPATIAL,RANKED_REVIEW_REQUIRED,EventKG,1,1,http://dbpedia.org/ontology/almaMater,508,False
+http://dbpedia.org/ontology/alumni,alumni,UNRESOLVED,FAMILY_PERSONAL,RANKED_REVIEW_REQUIRED,EventKG,1,1,http://dbpedia.org/ontology/alumni,3,False
+http://dbpedia.org/ontology/anthem,anthem,UNRESOLVED,FAMILY_PERSONAL,RANKED_REVIEW_REQUIRED,EventKG,1,1,http://dbpedia.org/ontology/anthem,18,False
+http://dbpedia.org/ontology/archipelago,archipelago,UNRESOLVED,CREATION_AUTHORSHIP,RANKED_REVIEW_REQUIRED,EventKG,1,1,http://dbpedia.org/ontology/archipelago,1,False
+http://dbpedia.org/ontology/architect,architect,CREATION_AUTHORSHIP,CREATION_AUTHORSHIP,EXISTING_CATALOG_ASSIGNMENT,EventKG,1,1,http://dbpedia.org/ontology/architect,41,False
+http://dbpedia.org/ontology/architecturalStyle,architectural Style,UNRESOLVED,CREATION_AUTHORSHIP,RANKED_REVIEW_REQUIRED,EventKG,1,1,http://dbpedia.org/ontology/architecturalStyle,27,False
+http://dbpedia.org/ontology/areaOfSearch,area Of Search,UNRESOLVED,SPATIAL,RANKED_REVIEW_REQUIRED,EventKG,1,1,http://dbpedia.org/ontology/areaOfSearch,1,False
+http://dbpedia.org/ontology/artist,artist,UNRESOLVED,SPATIAL,RANKED_REVIEW_REQUIRED,EventKG,1,1,http://dbpedia.org/ontology/artist,25,False
+http://dbpedia.org/ontology/assembly,assembly,UNRESOLVED,SPATIAL,RANKED_REVIEW_REQUIRED,EventKG,1,1,http://dbpedia.org/ontology/assembly,6,False
+http://dbpedia.org/ontology/associate,associate,UNRESOLVED,AFFILIATION_STATUS,RANKED_REVIEW_REQUIRED,EventKG,1,1,http://dbpedia.org/ontology/associate,4,False
+http://dbpedia.org/ontology/associatedBand,associated Band,UNRESOLVED,SPATIAL,RANKED_REVIEW_REQUIRED,EventKG,1,1,http://dbpedia.org/ontology/associatedBand,111,False
+http://dbpedia.org/ontology/associatedMusicalArtist,associated Musical Artist,UNRESOLVED,SPATIAL,RANKED_REVIEW_REQUIRED,EventKG,1,1,http://dbpedia.org/ontology/associatedMusicalArtist,111,False
+http://dbpedia.org/ontology/basedOn,based On,UNRESOLVED,SPATIAL,RANKED_REVIEW_REQUIRED,EventKG,1,1,http://dbpedia.org/ontology/basedOn,3,False
+http://dbpedia.org/ontology/beatifiedBy,beatified By,UNRESOLVED,SPATIAL,RANKED_REVIEW_REQUIRED,EventKG,1,1,http://dbpedia.org/ontology/beatifiedBy,2,False
+http://dbpedia.org/ontology/beatifiedPlace,beatified Place,SPATIAL,SPATIAL,EXISTING_CATALOG_ASSIGNMENT,EventKG,1,1,http://dbpedia.org/ontology/beatifiedPlace,46,False
+http://dbpedia.org/ontology/billed,billed,UNRESOLVED,SPATIAL,RANKED_REVIEW_REQUIRED,EventKG,1,1,http://dbpedia.org/ontology/billed,4,False
+http://dbpedia.org/ontology/birthPlace,birth Place,SPATIAL,SPATIAL,EXISTING_CATALOG_ASSIGNMENT,EventKG,1,1,http://dbpedia.org/ontology/birthPlace,19196,False
+http://dbpedia.org/ontology/board,board,UNRESOLVED,SPATIAL,RANKED_REVIEW_REQUIRED,EventKG,1,1,http://dbpedia.org/ontology/board,13,False
+http://dbpedia.org/ontology/bodyDiscovered,body Discovered,UNRESOLVED,SPATIAL,RANKED_REVIEW_REQUIRED,EventKG,1,1,http://dbpedia.org/ontology/bodyDiscovered,1,False
+http://dbpedia.org/ontology/bodyStyle,body Style,UNRESOLVED,SPATIAL,RANKED_REVIEW_REQUIRED,EventKG,1,1,http://dbpedia.org/ontology/bodyStyle,1,False
+http://dbpedia.org/ontology/breeder,breeder,UNRESOLVED,FAMILY_PERSONAL,RANKED_REVIEW_REQUIRED,EventKG,1,1,http://dbpedia.org/ontology/breeder,17,False
+http://dbpedia.org/ontology/broadcastArea,broadcast Area,UNRESOLVED,SPATIAL,RANKED_REVIEW_REQUIRED,EventKG,1,1,http://dbpedia.org/ontology/broadcastArea,10,False
+http://dbpedia.org/ontology/broadcastNetwork,broadcast Network,UNRESOLVED,SPATIAL,RANKED_REVIEW_REQUIRED,EventKG,1,1,http://dbpedia.org/ontology/broadcastNetwork,7,False
+http://dbpedia.org/ontology/bronzeMedalist,bronze Medalist,UNRESOLVED,SPATIAL,RANKED_REVIEW_REQUIRED,EventKG,1,1,http://dbpedia.org/ontology/bronzeMedalist,11,False
+http://dbpedia.org/ontology/builder,builder,UNRESOLVED,FAMILY_PERSONAL,RANKED_REVIEW_REQUIRED,EventKG,1,1,http://dbpedia.org/ontology/builder,5699,False
+http://dbpedia.org/ontology/campus,campus,UNRESOLVED,SPATIAL,RANKED_REVIEW_REQUIRED,EventKG,1,1,http://dbpedia.org/ontology/campus,3,False
+http://dbpedia.org/ontology/canonizedBy,canonized By,UNRESOLVED,SPATIAL,RANKED_REVIEW_REQUIRED,EventKG,1,1,http://dbpedia.org/ontology/canonizedBy,4,False
+http://dbpedia.org/ontology/canonizedPlace,canonized Place,SPATIAL,SPATIAL,EXISTING_CATALOG_ASSIGNMENT,EventKG,1,1,http://dbpedia.org/ontology/canonizedPlace,13,False
+http://dbpedia.org/ontology/capital,capital,SPATIAL,SPATIAL,EXISTING_CATALOG_ASSIGNMENT,EventKG,1,1,http://dbpedia.org/ontology/capital,47,False
+http://dbpedia.org/ontology/ceremonialCounty,ceremonial County,UNRESOLVED,SPATIAL,RANKED_REVIEW_REQUIRED,EventKG,1,1,http://dbpedia.org/ontology/ceremonialCounty,3,False
+http://dbpedia.org/ontology/chain,chain,UNRESOLVED,FAMILY_PERSONAL,RANKED_REVIEW_REQUIRED,EventKG,1,1,http://dbpedia.org/ontology/chain,3,False
+http://dbpedia.org/ontology/chairman,chairman,UNRESOLVED,FAMILY_PERSONAL,RANKED_REVIEW_REQUIRED,EventKG,1,1,http://dbpedia.org/ontology/chairman,3,False
+http://dbpedia.org/ontology/chairperson,chairperson,UNRESOLVED,FAMILY_PERSONAL,RANKED_REVIEW_REQUIRED,EventKG,1,1,http://dbpedia.org/ontology/chairperson,2,False
+http://dbpedia.org/ontology/champion,champion,UNRESOLVED,FAMILY_PERSONAL,RANKED_REVIEW_REQUIRED,EventKG,1,1,http://dbpedia.org/ontology/champion,1,False
+http://dbpedia.org/ontology/championInDoubleMale,champion In Double Male,UNRESOLVED,SPATIAL,RANKED_REVIEW_REQUIRED,EventKG,1,1,http://dbpedia.org/ontology/championInDoubleMale,2,False
+http://dbpedia.org/ontology/championInSingleMale,champion In Single Male,UNRESOLVED,SPATIAL,RANKED_REVIEW_REQUIRED,EventKG,1,1,http://dbpedia.org/ontology/championInSingleMale,1,False
+http://dbpedia.org/ontology/chancellor,chancellor,UNRESOLVED,FAMILY_PERSONAL,RANKED_REVIEW_REQUIRED,EventKG,1,1,http://dbpedia.org/ontology/chancellor,4,False
+http://dbpedia.org/ontology/channel,channel,UNRESOLVED,FAMILY_PERSONAL,RANKED_REVIEW_REQUIRED,EventKG,1,1,http://dbpedia.org/ontology/channel,15,False
+http://dbpedia.org/ontology/child,child,FAMILY_PERSONAL,FAMILY_PERSONAL,EXISTING_CATALOG_ASSIGNMENT,EventKG,1,1,http://dbpedia.org/ontology/child,243,False
+http://dbpedia.org/ontology/childOrganisation,child Organisation,ORGANIZATION_HIERARCHY,ORGANIZATION_HIERARCHY,EXISTING_CATALOG_ASSIGNMENT,EventKG,1,1,http://dbpedia.org/ontology/childOrganisation,35,False
+http://dbpedia.org/ontology/cinematography,cinematography,UNRESOLVED,SPATIAL,RANKED_REVIEW_REQUIRED,EventKG,1,1,http://dbpedia.org/ontology/cinematography,293,False
+http://dbpedia.org/ontology/citizenship,citizenship,AFFILIATION_STATUS,AFFILIATION_STATUS,EXISTING_CATALOG_ASSIGNMENT,EventKG,1,1,http://dbpedia.org/ontology/citizenship,275,False
+http://dbpedia.org/ontology/city,city,UNRESOLVED,SPATIAL,RANKED_REVIEW_REQUIRED,EventKG,1,1,http://dbpedia.org/ontology/city,374,False
+http://dbpedia.org/ontology/class,class,UNRESOLVED,SPATIAL,RANKED_REVIEW_REQUIRED,EventKG,1,1,http://dbpedia.org/ontology/class,990,False
+http://dbpedia.org/ontology/club,club,UNRESOLVED,SPATIAL,RANKED_REVIEW_REQUIRED,EventKG,1,1,http://dbpedia.org/ontology/club,7,False
+http://dbpedia.org/ontology/coach,coach,UNRESOLVED,SPATIAL,RANKED_REVIEW_REQUIRED,EventKG,1,1,http://dbpedia.org/ontology/coach,13,False
+http://dbpedia.org/ontology/college,college,UNRESOLVED,AFFILIATION_STATUS,RANKED_REVIEW_REQUIRED,EventKG,1,1,http://dbpedia.org/ontology/college,9,False
+http://dbpedia.org/ontology/colour,colour,UNRESOLVED,FAMILY_PERSONAL,RANKED_REVIEW_REQUIRED,EventKG,1,1,http://dbpedia.org/ontology/colour,41,False
+http://dbpedia.org/ontology/commandStructure,command Structure,ORGANIZATION_HIERARCHY,ORGANIZATION_HIERARCHY,EXISTING_CATALOG_ASSIGNMENT,EventKG,1,1,http://dbpedia.org/ontology/commandStructure,3447,False
+http://dbpedia.org/ontology/commander,commander,PARTICIPATION_ROLE,PARTICIPATION_ROLE,EXISTING_CATALOG_ASSIGNMENT,EventKG,1,1,http://dbpedia.org/ontology/commander,7223,False
+http://dbpedia.org/ontology/company,company,UNRESOLVED,ORGANIZATION_HIERARCHY,RANKED_REVIEW_REQUIRED,EventKG,1,1,http://dbpedia.org/ontology/company,33,False
+http://dbpedia.org/ontology/composer,composer,UNRESOLVED,ORGANIZATION_HIERARCHY,RANKED_REVIEW_REQUIRED,EventKG,1,1,http://dbpedia.org/ontology/composer,40,False
+http://dbpedia.org/ontology/computingPlatform,computing Platform,UNRESOLVED,SPATIAL,RANKED_REVIEW_REQUIRED,EventKG,1,1,http://dbpedia.org/ontology/computingPlatform,17,False
+http://dbpedia.org/ontology/convictionPenalty,conviction Penalty,UNRESOLVED,SPATIAL,RANKED_REVIEW_REQUIRED,EventKG,1,1,http://dbpedia.org/ontology/convictionPenalty,60,False
+http://dbpedia.org/ontology/councilArea,council Area,UNRESOLVED,SPATIAL,RANKED_REVIEW_REQUIRED,EventKG,1,1,http://dbpedia.org/ontology/councilArea,1,False
+http://dbpedia.org/ontology/country,country,SPATIAL,SPATIAL,EXISTING_CATALOG_ASSIGNMENT,EventKG,1,1,http://dbpedia.org/ontology/country,8561,False
+http://dbpedia.org/ontology/countryOrigin,country Origin,SPATIAL,SPATIAL,EXISTING_CATALOG_ASSIGNMENT,EventKG,1,1,http://dbpedia.org/ontology/countryOrigin,12,False
+http://dbpedia.org/ontology/coverArtist,cover Artist,UNRESOLVED,SPATIAL,RANKED_REVIEW_REQUIRED,EventKG,1,1,http://dbpedia.org/ontology/coverArtist,14,False
+http://dbpedia.org/ontology/creator,creator,CREATION_AUTHORSHIP,CREATION_AUTHORSHIP,EXISTING_CATALOG_ASSIGNMENT,EventKG,1,1,http://dbpedia.org/ontology/creator,122,False
+http://dbpedia.org/ontology/crewMember,crew Member,UNRESOLVED,PARTICIPATION_ROLE,RANKED_REVIEW_REQUIRED,EventKG,1,1,http://dbpedia.org/ontology/crewMember,2,False
+http://dbpedia.org/ontology/crosses,crosses,UNRESOLVED,FAMILY_PERSONAL,RANKED_REVIEW_REQUIRED,EventKG,1,1,http://dbpedia.org/ontology/crosses,5,False
+http://dbpedia.org/ontology/curator,curator,UNRESOLVED,CREATION_AUTHORSHIP,RANKED_REVIEW_REQUIRED,EventKG,1,1,http://dbpedia.org/ontology/curator,2,False
+http://dbpedia.org/ontology/currency,currency,UNRESOLVED,FAMILY_PERSONAL,RANKED_REVIEW_REQUIRED,EventKG,1,1,http://dbpedia.org/ontology/currency,30,False
+http://dbpedia.org/ontology/dean,dean,UNRESOLVED,SPATIAL,RANKED_REVIEW_REQUIRED,EventKG,1,1,http://dbpedia.org/ontology/dean,1,False
+http://dbpedia.org/ontology/deathCause,death Cause,CAUSAL,CAUSAL,EXISTING_CATALOG_ASSIGNMENT,EventKG,1,1,http://dbpedia.org/ontology/deathCause,122,False
+http://dbpedia.org/ontology/deathPlace,death Place,SPATIAL,SPATIAL,EXISTING_CATALOG_ASSIGNMENT,EventKG,1,1,http://dbpedia.org/ontology/deathPlace,6569,False
+http://dbpedia.org/ontology/debutTeam,debut Team,UNRESOLVED,PARTICIPATION_ROLE,RANKED_REVIEW_REQUIRED,EventKG,1,1,http://dbpedia.org/ontology/debutTeam,5,False
+http://dbpedia.org/ontology/depiction,depiction,UNRESOLVED,SPATIAL,RANKED_REVIEW_REQUIRED,EventKG,1,1,http://dbpedia.org/ontology/depiction,2,False
+http://dbpedia.org/ontology/deputy,deputy,UNRESOLVED,SPATIAL,RANKED_REVIEW_REQUIRED,EventKG,1,1,http://dbpedia.org/ontology/deputy,3,False
+http://dbpedia.org/ontology/designCompany,design Company,UNRESOLVED,ORGANIZATION_HIERARCHY,RANKED_REVIEW_REQUIRED,EventKG,1,1,http://dbpedia.org/ontology/designCompany,4,False
+http://dbpedia.org/ontology/designer,designer,UNRESOLVED,CREATION_AUTHORSHIP,RANKED_REVIEW_REQUIRED,EventKG,1,1,http://dbpedia.org/ontology/designer,293,False
+http://dbpedia.org/ontology/destination,destination,UNRESOLVED,AFFILIATION_STATUS,RANKED_REVIEW_REQUIRED,EventKG,1,1,http://dbpedia.org/ontology/destination,7,False
+http://dbpedia.org/ontology/developer,developer,UNRESOLVED,FAMILY_PERSONAL,RANKED_REVIEW_REQUIRED,EventKG,1,1,http://dbpedia.org/ontology/developer,10,False
+http://dbpedia.org/ontology/diocese,diocese,UNRESOLVED,FAMILY_PERSONAL,RANKED_REVIEW_REQUIRED,EventKG,1,1,http://dbpedia.org/ontology/diocese,8,False
+http://dbpedia.org/ontology/director,director,UNRESOLVED,FAMILY_PERSONAL,RANKED_REVIEW_REQUIRED,EventKG,1,1,http://dbpedia.org/ontology/director,664,False
+http://dbpedia.org/ontology/discipline,discipline,UNRESOLVED,SPATIAL,RANKED_REVIEW_REQUIRED,EventKG,1,1,http://dbpedia.org/ontology/discipline,14,False
+http://dbpedia.org/ontology/distributor,distributor,UNRESOLVED,SPATIAL,RANKED_REVIEW_REQUIRED,EventKG,1,1,http://dbpedia.org/ontology/distributor,321,False
+http://dbpedia.org/ontology/district,district,UNRESOLVED,SPATIAL,RANKED_REVIEW_REQUIRED,EventKG,1,1,http://dbpedia.org/ontology/district,3,False
+http://dbpedia.org/ontology/division,division,UNRESOLVED,SPATIAL,RANKED_REVIEW_REQUIRED,EventKG,1,1,http://dbpedia.org/ontology/division,1,False
+http://dbpedia.org/ontology/doctoralAdvisor,doctoral Advisor,UNRESOLVED,EDUCATION_EMPLOYMENT,RANKED_REVIEW_REQUIRED,EventKG,1,1,http://dbpedia.org/ontology/doctoralAdvisor,38,False
+http://dbpedia.org/ontology/doctoralStudent,doctoral Student,EDUCATION_EMPLOYMENT,EDUCATION_EMPLOYMENT,EXISTING_CATALOG_ASSIGNMENT,EventKG,1,1,http://dbpedia.org/ontology/doctoralStudent,195,False
+http://dbpedia.org/ontology/editing,editing,UNRESOLVED,SPATIAL,RANKED_REVIEW_REQUIRED,EventKG,1,1,http://dbpedia.org/ontology/editing,173,False
+http://dbpedia.org/ontology/editor,editor,UNRESOLVED,SPATIAL,RANKED_REVIEW_REQUIRED,EventKG,1,1,http://dbpedia.org/ontology/editor,17,False
+http://dbpedia.org/ontology/education,education,UNRESOLVED,SPATIAL,RANKED_REVIEW_REQUIRED,EventKG,1,1,http://dbpedia.org/ontology/education,432,False
+http://dbpedia.org/ontology/employer,employer,PARTICIPATION_ROLE,PARTICIPATION_ROLE,EXISTING_CATALOG_ASSIGNMENT,EventKG,1,1,http://dbpedia.org/ontology/employer,149,False
+http://dbpedia.org/ontology/engine,engine,UNRESOLVED,SPATIAL,RANKED_REVIEW_REQUIRED,EventKG,1,1,http://dbpedia.org/ontology/engine,2,False
+http://dbpedia.org/ontology/era,era,UNRESOLVED,FAMILY_PERSONAL,RANKED_REVIEW_REQUIRED,EventKG,1,1,http://dbpedia.org/ontology/era,3,False
+http://dbpedia.org/ontology/ethnicGroup,ethnic Group,AFFILIATION_STATUS,AFFILIATION_STATUS,EXISTING_CATALOG_ASSIGNMENT,EventKG,1,1,http://dbpedia.org/ontology/ethnicGroup,5,False
+http://dbpedia.org/ontology/executiveProducer,executive Producer,UNRESOLVED,CREATION_AUTHORSHIP,RANKED_REVIEW_REQUIRED,EventKG,1,1,http://dbpedia.org/ontology/executiveProducer,31,False
+http://dbpedia.org/ontology/fastestDriver,fastest Driver,UNRESOLVED,FAMILY_PERSONAL,RANKED_REVIEW_REQUIRED,EventKG,1,1,http://dbpedia.org/ontology/fastestDriver,3,False
+http://dbpedia.org/ontology/father,father,FAMILY_PERSONAL,FAMILY_PERSONAL,EXISTING_CATALOG_ASSIGNMENT,EventKG,1,1,http://dbpedia.org/ontology/father,38,False
+http://dbpedia.org/ontology/federalState,federal State,UNRESOLVED,SPATIAL,RANKED_REVIEW_REQUIRED,EventKG,1,1,http://dbpedia.org/ontology/federalState,1,False
+http://dbpedia.org/ontology/field,field,UNRESOLVED,PARTICIPATION_ROLE,RANKED_REVIEW_REQUIRED,EventKG,1,1,http://dbpedia.org/ontology/field,21,False
+http://dbpedia.org/ontology/firstAscentPerson,first Ascent Person,UNRESOLVED,SPATIAL,RANKED_REVIEW_REQUIRED,EventKG,1,1,http://dbpedia.org/ontology/firstAscentPerson,12,False
+http://dbpedia.org/ontology/firstDriver,first Driver,UNRESOLVED,SPATIAL,RANKED_REVIEW_REQUIRED,EventKG,1,1,http://dbpedia.org/ontology/firstDriver,5,False
+http://dbpedia.org/ontology/firstLeader,first Leader,UNRESOLVED,SPATIAL,RANKED_REVIEW_REQUIRED,EventKG,1,1,http://dbpedia.org/ontology/firstLeader,114,False
+http://dbpedia.org/ontology/firstRace,first Race,UNRESOLVED,SPATIAL,RANKED_REVIEW_REQUIRED,EventKG,1,1,http://dbpedia.org/ontology/firstRace,1,False
+http://dbpedia.org/ontology/formerBandMember,former Band Member,UNRESOLVED,PARTICIPATION_ROLE,RANKED_REVIEW_REQUIRED,EventKG,1,1,http://dbpedia.org/ontology/formerBandMember,3,False
+http://dbpedia.org/ontology/formerCoach,former Coach,UNRESOLVED,SPATIAL,RANKED_REVIEW_REQUIRED,EventKG,1,1,http://dbpedia.org/ontology/formerCoach,1,False
+http://dbpedia.org/ontology/formerTeam,former Team,UNRESOLVED,PARTICIPATION_ROLE,RANKED_REVIEW_REQUIRED,EventKG,1,1,http://dbpedia.org/ontology/formerTeam,11,False
+http://dbpedia.org/ontology/foundedBy,founded By,UNRESOLVED,PARTICIPATION_ROLE,RANKED_REVIEW_REQUIRED,EventKG,1,1,http://dbpedia.org/ontology/foundedBy,109,False
+http://dbpedia.org/ontology/founder,founder,UNRESOLVED,PARTICIPATION_ROLE,RANKED_REVIEW_REQUIRED,EventKG,1,1,http://dbpedia.org/ontology/founder,12,False
+http://dbpedia.org/ontology/fourthCommander,fourth Commander,PARTICIPATION_ROLE,PARTICIPATION_ROLE,EXISTING_CATALOG_ASSIGNMENT,EventKG,1,1,http://dbpedia.org/ontology/fourthCommander,29,False
+http://dbpedia.org/ontology/frazioni,frazioni,UNRESOLVED,FAMILY_PERSONAL,RANKED_REVIEW_REQUIRED,EventKG,1,1,http://dbpedia.org/ontology/frazioni,3,False
+http://dbpedia.org/ontology/gameArtist,game Artist,UNRESOLVED,SPATIAL,RANKED_REVIEW_REQUIRED,EventKG,1,1,http://dbpedia.org/ontology/gameArtist,1,False
+http://dbpedia.org/ontology/garrison,garrison,UNRESOLVED,SPATIAL,RANKED_REVIEW_REQUIRED,EventKG,1,1,http://dbpedia.org/ontology/garrison,2779,False
+http://dbpedia.org/ontology/genre,genre,UNRESOLVED,FAMILY_PERSONAL,RANKED_REVIEW_REQUIRED,EventKG,1,1,http://dbpedia.org/ontology/genre,72,False
+http://dbpedia.org/ontology/goldMedalist,gold Medalist,UNRESOLVED,FAMILY_PERSONAL,RANKED_REVIEW_REQUIRED,EventKG,1,1,http://dbpedia.org/ontology/goldMedalist,23,False
+http://dbpedia.org/ontology/governingBody,governing Body,UNRESOLVED,SPATIAL,RANKED_REVIEW_REQUIRED,EventKG,1,1,http://dbpedia.org/ontology/governingBody,2,False
+http://dbpedia.org/ontology/governmentType,government Type,UNRESOLVED,SPATIAL,RANKED_REVIEW_REQUIRED,EventKG,1,1,http://dbpedia.org/ontology/governmentType,54,False
+http://dbpedia.org/ontology/governor,governor,UNRESOLVED,SPATIAL,RANKED_REVIEW_REQUIRED,EventKG,1,1,http://dbpedia.org/ontology/governor,2,False
+http://dbpedia.org/ontology/ground,ground,UNRESOLVED,AFFILIATION_STATUS,RANKED_REVIEW_REQUIRED,EventKG,1,1,http://dbpedia.org/ontology/ground,26,False
+http://dbpedia.org/ontology/head,head,UNRESOLVED,PARTICIPATION_ROLE,RANKED_REVIEW_REQUIRED,EventKG,1,1,http://dbpedia.org/ontology/head,3,False
+http://dbpedia.org/ontology/headquarter,headquarter,SPATIAL,SPATIAL,EXISTING_CATALOG_ASSIGNMENT,EventKG,1,1,http://dbpedia.org/ontology/headquarter,206,False
+http://dbpedia.org/ontology/highschool,highschool,UNRESOLVED,FAMILY_PERSONAL,RANKED_REVIEW_REQUIRED,EventKG,1,1,http://dbpedia.org/ontology/highschool,7,False
+http://dbpedia.org/ontology/homeport,homeport,UNRESOLVED,SPATIAL,RANKED_REVIEW_REQUIRED,EventKG,1,1,http://dbpedia.org/ontology/homeport,234,False
+http://dbpedia.org/ontology/hometown,hometown,UNRESOLVED,SPATIAL,RANKED_REVIEW_REQUIRED,EventKG,1,1,http://dbpedia.org/ontology/hometown,163,False
+http://dbpedia.org/ontology/honours,honours,UNRESOLVED,FAMILY_PERSONAL,RANKED_REVIEW_REQUIRED,EventKG,1,1,http://dbpedia.org/ontology/honours,622,False
+http://dbpedia.org/ontology/hubAirport,hub Airport,UNRESOLVED,SPATIAL,RANKED_REVIEW_REQUIRED,EventKG,1,1,http://dbpedia.org/ontology/hubAirport,46,False
+http://dbpedia.org/ontology/ideology,ideology,UNRESOLVED,FAMILY_PERSONAL,RANKED_REVIEW_REQUIRED,EventKG,1,1,http://dbpedia.org/ontology/ideology,323,False
+http://dbpedia.org/ontology/illustrator,illustrator,UNRESOLVED,SPATIAL,RANKED_REVIEW_REQUIRED,EventKG,1,1,http://dbpedia.org/ontology/illustrator,10,False
+http://dbpedia.org/ontology/incumbent,incumbent,UNRESOLVED,FAMILY_PERSONAL,RANKED_REVIEW_REQUIRED,EventKG,1,1,http://dbpedia.org/ontology/incumbent,1,False
+http://dbpedia.org/ontology/industry,industry,UNRESOLVED,SPATIAL,RANKED_REVIEW_REQUIRED,EventKG,1,1,http://dbpedia.org/ontology/industry,52,False
+http://dbpedia.org/ontology/inflow,inflow,UNRESOLVED,FAMILY_PERSONAL,RANKED_REVIEW_REQUIRED,EventKG,1,1,http://dbpedia.org/ontology/inflow,1,False
+http://dbpedia.org/ontology/influenced,influenced,UNRESOLVED,FAMILY_PERSONAL,RANKED_REVIEW_REQUIRED,EventKG,1,1,http://dbpedia.org/ontology/influenced,40,False
+http://dbpedia.org/ontology/influencedBy,influenced By,UNRESOLVED,TEMPORAL_SUCCESSION,RANKED_REVIEW_REQUIRED,EventKG,1,1,http://dbpedia.org/ontology/influencedBy,199,False
+http://dbpedia.org/ontology/institution,institution,UNRESOLVED,SPATIAL,RANKED_REVIEW_REQUIRED,EventKG,1,1,http://dbpedia.org/ontology/institution,255,False
+http://dbpedia.org/ontology/instrument,instrument,UNRESOLVED,ORGANIZATION_HIERARCHY,RANKED_REVIEW_REQUIRED,EventKG,1,1,http://dbpedia.org/ontology/instrument,10,False
+http://dbpedia.org/ontology/intercommunality,intercommunality,UNRESOLVED,AFFILIATION_STATUS,RANKED_REVIEW_REQUIRED,EventKG,1,1,http://dbpedia.org/ontology/intercommunality,1,False
+http://dbpedia.org/ontology/internationalAffiliation,international Affiliation,AFFILIATION_STATUS,AFFILIATION_STATUS,EXISTING_CATALOG_ASSIGNMENT,EventKG,1,1,http://dbpedia.org/ontology/internationalAffiliation,1,False
+http://dbpedia.org/ontology/island,island,UNRESOLVED,FAMILY_PERSONAL,RANKED_REVIEW_REQUIRED,EventKG,1,1,http://dbpedia.org/ontology/island,2,False
+http://dbpedia.org/ontology/jurisdiction,jurisdiction,UNRESOLVED,SPATIAL,RANKED_REVIEW_REQUIRED,EventKG,1,1,http://dbpedia.org/ontology/jurisdiction,60,False
+http://dbpedia.org/ontology/keyPerson,key Person,UNRESOLVED,AFFILIATION_STATUS,RANKED_REVIEW_REQUIRED,EventKG,1,1,http://dbpedia.org/ontology/keyPerson,104,False
+http://dbpedia.org/ontology/knownFor,known For,UNRESOLVED,SPATIAL,RANKED_REVIEW_REQUIRED,EventKG,1,1,http://dbpedia.org/ontology/knownFor,771,False
+http://dbpedia.org/ontology/language,language,AFFILIATION_STATUS,AFFILIATION_STATUS,EXISTING_CATALOG_ASSIGNMENT,EventKG,1,1,http://dbpedia.org/ontology/language,148,False
+http://dbpedia.org/ontology/largestCity,largest City,UNRESOLVED,SPATIAL,RANKED_REVIEW_REQUIRED,EventKG,1,1,http://dbpedia.org/ontology/largestCity,5,False
+http://dbpedia.org/ontology/lastRace,last Race,UNRESOLVED,SPATIAL,RANKED_REVIEW_REQUIRED,EventKG,1,1,http://dbpedia.org/ontology/lastRace,1,False
+http://dbpedia.org/ontology/leader,leader,UNRESOLVED,FAMILY_PERSONAL,RANKED_REVIEW_REQUIRED,EventKG,1,1,http://dbpedia.org/ontology/leader,113,False
+http://dbpedia.org/ontology/leaderName,leader Name,UNRESOLVED,AFFILIATION_STATUS,RANKED_REVIEW_REQUIRED,EventKG,1,1,http://dbpedia.org/ontology/leaderName,1,False
+http://dbpedia.org/ontology/leaderParty,leader Party,UNRESOLVED,AFFILIATION_STATUS,RANKED_REVIEW_REQUIRED,EventKG,1,1,http://dbpedia.org/ontology/leaderParty,1,False
+http://dbpedia.org/ontology/legislature,legislature,UNRESOLVED,SPATIAL,RANKED_REVIEW_REQUIRED,EventKG,1,1,http://dbpedia.org/ontology/legislature,4,False
+http://dbpedia.org/ontology/lieutenant,lieutenant,UNRESOLVED,SPATIAL,RANKED_REVIEW_REQUIRED,EventKG,1,1,http://dbpedia.org/ontology/lieutenant,3,False
+http://dbpedia.org/ontology/literaryGenre,literary Genre,UNRESOLVED,SPATIAL,RANKED_REVIEW_REQUIRED,EventKG,1,1,http://dbpedia.org/ontology/literaryGenre,55,False
+http://dbpedia.org/ontology/locatedInArea,located In Area,SPATIAL,SPATIAL,EXISTING_CATALOG_ASSIGNMENT,EventKG,1,1,http://dbpedia.org/ontology/locatedInArea,17,False
+http://dbpedia.org/ontology/locationCity,location City,SPATIAL,SPATIAL,EXISTING_CATALOG_ASSIGNMENT,EventKG,1,1,http://dbpedia.org/ontology/locationCity,29,False
+http://dbpedia.org/ontology/locationCountry,location Country,SPATIAL,SPATIAL,EXISTING_CATALOG_ASSIGNMENT,EventKG,1,1,http://dbpedia.org/ontology/locationCountry,18,False
+http://dbpedia.org/ontology/logo,logo,UNRESOLVED,SPATIAL,RANKED_REVIEW_REQUIRED,EventKG,1,1,http://dbpedia.org/ontology/logo,2,False
+http://dbpedia.org/ontology/maidenFlightRocket,maiden Flight Rocket,UNRESOLVED,SPATIAL,RANKED_REVIEW_REQUIRED,EventKG,1,1,http://dbpedia.org/ontology/maidenFlightRocket,6,False
+http://dbpedia.org/ontology/mainInterest,main Interest,UNRESOLVED,SPATIAL,RANKED_REVIEW_REQUIRED,EventKG,1,1,http://dbpedia.org/ontology/mainInterest,26,False
+http://dbpedia.org/ontology/mainOrgan,main Organ,UNRESOLVED,ORGANIZATION_HIERARCHY,RANKED_REVIEW_REQUIRED,EventKG,1,1,http://dbpedia.org/ontology/mainOrgan,2,False
+http://dbpedia.org/ontology/majorShrine,major Shrine,UNRESOLVED,SPATIAL,RANKED_REVIEW_REQUIRED,EventKG,1,1,http://dbpedia.org/ontology/majorShrine,9,False
+http://dbpedia.org/ontology/manager,manager,UNRESOLVED,FAMILY_PERSONAL,RANKED_REVIEW_REQUIRED,EventKG,1,1,http://dbpedia.org/ontology/manager,2,False
+http://dbpedia.org/ontology/managerClub,manager Club,UNRESOLVED,SPATIAL,RANKED_REVIEW_REQUIRED,EventKG,1,1,http://dbpedia.org/ontology/managerClub,3,False
+http://dbpedia.org/ontology/map,map,UNRESOLVED,FAMILY_PERSONAL,RANKED_REVIEW_REQUIRED,EventKG,1,1,http://dbpedia.org/ontology/map,10,False
+http://dbpedia.org/ontology/march,march,UNRESOLVED,FAMILY_PERSONAL,RANKED_REVIEW_REQUIRED,EventKG,1,1,http://dbpedia.org/ontology/march,53,False
+http://dbpedia.org/ontology/material,material,UNRESOLVED,SPATIAL,RANKED_REVIEW_REQUIRED,EventKG,1,1,http://dbpedia.org/ontology/material,2,False
+http://dbpedia.org/ontology/mergedWith,merged With,UNRESOLVED,SPATIAL,RANKED_REVIEW_REQUIRED,EventKG,1,1,http://dbpedia.org/ontology/mergedWith,8,False
+http://dbpedia.org/ontology/militaryRank,military Rank,PARTICIPATION_ROLE,PARTICIPATION_ROLE,EXISTING_CATALOG_ASSIGNMENT,EventKG,1,1,http://dbpedia.org/ontology/militaryRank,14,False
+http://dbpedia.org/ontology/militaryUnit,military Unit,PARTICIPATION_ROLE,PARTICIPATION_ROLE,EXISTING_CATALOG_ASSIGNMENT,EventKG,1,1,http://dbpedia.org/ontology/militaryUnit,6718,False
+http://dbpedia.org/ontology/mission,mission,UNRESOLVED,SPATIAL,RANKED_REVIEW_REQUIRED,EventKG,1,1,http://dbpedia.org/ontology/mission,1,False
+http://dbpedia.org/ontology/monarch,monarch,UNRESOLVED,FAMILY_PERSONAL,RANKED_REVIEW_REQUIRED,EventKG,1,1,http://dbpedia.org/ontology/monarch,35,False
+http://dbpedia.org/ontology/mother,mother,FAMILY_PERSONAL,FAMILY_PERSONAL,EXISTING_CATALOG_ASSIGNMENT,EventKG,1,1,http://dbpedia.org/ontology/mother,6,False
+http://dbpedia.org/ontology/mouthMountain,mouth Mountain,UNRESOLVED,SPATIAL,RANKED_REVIEW_REQUIRED,EventKG,1,1,http://dbpedia.org/ontology/mouthMountain,3,False
+http://dbpedia.org/ontology/mouthPlace,mouth Place,SPATIAL,SPATIAL,EXISTING_CATALOG_ASSIGNMENT,EventKG,1,1,http://dbpedia.org/ontology/mouthPlace,3,False
+http://dbpedia.org/ontology/movement,movement,UNRESOLVED,FAMILY_PERSONAL,RANKED_REVIEW_REQUIRED,EventKG,1,1,http://dbpedia.org/ontology/movement,28,False
+http://dbpedia.org/ontology/museum,museum,UNRESOLVED,FAMILY_PERSONAL,RANKED_REVIEW_REQUIRED,EventKG,1,1,http://dbpedia.org/ontology/museum,8,False
+http://dbpedia.org/ontology/musicComposer,music Composer,UNRESOLVED,PARTICIPATION_ROLE,RANKED_REVIEW_REQUIRED,EventKG,1,1,http://dbpedia.org/ontology/musicComposer,318,False
+http://dbpedia.org/ontology/musicType,music Type,UNRESOLVED,SPATIAL,RANKED_REVIEW_REQUIRED,EventKG,1,1,http://dbpedia.org/ontology/musicType,1,False
+http://dbpedia.org/ontology/namedAfter,named After,UNRESOLVED,AFFILIATION_STATUS,RANKED_REVIEW_REQUIRED,EventKG,1,1,http://dbpedia.org/ontology/namedAfter,24,False
+http://dbpedia.org/ontology/narrator,narrator,UNRESOLVED,SPATIAL,RANKED_REVIEW_REQUIRED,EventKG,1,1,http://dbpedia.org/ontology/narrator,129,False
+http://dbpedia.org/ontology/nationality,nationality,AFFILIATION_STATUS,AFFILIATION_STATUS,EXISTING_CATALOG_ASSIGNMENT,EventKG,1,1,http://dbpedia.org/ontology/nationality,1208,False
+http://dbpedia.org/ontology/nearestCity,nearest City,UNRESOLVED,SPATIAL,RANKED_REVIEW_REQUIRED,EventKG,1,1,http://dbpedia.org/ontology/nearestCity,40,False
+http://dbpedia.org/ontology/network,network,UNRESOLVED,SPATIAL,RANKED_REVIEW_REQUIRED,EventKG,1,1,http://dbpedia.org/ontology/network,26,False
+http://dbpedia.org/ontology/nextEvent,next Event,UNRESOLVED,PARTICIPATION_ROLE,RANKED_REVIEW_REQUIRED,EventKG,1,1,http://dbpedia.org/ontology/nextEvent,16,False
+http://dbpedia.org/ontology/notableCommander,notable Commander,PARTICIPATION_ROLE,PARTICIPATION_ROLE,EXISTING_CATALOG_ASSIGNMENT,EventKG,1,1,http://dbpedia.org/ontology/notableCommander,3951,False
+http://dbpedia.org/ontology/notableIdea,notable Idea,UNRESOLVED,EDUCATION_EMPLOYMENT,RANKED_REVIEW_REQUIRED,EventKG,1,1,http://dbpedia.org/ontology/notableIdea,2,False
+http://dbpedia.org/ontology/notableStudent,notable Student,EDUCATION_EMPLOYMENT,EDUCATION_EMPLOYMENT,EXISTING_CATALOG_ASSIGNMENT,EventKG,1,1,http://dbpedia.org/ontology/notableStudent,22,False
+http://dbpedia.org/ontology/notableWork,notable Work,UNRESOLVED,SPATIAL,RANKED_REVIEW_REQUIRED,EventKG,1,1,http://dbpedia.org/ontology/notableWork,71,False
+http://dbpedia.org/ontology/occupation,occupation,PARTICIPATION_ROLE,PARTICIPATION_ROLE,EXISTING_CATALOG_ASSIGNMENT,EventKG,1,1,http://dbpedia.org/ontology/occupation,1544,False
+http://dbpedia.org/ontology/officialLanguage,official Language,AFFILIATION_STATUS,AFFILIATION_STATUS,EXISTING_CATALOG_ASSIGNMENT,EventKG,1,1,http://dbpedia.org/ontology/officialLanguage,6,False
+http://dbpedia.org/ontology/openingTheme,opening Theme,UNRESOLVED,SPATIAL,RANKED_REVIEW_REQUIRED,EventKG,1,1,http://dbpedia.org/ontology/openingTheme,1,False
+http://dbpedia.org/ontology/opponent,opponent,UNRESOLVED,ORGANIZATION_HIERARCHY,RANKED_REVIEW_REQUIRED,EventKG,1,1,http://dbpedia.org/ontology/opponent,9,False
+http://dbpedia.org/ontology/otherParty,other Party,UNRESOLVED,FAMILY_PERSONAL,RANKED_REVIEW_REQUIRED,EventKG,1,1,http://dbpedia.org/ontology/otherParty,3,False
+http://dbpedia.org/ontology/outflow,outflow,UNRESOLVED,FAMILY_PERSONAL,RANKED_REVIEW_REQUIRED,EventKG,1,1,http://dbpedia.org/ontology/outflow,1,False
+http://dbpedia.org/ontology/owner,owner,OWNERSHIP_CONTROL,OWNERSHIP_CONTROL,EXISTING_CATALOG_ASSIGNMENT,EventKG,1,1,http://dbpedia.org/ontology/owner,1156,False
+http://dbpedia.org/ontology/owningCompany,owning Company,UNRESOLVED,ORGANIZATION_HIERARCHY,RANKED_REVIEW_REQUIRED,EventKG,1,1,http://dbpedia.org/ontology/owningCompany,10,False
+http://dbpedia.org/ontology/owningOrganisation,owning Organisation,UNRESOLVED,ORGANIZATION_HIERARCHY,RANKED_REVIEW_REQUIRED,EventKG,1,1,http://dbpedia.org/ontology/owningOrganisation,1,False
+http://dbpedia.org/ontology/parent,parent,UNRESOLVED,ORGANIZATION_HIERARCHY,RANKED_REVIEW_REQUIRED,EventKG,1,1,http://dbpedia.org/ontology/parent,397,False
+http://dbpedia.org/ontology/parentCompany,parent Company,ORGANIZATION_HIERARCHY,ORGANIZATION_HIERARCHY,EXISTING_CATALOG_ASSIGNMENT,EventKG,1,1,http://dbpedia.org/ontology/parentCompany,61,False
+http://dbpedia.org/ontology/parentOrganisation,parent Organisation,ORGANIZATION_HIERARCHY,ORGANIZATION_HIERARCHY,EXISTING_CATALOG_ASSIGNMENT,EventKG,1,1,http://dbpedia.org/ontology/parentOrganisation,43,False
+http://dbpedia.org/ontology/partner,partner,UNRESOLVED,FAMILY_PERSONAL,RANKED_REVIEW_REQUIRED,EventKG,1,1,http://dbpedia.org/ontology/partner,25,False
+http://dbpedia.org/ontology/party,party,UNRESOLVED,AFFILIATION_STATUS,RANKED_REVIEW_REQUIRED,EventKG,1,1,http://dbpedia.org/ontology/party,865,False
+http://dbpedia.org/ontology/patron,patron,UNRESOLVED,ORGANIZATION_HIERARCHY,RANKED_REVIEW_REQUIRED,EventKG,1,1,http://dbpedia.org/ontology/patron,75,False
+http://dbpedia.org/ontology/person,person,UNRESOLVED,AFFILIATION_STATUS,RANKED_REVIEW_REQUIRED,EventKG,1,1,http://dbpedia.org/ontology/person,8,False
+http://dbpedia.org/ontology/philosophicalSchool,philosophical School,UNRESOLVED,SPATIAL,RANKED_REVIEW_REQUIRED,EventKG,1,1,http://dbpedia.org/ontology/philosophicalSchool,11,False
+http://dbpedia.org/ontology/picture,picture,UNRESOLVED,ORGANIZATION_HIERARCHY,RANKED_REVIEW_REQUIRED,EventKG,1,1,http://dbpedia.org/ontology/picture,9,False
+http://dbpedia.org/ontology/placeOfBurial,place Of Burial,SPATIAL,SPATIAL,EXISTING_CATALOG_ASSIGNMENT,EventKG,1,1,http://dbpedia.org/ontology/placeOfBurial,7,False
+http://dbpedia.org/ontology/populationPlace,population Place,SPATIAL,SPATIAL,EXISTING_CATALOG_ASSIGNMENT,EventKG,1,1,http://dbpedia.org/ontology/populationPlace,4,False
+http://dbpedia.org/ontology/portrayer,portrayer,UNRESOLVED,SPATIAL,RANKED_REVIEW_REQUIRED,EventKG,1,1,http://dbpedia.org/ontology/portrayer,5,False
+http://dbpedia.org/ontology/position,position,UNRESOLVED,SPATIAL,RANKED_REVIEW_REQUIRED,EventKG,1,1,http://dbpedia.org/ontology/position,30,False
+http://dbpedia.org/ontology/powerType,power Type,UNRESOLVED,SPATIAL,RANKED_REVIEW_REQUIRED,EventKG,1,1,http://dbpedia.org/ontology/powerType,112,False
+http://dbpedia.org/ontology/predecessor,predecessor,TEMPORAL_SUCCESSION,TEMPORAL_SUCCESSION,EXISTING_CATALOG_ASSIGNMENT,EventKG,1,1,http://dbpedia.org/ontology/predecessor,326,False
+http://dbpedia.org/ontology/premierePlace,premiere Place,SPATIAL,SPATIAL,EXISTING_CATALOG_ASSIGNMENT,EventKG,1,1,http://dbpedia.org/ontology/premierePlace,1,False
+http://dbpedia.org/ontology/presenter,presenter,UNRESOLVED,SPATIAL,RANKED_REVIEW_REQUIRED,EventKG,1,1,http://dbpedia.org/ontology/presenter,180,False
+http://dbpedia.org/ontology/president,president,UNRESOLVED,SPATIAL,RANKED_REVIEW_REQUIRED,EventKG,1,1,http://dbpedia.org/ontology/president,62,False
+http://dbpedia.org/ontology/previousEditor,previous Editor,UNRESOLVED,FAMILY_PERSONAL,RANKED_REVIEW_REQUIRED,EventKG,1,1,http://dbpedia.org/ontology/previousEditor,2,False
+http://dbpedia.org/ontology/previousEvent,previous Event,UNRESOLVED,SPATIAL,RANKED_REVIEW_REQUIRED,EventKG,1,1,http://dbpedia.org/ontology/previousEvent,9,False
+http://dbpedia.org/ontology/primeMinister,prime Minister,UNRESOLVED,SPATIAL,RANKED_REVIEW_REQUIRED,EventKG,1,1,http://dbpedia.org/ontology/primeMinister,27,False
+http://dbpedia.org/ontology/principal,principal,UNRESOLVED,SPATIAL,RANKED_REVIEW_REQUIRED,EventKG,1,1,http://dbpedia.org/ontology/principal,1,False
+http://dbpedia.org/ontology/producer,producer,UNRESOLVED,CREATION_AUTHORSHIP,RANKED_REVIEW_REQUIRED,EventKG,1,1,http://dbpedia.org/ontology/producer,530,False
+http://dbpedia.org/ontology/product,product,UNRESOLVED,CREATION_AUTHORSHIP,RANKED_REVIEW_REQUIRED,EventKG,1,1,http://dbpedia.org/ontology/product,109,False
+http://dbpedia.org/ontology/productionCompany,production Company,UNRESOLVED,ORGANIZATION_HIERARCHY,RANKED_REVIEW_REQUIRED,EventKG,1,1,http://dbpedia.org/ontology/productionCompany,201,False
+http://dbpedia.org/ontology/profession,profession,UNRESOLVED,SPATIAL,RANKED_REVIEW_REQUIRED,EventKG,1,1,http://dbpedia.org/ontology/profession,83,False
+http://dbpedia.org/ontology/province,province,UNRESOLVED,SPATIAL,RANKED_REVIEW_REQUIRED,EventKG,1,1,http://dbpedia.org/ontology/province,1,False
+http://dbpedia.org/ontology/publisher,publisher,UNRESOLVED,FAMILY_PERSONAL,RANKED_REVIEW_REQUIRED,EventKG,1,1,http://dbpedia.org/ontology/publisher,60,False
+http://dbpedia.org/ontology/race,race,UNRESOLVED,SPATIAL,RANKED_REVIEW_REQUIRED,EventKG,1,1,http://dbpedia.org/ontology/race,2,False
+http://dbpedia.org/ontology/raceHorse,race Horse,UNRESOLVED,SPATIAL,RANKED_REVIEW_REQUIRED,EventKG,1,1,http://dbpedia.org/ontology/raceHorse,2,False
+http://dbpedia.org/ontology/railwayLineUsingTunnel,railway Line Using Tunnel,UNRESOLVED,SPATIAL,RANKED_REVIEW_REQUIRED,EventKG,1,1,http://dbpedia.org/ontology/railwayLineUsingTunnel,1,False
+http://dbpedia.org/ontology/railwayRollingStock,railway Rolling Stock,UNRESOLVED,FAMILY_PERSONAL,RANKED_REVIEW_REQUIRED,EventKG,1,1,http://dbpedia.org/ontology/railwayRollingStock,1,False
+http://dbpedia.org/ontology/rebuilder,rebuilder,UNRESOLVED,FAMILY_PERSONAL,RANKED_REVIEW_REQUIRED,EventKG,1,1,http://dbpedia.org/ontology/rebuilder,1,False
+http://dbpedia.org/ontology/recordLabel,record Label,UNRESOLVED,SPATIAL,RANKED_REVIEW_REQUIRED,EventKG,1,1,http://dbpedia.org/ontology/recordLabel,27,False
+http://dbpedia.org/ontology/region,region,UNRESOLVED,AFFILIATION_STATUS,RANKED_REVIEW_REQUIRED,EventKG,1,1,http://dbpedia.org/ontology/region,15,False
+http://dbpedia.org/ontology/regionServed,region Served,UNRESOLVED,SPATIAL,RANKED_REVIEW_REQUIRED,EventKG,1,1,http://dbpedia.org/ontology/regionServed,34,False
+http://dbpedia.org/ontology/regionalLanguage,regional Language,AFFILIATION_STATUS,AFFILIATION_STATUS,EXISTING_CATALOG_ASSIGNMENT,EventKG,1,1,http://dbpedia.org/ontology/regionalLanguage,22,False
+http://dbpedia.org/ontology/related,related,UNRESOLVED,FAMILY_PERSONAL,RANKED_REVIEW_REQUIRED,EventKG,1,1,http://dbpedia.org/ontology/related,4,False
+http://dbpedia.org/ontology/relatedMeanOfTransportation,related Mean Of Transportation,UNRESOLVED,SPATIAL,RANKED_REVIEW_REQUIRED,EventKG,1,1,http://dbpedia.org/ontology/relatedMeanOfTransportation,1,False
+http://dbpedia.org/ontology/relation,relation,UNRESOLVED,FAMILY_PERSONAL,RANKED_REVIEW_REQUIRED,EventKG,1,1,http://dbpedia.org/ontology/relation,1361,False
+http://dbpedia.org/ontology/relative,relative,FAMILY_PERSONAL,FAMILY_PERSONAL,EXISTING_CATALOG_ASSIGNMENT,EventKG,1,1,http://dbpedia.org/ontology/relative,358,False
+http://dbpedia.org/ontology/religion,religion,AFFILIATION_STATUS,AFFILIATION_STATUS,EXISTING_CATALOG_ASSIGNMENT,EventKG,1,1,http://dbpedia.org/ontology/religion,33,False
+http://dbpedia.org/ontology/residence,residence,UNRESOLVED,SPATIAL,RANKED_REVIEW_REQUIRED,EventKG,1,1,http://dbpedia.org/ontology/residence,70,False
+http://dbpedia.org/ontology/retiredRocket,retired Rocket,UNRESOLVED,FAMILY_PERSONAL,RANKED_REVIEW_REQUIRED,EventKG,1,1,http://dbpedia.org/ontology/retiredRocket,5,False
+http://dbpedia.org/ontology/river,river,UNRESOLVED,FAMILY_PERSONAL,RANKED_REVIEW_REQUIRED,EventKG,1,1,http://dbpedia.org/ontology/river,1,False
+http://dbpedia.org/ontology/routeEnd,route End,UNRESOLVED,SPATIAL,RANKED_REVIEW_REQUIRED,EventKG,1,1,http://dbpedia.org/ontology/routeEnd,29,False
+http://dbpedia.org/ontology/routeJunction,route Junction,UNRESOLVED,SPATIAL,RANKED_REVIEW_REQUIRED,EventKG,1,1,http://dbpedia.org/ontology/routeJunction,13,False
+http://dbpedia.org/ontology/routeStart,route Start,UNRESOLVED,SPATIAL,RANKED_REVIEW_REQUIRED,EventKG,1,1,http://dbpedia.org/ontology/routeStart,20,False
+http://dbpedia.org/ontology/routeStartLocation,route Start Location,SPATIAL,SPATIAL,EXISTING_CATALOG_ASSIGNMENT,EventKG,1,1,http://dbpedia.org/ontology/routeStartLocation,1,False
+http://dbpedia.org/ontology/school,school,UNRESOLVED,FAMILY_PERSONAL,RANKED_REVIEW_REQUIRED,EventKG,1,1,http://dbpedia.org/ontology/school,19,False
+http://dbpedia.org/ontology/secondCommander,second Commander,PARTICIPATION_ROLE,PARTICIPATION_ROLE,EXISTING_CATALOG_ASSIGNMENT,EventKG,1,1,http://dbpedia.org/ontology/secondCommander,101,False
+http://dbpedia.org/ontology/secondDriver,second Driver,UNRESOLVED,PARTICIPATION_ROLE,RANKED_REVIEW_REQUIRED,EventKG,1,1,http://dbpedia.org/ontology/secondDriver,4,False
+http://dbpedia.org/ontology/secondLeader,second Leader,UNRESOLVED,PARTICIPATION_ROLE,RANKED_REVIEW_REQUIRED,EventKG,1,1,http://dbpedia.org/ontology/secondLeader,56,False
+http://dbpedia.org/ontology/series,series,UNRESOLVED,TEMPORAL_SUCCESSION,RANKED_REVIEW_REQUIRED,EventKG,1,1,http://dbpedia.org/ontology/series,4,False
+http://dbpedia.org/ontology/service,service,UNRESOLVED,PARTICIPATION_ROLE,RANKED_REVIEW_REQUIRED,EventKG,1,1,http://dbpedia.org/ontology/service,2,False
+http://dbpedia.org/ontology/servingRailwayLine,serving Railway Line,UNRESOLVED,SPATIAL,RANKED_REVIEW_REQUIRED,EventKG,1,1,http://dbpedia.org/ontology/servingRailwayLine,4,False
+http://dbpedia.org/ontology/significantBuilding,significant Building,UNRESOLVED,SPATIAL,RANKED_REVIEW_REQUIRED,EventKG,1,1,http://dbpedia.org/ontology/significantBuilding,9,False
+http://dbpedia.org/ontology/significantDesign,significant Design,UNRESOLVED,SPATIAL,RANKED_REVIEW_REQUIRED,EventKG,1,1,http://dbpedia.org/ontology/significantDesign,4,False
+http://dbpedia.org/ontology/significantProject,significant Project,UNRESOLVED,SPATIAL,RANKED_REVIEW_REQUIRED,EventKG,1,1,http://dbpedia.org/ontology/significantProject,34,False
+http://dbpedia.org/ontology/silverMedalist,silver Medalist,UNRESOLVED,FAMILY_PERSONAL,RANKED_REVIEW_REQUIRED,EventKG,1,1,http://dbpedia.org/ontology/silverMedalist,14,False
+http://dbpedia.org/ontology/similar,similar,UNRESOLVED,SPATIAL,RANKED_REVIEW_REQUIRED,EventKG,1,1,http://dbpedia.org/ontology/similar,15,False
+http://dbpedia.org/ontology/sisterNewspaper,sister Newspaper,UNRESOLVED,FAMILY_PERSONAL,RANKED_REVIEW_REQUIRED,EventKG,1,1,http://dbpedia.org/ontology/sisterNewspaper,2,False
+http://dbpedia.org/ontology/sisterStation,sister Station,UNRESOLVED,SPATIAL,RANKED_REVIEW_REQUIRED,EventKG,1,1,http://dbpedia.org/ontology/sisterStation,1,False
+http://dbpedia.org/ontology/splitFromParty,split From Party,UNRESOLVED,FAMILY_PERSONAL,RANKED_REVIEW_REQUIRED,EventKG,1,1,http://dbpedia.org/ontology/splitFromParty,3,False
+http://dbpedia.org/ontology/spokenIn,spoken In,UNRESOLVED,SPATIAL,RANKED_REVIEW_REQUIRED,EventKG,1,1,http://dbpedia.org/ontology/spokenIn,5,False
+http://dbpedia.org/ontology/spouse,spouse,FAMILY_PERSONAL,FAMILY_PERSONAL,EXISTING_CATALOG_ASSIGNMENT,EventKG,1,1,http://dbpedia.org/ontology/spouse,61,False
+http://dbpedia.org/ontology/stadium,stadium,UNRESOLVED,FAMILY_PERSONAL,RANKED_REVIEW_REQUIRED,EventKG,1,1,http://dbpedia.org/ontology/stadium,2,False
+http://dbpedia.org/ontology/starring,starring,UNRESOLVED,SPATIAL,RANKED_REVIEW_REQUIRED,EventKG,1,1,http://dbpedia.org/ontology/starring,2258,False
+http://dbpedia.org/ontology/state,state,UNRESOLVED,SPATIAL,RANKED_REVIEW_REQUIRED,EventKG,1,1,http://dbpedia.org/ontology/state,5,False
+http://dbpedia.org/ontology/stateOfOrigin,state Of Origin,UNRESOLVED,SPATIAL,RANKED_REVIEW_REQUIRED,EventKG,1,1,http://dbpedia.org/ontology/stateOfOrigin,285,False
+http://dbpedia.org/ontology/structuralSystem,structural System,UNRESOLVED,ORGANIZATION_HIERARCHY,RANKED_REVIEW_REQUIRED,EventKG,1,1,http://dbpedia.org/ontology/structuralSystem,1,False
+http://dbpedia.org/ontology/subdivision,subdivision,UNRESOLVED,SPATIAL,RANKED_REVIEW_REQUIRED,EventKG,1,1,http://dbpedia.org/ontology/subdivision,95,False
+http://dbpedia.org/ontology/subject,subject,UNRESOLVED,FAMILY_PERSONAL,RANKED_REVIEW_REQUIRED,EventKG,1,1,http://dbpedia.org/ontology/subject,44,False
+http://dbpedia.org/ontology/subsidiary,subsidiary,UNRESOLVED,FAMILY_PERSONAL,RANKED_REVIEW_REQUIRED,EventKG,1,1,http://dbpedia.org/ontology/subsidiary,18,False
+http://dbpedia.org/ontology/successor,successor,TEMPORAL_SUCCESSION,TEMPORAL_SUCCESSION,EXISTING_CATALOG_ASSIGNMENT,EventKG,1,1,http://dbpedia.org/ontology/successor,348,False
+http://dbpedia.org/ontology/targetAirport,target Airport,UNRESOLVED,SPATIAL,RANKED_REVIEW_REQUIRED,EventKG,1,1,http://dbpedia.org/ontology/targetAirport,62,False
+http://dbpedia.org/ontology/team,team,UNRESOLVED,PARTICIPATION_ROLE,RANKED_REVIEW_REQUIRED,EventKG,1,1,http://dbpedia.org/ontology/team,141,False
+http://dbpedia.org/ontology/tenant,tenant,UNRESOLVED,SPATIAL,RANKED_REVIEW_REQUIRED,EventKG,1,1,http://dbpedia.org/ontology/tenant,7,False
+http://dbpedia.org/ontology/territory,territory,UNRESOLVED,SPATIAL,RANKED_REVIEW_REQUIRED,EventKG,1,1,http://dbpedia.org/ontology/territory,145,False
+http://dbpedia.org/ontology/thirdCommander,third Commander,PARTICIPATION_ROLE,PARTICIPATION_ROLE,EXISTING_CATALOG_ASSIGNMENT,EventKG,1,1,http://dbpedia.org/ontology/thirdCommander,45,False
+http://dbpedia.org/ontology/thirdDriver,third Driver,UNRESOLVED,SPATIAL,RANKED_REVIEW_REQUIRED,EventKG,1,1,http://dbpedia.org/ontology/thirdDriver,4,False
+http://dbpedia.org/ontology/timeZone,time Zone,UNRESOLVED,SPATIAL,RANKED_REVIEW_REQUIRED,EventKG,1,1,http://dbpedia.org/ontology/timeZone,4,False
+http://dbpedia.org/ontology/trainer,trainer,UNRESOLVED,SPATIAL,RANKED_REVIEW_REQUIRED,EventKG,1,1,http://dbpedia.org/ontology/trainer,4,False
+http://dbpedia.org/ontology/training,training,UNRESOLVED,SPATIAL,RANKED_REVIEW_REQUIRED,EventKG,1,1,http://dbpedia.org/ontology/training,37,False
+http://dbpedia.org/ontology/translator,translator,UNRESOLVED,CREATION_AUTHORSHIP,RANKED_REVIEW_REQUIRED,EventKG,1,1,http://dbpedia.org/ontology/translator,7,False
+http://dbpedia.org/ontology/university,university,UNRESOLVED,SPATIAL,RANKED_REVIEW_REQUIRED,EventKG,1,1,http://dbpedia.org/ontology/university,2,False
+http://dbpedia.org/ontology/usingCountry,using Country,SPATIAL,SPATIAL,EXISTING_CATALOG_ASSIGNMENT,EventKG,1,1,http://dbpedia.org/ontology/usingCountry,15,False
+http://dbpedia.org/ontology/veneratedIn,venerated In,UNRESOLVED,SPATIAL,RANKED_REVIEW_REQUIRED,EventKG,1,1,http://dbpedia.org/ontology/veneratedIn,5,False
+http://dbpedia.org/ontology/vicePresident,vice President,UNRESOLVED,SPATIAL,RANKED_REVIEW_REQUIRED,EventKG,1,1,http://dbpedia.org/ontology/vicePresident,1,False
+http://dbpedia.org/ontology/victim,victim,UNRESOLVED,SPATIAL,RANKED_REVIEW_REQUIRED,EventKG,1,1,http://dbpedia.org/ontology/victim,138,False
+http://dbpedia.org/ontology/voice,voice,UNRESOLVED,SPATIAL,RANKED_REVIEW_REQUIRED,EventKG,1,1,http://dbpedia.org/ontology/voice,58,False
+http://dbpedia.org/ontology/writer,writer,UNRESOLVED,SPATIAL,RANKED_REVIEW_REQUIRED,EventKG,1,1,http://dbpedia.org/ontology/writer,647,False
+http://dbpedia.org/ontology/youthWing,youth Wing,UNRESOLVED,SPATIAL,RANKED_REVIEW_REQUIRED,EventKG,1,1,http://dbpedia.org/ontology/youthWing,3,False
+http://ldf.fi/ammo/coo1980/socioeconomic_status,socioeconomic status,UNRESOLVED,PARTICIPATION_ROLE,RANKED_REVIEW_REQUIRED,WarSampo,1,1,http://ldf.fi/ammo/coo1980/socioeconomic_status,419,False
+http://ldf.fi/schema/ammo/hisclass12,hisclass12,UNRESOLVED,PARTICIPATION_ROLE,RANKED_REVIEW_REQUIRED,WarSampo,1,1,http://ldf.fi/schema/ammo/hisclass12,2453,False
+http://ldf.fi/schema/ammo/hisclass5,hisclass5,UNRESOLVED,PARTICIPATION_ROLE,RANKED_REVIEW_REQUIRED,WarSampo,1,1,http://ldf.fi/schema/ammo/hisclass5,2452,False
+http://ldf.fi/schema/ammo/hisclass7,hisclass7,UNRESOLVED,PARTICIPATION_ROLE,RANKED_REVIEW_REQUIRED,WarSampo,1,1,http://ldf.fi/schema/ammo/hisclass7,2452,False
+http://ldf.fi/schema/ammo/hisco_product,hisco product,UNRESOLVED,CREATION_AUTHORSHIP,RANKED_REVIEW_REQUIRED,WarSampo,1,1,http://ldf.fi/schema/ammo/hisco_product,32,False
+http://ldf.fi/schema/ammo/hisco_relation,hisco relation,UNRESOLVED,FAMILY_PERSONAL,RANKED_REVIEW_REQUIRED,WarSampo,1,1,http://ldf.fi/schema/ammo/hisco_relation,208,False
+http://ldf.fi/schema/ammo/hisco_status,hisco status,UNRESOLVED,PARTICIPATION_ROLE,RANKED_REVIEW_REQUIRED,WarSampo,1,1,http://ldf.fi/schema/ammo/hisco_status,650,False
+http://ldf.fi/schema/bioc/has_family_relation,has family relation,FAMILY_PERSONAL,FAMILY_PERSONAL,EXISTING_CATALOG_ASSIGNMENT,WarSampo,1,1,http://ldf.fi/schema/bioc/has_family_relation,2,False
+http://ldf.fi/schema/bioc/has_occupation,has occupation,PARTICIPATION_ROLE,PARTICIPATION_ROLE,EXISTING_CATALOG_ASSIGNMENT,WarSampo,1,1,http://ldf.fi/schema/bioc/has_occupation,182096,False
+http://ldf.fi/schema/bioc/inheres_in,inheres in,UNRESOLVED,PARTICIPATION_ROLE,RANKED_REVIEW_REQUIRED,WarSampo,1,1,http://ldf.fi/schema/bioc/inheres_in,2,False
+http://ldf.fi/schema/hipla/topology,Temporal part of relations,PART_WHOLE_HIERARCHY,PART_WHOLE_HIERARCHY,EXISTING_CATALOG_ASSIGNMENT,WarSampo,1,1,http://ldf.fi/schema/hipla/topology,625,False
+http://ldf.fi/schema/hipla/within,within,SPATIAL,SPATIAL,EXISTING_CATALOG_ASSIGNMENT,WarSampo,1,1,http://ldf.fi/schema/hipla/within,625,False
+http://ldf.fi/schema/ldf/dataVisualization,data Visualization,UNRESOLVED,PARTICIPATION_ROLE,RANKED_REVIEW_REQUIRED,WarSampo,1,1,http://ldf.fi/schema/ldf/dataVisualization,1,False
+http://ldf.fi/schema/narc-menehtyneet1939-45/menehtymisluokka,menehtymisluokka,UNRESOLVED,PARTICIPATION_ROLE,RANKED_REVIEW_REQUIRED,WarSampo,1,1,http://ldf.fi/schema/narc-menehtyneet1939-45/menehtymisluokka,604,False
+http://ldf.fi/schema/warsa/actors/genicom,genicom,UNRESOLVED,PARTICIPATION_ROLE,RANKED_REVIEW_REQUIRED,WarSampo,1,1,http://ldf.fi/schema/warsa/actors/genicom,9355,False
+http://ldf.fi/schema/warsa/actors/genitree,genitree,UNRESOLVED,PARTICIPATION_ROLE,RANKED_REVIEW_REQUIRED,WarSampo,1,1,http://ldf.fi/schema/warsa/actors/genitree,9355,False
+http://ldf.fi/schema/warsa/actors/hasRank,Military Rank,PARTICIPATION_ROLE,PARTICIPATION_ROLE,EXISTING_CATALOG_ASSIGNMENT,WarSampo,1,1,http://ldf.fi/schema/warsa/actors/hasRank,105652,False
+http://ldf.fi/schema/warsa/actors/hasUnitCategory,has Unit Category,PARTICIPATION_ROLE,PARTICIPATION_ROLE,EXISTING_CATALOG_ASSIGNMENT,WarSampo,1,1,http://ldf.fi/schema/warsa/actors/hasUnitCategory,4519,False
+http://ldf.fi/schema/warsa/articles/arms_of_service,arms of service,UNRESOLVED,PARTICIPATION_ROLE,RANKED_REVIEW_REQUIRED,WarSampo,1,1,http://ldf.fi/schema/warsa/articles/arms_of_service,3357,False
+http://ldf.fi/schema/warsa/articles/author,author,CREATION_AUTHORSHIP,CREATION_AUTHORSHIP,EXISTING_CATALOG_ASSIGNMENT,WarSampo,1,1,http://ldf.fi/schema/warsa/articles/author,3358,False
+http://ldf.fi/schema/warsa/articles/event,is related to an event,UNRESOLVED,PARTICIPATION_ROLE,RANKED_REVIEW_REQUIRED,WarSampo,1,1,http://ldf.fi/schema/warsa/articles/event,2826,False
+http://ldf.fi/schema/warsa/articles/issue,issue,UNRESOLVED,PARTICIPATION_ROLE,RANKED_REVIEW_REQUIRED,WarSampo,1,1,http://ldf.fi/schema/warsa/articles/issue,3357,False
+http://ldf.fi/schema/warsa/articles/mentionsGeneral,is related to general concept (automatic linking),UNRESOLVED,CONFLICT_AFFILIATION,RANKED_REVIEW_REQUIRED,WarSampo,1,1,http://ldf.fi/schema/warsa/articles/mentionsGeneral,3381,False
+http://ldf.fi/schema/warsa/articles/mentionsPerson,is related to person (automatic linking),UNRESOLVED,CONFLICT_AFFILIATION,RANKED_REVIEW_REQUIRED,WarSampo,1,1,http://ldf.fi/schema/warsa/articles/mentionsPerson,3963,False
+http://ldf.fi/schema/warsa/articles/mentionsPlace,is related to place (automatic linking),SPATIAL,SPATIAL,EXISTING_CATALOG_ASSIGNMENT,WarSampo,1,1,http://ldf.fi/schema/warsa/articles/mentionsPlace,593,False
+http://ldf.fi/schema/warsa/articles/mentionsUnit,is related to military unit (automatic linking),PARTICIPATION_ROLE,PARTICIPATION_ROLE,EXISTING_CATALOG_ASSIGNMENT,WarSampo,1,1,http://ldf.fi/schema/warsa/articles/mentionsUnit,74,False
+http://ldf.fi/schema/warsa/articles/mentionsWar,is related to war concept (automatic linking),CONFLICT_AFFILIATION,CONFLICT_AFFILIATION,EXISTING_CATALOG_ASSIGNMENT,WarSampo,1,1,http://ldf.fi/schema/warsa/articles/mentionsWar,1193,False
+http://ldf.fi/schema/warsa/articles/place,is related to place,SPATIAL,SPATIAL,EXISTING_CATALOG_ASSIGNMENT,WarSampo,1,1,http://ldf.fi/schema/warsa/articles/place,3854,False
+http://ldf.fi/schema/warsa/articles/unit,is related to military unit,PARTICIPATION_ROLE,PARTICIPATION_ROLE,EXISTING_CATALOG_ASSIGNMENT,WarSampo,1,1,http://ldf.fi/schema/warsa/articles/unit,3357,False
+http://ldf.fi/schema/warsa/articles/volume,volume,UNRESOLVED,PARTICIPATION_ROLE,RANKED_REVIEW_REQUIRED,WarSampo,1,1,http://ldf.fi/schema/warsa/articles/volume,3357,False
+http://ldf.fi/schema/warsa/buried_in,Buried in,UNRESOLVED,PARTICIPATION_ROLE,RANKED_REVIEW_REQUIRED,WarSampo,1,1,http://ldf.fi/schema/warsa/buried_in,84310,False
+http://ldf.fi/schema/warsa/casualties/buried_in,buried in,UNRESOLVED,PARTICIPATION_ROLE,RANKED_REVIEW_REQUIRED,WarSampo,1,1,http://ldf.fi/schema/warsa/casualties/buried_in,5,False
+http://ldf.fi/schema/warsa/casualties/current_municipality,current municipality,UNRESOLVED,PARTICIPATION_ROLE,RANKED_REVIEW_REQUIRED,WarSampo,1,1,http://ldf.fi/schema/warsa/casualties/current_municipality,558,False
+http://ldf.fi/schema/warsa/casualties/municipality_of_birth,Municipality of birth,UNRESOLVED,SPATIAL,RANKED_REVIEW_REQUIRED,WarSampo,1,1,http://ldf.fi/schema/warsa/casualties/municipality_of_birth,81661,False
+http://ldf.fi/schema/warsa/casualties/municipality_of_burial,municipality of burial,SPATIAL,SPATIAL,EXISTING_CATALOG_ASSIGNMENT,WarSampo,1,1,http://ldf.fi/schema/warsa/casualties/municipality_of_burial,94432,False
+http://ldf.fi/schema/warsa/casualties/municipality_of_death,municipality of death,UNRESOLVED,SPATIAL,RANKED_REVIEW_REQUIRED,WarSampo,1,1,http://ldf.fi/schema/warsa/casualties/municipality_of_death,41679,False
+http://ldf.fi/schema/warsa/casualties/municipality_of_domicile,municipality of domicile,UNRESOLVED,SPATIAL,RANKED_REVIEW_REQUIRED,WarSampo,1,1,http://ldf.fi/schema/warsa/casualties/municipality_of_domicile,92633,False
+http://ldf.fi/schema/warsa/casualties/municipality_of_going_mia,municipality of going mia,UNRESOLVED,SPATIAL,RANKED_REVIEW_REQUIRED,WarSampo,1,1,http://ldf.fi/schema/warsa/casualties/municipality_of_going_mia,4117,False
+http://ldf.fi/schema/warsa/casualties/municipality_of_residence,municipality of residence,UNRESOLVED,SPATIAL,RANKED_REVIEW_REQUIRED,WarSampo,1,1,http://ldf.fi/schema/warsa/casualties/municipality_of_residence,88176,False
+http://ldf.fi/schema/warsa/casualties/municipality_of_wounding,municipality of wounding,UNRESOLVED,SPATIAL,RANKED_REVIEW_REQUIRED,WarSampo,1,1,http://ldf.fi/schema/warsa/casualties/municipality_of_wounding,7673,False
+http://ldf.fi/schema/warsa/casualties/perishing_category,perishing category,UNRESOLVED,PARTICIPATION_ROLE,RANKED_REVIEW_REQUIRED,WarSampo,1,1,http://ldf.fi/schema/warsa/casualties/perishing_category,94677,False
+http://ldf.fi/schema/warsa/casualties/preferred_municipality,preferred municipality,UNRESOLVED,PARTICIPATION_ROLE,RANKED_REVIEW_REQUIRED,WarSampo,1,1,http://ldf.fi/schema/warsa/casualties/preferred_municipality,632,False
+http://ldf.fi/schema/warsa/casualties/rank,rank,PARTICIPATION_ROLE,PARTICIPATION_ROLE,EXISTING_CATALOG_ASSIGNMENT,WarSampo,1,1,http://ldf.fi/schema/warsa/casualties/rank,93557,False
+http://ldf.fi/schema/warsa/casualties/unit,unit,PARTICIPATION_ROLE,PARTICIPATION_ROLE,EXISTING_CATALOG_ASSIGNMENT,WarSampo,1,1,http://ldf.fi/schema/warsa/casualties/unit,88189,False
+http://ldf.fi/schema/warsa/casualties/wartime_municipality,wartime municipality,UNRESOLVED,SPATIAL,RANKED_REVIEW_REQUIRED,WarSampo,1,1,http://ldf.fi/schema/warsa/casualties/wartime_municipality,577,False
+http://ldf.fi/schema/warsa/citizenship,Citizenship,AFFILIATION_STATUS,AFFILIATION_STATUS,EXISTING_CATALOG_ASSIGNMENT,WarSampo,1,1,http://ldf.fi/schema/warsa/citizenship,94775,False
+http://ldf.fi/schema/warsa/events/related_period,Related period,UNRESOLVED,PARTICIPATION_ROLE,RANKED_REVIEW_REQUIRED,WarSampo,1,1,http://ldf.fi/schema/warsa/events/related_period,113023,False
+http://ldf.fi/schema/warsa/municipality_of_birth,Municipality of birth,UNRESOLVED,SPATIAL,RANKED_REVIEW_REQUIRED,WarSampo,1,1,http://ldf.fi/schema/warsa/municipality_of_birth,3915,False
+http://ldf.fi/schema/warsa/municipality_of_death,municipality of death,UNRESOLVED,SPATIAL,RANKED_REVIEW_REQUIRED,WarSampo,1,1,http://ldf.fi/schema/warsa/municipality_of_death,0,False
+http://ldf.fi/schema/warsa/municipality_of_domicile,municipality of domicile,UNRESOLVED,SPATIAL,RANKED_REVIEW_REQUIRED,WarSampo,1,1,http://ldf.fi/schema/warsa/municipality_of_domicile,0,False
+http://ldf.fi/schema/warsa/municipality_of_going_mia,municipality of going mia,UNRESOLVED,SPATIAL,RANKED_REVIEW_REQUIRED,WarSampo,1,1,http://ldf.fi/schema/warsa/municipality_of_going_mia,0,False
+http://ldf.fi/schema/warsa/municipality_of_residence,municipality of residence,UNRESOLVED,SPATIAL,RANKED_REVIEW_REQUIRED,WarSampo,1,1,http://ldf.fi/schema/warsa/municipality_of_residence,0,False
+http://ldf.fi/schema/warsa/municipality_of_wounding,municipality of wounding,UNRESOLVED,SPATIAL,RANKED_REVIEW_REQUIRED,WarSampo,1,1,http://ldf.fi/schema/warsa/municipality_of_wounding,0,False
+http://ldf.fi/schema/warsa/nationality,nationality,AFFILIATION_STATUS,AFFILIATION_STATUS,EXISTING_CATALOG_ASSIGNMENT,WarSampo,1,1,http://ldf.fi/schema/warsa/nationality,94676,False
+http://ldf.fi/schema/warsa/person_document,person document,UNRESOLVED,PARTICIPATION_ROLE,RANKED_REVIEW_REQUIRED,WarSampo,1,1,http://ldf.fi/schema/warsa/person_document,4620,False
+http://ldf.fi/schema/warsa/prisoners/captivity,Captivity locations,UNRESOLVED,SPATIAL,RANKED_REVIEW_REQUIRED,WarSampo,1,1,http://ldf.fi/schema/warsa/prisoners/captivity,10983,False
+http://ldf.fi/schema/warsa/prisoners/location,location,SPATIAL,SPATIAL,EXISTING_CATALOG_ASSIGNMENT,WarSampo,1,1,http://ldf.fi/schema/warsa/prisoners/location,8845,False
+http://ldf.fi/schema/warsa/prisoners/municipality_of_capture,Municipality of capture,UNRESOLVED,SPATIAL,RANKED_REVIEW_REQUIRED,WarSampo,1,1,http://ldf.fi/schema/warsa/prisoners/municipality_of_capture,3082,False
+http://ldf.fi/schema/warsa/prisoners/municipality_of_death,municipality of death,UNRESOLVED,SPATIAL,RANKED_REVIEW_REQUIRED,WarSampo,1,1,http://ldf.fi/schema/warsa/prisoners/municipality_of_death,2192,False
+http://ldf.fi/schema/warsa/prisoners/municipality_of_domicile,municipality of domicile,UNRESOLVED,PARTICIPATION_ROLE,RANKED_REVIEW_REQUIRED,WarSampo,1,1,http://ldf.fi/schema/warsa/prisoners/municipality_of_domicile,3908,False
+http://ldf.fi/schema/warsa/prisoners/municipality_of_residence,municipality of residence,UNRESOLVED,SPATIAL,RANKED_REVIEW_REQUIRED,WarSampo,1,1,http://ldf.fi/schema/warsa/prisoners/municipality_of_residence,4006,False
+http://ldf.fi/schema/warsa/prisoners/propaganda_magazine_link,propaganda magazine link,UNRESOLVED,PARTICIPATION_ROLE,RANKED_REVIEW_REQUIRED,WarSampo,1,1,http://ldf.fi/schema/warsa/prisoners/propaganda_magazine_link,188,False
+http://ldf.fi/schema/warsa/prisoners/rank,rank,PARTICIPATION_ROLE,PARTICIPATION_ROLE,EXISTING_CATALOG_ASSIGNMENT,WarSampo,1,1,http://ldf.fi/schema/warsa/prisoners/rank,4138,False
+http://ldf.fi/schema/warsa/prisoners/unit,unit,PARTICIPATION_ROLE,PARTICIPATION_ROLE,EXISTING_CATALOG_ASSIGNMENT,WarSampo,1,1,http://ldf.fi/schema/warsa/prisoners/unit,3861,False
+http://ldf.fi/schema/warsa/prisoners/warsa_unit,warsa unit,PARTICIPATION_ROLE,PARTICIPATION_ROLE,EXISTING_CATALOG_ASSIGNMENT,WarSampo,1,1,http://ldf.fi/schema/warsa/prisoners/warsa_unit,0,False
+http://ldf.fi/schema/warsa/sotilaan_aani_magazine,sotilaan aani magazine,UNRESOLVED,PARTICIPATION_ROLE,RANKED_REVIEW_REQUIRED,WarSampo,1,1,http://ldf.fi/schema/warsa/sotilaan_aani_magazine,3964,False
+http://ldf.fi/schema/warsa/unit,unit,PARTICIPATION_ROLE,PARTICIPATION_ROLE,EXISTING_CATALOG_ASSIGNMENT,WarSampo,1,1,http://ldf.fi/schema/warsa/unit,0,False
+http://ldf.fi/warsa/actors/hasUnitCategory,has Unit Category,PARTICIPATION_ROLE,PARTICIPATION_ROLE,EXISTING_CATALOG_ASSIGNMENT,WarSampo,1,1,http://ldf.fi/warsa/actors/hasUnitCategory,1,False
+http://ldf.fi/warsa/actors/hasUpperUnit,has Upper Unit,ORGANIZATION_HIERARCHY,ORGANIZATION_HIERARCHY,EXISTING_CATALOG_ASSIGNMENT,WarSampo,1,1,http://ldf.fi/warsa/actors/hasUpperUnit,78,False
+http://purl.org/dc/terms/,,UNRESOLVED,PART_WHOLE_HIERARCHY,RANKED_REVIEW_REQUIRED,WarSampo,1,1,http://purl.org/dc/terms/,1,False
+http://purl.org/dc/terms/isPartOf,is Part Of,PART_WHOLE_HIERARCHY,PART_WHOLE_HIERARCHY,EXISTING_CATALOG_ASSIGNMENT,WarSampo,1,1,http://purl.org/dc/terms/isPartOf,171,False
+http://rdf.muninn-project.org/ontologies/organization#equalTo,equal To,UNRESOLVED,PARTICIPATION_ROLE,RANKED_REVIEW_REQUIRED,WarSampo,1,1,http://rdf.muninn-project.org/ontologies/organization#equalTo,106,False
+http://rdf.muninn-project.org/ontologies/organization#rankSeniorTo,rank Senior To,PARTICIPATION_ROLE,PARTICIPATION_ROLE,EXISTING_CATALOG_ASSIGNMENT,WarSampo,1,1,http://rdf.muninn-project.org/ontologies/organization#rankSeniorTo,42,False
+http://schema.org/containedInPlace,contained In Place,SPATIAL,SPATIAL,EXISTING_CATALOG_ASSIGNMENT,EventKG,1,1,http://schema.org/containedInPlace,3122,False
+http://www.cidoc-crm.org/cidoc-crm/P100_was_death_of,was death of,UNRESOLVED,FORMATION_DISSOLUTION,RANKED_REVIEW_REQUIRED,WarSampo,1,1,http://www.cidoc-crm.org/cidoc-crm/P100_was_death_of,99294,False
+http://www.cidoc-crm.org/cidoc-crm/P138_represents,represents,UNRESOLVED,FORMATION_DISSOLUTION,RANKED_REVIEW_REQUIRED,WarSampo,1,1,http://www.cidoc-crm.org/cidoc-crm/P138_represents,521904,False
+http://www.cidoc-crm.org/cidoc-crm/P138i_has_representation,i has representation,UNRESOLVED,FORMATION_DISSOLUTION,RANKED_REVIEW_REQUIRED,WarSampo,1,1,http://www.cidoc-crm.org/cidoc-crm/P138i_has_representation,496211,False
+http://www.cidoc-crm.org/cidoc-crm/P141_assigned,assigned,UNRESOLVED,FORMATION_DISSOLUTION,RANKED_REVIEW_REQUIRED,WarSampo,1,1,http://www.cidoc-crm.org/cidoc-crm/P141_assigned,6086,False
+http://www.cidoc-crm.org/cidoc-crm/P143_joined,joined,FORMATION_DISSOLUTION,FORMATION_DISSOLUTION,EXISTING_CATALOG_ASSIGNMENT,WarSampo,1,1,http://www.cidoc-crm.org/cidoc-crm/P143_joined,102681,False
+http://www.cidoc-crm.org/cidoc-crm/P144_joined_with,joined with,FORMATION_DISSOLUTION,FORMATION_DISSOLUTION,EXISTING_CATALOG_ASSIGNMENT,WarSampo,1,1,http://www.cidoc-crm.org/cidoc-crm/P144_joined_with,103210,False
+http://www.cidoc-crm.org/cidoc-crm/P14_carried_out_by,carried out by,PARTICIPATION_ROLE,PARTICIPATION_ROLE,EXISTING_CATALOG_ASSIGNMENT,WarSampo,1,1,http://www.cidoc-crm.org/cidoc-crm/P14_carried_out_by,87530,False
+http://www.cidoc-crm.org/cidoc-crm/P4_has_time-span,has time-span,UNRESOLVED,FORMATION_DISSOLUTION,RANKED_REVIEW_REQUIRED,WarSampo,1,1,http://www.cidoc-crm.org/cidoc-crm/P4_has_time-span,347347,False
+http://www.cidoc-crm.org/cidoc-crm/P67_refers_to,refers to,UNRESOLVED,FORMATION_DISSOLUTION,RANKED_REVIEW_REQUIRED,WarSampo,1,1,http://www.cidoc-crm.org/cidoc-crm/P67_refers_to,1,False
+http://www.cidoc-crm.org/cidoc-crm/P70_documents,documents,UNRESOLVED,FORMATION_DISSOLUTION,RANKED_REVIEW_REQUIRED,WarSampo,1,1,http://www.cidoc-crm.org/cidoc-crm/P70_documents,125457,False
+http://www.cidoc-crm.org/cidoc-crm/P94_has_created,has created,FORMATION_DISSOLUTION,FORMATION_DISSOLUTION,EXISTING_CATALOG_ASSIGNMENT,WarSampo,1,1,http://www.cidoc-crm.org/cidoc-crm/P94_has_created,166214,False
+http://www.cidoc-crm.org/cidoc-crm/P95_has_formed,has formed,FORMATION_DISSOLUTION,FORMATION_DISSOLUTION,EXISTING_CATALOG_ASSIGNMENT,WarSampo,1,1,http://www.cidoc-crm.org/cidoc-crm/P95_has_formed,17365,False
+http://www.cidoc-crm.org/cidoc-crm/P96_by_mother,by mother,FAMILY_PERSONAL,FAMILY_PERSONAL,EXISTING_CATALOG_ASSIGNMENT,WarSampo,1,1,http://www.cidoc-crm.org/cidoc-crm/P96_by_mother,0,False
+http://www.cidoc-crm.org/cidoc-crm/P97_from_father,from father,FAMILY_PERSONAL,FAMILY_PERSONAL,EXISTING_CATALOG_ASSIGNMENT,WarSampo,1,1,http://www.cidoc-crm.org/cidoc-crm/P97_from_father,1,False
+http://www.cidoc-crm.org/cidoc-crm/P98_brought_into_life,brought into life,FORMATION_DISSOLUTION,FORMATION_DISSOLUTION,EXISTING_CATALOG_ASSIGNMENT,WarSampo,1,1,http://www.cidoc-crm.org/cidoc-crm/P98_brought_into_life,99830,False
+http://www.cidoc-crm.org/cidoc-crm/P99_dissolved,dissolved,UNRESOLVED,FORMATION_DISSOLUTION,RANKED_REVIEW_REQUIRED,WarSampo,1,1,http://www.cidoc-crm.org/cidoc-crm/P99_dissolved,7711,False
+http://www.opengis.net/ont/geosparql#sfWithin,Preferred part of relation,PART_WHOLE_HIERARCHY,PART_WHOLE_HIERARCHY,EXISTING_CATALOG_ASSIGNMENT,WarSampo,1,1,http://www.opengis.net/ont/geosparql#sfWithin,30906,False
+http://www.w3.org/1999/02/22-rdf-syntax-ns#Property,Property,UNRESOLVED,PART_WHOLE_HIERARCHY,RANKED_REVIEW_REQUIRED,WarSampo,1,1,http://www.w3.org/1999/02/22-rdf-syntax-ns#Property,0,False
+http://www.w3.org/2000/01/rdf-schema#seeAlso,see Also,UNRESOLVED,PART_WHOLE_HIERARCHY,RANKED_REVIEW_REQUIRED,EventKG,1,1,http://www.w3.org/2000/01/rdf-schema#seeAlso,1634,False
+http://www.w3.org/2000/01/rdf-schema#subClassof,sub Classof,UNRESOLVED,PART_WHOLE_HIERARCHY,RANKED_REVIEW_REQUIRED,WarSampo,1,1,http://www.w3.org/2000/01/rdf-schema#subClassof,2,False
+http://www.w3.org/2002/07/owl#AnnotationProperty,Annotation Property,UNRESOLVED,PART_WHOLE_HIERARCHY,RANKED_REVIEW_REQUIRED,WarSampo,1,1,http://www.w3.org/2002/07/owl#AnnotationProperty,0,False
+http://www.w3.org/2002/07/owl#DatatypeProperty,Datatype Property,UNRESOLVED,PART_WHOLE_HIERARCHY,RANKED_REVIEW_REQUIRED,WarSampo,1,1,http://www.w3.org/2002/07/owl#DatatypeProperty,0,False
+http://www.w3.org/2002/07/owl#ObjectProperty,Object Property,UNRESOLVED,PART_WHOLE_HIERARCHY,RANKED_REVIEW_REQUIRED,WarSampo,1,1,http://www.w3.org/2002/07/owl#ObjectProperty,0,False
+http://www.w3.org/2002/07/owl#disjointWith,disjoint With,UNRESOLVED,PART_WHOLE_HIERARCHY,RANKED_REVIEW_REQUIRED,WarSampo,1,1,http://www.w3.org/2002/07/owl#disjointWith,1,False
+http://www.w3.org/2002/07/owl#inverseOf,inverse Of,UNRESOLVED,PART_WHOLE_HIERARCHY,RANKED_REVIEW_REQUIRED,WarSampo,1,1,http://www.w3.org/2002/07/owl#inverseOf,1,False
+http://www.w3.org/2002/07/owl#same,same,UNRESOLVED,PART_WHOLE_HIERARCHY,RANKED_REVIEW_REQUIRED,WarSampo,1,1,http://www.w3.org/2002/07/owl#same,1,False
+http://www.w3.org/2004/02/skos/core#broadMatch,broad Match,UNRESOLVED,PART_WHOLE_HIERARCHY,RANKED_REVIEW_REQUIRED,WarSampo,1,1,http://www.w3.org/2004/02/skos/core#broadMatch,3,False
+http://www.w3.org/2004/02/skos/core#broader,broader,PART_WHOLE_HIERARCHY,PART_WHOLE_HIERARCHY,EXISTING_CATALOG_ASSIGNMENT,WarSampo,1,1,http://www.w3.org/2004/02/skos/core#broader,1783,False
+http://www.w3.org/2004/02/skos/core#hasTopConcept,has top concept,UNRESOLVED,PART_WHOLE_HIERARCHY,RANKED_REVIEW_REQUIRED,WarSampo,1,1,http://www.w3.org/2004/02/skos/core#hasTopConcept,3221,False
+http://www.w3.org/2004/02/skos/core#member,member,UNRESOLVED,PART_WHOLE_HIERARCHY,RANKED_REVIEW_REQUIRED,WarSampo,1,1,http://www.w3.org/2004/02/skos/core#member,607,False
+http://www.w3.org/2004/02/skos/core#narrowMatch,narrow Match,UNRESOLVED,PART_WHOLE_HIERARCHY,RANKED_REVIEW_REQUIRED,WarSampo,1,1,http://www.w3.org/2004/02/skos/core#narrowMatch,3,False
+http://www.w3.org/2004/02/skos/core#narrower,narrower,PART_WHOLE_HIERARCHY,PART_WHOLE_HIERARCHY,EXISTING_CATALOG_ASSIGNMENT,WarSampo,1,1,http://www.w3.org/2004/02/skos/core#narrower,441,False
+http://www.w3.org/2004/02/skos/core#related,related,UNRESOLVED,PART_WHOLE_HIERARCHY,RANKED_REVIEW_REQUIRED,WarSampo,1,1,http://www.w3.org/2004/02/skos/core#related,584,False
+http://www.w3.org/2004/02/skos/core#relatedMatch,related Match,UNRESOLVED,PART_WHOLE_HIERARCHY,RANKED_REVIEW_REQUIRED,WarSampo,1,1,http://www.w3.org/2004/02/skos/core#relatedMatch,2880,False
+http://www.w3.org/2004/02/skos/core#topConceptOf,top Concept Of,UNRESOLVED,PART_WHOLE_HIERARCHY,RANKED_REVIEW_REQUIRED,WarSampo,1,1,http://www.w3.org/2004/02/skos/core#topConceptOf,41,False
+http://yago-knowledge.org/resource/actedIn,acted In,UNRESOLVED,SPATIAL,RANKED_REVIEW_REQUIRED,EventKG,1,1,http://yago-knowledge.org/resource/actedIn,1684,False
+http://yago-knowledge.org/resource/created,created,FORMATION_DISSOLUTION,FORMATION_DISSOLUTION,EXISTING_CATALOG_ASSIGNMENT,EventKG,1,1,http://yago-knowledge.org/resource/created,2053,False
+http://yago-knowledge.org/resource/dealsWith,deals With,UNRESOLVED,FORMATION_DISSOLUTION,RANKED_REVIEW_REQUIRED,EventKG,1,1,http://yago-knowledge.org/resource/dealsWith,24,False
+http://yago-knowledge.org/resource/diedIn,died In,UNRESOLVED,SPATIAL,RANKED_REVIEW_REQUIRED,EventKG,1,1,http://yago-knowledge.org/resource/diedIn,4550,False
+http://yago-knowledge.org/resource/directed,directed,UNRESOLVED,FORMATION_DISSOLUTION,RANKED_REVIEW_REQUIRED,EventKG,1,1,http://yago-knowledge.org/resource/directed,553,False
+http://yago-knowledge.org/resource/edited,edited,UNRESOLVED,FORMATION_DISSOLUTION,RANKED_REVIEW_REQUIRED,EventKG,1,1,http://yago-knowledge.org/resource/edited,105,False
+http://yago-knowledge.org/resource/graduatedFrom,graduated From,UNRESOLVED,FORMATION_DISSOLUTION,RANKED_REVIEW_REQUIRED,EventKG,1,1,http://yago-knowledge.org/resource/graduatedFrom,355,False
+http://yago-knowledge.org/resource/hasAcademicAdvisor,has Academic Advisor,EDUCATION_EMPLOYMENT,EDUCATION_EMPLOYMENT,EXISTING_CATALOG_ASSIGNMENT,EventKG,1,1,http://yago-knowledge.org/resource/hasAcademicAdvisor,107,False
+http://yago-knowledge.org/resource/hasCapital,has Capital,SPATIAL,SPATIAL,EXISTING_CATALOG_ASSIGNMENT,EventKG,1,1,http://yago-knowledge.org/resource/hasCapital,26,False
+http://yago-knowledge.org/resource/hasChild,has Child,FAMILY_PERSONAL,FAMILY_PERSONAL,EXISTING_CATALOG_ASSIGNMENT,EventKG,1,1,http://yago-knowledge.org/resource/hasChild,169,False
+http://yago-knowledge.org/resource/hasCurrency,has Currency,UNRESOLVED,FAMILY_PERSONAL,RANKED_REVIEW_REQUIRED,EventKG,1,1,http://yago-knowledge.org/resource/hasCurrency,18,False
+http://yago-knowledge.org/resource/hasOfficialLanguage,has Official Language,AFFILIATION_STATUS,AFFILIATION_STATUS,EXISTING_CATALOG_ASSIGNMENT,EventKG,1,1,http://yago-knowledge.org/resource/hasOfficialLanguage,29,False
+http://yago-knowledge.org/resource/influences,influences,UNRESOLVED,FORMATION_DISSOLUTION,RANKED_REVIEW_REQUIRED,EventKG,1,1,http://yago-knowledge.org/resource/influences,644,False
+http://yago-knowledge.org/resource/isAffiliatedTo,is Affiliated To,UNRESOLVED,AFFILIATION_STATUS,RANKED_REVIEW_REQUIRED,EventKG,1,1,http://yago-knowledge.org/resource/isAffiliatedTo,860,False
+http://yago-knowledge.org/resource/isCitizenOf,is Citizen Of,UNRESOLVED,AFFILIATION_STATUS,RANKED_REVIEW_REQUIRED,EventKG,1,1,http://yago-knowledge.org/resource/isCitizenOf,17627,False
+http://yago-knowledge.org/resource/isConnectedTo,is Connected To,UNRESOLVED,SPATIAL,RANKED_REVIEW_REQUIRED,EventKG,1,1,http://yago-knowledge.org/resource/isConnectedTo,1036,False
+http://yago-knowledge.org/resource/isInterestedIn,is Interested In,UNRESOLVED,SPATIAL,RANKED_REVIEW_REQUIRED,EventKG,1,1,http://yago-knowledge.org/resource/isInterestedIn,21,False
+http://yago-knowledge.org/resource/isKnownFor,is Known For,UNRESOLVED,SPATIAL,RANKED_REVIEW_REQUIRED,EventKG,1,1,http://yago-knowledge.org/resource/isKnownFor,2,False
+http://yago-knowledge.org/resource/isLeaderOf,is Leader Of,UNRESOLVED,SPATIAL,RANKED_REVIEW_REQUIRED,EventKG,1,1,http://yago-knowledge.org/resource/isLeaderOf,340,False
+http://yago-knowledge.org/resource/isMarriedTo,is Married To,UNRESOLVED,FAMILY_PERSONAL,RANKED_REVIEW_REQUIRED,EventKG,1,1,http://yago-knowledge.org/resource/isMarriedTo,203,False
+http://yago-knowledge.org/resource/isPoliticianOf,is Politician Of,UNRESOLVED,SPATIAL,RANKED_REVIEW_REQUIRED,EventKG,1,1,http://yago-knowledge.org/resource/isPoliticianOf,536,False
+http://yago-knowledge.org/resource/livesIn,lives In,UNRESOLVED,SPATIAL,RANKED_REVIEW_REQUIRED,EventKG,1,1,http://yago-knowledge.org/resource/livesIn,165,False
+http://yago-knowledge.org/resource/owns,owns,UNRESOLVED,FORMATION_DISSOLUTION,RANKED_REVIEW_REQUIRED,EventKG,1,1,http://yago-knowledge.org/resource/owns,355,False
+http://yago-knowledge.org/resource/participatedIn,participated In,UNRESOLVED,SPATIAL,RANKED_REVIEW_REQUIRED,EventKG,1,1,http://yago-knowledge.org/resource/participatedIn,4837,False
+http://yago-knowledge.org/resource/playsFor,plays For,UNRESOLVED,FORMATION_DISSOLUTION,RANKED_REVIEW_REQUIRED,EventKG,1,1,http://yago-knowledge.org/resource/playsFor,289,False
+http://yago-knowledge.org/resource/wasBornIn,was Born In,UNRESOLVED,SPATIAL,RANKED_REVIEW_REQUIRED,EventKG,1,1,http://yago-knowledge.org/resource/wasBornIn,5226,False
+http://yago-knowledge.org/resource/worksAt,works At,UNRESOLVED,SPATIAL,RANKED_REVIEW_REQUIRED,EventKG,1,1,http://yago-knowledge.org/resource/worksAt,259,False
+http://yago-knowledge.org/resource/wroteMusicFor,wrote Music For,UNRESOLVED,FORMATION_DISSOLUTION,RANKED_REVIEW_REQUIRED,EventKG,1,1,http://yago-knowledge.org/resource/wroteMusicFor,285,False
+wd:P1000,record held,UNRESOLVED,PARTICIPATION_ROLE,RANKED_REVIEW_REQUIRED,EventKG|Wikidata,2,2,http://www.wikidata.org/prop/direct/P1000|wd:P1000,4,False
+wd:P1001,applies to jurisdiction,UNRESOLVED,SPATIAL,RANKED_REVIEW_REQUIRED,EventKG|Wikidata,2,2,http://www.wikidata.org/prop/direct/P1001|wd:P1001,480,False
+wd:P1002,engine configuration,UNRESOLVED,SPATIAL,RANKED_REVIEW_REQUIRED,Wikidata,1,1,wd:P1002,40,False
+wd:P101,field of work,UNRESOLVED,PARTICIPATION_ROLE,RANKED_REVIEW_REQUIRED,EventKG|Wikidata,2,2,http://www.wikidata.org/prop/direct/P101|wd:P101,2831,False
+wd:P10129,protective marking,UNRESOLVED,SPATIAL,RANKED_REVIEW_REQUIRED,EventKG|Wikidata,2,2,http://www.wikidata.org/prop/direct/P10129|wd:P10129,2,False
+wd:P102,member of political party,AFFILIATION_STATUS,AFFILIATION_STATUS,EXISTING_CATALOG_ASSIGNMENT,EventKG|Wikidata,2,2,http://www.wikidata.org/prop/direct/P102|wd:P102,7487,False
+wd:P10241,individual of taxon,UNRESOLVED,SPATIAL,RANKED_REVIEW_REQUIRED,Wikidata,1,1,wd:P10241,22,False
+wd:P10254,associated cadastral district,UNRESOLVED,SPATIAL,RANKED_REVIEW_REQUIRED,EventKG|Wikidata,2,2,http://www.wikidata.org/prop/direct/P10254|wd:P10254,6,False
+wd:P1026,academic thesis,UNRESOLVED,EDUCATION_EMPLOYMENT,RANKED_REVIEW_REQUIRED,EventKG|Wikidata,2,2,http://www.wikidata.org/prop/direct/P1026|wd:P1026,41,False
+wd:P1027,conferred by,UNRESOLVED,CAUSAL,RANKED_REVIEW_REQUIRED,EventKG|Wikidata,2,2,http://www.wikidata.org/prop/direct/P1027|wd:P1027,57,False
+wd:P1028,donated by,UNRESOLVED,CAUSAL,RANKED_REVIEW_REQUIRED,EventKG|Wikidata,2,2,http://www.wikidata.org/prop/direct/P1028|wd:P1028,7,False
+wd:P10280,category for honorary citizens of entity,UNRESOLVED,SPATIAL,RANKED_REVIEW_REQUIRED,Wikidata,1,1,wd:P10280,5,False
+wd:P1029,crew members,UNRESOLVED,PARTICIPATION_ROLE,RANKED_REVIEW_REQUIRED,EventKG|Wikidata,2,2,http://www.wikidata.org/prop/direct/P1029|wd:P1029,996,False
+wd:P10290,hotel rating,UNRESOLVED,SPATIAL,RANKED_REVIEW_REQUIRED,Wikidata,1,1,wd:P10290,6,False
+wd:P103,native language,AFFILIATION_STATUS,AFFILIATION_STATUS,EXISTING_CATALOG_ASSIGNMENT,EventKG|Wikidata,2,2,http://www.wikidata.org/prop/direct/P103|wd:P103,711,False
+wd:P1035,honorific suffix,UNRESOLVED,SPATIAL,RANKED_REVIEW_REQUIRED,EventKG|Wikidata,2,2,http://www.wikidata.org/prop/direct/P1035|wd:P1035,10,False
+wd:P1037,director / manager,UNRESOLVED,AFFILIATION_STATUS,RANKED_REVIEW_REQUIRED,EventKG|Wikidata,2,2,http://www.wikidata.org/prop/direct/P1037|wd:P1037,540,False
+wd:P1038,relative,FAMILY_PERSONAL,FAMILY_PERSONAL,EXISTING_CATALOG_ASSIGNMENT,EventKG|Wikidata,2,2,http://www.wikidata.org/prop/direct/P1038|wd:P1038,989,False
+wd:P1040,film editor,UNRESOLVED,SPATIAL,RANKED_REVIEW_REQUIRED,Wikidata,1,1,wd:P1040,176,False
+wd:P10449,trained by,UNRESOLVED,CREATION_AUTHORSHIP,RANKED_REVIEW_REQUIRED,EventKG,1,1,http://www.wikidata.org/prop/direct/P10449,1,False
+wd:P105,taxon rank,PARTICIPATION_ROLE,PARTICIPATION_ROLE,EXISTING_CATALOG_ASSIGNMENT,Wikidata,1,1,wd:P105,1,False
+wd:P1050,medical condition,UNRESOLVED,PARTICIPATION_ROLE,RANKED_REVIEW_REQUIRED,EventKG|Wikidata,2,2,http://www.wikidata.org/prop/direct/P1050|wd:P1050,196,False
+wd:P1056,product or material produced,CREATION_AUTHORSHIP,CREATION_AUTHORSHIP,EXISTING_CATALOG_ASSIGNMENT,EventKG|Wikidata,2,2,http://www.wikidata.org/prop/direct/P1056|wd:P1056,1597,False
+wd:P106,occupation,PARTICIPATION_ROLE,PARTICIPATION_ROLE,EXISTING_CATALOG_ASSIGNMENT,EventKG|Wikidata,2,2,http://www.wikidata.org/prop/direct/P106|wd:P106,32744,False
+wd:P10624,official observer status in organization,UNRESOLVED,AFFILIATION_STATUS,RANKED_REVIEW_REQUIRED,Wikidata,1,1,wd:P10624,1,False
+wd:P1064,track gauge,UNRESOLVED,SPATIAL,RANKED_REVIEW_REQUIRED,Wikidata,1,1,wd:P1064,10,False
+wd:P1066,student of,EDUCATION_EMPLOYMENT,EDUCATION_EMPLOYMENT,EXISTING_CATALOG_ASSIGNMENT,EventKG|Wikidata,2,2,http://www.wikidata.org/prop/direct/P1066|wd:P1066,280,False
+wd:P10661,exhibited creator,CREATION_AUTHORSHIP,CREATION_AUTHORSHIP,EXISTING_CATALOG_ASSIGNMENT,EventKG,1,1,http://www.wikidata.org/prop/direct/P10661,1,False
+wd:P1071,location of creation,SPATIAL,SPATIAL,EXISTING_CATALOG_ASSIGNMENT,EventKG|Wikidata,2,2,http://www.wikidata.org/prop/direct/P1071|wd:P1071,3129,False
+wd:P1074,fictional or mythical analog of,UNRESOLVED,SPATIAL,RANKED_REVIEW_REQUIRED,EventKG|Wikidata,2,2,http://www.wikidata.org/prop/direct/P1074|wd:P1074,3,False
+wd:P10741,dance style,UNRESOLVED,AFFILIATION_STATUS,RANKED_REVIEW_REQUIRED,Wikidata,1,1,wd:P10741,1,False
+wd:P1075,rector,UNRESOLVED,AFFILIATION_STATUS,RANKED_REVIEW_REQUIRED,EventKG|Wikidata,2,2,http://www.wikidata.org/prop/direct/P1075|wd:P1075,7,False
+wd:P1078,valvetrain configuration,UNRESOLVED,SPATIAL,RANKED_REVIEW_REQUIRED,Wikidata,1,1,wd:P1078,2,False
+wd:P108,employer,PARTICIPATION_ROLE,PARTICIPATION_ROLE,EXISTING_CATALOG_ASSIGNMENT,EventKG|Wikidata,2,2,http://www.wikidata.org/prop/direct/P108|wd:P108,6777,False
+wd:P1080,from narrative universe,UNRESOLVED,SPATIAL,RANKED_REVIEW_REQUIRED,Wikidata,1,1,wd:P1080,1,False
+wd:P10894,spoken by,UNRESOLVED,PARTICIPATION_ROLE,RANKED_REVIEW_REQUIRED,EventKG,1,1,http://www.wikidata.org/prop/direct/P10894,1,False
+wd:P110,illustrator,UNRESOLVED,SPATIAL,RANKED_REVIEW_REQUIRED,Wikidata,1,1,wd:P110,3,False
+wd:P11146,collection items at,UNRESOLVED,SPATIAL,RANKED_REVIEW_REQUIRED,Wikidata,1,1,wd:P11146,20,False
+wd:P112,founder,UNRESOLVED,AFFILIATION_STATUS,RANKED_REVIEW_REQUIRED,EventKG|Wikidata,2,2,http://www.wikidata.org/prop/direct/P112|wd:P112,849,False
+wd:P113,airline hub,UNRESOLVED,PARTICIPATION_ROLE,RANKED_REVIEW_REQUIRED,EventKG|Wikidata,2,2,http://www.wikidata.org/prop/direct/P113|wd:P113,3,False
+wd:P1136,solved by,UNRESOLVED,CREATION_AUTHORSHIP,RANKED_REVIEW_REQUIRED,EventKG,1,1,http://www.wikidata.org/prop/direct/P1136,1,False
+wd:P114,airline alliance,UNRESOLVED,AFFILIATION_STATUS,RANKED_REVIEW_REQUIRED,EventKG|Wikidata,2,2,http://www.wikidata.org/prop/direct/P114|wd:P114,2,False
+wd:P1142,political ideology,UNRESOLVED,AFFILIATION_STATUS,RANKED_REVIEW_REQUIRED,EventKG|Wikidata,2,2,http://www.wikidata.org/prop/direct/P1142|wd:P1142,298,False
+wd:P115,home venue,UNRESOLVED,CREATION_AUTHORSHIP,RANKED_REVIEW_REQUIRED,EventKG,1,1,http://www.wikidata.org/prop/direct/P115,1,False
+wd:P118,league or competition,UNRESOLVED,PARTICIPATION_ROLE,RANKED_REVIEW_REQUIRED,EventKG|Wikidata,2,2,http://www.wikidata.org/prop/direct/P118|wd:P118,33,False
+wd:P11849,first performance by,UNRESOLVED,SPATIAL,RANKED_REVIEW_REQUIRED,Wikidata,1,1,wd:P11849,1,False
+wd:P119,place of burial,SPATIAL,SPATIAL,EXISTING_CATALOG_ASSIGNMENT,EventKG|Wikidata,2,3,http://dbpedia.org/ontology/restingPlace|http://www.wikidata.org/prop/direct/P119|wd:P119,13269,True
+wd:P1196,manner of death,UNRESOLVED,CAUSAL,RANKED_REVIEW_REQUIRED,EventKG|Wikidata,2,2,http://www.wikidata.org/prop/direct/P1196|wd:P1196,2491,False
+wd:P12011,tribe,UNRESOLVED,PARTICIPATION_ROLE,RANKED_REVIEW_REQUIRED,Wikidata,1,1,wd:P12011,2,False
+wd:P1202,carries scientific instrument,UNRESOLVED,PARTICIPATION_ROLE,RANKED_REVIEW_REQUIRED,Wikidata,1,1,wd:P1202,1,False
+wd:P12020,state of transmission,UNRESOLVED,SPATIAL,RANKED_REVIEW_REQUIRED,Wikidata,1,1,wd:P12020,3,False
+wd:P12095,fonds,UNRESOLVED,PART_WHOLE_HIERARCHY,RANKED_REVIEW_REQUIRED,Wikidata,1,1,wd:P12095,1,False
+wd:P121,item operated,UNRESOLVED,OWNERSHIP_CONTROL,RANKED_REVIEW_REQUIRED,EventKG|Wikidata,2,2,http://www.wikidata.org/prop/direct/P121|wd:P121,1486,False
+wd:P1210,supercharger,UNRESOLVED,PARTICIPATION_ROLE,RANKED_REVIEW_REQUIRED,Wikidata,1,1,wd:P1210,3,False
+wd:P1211,fuel system,UNRESOLVED,PARTICIPATION_ROLE,RANKED_REVIEW_REQUIRED,Wikidata,1,1,wd:P1211,5,False
+wd:P122,basic form of government,UNRESOLVED,PARTICIPATION_ROLE,RANKED_REVIEW_REQUIRED,EventKG|Wikidata,2,2,http://www.wikidata.org/prop/direct/P122|wd:P122,96,False
+wd:P1221,compressor type,UNRESOLVED,TEMPORAL_SUCCESSION,RANKED_REVIEW_REQUIRED,Wikidata,1,1,wd:P1221,1,False
+wd:P123,publisher,UNRESOLVED,CREATION_AUTHORSHIP,RANKED_REVIEW_REQUIRED,EventKG|Wikidata,2,2,http://www.wikidata.org/prop/direct/P123|wd:P123,241,False
+wd:P12328,simulates,UNRESOLVED,SPATIAL,RANKED_REVIEW_REQUIRED,Wikidata,1,1,wd:P12328,8,False
+wd:P12330,Philippine middle name,UNRESOLVED,SPATIAL,RANKED_REVIEW_REQUIRED,Wikidata,1,1,wd:P12330,4,False
+wd:P12363,clerked for,UNRESOLVED,PARTICIPATION_ROLE,RANKED_REVIEW_REQUIRED,Wikidata,1,1,wd:P12363,5,False
+wd:P12439,civil rank,PARTICIPATION_ROLE,PARTICIPATION_ROLE,EXISTING_CATALOG_ASSIGNMENT,Wikidata,1,1,wd:P12439,1,False
+wd:P126,maintained by,UNRESOLVED,CAUSAL,RANKED_REVIEW_REQUIRED,EventKG|Wikidata,2,2,http://www.wikidata.org/prop/direct/P126|wd:P126,153,False
+wd:P1264,valid in period,UNRESOLVED,CAUSAL,RANKED_REVIEW_REQUIRED,EventKG,1,1,http://www.wikidata.org/prop/direct/P1264,5,False
+wd:P1268,represents,UNRESOLVED,PARTICIPATION_ROLE,RANKED_REVIEW_REQUIRED,EventKG|Wikidata,2,2,http://www.wikidata.org/prop/direct/P1268|wd:P1268,9,False
+wd:P1269,facet of,UNRESOLVED,SPATIAL,RANKED_REVIEW_REQUIRED,EventKG|Wikidata,2,2,http://www.wikidata.org/prop/direct/P1269|wd:P1269,2279,False
+wd:P127,owned by,OWNERSHIP_CONTROL,OWNERSHIP_CONTROL,EXISTING_CATALOG_ASSIGNMENT,EventKG|Wikidata,2,2,http://www.wikidata.org/prop/direct/P127|wd:P127,1150,False
+wd:P12714,tartan,UNRESOLVED,PART_WHOLE_HIERARCHY,RANKED_REVIEW_REQUIRED,Wikidata,1,1,wd:P12714,1,False
+wd:P1283,filmography,UNRESOLVED,SPATIAL,RANKED_REVIEW_REQUIRED,Wikidata,1,1,wd:P1283,12,False
+wd:P1290,godparent,UNRESOLVED,CAUSAL,RANKED_REVIEW_REQUIRED,EventKG|Wikidata,2,2,http://www.wikidata.org/prop/direct/P1290|wd:P1290,69,False
+wd:P12912,object of occurrence,UNRESOLVED,PARTICIPATION_ROLE,RANKED_REVIEW_REQUIRED,Wikidata,1,1,wd:P12912,12,False
+wd:P12913,class of object(s) of occurrence,UNRESOLVED,PARTICIPATION_ROLE,RANKED_REVIEW_REQUIRED,Wikidata,1,1,wd:P12913,3,False
+wd:P12969,game designer,UNRESOLVED,CREATION_AUTHORSHIP,RANKED_REVIEW_REQUIRED,Wikidata,1,1,wd:P12969,2,False
+wd:P1299,depicted by,UNRESOLVED,CREATION_AUTHORSHIP,RANKED_REVIEW_REQUIRED,EventKG|Wikidata,2,2,http://www.wikidata.org/prop/direct/P1299|wd:P1299,459,False
+wd:P12995,agent of action,UNRESOLVED,SPATIAL,RANKED_REVIEW_REQUIRED,Wikidata,1,1,wd:P12995,5,False
+wd:P1302,primary destinations,UNRESOLVED,CREATION_AUTHORSHIP,RANKED_REVIEW_REQUIRED,EventKG,1,1,http://www.wikidata.org/prop/direct/P1302,1,False
+wd:P1303,instrument,UNRESOLVED,PARTICIPATION_ROLE,RANKED_REVIEW_REQUIRED,EventKG|Wikidata,2,2,http://www.wikidata.org/prop/direct/P1303|wd:P1303,82,False
+wd:P1304,central bank,UNRESOLVED,SPATIAL,RANKED_REVIEW_REQUIRED,EventKG|Wikidata,2,2,http://www.wikidata.org/prop/direct/P1304|wd:P1304,6,False
+wd:P13044,characteristic of,UNRESOLVED,SPATIAL,RANKED_REVIEW_REQUIRED,Wikidata,1,1,wd:P13044,2,False
+wd:P1308,position holder,UNRESOLVED,PARTICIPATION_ROLE,RANKED_REVIEW_REQUIRED,EventKG|Wikidata,2,2,http://www.wikidata.org/prop/direct/P1308|wd:P1308,621,False
+wd:P131,located in the administrative territorial entity,SPATIAL,SPATIAL,EXISTING_CATALOG_ASSIGNMENT,EventKG|Wikidata,2,2,http://www.wikidata.org/prop/direct/P131|wd:P131,4304,False
+wd:P1313,office held by the head of government,PARTICIPATION_ROLE,PARTICIPATION_ROLE,EXISTING_CATALOG_ASSIGNMENT,EventKG|Wikidata,2,2,http://www.wikidata.org/prop/direct/P1313|wd:P1313,25,False
+wd:P1321,municipal affiliation of a Swiss national,AFFILIATION_STATUS,AFFILIATION_STATUS,EXISTING_CATALOG_ASSIGNMENT,Wikidata,1,1,wd:P1321,15,False
+wd:P13210,organisation tax status,UNRESOLVED,ORGANIZATION_HIERARCHY,RANKED_REVIEW_REQUIRED,Wikidata,1,1,wd:P13210,1,False
+wd:P1327,partner in business or sport,UNRESOLVED,SPATIAL,RANKED_REVIEW_REQUIRED,EventKG|Wikidata,2,2,http://www.wikidata.org/prop/direct/P1327|wd:P1327,66,False
+wd:P1336,territory claimed by,UNRESOLVED,SPATIAL,RANKED_REVIEW_REQUIRED,EventKG|Wikidata,2,2,http://www.wikidata.org/prop/direct/P1336|wd:P1336,5,False
+wd:P1340,eye color,UNRESOLVED,SPATIAL,RANKED_REVIEW_REQUIRED,Wikidata,1,1,wd:P1340,22,False
+wd:P1344,participant in,UNRESOLVED,SPATIAL,RANKED_REVIEW_REQUIRED,EventKG|Wikidata,2,2,http://www.wikidata.org/prop/direct/P1344|wd:P1344,7335,False
+wd:P13459,research project that contributed to this data set,UNRESOLVED,SPATIAL,RANKED_REVIEW_REQUIRED,Wikidata,1,1,wd:P13459,74,False
+wd:P1346,winner,UNRESOLVED,AWARD_RECOGNITION,RANKED_REVIEW_REQUIRED,EventKG|Wikidata,2,2,http://www.wikidata.org/prop/direct/P1346|wd:P1346,362,False
+wd:P1347,military casualty classification,UNRESOLVED,CONFLICT_AFFILIATION,RANKED_REVIEW_REQUIRED,EventKG|Wikidata,2,2,http://www.wikidata.org/prop/direct/P1347|wd:P1347,986,False
+wd:P135,movement,UNRESOLVED,AFFILIATION_STATUS,RANKED_REVIEW_REQUIRED,EventKG|Wikidata,2,2,http://www.wikidata.org/prop/direct/P135|wd:P135,128,False
+wd:P13574,most populous urban area,UNRESOLVED,SPATIAL,RANKED_REVIEW_REQUIRED,Wikidata,1,1,wd:P13574,1,False
+wd:P136,genre,UNRESOLVED,CREATION_AUTHORSHIP,RANKED_REVIEW_REQUIRED,EventKG|Wikidata,2,2,http://www.wikidata.org/prop/direct/P136|wd:P136,1386,False
+wd:P1363,points/goal scored by,UNRESOLVED,PARTICIPATION_ROLE,RANKED_REVIEW_REQUIRED,EventKG,1,1,http://www.wikidata.org/prop/direct/P1363,1,False
+wd:P1365,replaces,UNRESOLVED,TEMPORAL_SUCCESSION,RANKED_REVIEW_REQUIRED,EventKG|Wikidata,2,2,http://www.wikidata.org/prop/direct/P1365|wd:P1365,1061,False
+wd:P1366,replaced by,TEMPORAL_SUCCESSION,TEMPORAL_SUCCESSION,EXISTING_CATALOG_ASSIGNMENT,EventKG|Wikidata,2,2,http://www.wikidata.org/prop/direct/P1366|wd:P1366,1029,False
+wd:P137,operator,OWNERSHIP_CONTROL,OWNERSHIP_CONTROL,EXISTING_CATALOG_ASSIGNMENT,EventKG|Wikidata,2,3,http://dbpedia.org/ontology/operator|http://www.wikidata.org/prop/direct/P137|wd:P137,29867,False
+wd:P1376,capital of,SPATIAL,SPATIAL,EXISTING_CATALOG_ASSIGNMENT,EventKG|Wikidata,2,2,http://www.wikidata.org/prop/direct/P1376|wd:P1376,80,False
+wd:P13773,LSF rating,UNRESOLVED,SPATIAL,RANKED_REVIEW_REQUIRED,Wikidata,1,1,wd:P13773,1,False
+wd:P138,named after,UNRESOLVED,AFFILIATION_STATUS,RANKED_REVIEW_REQUIRED,EventKG|Wikidata,2,2,http://www.wikidata.org/prop/direct/P138|wd:P138,5474,False
+wd:P1382,partially coincident with,UNRESOLVED,PARTICIPATION_ROLE,RANKED_REVIEW_REQUIRED,EventKG|Wikidata,2,2,http://www.wikidata.org/prop/direct/P1382|wd:P1382,21,False
+wd:P1383,contains settlement,UNRESOLVED,SPATIAL,RANKED_REVIEW_REQUIRED,Wikidata,1,1,wd:P1383,13,False
+wd:P1387,political alignment,UNRESOLVED,PARTICIPATION_ROLE,RANKED_REVIEW_REQUIRED,EventKG|Wikidata,2,2,http://www.wikidata.org/prop/direct/P1387|wd:P1387,42,False
+wd:P1398,structure replaces,UNRESOLVED,TEMPORAL_SUCCESSION,RANKED_REVIEW_REQUIRED,EventKG|Wikidata,2,2,http://www.wikidata.org/prop/direct/P1398|wd:P1398,20,False
+wd:P1399,convicted of,UNRESOLVED,CAUSAL,RANKED_REVIEW_REQUIRED,EventKG|Wikidata,2,2,http://www.wikidata.org/prop/direct/P1399|wd:P1399,955,False
+wd:P140,religion or worldview,AFFILIATION_STATUS,AFFILIATION_STATUS,EXISTING_CATALOG_ASSIGNMENT,EventKG|Wikidata,2,2,http://www.wikidata.org/prop/direct/P140|wd:P140,1140,False
+wd:P14005,Japanese court rank,PARTICIPATION_ROLE,PARTICIPATION_ROLE,EXISTING_CATALOG_ASSIGNMENT,Wikidata,1,1,wd:P14005,31,False
+wd:P1408,licensed to broadcast to,UNRESOLVED,SPATIAL,RANKED_REVIEW_REQUIRED,EventKG|Wikidata,2,2,http://www.wikidata.org/prop/direct/P1408|wd:P1408,10,False
+wd:P1411,nominated for,AWARD_RECOGNITION,AWARD_RECOGNITION,EXISTING_CATALOG_ASSIGNMENT,EventKG|Wikidata,2,2,http://www.wikidata.org/prop/direct/P1411|wd:P1411,1737,False
+wd:P1412,"languages spoken, written or signed",UNRESOLVED,AFFILIATION_STATUS,RANKED_REVIEW_REQUIRED,EventKG|Wikidata,2,2,http://www.wikidata.org/prop/direct/P1412|wd:P1412,9765,False
+wd:P1416,affiliation,AFFILIATION_STATUS,AFFILIATION_STATUS,EXISTING_CATALOG_ASSIGNMENT,EventKG|Wikidata,2,2,http://www.wikidata.org/prop/direct/P1416|wd:P1416,928,False
+wd:P1419,shape,UNRESOLVED,PARTICIPATION_ROLE,RANKED_REVIEW_REQUIRED,Wikidata,1,1,wd:P1419,1,False
+wd:P1424,topic has template,UNRESOLVED,SPATIAL,RANKED_REVIEW_REQUIRED,Wikidata,1,1,wd:P1424,319,False
+wd:P1427,start point,UNRESOLVED,SPATIAL,RANKED_REVIEW_REQUIRED,EventKG|Wikidata,2,2,http://www.wikidata.org/prop/direct/P1427|wd:P1427,29,False
+wd:P1429,has pet,UNRESOLVED,CAUSAL,RANKED_REVIEW_REQUIRED,EventKG|Wikidata,2,2,http://www.wikidata.org/prop/direct/P1429|wd:P1429,3,False
+wd:P1433,published in,UNRESOLVED,CREATION_AUTHORSHIP,RANKED_REVIEW_REQUIRED,EventKG,1,1,http://www.wikidata.org/prop/direct/P1433,300,False
+wd:P1434,takes place in fictional universe,SPATIAL,SPATIAL,EXISTING_CATALOG_ASSIGNMENT,Wikidata,1,1,wd:P1434,3,False
+wd:P1435,heritage designation,UNRESOLVED,CREATION_AUTHORSHIP,RANKED_REVIEW_REQUIRED,EventKG|Wikidata,2,2,http://www.wikidata.org/prop/direct/P1435|wd:P1435,1213,False
+wd:P144,based on,UNRESOLVED,AFFILIATION_STATUS,RANKED_REVIEW_REQUIRED,EventKG|Wikidata,2,2,http://www.wikidata.org/prop/direct/P144|wd:P144,480,False
+wd:P1441,present in work,UNRESOLVED,SPATIAL,RANKED_REVIEW_REQUIRED,EventKG|Wikidata,2,2,http://www.wikidata.org/prop/direct/P1441|wd:P1441,160,False
+wd:P1444,destination point,UNRESOLVED,SPATIAL,RANKED_REVIEW_REQUIRED,EventKG|Wikidata,2,2,http://www.wikidata.org/prop/direct/P1444|wd:P1444,319,False
+wd:P1445,fictional universe described in,UNRESOLVED,SPATIAL,RANKED_REVIEW_REQUIRED,EventKG,1,1,http://www.wikidata.org/prop/direct/P1445,1,False
+wd:P1454,legal form,UNRESOLVED,SPATIAL,RANKED_REVIEW_REQUIRED,EventKG|Wikidata,2,2,http://www.wikidata.org/prop/direct/P1454|wd:P1454,119,False
+wd:P1455,list of works,UNRESOLVED,PARTICIPATION_ROLE,RANKED_REVIEW_REQUIRED,Wikidata,1,1,wd:P1455,7,False
+wd:P1456,list of monuments,UNRESOLVED,SPATIAL,RANKED_REVIEW_REQUIRED,Wikidata,1,1,wd:P1456,8,False
+wd:P14574,photographer,UNRESOLVED,SPATIAL,RANKED_REVIEW_REQUIRED,Wikidata,1,1,wd:P14574,10,False
+wd:P1464,category for people born here,UNRESOLVED,SPATIAL,RANKED_REVIEW_REQUIRED,Wikidata,1,1,wd:P1464,26,False
+wd:P1465,category for people who died here,UNRESOLVED,SPATIAL,RANKED_REVIEW_REQUIRED,Wikidata,1,1,wd:P1465,46,False
+wd:P1478,has immediate cause,CAUSAL,CAUSAL,EXISTING_CATALOG_ASSIGNMENT,EventKG|Wikidata,2,2,http://www.wikidata.org/prop/direct/P1478|wd:P1478,27,False
+wd:P1479,has contributing factor,UNRESOLVED,CAUSAL,RANKED_REVIEW_REQUIRED,EventKG|Wikidata,2,2,http://www.wikidata.org/prop/direct/P1479|wd:P1479,15,False
+wd:P14834,substance control status,UNRESOLVED,SPATIAL,RANKED_REVIEW_REQUIRED,Wikidata,1,1,wd:P14834,1,False
+wd:P149,architectural style,UNRESOLVED,CREATION_AUTHORSHIP,RANKED_REVIEW_REQUIRED,EventKG|Wikidata,2,2,http://www.wikidata.org/prop/direct/P149|wd:P149,87,False
+wd:P150,contains the administrative territorial entity,UNRESOLVED,SPATIAL,RANKED_REVIEW_REQUIRED,EventKG|Wikidata,2,2,http://www.wikidata.org/prop/direct/P150|wd:P150,255,False
+wd:P1532,country for sport,SPATIAL,SPATIAL,EXISTING_CATALOG_ASSIGNMENT,EventKG|Wikidata,2,2,http://www.wikidata.org/prop/direct/P1532|wd:P1532,7311,False
+wd:P1534,end cause,CAUSAL,CAUSAL,EXISTING_CATALOG_ASSIGNMENT,EventKG,1,1,http://www.wikidata.org/prop/direct/P1534,6,False
+wd:P1535,used by,UNRESOLVED,CAUSAL,RANKED_REVIEW_REQUIRED,EventKG|Wikidata,2,2,http://www.wikidata.org/prop/direct/P1535|wd:P1535,177,False
+wd:P1536,immediate cause of,CAUSAL,CAUSAL,EXISTING_CATALOG_ASSIGNMENT,EventKG|Wikidata,2,2,http://www.wikidata.org/prop/direct/P1536|wd:P1536,10,False
+wd:P1537,contributing factor of,UNRESOLVED,CAUSAL,RANKED_REVIEW_REQUIRED,EventKG|Wikidata,2,2,http://www.wikidata.org/prop/direct/P1537|wd:P1537,5,False
+wd:P1542,has effect,CAUSAL,CAUSAL,EXISTING_CATALOG_ASSIGNMENT,EventKG|Wikidata,2,2,http://www.wikidata.org/prop/direct/P1542|wd:P1542,108,False
+wd:P1546,motto,UNRESOLVED,CAUSAL,RANKED_REVIEW_REQUIRED,EventKG|Wikidata,2,2,http://www.wikidata.org/prop/direct/P1546|wd:P1546,25,False
+wd:P1547,depends on software,UNRESOLVED,SPATIAL,RANKED_REVIEW_REQUIRED,Wikidata,1,1,wd:P1547,1,False
+wd:P155,follows,TEMPORAL_SUCCESSION,TEMPORAL_SUCCESSION,EXISTING_CATALOG_ASSIGNMENT,EventKG|Wikidata,2,2,http://www.wikidata.org/prop/direct/P155|wd:P155,582,False
+wd:P1552,has characteristic,UNRESOLVED,SPATIAL,RANKED_REVIEW_REQUIRED,EventKG|Wikidata,2,2,http://www.wikidata.org/prop/direct/P1552|wd:P1552,110,False
+wd:P1557,manifestation of,UNRESOLVED,SPATIAL,RANKED_REVIEW_REQUIRED,EventKG|Wikidata,2,2,http://www.wikidata.org/prop/direct/P1557|wd:P1557,3,False
+wd:P156,followed by,TEMPORAL_SUCCESSION,TEMPORAL_SUCCESSION,EXISTING_CATALOG_ASSIGNMENT,EventKG|Wikidata,2,2,http://www.wikidata.org/prop/direct/P156|wd:P156,661,False
+wd:P157,killed by,CAUSAL,CAUSAL,EXISTING_CATALOG_ASSIGNMENT,EventKG|Wikidata,2,2,http://www.wikidata.org/prop/direct/P157|wd:P157,106,False
+wd:P1576,lifestyle,UNRESOLVED,SPATIAL,RANKED_REVIEW_REQUIRED,Wikidata,1,1,wd:P1576,2,False
+wd:P1589,lowest point,UNRESOLVED,SPATIAL,RANKED_REVIEW_REQUIRED,Wikidata,1,1,wd:P1589,3,False
+wd:P159,headquarters location,SPATIAL,SPATIAL,EXISTING_CATALOG_ASSIGNMENT,EventKG|Wikidata,2,2,http://www.wikidata.org/prop/direct/P159|wd:P159,2831,False
+wd:P1591,defendant,UNRESOLVED,CAUSAL,RANKED_REVIEW_REQUIRED,EventKG|Wikidata,2,2,http://www.wikidata.org/prop/direct/P1591|wd:P1591,544,False
+wd:P1592,prosecutor,UNRESOLVED,CREATION_AUTHORSHIP,RANKED_REVIEW_REQUIRED,EventKG|Wikidata,2,2,http://www.wikidata.org/prop/direct/P1592|wd:P1592,8,False
+wd:P1593,legal counsel,UNRESOLVED,CAUSAL,RANKED_REVIEW_REQUIRED,Wikidata,1,1,wd:P1593,3,False
+wd:P1594,judge,UNRESOLVED,CAUSAL,RANKED_REVIEW_REQUIRED,EventKG|Wikidata,2,2,http://www.wikidata.org/prop/direct/P1594|wd:P1594,58,False
+wd:P1595,charge,UNRESOLVED,SPATIAL,RANKED_REVIEW_REQUIRED,EventKG|Wikidata,2,2,http://www.wikidata.org/prop/direct/P1595|wd:P1595,24,False
+wd:P1596,penalty,UNRESOLVED,CREATION_AUTHORSHIP,RANKED_REVIEW_REQUIRED,EventKG|Wikidata,2,2,http://www.wikidata.org/prop/direct/P1596|wd:P1596,46,False
+wd:P1598,consecrator,UNRESOLVED,CAUSAL,RANKED_REVIEW_REQUIRED,EventKG|Wikidata,2,2,http://www.wikidata.org/prop/direct/P1598|wd:P1598,63,False
+wd:P16,transport network,UNRESOLVED,PART_WHOLE_HIERARCHY,RANKED_REVIEW_REQUIRED,EventKG|Wikidata,2,2,http://www.wikidata.org/prop/direct/P16|wd:P16,7,False
+wd:P161,cast member,UNRESOLVED,PARTICIPATION_ROLE,RANKED_REVIEW_REQUIRED,EventKG|Wikidata,2,2,http://www.wikidata.org/prop/direct/P161|wd:P161,10116,False
+wd:P162,producer,UNRESOLVED,CREATION_AUTHORSHIP,RANKED_REVIEW_REQUIRED,Wikidata,1,1,wd:P162,369,False
+wd:P1620,plaintiff,UNRESOLVED,CAUSAL,RANKED_REVIEW_REQUIRED,EventKG|Wikidata,2,2,http://www.wikidata.org/prop/direct/P1620|wd:P1620,11,False
+wd:P1625,has melody,UNRESOLVED,CAUSAL,RANKED_REVIEW_REQUIRED,EventKG,1,1,http://www.wikidata.org/prop/direct/P1625,3,False
+wd:P163,flag,UNRESOLVED,CAUSAL,RANKED_REVIEW_REQUIRED,EventKG|Wikidata,2,2,http://www.wikidata.org/prop/direct/P163|wd:P163,43,False
+wd:P1637,undercarriage,UNRESOLVED,SPATIAL,RANKED_REVIEW_REQUIRED,Wikidata,1,1,wd:P1637,87,False
+wd:P1640,curator,UNRESOLVED,CREATION_AUTHORSHIP,RANKED_REVIEW_REQUIRED,EventKG|Wikidata,2,2,http://www.wikidata.org/prop/direct/P1640|wd:P1640,3,False
+wd:P1652,referee,UNRESOLVED,CREATION_AUTHORSHIP,RANKED_REVIEW_REQUIRED,EventKG,1,1,http://www.wikidata.org/prop/direct/P1652,3,False
+wd:P1654,wing configuration,UNRESOLVED,SPATIAL,RANKED_REVIEW_REQUIRED,Wikidata,1,1,wd:P1654,163,False
+wd:P1656,unveiled by,UNRESOLVED,CAUSAL,RANKED_REVIEW_REQUIRED,EventKG|Wikidata,2,2,http://www.wikidata.org/prop/direct/P1656|wd:P1656,33,False
+wd:P1657,MPA film rating,UNRESOLVED,SPATIAL,RANKED_REVIEW_REQUIRED,EventKG|Wikidata,2,2,http://www.wikidata.org/prop/direct/P1657|wd:P1657,37,False
+wd:P166,award received,AWARD_RECOGNITION,AWARD_RECOGNITION,EXISTING_CATALOG_ASSIGNMENT,EventKG|Wikidata,2,4,http://dbpedia.org/ontology/award|http://www.wikidata.org/prop/direct/P166|http://yago-knowledge.org/resource/hasWonPrize|wd:P166,173526,True
+wd:P167,structure replaced by,TEMPORAL_SUCCESSION,TEMPORAL_SUCCESSION,EXISTING_CATALOG_ASSIGNMENT,EventKG|Wikidata,2,2,http://www.wikidata.org/prop/direct/P167|wd:P167,44,False
+wd:P169,chief executive officer,UNRESOLVED,PARTICIPATION_ROLE,RANKED_REVIEW_REQUIRED,EventKG|Wikidata,2,2,http://www.wikidata.org/prop/direct/P169|wd:P169,10,False
+wd:P17,country,SPATIAL,SPATIAL,EXISTING_CATALOG_ASSIGNMENT,EventKG|Wikidata,2,2,http://www.wikidata.org/prop/direct/P17|wd:P17,19508,False
+wd:P170,creator,CREATION_AUTHORSHIP,CREATION_AUTHORSHIP,EXISTING_CATALOG_ASSIGNMENT,EventKG|Wikidata,2,2,http://www.wikidata.org/prop/direct/P170|wd:P170,1926,False
+wd:P171,parent taxon,UNRESOLVED,ORGANIZATION_HIERARCHY,RANKED_REVIEW_REQUIRED,Wikidata,1,1,wd:P171,1,False
+wd:P1716,brand,UNRESOLVED,AFFILIATION_STATUS,RANKED_REVIEW_REQUIRED,EventKG|Wikidata,2,2,http://www.wikidata.org/prop/direct/P1716|wd:P1716,20,False
+wd:P172,ethnic group,AFFILIATION_STATUS,AFFILIATION_STATUS,EXISTING_CATALOG_ASSIGNMENT,EventKG|Wikidata,2,2,http://www.wikidata.org/prop/direct/P172|wd:P172,367,False
+wd:P1740,category for films shot at this location,SPATIAL,SPATIAL,EXISTING_CATALOG_ASSIGNMENT,Wikidata,1,1,wd:P1740,2,False
+wd:P175,performer,UNRESOLVED,AFFILIATION_STATUS,RANKED_REVIEW_REQUIRED,EventKG|Wikidata,2,2,http://www.wikidata.org/prop/direct/P175|wd:P175,254,False
+wd:P176,manufacturer,CREATION_AUTHORSHIP,CREATION_AUTHORSHIP,EXISTING_CATALOG_ASSIGNMENT,EventKG|Wikidata,2,3,http://dbpedia.org/ontology/manufacturer|http://www.wikidata.org/prop/direct/P176|wd:P176,17680,False
+wd:P177,crosses,UNRESOLVED,SPATIAL,RANKED_REVIEW_REQUIRED,EventKG|Wikidata,2,2,http://www.wikidata.org/prop/direct/P177|wd:P177,12,False
+wd:P178,developer,UNRESOLVED,CAUSAL,RANKED_REVIEW_REQUIRED,EventKG|Wikidata,2,2,http://www.wikidata.org/prop/direct/P178|wd:P178,911,False
+wd:P1789,chief operating officer,UNRESOLVED,PARTICIPATION_ROLE,RANKED_REVIEW_REQUIRED,EventKG|Wikidata,2,2,http://www.wikidata.org/prop/direct/P1789|wd:P1789,2,False
+wd:P179,part of the series,PART_WHOLE_HIERARCHY,PART_WHOLE_HIERARCHY,EXISTING_CATALOG_ASSIGNMENT,EventKG|Wikidata,2,2,http://www.wikidata.org/prop/direct/P179|wd:P179,542,False
+wd:P180,depicts,UNRESOLVED,CREATION_AUTHORSHIP,RANKED_REVIEW_REQUIRED,EventKG,1,1,http://www.wikidata.org/prop/direct/P180,3165,False
+wd:P1809,choreographer,UNRESOLVED,CREATION_AUTHORSHIP,RANKED_REVIEW_REQUIRED,EventKG,1,1,http://www.wikidata.org/prop/direct/P1809,1,False
+wd:P1811,list of episodes,UNRESOLVED,SPATIAL,RANKED_REVIEW_REQUIRED,Wikidata,1,1,wd:P1811,5,False
+wd:P1817,addressee,UNRESOLVED,CAUSAL,RANKED_REVIEW_REQUIRED,EventKG|Wikidata,2,2,http://www.wikidata.org/prop/direct/P1817|wd:P1817,21,False
+wd:P1830,owner of,OWNERSHIP_CONTROL,OWNERSHIP_CONTROL,EXISTING_CATALOG_ASSIGNMENT,EventKG|Wikidata,2,2,http://www.wikidata.org/prop/direct/P1830|wd:P1830,303,False
+wd:P184,doctoral advisor,UNRESOLVED,EDUCATION_EMPLOYMENT,RANKED_REVIEW_REQUIRED,EventKG|Wikidata,2,2,http://www.wikidata.org/prop/direct/P184|wd:P184,609,False
+wd:P1840,investigated by,UNRESOLVED,CAUSAL,RANKED_REVIEW_REQUIRED,EventKG|Wikidata,2,2,http://www.wikidata.org/prop/direct/P1840|wd:P1840,31,False
+wd:P185,doctoral student,EDUCATION_EMPLOYMENT,EDUCATION_EMPLOYMENT,EXISTING_CATALOG_ASSIGNMENT,EventKG|Wikidata,2,2,http://www.wikidata.org/prop/direct/P185|wd:P185,1068,False
+wd:P1853,blood type,UNRESOLVED,SPATIAL,RANKED_REVIEW_REQUIRED,Wikidata,1,1,wd:P1853,9,False
+wd:P186,made from material,UNRESOLVED,SPATIAL,RANKED_REVIEW_REQUIRED,EventKG|Wikidata,2,2,http://www.wikidata.org/prop/direct/P186|wd:P186,226,False
+wd:P1875,represented by,UNRESOLVED,PARTICIPATION_ROLE,RANKED_REVIEW_REQUIRED,EventKG|Wikidata,2,2,http://www.wikidata.org/prop/direct/P1875|wd:P1875,19,False
+wd:P1876,vessel,UNRESOLVED,SPATIAL,RANKED_REVIEW_REQUIRED,EventKG|Wikidata,2,2,http://www.wikidata.org/prop/direct/P1876|wd:P1876,30,False
+wd:P1877,after a work by,UNRESOLVED,SPATIAL,RANKED_REVIEW_REQUIRED,EventKG|Wikidata,2,2,http://www.wikidata.org/prop/direct/P1877|wd:P1877,174,False
+wd:P1884,hair color,UNRESOLVED,PARTICIPATION_ROLE,RANKED_REVIEW_REQUIRED,EventKG|Wikidata,2,2,http://www.wikidata.org/prop/direct/P1884|wd:P1884,27,False
+wd:P1885,cathedral,UNRESOLVED,CAUSAL,RANKED_REVIEW_REQUIRED,EventKG,1,1,http://www.wikidata.org/prop/direct/P1885,1,False
+wd:P1891,signatory,UNRESOLVED,CREATION_AUTHORSHIP,RANKED_REVIEW_REQUIRED,EventKG|Wikidata,2,2,http://www.wikidata.org/prop/direct/P1891|wd:P1891,822,False
+wd:P19,place of birth,SPATIAL,SPATIAL,EXISTING_CATALOG_ASSIGNMENT,EventKG|Wikidata,2,2,http://www.wikidata.org/prop/direct/P19|wd:P19,23035,False
+wd:P190,twinned administrative body,UNRESOLVED,SPATIAL,RANKED_REVIEW_REQUIRED,EventKG|Wikidata,2,2,http://www.wikidata.org/prop/direct/P190|wd:P190,270,False
+wd:P1906,office held by head of state,PARTICIPATION_ROLE,PARTICIPATION_ROLE,EXISTING_CATALOG_ASSIGNMENT,EventKG|Wikidata,2,2,http://www.wikidata.org/prop/direct/P1906|wd:P1906,23,False
+wd:P1923,participating team,UNRESOLVED,PARTICIPATION_ROLE,RANKED_REVIEW_REQUIRED,EventKG|Wikidata,2,2,http://www.wikidata.org/prop/direct/P1923|wd:P1923,6,False
+wd:P193,main building contractor,UNRESOLVED,CREATION_AUTHORSHIP,RANKED_REVIEW_REQUIRED,EventKG|Wikidata,2,2,http://www.wikidata.org/prop/direct/P193|wd:P193,59,False
+wd:P194,legislative body,UNRESOLVED,SPATIAL,RANKED_REVIEW_REQUIRED,EventKG|Wikidata,2,2,http://www.wikidata.org/prop/direct/P194|wd:P194,16,False
+wd:P195,collection,UNRESOLVED,PART_WHOLE_HIERARCHY,RANKED_REVIEW_REQUIRED,EventKG|Wikidata,2,2,http://www.wikidata.org/prop/direct/P195|wd:P195,466,False
+wd:P1950,second family name in Spanish name,UNRESOLVED,FAMILY_PERSONAL,RANKED_REVIEW_REQUIRED,Wikidata,1,1,wd:P1950,73,False
+wd:P1951,investor,UNRESOLVED,CREATION_AUTHORSHIP,RANKED_REVIEW_REQUIRED,EventKG,1,1,http://www.wikidata.org/prop/direct/P1951,1,False
+wd:P1956,takeoff and landing capability,UNRESOLVED,CREATION_AUTHORSHIP,RANKED_REVIEW_REQUIRED,Wikidata,1,1,wd:P1956,2,False
+wd:P1981,FSK film rating,UNRESOLVED,SPATIAL,RANKED_REVIEW_REQUIRED,Wikidata,1,1,wd:P1981,108,False
+wd:P199,organizational division,UNRESOLVED,SPATIAL,RANKED_REVIEW_REQUIRED,Wikidata,1,1,wd:P199,4,False
+wd:P20,place of death,SPATIAL,SPATIAL,EXISTING_CATALOG_ASSIGNMENT,EventKG|Wikidata,2,2,http://www.wikidata.org/prop/direct/P20|wd:P20,63479,False
+wd:P200,inflows,UNRESOLVED,SPATIAL,RANKED_REVIEW_REQUIRED,Wikidata,1,1,wd:P200,2,False
+wd:P201,outflows,UNRESOLVED,SPATIAL,RANKED_REVIEW_REQUIRED,Wikidata,1,1,wd:P201,1,False
+wd:P2012,cuisine,UNRESOLVED,AFFILIATION_STATUS,RANKED_REVIEW_REQUIRED,EventKG|Wikidata,2,2,http://www.wikidata.org/prop/direct/P2012|wd:P2012,2,False
+wd:P205,basin country,SPATIAL,SPATIAL,EXISTING_CATALOG_ASSIGNMENT,Wikidata,1,1,wd:P205,1,False
+wd:P2058,depositary,UNRESOLVED,PARTICIPATION_ROLE,RANKED_REVIEW_REQUIRED,Wikidata,1,1,wd:P2058,1,False
+wd:P206,located in or next to body of water,SPATIAL,SPATIAL,EXISTING_CATALOG_ASSIGNMENT,EventKG|Wikidata,2,2,http://www.wikidata.org/prop/direct/P206|wd:P206,103,False
+wd:P2079,fabrication method,UNRESOLVED,SPATIAL,RANKED_REVIEW_REQUIRED,Wikidata,1,1,wd:P2079,17,False
+wd:P208,executive body,UNRESOLVED,SPATIAL,RANKED_REVIEW_REQUIRED,EventKG|Wikidata,2,2,http://www.wikidata.org/prop/direct/P208|wd:P208,7,False
+wd:P2094,competition class,UNRESOLVED,PARTICIPATION_ROLE,RANKED_REVIEW_REQUIRED,Wikidata,1,1,wd:P2094,1,False
+wd:P2098,substitute/deputy/replacement of office/officeholder,UNRESOLVED,PARTICIPATION_ROLE,RANKED_REVIEW_REQUIRED,EventKG|Wikidata,2,2,http://www.wikidata.org/prop/direct/P2098|wd:P2098,4,False
+wd:P210,party chief representative,UNRESOLVED,SPATIAL,RANKED_REVIEW_REQUIRED,EventKG|Wikidata,2,2,http://www.wikidata.org/prop/direct/P210|wd:P210,26,False
+wd:P2184,history of topic,UNRESOLVED,SPATIAL,RANKED_REVIEW_REQUIRED,EventKG|Wikidata,2,2,http://www.wikidata.org/prop/direct/P2184|wd:P2184,36,False
+wd:P22,father,FAMILY_PERSONAL,FAMILY_PERSONAL,EXISTING_CATALOG_ASSIGNMENT,EventKG|Wikidata,2,2,http://www.wikidata.org/prop/direct/P22|wd:P22,4743,False
+wd:P2238,official symbol,UNRESOLVED,AFFILIATION_STATUS,RANKED_REVIEW_REQUIRED,EventKG|Wikidata,2,2,http://www.wikidata.org/prop/direct/P2238|wd:P2238,6,False
+wd:P2283,uses,UNRESOLVED,CAUSAL,RANKED_REVIEW_REQUIRED,EventKG|Wikidata,2,2,http://www.wikidata.org/prop/direct/P2283|wd:P2283,63,False
+wd:P2308,class,UNRESOLVED,SPATIAL,RANKED_REVIEW_REQUIRED,Wikidata,1,1,wd:P2308,2,False
+wd:P2318,debut participant,UNRESOLVED,PARTICIPATION_ROLE,RANKED_REVIEW_REQUIRED,EventKG,1,1,http://www.wikidata.org/prop/direct/P2318,1,False
+wd:P2341,indigenous to,UNRESOLVED,CREATION_AUTHORSHIP,RANKED_REVIEW_REQUIRED,EventKG,1,1,http://www.wikidata.org/prop/direct/P2341,1,False
+wd:P2348,time period,UNRESOLVED,SPATIAL,RANKED_REVIEW_REQUIRED,EventKG|Wikidata,2,2,http://www.wikidata.org/prop/direct/P2348|wd:P2348,555,False
+wd:P2353,statistical unit,PARTICIPATION_ROLE,PARTICIPATION_ROLE,EXISTING_CATALOG_ASSIGNMENT,EventKG,1,1,http://www.wikidata.org/prop/direct/P2353,1,False
+wd:P2359,nomen gentilicium,UNRESOLVED,PART_WHOLE_HIERARCHY,RANKED_REVIEW_REQUIRED,Wikidata,1,1,wd:P2359,1,False
+wd:P2360,intended public,UNRESOLVED,CREATION_AUTHORSHIP,RANKED_REVIEW_REQUIRED,EventKG|Wikidata,2,2,http://www.wikidata.org/prop/direct/P2360|wd:P2360,5,False
+wd:P2363,NMHH film rating,UNRESOLVED,SPATIAL,RANKED_REVIEW_REQUIRED,Wikidata,1,1,wd:P2363,27,False
+wd:P2365,cognomen,UNRESOLVED,PART_WHOLE_HIERARCHY,RANKED_REVIEW_REQUIRED,Wikidata,1,1,wd:P2365,1,False
+wd:P237,coat of arms,UNRESOLVED,CAUSAL,RANKED_REVIEW_REQUIRED,EventKG|Wikidata,2,2,http://www.wikidata.org/prop/direct/P237|wd:P237,48,False
+wd:P2388,position held by head of the organization,UNRESOLVED,PARTICIPATION_ROLE,RANKED_REVIEW_REQUIRED,EventKG|Wikidata,2,2,http://www.wikidata.org/prop/direct/P2388|wd:P2388,45,False
+wd:P2389,organization directed by the office or position,UNRESOLVED,PARTICIPATION_ROLE,RANKED_REVIEW_REQUIRED,EventKG|Wikidata,2,2,http://www.wikidata.org/prop/direct/P2389|wd:P2389,23,False
+wd:P2408,set in period,UNRESOLVED,SPATIAL,RANKED_REVIEW_REQUIRED,EventKG|Wikidata,2,2,http://www.wikidata.org/prop/direct/P2408|wd:P2408,590,False
+wd:P241,military branch,CONFLICT_AFFILIATION,CONFLICT_AFFILIATION,EXISTING_CATALOG_ASSIGNMENT,EventKG|Wikidata,2,3,http://dbpedia.org/ontology/militaryBranch|http://www.wikidata.org/prop/direct/P241|wd:P241,88972,False
+wd:P2416,sports discipline competed in,UNRESOLVED,SPATIAL,RANKED_REVIEW_REQUIRED,EventKG|Wikidata,2,2,http://www.wikidata.org/prop/direct/P2416|wd:P2416,31,False
+wd:P2438,narrator,UNRESOLVED,CREATION_AUTHORSHIP,RANKED_REVIEW_REQUIRED,EventKG|Wikidata,2,2,http://www.wikidata.org/prop/direct/P2438|wd:P2438,40,False
+wd:P248,stated in,UNRESOLVED,SPATIAL,RANKED_REVIEW_REQUIRED,EventKG,1,1,http://www.wikidata.org/prop/direct/P248,2,False
+wd:P25,mother,FAMILY_PERSONAL,FAMILY_PERSONAL,EXISTING_CATALOG_ASSIGNMENT,EventKG|Wikidata,2,2,http://www.wikidata.org/prop/direct/P25|wd:P25,1551,False
+wd:P2505,carries thoroughfare,UNRESOLVED,CREATION_AUTHORSHIP,RANKED_REVIEW_REQUIRED,EventKG|Wikidata,2,2,http://www.wikidata.org/prop/direct/P2505|wd:P2505,12,False
+wd:P2515,costume designer,UNRESOLVED,CREATION_AUTHORSHIP,RANKED_REVIEW_REQUIRED,EventKG|Wikidata,2,2,http://www.wikidata.org/prop/direct/P2515|wd:P2515,63,False
+wd:P2522,competition won,UNRESOLVED,PARTICIPATION_ROLE,RANKED_REVIEW_REQUIRED,EventKG|Wikidata,2,2,http://www.wikidata.org/prop/direct/P2522|wd:P2522,4,False
+wd:P2541,operating area,UNRESOLVED,SPATIAL,RANKED_REVIEW_REQUIRED,EventKG|Wikidata,2,2,http://www.wikidata.org/prop/direct/P2541|wd:P2541,44,False
+wd:P2545,bowling style,UNRESOLVED,PARTICIPATION_ROLE,RANKED_REVIEW_REQUIRED,Wikidata,1,1,wd:P2545,8,False
+wd:P2554,production designer,UNRESOLVED,CREATION_AUTHORSHIP,RANKED_REVIEW_REQUIRED,EventKG|Wikidata,2,2,http://www.wikidata.org/prop/direct/P2554|wd:P2554,131,False
+wd:P2564,Köppen climate classification,UNRESOLVED,SPATIAL,RANKED_REVIEW_REQUIRED,Wikidata,1,1,wd:P2564,2,False
+wd:P2568,repealed by,UNRESOLVED,PARTICIPATION_ROLE,RANKED_REVIEW_REQUIRED,EventKG|Wikidata,2,2,http://www.wikidata.org/prop/direct/P2568|wd:P2568,17,False
+wd:P2578,is the study of,UNRESOLVED,PARTICIPATION_ROLE,RANKED_REVIEW_REQUIRED,Wikidata,1,1,wd:P2578,3,False
+wd:P2579,studied by,UNRESOLVED,EDUCATION_EMPLOYMENT,RANKED_REVIEW_REQUIRED,EventKG|Wikidata,2,2,http://www.wikidata.org/prop/direct/P2579|wd:P2579,10,False
+wd:P26,spouse,FAMILY_PERSONAL,FAMILY_PERSONAL,EXISTING_CATALOG_ASSIGNMENT,EventKG|Wikidata,2,2,http://www.wikidata.org/prop/direct/P26|wd:P26,5436,False
+wd:P2614,World Heritage criteria,UNRESOLVED,SPATIAL,RANKED_REVIEW_REQUIRED,Wikidata,1,1,wd:P2614,10,False
+wd:P263,official residence,UNRESOLVED,AFFILIATION_STATUS,RANKED_REVIEW_REQUIRED,EventKG|Wikidata,2,2,http://www.wikidata.org/prop/direct/P263|wd:P263,11,False
+wd:P2632,place of detention,SPATIAL,SPATIAL,EXISTING_CATALOG_ASSIGNMENT,EventKG|Wikidata,2,2,http://www.wikidata.org/prop/direct/P2632|wd:P2632,30189,False
+wd:P2633,geography of topic,UNRESOLVED,SPATIAL,RANKED_REVIEW_REQUIRED,Wikidata,1,1,wd:P2633,1,False
+wd:P2634,model,UNRESOLVED,PARTICIPATION_ROLE,RANKED_REVIEW_REQUIRED,EventKG|Wikidata,2,2,http://www.wikidata.org/prop/direct/P2634|wd:P2634,5,False
+wd:P264,record label,UNRESOLVED,AFFILIATION_STATUS,RANKED_REVIEW_REQUIRED,EventKG|Wikidata,2,2,http://www.wikidata.org/prop/direct/P264|wd:P264,70,False
+wd:P2650,interested in,UNRESOLVED,SPATIAL,RANKED_REVIEW_REQUIRED,EventKG|Wikidata,2,2,http://www.wikidata.org/prop/direct/P2650|wd:P2650,160,False
+wd:P2652,partnership with,UNRESOLVED,AFFILIATION_STATUS,RANKED_REVIEW_REQUIRED,EventKG|Wikidata,2,2,http://www.wikidata.org/prop/direct/P2652|wd:P2652,79,False
+wd:P2670,has part(s) of the class,PART_WHOLE_HIERARCHY,PART_WHOLE_HIERARCHY,EXISTING_CATALOG_ASSIGNMENT,EventKG|Wikidata,2,2,http://www.wikidata.org/prop/direct/P2670|wd:P2670,244,False
+wd:P2675,reply to,UNRESOLVED,SPATIAL,RANKED_REVIEW_REQUIRED,Wikidata,1,1,wd:P2675,1,False
+wd:P2679,author of foreword,CREATION_AUTHORSHIP,CREATION_AUTHORSHIP,EXISTING_CATALOG_ASSIGNMENT,EventKG,1,1,http://www.wikidata.org/prop/direct/P2679,12,False
+wd:P2680,author of afterword,CREATION_AUTHORSHIP,CREATION_AUTHORSHIP,EXISTING_CATALOG_ASSIGNMENT,EventKG,1,1,http://www.wikidata.org/prop/direct/P2680,1,False
+wd:P27,country of citizenship,AFFILIATION_STATUS,AFFILIATION_STATUS,EXISTING_CATALOG_ASSIGNMENT,EventKG|Wikidata,2,2,http://www.wikidata.org/prop/direct/P27|wd:P27,233269,False
+wd:P272,production company,UNRESOLVED,CREATION_AUTHORSHIP,RANKED_REVIEW_REQUIRED,EventKG|Wikidata,2,2,http://www.wikidata.org/prop/direct/P272|wd:P272,492,False
+wd:P2737,union of,UNRESOLVED,CREATION_AUTHORSHIP,RANKED_REVIEW_REQUIRED,EventKG,1,1,http://www.wikidata.org/prop/direct/P2737,2,False
+wd:P2738,disjoint union of,UNRESOLVED,SPATIAL,RANKED_REVIEW_REQUIRED,Wikidata,1,1,wd:P2738,1,False
+wd:P2747,Filmiroda rating,UNRESOLVED,SPATIAL,RANKED_REVIEW_REQUIRED,Wikidata,1,1,wd:P2747,36,False
+wd:P2756,EIRIN film rating,UNRESOLVED,SPATIAL,RANKED_REVIEW_REQUIRED,Wikidata,1,1,wd:P2756,38,False
+wd:P2758,CNC film rating (France),UNRESOLVED,SPATIAL,RANKED_REVIEW_REQUIRED,Wikidata,1,1,wd:P2758,92,False
+wd:P276,location,SPATIAL,SPATIAL,EXISTING_CATALOG_ASSIGNMENT,EventKG|WarSampo|Wikidata,3,4,http://semanticweb.cs.vu.nl/2009/11/sem/hasPlace|http://www.cidoc-crm.org/cidoc-crm/P7_took_place_at|http://www.wikidata.org/prop/direct/P276|wd:P276,241176,False
+wd:P2789,connects with,UNRESOLVED,SPATIAL,RANKED_REVIEW_REQUIRED,EventKG|Wikidata,2,2,http://www.wikidata.org/prop/direct/P2789|wd:P2789,39,False
+wd:P2813,house publication,UNRESOLVED,SPATIAL,RANKED_REVIEW_REQUIRED,EventKG,1,1,http://www.wikidata.org/prop/direct/P2813,4,False
+wd:P2817,appears in the heritage monument list,UNRESOLVED,PART_WHOLE_HIERARCHY,RANKED_REVIEW_REQUIRED,Wikidata,1,1,wd:P2817,35,False
+wd:P282,writing system,UNRESOLVED,AFFILIATION_STATUS,RANKED_REVIEW_REQUIRED,EventKG|Wikidata,2,2,http://www.wikidata.org/prop/direct/P282|wd:P282,3,False
+wd:P2825,via,UNRESOLVED,CREATION_AUTHORSHIP,RANKED_REVIEW_REQUIRED,EventKG,1,1,http://www.wikidata.org/prop/direct/P2825,2,False
+wd:P2828,corporate officer,UNRESOLVED,PARTICIPATION_ROLE,RANKED_REVIEW_REQUIRED,EventKG|Wikidata,2,2,http://www.wikidata.org/prop/direct/P2828|wd:P2828,6,False
+wd:P2846,disabled accessibility,UNRESOLVED,SPATIAL,RANKED_REVIEW_REQUIRED,Wikidata,1,1,wd:P2846,6,False
+wd:P2848,Wi-Fi access,UNRESOLVED,PARTICIPATION_ROLE,RANKED_REVIEW_REQUIRED,Wikidata,1,1,wd:P2848,6,False
+wd:P2851,payment types accepted,UNRESOLVED,CREATION_AUTHORSHIP,RANKED_REVIEW_REQUIRED,EventKG|Wikidata,2,2,http://www.wikidata.org/prop/direct/P2851|wd:P2851,8,False
+wd:P2852,emergency phone number,UNRESOLVED,PARTICIPATION_ROLE,RANKED_REVIEW_REQUIRED,EventKG|Wikidata,2,2,http://www.wikidata.org/prop/direct/P2852|wd:P2852,2,False
+wd:P2853,electrical plug type,UNRESOLVED,SPATIAL,RANKED_REVIEW_REQUIRED,Wikidata,1,1,wd:P2853,2,False
+wd:P286,head coach,UNRESOLVED,PARTICIPATION_ROLE,RANKED_REVIEW_REQUIRED,EventKG|Wikidata,2,2,http://www.wikidata.org/prop/direct/P286|wd:P286,58,False
+wd:P2860,cites work,UNRESOLVED,CREATION_AUTHORSHIP,RANKED_REVIEW_REQUIRED,EventKG|Wikidata,2,2,http://www.wikidata.org/prop/direct/P2860|wd:P2860,14,False
+wd:P2868,subject has role,PARTICIPATION_ROLE,PARTICIPATION_ROLE,EXISTING_CATALOG_ASSIGNMENT,EventKG|Wikidata,2,2,http://www.wikidata.org/prop/direct/P2868|wd:P2868,457,False
+wd:P287,designed by,CREATION_AUTHORSHIP,CREATION_AUTHORSHIP,EXISTING_CATALOG_ASSIGNMENT,EventKG|Wikidata,2,2,http://www.wikidata.org/prop/direct/P287|wd:P287,1431,False
+wd:P2872,visitor center,UNRESOLVED,AFFILIATION_STATUS,RANKED_REVIEW_REQUIRED,Wikidata,1,1,wd:P2872,3,False
+wd:P289,vessel class,UNRESOLVED,CREATION_AUTHORSHIP,RANKED_REVIEW_REQUIRED,EventKG|Wikidata,2,2,http://www.wikidata.org/prop/direct/P289|wd:P289,8818,False
+wd:P2894,day of week,UNRESOLVED,SPATIAL,RANKED_REVIEW_REQUIRED,EventKG|Wikidata,2,2,http://www.wikidata.org/prop/direct/P2894|wd:P2894,2,False
+wd:P291,place of publication,SPATIAL,SPATIAL,EXISTING_CATALOG_ASSIGNMENT,EventKG|Wikidata,2,2,http://www.wikidata.org/prop/direct/P291|wd:P291,401,False
+wd:P2922,month of the year,UNRESOLVED,SPATIAL,RANKED_REVIEW_REQUIRED,Wikidata,1,1,wd:P2922,2,False
+wd:P2925,domain of saint or deity,UNRESOLVED,SPATIAL,RANKED_REVIEW_REQUIRED,Wikidata,1,1,wd:P2925,1,False
+wd:P2936,language used,AFFILIATION_STATUS,AFFILIATION_STATUS,EXISTING_CATALOG_ASSIGNMENT,EventKG|Wikidata,2,2,http://www.wikidata.org/prop/direct/P2936|wd:P2936,101,False
+wd:P2937,parliamentary term,UNRESOLVED,CREATION_AUTHORSHIP,RANKED_REVIEW_REQUIRED,EventKG,1,1,http://www.wikidata.org/prop/direct/P2937,1,False
+wd:P2962,title of chess person,UNRESOLVED,PARTICIPATION_ROLE,RANKED_REVIEW_REQUIRED,EventKG|Wikidata,2,2,http://www.wikidata.org/prop/direct/P2962|wd:P2962,18,False
+wd:P2964,right to vote,UNRESOLVED,CREATION_AUTHORSHIP,RANKED_REVIEW_REQUIRED,EventKG,1,1,http://www.wikidata.org/prop/direct/P2964,1,False
+wd:P2978,wheel arrangement,UNRESOLVED,PARTICIPATION_ROLE,RANKED_REVIEW_REQUIRED,Wikidata,1,1,wd:P2978,4,False
+wd:P30,continent,UNRESOLVED,PART_WHOLE_HIERARCHY,RANKED_REVIEW_REQUIRED,Wikidata,1,1,wd:P30,82,False
+wd:P3014,laws applied,UNRESOLVED,SPATIAL,RANKED_REVIEW_REQUIRED,Wikidata,1,1,wd:P3014,3,False
+wd:P3018,located in protected area,SPATIAL,SPATIAL,EXISTING_CATALOG_ASSIGNMENT,Wikidata,1,1,wd:P3018,27,False
+wd:P3022,flag bearer,UNRESOLVED,CREATION_AUTHORSHIP,RANKED_REVIEW_REQUIRED,EventKG,1,1,http://www.wikidata.org/prop/direct/P3022,5,False
+wd:P3025,open days,UNRESOLVED,SPATIAL,RANKED_REVIEW_REQUIRED,Wikidata,1,1,wd:P3025,17,False
+wd:P3026,closed on,UNRESOLVED,SPATIAL,RANKED_REVIEW_REQUIRED,Wikidata,1,1,wd:P3026,3,False
+wd:P3032,adjacent structure or building,UNRESOLVED,TEMPORAL_SUCCESSION,RANKED_REVIEW_REQUIRED,Wikidata,1,1,wd:P3032,21,False
+wd:P3075,official religion,AFFILIATION_STATUS,AFFILIATION_STATUS,EXISTING_CATALOG_ASSIGNMENT,EventKG|Wikidata,2,2,http://www.wikidata.org/prop/direct/P3075|wd:P3075,38,False
+wd:P3081,damaged,UNRESOLVED,AFFILIATION_STATUS,RANKED_REVIEW_REQUIRED,EventKG|Wikidata,2,2,http://www.wikidata.org/prop/direct/P3081|wd:P3081,10,False
+wd:P3082,destroyed,UNRESOLVED,CREATION_AUTHORSHIP,RANKED_REVIEW_REQUIRED,EventKG|Wikidata,2,2,http://www.wikidata.org/prop/direct/P3082|wd:P3082,43,False
+wd:P3091,mount,UNRESOLVED,CREATION_AUTHORSHIP,RANKED_REVIEW_REQUIRED,EventKG|Wikidata,2,2,http://www.wikidata.org/prop/direct/P3091|wd:P3091,5,False
+wd:P3092,film crew member,UNRESOLVED,PARTICIPATION_ROLE,RANKED_REVIEW_REQUIRED,EventKG|Wikidata,2,2,http://www.wikidata.org/prop/direct/P3092|wd:P3092,27,False
+wd:P3093,recovered by,UNRESOLVED,PARTICIPATION_ROLE,RANKED_REVIEW_REQUIRED,EventKG|Wikidata,2,2,http://www.wikidata.org/prop/direct/P3093|wd:P3093,11,False
+wd:P3094,develops from,UNRESOLVED,SPATIAL,RANKED_REVIEW_REQUIRED,Wikidata,1,1,wd:P3094,1,False
+wd:P3095,practiced by,UNRESOLVED,PARTICIPATION_ROLE,RANKED_REVIEW_REQUIRED,EventKG|Wikidata,2,2,http://www.wikidata.org/prop/direct/P3095|wd:P3095,12,False
+wd:P3137,parent peak,UNRESOLVED,SPATIAL,RANKED_REVIEW_REQUIRED,Wikidata,1,1,wd:P3137,1,False
+wd:P3148,repeals,UNRESOLVED,CREATION_AUTHORSHIP,RANKED_REVIEW_REQUIRED,EventKG|Wikidata,2,2,http://www.wikidata.org/prop/direct/P3148|wd:P3148,7,False
+wd:P3156,Australian Classification,UNRESOLVED,SPATIAL,RANKED_REVIEW_REQUIRED,EventKG|Wikidata,2,2,http://www.wikidata.org/prop/direct/P3156|wd:P3156,12,False
+wd:P3173,offers view on,UNRESOLVED,SPATIAL,RANKED_REVIEW_REQUIRED,EventKG,1,1,http://www.wikidata.org/prop/direct/P3173,1,False
+wd:P3174,art director,UNRESOLVED,CREATION_AUTHORSHIP,RANKED_REVIEW_REQUIRED,EventKG|Wikidata,2,2,http://www.wikidata.org/prop/direct/P3174|wd:P3174,26,False
+wd:P3179,territory overlaps,UNRESOLVED,SPATIAL,RANKED_REVIEW_REQUIRED,Wikidata,1,1,wd:P3179,2,False
+wd:P3205,patient of,UNRESOLVED,CREATION_AUTHORSHIP,RANKED_REVIEW_REQUIRED,EventKG|Wikidata,2,2,http://www.wikidata.org/prop/direct/P3205|wd:P3205,8,False
+wd:P3216,ClassInd rating,UNRESOLVED,SPATIAL,RANKED_REVIEW_REQUIRED,Wikidata,1,1,wd:P3216,19,False
+wd:P3275,storyboard artist,UNRESOLVED,CREATION_AUTHORSHIP,RANKED_REVIEW_REQUIRED,EventKG|Wikidata,2,2,http://www.wikidata.org/prop/direct/P3275|wd:P3275,14,False
+wd:P3300,musical conductor,UNRESOLVED,CREATION_AUTHORSHIP,RANKED_REVIEW_REQUIRED,EventKG,1,1,http://www.wikidata.org/prop/direct/P3300,7,False
+wd:P3301,broadcast by,UNRESOLVED,PARTICIPATION_ROLE,RANKED_REVIEW_REQUIRED,EventKG,1,1,http://www.wikidata.org/prop/direct/P3301,2,False
+wd:P3306,ICAA rating,UNRESOLVED,SPATIAL,RANKED_REVIEW_REQUIRED,Wikidata,1,1,wd:P3306,17,False
+wd:P3320,board member,UNRESOLVED,PARTICIPATION_ROLE,RANKED_REVIEW_REQUIRED,EventKG|Wikidata,2,2,http://www.wikidata.org/prop/direct/P3320|wd:P3320,51,False
+wd:P3335,associated hazard,UNRESOLVED,SPATIAL,RANKED_REVIEW_REQUIRED,Wikidata,1,1,wd:P3335,5,False
+wd:P3342,significant person,UNRESOLVED,SPATIAL,RANKED_REVIEW_REQUIRED,EventKG|Wikidata,2,2,http://www.wikidata.org/prop/direct/P3342|wd:P3342,1771,False
+wd:P3349,designed to carry,CREATION_AUTHORSHIP,CREATION_AUTHORSHIP,EXISTING_CATALOG_ASSIGNMENT,EventKG|Wikidata,2,2,http://www.wikidata.org/prop/direct/P3349|wd:P3349,6,False
+wd:P3373,sibling,FAMILY_PERSONAL,FAMILY_PERSONAL,EXISTING_CATALOG_ASSIGNMENT,EventKG|Wikidata,2,2,http://www.wikidata.org/prop/direct/P3373|wd:P3373,3018,False
+wd:P3402,CNC film rating (Romania),UNRESOLVED,SPATIAL,RANKED_REVIEW_REQUIRED,Wikidata,1,1,wd:P3402,10,False
+wd:P3403,coextensive with,UNRESOLVED,SPATIAL,RANKED_REVIEW_REQUIRED,Wikidata,1,1,wd:P3403,1,False
+wd:P3428,INCAA film rating,UNRESOLVED,SPATIAL,RANKED_REVIEW_REQUIRED,Wikidata,1,1,wd:P3428,7,False
+wd:P3438,vehicle normally used,UNRESOLVED,CREATION_AUTHORSHIP,RANKED_REVIEW_REQUIRED,EventKG|Wikidata,2,2,http://www.wikidata.org/prop/direct/P3438|wd:P3438,11,False
+wd:P344,director of photography,UNRESOLVED,SPATIAL,RANKED_REVIEW_REQUIRED,Wikidata,1,1,wd:P344,251,False
+wd:P3448,stepparent,UNRESOLVED,FAMILY_PERSONAL,RANKED_REVIEW_REQUIRED,EventKG|Wikidata,2,2,http://www.wikidata.org/prop/direct/P3448|wd:P3448,25,False
+wd:P3460,colonel-in-chief,UNRESOLVED,PARTICIPATION_ROLE,RANKED_REVIEW_REQUIRED,EventKG|Wikidata,2,2,http://www.wikidata.org/prop/direct/P3460|wd:P3460,12,False
+wd:P3461,designated as terrorist by,UNRESOLVED,AFFILIATION_STATUS,RANKED_REVIEW_REQUIRED,EventKG|Wikidata,2,2,http://www.wikidata.org/prop/direct/P3461|wd:P3461,6,False
+wd:P35,head of state,UNRESOLVED,SPATIAL,RANKED_REVIEW_REQUIRED,EventKG|Wikidata,2,2,http://www.wikidata.org/prop/direct/P35|wd:P35,121,False
+wd:P3501,Christian liturgical rite,UNRESOLVED,SPATIAL,RANKED_REVIEW_REQUIRED,Wikidata,1,1,wd:P3501,8,False
+wd:P355,child organization or unit,ORGANIZATION_HIERARCHY,ORGANIZATION_HIERARCHY,EXISTING_CATALOG_ASSIGNMENT,EventKG|Wikidata,2,2,http://www.wikidata.org/prop/direct/P355|wd:P355,1339,False
+wd:P358,discography,UNRESOLVED,SPATIAL,RANKED_REVIEW_REQUIRED,Wikidata,1,1,wd:P358,7,False
+wd:P36,capital,SPATIAL,SPATIAL,EXISTING_CATALOG_ASSIGNMENT,EventKG|Wikidata,2,2,http://www.wikidata.org/prop/direct/P36|wd:P36,106,False
+wd:P360,is a list of,UNRESOLVED,SPATIAL,RANKED_REVIEW_REQUIRED,EventKG|Wikidata,2,2,http://www.wikidata.org/prop/direct/P360|wd:P360,428,False
+wd:P3602,candidacy in election,UNRESOLVED,SPATIAL,RANKED_REVIEW_REQUIRED,EventKG|Wikidata,2,2,http://www.wikidata.org/prop/direct/P3602|wd:P3602,680,False
+wd:P361,part of,PART_WHOLE_HIERARCHY,PART_WHOLE_HIERARCHY,EXISTING_CATALOG_ASSIGNMENT,EventKG|WarSampo|Wikidata,3,4,http://semanticweb.cs.vu.nl/2009/11/sem/subEventOf|http://www.cidoc-crm.org/cidoc-crm/P10_falls_within|http://www.wikidata.org/prop/direct/P361|wd:P361,11009,False
+wd:P364,original language of film or TV show,AFFILIATION_STATUS,AFFILIATION_STATUS,EXISTING_CATALOG_ASSIGNMENT,Wikidata,1,1,wd:P364,567,False
+wd:P3650,JMK film rating,UNRESOLVED,SPATIAL,RANKED_REVIEW_REQUIRED,Wikidata,1,1,wd:P3650,16,False
+wd:P366,has use,UNRESOLVED,FAMILY_PERSONAL,RANKED_REVIEW_REQUIRED,EventKG|Wikidata,2,2,http://www.wikidata.org/prop/direct/P366|wd:P366,4178,False
+wd:P37,official language,AFFILIATION_STATUS,AFFILIATION_STATUS,EXISTING_CATALOG_ASSIGNMENT,EventKG|Wikidata,2,2,http://www.wikidata.org/prop/direct/P37|wd:P37,91,False
+wd:P371,presenter,UNRESOLVED,PARTICIPATION_ROLE,RANKED_REVIEW_REQUIRED,EventKG|Wikidata,2,2,http://www.wikidata.org/prop/direct/P371|wd:P371,19,False
+wd:P3712,has goal,UNRESOLVED,CAUSAL,RANKED_REVIEW_REQUIRED,EventKG|Wikidata,2,2,http://www.wikidata.org/prop/direct/P3712|wd:P3712,40,False
+wd:P3716,social classification,UNRESOLVED,AFFILIATION_STATUS,RANKED_REVIEW_REQUIRED,EventKG|Wikidata,2,2,http://www.wikidata.org/prop/direct/P3716|wd:P3716,39,False
+wd:P3719,regulated by,UNRESOLVED,CREATION_AUTHORSHIP,RANKED_REVIEW_REQUIRED,EventKG|Wikidata,2,2,http://www.wikidata.org/prop/direct/P3719|wd:P3719,10,False
+wd:P3729,next lower rank,PARTICIPATION_ROLE,PARTICIPATION_ROLE,EXISTING_CATALOG_ASSIGNMENT,EventKG,1,1,http://www.wikidata.org/prop/direct/P3729,103,False
+wd:P3730,next higher rank,PARTICIPATION_ROLE,PARTICIPATION_ROLE,EXISTING_CATALOG_ASSIGNMENT,EventKG,1,1,http://www.wikidata.org/prop/direct/P3730,111,False
+wd:P3764,pole position,UNRESOLVED,PARTICIPATION_ROLE,RANKED_REVIEW_REQUIRED,EventKG,1,1,http://www.wikidata.org/prop/direct/P3764,1,False
+wd:P38,currency,UNRESOLVED,CAUSAL,RANKED_REVIEW_REQUIRED,EventKG|Wikidata,2,2,http://www.wikidata.org/prop/direct/P38|wd:P38,94,False
+wd:P3818,KMRB film rating,UNRESOLVED,SPATIAL,RANKED_REVIEW_REQUIRED,Wikidata,1,1,wd:P3818,6,False
+wd:P3828,wears,UNRESOLVED,CREATION_AUTHORSHIP,RANKED_REVIEW_REQUIRED,EventKG|Wikidata,2,2,http://www.wikidata.org/prop/direct/P3828|wd:P3828,5,False
+wd:P3834,RTC film rating,UNRESOLVED,SPATIAL,RANKED_REVIEW_REQUIRED,Wikidata,1,1,wd:P3834,13,False
+wd:P3842,located in the present-day administrative territorial entity,SPATIAL,SPATIAL,EXISTING_CATALOG_ASSIGNMENT,EventKG|Wikidata,2,2,http://www.wikidata.org/prop/direct/P3842|wd:P3842,62,False
+wd:P3876,category for alumni of educational institution,UNRESOLVED,SPATIAL,RANKED_REVIEW_REQUIRED,Wikidata,1,1,wd:P3876,10,False
+wd:P39,position held,UNRESOLVED,PARTICIPATION_ROLE,RANKED_REVIEW_REQUIRED,EventKG|Wikidata,2,2,http://www.wikidata.org/prop/direct/P39|wd:P39,11261,False
+wd:P3919,contributed to creative work,UNRESOLVED,CREATION_AUTHORSHIP,RANKED_REVIEW_REQUIRED,EventKG|Wikidata,2,2,http://www.wikidata.org/prop/direct/P3919|wd:P3919,29,False
+wd:P3931,copyright holder,UNRESOLVED,CREATION_AUTHORSHIP,RANKED_REVIEW_REQUIRED,EventKG|Wikidata,2,2,http://www.wikidata.org/prop/direct/P3931|wd:P3931,7,False
+wd:P3938,named by,UNRESOLVED,PARTICIPATION_ROLE,RANKED_REVIEW_REQUIRED,EventKG|Wikidata,2,2,http://www.wikidata.org/prop/direct/P3938|wd:P3938,14,False
+wd:P3975,general secretary,UNRESOLVED,AFFILIATION_STATUS,RANKED_REVIEW_REQUIRED,EventKG|Wikidata,2,2,http://www.wikidata.org/prop/direct/P3975|wd:P3975,18,False
+wd:P3989,members have occupation,PARTICIPATION_ROLE,PARTICIPATION_ROLE,EXISTING_CATALOG_ASSIGNMENT,Wikidata,1,1,wd:P3989,8,False
+wd:P40,child,FAMILY_PERSONAL,FAMILY_PERSONAL,EXISTING_CATALOG_ASSIGNMENT,EventKG|Wikidata,2,2,http://www.wikidata.org/prop/direct/P40|wd:P40,6555,False
+wd:P400,platform,UNRESOLVED,CREATION_AUTHORSHIP,RANKED_REVIEW_REQUIRED,EventKG|Wikidata,2,2,http://www.wikidata.org/prop/direct/P400|wd:P400,57,False
+wd:P403,mouth of the watercourse,UNRESOLVED,SPATIAL,RANKED_REVIEW_REQUIRED,Wikidata,1,1,wd:P403,1,False
+wd:P404,game mode,UNRESOLVED,PARTICIPATION_ROLE,RANKED_REVIEW_REQUIRED,EventKG|Wikidata,2,2,http://www.wikidata.org/prop/direct/P404|wd:P404,27,False
+wd:P406,soundtrack release,UNRESOLVED,SPATIAL,RANKED_REVIEW_REQUIRED,EventKG|Wikidata,2,2,http://www.wikidata.org/prop/direct/P406|wd:P406,11,False
+wd:P407,language of work or name,AFFILIATION_STATUS,AFFILIATION_STATUS,EXISTING_CATALOG_ASSIGNMENT,EventKG|Wikidata,2,2,http://www.wikidata.org/prop/direct/P407|wd:P407,496,False
+wd:P408,software engine,UNRESOLVED,PARTICIPATION_ROLE,RANKED_REVIEW_REQUIRED,EventKG|Wikidata,2,2,http://www.wikidata.org/prop/direct/P408|wd:P408,8,False
+wd:P410,"military, police or special rank",PARTICIPATION_ROLE,PARTICIPATION_ROLE,EXISTING_CATALOG_ASSIGNMENT,EventKG|Wikidata,2,2,http://www.wikidata.org/prop/direct/P410|wd:P410,18426,False
+wd:P411,canonization status,UNRESOLVED,AFFILIATION_STATUS,RANKED_REVIEW_REQUIRED,EventKG|Wikidata,2,2,http://www.wikidata.org/prop/direct/P411|wd:P411,29,False
+wd:P412,voice type,UNRESOLVED,SPATIAL,RANKED_REVIEW_REQUIRED,EventKG|Wikidata,2,2,http://www.wikidata.org/prop/direct/P412|wd:P412,16,False
+wd:P413,position played on team / speciality,UNRESOLVED,PARTICIPATION_ROLE,RANKED_REVIEW_REQUIRED,EventKG|Wikidata,2,2,http://www.wikidata.org/prop/direct/P413|wd:P413,155,False
+wd:P414,stock exchange,UNRESOLVED,SPATIAL,RANKED_REVIEW_REQUIRED,Wikidata,1,1,wd:P414,3,False
+wd:P4151,game mechanics,UNRESOLVED,CREATION_AUTHORSHIP,RANKED_REVIEW_REQUIRED,Wikidata,1,1,wd:P4151,2,False
+wd:P417,patron saint,UNRESOLVED,CAUSAL,RANKED_REVIEW_REQUIRED,EventKG|Wikidata,2,2,http://www.wikidata.org/prop/direct/P417|wd:P417,13,False
+wd:P418,"has seal, badge, or sigil",UNRESOLVED,CAUSAL,RANKED_REVIEW_REQUIRED,EventKG|Wikidata,2,2,http://www.wikidata.org/prop/direct/P418|wd:P418,2,False
+wd:P421,located in time zone,SPATIAL,SPATIAL,EXISTING_CATALOG_ASSIGNMENT,EventKG|Wikidata,2,2,http://www.wikidata.org/prop/direct/P421|wd:P421,31,False
+wd:P4220,order of battle,CONFLICT_AFFILIATION,CONFLICT_AFFILIATION,EXISTING_CATALOG_ASSIGNMENT,EventKG|Wikidata,2,2,http://www.wikidata.org/prop/direct/P4220|wd:P4220,160,False
+wd:P423,shooting handedness,UNRESOLVED,PARTICIPATION_ROLE,RANKED_REVIEW_REQUIRED,Wikidata,1,1,wd:P423,2,False
+wd:P425,field of this occupation,PARTICIPATION_ROLE,PARTICIPATION_ROLE,EXISTING_CATALOG_ASSIGNMENT,EventKG|Wikidata,2,2,http://www.wikidata.org/prop/direct/P425|wd:P425,11,False
+wd:P4312,camera setup,UNRESOLVED,SPATIAL,RANKED_REVIEW_REQUIRED,Wikidata,1,1,wd:P4312,2,False
+wd:P4330,contains,UNRESOLVED,SPATIAL,RANKED_REVIEW_REQUIRED,EventKG|Wikidata,2,2,http://www.wikidata.org/prop/direct/P4330|wd:P4330,11,False
+wd:P4345,director of archaeological fieldwork,UNRESOLVED,CREATION_AUTHORSHIP,RANKED_REVIEW_REQUIRED,EventKG,1,1,http://www.wikidata.org/prop/direct/P4345,5,False
+wd:P4379,youth wing,UNRESOLVED,AFFILIATION_STATUS,RANKED_REVIEW_REQUIRED,EventKG|Wikidata,2,2,http://www.wikidata.org/prop/direct/P4379|wd:P4379,3,False
+wd:P449,original broadcaster,UNRESOLVED,AFFILIATION_STATUS,RANKED_REVIEW_REQUIRED,EventKG|Wikidata,2,2,http://www.wikidata.org/prop/direct/P449|wd:P449,101,False
+wd:P450,astronaut mission,UNRESOLVED,CREATION_AUTHORSHIP,RANKED_REVIEW_REQUIRED,EventKG,1,1,http://www.wikidata.org/prop/direct/P450,3,False
+wd:P451,unmarried partner,UNRESOLVED,FAMILY_PERSONAL,RANKED_REVIEW_REQUIRED,EventKG|Wikidata,2,2,http://www.wikidata.org/prop/direct/P451|wd:P451,266,False
+wd:P452,industry,UNRESOLVED,CREATION_AUTHORSHIP,RANKED_REVIEW_REQUIRED,EventKG|Wikidata,2,2,http://www.wikidata.org/prop/direct/P452|wd:P452,285,False
+wd:P4552,mountain range,UNRESOLVED,SPATIAL,RANKED_REVIEW_REQUIRED,Wikidata,1,1,wd:P4552,16,False
+wd:P457,foundational text,UNRESOLVED,AFFILIATION_STATUS,RANKED_REVIEW_REQUIRED,EventKG|Wikidata,2,2,http://www.wikidata.org/prop/direct/P457|wd:P457,29,False
+wd:P4608,scenographer,UNRESOLVED,CREATION_AUTHORSHIP,RANKED_REVIEW_REQUIRED,EventKG|Wikidata,2,2,http://www.wikidata.org/prop/direct/P4608|wd:P4608,2,False
+wd:P461,opposite of,UNRESOLVED,SPATIAL,RANKED_REVIEW_REQUIRED,EventKG|Wikidata,2,2,http://www.wikidata.org/prop/direct/P461|wd:P461,28,False
+wd:P4614,drainage basin,UNRESOLVED,SPATIAL,RANKED_REVIEW_REQUIRED,Wikidata,1,1,wd:P4614,2,False
+wd:P462,color,UNRESOLVED,CAUSAL,RANKED_REVIEW_REQUIRED,EventKG|Wikidata,2,2,http://www.wikidata.org/prop/direct/P462|wd:P462,482,False
+wd:P4622,trophy awarded,UNRESOLVED,AWARD_RECOGNITION,RANKED_REVIEW_REQUIRED,EventKG,1,1,http://www.wikidata.org/prop/direct/P4622,7,False
+wd:P4624,squadron embarked,UNRESOLVED,PARTICIPATION_ROLE,RANKED_REVIEW_REQUIRED,Wikidata,1,1,wd:P4624,4,False
+wd:P463,member of,PARTICIPATION_ROLE,PARTICIPATION_ROLE,EXISTING_CATALOG_ASSIGNMENT,EventKG|Wikidata,2,2,http://www.wikidata.org/prop/direct/P463|wd:P463,11057,False
+wd:P4647,location of first performance,SPATIAL,SPATIAL,EXISTING_CATALOG_ASSIGNMENT,EventKG|Wikidata,2,2,http://www.wikidata.org/prop/direct/P4647|wd:P4647,8,False
+wd:P466,occupant,UNRESOLVED,PARTICIPATION_ROLE,RANKED_REVIEW_REQUIRED,EventKG|Wikidata,2,2,http://www.wikidata.org/prop/direct/P466|wd:P466,530,False
+wd:P4661,reservoir created,FORMATION_DISSOLUTION,FORMATION_DISSOLUTION,EXISTING_CATALOG_ASSIGNMENT,Wikidata,1,1,wd:P4661,1,False
+wd:P467,legislated by,UNRESOLVED,SPATIAL,RANKED_REVIEW_REQUIRED,EventKG|Wikidata,2,2,http://www.wikidata.org/prop/direct/P467|wd:P467,49,False
+wd:P468,dan/kyu rank,PARTICIPATION_ROLE,PARTICIPATION_ROLE,EXISTING_CATALOG_ASSIGNMENT,Wikidata,1,1,wd:P468,1,False
+wd:P47,shares border with,UNRESOLVED,SPATIAL,RANKED_REVIEW_REQUIRED,EventKG|Wikidata,2,2,http://www.wikidata.org/prop/direct/P47|wd:P47,317,False
+wd:P470,Eight Banner register,UNRESOLVED,PARTICIPATION_ROLE,RANKED_REVIEW_REQUIRED,Wikidata,1,1,wd:P470,1,False
+wd:P4743,animal breed,UNRESOLVED,SPATIAL,RANKED_REVIEW_REQUIRED,EventKG|Wikidata,2,2,http://www.wikidata.org/prop/direct/P4743|wd:P4743,12,False
+wd:P479,input device,UNRESOLVED,CREATION_AUTHORSHIP,RANKED_REVIEW_REQUIRED,EventKG|Wikidata,2,2,http://www.wikidata.org/prop/direct/P479|wd:P479,11,False
+wd:P4791,commanded by,PARTICIPATION_ROLE,PARTICIPATION_ROLE,EXISTING_CATALOG_ASSIGNMENT,EventKG|Wikidata,2,2,http://www.wikidata.org/prop/direct/P4791|wd:P4791,3361,False
+wd:P4805,make-up artist,UNRESOLVED,CREATION_AUTHORSHIP,RANKED_REVIEW_REQUIRED,EventKG|Wikidata,2,2,http://www.wikidata.org/prop/direct/P4805|wd:P4805,3,False
+wd:P483,recorded at studio or venue,UNRESOLVED,SPATIAL,RANKED_REVIEW_REQUIRED,Wikidata,1,1,wd:P483,1,False
+wd:P485,archives at,UNRESOLVED,CREATION_AUTHORSHIP,RANKED_REVIEW_REQUIRED,EventKG|Wikidata,2,2,http://www.wikidata.org/prop/direct/P485|wd:P485,1120,False
+wd:P488,chairperson,UNRESOLVED,AFFILIATION_STATUS,RANKED_REVIEW_REQUIRED,EventKG|Wikidata,2,2,http://www.wikidata.org/prop/direct/P488|wd:P488,482,False
+wd:P4884,court,UNRESOLVED,SPATIAL,RANKED_REVIEW_REQUIRED,EventKG|Wikidata,2,2,http://www.wikidata.org/prop/direct/P4884|wd:P4884,8,False
+wd:P489,currency sign,UNRESOLVED,SPATIAL,RANKED_REVIEW_REQUIRED,Wikidata,1,1,wd:P489,1,False
+wd:P4908,season,UNRESOLVED,CREATION_AUTHORSHIP,RANKED_REVIEW_REQUIRED,EventKG|Wikidata,2,2,http://www.wikidata.org/prop/direct/P4908|wd:P4908,12,False
+wd:P495,country of origin,SPATIAL,SPATIAL,EXISTING_CATALOG_ASSIGNMENT,EventKG|Wikidata,2,3,http://dbpedia.org/ontology/origin|http://www.wikidata.org/prop/direct/P495|wd:P495,18195,True
+wd:P4952,safety classification and labelling,UNRESOLVED,SPATIAL,RANKED_REVIEW_REQUIRED,Wikidata,1,1,wd:P4952,4,False
+wd:P4969,derivative work,UNRESOLVED,PART_WHOLE_HIERARCHY,RANKED_REVIEW_REQUIRED,EventKG|Wikidata,2,2,http://www.wikidata.org/prop/direct/P4969|wd:P4969,151,False
+wd:P50,author,CREATION_AUTHORSHIP,CREATION_AUTHORSHIP,EXISTING_CATALOG_ASSIGNMENT,EventKG|Wikidata,2,3,http://dbpedia.org/ontology/author|http://www.wikidata.org/prop/direct/P50|wd:P50,6348,False
+wd:P5004,in opposition to,UNRESOLVED,SPATIAL,RANKED_REVIEW_REQUIRED,EventKG|Wikidata,2,2,http://www.wikidata.org/prop/direct/P5004|wd:P5004,20,False
+wd:P5009,complies with,UNRESOLVED,CREATION_AUTHORSHIP,RANKED_REVIEW_REQUIRED,Wikidata,1,1,wd:P5009,3,False
+wd:P5012,special rank or class rate,PARTICIPATION_ROLE,PARTICIPATION_ROLE,EXISTING_CATALOG_ASSIGNMENT,EventKG|Wikidata,2,2,http://www.wikidata.org/prop/direct/P5012|wd:P5012,3,False
+wd:P5021,assessment,UNRESOLVED,CREATION_AUTHORSHIP,RANKED_REVIEW_REQUIRED,EventKG|Wikidata,2,2,http://www.wikidata.org/prop/direct/P5021|wd:P5021,215,False
+wd:P5023,activity policy in this place,SPATIAL,SPATIAL,EXISTING_CATALOG_ASSIGNMENT,EventKG|Wikidata,2,2,http://www.wikidata.org/prop/direct/P5023|wd:P5023,8,False
+wd:P5025,gens,UNRESOLVED,AFFILIATION_STATUS,RANKED_REVIEW_REQUIRED,Wikidata,1,1,wd:P5025,1,False
+wd:P5028,sound designer,UNRESOLVED,CREATION_AUTHORSHIP,RANKED_REVIEW_REQUIRED,EventKG|Wikidata,2,2,http://www.wikidata.org/prop/direct/P5028|wd:P5028,6,False
+wd:P5030,talk show guest,UNRESOLVED,AWARD_RECOGNITION,RANKED_REVIEW_REQUIRED,EventKG,1,1,http://www.wikidata.org/prop/direct/P5030,6,False
+wd:P504,shipping port,UNRESOLVED,SPATIAL,RANKED_REVIEW_REQUIRED,EventKG|Wikidata,2,2,http://www.wikidata.org/prop/direct/P504|wd:P504,834,False
+wd:P5052,supervisory board member,UNRESOLVED,PARTICIPATION_ROLE,RANKED_REVIEW_REQUIRED,EventKG|Wikidata,2,2,http://www.wikidata.org/prop/direct/P5052|wd:P5052,13,False
+wd:P5053,fastest lap,UNRESOLVED,CREATION_AUTHORSHIP,RANKED_REVIEW_REQUIRED,EventKG,1,1,http://www.wikidata.org/prop/direct/P5053,3,False
+wd:P5056,patronym or matronym,UNRESOLVED,PART_WHOLE_HIERARCHY,RANKED_REVIEW_REQUIRED,Wikidata,1,1,wd:P5056,87,False
+wd:P5059,modified version of,UNRESOLVED,SPATIAL,RANKED_REVIEW_REQUIRED,EventKG,1,1,http://www.wikidata.org/prop/direct/P5059,1,False
+wd:P5072,presented in,UNRESOLVED,SPATIAL,RANKED_REVIEW_REQUIRED,Wikidata,1,1,wd:P5072,1,False
+wd:P509,cause of death,CAUSAL,CAUSAL,EXISTING_CATALOG_ASSIGNMENT,EventKG|Wikidata,2,2,http://www.wikidata.org/prop/direct/P509|wd:P509,2211,False
+wd:P5096,member of the crew of,PARTICIPATION_ROLE,PARTICIPATION_ROLE,EXISTING_CATALOG_ASSIGNMENT,EventKG|Wikidata,2,2,http://www.wikidata.org/prop/direct/P5096|wd:P5096,987,False
+wd:P511,honorific prefix,UNRESOLVED,CREATION_AUTHORSHIP,RANKED_REVIEW_REQUIRED,EventKG|Wikidata,2,2,http://www.wikidata.org/prop/direct/P511|wd:P511,181,False
+wd:P512,academic degree,UNRESOLVED,EDUCATION_EMPLOYMENT,RANKED_REVIEW_REQUIRED,EventKG|Wikidata,2,2,http://www.wikidata.org/prop/direct/P512|wd:P512,387,False
+wd:P5126,assistant director,UNRESOLVED,CREATION_AUTHORSHIP,RANKED_REVIEW_REQUIRED,EventKG|Wikidata,2,2,http://www.wikidata.org/prop/direct/P5126|wd:P5126,8,False
+wd:P5150,IGAC rating,UNRESOLVED,SPATIAL,RANKED_REVIEW_REQUIRED,Wikidata,1,1,wd:P5150,5,False
+wd:P5152,KAVI rating,UNRESOLVED,SPATIAL,RANKED_REVIEW_REQUIRED,Wikidata,1,1,wd:P5152,1,False
+wd:P516,powered by,UNRESOLVED,PARTICIPATION_ROLE,RANKED_REVIEW_REQUIRED,EventKG,1,1,http://www.wikidata.org/prop/direct/P516,94,False
+wd:P518,applies to part,UNRESOLVED,PART_WHOLE_HIERARCHY,RANKED_REVIEW_REQUIRED,Wikidata,1,1,wd:P518,1,False
+wd:P520,armament,UNRESOLVED,CAUSAL,RANKED_REVIEW_REQUIRED,EventKG|Wikidata,2,2,http://www.wikidata.org/prop/direct/P520|wd:P520,1754,False
+wd:P5201,IMDA rating,UNRESOLVED,SPATIAL,RANKED_REVIEW_REQUIRED,Wikidata,1,1,wd:P5201,9,False
+wd:P521,scheduled service destination,UNRESOLVED,PARTICIPATION_ROLE,RANKED_REVIEW_REQUIRED,EventKG|Wikidata,2,2,http://www.wikidata.org/prop/direct/P521|wd:P521,231,False
+wd:P527,has part(s),PART_WHOLE_HIERARCHY,PART_WHOLE_HIERARCHY,EXISTING_CATALOG_ASSIGNMENT,EventKG|Wikidata,2,3,http://semanticweb.cs.vu.nl/2009/11/sem/hasSubEvent|http://www.wikidata.org/prop/direct/P527|wd:P527,11369,False
+wd:P53,family,UNRESOLVED,FAMILY_PERSONAL,RANKED_REVIEW_REQUIRED,EventKG|Wikidata,2,2,http://www.wikidata.org/prop/direct/P53|wd:P53,291,False
+wd:P530,diplomatic relation,AFFILIATION_STATUS,AFFILIATION_STATUS,EXISTING_CATALOG_ASSIGNMENT,EventKG|Wikidata,2,2,http://www.wikidata.org/prop/direct/P530|wd:P530,34,False
+wd:P531,diplomatic mission sent,UNRESOLVED,SPATIAL,RANKED_REVIEW_REQUIRED,EventKG|Wikidata,2,2,http://www.wikidata.org/prop/direct/P531|wd:P531,5,False
+wd:P532,port of registry,UNRESOLVED,SPATIAL,RANKED_REVIEW_REQUIRED,EventKG|Wikidata,2,2,http://www.wikidata.org/prop/direct/P532|wd:P532,139,False
+wd:P5323,attested in,UNRESOLVED,SPATIAL,RANKED_REVIEW_REQUIRED,Wikidata,1,1,wd:P5323,5,False
+wd:P533,target,UNRESOLVED,PARTICIPATION_ROLE,RANKED_REVIEW_REQUIRED,EventKG|Wikidata,2,2,http://www.wikidata.org/prop/direct/P533|wd:P533,207,False
+wd:P54,member of sports team,PARTICIPATION_ROLE,PARTICIPATION_ROLE,EXISTING_CATALOG_ASSIGNMENT,EventKG|Wikidata,2,2,http://www.wikidata.org/prop/direct/P54|wd:P54,1130,False
+wd:P542,officially opened by,UNRESOLVED,AFFILIATION_STATUS,RANKED_REVIEW_REQUIRED,EventKG|Wikidata,2,2,http://www.wikidata.org/prop/direct/P542|wd:P542,91,False
+wd:P5460,grants,UNRESOLVED,AWARD_RECOGNITION,RANKED_REVIEW_REQUIRED,Wikidata,1,1,wd:P5460,1,False
+wd:P547,commemorates,UNRESOLVED,SPATIAL,RANKED_REVIEW_REQUIRED,EventKG|Wikidata,2,2,http://www.wikidata.org/prop/direct/P547|wd:P547,4222,False
+wd:P551,residence,UNRESOLVED,SPATIAL,RANKED_REVIEW_REQUIRED,EventKG|Wikidata,2,2,http://www.wikidata.org/prop/direct/P551|wd:P551,997,False
+wd:P5514,accredited by,UNRESOLVED,PARTICIPATION_ROLE,RANKED_REVIEW_REQUIRED,EventKG|Wikidata,2,2,http://www.wikidata.org/prop/direct/P5514|wd:P5514,6,False
+wd:P552,handedness,UNRESOLVED,PARTICIPATION_ROLE,RANKED_REVIEW_REQUIRED,Wikidata,1,1,wd:P552,15,False
+wd:P559,terminus,UNRESOLVED,SPATIAL,RANKED_REVIEW_REQUIRED,EventKG|Wikidata,2,2,http://www.wikidata.org/prop/direct/P559|wd:P559,18,False
+wd:P562,central bank/issuer,UNRESOLVED,CREATION_AUTHORSHIP,RANKED_REVIEW_REQUIRED,EventKG|Wikidata,2,2,http://www.wikidata.org/prop/direct/P562|wd:P562,4,False
+wd:P566,has basionym,UNRESOLVED,PARTICIPATION_ROLE,RANKED_REVIEW_REQUIRED,Wikidata,1,1,wd:P566,1,False
+wd:P57,director,UNRESOLVED,CREATION_AUTHORSHIP,RANKED_REVIEW_REQUIRED,EventKG|Wikidata,2,2,http://www.wikidata.org/prop/direct/P57|wd:P57,1349,False
+wd:P5707,samples from work,UNRESOLVED,CREATION_AUTHORSHIP,RANKED_REVIEW_REQUIRED,EventKG|Wikidata,2,2,http://www.wikidata.org/prop/direct/P5707|wd:P5707,2,False
+wd:P5769,editor-in-chief,UNRESOLVED,CREATION_AUTHORSHIP,RANKED_REVIEW_REQUIRED,EventKG|Wikidata,2,2,http://www.wikidata.org/prop/direct/P5769|wd:P5769,16,False
+wd:P58,screenwriter,UNRESOLVED,PARTICIPATION_ROLE,RANKED_REVIEW_REQUIRED,Wikidata,1,1,wd:P58,405,False
+wd:P5816,state of conservation,UNRESOLVED,SPATIAL,RANKED_REVIEW_REQUIRED,EventKG|Wikidata,2,2,http://www.wikidata.org/prop/direct/P5816|wd:P5816,34,False
+wd:P5817,state of use,UNRESOLVED,SPATIAL,RANKED_REVIEW_REQUIRED,Wikidata,1,1,wd:P5817,275,False
+wd:P5826,majority opinion by,UNRESOLVED,PARTICIPATION_ROLE,RANKED_REVIEW_REQUIRED,Wikidata,1,1,wd:P5826,1,False
+wd:P5832,political coalition,UNRESOLVED,AFFILIATION_STATUS,RANKED_REVIEW_REQUIRED,EventKG,1,1,http://www.wikidata.org/prop/direct/P5832,1,False
+wd:P5869,model item,UNRESOLVED,CAUSAL,RANKED_REVIEW_REQUIRED,EventKG,1,1,http://www.wikidata.org/prop/direct/P5869,11,False
+wd:P588,coolant,UNRESOLVED,PARTICIPATION_ROLE,RANKED_REVIEW_REQUIRED,Wikidata,1,1,wd:P588,12,False
+wd:P5961,depicted part,UNRESOLVED,PART_WHOLE_HIERARCHY,RANKED_REVIEW_REQUIRED,EventKG,1,1,http://www.wikidata.org/prop/direct/P5961,1,False
+wd:P5970,Medierådet rating,UNRESOLVED,SPATIAL,RANKED_REVIEW_REQUIRED,Wikidata,1,1,wd:P5970,55,False
+wd:P598,commander of (DEPRECATED),PARTICIPATION_ROLE,PARTICIPATION_ROLE,EXISTING_CATALOG_ASSIGNMENT,EventKG|Wikidata,2,2,http://www.wikidata.org/prop/direct/P598|wd:P598,6342,False
+wd:P6,head of government,UNRESOLVED,SPATIAL,RANKED_REVIEW_REQUIRED,EventKG|Wikidata,2,2,http://www.wikidata.org/prop/direct/P6|wd:P6,213,False
+wd:P607,participated in conflict,CONFLICT_AFFILIATION,CONFLICT_AFFILIATION,EXISTING_CATALOG_ASSIGNMENT,EventKG|WarSampo|Wikidata,3,5,http://dbpedia.org/ontology/battle|http://dbpedia.org/ontology/usedInWar|http://ldf.fi/schema/warsa/actors/hasConflict|http://www.wikidata.org/prop/direct/P607|wd:P607,183953,True
+wd:P608,exhibition history,UNRESOLVED,SPATIAL,RANKED_REVIEW_REQUIRED,EventKG|Wikidata,2,2,http://www.wikidata.org/prop/direct/P608|wd:P608,92,False
+wd:P6087,coach of sports team,UNRESOLVED,PARTICIPATION_ROLE,RANKED_REVIEW_REQUIRED,EventKG|Wikidata,2,2,http://www.wikidata.org/prop/direct/P6087|wd:P6087,7,False
+wd:P609,terminus location,SPATIAL,SPATIAL,EXISTING_CATALOG_ASSIGNMENT,EventKG|Wikidata,2,2,http://www.wikidata.org/prop/direct/P609|wd:P609,7,False
+wd:P61,discoverer or inventor,UNRESOLVED,CREATION_AUTHORSHIP,RANKED_REVIEW_REQUIRED,EventKG|Wikidata,2,2,http://www.wikidata.org/prop/direct/P61|wd:P61,57,False
+wd:P610,highest point,UNRESOLVED,SPATIAL,RANKED_REVIEW_REQUIRED,Wikidata,1,1,wd:P610,5,False
+wd:P6104,maintained by WikiProject,UNRESOLVED,PART_WHOLE_HIERARCHY,RANKED_REVIEW_REQUIRED,Wikidata,1,1,wd:P6104,312,False
+wd:P611,religious order,UNRESOLVED,AFFILIATION_STATUS,RANKED_REVIEW_REQUIRED,EventKG|Wikidata,2,2,http://www.wikidata.org/prop/direct/P611|wd:P611,35,False
+wd:P6153,research site,UNRESOLVED,SPATIAL,RANKED_REVIEW_REQUIRED,EventKG|Wikidata,2,2,http://www.wikidata.org/prop/direct/P6153|wd:P6153,53,False
+wd:P6166,quotes work,UNRESOLVED,CREATION_AUTHORSHIP,RANKED_REVIEW_REQUIRED,EventKG|Wikidata,2,2,http://www.wikidata.org/prop/direct/P6166|wd:P6166,6,False
+wd:P6193,ratified by,UNRESOLVED,AFFILIATION_STATUS,RANKED_REVIEW_REQUIRED,EventKG|Wikidata,2,2,http://www.wikidata.org/prop/direct/P6193|wd:P6193,5,False
+wd:P6216,copyright status,UNRESOLVED,CREATION_AUTHORSHIP,RANKED_REVIEW_REQUIRED,EventKG|Wikidata,2,2,http://www.wikidata.org/prop/direct/P6216|wd:P6216,67,False
+wd:P6224,level of description,UNRESOLVED,PARTICIPATION_ROLE,RANKED_REVIEW_REQUIRED,Wikidata,1,1,wd:P6224,4,False
+wd:P624,guidance system,UNRESOLVED,SPATIAL,RANKED_REVIEW_REQUIRED,Wikidata,1,1,wd:P624,6,False
+wd:P6241,collection creator,CREATION_AUTHORSHIP,CREATION_AUTHORSHIP,EXISTING_CATALOG_ASSIGNMENT,EventKG|Wikidata,2,2,http://www.wikidata.org/prop/direct/P6241|wd:P6241,9,False
+wd:P6275,copyright representative,UNRESOLVED,SPATIAL,RANKED_REVIEW_REQUIRED,EventKG|Wikidata,2,2,http://www.wikidata.org/prop/direct/P6275|wd:P6275,72,False
+wd:P629,"version, edition or translation of",UNRESOLVED,SPATIAL,RANKED_REVIEW_REQUIRED,EventKG|Wikidata,2,2,http://www.wikidata.org/prop/direct/P629|wd:P629,15,False
+wd:P6291,advertises,UNRESOLVED,CAUSAL,RANKED_REVIEW_REQUIRED,Wikidata,1,1,wd:P6291,1,False
+wd:P631,structural engineer,UNRESOLVED,ORGANIZATION_HIERARCHY,RANKED_REVIEW_REQUIRED,EventKG|Wikidata,2,2,http://www.wikidata.org/prop/direct/P631|wd:P631,9,False
+wd:P6364,official color,UNRESOLVED,AFFILIATION_STATUS,RANKED_REVIEW_REQUIRED,Wikidata,1,1,wd:P6364,4,False
+wd:P6365,member category,UNRESOLVED,PARTICIPATION_ROLE,RANKED_REVIEW_REQUIRED,Wikidata,1,1,wd:P6365,12,False
+wd:P6379,has works in the collection,UNRESOLVED,CREATION_AUTHORSHIP,RANKED_REVIEW_REQUIRED,EventKG|Wikidata,2,2,http://www.wikidata.org/prop/direct/P6379|wd:P6379,2197,False
+wd:P641,sport,UNRESOLVED,SPATIAL,RANKED_REVIEW_REQUIRED,EventKG|Wikidata,2,2,http://www.wikidata.org/prop/direct/P641|wd:P641,1020,False
+wd:P647,drafted by,UNRESOLVED,CREATION_AUTHORSHIP,RANKED_REVIEW_REQUIRED,EventKG,1,1,http://www.wikidata.org/prop/direct/P647,2,False
+wd:P65,site of astronomical discovery,UNRESOLVED,CREATION_AUTHORSHIP,RANKED_REVIEW_REQUIRED,EventKG,1,1,http://www.wikidata.org/prop/direct/P65,1,False
+wd:P655,translator,UNRESOLVED,AFFILIATION_STATUS,RANKED_REVIEW_REQUIRED,EventKG|Wikidata,2,2,http://www.wikidata.org/prop/direct/P655|wd:P655,13,False
+wd:P6568,inscription mentions,UNRESOLVED,CREATION_AUTHORSHIP,RANKED_REVIEW_REQUIRED,EventKG,1,1,http://www.wikidata.org/prop/direct/P6568,40,False
+wd:P66,ancestral home,UNRESOLVED,SPATIAL,RANKED_REVIEW_REQUIRED,Wikidata,1,1,wd:P66,12,False
+wd:P664,organizer,UNRESOLVED,CAUSAL,RANKED_REVIEW_REQUIRED,EventKG|Wikidata,2,2,http://www.wikidata.org/prop/direct/P664|wd:P664,123,False
+wd:P6657,CHVRS Classification,UNRESOLVED,SPATIAL,RANKED_REVIEW_REQUIRED,Wikidata,1,1,wd:P6657,3,False
+wd:P6658,RCQ classification,UNRESOLVED,SPATIAL,RANKED_REVIEW_REQUIRED,Wikidata,1,1,wd:P6658,10,False
+wd:P669,located on street,SPATIAL,SPATIAL,EXISTING_CATALOG_ASSIGNMENT,Wikidata,1,1,wd:P669,82,False
+wd:P674,characters,UNRESOLVED,SPATIAL,RANKED_REVIEW_REQUIRED,EventKG|Wikidata,2,2,http://www.wikidata.org/prop/direct/P674|wd:P674,1228,False
+wd:P6758,supported sports team,UNRESOLVED,PARTICIPATION_ROLE,RANKED_REVIEW_REQUIRED,EventKG|Wikidata,2,2,http://www.wikidata.org/prop/direct/P6758|wd:P6758,7,False
+wd:P676,lyricist,UNRESOLVED,CREATION_AUTHORSHIP,RANKED_REVIEW_REQUIRED,EventKG|Wikidata,2,2,http://www.wikidata.org/prop/direct/P676|wd:P676,37,False
+wd:P6872,has written for,UNRESOLVED,CREATION_AUTHORSHIP,RANKED_REVIEW_REQUIRED,EventKG|Wikidata,2,2,http://www.wikidata.org/prop/direct/P6872|wd:P6872,54,False
+wd:P6885,historical region,UNRESOLVED,SPATIAL,RANKED_REVIEW_REQUIRED,EventKG|Wikidata,2,2,http://www.wikidata.org/prop/direct/P6885|wd:P6885,4,False
+wd:P6886,writing language,AFFILIATION_STATUS,AFFILIATION_STATUS,EXISTING_CATALOG_ASSIGNMENT,EventKG|Wikidata,2,2,http://www.wikidata.org/prop/direct/P6886|wd:P6886,519,False
+wd:P69,educated at,EDUCATION_EMPLOYMENT,EDUCATION_EMPLOYMENT,EXISTING_CATALOG_ASSIGNMENT,EventKG|Wikidata,2,2,http://www.wikidata.org/prop/direct/P69|wd:P69,25079,False
+wd:P6902,era name,UNRESOLVED,AFFILIATION_STATUS,RANKED_REVIEW_REQUIRED,EventKG|Wikidata,2,2,http://www.wikidata.org/prop/direct/P6902|wd:P6902,8,False
+wd:P6942,animator,UNRESOLVED,CREATION_AUTHORSHIP,RANKED_REVIEW_REQUIRED,EventKG|Wikidata,2,2,http://www.wikidata.org/prop/direct/P6942|wd:P6942,68,False
+wd:P6977,review of,UNRESOLVED,CREATION_AUTHORSHIP,RANKED_REVIEW_REQUIRED,EventKG,1,1,http://www.wikidata.org/prop/direct/P6977,2,False
+wd:P6978,Scandinavian middle family name,UNRESOLVED,FAMILY_PERSONAL,RANKED_REVIEW_REQUIRED,Wikidata,1,1,wd:P6978,19,False
+wd:P7045,chassis,UNRESOLVED,SPATIAL,RANKED_REVIEW_REQUIRED,Wikidata,1,1,wd:P7045,3,False
+wd:P7047,enemy,UNRESOLVED,AFFILIATION_STATUS,RANKED_REVIEW_REQUIRED,EventKG|Wikidata,2,2,http://www.wikidata.org/prop/direct/P7047|wd:P7047,33,False
+wd:P706,located in/on physical feature,SPATIAL,SPATIAL,EXISTING_CATALOG_ASSIGNMENT,Wikidata,1,1,wd:P706,96,False
+wd:P708,diocese,UNRESOLVED,SPATIAL,RANKED_REVIEW_REQUIRED,EventKG|Wikidata,2,2,http://www.wikidata.org/prop/direct/P708|wd:P708,31,False
+wd:P710,participant,PARTICIPATION_ROLE,PARTICIPATION_ROLE,EXISTING_CATALOG_ASSIGNMENT,EventKG|WarSampo|Wikidata,3,3,http://www.cidoc-crm.org/cidoc-crm/P11_had_participant|http://www.wikidata.org/prop/direct/P710|wd:P710,172034,False
+wd:P7108,location of the point of view,SPATIAL,SPATIAL,EXISTING_CATALOG_ASSIGNMENT,Wikidata,1,1,wd:P7108,3,False
+wd:P7137,acknowledges,UNRESOLVED,CREATION_AUTHORSHIP,RANKED_REVIEW_REQUIRED,EventKG|Wikidata,2,2,http://www.wikidata.org/prop/direct/P7137|wd:P7137,5,False
+wd:P7153,significant place,SPATIAL,SPATIAL,EXISTING_CATALOG_ASSIGNMENT,EventKG|Wikidata,2,2,http://www.wikidata.org/prop/direct/P7153|wd:P7153,68,False
+wd:P7169,substitute director/manager,UNRESOLVED,SPATIAL,RANKED_REVIEW_REQUIRED,Wikidata,1,1,wd:P7169,1,False
+wd:P7228,access restriction status,UNRESOLVED,CREATION_AUTHORSHIP,RANKED_REVIEW_REQUIRED,EventKG|Wikidata,2,2,http://www.wikidata.org/prop/direct/P7228|wd:P7228,5,False
+wd:P725,voice actor,PARTICIPATION_ROLE,PARTICIPATION_ROLE,EXISTING_CATALOG_ASSIGNMENT,EventKG|Wikidata,2,2,http://www.wikidata.org/prop/direct/P725|wd:P725,205,False
+wd:P726,candidate,UNRESOLVED,CAUSAL,RANKED_REVIEW_REQUIRED,EventKG,1,1,http://www.wikidata.org/prop/direct/P726,246,False
+wd:P7261,use restriction status,UNRESOLVED,CREATION_AUTHORSHIP,RANKED_REVIEW_REQUIRED,EventKG|Wikidata,2,2,http://www.wikidata.org/prop/direct/P7261|wd:P7261,4,False
+wd:P734,family name,UNRESOLVED,PART_WHOLE_HIERARCHY,RANKED_REVIEW_REQUIRED,EventKG|Wikidata,2,2,http://www.wikidata.org/prop/direct/P734|wd:P734,12546,False
+wd:P735,given name,UNRESOLVED,AFFILIATION_STATUS,RANKED_REVIEW_REQUIRED,EventKG|Wikidata,2,2,http://www.wikidata.org/prop/direct/P735|wd:P735,18365,False
+wd:P736,cover art by,UNRESOLVED,CREATION_AUTHORSHIP,RANKED_REVIEW_REQUIRED,EventKG|Wikidata,2,2,http://www.wikidata.org/prop/direct/P736|wd:P736,18,False
+wd:P737,influenced by,UNRESOLVED,CREATION_AUTHORSHIP,RANKED_REVIEW_REQUIRED,EventKG|Wikidata,2,2,http://www.wikidata.org/prop/direct/P737|wd:P737,510,False
+wd:P7376,worn by,UNRESOLVED,CREATION_AUTHORSHIP,RANKED_REVIEW_REQUIRED,EventKG,1,1,http://www.wikidata.org/prop/direct/P7376,1,False
+wd:P7378,item disputed by,UNRESOLVED,CAUSAL,RANKED_REVIEW_REQUIRED,EventKG,1,1,http://www.wikidata.org/prop/direct/P7378,1,False
+wd:P739,ammunition,UNRESOLVED,PARTICIPATION_ROLE,RANKED_REVIEW_REQUIRED,EventKG|Wikidata,2,2,http://www.wikidata.org/prop/direct/P739|wd:P739,678,False
+wd:P740,location of formation,SPATIAL,SPATIAL,EXISTING_CATALOG_ASSIGNMENT,EventKG|Wikidata,2,2,http://www.wikidata.org/prop/direct/P740|wd:P740,206,False
+wd:P741,playing hand,UNRESOLVED,SPATIAL,RANKED_REVIEW_REQUIRED,Wikidata,1,1,wd:P741,1,False
+wd:P747,"has version, edition or translation",UNRESOLVED,SPATIAL,RANKED_REVIEW_REQUIRED,EventKG|Wikidata,2,2,http://www.wikidata.org/prop/direct/P747|wd:P747,132,False
+wd:P748,appointed by,UNRESOLVED,PARTICIPATION_ROLE,RANKED_REVIEW_REQUIRED,EventKG|Wikidata,2,2,http://www.wikidata.org/prop/direct/P748|wd:P748,12,False
+wd:P749,parent organization or unit,ORGANIZATION_HIERARCHY,ORGANIZATION_HIERARCHY,EXISTING_CATALOG_ASSIGNMENT,EventKG|Wikidata,2,2,http://www.wikidata.org/prop/direct/P749|wd:P749,1151,False
+wd:P750,distributed by,UNRESOLVED,CREATION_AUTHORSHIP,RANKED_REVIEW_REQUIRED,EventKG|Wikidata,2,2,http://www.wikidata.org/prop/direct/P750|wd:P750,889,False
+wd:P7514,landscape architect,CREATION_AUTHORSHIP,CREATION_AUTHORSHIP,EXISTING_CATALOG_ASSIGNMENT,EventKG|Wikidata,2,2,http://www.wikidata.org/prop/direct/P7514|wd:P7514,14,False
+wd:P7573,IFCO rating,UNRESOLVED,SPATIAL,RANKED_REVIEW_REQUIRED,Wikidata,1,1,wd:P7573,8,False
+wd:P7604,supervised by,UNRESOLVED,CREATION_AUTHORSHIP,RANKED_REVIEW_REQUIRED,EventKG|Wikidata,2,2,http://www.wikidata.org/prop/direct/P7604|wd:P7604,9,False
+wd:P767,contributor to the creative work or subject,UNRESOLVED,CREATION_AUTHORSHIP,RANKED_REVIEW_REQUIRED,EventKG|Wikidata,2,2,http://www.wikidata.org/prop/direct/P767|wd:P767,50,False
+wd:P768,electoral district,UNRESOLVED,PARTICIPATION_ROLE,RANKED_REVIEW_REQUIRED,EventKG|Wikidata,2,2,http://www.wikidata.org/prop/direct/P768|wd:P768,2,False
+wd:P770,cause of destruction,CAUSAL,CAUSAL,EXISTING_CATALOG_ASSIGNMENT,EventKG|Wikidata,2,2,http://www.wikidata.org/prop/direct/P770|wd:P770,272,False
+wd:P7763,copyright status as a creator,CREATION_AUTHORSHIP,CREATION_AUTHORSHIP,EXISTING_CATALOG_ASSIGNMENT,Wikidata,1,1,wd:P7763,373,False
+wd:P7779,military unit,PARTICIPATION_ROLE,PARTICIPATION_ROLE,EXISTING_CATALOG_ASSIGNMENT,EventKG|Wikidata,2,2,http://www.wikidata.org/prop/direct/P7779|wd:P7779,1467,False
+wd:P7781,exonerated of,UNRESOLVED,SPATIAL,RANKED_REVIEW_REQUIRED,EventKG|Wikidata,2,2,http://www.wikidata.org/prop/direct/P7781|wd:P7781,4,False
+wd:P7782,category for ship name,UNRESOLVED,PARTICIPATION_ROLE,RANKED_REVIEW_REQUIRED,Wikidata,1,1,wd:P7782,272,False
+wd:P78,top-level Internet domain,UNRESOLVED,CREATION_AUTHORSHIP,RANKED_REVIEW_REQUIRED,EventKG,1,1,http://www.wikidata.org/prop/direct/P78,1,False
+wd:P7888,merged into,UNRESOLVED,PARTICIPATION_ROLE,RANKED_REVIEW_REQUIRED,EventKG|Wikidata,2,2,http://www.wikidata.org/prop/direct/P7888|wd:P7888,43,False
+wd:P790,approved by,UNRESOLVED,PARTICIPATION_ROLE,RANKED_REVIEW_REQUIRED,EventKG|Wikidata,2,2,http://www.wikidata.org/prop/direct/P790|wd:P790,5,False
+wd:P793,significant event,UNRESOLVED,SPATIAL,RANKED_REVIEW_REQUIRED,EventKG|Wikidata,2,2,http://www.wikidata.org/prop/direct/P793|wd:P793,48664,False
+wd:P7937,form of creative work,UNRESOLVED,CREATION_AUTHORSHIP,RANKED_REVIEW_REQUIRED,EventKG|Wikidata,2,2,http://www.wikidata.org/prop/direct/P7937|wd:P7937,98,False
+wd:P7938,associated electoral district,UNRESOLVED,SPATIAL,RANKED_REVIEW_REQUIRED,EventKG|Wikidata,2,2,http://www.wikidata.org/prop/direct/P7938|wd:P7938,44,False
+wd:P795,located on linear feature,SPATIAL,SPATIAL,EXISTING_CATALOG_ASSIGNMENT,EventKG|Wikidata,2,2,http://www.wikidata.org/prop/direct/P795|wd:P795,9,False
+wd:P7959,historic county,UNRESOLVED,SPATIAL,RANKED_REVIEW_REQUIRED,EventKG|Wikidata,2,2,http://www.wikidata.org/prop/direct/P7959|wd:P7959,780,False
+wd:P797,authority,UNRESOLVED,CREATION_AUTHORSHIP,RANKED_REVIEW_REQUIRED,EventKG|Wikidata,2,2,http://www.wikidata.org/prop/direct/P797|wd:P797,62,False
+wd:P800,notable work,UNRESOLVED,PARTICIPATION_ROLE,RANKED_REVIEW_REQUIRED,EventKG|Wikidata,2,2,http://www.wikidata.org/prop/direct/P800|wd:P800,894,False
+wd:P8001,endorsed by,UNRESOLVED,CAUSAL,RANKED_REVIEW_REQUIRED,EventKG,1,1,http://www.wikidata.org/prop/direct/P8001,1,False
+wd:P8004,ordered by,UNRESOLVED,PARTICIPATION_ROLE,RANKED_REVIEW_REQUIRED,Wikidata,1,1,wd:P8004,1,False
+wd:P802,student,EDUCATION_EMPLOYMENT,EDUCATION_EMPLOYMENT,EXISTING_CATALOG_ASSIGNMENT,EventKG|Wikidata,2,2,http://www.wikidata.org/prop/direct/P802|wd:P802,231,False
+wd:P803,professorship,UNRESOLVED,EDUCATION_EMPLOYMENT,RANKED_REVIEW_REQUIRED,EventKG|Wikidata,2,2,http://www.wikidata.org/prop/direct/P803|wd:P803,35,False
+wd:P8031,perpetrator,CAUSAL,CAUSAL,EXISTING_CATALOG_ASSIGNMENT,EventKG|Wikidata,2,2,http://www.wikidata.org/prop/direct/P8031|wd:P8031,201,False
+wd:P8032,victim(s),UNRESOLVED,CAUSAL,RANKED_REVIEW_REQUIRED,EventKG|Wikidata,2,2,http://www.wikidata.org/prop/direct/P8032|wd:P8032,225,False
+wd:P8047,country of registry,SPATIAL,SPATIAL,EXISTING_CATALOG_ASSIGNMENT,EventKG|Wikidata,2,2,http://www.wikidata.org/prop/direct/P8047|wd:P8047,8557,False
+wd:P805,statement is subject of,UNRESOLVED,SPATIAL,RANKED_REVIEW_REQUIRED,EventKG|Wikidata,2,2,http://www.wikidata.org/prop/direct/P805|wd:P805,6,False
+wd:P807,separated from,FORMATION_DISSOLUTION,FORMATION_DISSOLUTION,EXISTING_CATALOG_ASSIGNMENT,EventKG|Wikidata,2,2,http://www.wikidata.org/prop/direct/P807|wd:P807,7,False
+wd:P81,connecting line,UNRESOLVED,CREATION_AUTHORSHIP,RANKED_REVIEW_REQUIRED,EventKG,1,1,http://www.wikidata.org/prop/direct/P81,12,False
+wd:P812,academic major,UNRESOLVED,EDUCATION_EMPLOYMENT,RANKED_REVIEW_REQUIRED,Wikidata,1,1,wd:P812,4,False
+wd:P8138,located in the statistical territorial entity,SPATIAL,SPATIAL,EXISTING_CATALOG_ASSIGNMENT,Wikidata,1,1,wd:P8138,12,False
+wd:P814,IUCN protected areas category,UNRESOLVED,PARTICIPATION_ROLE,RANKED_REVIEW_REQUIRED,Wikidata,1,1,wd:P814,10,False
+wd:P822,mascot,UNRESOLVED,PARTICIPATION_ROLE,RANKED_REVIEW_REQUIRED,EventKG|Wikidata,2,2,http://www.wikidata.org/prop/direct/P822|wd:P822,13,False
+wd:P8225,is metaclass for,UNRESOLVED,PART_WHOLE_HIERARCHY,RANKED_REVIEW_REQUIRED,Wikidata,1,1,wd:P8225,4,False
+wd:P823,speaker,UNRESOLVED,SPATIAL,RANKED_REVIEW_REQUIRED,EventKG|Wikidata,2,2,http://www.wikidata.org/prop/direct/P823|wd:P823,78,False
+wd:P825,dedicated to,UNRESOLVED,CAUSAL,RANKED_REVIEW_REQUIRED,EventKG|Wikidata,2,2,http://www.wikidata.org/prop/direct/P825|wd:P825,99,False
+wd:P828,has cause,CAUSAL,CAUSAL,EXISTING_CATALOG_ASSIGNMENT,EventKG|Wikidata,2,2,http://www.wikidata.org/prop/direct/P828|wd:P828,150,False
+wd:P832,public holiday,UNRESOLVED,SPATIAL,RANKED_REVIEW_REQUIRED,EventKG|Wikidata,2,2,http://www.wikidata.org/prop/direct/P832|wd:P832,10,False
+wd:P8324,funder,UNRESOLVED,PARTICIPATION_ROLE,RANKED_REVIEW_REQUIRED,EventKG|Wikidata,2,2,http://www.wikidata.org/prop/direct/P8324|wd:P8324,9,False
+wd:P8329,principal investigator,UNRESOLVED,CREATION_AUTHORSHIP,RANKED_REVIEW_REQUIRED,EventKG,1,1,http://www.wikidata.org/prop/direct/P8329,1,False
+wd:P833,interchange station,UNRESOLVED,SPATIAL,RANKED_REVIEW_REQUIRED,EventKG|Wikidata,2,2,http://www.wikidata.org/prop/direct/P833|wd:P833,3,False
+wd:P837,day in year for periodic occurrence,UNRESOLVED,SPATIAL,RANKED_REVIEW_REQUIRED,EventKG|Wikidata,2,2,http://www.wikidata.org/prop/direct/P837|wd:P837,47,False
+wd:P8371,"references work, tradition or theory",UNRESOLVED,CREATION_AUTHORSHIP,RANKED_REVIEW_REQUIRED,EventKG|Wikidata,2,2,http://www.wikidata.org/prop/direct/P8371|wd:P8371,7,False
+wd:P84,architect,CREATION_AUTHORSHIP,CREATION_AUTHORSHIP,EXISTING_CATALOG_ASSIGNMENT,EventKG|Wikidata,2,2,http://www.wikidata.org/prop/direct/P84|wd:P84,294,False
+wd:P840,narrative location,SPATIAL,SPATIAL,EXISTING_CATALOG_ASSIGNMENT,EventKG|Wikidata,2,2,http://www.wikidata.org/prop/direct/P840|wd:P840,326,False
+wd:P8402,open data portal,UNRESOLVED,SPATIAL,RANKED_REVIEW_REQUIRED,Wikidata,1,1,wd:P8402,1,False
+wd:P8403,theorized by,UNRESOLVED,SPATIAL,RANKED_REVIEW_REQUIRED,Wikidata,1,1,wd:P8403,3,False
+wd:P841,feast day,UNRESOLVED,SPATIAL,RANKED_REVIEW_REQUIRED,EventKG|Wikidata,2,2,http://www.wikidata.org/prop/direct/P841|wd:P841,11,False
+wd:P8411,set in environment,UNRESOLVED,SPATIAL,RANKED_REVIEW_REQUIRED,EventKG|Wikidata,2,2,http://www.wikidata.org/prop/direct/P8411|wd:P8411,49,False
+wd:P8450,peak bagging classification,UNRESOLVED,SPATIAL,RANKED_REVIEW_REQUIRED,Wikidata,1,1,wd:P8450,1,False
+wd:P8453,public transport stop,UNRESOLVED,SPATIAL,RANKED_REVIEW_REQUIRED,Wikidata,1,1,wd:P8453,2,False
+wd:P85,anthem,UNRESOLVED,AFFILIATION_STATUS,RANKED_REVIEW_REQUIRED,EventKG|Wikidata,2,2,http://www.wikidata.org/prop/direct/P85|wd:P85,79,False
+wd:P8500,Vietnamese middle name,UNRESOLVED,PARTICIPATION_ROLE,RANKED_REVIEW_REQUIRED,Wikidata,1,1,wd:P8500,9,False
+wd:P852,ESRB rating,UNRESOLVED,PARTICIPATION_ROLE,RANKED_REVIEW_REQUIRED,EventKG|Wikidata,2,2,http://www.wikidata.org/prop/direct/P852|wd:P852,2,False
+wd:P859,sponsor,UNRESOLVED,CAUSAL,RANKED_REVIEW_REQUIRED,EventKG|Wikidata,2,2,http://www.wikidata.org/prop/direct/P859|wd:P859,24,False
+wd:P8596,category for the exterior of the item,UNRESOLVED,SPATIAL,RANKED_REVIEW_REQUIRED,Wikidata,1,1,wd:P8596,13,False
+wd:P86,composer,UNRESOLVED,CAUSAL,RANKED_REVIEW_REQUIRED,EventKG|Wikidata,2,2,http://www.wikidata.org/prop/direct/P86|wd:P86,845,False
+wd:P8625,bibliography,UNRESOLVED,CREATION_AUTHORSHIP,RANKED_REVIEW_REQUIRED,EventKG,1,1,http://www.wikidata.org/prop/direct/P8625,1,False
+wd:P8626,opening time,UNRESOLVED,SPATIAL,RANKED_REVIEW_REQUIRED,Wikidata,1,1,wd:P8626,1,False
+wd:P8627,closing time,UNRESOLVED,SPATIAL,RANKED_REVIEW_REQUIRED,Wikidata,1,1,wd:P8627,1,False
+wd:P8646,expansion of,UNRESOLVED,PARTICIPATION_ROLE,RANKED_REVIEW_REQUIRED,EventKG|Wikidata,2,2,http://www.wikidata.org/prop/direct/P8646|wd:P8646,2,False
+wd:P8670,character designer,UNRESOLVED,CREATION_AUTHORSHIP,RANKED_REVIEW_REQUIRED,EventKG|Wikidata,2,2,http://www.wikidata.org/prop/direct/P8670|wd:P8670,2,False
+wd:P87,librettist,UNRESOLVED,CREATION_AUTHORSHIP,RANKED_REVIEW_REQUIRED,EventKG,1,1,http://www.wikidata.org/prop/direct/P87,4,False
+wd:P872,printed by,UNRESOLVED,CREATION_AUTHORSHIP,RANKED_REVIEW_REQUIRED,EventKG|Wikidata,2,2,http://www.wikidata.org/prop/direct/P872|wd:P872,5,False
+wd:P8744,economy of topic,UNRESOLVED,SPATIAL,RANKED_REVIEW_REQUIRED,Wikidata,1,1,wd:P8744,8,False
+wd:P8745,check-in time,UNRESOLVED,SPATIAL,RANKED_REVIEW_REQUIRED,Wikidata,1,1,wd:P8745,2,False
+wd:P8746,check-out time,UNRESOLVED,SPATIAL,RANKED_REVIEW_REQUIRED,Wikidata,1,1,wd:P8746,2,False
+wd:P8764,port calls,UNRESOLVED,SPATIAL,RANKED_REVIEW_REQUIRED,EventKG|Wikidata,2,2,http://www.wikidata.org/prop/direct/P8764|wd:P8764,40,False
+wd:P8786,dedicated heritage entity,UNRESOLVED,SPATIAL,RANKED_REVIEW_REQUIRED,EventKG|Wikidata,2,2,http://www.wikidata.org/prop/direct/P8786|wd:P8786,23,False
+wd:P88,commissioned by,UNRESOLVED,CAUSAL,RANKED_REVIEW_REQUIRED,EventKG|Wikidata,2,2,http://www.wikidata.org/prop/direct/P88|wd:P88,236,False
+wd:P8810,parent,UNRESOLVED,FAMILY_PERSONAL,RANKED_REVIEW_REQUIRED,Wikidata,1,1,wd:P8810,1,False
+wd:P8852,facial hair,UNRESOLVED,SPATIAL,RANKED_REVIEW_REQUIRED,Wikidata,1,1,wd:P8852,29,False
+wd:P8874,Hong Kong film rating,UNRESOLVED,SPATIAL,RANKED_REVIEW_REQUIRED,Wikidata,1,1,wd:P8874,1,False
+wd:P8889,MTRCB rating,UNRESOLVED,SPATIAL,RANKED_REVIEW_REQUIRED,Wikidata,1,1,wd:P8889,1,False
+wd:P8933,category for the view from the item,UNRESOLVED,SPATIAL,RANKED_REVIEW_REQUIRED,Wikidata,1,1,wd:P8933,16,False
+wd:P8956,compatible with,UNRESOLVED,CREATION_AUTHORSHIP,RANKED_REVIEW_REQUIRED,Wikidata,1,1,wd:P8956,2,False
+wd:P8989,category for the view of the item,UNRESOLVED,SPATIAL,RANKED_REVIEW_REQUIRED,Wikidata,1,1,wd:P8989,20,False
+wd:P908,PEGI rating,UNRESOLVED,PARTICIPATION_ROLE,RANKED_REVIEW_REQUIRED,EventKG|Wikidata,2,2,http://www.wikidata.org/prop/direct/P908|wd:P908,3,False
+wd:P912,has facility,UNRESOLVED,CAUSAL,RANKED_REVIEW_REQUIRED,EventKG|Wikidata,2,2,http://www.wikidata.org/prop/direct/P912|wd:P912,75,False
+wd:P914,USK rating,UNRESOLVED,PARTICIPATION_ROLE,RANKED_REVIEW_REQUIRED,Wikidata,1,1,wd:P914,4,False
+wd:P915,filming location,SPATIAL,SPATIAL,EXISTING_CATALOG_ASSIGNMENT,EventKG|Wikidata,2,2,http://www.wikidata.org/prop/direct/P915|wd:P915,168,False
+wd:P9161,thesis committee member,UNRESOLVED,PARTICIPATION_ROLE,RANKED_REVIEW_REQUIRED,EventKG,1,1,http://www.wikidata.org/prop/direct/P9161,6,False
+wd:P9192,sensors,UNRESOLVED,PARTICIPATION_ROLE,RANKED_REVIEW_REQUIRED,Wikidata,1,1,wd:P9192,4,False
+wd:P92,main regulatory text,UNRESOLVED,CREATION_AUTHORSHIP,RANKED_REVIEW_REQUIRED,EventKG|Wikidata,2,2,http://www.wikidata.org/prop/direct/P92|wd:P92,41,False
+wd:P921,main subject,UNRESOLVED,CREATION_AUTHORSHIP,RANKED_REVIEW_REQUIRED,EventKG|Wikidata,2,3,http://dbpedia.org/ontology/nonFictionSubject|http://www.wikidata.org/prop/direct/P921|wd:P921,6969,True
+wd:P9215,set during recurring event,UNRESOLVED,SPATIAL,RANKED_REVIEW_REQUIRED,EventKG|Wikidata,2,2,http://www.wikidata.org/prop/direct/P9215|wd:P9215,10,False
+wd:P9235,seismic classification,UNRESOLVED,SPATIAL,RANKED_REVIEW_REQUIRED,Wikidata,1,1,wd:P9235,1,False
+wd:P9241,demographics of topic,UNRESOLVED,SPATIAL,RANKED_REVIEW_REQUIRED,Wikidata,1,1,wd:P9241,3,False
+wd:P931,place served by transport hub,SPATIAL,SPATIAL,EXISTING_CATALOG_ASSIGNMENT,Wikidata,1,1,wd:P931,319,False
+wd:P937,work location,SPATIAL,SPATIAL,EXISTING_CATALOG_ASSIGNMENT,EventKG|Wikidata,2,2,http://www.wikidata.org/prop/direct/P937|wd:P937,3724,False
+wd:P941,inspired by,UNRESOLVED,SPATIAL,RANKED_REVIEW_REQUIRED,EventKG|Wikidata,2,2,http://www.wikidata.org/prop/direct/P941|wd:P941,40,False
+wd:P9419,personal library at,UNRESOLVED,EDUCATION_EMPLOYMENT,RANKED_REVIEW_REQUIRED,EventKG|Wikidata,2,2,http://www.wikidata.org/prop/direct/P9419|wd:P9419,4,False
+wd:P942,theme music,UNRESOLVED,PARTICIPATION_ROLE,RANKED_REVIEW_REQUIRED,EventKG|Wikidata,2,2,http://www.wikidata.org/prop/direct/P942|wd:P942,5,False
+wd:P945,allegiance,AFFILIATION_STATUS,AFFILIATION_STATUS,EXISTING_CATALOG_ASSIGNMENT,EventKG|Wikidata,2,2,http://www.wikidata.org/prop/direct/P945|wd:P945,30263,False
+wd:P9493,artist files at,UNRESOLVED,AFFILIATION_STATUS,RANKED_REVIEW_REQUIRED,EventKG|Wikidata,2,2,http://www.wikidata.org/prop/direct/P9493|wd:P9493,163,False
+wd:P9549,official podcast,UNRESOLVED,AFFILIATION_STATUS,RANKED_REVIEW_REQUIRED,Wikidata,1,1,wd:P9549,2,False
+wd:P9600,oral history at,UNRESOLVED,EDUCATION_EMPLOYMENT,RANKED_REVIEW_REQUIRED,EventKG|Wikidata,2,2,http://www.wikidata.org/prop/direct/P9600|wd:P9600,31,False
+wd:P967,guest of honor,AWARD_RECOGNITION,AWARD_RECOGNITION,EXISTING_CATALOG_ASSIGNMENT,EventKG,1,1,http://www.wikidata.org/prop/direct/P967,4,False
+wd:P9681,voted on by,UNRESOLVED,SPATIAL,RANKED_REVIEW_REQUIRED,Wikidata,1,1,wd:P9681,2,False
+wd:P97,noble title,UNRESOLVED,PARTICIPATION_ROLE,RANKED_REVIEW_REQUIRED,EventKG|Wikidata,2,2,http://www.wikidata.org/prop/direct/P97|wd:P97,471,False
+wd:P974,tributary,UNRESOLVED,PARTICIPATION_ROLE,RANKED_REVIEW_REQUIRED,EventKG|Wikidata,2,2,http://www.wikidata.org/prop/direct/P974|wd:P974,4,False
+wd:P9745,translation of,UNRESOLVED,SPATIAL,RANKED_REVIEW_REQUIRED,EventKG,1,1,http://www.wikidata.org/prop/direct/P9745,3,False
+wd:P98,editor,UNRESOLVED,AFFILIATION_STATUS,RANKED_REVIEW_REQUIRED,EventKG|Wikidata,2,2,http://www.wikidata.org/prop/direct/P98|wd:P98,73,False
+wd:P9899,music created for,FORMATION_DISSOLUTION,FORMATION_DISSOLUTION,EXISTING_CATALOG_ASSIGNMENT,EventKG,1,1,http://www.wikidata.org/prop/direct/P9899,1,False
+wd:P991,successful candidate,UNRESOLVED,CAUSAL,RANKED_REVIEW_REQUIRED,EventKG,1,1,http://www.wikidata.org/prop/direct/P991,334,False
+wd:P9929,madhhab,UNRESOLVED,SPATIAL,RANKED_REVIEW_REQUIRED,Wikidata,1,1,wd:P9929,1,False

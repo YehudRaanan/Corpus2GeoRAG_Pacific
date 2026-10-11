@@ -9,6 +9,10 @@ The [QID-overlap Level 1 POC](OVERLAP_LEVEL1_POC_2026-10-11.md) tests whether
 repeated cross-source endpoint pairs can inherit a Wikidata parent for those
 unresolved relations. It keeps low-support options as review candidates.
 
+The [common relation map](COMMON_RELATION_MAP_2026-10-11.md) uses repeated QID
+endpoint pairs to add provisional cross-source Level 2 mappings. It preserves
+all source predicates, direction, evidence counts, and unresolved Level 1 values.
+
 The [full Level 1 to Level 2 map](FULL_LEVEL1_LEVEL2_MAP_2026-10-11.md)
 contains every eligible relation in the current three-source inventory. It
 keeps distinct Level 2 meanings separate and ranks Level 1 options for cases

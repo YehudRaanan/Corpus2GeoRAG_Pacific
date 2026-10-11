@@ -1,0 +1,23 @@
+{
+  "input_source_relation_rows": 1520,
+  "input_common_relation_ids": 1106,
+  "accepted_observation_contexts": 15,
+  "observation_supported_source_relations": 14,
+  "observation_actions": {
+    "CONFIRMS_EXISTING_MAPPING": 6,
+    "EXISTING_MAPPING_PRESERVED_FOR_REVIEW": 1,
+    "NEW_PROVISIONAL_COMMON_MAPPING": 7
+  },
+  "new_provisional_source_mappings": 7,
+  "output_source_relation_rows": 1520,
+  "output_common_relation_ids": 1099,
+  "common_relations_by_source_count": {
+    "1": 696,
+    "2": 399,
+    "3": 4
+  },
+  "multi_source_common_relation_ids": 403,
+  "common_ids_reduced_by": 7,
+  "level1_unresolved_source_rows": 1176,
+  "source_data_modified": false
+}
