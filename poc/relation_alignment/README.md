@@ -61,6 +61,10 @@ uses public ontology paths and observed endpoint types to resolve the two
 conflicts and three broader cases. It also defines the direction-aware combined
 Level 2 key for `schema:containedInPlace`.
 
+The [unresolved EventKG examples](unresolved_relation_examples/README.md) give
+up to three local source records for each of the 164 predicates for which the
+public-mapping audit found no declared Wikidata mapping.
+
 ## Purpose
 
 Find rules that translate **relation types** between WarSampo, Wikidata, and

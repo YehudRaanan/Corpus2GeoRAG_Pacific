@@ -1,0 +1,13 @@
+{
+  "selection_rule": "EventKG predicate audit status NO_DECLARED_MAPPING_FOUND",
+  "target_relation_count": 164,
+  "source_occurrence_sum": 3848,
+  "sample_limit_per_relation": 3,
+  "example_row_count": 405,
+  "relations_with_complete_example_coverage": 164,
+  "relations_with_incomplete_example_coverage": 0,
+  "relations_by_eda_status": {
+    "NO_QID_PAIR_OVERLAP": 164
+  },
+  "source_data_modified": false
+}
