@@ -3,78 +3,98 @@
   "pairs": 317,
   "coded_pairs": 101,
   "unrecorded_pairs": 216,
-  "minimum_rule_support": 3,
-  "test": "5-fold object-QID-held-out; exact recorded Wikidata code set",
-  "stages": [
+  "minimum_pairs_per_group": 3,
+  "minimum_object_qids_per_group": 2,
+  "candidate_fields": 120,
+  "start_mixed_pairs": 101,
+  "selected_fields": [
+    "subject_type_Q467011",
+    "object_type_Q23442",
+    "subject_type_Q678146"
+  ],
+  "steps": [
     {
-      "stage": "no context",
-      "fields": [],
-      "groups": 1,
-      "singleton_pairs": 0,
-      "mixed_pairs": 101,
-      "supported_consistent_pairs": 0,
-      "supported_pairs_across_objects": 0,
-      "held_out_rules_applied": 0,
-      "held_out_correct_code_sets": 0
+      "field": "subject_type_Q467011",
+      "added_groups": 1,
+      "groups": 2,
+      "mixed_pairs": 96,
+      "ambiguity_reduction": 5,
+      "consistent_supported_pairs": 5
     },
     {
-      "stage": "object types",
-      "fields": [
-        "object_p31"
-      ],
-      "groups": 38,
-      "singleton_pairs": 27,
-      "mixed_pairs": 62,
-      "supported_consistent_pairs": 4,
-      "supported_pairs_across_objects": 0,
-      "held_out_rules_applied": 0,
-      "held_out_correct_code_sets": 0
+      "field": "object_type_Q23442",
+      "added_groups": 1,
+      "groups": 3,
+      "mixed_pairs": 93,
+      "ambiguity_reduction": 3,
+      "consistent_supported_pairs": 8
     },
     {
-      "stage": "object types + source",
-      "fields": [
-        "object_p31",
-        "source"
-      ],
-      "groups": 48,
-      "singleton_pairs": 35,
-      "mixed_pairs": 56,
-      "supported_consistent_pairs": 0,
-      "supported_pairs_across_objects": 0,
-      "held_out_rules_applied": 0,
-      "held_out_correct_code_sets": 0
-    },
-    {
-      "stage": "object types + source + event types",
-      "fields": [
-        "object_p31",
-        "source",
-        "subject_p31"
-      ],
-      "groups": 82,
-      "singleton_pairs": 72,
-      "mixed_pairs": 15,
-      "supported_consistent_pairs": 6,
-      "supported_pairs_across_objects": 0,
-      "held_out_rules_applied": 0,
-      "held_out_correct_code_sets": 0
-    },
-    {
-      "stage": "plus both IDs (overfit check)",
-      "fields": [
-        "object_p31",
-        "source",
-        "subject_p31",
-        "event_qid",
-        "object_qid"
-      ],
-      "groups": 101,
-      "singleton_pairs": 101,
-      "mixed_pairs": 0,
-      "supported_consistent_pairs": 0,
-      "supported_pairs_across_objects": 0,
-      "held_out_rules_applied": 0,
-      "held_out_correct_code_sets": 0
+      "field": "subject_type_Q678146",
+      "added_groups": 1,
+      "groups": 4,
+      "mixed_pairs": 90,
+      "ambiguity_reduction": 3,
+      "consistent_supported_pairs": 11
     }
-  ]
+  ],
+  "stop_reason": "no unused field creates a supported split and reduces mixed coded pairs",
+  "held_out_by_object": {
+    "rule_applications": 8,
+    "correct_recorded_code_sets": 7,
+    "folds": [
+      {
+        "fold": 1,
+        "test_pairs": 23,
+        "selected_fields": [
+          "subject_type_Q467011",
+          "object_type_Q23442",
+          "subject_type_Q678146"
+        ],
+        "rule_applications": 1,
+        "correct_recorded_code_sets": 1
+      },
+      {
+        "fold": 2,
+        "test_pairs": 20,
+        "selected_fields": [
+          "subject_type_Q467011",
+          "object_type_Q23442",
+          "subject_type_Q678146"
+        ],
+        "rule_applications": 1,
+        "correct_recorded_code_sets": 1
+      },
+      {
+        "fold": 3,
+        "test_pairs": 20,
+        "selected_fields": [
+          "subject_type_Q1261499",
+          "subject_type_Q467011",
+          "subject_type_Q678146"
+        ],
+        "rule_applications": 5,
+        "correct_recorded_code_sets": 4
+      },
+      {
+        "fold": 4,
+        "test_pairs": 19,
+        "selected_fields": [
+          "subject_type_Q467011"
+        ],
+        "rule_applications": 0,
+        "correct_recorded_code_sets": 0
+      },
+      {
+        "fold": 5,
+        "test_pairs": 19,
+        "selected_fields": [
+          "subject_type_Q467011",
+          "object_type_Q23442"
+        ],
+        "rule_applications": 1,
+        "correct_recorded_code_sets": 1
+      }
+    ]
+  }
 }

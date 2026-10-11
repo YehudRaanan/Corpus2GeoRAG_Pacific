@@ -1,63 +1,64 @@
-# Incremental grouping POC for `hasPlace`
+# Adaptive minimal-split POC for `hasPlace`
 
 ## Question
 
-Can adding context fields to one unresolved source predicate produce reusable
-groups with one recorded Wikidata relation-code set? This tests the proposed
-"add fields until distinct" logic, not relation meaning or Pacific graph data.
+Can we start with all pairs for one source relation code and add, at each step,
+the field that creates the **fewest new distinct cases**? Stop when another
+field adds no useful separation. This replaces the previous fixed field order.
+It tests discovery logic, not semantic equivalence or Pacific graph content.
 
-## Input and rule
+## Input and selection rule
 
-Reuse the 317 EventKG `hasPlace` event–entity QID pairs with a YAGO or DBpedia
-English named-graph record from the [context POC](CONTEXT_SPLIT_POC_2026-10-11.md).
-Of these, 101 have at least one same-pair Wikidata `P17`, `P276`, or `P710`
-record. The other 216 are **unrecorded**, not negative examples, and are not
-used to judge code consistency. Keep all recorded codes on a pair as one set.
+Reuse 317 EventKG `hasPlace` event–entity pairs with a YAGO or DBpedia English
+named-graph record. Of these, 101 have at least one same-pair Wikidata `P17`,
+`P276`, or `P710` code. The 216 other pairs have no selected code recorded;
+they are **unknown**, not negative examples. Keep each pair's full code set,
+including multi-code sets.
 
-Group the 101 coded pairs by successively adding the object's direct `P31`
-type set, the non-Wikidata EventKG source-graph set, and the event's direct
-`P31` type set. Do not include the EventKG Wikidata graph as an independent
-source. Require at least three examples with the **same full code set** before
-calling a group a candidate rule. As a diagnostic, add both QIDs at the end:
-identifiers can make every case distinct without yielding a rule.
+Available fields are binary presence indicators for each direct event or
+object `P31` type and each non-Wikidata EventKG source graph. QIDs of the event
+and object are excluded as features. At each step:
 
-For each stage, test candidate rules with five folds that keep every object
-QID entirely in either training or test. A rule applies to a test pair only
-when its exact group key appeared at least three times in training, all with
-the same recorded code set. This is a deliberately strict test of exact
-grouping, not a search over all possible features or generalization methods.
+1. Try every unused field against the current groups of coded pairs.
+2. Keep a field only if it creates at least one new group, **every resulting
+   group has at least three pairs from at least two different object QIDs**,
+   and fewer pairs remain in groups with mixed recorded code sets.
+3. Choose the valid field that adds the **fewest groups**. Break a tie by the
+   larger reduction in mixed pairs, then by field name.
+4. Repeat until no field meets these conditions.
 
-## Result
+This support rule makes "adds value" concrete for the small POC. It excludes
+splits that merely isolate one event or object. It can also stop before a
+different, more complex feature combination becomes useful.
 
-| Fields added | Groups | Single-pair groups | Pairs in mixed groups | Pairs in consistent groups with 3+ examples | Rule applications to held-out objects |
-| --- | ---: | ---: | ---: | ---: | ---: |
-| None | 1 | 0 | 101 | 0 | 0 |
-| Object types | 38 | 27 | 62 | 4 | 0 |
-| + source | 48 | 35 | 56 | 0 | 0 |
-| + event types | 82 | 72 | 15 | 6 | 0 |
-| + event and object QIDs | 101 | 101 | 0 | 0 | 0 |
+## Result on the 101 coded pairs
 
-The four consistent object-type cases all concern Kharkiv (`Q42308`) and
-have `P276`. The six consistent cases in the third context stage all concern
-the Empire of Japan (`Q188712`) and have `P710`. **None of these groups spans
-two different object QIDs.** The five held-out folds therefore apply no
-three-example rule to a new object. Zero applications means predictive
-accuracy is *undefined*, not zero percent.
+| Step | Field selected | New groups | Total groups | Pairs still in mixed groups |
+| --- | --- | ---: | ---: | ---: |
+| Start | None | — | 1 | 101 |
+| 1 | Event is an [invasion (`Q467011`)](https://www.wikidata.org/wiki/Q467011) | 1 | 2 | 96 |
+| 2 | Object is an [island (`Q23442`)](https://www.wikidata.org/wiki/Q23442) | 1 | 3 | 93 |
+| 3 | Event is a [bombardment (`Q678146`)](https://www.wikidata.org/wiki/Q678146) | 1 | 4 | 90 |
 
-## Decision
+No remaining field meets all three conditions. Eleven coded pairs lie in
+consistent, supported groups; **90/101 remain mixed**. The output records the
+field choice and reduction at each step in
+[`incremental_distinct_summary.json`](incremental_distinct_summary.json).
 
-The proposed grouping is useful to find ambiguous cases. It does not yet
-yield a transferable relation-mapping rule. The last row makes all 101 cases
-unique by using IDs, but every group is a singleton. More exact fields can
-hide ambiguity instead of resolving it. Source overlap also does not prove
-that `hasPlace` means `P710`: EventKG defines `hasPlace` as location, and a
-pair can have both place and participant relations. A recorded Wikidata code
-set is an observation, not a semantic truth label.
+## New-object check
 
-The next test should use broader, role-relevant fields (for example, event
-role or a sourced text statement), require support across different objects,
-and keep an unresolved outcome. It must separately verify the original
-`hasPlace` source claim before accepting a location relation.
+Five folds hold out whole object QIDs. **Field selection is repeated inside
+each training fold**. A rule is applied to a test pair only when its training
+group has three or more pairs, two or more object QIDs, and one recorded code
+set. The process applied a rule to **8/101** held-out pairs; **7/8** matched
+their recorded Wikidata code set. It abstained on **93/101**. One of the eight
+applications was wrong. The selected fields differed across folds.
+
+This is a small test of predicting *recorded codes*, not proof that EventKG
+`hasPlace` means `P710`, `P17`, or `P276`. EventKG defines `hasPlace` as an
+event-location link. Same-pair overlap can include a separate participant
+relation. The next method test needs original source statements or cited text
+to verify the role of each relation, and must retain the abstain outcome.
 
 Run `python poc/relation_alignment/run_incremental_distinct_poc.py` to
-reproduce the [machine-readable summary](incremental_distinct_summary.json).
+reproduce the result from the saved local pair file.
