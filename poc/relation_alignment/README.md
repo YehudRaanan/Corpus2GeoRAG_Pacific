@@ -13,6 +13,10 @@ The [common relation map](COMMON_RELATION_MAP_2026-10-11.md) uses repeated QID
 endpoint pairs to add provisional cross-source Level 2 mappings. It preserves
 all source predicates, direction, evidence counts, and unresolved Level 1 values.
 
+The [unresolved relation EDA](UNRESOLVED_RELATION_EDA_2026-10-11.md) separates
+missing overlap, low support, multiple targets, and direction ambiguity. It
+keeps all observed options and stops before text classification.
+
 The [full Level 1 to Level 2 map](FULL_LEVEL1_LEVEL2_MAP_2026-10-11.md)
 contains every eligible relation in the current three-source inventory. It
 keeps distinct Level 2 meanings separate and ranks Level 1 options for cases

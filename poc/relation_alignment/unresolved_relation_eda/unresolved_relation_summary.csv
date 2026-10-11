@@ -1,0 +1,436 @@
+source,source_predicate,source_label,source_occurrence_count,level1_family,level1_candidate,level1_assignment_status,eda_status,overlap_context_count,observed_option_rows,observed_target_count,supported_target_count,supported_level2_options,weak_observed_level2_options,observed_directions,max_shared_pairs
+EventKG,http://dbpedia.org/ontology/academicAdvisor,academic Advisor,46,EDUCATION_EMPLOYMENT,EDUCATION_EMPLOYMENT,EXISTING_CATALOG_ASSIGNMENT,LOW_SUPPORT_ONLY,1,5,5,0,,wd:P1066|wd:P184|wd:P185|wd:P3342|wd:P802,reverse|same,1
+EventKG,http://dbpedia.org/ontology/academicDiscipline,academic Discipline,162,UNRESOLVED,EDUCATION_EMPLOYMENT,RANKED_REVIEW_REQUIRED,NO_QID_PAIR_OVERLAP,0,0,0,0,,,,0
+EventKG,http://dbpedia.org/ontology/administrativeCenter,administrative Center,4,UNRESOLVED,SPATIAL,RANKED_REVIEW_REQUIRED,NO_QID_PAIR_OVERLAP,0,0,0,0,,,,0
+EventKG,http://dbpedia.org/ontology/affiliation,affiliation,46,AFFILIATION_STATUS,AFFILIATION_STATUS,EXISTING_CATALOG_ASSIGNMENT,NO_QID_PAIR_OVERLAP,0,0,0,0,,,,0
+EventKG,http://dbpedia.org/ontology/aircraftAttack,aircraft Attack,143,UNRESOLVED,FAMILY_PERSONAL,RANKED_REVIEW_REQUIRED,NO_QID_PAIR_OVERLAP,0,0,0,0,,,,0
+EventKG,http://dbpedia.org/ontology/aircraftBomber,aircraft Bomber,230,UNRESOLVED,FAMILY_PERSONAL,RANKED_REVIEW_REQUIRED,LOW_SUPPORT_ONLY,1,2,2,0,,wd:P121|wd:P137,reverse|same,4
+EventKG,http://dbpedia.org/ontology/aircraftElectronic,aircraft Electronic,24,UNRESOLVED,AFFILIATION_STATUS,RANKED_REVIEW_REQUIRED,NO_QID_PAIR_OVERLAP,0,0,0,0,,,,0
+EventKG,http://dbpedia.org/ontology/aircraftFighter,aircraft Fighter,330,UNRESOLVED,SPATIAL,RANKED_REVIEW_REQUIRED,SINGLE_TARGET_BELOW_MERGE_GATE,1,2,2,1,wd:P121,wd:P137,reverse|same,5
+EventKG,http://dbpedia.org/ontology/aircraftHelicopter,aircraft Helicopter,31,UNRESOLVED,SPATIAL,RANKED_REVIEW_REQUIRED,NO_QID_PAIR_OVERLAP,0,0,0,0,,,,0
+EventKG,http://dbpedia.org/ontology/aircraftHelicopterAttack,aircraft Helicopter Attack,11,UNRESOLVED,SPATIAL,RANKED_REVIEW_REQUIRED,NO_QID_PAIR_OVERLAP,0,0,0,0,,,,0
+EventKG,http://dbpedia.org/ontology/aircraftHelicopterMultirole,aircraft Helicopter Multirole,8,UNRESOLVED,SPATIAL,RANKED_REVIEW_REQUIRED,NO_QID_PAIR_OVERLAP,0,0,0,0,,,,0
+EventKG,http://dbpedia.org/ontology/aircraftHelicopterUtility,aircraft Helicopter Utility,2,UNRESOLVED,AFFILIATION_STATUS,RANKED_REVIEW_REQUIRED,NO_QID_PAIR_OVERLAP,0,0,0,0,,,,0
+EventKG,http://dbpedia.org/ontology/aircraftInterceptor,aircraft Interceptor,5,UNRESOLVED,SPATIAL,RANKED_REVIEW_REQUIRED,NO_QID_PAIR_OVERLAP,0,0,0,0,,,,0
+EventKG,http://dbpedia.org/ontology/aircraftPatrol,aircraft Patrol,164,UNRESOLVED,FAMILY_PERSONAL,RANKED_REVIEW_REQUIRED,LOW_SUPPORT_ONLY,1,1,1,0,,wd:P121,same,1
+EventKG,http://dbpedia.org/ontology/aircraftRecon,aircraft Recon,78,UNRESOLVED,FAMILY_PERSONAL,RANKED_REVIEW_REQUIRED,LOW_SUPPORT_ONLY,1,1,1,0,,wd:P121,same,1
+EventKG,http://dbpedia.org/ontology/aircraftTrainer,aircraft Trainer,150,UNRESOLVED,SPATIAL,RANKED_REVIEW_REQUIRED,LOW_SUPPORT_ONLY,1,1,1,0,,wd:P121,same,1
+EventKG,http://dbpedia.org/ontology/aircraftTransport,aircraft Transport,134,UNRESOLVED,SPATIAL,RANKED_REVIEW_REQUIRED,NO_QID_PAIR_OVERLAP,0,0,0,0,,,,0
+EventKG,http://dbpedia.org/ontology/album,album,2,UNRESOLVED,FAMILY_PERSONAL,RANKED_REVIEW_REQUIRED,NO_QID_PAIR_OVERLAP,0,0,0,0,,,,0
+EventKG,http://dbpedia.org/ontology/almaMater,alma Mater,508,UNRESOLVED,SPATIAL,RANKED_REVIEW_REQUIRED,SINGLE_TARGET_BELOW_MERGE_GATE,1,1,1,1,wd:P69,,same,14
+EventKG,http://dbpedia.org/ontology/alumni,alumni,3,UNRESOLVED,FAMILY_PERSONAL,RANKED_REVIEW_REQUIRED,NO_QID_PAIR_OVERLAP,0,0,0,0,,,,0
+EventKG,http://dbpedia.org/ontology/anthem,anthem,18,UNRESOLVED,FAMILY_PERSONAL,RANKED_REVIEW_REQUIRED,NO_QID_PAIR_OVERLAP,0,0,0,0,,,,0
+EventKG,http://dbpedia.org/ontology/archipelago,archipelago,1,UNRESOLVED,CREATION_AUTHORSHIP,RANKED_REVIEW_REQUIRED,NO_QID_PAIR_OVERLAP,0,0,0,0,,,,0
+EventKG,http://dbpedia.org/ontology/architect,architect,41,CREATION_AUTHORSHIP,CREATION_AUTHORSHIP,EXISTING_CATALOG_ASSIGNMENT,LOW_SUPPORT_ONLY,1,1,1,0,,wd:P84,same,1
+EventKG,http://dbpedia.org/ontology/architecturalStyle,architectural Style,27,UNRESOLVED,CREATION_AUTHORSHIP,RANKED_REVIEW_REQUIRED,NO_QID_PAIR_OVERLAP,0,0,0,0,,,,0
+EventKG,http://dbpedia.org/ontology/areaOfSearch,area Of Search,1,UNRESOLVED,SPATIAL,RANKED_REVIEW_REQUIRED,NO_QID_PAIR_OVERLAP,0,0,0,0,,,,0
+EventKG,http://dbpedia.org/ontology/artist,artist,25,UNRESOLVED,SPATIAL,RANKED_REVIEW_REQUIRED,NO_QID_PAIR_OVERLAP,0,0,0,0,,,,0
+EventKG,http://dbpedia.org/ontology/assembly,assembly,6,UNRESOLVED,SPATIAL,RANKED_REVIEW_REQUIRED,NO_QID_PAIR_OVERLAP,0,0,0,0,,,,0
+EventKG,http://dbpedia.org/ontology/associate,associate,4,UNRESOLVED,AFFILIATION_STATUS,RANKED_REVIEW_REQUIRED,NO_QID_PAIR_OVERLAP,0,0,0,0,,,,0
+EventKG,http://dbpedia.org/ontology/associatedBand,associated Band,111,UNRESOLVED,SPATIAL,RANKED_REVIEW_REQUIRED,LOW_SUPPORT_ONLY,1,1,1,0,,wd:P463,same,2
+EventKG,http://dbpedia.org/ontology/associatedMusicalArtist,associated Musical Artist,111,UNRESOLVED,SPATIAL,RANKED_REVIEW_REQUIRED,LOW_SUPPORT_ONLY,1,1,1,0,,wd:P463,same,2
+EventKG,http://dbpedia.org/ontology/basedOn,based On,3,UNRESOLVED,SPATIAL,RANKED_REVIEW_REQUIRED,NO_QID_PAIR_OVERLAP,0,0,0,0,,,,0
+EventKG,http://dbpedia.org/ontology/beatifiedBy,beatified By,2,UNRESOLVED,SPATIAL,RANKED_REVIEW_REQUIRED,NO_QID_PAIR_OVERLAP,0,0,0,0,,,,0
+EventKG,http://dbpedia.org/ontology/beatifiedPlace,beatified Place,46,SPATIAL,SPATIAL,EXISTING_CATALOG_ASSIGNMENT,NO_QID_PAIR_OVERLAP,0,0,0,0,,,,0
+EventKG,http://dbpedia.org/ontology/billed,billed,4,UNRESOLVED,SPATIAL,RANKED_REVIEW_REQUIRED,NO_QID_PAIR_OVERLAP,0,0,0,0,,,,0
+EventKG,http://dbpedia.org/ontology/birthPlace,birth Place,19196,SPATIAL,SPATIAL,EXISTING_CATALOG_ASSIGNMENT,MULTIPLE_TARGETS,1,2,2,2,wd:P27|wd:P945,,same,77
+EventKG,http://dbpedia.org/ontology/board,board,13,UNRESOLVED,SPATIAL,RANKED_REVIEW_REQUIRED,NO_QID_PAIR_OVERLAP,0,0,0,0,,,,0
+EventKG,http://dbpedia.org/ontology/bodyDiscovered,body Discovered,1,UNRESOLVED,SPATIAL,RANKED_REVIEW_REQUIRED,NO_QID_PAIR_OVERLAP,0,0,0,0,,,,0
+EventKG,http://dbpedia.org/ontology/bodyStyle,body Style,1,UNRESOLVED,SPATIAL,RANKED_REVIEW_REQUIRED,NO_QID_PAIR_OVERLAP,0,0,0,0,,,,0
+EventKG,http://dbpedia.org/ontology/breeder,breeder,17,UNRESOLVED,FAMILY_PERSONAL,RANKED_REVIEW_REQUIRED,NO_QID_PAIR_OVERLAP,0,0,0,0,,,,0
+EventKG,http://dbpedia.org/ontology/broadcastArea,broadcast Area,10,UNRESOLVED,SPATIAL,RANKED_REVIEW_REQUIRED,NO_QID_PAIR_OVERLAP,0,0,0,0,,,,0
+EventKG,http://dbpedia.org/ontology/broadcastNetwork,broadcast Network,7,UNRESOLVED,SPATIAL,RANKED_REVIEW_REQUIRED,NO_QID_PAIR_OVERLAP,0,0,0,0,,,,0
+EventKG,http://dbpedia.org/ontology/bronzeMedalist,bronze Medalist,11,UNRESOLVED,SPATIAL,RANKED_REVIEW_REQUIRED,NO_QID_PAIR_OVERLAP,0,0,0,0,,,,0
+EventKG,http://dbpedia.org/ontology/builder,builder,5699,UNRESOLVED,FAMILY_PERSONAL,RANKED_REVIEW_REQUIRED,MULTIPLE_TARGETS,2,11,8,4,wd:P1056|wd:P176|wd:P193|wd:P88,wd:P1056|wd:P1071|wd:P127|wd:P137|wd:P84,reverse|same,487
+EventKG,http://dbpedia.org/ontology/campus,campus,3,UNRESOLVED,SPATIAL,RANKED_REVIEW_REQUIRED,NO_QID_PAIR_OVERLAP,0,0,0,0,,,,0
+EventKG,http://dbpedia.org/ontology/canonizedBy,canonized By,4,UNRESOLVED,SPATIAL,RANKED_REVIEW_REQUIRED,NO_QID_PAIR_OVERLAP,0,0,0,0,,,,0
+EventKG,http://dbpedia.org/ontology/canonizedPlace,canonized Place,13,SPATIAL,SPATIAL,EXISTING_CATALOG_ASSIGNMENT,NO_QID_PAIR_OVERLAP,0,0,0,0,,,,0
+EventKG,http://dbpedia.org/ontology/capital,capital,47,SPATIAL,SPATIAL,EXISTING_CATALOG_ASSIGNMENT,NO_QID_PAIR_OVERLAP,0,0,0,0,,,,0
+EventKG,http://dbpedia.org/ontology/ceremonialCounty,ceremonial County,3,UNRESOLVED,SPATIAL,RANKED_REVIEW_REQUIRED,NO_QID_PAIR_OVERLAP,0,0,0,0,,,,0
+EventKG,http://dbpedia.org/ontology/chain,chain,3,UNRESOLVED,FAMILY_PERSONAL,RANKED_REVIEW_REQUIRED,NO_QID_PAIR_OVERLAP,0,0,0,0,,,,0
+EventKG,http://dbpedia.org/ontology/chairman,chairman,3,UNRESOLVED,FAMILY_PERSONAL,RANKED_REVIEW_REQUIRED,NO_QID_PAIR_OVERLAP,0,0,0,0,,,,0
+EventKG,http://dbpedia.org/ontology/chairperson,chairperson,2,UNRESOLVED,FAMILY_PERSONAL,RANKED_REVIEW_REQUIRED,NO_QID_PAIR_OVERLAP,0,0,0,0,,,,0
+EventKG,http://dbpedia.org/ontology/champion,champion,1,UNRESOLVED,FAMILY_PERSONAL,RANKED_REVIEW_REQUIRED,NO_QID_PAIR_OVERLAP,0,0,0,0,,,,0
+EventKG,http://dbpedia.org/ontology/championInDoubleMale,champion In Double Male,2,UNRESOLVED,SPATIAL,RANKED_REVIEW_REQUIRED,NO_QID_PAIR_OVERLAP,0,0,0,0,,,,0
+EventKG,http://dbpedia.org/ontology/championInSingleMale,champion In Single Male,1,UNRESOLVED,SPATIAL,RANKED_REVIEW_REQUIRED,NO_QID_PAIR_OVERLAP,0,0,0,0,,,,0
+EventKG,http://dbpedia.org/ontology/chancellor,chancellor,4,UNRESOLVED,FAMILY_PERSONAL,RANKED_REVIEW_REQUIRED,NO_QID_PAIR_OVERLAP,0,0,0,0,,,,0
+EventKG,http://dbpedia.org/ontology/channel,channel,15,UNRESOLVED,FAMILY_PERSONAL,RANKED_REVIEW_REQUIRED,NO_QID_PAIR_OVERLAP,0,0,0,0,,,,0
+EventKG,http://dbpedia.org/ontology/child,child,243,FAMILY_PERSONAL,FAMILY_PERSONAL,EXISTING_CATALOG_ASSIGNMENT,MULTIPLE_TARGETS,1,2,2,2,wd:P22|wd:P40,,reverse|same,5
+EventKG,http://dbpedia.org/ontology/childOrganisation,child Organisation,35,ORGANIZATION_HIERARCHY,ORGANIZATION_HIERARCHY,EXISTING_CATALOG_ASSIGNMENT,MULTIPLE_TARGETS,1,4,4,2,wd:P355|wd:P749,wd:P279|wd:P361,reverse|same,7
+EventKG,http://dbpedia.org/ontology/cinematography,cinematography,293,UNRESOLVED,SPATIAL,RANKED_REVIEW_REQUIRED,LOW_SUPPORT_ONLY,1,5,5,0,,wd:P1040|wd:P162|wd:P344|wd:P57|wd:P58,same,3
+EventKG,http://dbpedia.org/ontology/citizenship,citizenship,275,AFFILIATION_STATUS,AFFILIATION_STATUS,EXISTING_CATALOG_ASSIGNMENT,LOW_SUPPORT_ONLY,1,2,2,0,,wd:P27|wd:P945,same,2
+EventKG,http://dbpedia.org/ontology/city,city,374,UNRESOLVED,SPATIAL,RANKED_REVIEW_REQUIRED,LOW_SUPPORT_ONLY,1,2,2,0,,wd:P138|wd:P931,same,4
+EventKG,http://dbpedia.org/ontology/class,class,990,UNRESOLVED,SPATIAL,RANKED_REVIEW_REQUIRED,MULTIPLE_TARGETS,1,5,5,2,wd:P289|wd:P31,wd:P137|wd:P138|wd:P279,reverse|same,435
+EventKG,http://dbpedia.org/ontology/club,club,7,UNRESOLVED,SPATIAL,RANKED_REVIEW_REQUIRED,NO_QID_PAIR_OVERLAP,0,0,0,0,,,,0
+EventKG,http://dbpedia.org/ontology/coach,coach,13,UNRESOLVED,SPATIAL,RANKED_REVIEW_REQUIRED,NO_QID_PAIR_OVERLAP,0,0,0,0,,,,0
+EventKG,http://dbpedia.org/ontology/college,college,9,UNRESOLVED,AFFILIATION_STATUS,RANKED_REVIEW_REQUIRED,NO_QID_PAIR_OVERLAP,0,0,0,0,,,,0
+EventKG,http://dbpedia.org/ontology/colour,colour,41,UNRESOLVED,FAMILY_PERSONAL,RANKED_REVIEW_REQUIRED,NO_QID_PAIR_OVERLAP,0,0,0,0,,,,0
+EventKG,http://dbpedia.org/ontology/commandStructure,command Structure,3447,ORGANIZATION_HIERARCHY,ORGANIZATION_HIERARCHY,EXISTING_CATALOG_ASSIGNMENT,MULTIPLE_TARGETS,3,15,10,4,wd:P355|wd:P361|wd:P527|wd:P749,wd:P135|wd:P1365|wd:P1547|wd:P241|wd:P361|wd:P3719|wd:P527|wd:P945,reverse|same,127
+EventKG,http://dbpedia.org/ontology/commander,commander,7223,PARTICIPATION_ROLE,PARTICIPATION_ROLE,EXISTING_CATALOG_ASSIGNMENT,MULTIPLE_TARGETS,2,26,20,9,wd:P1037|wd:P1344|wd:P3342|wd:P4791|wd:P598|wd:P607|wd:P710|wd:P793|wd:P937,wd:P101|wd:P138|wd:P1542|wd:P1789|wd:P241|wd:P2632|wd:P3342|wd:P463|wd:P4791|wd:P488|wd:P533|wd:P598|wd:P710|wd:P7779|wd:P793|wd:P828,reverse|same,320
+EventKG,http://dbpedia.org/ontology/company,company,33,UNRESOLVED,ORGANIZATION_HIERARCHY,RANKED_REVIEW_REQUIRED,NO_QID_PAIR_OVERLAP,0,0,0,0,,,,0
+EventKG,http://dbpedia.org/ontology/composer,composer,40,UNRESOLVED,ORGANIZATION_HIERARCHY,RANKED_REVIEW_REQUIRED,NO_QID_PAIR_OVERLAP,0,0,0,0,,,,0
+EventKG,http://dbpedia.org/ontology/computingPlatform,computing Platform,17,UNRESOLVED,SPATIAL,RANKED_REVIEW_REQUIRED,NO_QID_PAIR_OVERLAP,0,0,0,0,,,,0
+EventKG,http://dbpedia.org/ontology/convictionPenalty,conviction Penalty,60,UNRESOLVED,SPATIAL,RANKED_REVIEW_REQUIRED,NO_QID_PAIR_OVERLAP,0,0,0,0,,,,0
+EventKG,http://dbpedia.org/ontology/councilArea,council Area,1,UNRESOLVED,SPATIAL,RANKED_REVIEW_REQUIRED,NO_QID_PAIR_OVERLAP,0,0,0,0,,,,0
+EventKG,http://dbpedia.org/ontology/country,country,8561,SPATIAL,SPATIAL,EXISTING_CATALOG_ASSIGNMENT,MULTIPLE_TARGETS,3,22,16,6,wd:P17|wd:P27|wd:P495|wd:P749|wd:P8047|wd:P945,wd:P1001|wd:P127|wd:P137|wd:P1532|wd:P176|wd:P241|wd:P276|wd:P361|wd:P495|wd:P710|wd:P840|wd:P945,same,1376
+EventKG,http://dbpedia.org/ontology/countryOrigin,country Origin,12,SPATIAL,SPATIAL,EXISTING_CATALOG_ASSIGNMENT,NO_QID_PAIR_OVERLAP,0,0,0,0,,,,0
+EventKG,http://dbpedia.org/ontology/coverArtist,cover Artist,14,UNRESOLVED,SPATIAL,RANKED_REVIEW_REQUIRED,LOW_SUPPORT_ONLY,1,1,1,0,,wd:P736,same,1
+EventKG,http://dbpedia.org/ontology/creator,creator,122,CREATION_AUTHORSHIP,CREATION_AUTHORSHIP,EXISTING_CATALOG_ASSIGNMENT,NO_QID_PAIR_OVERLAP,0,0,0,0,,,,0
+EventKG,http://dbpedia.org/ontology/crewMember,crew Member,2,UNRESOLVED,PARTICIPATION_ROLE,RANKED_REVIEW_REQUIRED,NO_QID_PAIR_OVERLAP,0,0,0,0,,,,0
+EventKG,http://dbpedia.org/ontology/crosses,crosses,5,UNRESOLVED,FAMILY_PERSONAL,RANKED_REVIEW_REQUIRED,NO_QID_PAIR_OVERLAP,0,0,0,0,,,,0
+EventKG,http://dbpedia.org/ontology/curator,curator,2,UNRESOLVED,CREATION_AUTHORSHIP,RANKED_REVIEW_REQUIRED,NO_QID_PAIR_OVERLAP,0,0,0,0,,,,0
+EventKG,http://dbpedia.org/ontology/currency,currency,30,UNRESOLVED,FAMILY_PERSONAL,RANKED_REVIEW_REQUIRED,NO_QID_PAIR_OVERLAP,0,0,0,0,,,,0
+EventKG,http://dbpedia.org/ontology/dean,dean,1,UNRESOLVED,SPATIAL,RANKED_REVIEW_REQUIRED,NO_QID_PAIR_OVERLAP,0,0,0,0,,,,0
+EventKG,http://dbpedia.org/ontology/deathCause,death Cause,122,CAUSAL,CAUSAL,EXISTING_CATALOG_ASSIGNMENT,LOW_SUPPORT_ONLY,1,3,3,0,,wd:P1269|wd:P12912|wd:P8032,reverse,1
+EventKG,http://dbpedia.org/ontology/deathPlace,death Place,6569,SPATIAL,SPATIAL,EXISTING_CATALOG_ASSIGNMENT,MULTIPLE_TARGETS,2,13,13,6,wd:P20|wd:P210|wd:P27|wd:P35|wd:P6|wd:P945,wd:P1532|wd:P1591|wd:P2348|wd:P2632|wd:P3342|wd:P8032|wd:P937,reverse|same,88
+EventKG,http://dbpedia.org/ontology/debutTeam,debut Team,5,UNRESOLVED,PARTICIPATION_ROLE,RANKED_REVIEW_REQUIRED,NO_QID_PAIR_OVERLAP,0,0,0,0,,,,0
+EventKG,http://dbpedia.org/ontology/depiction,depiction,2,UNRESOLVED,SPATIAL,RANKED_REVIEW_REQUIRED,NO_QID_PAIR_OVERLAP,0,0,0,0,,,,0
+EventKG,http://dbpedia.org/ontology/deputy,deputy,3,UNRESOLVED,SPATIAL,RANKED_REVIEW_REQUIRED,NO_QID_PAIR_OVERLAP,0,0,0,0,,,,0
+EventKG,http://dbpedia.org/ontology/designCompany,design Company,4,UNRESOLVED,ORGANIZATION_HIERARCHY,RANKED_REVIEW_REQUIRED,NO_QID_PAIR_OVERLAP,0,0,0,0,,,,0
+EventKG,http://dbpedia.org/ontology/designer,designer,293,UNRESOLVED,CREATION_AUTHORSHIP,RANKED_REVIEW_REQUIRED,SINGLE_TARGET_BELOW_MERGE_GATE,1,3,3,1,wd:P287,wd:P176|wd:P178,same,22
+EventKG,http://dbpedia.org/ontology/destination,destination,7,UNRESOLVED,AFFILIATION_STATUS,RANKED_REVIEW_REQUIRED,NO_QID_PAIR_OVERLAP,0,0,0,0,,,,0
+EventKG,http://dbpedia.org/ontology/developer,developer,10,UNRESOLVED,FAMILY_PERSONAL,RANKED_REVIEW_REQUIRED,NO_QID_PAIR_OVERLAP,0,0,0,0,,,,0
+EventKG,http://dbpedia.org/ontology/diocese,diocese,8,UNRESOLVED,FAMILY_PERSONAL,RANKED_REVIEW_REQUIRED,NO_QID_PAIR_OVERLAP,0,0,0,0,,,,0
+EventKG,http://dbpedia.org/ontology/director,director,664,UNRESOLVED,FAMILY_PERSONAL,RANKED_REVIEW_REQUIRED,SINGLE_TARGET_BELOW_MERGE_GATE,1,7,7,1,wd:P57,wd:P1040|wd:P161|wd:P162|wd:P344|wd:P58|wd:P800,reverse|same,9
+EventKG,http://dbpedia.org/ontology/discipline,discipline,14,UNRESOLVED,SPATIAL,RANKED_REVIEW_REQUIRED,NO_QID_PAIR_OVERLAP,0,0,0,0,,,,0
+EventKG,http://dbpedia.org/ontology/distributor,distributor,321,UNRESOLVED,SPATIAL,RANKED_REVIEW_REQUIRED,LOW_SUPPORT_ONLY,1,1,1,0,,wd:P750,same,2
+EventKG,http://dbpedia.org/ontology/district,district,3,UNRESOLVED,SPATIAL,RANKED_REVIEW_REQUIRED,NO_QID_PAIR_OVERLAP,0,0,0,0,,,,0
+EventKG,http://dbpedia.org/ontology/division,division,1,UNRESOLVED,SPATIAL,RANKED_REVIEW_REQUIRED,NO_QID_PAIR_OVERLAP,0,0,0,0,,,,0
+EventKG,http://dbpedia.org/ontology/doctoralAdvisor,doctoral Advisor,38,UNRESOLVED,EDUCATION_EMPLOYMENT,RANKED_REVIEW_REQUIRED,LOW_SUPPORT_ONLY,1,2,2,0,,wd:P184|wd:P185,reverse|same,1
+EventKG,http://dbpedia.org/ontology/doctoralStudent,doctoral Student,195,EDUCATION_EMPLOYMENT,EDUCATION_EMPLOYMENT,EXISTING_CATALOG_ASSIGNMENT,MULTIPLE_TARGETS,1,4,4,2,wd:P184|wd:P185,wd:P1066|wd:P802,reverse|same,12
+EventKG,http://dbpedia.org/ontology/editing,editing,173,UNRESOLVED,SPATIAL,RANKED_REVIEW_REQUIRED,LOW_SUPPORT_ONLY,1,5,5,0,,wd:P1040|wd:P162|wd:P344|wd:P57|wd:P58,same,1
+EventKG,http://dbpedia.org/ontology/editor,editor,17,UNRESOLVED,SPATIAL,RANKED_REVIEW_REQUIRED,NO_QID_PAIR_OVERLAP,0,0,0,0,,,,0
+EventKG,http://dbpedia.org/ontology/education,education,432,UNRESOLVED,SPATIAL,RANKED_REVIEW_REQUIRED,LOW_SUPPORT_ONLY,1,1,1,0,,wd:P69,same,1
+EventKG,http://dbpedia.org/ontology/employer,employer,149,PARTICIPATION_ROLE,PARTICIPATION_ROLE,EXISTING_CATALOG_ASSIGNMENT,SINGLE_TARGET_BELOW_MERGE_GATE,1,3,3,1,wd:P108,wd:P138|wd:P3342,reverse|same,7
+EventKG,http://dbpedia.org/ontology/engine,engine,2,UNRESOLVED,SPATIAL,RANKED_REVIEW_REQUIRED,NO_QID_PAIR_OVERLAP,0,0,0,0,,,,0
+EventKG,http://dbpedia.org/ontology/era,era,3,UNRESOLVED,FAMILY_PERSONAL,RANKED_REVIEW_REQUIRED,NO_QID_PAIR_OVERLAP,0,0,0,0,,,,0
+EventKG,http://dbpedia.org/ontology/ethnicGroup,ethnic Group,5,AFFILIATION_STATUS,AFFILIATION_STATUS,EXISTING_CATALOG_ASSIGNMENT,NO_QID_PAIR_OVERLAP,0,0,0,0,,,,0
+EventKG,http://dbpedia.org/ontology/executiveProducer,executive Producer,31,UNRESOLVED,CREATION_AUTHORSHIP,RANKED_REVIEW_REQUIRED,NO_QID_PAIR_OVERLAP,0,0,0,0,,,,0
+EventKG,http://dbpedia.org/ontology/fastestDriver,fastest Driver,3,UNRESOLVED,FAMILY_PERSONAL,RANKED_REVIEW_REQUIRED,NO_QID_PAIR_OVERLAP,0,0,0,0,,,,0
+EventKG,http://dbpedia.org/ontology/father,father,38,FAMILY_PERSONAL,FAMILY_PERSONAL,EXISTING_CATALOG_ASSIGNMENT,LOW_SUPPORT_ONLY,1,2,2,0,,wd:P22|wd:P40,reverse|same,1
+EventKG,http://dbpedia.org/ontology/federalState,federal State,1,UNRESOLVED,SPATIAL,RANKED_REVIEW_REQUIRED,NO_QID_PAIR_OVERLAP,0,0,0,0,,,,0
+EventKG,http://dbpedia.org/ontology/field,field,21,UNRESOLVED,PARTICIPATION_ROLE,RANKED_REVIEW_REQUIRED,LOW_SUPPORT_ONLY,1,1,1,0,,wd:P463,same,1
+EventKG,http://dbpedia.org/ontology/firstAscentPerson,first Ascent Person,12,UNRESOLVED,SPATIAL,RANKED_REVIEW_REQUIRED,NO_QID_PAIR_OVERLAP,0,0,0,0,,,,0
+EventKG,http://dbpedia.org/ontology/firstDriver,first Driver,5,UNRESOLVED,SPATIAL,RANKED_REVIEW_REQUIRED,NO_QID_PAIR_OVERLAP,0,0,0,0,,,,0
+EventKG,http://dbpedia.org/ontology/firstLeader,first Leader,114,UNRESOLVED,SPATIAL,RANKED_REVIEW_REQUIRED,NO_QID_PAIR_OVERLAP,0,0,0,0,,,,0
+EventKG,http://dbpedia.org/ontology/firstRace,first Race,1,UNRESOLVED,SPATIAL,RANKED_REVIEW_REQUIRED,NO_QID_PAIR_OVERLAP,0,0,0,0,,,,0
+EventKG,http://dbpedia.org/ontology/formerBandMember,former Band Member,3,UNRESOLVED,PARTICIPATION_ROLE,RANKED_REVIEW_REQUIRED,NO_QID_PAIR_OVERLAP,0,0,0,0,,,,0
+EventKG,http://dbpedia.org/ontology/formerCoach,former Coach,1,UNRESOLVED,SPATIAL,RANKED_REVIEW_REQUIRED,NO_QID_PAIR_OVERLAP,0,0,0,0,,,,0
+EventKG,http://dbpedia.org/ontology/formerTeam,former Team,11,UNRESOLVED,PARTICIPATION_ROLE,RANKED_REVIEW_REQUIRED,NO_QID_PAIR_OVERLAP,0,0,0,0,,,,0
+EventKG,http://dbpedia.org/ontology/foundedBy,founded By,109,UNRESOLVED,PARTICIPATION_ROLE,RANKED_REVIEW_REQUIRED,SINGLE_TARGET_BELOW_MERGE_GATE,1,4,4,1,wd:P112,wd:P1037|wd:P108|wd:P138,reverse|same,7
+EventKG,http://dbpedia.org/ontology/founder,founder,12,UNRESOLVED,PARTICIPATION_ROLE,RANKED_REVIEW_REQUIRED,LOW_SUPPORT_ONLY,1,1,1,0,,wd:P112,same,2
+EventKG,http://dbpedia.org/ontology/fourthCommander,fourth Commander,29,PARTICIPATION_ROLE,PARTICIPATION_ROLE,EXISTING_CATALOG_ASSIGNMENT,LOW_SUPPORT_ONLY,1,1,1,0,,wd:P361,same,1
+EventKG,http://dbpedia.org/ontology/frazioni,frazioni,3,UNRESOLVED,FAMILY_PERSONAL,RANKED_REVIEW_REQUIRED,NO_QID_PAIR_OVERLAP,0,0,0,0,,,,0
+EventKG,http://dbpedia.org/ontology/gameArtist,game Artist,1,UNRESOLVED,SPATIAL,RANKED_REVIEW_REQUIRED,NO_QID_PAIR_OVERLAP,0,0,0,0,,,,0
+EventKG,http://dbpedia.org/ontology/garrison,garrison,2779,UNRESOLVED,SPATIAL,RANKED_REVIEW_REQUIRED,MULTIPLE_TARGETS,1,7,7,4,wd:P159|wd:P276|wd:P466|wd:P749,wd:P131|wd:P17|wd:P355,reverse|same,119
+EventKG,http://dbpedia.org/ontology/genre,genre,72,UNRESOLVED,FAMILY_PERSONAL,RANKED_REVIEW_REQUIRED,LOW_SUPPORT_ONLY,1,2,2,0,,wd:P101|wd:P607,same,1
+EventKG,http://dbpedia.org/ontology/goldMedalist,gold Medalist,23,UNRESOLVED,FAMILY_PERSONAL,RANKED_REVIEW_REQUIRED,NO_QID_PAIR_OVERLAP,0,0,0,0,,,,0
+EventKG,http://dbpedia.org/ontology/governingBody,governing Body,2,UNRESOLVED,SPATIAL,RANKED_REVIEW_REQUIRED,NO_QID_PAIR_OVERLAP,0,0,0,0,,,,0
+EventKG,http://dbpedia.org/ontology/governmentType,government Type,54,UNRESOLVED,SPATIAL,RANKED_REVIEW_REQUIRED,LOW_SUPPORT_ONLY,1,3,2,0,,wd:P131|wd:P17,reverse|same,2
+EventKG,http://dbpedia.org/ontology/governor,governor,2,UNRESOLVED,SPATIAL,RANKED_REVIEW_REQUIRED,NO_QID_PAIR_OVERLAP,0,0,0,0,,,,0
+EventKG,http://dbpedia.org/ontology/ground,ground,26,UNRESOLVED,AFFILIATION_STATUS,RANKED_REVIEW_REQUIRED,NO_QID_PAIR_OVERLAP,0,0,0,0,,,,0
+EventKG,http://dbpedia.org/ontology/head,head,3,UNRESOLVED,PARTICIPATION_ROLE,RANKED_REVIEW_REQUIRED,NO_QID_PAIR_OVERLAP,0,0,0,0,,,,0
+EventKG,http://dbpedia.org/ontology/headquarter,headquarter,206,SPATIAL,SPATIAL,EXISTING_CATALOG_ASSIGNMENT,LOW_SUPPORT_ONLY,1,1,1,0,,wd:P17,same,1
+EventKG,http://dbpedia.org/ontology/highschool,highschool,7,UNRESOLVED,FAMILY_PERSONAL,RANKED_REVIEW_REQUIRED,NO_QID_PAIR_OVERLAP,0,0,0,0,,,,0
+EventKG,http://dbpedia.org/ontology/homeport,homeport,234,UNRESOLVED,SPATIAL,RANKED_REVIEW_REQUIRED,NO_QID_PAIR_OVERLAP,0,0,0,0,,,,0
+EventKG,http://dbpedia.org/ontology/hometown,hometown,163,UNRESOLVED,SPATIAL,RANKED_REVIEW_REQUIRED,LOW_SUPPORT_ONLY,1,1,1,0,,wd:P27,same,1
+EventKG,http://dbpedia.org/ontology/honours,honours,622,UNRESOLVED,FAMILY_PERSONAL,RANKED_REVIEW_REQUIRED,SINGLE_TARGET_BELOW_MERGE_GATE,1,1,1,1,wd:P166,,same,27
+EventKG,http://dbpedia.org/ontology/hubAirport,hub Airport,46,UNRESOLVED,SPATIAL,RANKED_REVIEW_REQUIRED,LOW_SUPPORT_ONLY,1,1,1,0,,wd:P113,same,1
+EventKG,http://dbpedia.org/ontology/ideology,ideology,323,UNRESOLVED,FAMILY_PERSONAL,RANKED_REVIEW_REQUIRED,NO_QID_PAIR_OVERLAP,0,0,0,0,,,,0
+EventKG,http://dbpedia.org/ontology/illustrator,illustrator,10,UNRESOLVED,SPATIAL,RANKED_REVIEW_REQUIRED,LOW_SUPPORT_ONLY,1,1,1,0,,wd:P50,same,1
+EventKG,http://dbpedia.org/ontology/incumbent,incumbent,1,UNRESOLVED,FAMILY_PERSONAL,RANKED_REVIEW_REQUIRED,NO_QID_PAIR_OVERLAP,0,0,0,0,,,,0
+EventKG,http://dbpedia.org/ontology/industry,industry,52,UNRESOLVED,SPATIAL,RANKED_REVIEW_REQUIRED,NO_QID_PAIR_OVERLAP,0,0,0,0,,,,0
+EventKG,http://dbpedia.org/ontology/inflow,inflow,1,UNRESOLVED,FAMILY_PERSONAL,RANKED_REVIEW_REQUIRED,NO_QID_PAIR_OVERLAP,0,0,0,0,,,,0
+EventKG,http://dbpedia.org/ontology/influenced,influenced,40,UNRESOLVED,FAMILY_PERSONAL,RANKED_REVIEW_REQUIRED,LOW_SUPPORT_ONLY,1,2,1,0,,wd:P3373,reverse|same,1
+EventKG,http://dbpedia.org/ontology/influencedBy,influenced By,199,UNRESOLVED,TEMPORAL_SUCCESSION,RANKED_REVIEW_REQUIRED,SINGLE_TARGET_BELOW_MERGE_GATE,1,3,3,1,wd:P737,wd:P184|wd:P185,reverse|same,5
+EventKG,http://dbpedia.org/ontology/institution,institution,255,UNRESOLVED,SPATIAL,RANKED_REVIEW_REQUIRED,LOW_SUPPORT_ONLY,1,2,2,0,,wd:P108|wd:P1344,same,2
+EventKG,http://dbpedia.org/ontology/instrument,instrument,10,UNRESOLVED,ORGANIZATION_HIERARCHY,RANKED_REVIEW_REQUIRED,NO_QID_PAIR_OVERLAP,0,0,0,0,,,,0
+EventKG,http://dbpedia.org/ontology/intercommunality,intercommunality,1,UNRESOLVED,AFFILIATION_STATUS,RANKED_REVIEW_REQUIRED,NO_QID_PAIR_OVERLAP,0,0,0,0,,,,0
+EventKG,http://dbpedia.org/ontology/internationalAffiliation,international Affiliation,1,AFFILIATION_STATUS,AFFILIATION_STATUS,EXISTING_CATALOG_ASSIGNMENT,NO_QID_PAIR_OVERLAP,0,0,0,0,,,,0
+EventKG,http://dbpedia.org/ontology/island,island,2,UNRESOLVED,FAMILY_PERSONAL,RANKED_REVIEW_REQUIRED,NO_QID_PAIR_OVERLAP,0,0,0,0,,,,0
+EventKG,http://dbpedia.org/ontology/jurisdiction,jurisdiction,60,UNRESOLVED,SPATIAL,RANKED_REVIEW_REQUIRED,MULTIPLE_TARGETS,1,3,3,2,wd:P1001|wd:P17,wd:P797,same,18
+EventKG,http://dbpedia.org/ontology/keyPerson,key Person,104,UNRESOLVED,AFFILIATION_STATUS,RANKED_REVIEW_REQUIRED,LOW_SUPPORT_ONLY,1,4,4,0,,wd:P108|wd:P112|wd:P138|wd:P463,reverse|same,3
+EventKG,http://dbpedia.org/ontology/knownFor,known For,771,UNRESOLVED,SPATIAL,RANKED_REVIEW_REQUIRED,MULTIPLE_TARGETS,2,29,26,4,wd:P108|wd:P1344|wd:P463|wd:P607,wd:P1037|wd:P112|wd:P119|wd:P1344|wd:P138|wd:P1416|wd:P14574|wd:P157|wd:P1891|wd:P20|wd:P241|wd:P26|wd:P2632|wd:P27|wd:P287|wd:P3342|wd:P463|wd:P488|wd:P50|wd:P710|wd:P7779|wd:P793|wd:P800|wd:P840,reverse|same,14
+EventKG,http://dbpedia.org/ontology/language,language,148,AFFILIATION_STATUS,AFFILIATION_STATUS,EXISTING_CATALOG_ASSIGNMENT,NO_QID_PAIR_OVERLAP,0,0,0,0,,,,0
+EventKG,http://dbpedia.org/ontology/largestCity,largest City,5,UNRESOLVED,SPATIAL,RANKED_REVIEW_REQUIRED,NO_QID_PAIR_OVERLAP,0,0,0,0,,,,0
+EventKG,http://dbpedia.org/ontology/lastRace,last Race,1,UNRESOLVED,SPATIAL,RANKED_REVIEW_REQUIRED,NO_QID_PAIR_OVERLAP,0,0,0,0,,,,0
+EventKG,http://dbpedia.org/ontology/leader,leader,113,UNRESOLVED,FAMILY_PERSONAL,RANKED_REVIEW_REQUIRED,MULTIPLE_TARGETS,1,9,9,2,wd:P112|wd:P488,wd:P102|wd:P1037|wd:P138|wd:P169|wd:P3342|wd:P463|wd:P800,reverse|same,7
+EventKG,http://dbpedia.org/ontology/leaderName,leader Name,1,UNRESOLVED,AFFILIATION_STATUS,RANKED_REVIEW_REQUIRED,NO_QID_PAIR_OVERLAP,0,0,0,0,,,,0
+EventKG,http://dbpedia.org/ontology/leaderParty,leader Party,1,UNRESOLVED,AFFILIATION_STATUS,RANKED_REVIEW_REQUIRED,NO_QID_PAIR_OVERLAP,0,0,0,0,,,,0
+EventKG,http://dbpedia.org/ontology/legislature,legislature,4,UNRESOLVED,SPATIAL,RANKED_REVIEW_REQUIRED,NO_QID_PAIR_OVERLAP,0,0,0,0,,,,0
+EventKG,http://dbpedia.org/ontology/lieutenant,lieutenant,3,UNRESOLVED,SPATIAL,RANKED_REVIEW_REQUIRED,NO_QID_PAIR_OVERLAP,0,0,0,0,,,,0
+EventKG,http://dbpedia.org/ontology/literaryGenre,literary Genre,55,UNRESOLVED,SPATIAL,RANKED_REVIEW_REQUIRED,LOW_SUPPORT_ONLY,1,1,1,0,,wd:P921,same,3
+EventKG,http://dbpedia.org/ontology/locatedInArea,located In Area,17,SPATIAL,SPATIAL,EXISTING_CATALOG_ASSIGNMENT,NO_QID_PAIR_OVERLAP,0,0,0,0,,,,0
+EventKG,http://dbpedia.org/ontology/locationCity,location City,29,SPATIAL,SPATIAL,EXISTING_CATALOG_ASSIGNMENT,NO_QID_PAIR_OVERLAP,0,0,0,0,,,,0
+EventKG,http://dbpedia.org/ontology/locationCountry,location Country,18,SPATIAL,SPATIAL,EXISTING_CATALOG_ASSIGNMENT,NO_QID_PAIR_OVERLAP,0,0,0,0,,,,0
+EventKG,http://dbpedia.org/ontology/logo,logo,2,UNRESOLVED,SPATIAL,RANKED_REVIEW_REQUIRED,NO_QID_PAIR_OVERLAP,0,0,0,0,,,,0
+EventKG,http://dbpedia.org/ontology/maidenFlightRocket,maiden Flight Rocket,6,UNRESOLVED,SPATIAL,RANKED_REVIEW_REQUIRED,NO_QID_PAIR_OVERLAP,0,0,0,0,,,,0
+EventKG,http://dbpedia.org/ontology/mainInterest,main Interest,26,UNRESOLVED,SPATIAL,RANKED_REVIEW_REQUIRED,NO_QID_PAIR_OVERLAP,0,0,0,0,,,,0
+EventKG,http://dbpedia.org/ontology/mainOrgan,main Organ,2,UNRESOLVED,ORGANIZATION_HIERARCHY,RANKED_REVIEW_REQUIRED,NO_QID_PAIR_OVERLAP,0,0,0,0,,,,0
+EventKG,http://dbpedia.org/ontology/majorShrine,major Shrine,9,UNRESOLVED,SPATIAL,RANKED_REVIEW_REQUIRED,LOW_SUPPORT_ONLY,1,1,1,0,,wd:P937,same,1
+EventKG,http://dbpedia.org/ontology/manager,manager,2,UNRESOLVED,FAMILY_PERSONAL,RANKED_REVIEW_REQUIRED,NO_QID_PAIR_OVERLAP,0,0,0,0,,,,0
+EventKG,http://dbpedia.org/ontology/managerClub,manager Club,3,UNRESOLVED,SPATIAL,RANKED_REVIEW_REQUIRED,NO_QID_PAIR_OVERLAP,0,0,0,0,,,,0
+EventKG,http://dbpedia.org/ontology/map,map,10,UNRESOLVED,FAMILY_PERSONAL,RANKED_REVIEW_REQUIRED,NO_QID_PAIR_OVERLAP,0,0,0,0,,,,0
+EventKG,http://dbpedia.org/ontology/march,march,53,UNRESOLVED,FAMILY_PERSONAL,RANKED_REVIEW_REQUIRED,LOW_SUPPORT_ONLY,2,2,2,0,,wd:P607|wd:P921,reverse|same,1
+EventKG,http://dbpedia.org/ontology/material,material,2,UNRESOLVED,SPATIAL,RANKED_REVIEW_REQUIRED,NO_QID_PAIR_OVERLAP,0,0,0,0,,,,0
+EventKG,http://dbpedia.org/ontology/mergedWith,merged With,8,UNRESOLVED,SPATIAL,RANKED_REVIEW_REQUIRED,NO_QID_PAIR_OVERLAP,0,0,0,0,,,,0
+EventKG,http://dbpedia.org/ontology/militaryRank,military Rank,14,PARTICIPATION_ROLE,PARTICIPATION_ROLE,EXISTING_CATALOG_ASSIGNMENT,LOW_SUPPORT_ONLY,1,1,1,0,,wd:P410,same,1
+EventKG,http://dbpedia.org/ontology/militaryUnit,military Unit,6718,PARTICIPATION_ROLE,PARTICIPATION_ROLE,EXISTING_CATALOG_ASSIGNMENT,MULTIPLE_TARGETS,2,18,16,9,wd:P1029|wd:P108|wd:P1416|wd:P241|wd:P463|wd:P4791|wd:P5096|wd:P598|wd:P7779,wd:P1029|wd:P138|wd:P2353|wd:P241|wd:P2632|wd:P488|wd:P607|wd:P7169|wd:P945,reverse|same,42
+EventKG,http://dbpedia.org/ontology/mission,mission,1,UNRESOLVED,SPATIAL,RANKED_REVIEW_REQUIRED,NO_QID_PAIR_OVERLAP,0,0,0,0,,,,0
+EventKG,http://dbpedia.org/ontology/monarch,monarch,35,UNRESOLVED,FAMILY_PERSONAL,RANKED_REVIEW_REQUIRED,NO_QID_PAIR_OVERLAP,0,0,0,0,,,,0
+EventKG,http://dbpedia.org/ontology/mother,mother,6,FAMILY_PERSONAL,FAMILY_PERSONAL,EXISTING_CATALOG_ASSIGNMENT,NO_QID_PAIR_OVERLAP,0,0,0,0,,,,0
+EventKG,http://dbpedia.org/ontology/mouthMountain,mouth Mountain,3,UNRESOLVED,SPATIAL,RANKED_REVIEW_REQUIRED,NO_QID_PAIR_OVERLAP,0,0,0,0,,,,0
+EventKG,http://dbpedia.org/ontology/mouthPlace,mouth Place,3,SPATIAL,SPATIAL,EXISTING_CATALOG_ASSIGNMENT,NO_QID_PAIR_OVERLAP,0,0,0,0,,,,0
+EventKG,http://dbpedia.org/ontology/movement,movement,28,UNRESOLVED,FAMILY_PERSONAL,RANKED_REVIEW_REQUIRED,NO_QID_PAIR_OVERLAP,0,0,0,0,,,,0
+EventKG,http://dbpedia.org/ontology/museum,museum,8,UNRESOLVED,FAMILY_PERSONAL,RANKED_REVIEW_REQUIRED,NO_QID_PAIR_OVERLAP,0,0,0,0,,,,0
+EventKG,http://dbpedia.org/ontology/musicComposer,music Composer,318,UNRESOLVED,PARTICIPATION_ROLE,RANKED_REVIEW_REQUIRED,LOW_SUPPORT_ONLY,1,1,1,0,,wd:P86,same,1
+EventKG,http://dbpedia.org/ontology/musicType,music Type,1,UNRESOLVED,SPATIAL,RANKED_REVIEW_REQUIRED,NO_QID_PAIR_OVERLAP,0,0,0,0,,,,0
+EventKG,http://dbpedia.org/ontology/namedAfter,named After,24,UNRESOLVED,AFFILIATION_STATUS,RANKED_REVIEW_REQUIRED,LOW_SUPPORT_ONLY,1,1,1,0,,wd:P138,same,1
+EventKG,http://dbpedia.org/ontology/narrator,narrator,129,UNRESOLVED,SPATIAL,RANKED_REVIEW_REQUIRED,LOW_SUPPORT_ONLY,1,1,1,0,,wd:P162,same,1
+EventKG,http://dbpedia.org/ontology/nationality,nationality,1208,AFFILIATION_STATUS,AFFILIATION_STATUS,EXISTING_CATALOG_ASSIGNMENT,MULTIPLE_TARGETS,1,3,3,2,wd:P27|wd:P945,wd:P35,reverse|same,10
+EventKG,http://dbpedia.org/ontology/nearestCity,nearest City,40,UNRESOLVED,SPATIAL,RANKED_REVIEW_REQUIRED,NO_QID_PAIR_OVERLAP,0,0,0,0,,,,0
+EventKG,http://dbpedia.org/ontology/network,network,26,UNRESOLVED,SPATIAL,RANKED_REVIEW_REQUIRED,NO_QID_PAIR_OVERLAP,0,0,0,0,,,,0
+EventKG,http://dbpedia.org/ontology/nextEvent,next Event,16,UNRESOLVED,PARTICIPATION_ROLE,RANKED_REVIEW_REQUIRED,NO_QID_PAIR_OVERLAP,0,0,0,0,,,,0
+EventKG,http://dbpedia.org/ontology/notableCommander,notable Commander,3951,PARTICIPATION_ROLE,PARTICIPATION_ROLE,EXISTING_CATALOG_ASSIGNMENT,MULTIPLE_TARGETS,2,14,11,7,wd:P1037|wd:P112|wd:P241|wd:P463|wd:P4791|wd:P598|wd:P7779,wd:P138|wd:P1416|wd:P241|wd:P4791|wd:P488|wd:P945,reverse|same,329
+EventKG,http://dbpedia.org/ontology/notableIdea,notable Idea,2,UNRESOLVED,EDUCATION_EMPLOYMENT,RANKED_REVIEW_REQUIRED,NO_QID_PAIR_OVERLAP,0,0,0,0,,,,0
+EventKG,http://dbpedia.org/ontology/notableStudent,notable Student,22,EDUCATION_EMPLOYMENT,EDUCATION_EMPLOYMENT,EXISTING_CATALOG_ASSIGNMENT,NO_QID_PAIR_OVERLAP,0,0,0,0,,,,0
+EventKG,http://dbpedia.org/ontology/notableWork,notable Work,71,UNRESOLVED,SPATIAL,RANKED_REVIEW_REQUIRED,LOW_SUPPORT_ONLY,1,2,2,0,,wd:P50|wd:P800,reverse|same,1
+EventKG,http://dbpedia.org/ontology/occupation,occupation,1544,PARTICIPATION_ROLE,PARTICIPATION_ROLE,EXISTING_CATALOG_ASSIGNMENT,MULTIPLE_TARGETS,2,14,13,3,wd:P108|wd:P241|wd:P463,wd:P1037|wd:P106|wd:P1416|wd:P2632|wd:P410|wd:P463|wd:P50|wd:P598|wd:P607|wd:P710|wd:P800,reverse|same,19
+EventKG,http://dbpedia.org/ontology/officialLanguage,official Language,6,AFFILIATION_STATUS,AFFILIATION_STATUS,EXISTING_CATALOG_ASSIGNMENT,NO_QID_PAIR_OVERLAP,0,0,0,0,,,,0
+EventKG,http://dbpedia.org/ontology/openingTheme,opening Theme,1,UNRESOLVED,SPATIAL,RANKED_REVIEW_REQUIRED,NO_QID_PAIR_OVERLAP,0,0,0,0,,,,0
+EventKG,http://dbpedia.org/ontology/opponent,opponent,9,UNRESOLVED,ORGANIZATION_HIERARCHY,RANKED_REVIEW_REQUIRED,NO_QID_PAIR_OVERLAP,0,0,0,0,,,,0
+EventKG,http://dbpedia.org/ontology/otherParty,other Party,3,UNRESOLVED,FAMILY_PERSONAL,RANKED_REVIEW_REQUIRED,NO_QID_PAIR_OVERLAP,0,0,0,0,,,,0
+EventKG,http://dbpedia.org/ontology/outflow,outflow,1,UNRESOLVED,FAMILY_PERSONAL,RANKED_REVIEW_REQUIRED,NO_QID_PAIR_OVERLAP,0,0,0,0,,,,0
+EventKG,http://dbpedia.org/ontology/owner,owner,1156,OWNERSHIP_CONTROL,OWNERSHIP_CONTROL,EXISTING_CATALOG_ASSIGNMENT,SINGLE_TARGET_BELOW_MERGE_GATE,2,4,3,1,wd:P137,wd:P127|wd:P1830,reverse|same,11
+EventKG,http://dbpedia.org/ontology/owningCompany,owning Company,10,UNRESOLVED,ORGANIZATION_HIERARCHY,RANKED_REVIEW_REQUIRED,NO_QID_PAIR_OVERLAP,0,0,0,0,,,,0
+EventKG,http://dbpedia.org/ontology/owningOrganisation,owning Organisation,1,UNRESOLVED,ORGANIZATION_HIERARCHY,RANKED_REVIEW_REQUIRED,NO_QID_PAIR_OVERLAP,0,0,0,0,,,,0
+EventKG,http://dbpedia.org/ontology/parent,parent,397,UNRESOLVED,ORGANIZATION_HIERARCHY,RANKED_REVIEW_REQUIRED,MULTIPLE_TARGETS,1,3,3,2,wd:P22|wd:P40,wd:P25,reverse|same,13
+EventKG,http://dbpedia.org/ontology/parentCompany,parent Company,61,ORGANIZATION_HIERARCHY,ORGANIZATION_HIERARCHY,EXISTING_CATALOG_ASSIGNMENT,NO_QID_PAIR_OVERLAP,0,0,0,0,,,,0
+EventKG,http://dbpedia.org/ontology/parentOrganisation,parent Organisation,43,ORGANIZATION_HIERARCHY,ORGANIZATION_HIERARCHY,EXISTING_CATALOG_ASSIGNMENT,LOW_SUPPORT_ONLY,1,4,4,0,,wd:P279|wd:P355|wd:P361|wd:P749,reverse|same,4
+EventKG,http://dbpedia.org/ontology/partner,partner,25,UNRESOLVED,FAMILY_PERSONAL,RANKED_REVIEW_REQUIRED,NO_QID_PAIR_OVERLAP,0,0,0,0,,,,0
+EventKG,http://dbpedia.org/ontology/party,party,865,UNRESOLVED,AFFILIATION_STATUS,RANKED_REVIEW_REQUIRED,SINGLE_TARGET_BELOW_MERGE_GATE,2,4,4,1,wd:P102,wd:P112|wd:P463|wd:P488,reverse|same,11
+EventKG,http://dbpedia.org/ontology/patron,patron,75,UNRESOLVED,ORGANIZATION_HIERARCHY,RANKED_REVIEW_REQUIRED,LOW_SUPPORT_ONLY,1,3,3,0,,wd:P138|wd:P241|wd:P598,reverse|same,2
+EventKG,http://dbpedia.org/ontology/person,person,8,UNRESOLVED,AFFILIATION_STATUS,RANKED_REVIEW_REQUIRED,NO_QID_PAIR_OVERLAP,0,0,0,0,,,,0
+EventKG,http://dbpedia.org/ontology/philosophicalSchool,philosophical School,11,UNRESOLVED,SPATIAL,RANKED_REVIEW_REQUIRED,NO_QID_PAIR_OVERLAP,0,0,0,0,,,,0
+EventKG,http://dbpedia.org/ontology/picture,picture,9,UNRESOLVED,ORGANIZATION_HIERARCHY,RANKED_REVIEW_REQUIRED,NO_QID_PAIR_OVERLAP,0,0,0,0,,,,0
+EventKG,http://dbpedia.org/ontology/placeOfBurial,place Of Burial,7,SPATIAL,SPATIAL,EXISTING_CATALOG_ASSIGNMENT,NO_QID_PAIR_OVERLAP,0,0,0,0,,,,0
+EventKG,http://dbpedia.org/ontology/populationPlace,population Place,4,SPATIAL,SPATIAL,EXISTING_CATALOG_ASSIGNMENT,NO_QID_PAIR_OVERLAP,0,0,0,0,,,,0
+EventKG,http://dbpedia.org/ontology/portrayer,portrayer,5,UNRESOLVED,SPATIAL,RANKED_REVIEW_REQUIRED,NO_QID_PAIR_OVERLAP,0,0,0,0,,,,0
+EventKG,http://dbpedia.org/ontology/position,position,30,UNRESOLVED,SPATIAL,RANKED_REVIEW_REQUIRED,NO_QID_PAIR_OVERLAP,0,0,0,0,,,,0
+EventKG,http://dbpedia.org/ontology/powerType,power Type,112,UNRESOLVED,SPATIAL,RANKED_REVIEW_REQUIRED,LOW_SUPPORT_ONLY,1,1,1,0,,wd:P176,same,1
+EventKG,http://dbpedia.org/ontology/predecessor,predecessor,326,TEMPORAL_SUCCESSION,TEMPORAL_SUCCESSION,EXISTING_CATALOG_ASSIGNMENT,MULTIPLE_TARGETS,1,7,7,2,wd:P144|wd:P279,wd:P155|wd:P156|wd:P22|wd:P40|wd:P4969,reverse|same,37
+EventKG,http://dbpedia.org/ontology/premierePlace,premiere Place,1,SPATIAL,SPATIAL,EXISTING_CATALOG_ASSIGNMENT,NO_QID_PAIR_OVERLAP,0,0,0,0,,,,0
+EventKG,http://dbpedia.org/ontology/presenter,presenter,180,UNRESOLVED,SPATIAL,RANKED_REVIEW_REQUIRED,SINGLE_TARGET_BELOW_MERGE_GATE,1,2,2,1,wd:P17,wd:P1027,same,35
+EventKG,http://dbpedia.org/ontology/president,president,62,UNRESOLVED,SPATIAL,RANKED_REVIEW_REQUIRED,NO_QID_PAIR_OVERLAP,0,0,0,0,,,,0
+EventKG,http://dbpedia.org/ontology/previousEditor,previous Editor,2,UNRESOLVED,FAMILY_PERSONAL,RANKED_REVIEW_REQUIRED,NO_QID_PAIR_OVERLAP,0,0,0,0,,,,0
+EventKG,http://dbpedia.org/ontology/previousEvent,previous Event,9,UNRESOLVED,SPATIAL,RANKED_REVIEW_REQUIRED,NO_QID_PAIR_OVERLAP,0,0,0,0,,,,0
+EventKG,http://dbpedia.org/ontology/primeMinister,prime Minister,27,UNRESOLVED,SPATIAL,RANKED_REVIEW_REQUIRED,NO_QID_PAIR_OVERLAP,0,0,0,0,,,,0
+EventKG,http://dbpedia.org/ontology/principal,principal,1,UNRESOLVED,SPATIAL,RANKED_REVIEW_REQUIRED,NO_QID_PAIR_OVERLAP,0,0,0,0,,,,0
+EventKG,http://dbpedia.org/ontology/producer,producer,530,UNRESOLVED,CREATION_AUTHORSHIP,RANKED_REVIEW_REQUIRED,SINGLE_TARGET_BELOW_MERGE_GATE,1,5,5,1,wd:P162,wd:P1040|wd:P344|wd:P57|wd:P58,same,5
+EventKG,http://dbpedia.org/ontology/product,product,109,UNRESOLVED,CREATION_AUTHORSHIP,RANKED_REVIEW_REQUIRED,LOW_SUPPORT_ONLY,1,2,2,0,,wd:P1056|wd:P176,reverse|same,3
+EventKG,http://dbpedia.org/ontology/productionCompany,production Company,201,UNRESOLVED,ORGANIZATION_HIERARCHY,RANKED_REVIEW_REQUIRED,LOW_SUPPORT_ONLY,1,1,1,0,,wd:P272,same,1
+EventKG,http://dbpedia.org/ontology/profession,profession,83,UNRESOLVED,SPATIAL,RANKED_REVIEW_REQUIRED,NO_QID_PAIR_OVERLAP,0,0,0,0,,,,0
+EventKG,http://dbpedia.org/ontology/province,province,1,UNRESOLVED,SPATIAL,RANKED_REVIEW_REQUIRED,NO_QID_PAIR_OVERLAP,0,0,0,0,,,,0
+EventKG,http://dbpedia.org/ontology/publisher,publisher,60,UNRESOLVED,FAMILY_PERSONAL,RANKED_REVIEW_REQUIRED,LOW_SUPPORT_ONLY,1,2,2,0,,wd:P162|wd:P50,same,1
+EventKG,http://dbpedia.org/ontology/race,race,2,UNRESOLVED,SPATIAL,RANKED_REVIEW_REQUIRED,NO_QID_PAIR_OVERLAP,0,0,0,0,,,,0
+EventKG,http://dbpedia.org/ontology/raceHorse,race Horse,2,UNRESOLVED,SPATIAL,RANKED_REVIEW_REQUIRED,NO_QID_PAIR_OVERLAP,0,0,0,0,,,,0
+EventKG,http://dbpedia.org/ontology/railwayLineUsingTunnel,railway Line Using Tunnel,1,UNRESOLVED,SPATIAL,RANKED_REVIEW_REQUIRED,NO_QID_PAIR_OVERLAP,0,0,0,0,,,,0
+EventKG,http://dbpedia.org/ontology/railwayRollingStock,railway Rolling Stock,1,UNRESOLVED,FAMILY_PERSONAL,RANKED_REVIEW_REQUIRED,NO_QID_PAIR_OVERLAP,0,0,0,0,,,,0
+EventKG,http://dbpedia.org/ontology/rebuilder,rebuilder,1,UNRESOLVED,FAMILY_PERSONAL,RANKED_REVIEW_REQUIRED,NO_QID_PAIR_OVERLAP,0,0,0,0,,,,0
+EventKG,http://dbpedia.org/ontology/recordLabel,record Label,27,UNRESOLVED,SPATIAL,RANKED_REVIEW_REQUIRED,NO_QID_PAIR_OVERLAP,0,0,0,0,,,,0
+EventKG,http://dbpedia.org/ontology/region,region,15,UNRESOLVED,AFFILIATION_STATUS,RANKED_REVIEW_REQUIRED,NO_QID_PAIR_OVERLAP,0,0,0,0,,,,0
+EventKG,http://dbpedia.org/ontology/regionServed,region Served,34,UNRESOLVED,SPATIAL,RANKED_REVIEW_REQUIRED,LOW_SUPPORT_ONLY,1,2,2,0,,wd:P17|wd:P945,same,3
+EventKG,http://dbpedia.org/ontology/regionalLanguage,regional Language,22,AFFILIATION_STATUS,AFFILIATION_STATUS,EXISTING_CATALOG_ASSIGNMENT,NO_QID_PAIR_OVERLAP,0,0,0,0,,,,0
+EventKG,http://dbpedia.org/ontology/related,related,4,UNRESOLVED,FAMILY_PERSONAL,RANKED_REVIEW_REQUIRED,NO_QID_PAIR_OVERLAP,0,0,0,0,,,,0
+EventKG,http://dbpedia.org/ontology/relatedMeanOfTransportation,related Mean Of Transportation,1,UNRESOLVED,SPATIAL,RANKED_REVIEW_REQUIRED,NO_QID_PAIR_OVERLAP,0,0,0,0,,,,0
+EventKG,http://dbpedia.org/ontology/relation,relation,1361,UNRESOLVED,FAMILY_PERSONAL,RANKED_REVIEW_REQUIRED,DIRECTION_AMBIGUITY,1,10,5,3,wd:P22|wd:P3373|wd:P40,wd:P1038|wd:P26,reverse|same,62
+EventKG,http://dbpedia.org/ontology/relative,relative,358,FAMILY_PERSONAL,FAMILY_PERSONAL,EXISTING_CATALOG_ASSIGNMENT,DIRECTION_AMBIGUITY,1,2,1,1,wd:P3373,,reverse|same,8
+EventKG,http://dbpedia.org/ontology/religion,religion,33,AFFILIATION_STATUS,AFFILIATION_STATUS,EXISTING_CATALOG_ASSIGNMENT,NO_QID_PAIR_OVERLAP,0,0,0,0,,,,0
+EventKG,http://dbpedia.org/ontology/residence,residence,70,UNRESOLVED,SPATIAL,RANKED_REVIEW_REQUIRED,LOW_SUPPORT_ONLY,1,4,4,0,,wd:P127|wd:P1830|wd:P27|wd:P466,reverse|same,1
+EventKG,http://dbpedia.org/ontology/retiredRocket,retired Rocket,5,UNRESOLVED,FAMILY_PERSONAL,RANKED_REVIEW_REQUIRED,NO_QID_PAIR_OVERLAP,0,0,0,0,,,,0
+EventKG,http://dbpedia.org/ontology/river,river,1,UNRESOLVED,FAMILY_PERSONAL,RANKED_REVIEW_REQUIRED,NO_QID_PAIR_OVERLAP,0,0,0,0,,,,0
+EventKG,http://dbpedia.org/ontology/routeEnd,route End,29,UNRESOLVED,SPATIAL,RANKED_REVIEW_REQUIRED,NO_QID_PAIR_OVERLAP,0,0,0,0,,,,0
+EventKG,http://dbpedia.org/ontology/routeJunction,route Junction,13,UNRESOLVED,SPATIAL,RANKED_REVIEW_REQUIRED,NO_QID_PAIR_OVERLAP,0,0,0,0,,,,0
+EventKG,http://dbpedia.org/ontology/routeStart,route Start,20,UNRESOLVED,SPATIAL,RANKED_REVIEW_REQUIRED,NO_QID_PAIR_OVERLAP,0,0,0,0,,,,0
+EventKG,http://dbpedia.org/ontology/routeStartLocation,route Start Location,1,SPATIAL,SPATIAL,EXISTING_CATALOG_ASSIGNMENT,NO_QID_PAIR_OVERLAP,0,0,0,0,,,,0
+EventKG,http://dbpedia.org/ontology/school,school,19,UNRESOLVED,FAMILY_PERSONAL,RANKED_REVIEW_REQUIRED,NO_QID_PAIR_OVERLAP,0,0,0,0,,,,0
+EventKG,http://dbpedia.org/ontology/secondCommander,second Commander,101,PARTICIPATION_ROLE,PARTICIPATION_ROLE,EXISTING_CATALOG_ASSIGNMENT,LOW_SUPPORT_ONLY,1,7,7,0,,wd:P241|wd:P3342|wd:P361|wd:P4791|wd:P527|wd:P598|wd:P945,reverse|same,4
+EventKG,http://dbpedia.org/ontology/secondDriver,second Driver,4,UNRESOLVED,PARTICIPATION_ROLE,RANKED_REVIEW_REQUIRED,NO_QID_PAIR_OVERLAP,0,0,0,0,,,,0
+EventKG,http://dbpedia.org/ontology/secondLeader,second Leader,56,UNRESOLVED,PARTICIPATION_ROLE,RANKED_REVIEW_REQUIRED,NO_QID_PAIR_OVERLAP,0,0,0,0,,,,0
+EventKG,http://dbpedia.org/ontology/series,series,4,UNRESOLVED,TEMPORAL_SUCCESSION,RANKED_REVIEW_REQUIRED,LOW_SUPPORT_ONLY,1,1,1,0,,wd:P179,same,1
+EventKG,http://dbpedia.org/ontology/service,service,2,UNRESOLVED,PARTICIPATION_ROLE,RANKED_REVIEW_REQUIRED,NO_QID_PAIR_OVERLAP,0,0,0,0,,,,0
+EventKG,http://dbpedia.org/ontology/servingRailwayLine,serving Railway Line,4,UNRESOLVED,SPATIAL,RANKED_REVIEW_REQUIRED,NO_QID_PAIR_OVERLAP,0,0,0,0,,,,0
+EventKG,http://dbpedia.org/ontology/significantBuilding,significant Building,9,UNRESOLVED,SPATIAL,RANKED_REVIEW_REQUIRED,NO_QID_PAIR_OVERLAP,0,0,0,0,,,,0
+EventKG,http://dbpedia.org/ontology/significantDesign,significant Design,4,UNRESOLVED,SPATIAL,RANKED_REVIEW_REQUIRED,NO_QID_PAIR_OVERLAP,0,0,0,0,,,,0
+EventKG,http://dbpedia.org/ontology/significantProject,significant Project,34,UNRESOLVED,SPATIAL,RANKED_REVIEW_REQUIRED,LOW_SUPPORT_ONLY,1,1,1,0,,wd:P287,reverse,1
+EventKG,http://dbpedia.org/ontology/silverMedalist,silver Medalist,14,UNRESOLVED,FAMILY_PERSONAL,RANKED_REVIEW_REQUIRED,NO_QID_PAIR_OVERLAP,0,0,0,0,,,,0
+EventKG,http://dbpedia.org/ontology/similar,similar,15,UNRESOLVED,SPATIAL,RANKED_REVIEW_REQUIRED,LOW_SUPPORT_ONLY,3,6,4,0,,wd:P155|wd:P156|wd:P1889|wd:P31,reverse|same,1
+EventKG,http://dbpedia.org/ontology/sisterNewspaper,sister Newspaper,2,UNRESOLVED,FAMILY_PERSONAL,RANKED_REVIEW_REQUIRED,NO_QID_PAIR_OVERLAP,0,0,0,0,,,,0
+EventKG,http://dbpedia.org/ontology/sisterStation,sister Station,1,UNRESOLVED,SPATIAL,RANKED_REVIEW_REQUIRED,NO_QID_PAIR_OVERLAP,0,0,0,0,,,,0
+EventKG,http://dbpedia.org/ontology/splitFromParty,split From Party,3,UNRESOLVED,FAMILY_PERSONAL,RANKED_REVIEW_REQUIRED,NO_QID_PAIR_OVERLAP,0,0,0,0,,,,0
+EventKG,http://dbpedia.org/ontology/spokenIn,spoken In,5,UNRESOLVED,SPATIAL,RANKED_REVIEW_REQUIRED,NO_QID_PAIR_OVERLAP,0,0,0,0,,,,0
+EventKG,http://dbpedia.org/ontology/spouse,spouse,61,FAMILY_PERSONAL,FAMILY_PERSONAL,EXISTING_CATALOG_ASSIGNMENT,LOW_SUPPORT_ONLY,1,2,1,0,,wd:P26,reverse|same,1
+EventKG,http://dbpedia.org/ontology/stadium,stadium,2,UNRESOLVED,FAMILY_PERSONAL,RANKED_REVIEW_REQUIRED,NO_QID_PAIR_OVERLAP,0,0,0,0,,,,0
+EventKG,http://dbpedia.org/ontology/starring,starring,2258,UNRESOLVED,SPATIAL,RANKED_REVIEW_REQUIRED,SINGLE_TARGET_BELOW_MERGE_GATE,1,4,4,1,wd:P161,wd:P11108|wd:P180|wd:P58,same,18
+EventKG,http://dbpedia.org/ontology/state,state,5,UNRESOLVED,SPATIAL,RANKED_REVIEW_REQUIRED,NO_QID_PAIR_OVERLAP,0,0,0,0,,,,0
+EventKG,http://dbpedia.org/ontology/stateOfOrigin,state Of Origin,285,UNRESOLVED,SPATIAL,RANKED_REVIEW_REQUIRED,LOW_SUPPORT_ONLY,1,1,1,0,,wd:P27,same,1
+EventKG,http://dbpedia.org/ontology/structuralSystem,structural System,1,UNRESOLVED,ORGANIZATION_HIERARCHY,RANKED_REVIEW_REQUIRED,NO_QID_PAIR_OVERLAP,0,0,0,0,,,,0
+EventKG,http://dbpedia.org/ontology/subdivision,subdivision,95,UNRESOLVED,SPATIAL,RANKED_REVIEW_REQUIRED,NO_QID_PAIR_OVERLAP,0,0,0,0,,,,0
+EventKG,http://dbpedia.org/ontology/subject,subject,44,UNRESOLVED,FAMILY_PERSONAL,RANKED_REVIEW_REQUIRED,NO_QID_PAIR_OVERLAP,0,0,0,0,,,,0
+EventKG,http://dbpedia.org/ontology/subsidiary,subsidiary,18,UNRESOLVED,FAMILY_PERSONAL,RANKED_REVIEW_REQUIRED,NO_QID_PAIR_OVERLAP,0,0,0,0,,,,0
+EventKG,http://dbpedia.org/ontology/successor,successor,348,TEMPORAL_SUCCESSION,TEMPORAL_SUCCESSION,EXISTING_CATALOG_ASSIGNMENT,MULTIPLE_TARGETS,1,7,6,2,wd:P144|wd:P279,wd:P155|wd:P22|wd:P279|wd:P40|wd:P4969,reverse|same,27
+EventKG,http://dbpedia.org/ontology/targetAirport,target Airport,62,UNRESOLVED,SPATIAL,RANKED_REVIEW_REQUIRED,NO_QID_PAIR_OVERLAP,0,0,0,0,,,,0
+EventKG,http://dbpedia.org/ontology/team,team,141,UNRESOLVED,PARTICIPATION_ROLE,RANKED_REVIEW_REQUIRED,NO_QID_PAIR_OVERLAP,0,0,0,0,,,,0
+EventKG,http://dbpedia.org/ontology/tenant,tenant,7,UNRESOLVED,SPATIAL,RANKED_REVIEW_REQUIRED,NO_QID_PAIR_OVERLAP,0,0,0,0,,,,0
+EventKG,http://dbpedia.org/ontology/territory,territory,145,UNRESOLVED,SPATIAL,RANKED_REVIEW_REQUIRED,LOW_SUPPORT_ONLY,2,6,6,0,,wd:P1542|wd:P17|wd:P276|wd:P527|wd:P710|wd:P793,reverse|same,2
+EventKG,http://dbpedia.org/ontology/thirdCommander,third Commander,45,PARTICIPATION_ROLE,PARTICIPATION_ROLE,EXISTING_CATALOG_ASSIGNMENT,LOW_SUPPORT_ONLY,1,6,5,0,,wd:P241|wd:P361|wd:P4791|wd:P527|wd:P598,reverse|same,2
+EventKG,http://dbpedia.org/ontology/thirdDriver,third Driver,4,UNRESOLVED,SPATIAL,RANKED_REVIEW_REQUIRED,NO_QID_PAIR_OVERLAP,0,0,0,0,,,,0
+EventKG,http://dbpedia.org/ontology/timeZone,time Zone,4,UNRESOLVED,SPATIAL,RANKED_REVIEW_REQUIRED,NO_QID_PAIR_OVERLAP,0,0,0,0,,,,0
+EventKG,http://dbpedia.org/ontology/trainer,trainer,4,UNRESOLVED,SPATIAL,RANKED_REVIEW_REQUIRED,NO_QID_PAIR_OVERLAP,0,0,0,0,,,,0
+EventKG,http://dbpedia.org/ontology/training,training,37,UNRESOLVED,SPATIAL,RANKED_REVIEW_REQUIRED,NO_QID_PAIR_OVERLAP,0,0,0,0,,,,0
+EventKG,http://dbpedia.org/ontology/translator,translator,7,UNRESOLVED,CREATION_AUTHORSHIP,RANKED_REVIEW_REQUIRED,NO_QID_PAIR_OVERLAP,0,0,0,0,,,,0
+EventKG,http://dbpedia.org/ontology/university,university,2,UNRESOLVED,SPATIAL,RANKED_REVIEW_REQUIRED,NO_QID_PAIR_OVERLAP,0,0,0,0,,,,0
+EventKG,http://dbpedia.org/ontology/usingCountry,using Country,15,SPATIAL,SPATIAL,EXISTING_CATALOG_ASSIGNMENT,NO_QID_PAIR_OVERLAP,0,0,0,0,,,,0
+EventKG,http://dbpedia.org/ontology/veneratedIn,venerated In,5,UNRESOLVED,SPATIAL,RANKED_REVIEW_REQUIRED,NO_QID_PAIR_OVERLAP,0,0,0,0,,,,0
+EventKG,http://dbpedia.org/ontology/vicePresident,vice President,1,UNRESOLVED,SPATIAL,RANKED_REVIEW_REQUIRED,NO_QID_PAIR_OVERLAP,0,0,0,0,,,,0
+EventKG,http://dbpedia.org/ontology/victim,victim,138,UNRESOLVED,SPATIAL,RANKED_REVIEW_REQUIRED,SINGLE_TARGET_BELOW_MERGE_GATE,1,2,2,1,wd:P2632,wd:P20,reverse,6
+EventKG,http://dbpedia.org/ontology/voice,voice,58,UNRESOLVED,SPATIAL,RANKED_REVIEW_REQUIRED,NO_QID_PAIR_OVERLAP,0,0,0,0,,,,0
+EventKG,http://dbpedia.org/ontology/writer,writer,647,UNRESOLVED,SPATIAL,RANKED_REVIEW_REQUIRED,SINGLE_TARGET_BELOW_MERGE_GATE,1,4,4,1,wd:P58,wd:P1431|wd:P162|wd:P57,same,10
+EventKG,http://dbpedia.org/ontology/youthWing,youth Wing,3,UNRESOLVED,SPATIAL,RANKED_REVIEW_REQUIRED,LOW_SUPPORT_ONLY,2,2,2,0,,wd:P463|wd:P749,reverse,1
+EventKG,http://schema.org/containedInPlace,contained In Place,3122,SPATIAL,SPATIAL,EXISTING_CATALOG_ASSIGNMENT,NO_QID_PAIR_OVERLAP,0,0,0,0,,,,0
+EventKG,http://www.w3.org/2000/01/rdf-schema#seeAlso,see Also,1634,UNRESOLVED,PART_WHOLE_HIERARCHY,RANKED_REVIEW_REQUIRED,MULTIPLE_TARGETS,4,49,27,4,wd:P241|wd:P361|wd:P607|wd:P710,wd:P102|wd:P1037|wd:P112|wd:P1269|wd:P1344|wd:P1365|wd:P1366|wd:P138|wd:P17|wd:P1889|wd:P2348|wd:P276|wd:P279|wd:P289|wd:P361|wd:P4791|wd:P488|wd:P50|wd:P527|wd:P533|wd:P547|wd:P598|wd:P607|wd:P749|wd:P793,reverse|same,35
+EventKG,http://yago-knowledge.org/resource/actedIn,acted In,1684,UNRESOLVED,SPATIAL,RANKED_REVIEW_REQUIRED,SINGLE_TARGET_BELOW_MERGE_GATE,1,1,1,1,wd:P161,,reverse,11
+EventKG,http://yago-knowledge.org/resource/created,created,2053,FORMATION_DISSOLUTION,FORMATION_DISSOLUTION,EXISTING_CATALOG_ASSIGNMENT,MULTIPLE_TARGETS,1,19,19,5,wd:P112|wd:P176|wd:P287|wd:P50|wd:P58,wd:P102|wd:P1037|wd:P108|wd:P137|wd:P138|wd:P1431|wd:P178|wd:P180|wd:P241|wd:P488|wd:P57|wd:P800|wd:P84|wd:P921,reverse|same,90
+EventKG,http://yago-knowledge.org/resource/dealsWith,deals With,24,UNRESOLVED,FORMATION_DISSOLUTION,RANKED_REVIEW_REQUIRED,NO_QID_PAIR_OVERLAP,0,0,0,0,,,,0
+EventKG,http://yago-knowledge.org/resource/diedIn,died In,4550,UNRESOLVED,SPATIAL,RANKED_REVIEW_REQUIRED,MULTIPLE_TARGETS,1,5,5,4,wd:P20|wd:P2632|wd:P27|wd:P945,wd:P19,same,25
+EventKG,http://yago-knowledge.org/resource/directed,directed,553,UNRESOLVED,FORMATION_DISSOLUTION,RANKED_REVIEW_REQUIRED,SINGLE_TARGET_BELOW_MERGE_GATE,1,7,7,1,wd:P57,wd:P1040|wd:P161|wd:P162|wd:P344|wd:P58|wd:P800,reverse|same,6
+EventKG,http://yago-knowledge.org/resource/edited,edited,105,UNRESOLVED,FORMATION_DISSOLUTION,RANKED_REVIEW_REQUIRED,NO_QID_PAIR_OVERLAP,0,0,0,0,,,,0
+EventKG,http://yago-knowledge.org/resource/graduatedFrom,graduated From,355,UNRESOLVED,FORMATION_DISSOLUTION,RANKED_REVIEW_REQUIRED,NO_QID_PAIR_OVERLAP,0,0,0,0,,,,0
+EventKG,http://yago-knowledge.org/resource/hasAcademicAdvisor,has Academic Advisor,107,EDUCATION_EMPLOYMENT,EDUCATION_EMPLOYMENT,EXISTING_CATALOG_ASSIGNMENT,LOW_SUPPORT_ONLY,1,4,4,0,,wd:P1066|wd:P184|wd:P185|wd:P802,reverse|same,4
+EventKG,http://yago-knowledge.org/resource/hasCapital,has Capital,26,SPATIAL,SPATIAL,EXISTING_CATALOG_ASSIGNMENT,NO_QID_PAIR_OVERLAP,0,0,0,0,,,,0
+EventKG,http://yago-knowledge.org/resource/hasChild,has Child,169,FAMILY_PERSONAL,FAMILY_PERSONAL,EXISTING_CATALOG_ASSIGNMENT,LOW_SUPPORT_ONLY,1,2,2,0,,wd:P22|wd:P40,reverse|same,2
+EventKG,http://yago-knowledge.org/resource/hasCurrency,has Currency,18,UNRESOLVED,FAMILY_PERSONAL,RANKED_REVIEW_REQUIRED,NO_QID_PAIR_OVERLAP,0,0,0,0,,,,0
+EventKG,http://yago-knowledge.org/resource/hasOfficialLanguage,has Official Language,29,AFFILIATION_STATUS,AFFILIATION_STATUS,EXISTING_CATALOG_ASSIGNMENT,NO_QID_PAIR_OVERLAP,0,0,0,0,,,,0
+EventKG,http://yago-knowledge.org/resource/influences,influences,644,UNRESOLVED,FORMATION_DISSOLUTION,RANKED_REVIEW_REQUIRED,LOW_SUPPORT_ONLY,1,3,3,0,,wd:P184|wd:P185|wd:P737,reverse|same,4
+EventKG,http://yago-knowledge.org/resource/isAffiliatedTo,is Affiliated To,860,UNRESOLVED,AFFILIATION_STATUS,RANKED_REVIEW_REQUIRED,SINGLE_TARGET_BELOW_MERGE_GATE,1,4,4,1,wd:P102,wd:P112|wd:P463|wd:P488,reverse|same,10
+EventKG,http://yago-knowledge.org/resource/isCitizenOf,is Citizen Of,17627,UNRESOLVED,AFFILIATION_STATUS,RANKED_REVIEW_REQUIRED,MULTIPLE_TARGETS,1,4,4,2,wd:P27|wd:P945,wd:P210|wd:P35,reverse|same,16
+EventKG,http://yago-knowledge.org/resource/isConnectedTo,is Connected To,1036,UNRESOLVED,SPATIAL,RANKED_REVIEW_REQUIRED,NO_QID_PAIR_OVERLAP,0,0,0,0,,,,0
+EventKG,http://yago-knowledge.org/resource/isInterestedIn,is Interested In,21,UNRESOLVED,SPATIAL,RANKED_REVIEW_REQUIRED,NO_QID_PAIR_OVERLAP,0,0,0,0,,,,0
+EventKG,http://yago-knowledge.org/resource/isKnownFor,is Known For,2,UNRESOLVED,SPATIAL,RANKED_REVIEW_REQUIRED,NO_QID_PAIR_OVERLAP,0,0,0,0,,,,0
+EventKG,http://yago-knowledge.org/resource/isLeaderOf,is Leader Of,340,UNRESOLVED,SPATIAL,RANKED_REVIEW_REQUIRED,SINGLE_TARGET_BELOW_MERGE_GATE,2,13,11,1,wd:P598,wd:P102|wd:P112|wd:P138|wd:P1416|wd:P241|wd:P3342|wd:P463|wd:P4791|wd:P488|wd:P945,reverse|same,8
+EventKG,http://yago-knowledge.org/resource/isMarriedTo,is Married To,203,UNRESOLVED,FAMILY_PERSONAL,RANKED_REVIEW_REQUIRED,DIRECTION_AMBIGUITY,1,2,1,1,wd:P26,,reverse|same,5
+EventKG,http://yago-knowledge.org/resource/isPoliticianOf,is Politician Of,536,UNRESOLVED,SPATIAL,RANKED_REVIEW_REQUIRED,MULTIPLE_TARGETS,1,3,3,2,wd:P27|wd:P945,wd:P6,reverse|same,14
+EventKG,http://yago-knowledge.org/resource/livesIn,lives In,165,UNRESOLVED,SPATIAL,RANKED_REVIEW_REQUIRED,LOW_SUPPORT_ONLY,1,1,1,0,,wd:P27,same,1
+EventKG,http://yago-knowledge.org/resource/owns,owns,355,UNRESOLVED,FORMATION_DISSOLUTION,RANKED_REVIEW_REQUIRED,LOW_SUPPORT_ONLY,1,7,7,0,,wd:P127|wd:P137|wd:P17|wd:P1830|wd:P466|wd:P551|wd:P937,reverse|same,4
+EventKG,http://yago-knowledge.org/resource/participatedIn,participated In,4837,UNRESOLVED,SPATIAL,RANKED_REVIEW_REQUIRED,MULTIPLE_TARGETS,4,23,13,4,wd:P17|wd:P276|wd:P607|wd:P710,wd:P12995|wd:P131|wd:P1344|wd:P138|wd:P1542|wd:P17|wd:P276|wd:P4791|wd:P607|wd:P710|wd:P793|wd:P8031|wd:P8047,reverse|same,179
+EventKG,http://yago-knowledge.org/resource/playsFor,plays For,289,UNRESOLVED,FORMATION_DISSOLUTION,RANKED_REVIEW_REQUIRED,NO_QID_PAIR_OVERLAP,0,0,0,0,,,,0
+EventKG,http://yago-knowledge.org/resource/wasBornIn,was Born In,5226,UNRESOLVED,SPATIAL,RANKED_REVIEW_REQUIRED,MULTIPLE_TARGETS,1,4,4,3,wd:P19|wd:P27|wd:P945,wd:P20,same,8
+EventKG,http://yago-knowledge.org/resource/worksAt,works At,259,UNRESOLVED,SPATIAL,RANKED_REVIEW_REQUIRED,LOW_SUPPORT_ONLY,1,1,1,0,,wd:P108,same,1
+EventKG,http://yago-knowledge.org/resource/wroteMusicFor,wrote Music For,285,UNRESOLVED,FORMATION_DISSOLUTION,RANKED_REVIEW_REQUIRED,NO_QID_PAIR_OVERLAP,0,0,0,0,,,,0
+WarSampo,http://ldf.fi/ammo/coo1980/socioeconomic_status,socioeconomic status,419,UNRESOLVED,PARTICIPATION_ROLE,RANKED_REVIEW_REQUIRED,NO_QID_PAIR_OVERLAP,0,0,0,0,,,,0
+WarSampo,http://ldf.fi/schema/ammo/hisclass12,hisclass12,2453,UNRESOLVED,PARTICIPATION_ROLE,RANKED_REVIEW_REQUIRED,NO_QID_PAIR_OVERLAP,0,0,0,0,,,,0
+WarSampo,http://ldf.fi/schema/ammo/hisclass5,hisclass5,2452,UNRESOLVED,PARTICIPATION_ROLE,RANKED_REVIEW_REQUIRED,NO_QID_PAIR_OVERLAP,0,0,0,0,,,,0
+WarSampo,http://ldf.fi/schema/ammo/hisclass7,hisclass7,2452,UNRESOLVED,PARTICIPATION_ROLE,RANKED_REVIEW_REQUIRED,NO_QID_PAIR_OVERLAP,0,0,0,0,,,,0
+WarSampo,http://ldf.fi/schema/ammo/hisco_product,hisco product,32,UNRESOLVED,CREATION_AUTHORSHIP,RANKED_REVIEW_REQUIRED,NO_QID_PAIR_OVERLAP,0,0,0,0,,,,0
+WarSampo,http://ldf.fi/schema/ammo/hisco_relation,hisco relation,208,UNRESOLVED,FAMILY_PERSONAL,RANKED_REVIEW_REQUIRED,NO_QID_PAIR_OVERLAP,0,0,0,0,,,,0
+WarSampo,http://ldf.fi/schema/ammo/hisco_status,hisco status,650,UNRESOLVED,PARTICIPATION_ROLE,RANKED_REVIEW_REQUIRED,NO_QID_PAIR_OVERLAP,0,0,0,0,,,,0
+WarSampo,http://ldf.fi/schema/bioc/has_family_relation,has family relation,2,FAMILY_PERSONAL,FAMILY_PERSONAL,EXISTING_CATALOG_ASSIGNMENT,NO_QID_PAIR_OVERLAP,0,0,0,0,,,,0
+WarSampo,http://ldf.fi/schema/bioc/has_occupation,has occupation,182096,PARTICIPATION_ROLE,PARTICIPATION_ROLE,EXISTING_CATALOG_ASSIGNMENT,NO_QID_PAIR_OVERLAP,0,0,0,0,,,,0
+WarSampo,http://ldf.fi/schema/bioc/inheres_in,inheres in,2,UNRESOLVED,PARTICIPATION_ROLE,RANKED_REVIEW_REQUIRED,NO_QID_PAIR_OVERLAP,0,0,0,0,,,,0
+WarSampo,http://ldf.fi/schema/hipla/topology,Temporal part of relations,625,PART_WHOLE_HIERARCHY,PART_WHOLE_HIERARCHY,EXISTING_CATALOG_ASSIGNMENT,NO_QID_PAIR_OVERLAP,0,0,0,0,,,,0
+WarSampo,http://ldf.fi/schema/hipla/within,within,625,SPATIAL,SPATIAL,EXISTING_CATALOG_ASSIGNMENT,NO_QID_PAIR_OVERLAP,0,0,0,0,,,,0
+WarSampo,http://ldf.fi/schema/ldf/dataVisualization,data Visualization,1,UNRESOLVED,PARTICIPATION_ROLE,RANKED_REVIEW_REQUIRED,NO_QID_PAIR_OVERLAP,0,0,0,0,,,,0
+WarSampo,http://ldf.fi/schema/narc-menehtyneet1939-45/menehtymisluokka,menehtymisluokka,604,UNRESOLVED,PARTICIPATION_ROLE,RANKED_REVIEW_REQUIRED,NO_QID_PAIR_OVERLAP,0,0,0,0,,,,0
+WarSampo,http://ldf.fi/schema/warsa/actors/genicom,genicom,9355,UNRESOLVED,PARTICIPATION_ROLE,RANKED_REVIEW_REQUIRED,NO_QID_PAIR_OVERLAP,0,0,0,0,,,,0
+WarSampo,http://ldf.fi/schema/warsa/actors/genitree,genitree,9355,UNRESOLVED,PARTICIPATION_ROLE,RANKED_REVIEW_REQUIRED,NO_QID_PAIR_OVERLAP,0,0,0,0,,,,0
+WarSampo,http://ldf.fi/schema/warsa/actors/hasRank,Military Rank,105652,PARTICIPATION_ROLE,PARTICIPATION_ROLE,EXISTING_CATALOG_ASSIGNMENT,NO_QID_PAIR_OVERLAP,0,0,0,0,,,,0
+WarSampo,http://ldf.fi/schema/warsa/actors/hasUnitCategory,has Unit Category,4519,PARTICIPATION_ROLE,PARTICIPATION_ROLE,EXISTING_CATALOG_ASSIGNMENT,NO_QID_PAIR_OVERLAP,0,0,0,0,,,,0
+WarSampo,http://ldf.fi/schema/warsa/articles/arms_of_service,arms of service,3357,UNRESOLVED,PARTICIPATION_ROLE,RANKED_REVIEW_REQUIRED,NO_QID_PAIR_OVERLAP,0,0,0,0,,,,0
+WarSampo,http://ldf.fi/schema/warsa/articles/author,author,3358,CREATION_AUTHORSHIP,CREATION_AUTHORSHIP,EXISTING_CATALOG_ASSIGNMENT,NO_QID_PAIR_OVERLAP,0,0,0,0,,,,0
+WarSampo,http://ldf.fi/schema/warsa/articles/event,is related to an event,2826,UNRESOLVED,PARTICIPATION_ROLE,RANKED_REVIEW_REQUIRED,NO_QID_PAIR_OVERLAP,0,0,0,0,,,,0
+WarSampo,http://ldf.fi/schema/warsa/articles/issue,issue,3357,UNRESOLVED,PARTICIPATION_ROLE,RANKED_REVIEW_REQUIRED,NO_QID_PAIR_OVERLAP,0,0,0,0,,,,0
+WarSampo,http://ldf.fi/schema/warsa/articles/mentionsGeneral,is related to general concept (automatic linking),3381,UNRESOLVED,CONFLICT_AFFILIATION,RANKED_REVIEW_REQUIRED,NO_QID_PAIR_OVERLAP,0,0,0,0,,,,0
+WarSampo,http://ldf.fi/schema/warsa/articles/mentionsPerson,is related to person (automatic linking),3963,UNRESOLVED,CONFLICT_AFFILIATION,RANKED_REVIEW_REQUIRED,NO_QID_PAIR_OVERLAP,0,0,0,0,,,,0
+WarSampo,http://ldf.fi/schema/warsa/articles/mentionsPlace,is related to place (automatic linking),593,SPATIAL,SPATIAL,EXISTING_CATALOG_ASSIGNMENT,NO_QID_PAIR_OVERLAP,0,0,0,0,,,,0
+WarSampo,http://ldf.fi/schema/warsa/articles/mentionsUnit,is related to military unit (automatic linking),74,PARTICIPATION_ROLE,PARTICIPATION_ROLE,EXISTING_CATALOG_ASSIGNMENT,NO_QID_PAIR_OVERLAP,0,0,0,0,,,,0
+WarSampo,http://ldf.fi/schema/warsa/articles/mentionsWar,is related to war concept (automatic linking),1193,CONFLICT_AFFILIATION,CONFLICT_AFFILIATION,EXISTING_CATALOG_ASSIGNMENT,NO_QID_PAIR_OVERLAP,0,0,0,0,,,,0
+WarSampo,http://ldf.fi/schema/warsa/articles/place,is related to place,3854,SPATIAL,SPATIAL,EXISTING_CATALOG_ASSIGNMENT,NO_QID_PAIR_OVERLAP,0,0,0,0,,,,0
+WarSampo,http://ldf.fi/schema/warsa/articles/unit,is related to military unit,3357,PARTICIPATION_ROLE,PARTICIPATION_ROLE,EXISTING_CATALOG_ASSIGNMENT,NO_QID_PAIR_OVERLAP,0,0,0,0,,,,0
+WarSampo,http://ldf.fi/schema/warsa/articles/volume,volume,3357,UNRESOLVED,PARTICIPATION_ROLE,RANKED_REVIEW_REQUIRED,NO_QID_PAIR_OVERLAP,0,0,0,0,,,,0
+WarSampo,http://ldf.fi/schema/warsa/buried_in,Buried in,84310,UNRESOLVED,PARTICIPATION_ROLE,RANKED_REVIEW_REQUIRED,NO_QID_PAIR_OVERLAP,0,0,0,0,,,,0
+WarSampo,http://ldf.fi/schema/warsa/casualties/buried_in,buried in,5,UNRESOLVED,PARTICIPATION_ROLE,RANKED_REVIEW_REQUIRED,NO_QID_PAIR_OVERLAP,0,0,0,0,,,,0
+WarSampo,http://ldf.fi/schema/warsa/casualties/current_municipality,current municipality,558,UNRESOLVED,PARTICIPATION_ROLE,RANKED_REVIEW_REQUIRED,NO_QID_PAIR_OVERLAP,0,0,0,0,,,,0
+WarSampo,http://ldf.fi/schema/warsa/casualties/municipality_of_birth,Municipality of birth,81661,UNRESOLVED,SPATIAL,RANKED_REVIEW_REQUIRED,NO_QID_PAIR_OVERLAP,0,0,0,0,,,,0
+WarSampo,http://ldf.fi/schema/warsa/casualties/municipality_of_burial,municipality of burial,94432,SPATIAL,SPATIAL,EXISTING_CATALOG_ASSIGNMENT,NO_QID_PAIR_OVERLAP,0,0,0,0,,,,0
+WarSampo,http://ldf.fi/schema/warsa/casualties/municipality_of_death,municipality of death,41679,UNRESOLVED,SPATIAL,RANKED_REVIEW_REQUIRED,NO_QID_PAIR_OVERLAP,0,0,0,0,,,,0
+WarSampo,http://ldf.fi/schema/warsa/casualties/municipality_of_domicile,municipality of domicile,92633,UNRESOLVED,SPATIAL,RANKED_REVIEW_REQUIRED,NO_QID_PAIR_OVERLAP,0,0,0,0,,,,0
+WarSampo,http://ldf.fi/schema/warsa/casualties/municipality_of_going_mia,municipality of going mia,4117,UNRESOLVED,SPATIAL,RANKED_REVIEW_REQUIRED,NO_QID_PAIR_OVERLAP,0,0,0,0,,,,0
+WarSampo,http://ldf.fi/schema/warsa/casualties/municipality_of_residence,municipality of residence,88176,UNRESOLVED,SPATIAL,RANKED_REVIEW_REQUIRED,NO_QID_PAIR_OVERLAP,0,0,0,0,,,,0
+WarSampo,http://ldf.fi/schema/warsa/casualties/municipality_of_wounding,municipality of wounding,7673,UNRESOLVED,SPATIAL,RANKED_REVIEW_REQUIRED,NO_QID_PAIR_OVERLAP,0,0,0,0,,,,0
+WarSampo,http://ldf.fi/schema/warsa/casualties/perishing_category,perishing category,94677,UNRESOLVED,PARTICIPATION_ROLE,RANKED_REVIEW_REQUIRED,NO_QID_PAIR_OVERLAP,0,0,0,0,,,,0
+WarSampo,http://ldf.fi/schema/warsa/casualties/preferred_municipality,preferred municipality,632,UNRESOLVED,PARTICIPATION_ROLE,RANKED_REVIEW_REQUIRED,NO_QID_PAIR_OVERLAP,0,0,0,0,,,,0
+WarSampo,http://ldf.fi/schema/warsa/casualties/rank,rank,93557,PARTICIPATION_ROLE,PARTICIPATION_ROLE,EXISTING_CATALOG_ASSIGNMENT,NO_QID_PAIR_OVERLAP,0,0,0,0,,,,0
+WarSampo,http://ldf.fi/schema/warsa/casualties/unit,unit,88189,PARTICIPATION_ROLE,PARTICIPATION_ROLE,EXISTING_CATALOG_ASSIGNMENT,NO_QID_PAIR_OVERLAP,0,0,0,0,,,,0
+WarSampo,http://ldf.fi/schema/warsa/casualties/wartime_municipality,wartime municipality,577,UNRESOLVED,SPATIAL,RANKED_REVIEW_REQUIRED,NO_QID_PAIR_OVERLAP,0,0,0,0,,,,0
+WarSampo,http://ldf.fi/schema/warsa/citizenship,Citizenship,94775,AFFILIATION_STATUS,AFFILIATION_STATUS,EXISTING_CATALOG_ASSIGNMENT,NO_QID_PAIR_OVERLAP,0,0,0,0,,,,0
+WarSampo,http://ldf.fi/schema/warsa/events/related_period,Related period,113023,UNRESOLVED,PARTICIPATION_ROLE,RANKED_REVIEW_REQUIRED,NO_QID_PAIR_OVERLAP,0,0,0,0,,,,0
+WarSampo,http://ldf.fi/schema/warsa/municipality_of_birth,Municipality of birth,3915,UNRESOLVED,SPATIAL,RANKED_REVIEW_REQUIRED,NO_QID_PAIR_OVERLAP,0,0,0,0,,,,0
+WarSampo,http://ldf.fi/schema/warsa/municipality_of_death,municipality of death,0,UNRESOLVED,SPATIAL,RANKED_REVIEW_REQUIRED,NO_QID_PAIR_OVERLAP,0,0,0,0,,,,0
+WarSampo,http://ldf.fi/schema/warsa/municipality_of_domicile,municipality of domicile,0,UNRESOLVED,SPATIAL,RANKED_REVIEW_REQUIRED,NO_QID_PAIR_OVERLAP,0,0,0,0,,,,0
+WarSampo,http://ldf.fi/schema/warsa/municipality_of_going_mia,municipality of going mia,0,UNRESOLVED,SPATIAL,RANKED_REVIEW_REQUIRED,NO_QID_PAIR_OVERLAP,0,0,0,0,,,,0
+WarSampo,http://ldf.fi/schema/warsa/municipality_of_residence,municipality of residence,0,UNRESOLVED,SPATIAL,RANKED_REVIEW_REQUIRED,NO_QID_PAIR_OVERLAP,0,0,0,0,,,,0
+WarSampo,http://ldf.fi/schema/warsa/municipality_of_wounding,municipality of wounding,0,UNRESOLVED,SPATIAL,RANKED_REVIEW_REQUIRED,NO_QID_PAIR_OVERLAP,0,0,0,0,,,,0
+WarSampo,http://ldf.fi/schema/warsa/nationality,nationality,94676,AFFILIATION_STATUS,AFFILIATION_STATUS,EXISTING_CATALOG_ASSIGNMENT,NO_QID_PAIR_OVERLAP,0,0,0,0,,,,0
+WarSampo,http://ldf.fi/schema/warsa/person_document,person document,4620,UNRESOLVED,PARTICIPATION_ROLE,RANKED_REVIEW_REQUIRED,NO_QID_PAIR_OVERLAP,0,0,0,0,,,,0
+WarSampo,http://ldf.fi/schema/warsa/prisoners/captivity,Captivity locations,10983,UNRESOLVED,SPATIAL,RANKED_REVIEW_REQUIRED,NO_QID_PAIR_OVERLAP,0,0,0,0,,,,0
+WarSampo,http://ldf.fi/schema/warsa/prisoners/location,location,8845,SPATIAL,SPATIAL,EXISTING_CATALOG_ASSIGNMENT,NO_QID_PAIR_OVERLAP,0,0,0,0,,,,0
+WarSampo,http://ldf.fi/schema/warsa/prisoners/municipality_of_capture,Municipality of capture,3082,UNRESOLVED,SPATIAL,RANKED_REVIEW_REQUIRED,NO_QID_PAIR_OVERLAP,0,0,0,0,,,,0
+WarSampo,http://ldf.fi/schema/warsa/prisoners/municipality_of_death,municipality of death,2192,UNRESOLVED,SPATIAL,RANKED_REVIEW_REQUIRED,NO_QID_PAIR_OVERLAP,0,0,0,0,,,,0
+WarSampo,http://ldf.fi/schema/warsa/prisoners/municipality_of_domicile,municipality of domicile,3908,UNRESOLVED,PARTICIPATION_ROLE,RANKED_REVIEW_REQUIRED,NO_QID_PAIR_OVERLAP,0,0,0,0,,,,0
+WarSampo,http://ldf.fi/schema/warsa/prisoners/municipality_of_residence,municipality of residence,4006,UNRESOLVED,SPATIAL,RANKED_REVIEW_REQUIRED,NO_QID_PAIR_OVERLAP,0,0,0,0,,,,0
+WarSampo,http://ldf.fi/schema/warsa/prisoners/propaganda_magazine_link,propaganda magazine link,188,UNRESOLVED,PARTICIPATION_ROLE,RANKED_REVIEW_REQUIRED,NO_QID_PAIR_OVERLAP,0,0,0,0,,,,0
+WarSampo,http://ldf.fi/schema/warsa/prisoners/rank,rank,4138,PARTICIPATION_ROLE,PARTICIPATION_ROLE,EXISTING_CATALOG_ASSIGNMENT,NO_QID_PAIR_OVERLAP,0,0,0,0,,,,0
+WarSampo,http://ldf.fi/schema/warsa/prisoners/unit,unit,3861,PARTICIPATION_ROLE,PARTICIPATION_ROLE,EXISTING_CATALOG_ASSIGNMENT,NO_QID_PAIR_OVERLAP,0,0,0,0,,,,0
+WarSampo,http://ldf.fi/schema/warsa/prisoners/warsa_unit,warsa unit,0,PARTICIPATION_ROLE,PARTICIPATION_ROLE,EXISTING_CATALOG_ASSIGNMENT,NO_QID_PAIR_OVERLAP,0,0,0,0,,,,0
+WarSampo,http://ldf.fi/schema/warsa/sotilaan_aani_magazine,sotilaan aani magazine,3964,UNRESOLVED,PARTICIPATION_ROLE,RANKED_REVIEW_REQUIRED,NO_QID_PAIR_OVERLAP,0,0,0,0,,,,0
+WarSampo,http://ldf.fi/schema/warsa/unit,unit,0,PARTICIPATION_ROLE,PARTICIPATION_ROLE,EXISTING_CATALOG_ASSIGNMENT,NO_QID_PAIR_OVERLAP,0,0,0,0,,,,0
+WarSampo,http://ldf.fi/warsa/actors/hasUnitCategory,has Unit Category,1,PARTICIPATION_ROLE,PARTICIPATION_ROLE,EXISTING_CATALOG_ASSIGNMENT,NO_QID_PAIR_OVERLAP,0,0,0,0,,,,0
+WarSampo,http://ldf.fi/warsa/actors/hasUpperUnit,has Upper Unit,78,ORGANIZATION_HIERARCHY,ORGANIZATION_HIERARCHY,EXISTING_CATALOG_ASSIGNMENT,LOW_SUPPORT_ONLY,1,2,2,0,,wd:P361|wd:P527,reverse|same,3
+WarSampo,http://purl.org/dc/terms/,,1,UNRESOLVED,PART_WHOLE_HIERARCHY,RANKED_REVIEW_REQUIRED,NO_QID_PAIR_OVERLAP,0,0,0,0,,,,0
+WarSampo,http://purl.org/dc/terms/isPartOf,is Part Of,171,PART_WHOLE_HIERARCHY,PART_WHOLE_HIERARCHY,EXISTING_CATALOG_ASSIGNMENT,NO_QID_PAIR_OVERLAP,0,0,0,0,,,,0
+WarSampo,http://rdf.muninn-project.org/ontologies/organization#equalTo,equal To,106,UNRESOLVED,PARTICIPATION_ROLE,RANKED_REVIEW_REQUIRED,NO_QID_PAIR_OVERLAP,0,0,0,0,,,,0
+WarSampo,http://rdf.muninn-project.org/ontologies/organization#rankSeniorTo,rank Senior To,42,PARTICIPATION_ROLE,PARTICIPATION_ROLE,EXISTING_CATALOG_ASSIGNMENT,NO_QID_PAIR_OVERLAP,0,0,0,0,,,,0
+WarSampo,http://www.cidoc-crm.org/cidoc-crm/P100_was_death_of,was death of,99294,UNRESOLVED,FORMATION_DISSOLUTION,RANKED_REVIEW_REQUIRED,NO_QID_PAIR_OVERLAP,0,0,0,0,,,,0
+WarSampo,http://www.cidoc-crm.org/cidoc-crm/P138_represents,represents,521904,UNRESOLVED,FORMATION_DISSOLUTION,RANKED_REVIEW_REQUIRED,NO_QID_PAIR_OVERLAP,0,0,0,0,,,,0
+WarSampo,http://www.cidoc-crm.org/cidoc-crm/P138i_has_representation,i has representation,496211,UNRESOLVED,FORMATION_DISSOLUTION,RANKED_REVIEW_REQUIRED,NO_QID_PAIR_OVERLAP,0,0,0,0,,,,0
+WarSampo,http://www.cidoc-crm.org/cidoc-crm/P141_assigned,assigned,6086,UNRESOLVED,FORMATION_DISSOLUTION,RANKED_REVIEW_REQUIRED,NO_QID_PAIR_OVERLAP,0,0,0,0,,,,0
+WarSampo,http://www.cidoc-crm.org/cidoc-crm/P143_joined,joined,102681,FORMATION_DISSOLUTION,FORMATION_DISSOLUTION,EXISTING_CATALOG_ASSIGNMENT,NO_QID_PAIR_OVERLAP,0,0,0,0,,,,0
+WarSampo,http://www.cidoc-crm.org/cidoc-crm/P144_joined_with,joined with,103210,FORMATION_DISSOLUTION,FORMATION_DISSOLUTION,EXISTING_CATALOG_ASSIGNMENT,NO_QID_PAIR_OVERLAP,0,0,0,0,,,,0
+WarSampo,http://www.cidoc-crm.org/cidoc-crm/P14_carried_out_by,carried out by,87530,PARTICIPATION_ROLE,PARTICIPATION_ROLE,EXISTING_CATALOG_ASSIGNMENT,NO_QID_PAIR_OVERLAP,0,0,0,0,,,,0
+WarSampo,http://www.cidoc-crm.org/cidoc-crm/P4_has_time-span,has time-span,347347,UNRESOLVED,FORMATION_DISSOLUTION,RANKED_REVIEW_REQUIRED,NO_QID_PAIR_OVERLAP,0,0,0,0,,,,0
+WarSampo,http://www.cidoc-crm.org/cidoc-crm/P67_refers_to,refers to,1,UNRESOLVED,FORMATION_DISSOLUTION,RANKED_REVIEW_REQUIRED,NO_QID_PAIR_OVERLAP,0,0,0,0,,,,0
+WarSampo,http://www.cidoc-crm.org/cidoc-crm/P70_documents,documents,125457,UNRESOLVED,FORMATION_DISSOLUTION,RANKED_REVIEW_REQUIRED,NO_QID_PAIR_OVERLAP,0,0,0,0,,,,0
+WarSampo,http://www.cidoc-crm.org/cidoc-crm/P94_has_created,has created,166214,FORMATION_DISSOLUTION,FORMATION_DISSOLUTION,EXISTING_CATALOG_ASSIGNMENT,NO_QID_PAIR_OVERLAP,0,0,0,0,,,,0
+WarSampo,http://www.cidoc-crm.org/cidoc-crm/P95_has_formed,has formed,17365,FORMATION_DISSOLUTION,FORMATION_DISSOLUTION,EXISTING_CATALOG_ASSIGNMENT,NO_QID_PAIR_OVERLAP,0,0,0,0,,,,0
+WarSampo,http://www.cidoc-crm.org/cidoc-crm/P96_by_mother,by mother,0,FAMILY_PERSONAL,FAMILY_PERSONAL,EXISTING_CATALOG_ASSIGNMENT,NO_QID_PAIR_OVERLAP,0,0,0,0,,,,0
+WarSampo,http://www.cidoc-crm.org/cidoc-crm/P97_from_father,from father,1,FAMILY_PERSONAL,FAMILY_PERSONAL,EXISTING_CATALOG_ASSIGNMENT,NO_QID_PAIR_OVERLAP,0,0,0,0,,,,0
+WarSampo,http://www.cidoc-crm.org/cidoc-crm/P98_brought_into_life,brought into life,99830,FORMATION_DISSOLUTION,FORMATION_DISSOLUTION,EXISTING_CATALOG_ASSIGNMENT,NO_QID_PAIR_OVERLAP,0,0,0,0,,,,0
+WarSampo,http://www.cidoc-crm.org/cidoc-crm/P99_dissolved,dissolved,7711,UNRESOLVED,FORMATION_DISSOLUTION,RANKED_REVIEW_REQUIRED,NO_QID_PAIR_OVERLAP,0,0,0,0,,,,0
+WarSampo,http://www.opengis.net/ont/geosparql#sfWithin,Preferred part of relation,30906,PART_WHOLE_HIERARCHY,PART_WHOLE_HIERARCHY,EXISTING_CATALOG_ASSIGNMENT,NO_QID_PAIR_OVERLAP,0,0,0,0,,,,0
+WarSampo,http://www.w3.org/1999/02/22-rdf-syntax-ns#Property,Property,0,UNRESOLVED,PART_WHOLE_HIERARCHY,RANKED_REVIEW_REQUIRED,NO_QID_PAIR_OVERLAP,0,0,0,0,,,,0
+WarSampo,http://www.w3.org/2000/01/rdf-schema#subClassof,sub Classof,2,UNRESOLVED,PART_WHOLE_HIERARCHY,RANKED_REVIEW_REQUIRED,NO_QID_PAIR_OVERLAP,0,0,0,0,,,,0
+WarSampo,http://www.w3.org/2002/07/owl#AnnotationProperty,Annotation Property,0,UNRESOLVED,PART_WHOLE_HIERARCHY,RANKED_REVIEW_REQUIRED,NO_QID_PAIR_OVERLAP,0,0,0,0,,,,0
+WarSampo,http://www.w3.org/2002/07/owl#DatatypeProperty,Datatype Property,0,UNRESOLVED,PART_WHOLE_HIERARCHY,RANKED_REVIEW_REQUIRED,NO_QID_PAIR_OVERLAP,0,0,0,0,,,,0
+WarSampo,http://www.w3.org/2002/07/owl#ObjectProperty,Object Property,0,UNRESOLVED,PART_WHOLE_HIERARCHY,RANKED_REVIEW_REQUIRED,NO_QID_PAIR_OVERLAP,0,0,0,0,,,,0
+WarSampo,http://www.w3.org/2002/07/owl#disjointWith,disjoint With,1,UNRESOLVED,PART_WHOLE_HIERARCHY,RANKED_REVIEW_REQUIRED,NO_QID_PAIR_OVERLAP,0,0,0,0,,,,0
+WarSampo,http://www.w3.org/2002/07/owl#inverseOf,inverse Of,1,UNRESOLVED,PART_WHOLE_HIERARCHY,RANKED_REVIEW_REQUIRED,NO_QID_PAIR_OVERLAP,0,0,0,0,,,,0
+WarSampo,http://www.w3.org/2002/07/owl#same,same,1,UNRESOLVED,PART_WHOLE_HIERARCHY,RANKED_REVIEW_REQUIRED,NO_QID_PAIR_OVERLAP,0,0,0,0,,,,0
+WarSampo,http://www.w3.org/2004/02/skos/core#broadMatch,broad Match,3,UNRESOLVED,PART_WHOLE_HIERARCHY,RANKED_REVIEW_REQUIRED,NO_QID_PAIR_OVERLAP,0,0,0,0,,,,0
+WarSampo,http://www.w3.org/2004/02/skos/core#broader,broader,1783,PART_WHOLE_HIERARCHY,PART_WHOLE_HIERARCHY,EXISTING_CATALOG_ASSIGNMENT,NO_QID_PAIR_OVERLAP,0,0,0,0,,,,0
+WarSampo,http://www.w3.org/2004/02/skos/core#hasTopConcept,has top concept,3221,UNRESOLVED,PART_WHOLE_HIERARCHY,RANKED_REVIEW_REQUIRED,NO_QID_PAIR_OVERLAP,0,0,0,0,,,,0
+WarSampo,http://www.w3.org/2004/02/skos/core#member,member,607,UNRESOLVED,PART_WHOLE_HIERARCHY,RANKED_REVIEW_REQUIRED,NO_QID_PAIR_OVERLAP,0,0,0,0,,,,0
+WarSampo,http://www.w3.org/2004/02/skos/core#narrowMatch,narrow Match,3,UNRESOLVED,PART_WHOLE_HIERARCHY,RANKED_REVIEW_REQUIRED,NO_QID_PAIR_OVERLAP,0,0,0,0,,,,0
+WarSampo,http://www.w3.org/2004/02/skos/core#narrower,narrower,441,PART_WHOLE_HIERARCHY,PART_WHOLE_HIERARCHY,EXISTING_CATALOG_ASSIGNMENT,NO_QID_PAIR_OVERLAP,0,0,0,0,,,,0
+WarSampo,http://www.w3.org/2004/02/skos/core#related,related,584,UNRESOLVED,PART_WHOLE_HIERARCHY,RANKED_REVIEW_REQUIRED,NO_QID_PAIR_OVERLAP,0,0,0,0,,,,0
+WarSampo,http://www.w3.org/2004/02/skos/core#relatedMatch,related Match,2880,UNRESOLVED,PART_WHOLE_HIERARCHY,RANKED_REVIEW_REQUIRED,NO_QID_PAIR_OVERLAP,0,0,0,0,,,,0
+WarSampo,http://www.w3.org/2004/02/skos/core#topConceptOf,top Concept Of,41,UNRESOLVED,PART_WHOLE_HIERARCHY,RANKED_REVIEW_REQUIRED,NO_QID_PAIR_OVERLAP,0,0,0,0,,,,0

@@ -1,0 +1,39 @@
+{
+  "unresolved_source_relation_rows": 435,
+  "unresolved_by_source": {
+    "EventKG": 328,
+    "WarSampo": 107
+  },
+  "eda_status_counts": {
+    "DIRECTION_AMBIGUITY": 3,
+    "LOW_SUPPORT_ONLY": 62,
+    "MULTIPLE_TARGETS": 28,
+    "NO_QID_PAIR_OVERLAP": 323,
+    "SINGLE_TARGET_BELOW_MERGE_GATE": 19
+  },
+  "eda_status_source_occurrence_sums": {
+    "DIRECTION_AMBIGUITY": 1922,
+    "LOW_SUPPORT_ONLY": 7870,
+    "MULTIPLE_TARGETS": 106836,
+    "NO_QID_PAIR_OVERLAP": 3714068,
+    "SINGLE_TARGET_BELOW_MERGE_GATE": 12085
+  },
+  "status_by_source": {
+    "EventKG|DIRECTION_AMBIGUITY": 3,
+    "EventKG|LOW_SUPPORT_ONLY": 61,
+    "EventKG|MULTIPLE_TARGETS": 28,
+    "EventKG|NO_QID_PAIR_OVERLAP": 217,
+    "EventKG|SINGLE_TARGET_BELOW_MERGE_GATE": 19,
+    "WarSampo|LOW_SUPPORT_ONLY": 1,
+    "WarSampo|NO_QID_PAIR_OVERLAP": 106
+  },
+  "observed_candidate_option_rows": 551,
+  "option_tier_counts": {
+    "SINGLE_PAIR_ONLY": 274,
+    "SUPPORTED_REVIEW_OPTION": 137,
+    "WEAK_REPEATED_OPTION": 140
+  },
+  "relations_with_supported_options": 50,
+  "classifier_run": false,
+  "source_data_modified": false
+}
