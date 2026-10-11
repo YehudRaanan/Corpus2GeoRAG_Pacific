@@ -1,4 +1,8 @@
-from build_classifier_candidate_eda import candidate_support, type_closure
+from build_classifier_candidate_eda import (
+    candidate_support,
+    non_text_evidence,
+    type_closure,
+)
 
 
 def test_type_closure_obeys_depth() -> None:
@@ -32,3 +36,38 @@ def test_candidate_support_uses_narrowest_matching_tier() -> None:
     )
     assert tier == "DIRECT_P31"
     assert support == {"P945": 1}
+
+
+def evidence_row(**updates: str) -> dict[str, str]:
+    row = {
+        "full_article_evidence_text": "",
+        "page_anchored_evidence_text": "",
+        "lead_evidence_status": "",
+        "infobox_matching_fields": "",
+        "full_article_object_link_anchors": "",
+        "qualifier_relation_paths": "",
+    }
+    row.update(updates)
+    return row
+
+
+def test_infobox_candidates_use_empirical_support_and_allowed_list() -> None:
+    result = non_text_evidence(
+        evidence_row(infobox_matching_fields="country"),
+        ["P17", "P8047"],
+        {"country": {"P17": 4, "P8047": 9, "P495": 20}},
+    )
+    assert result["non_text_candidate_ids"] == "P8047|P17"
+    assert result["non_text_review_status"] == "INFOBOX_EMPIRICAL_CANDIDATES_READY"
+
+
+def test_qualifier_context_keeps_main_and_qualifier_properties() -> None:
+    result = non_text_evidence(
+        evidence_row(qualifier_relation_paths="P17/P2348"),
+        ["P17", "P945"],
+        {},
+    )
+    assert result["non_text_candidate_ids"] == ""
+    assert result["qualifier_main_properties"] == "P17"
+    assert result["qualifier_properties"] == "P2348"
+    assert result["non_text_review_status"] == "QUALIFIER_CONTEXT_READY"

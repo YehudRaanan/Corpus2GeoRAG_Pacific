@@ -1,6 +1,7 @@
 from run_country_data_availability_audit import (
     article_body_wikitext,
     balanced_template,
+    infobox_field_matches,
     linked_anchors,
     object_spans,
     plain_wikitext,
@@ -33,6 +34,20 @@ def test_infobox_and_link_extraction() -> None:
     infobox = balanced_template(text)
     assert template_fields(infobox)["operator"].startswith("[[Nazi Germany")
     assert linked_anchors(text, "Nazi Germany") == ["German"]
+
+
+def test_nested_ship_infobox_fields_are_extracted() -> None:
+    text = """{{Infobox ship begin}}
+{{Infobox ship career
+| country = [[Norway]]
+}}
+{{Infobox ship career
+| country = [[Nazi Germany]]
+}}
+"""
+    assert infobox_field_matches(text, "Nazi Germany", ["Nazi Germany"]) == {
+        "country": "Nazi Germany"
+    }
 
 
 def test_plain_wikitext_keeps_link_anchor_and_removes_infobox() -> None:

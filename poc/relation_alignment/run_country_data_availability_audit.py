@@ -189,25 +189,43 @@ def linked_anchors(wikitext: str, target_title: str) -> list[str]:
 
 
 def balanced_template(text: str, name: str = "infobox") -> str:
-    match = re.search(rf"\{{\{{\s*{re.escape(name)}\b", text, re.I)
-    if not match:
-        return ""
-    depth = 0
-    index = match.start()
-    while index < len(text) - 1:
-        token = text[index : index + 2]
-        if token == "{{":
-            depth += 1
-            index += 2
-            continue
-        if token == "}}":
-            depth -= 1
-            index += 2
-            if depth == 0:
-                return text[match.start() : index]
-            continue
-        index += 1
-    return ""
+    templates = balanced_templates(text, name)
+    return templates[0] if templates else ""
+
+
+def balanced_templates(text: str, name: str = "infobox") -> list[str]:
+    """Return every named template, including nested ship infobox sections."""
+    templates = []
+    matches = re.finditer(rf"\{{\{{\s*{re.escape(name)}\b", text, re.I)
+    for match in matches:
+        depth = 0
+        index = match.start()
+        while index < len(text) - 1:
+            token = text[index : index + 2]
+            if token == "{{":
+                depth += 1
+                index += 2
+                continue
+            if token == "}}":
+                depth -= 1
+                index += 2
+                if depth == 0:
+                    templates.append(text[match.start() : index])
+                    break
+                continue
+            index += 1
+    return templates
+
+
+def infobox_field_matches(
+    wikitext: str, target_title: str, object_aliases: list[str]
+) -> dict[str, str]:
+    matches = {}
+    for template in balanced_templates(wikitext):
+        matches.update(
+            field_matches(template_fields(template), target_title, object_aliases)
+        )
+    return matches
 
 
 def remove_templates(text: str) -> str:
@@ -231,7 +249,8 @@ def template_fields(template: str) -> dict[str, str]:
     fields: dict[str, str] = {}
     current = ""
     parts: list[str] = []
-    for line in template.splitlines()[1:]:
+    body = template[:-2] if template.endswith("}}") else template
+    for line in body.splitlines()[1:]:
         match = re.match(r"\s*\|\s*([^=]+?)\s*=\s*(.*)$", line)
         if match:
             if current:
@@ -375,7 +394,7 @@ def audit_rows(rows: list[dict[str, str]]) -> tuple[list[dict], dict[str, str]]:
         page = wikitexts[subject]
         wikitext = page.get("wikitext", "")
         infobox = balanced_template(wikitext)
-        fields = field_matches(template_fields(infobox), target_title, object_aliases)
+        fields = infobox_field_matches(wikitext, target_title, object_aliases)
         anchors = linked_anchors(wikitext, target_title)
         body_wikitext = article_body_wikitext(wikitext, infobox)
         body_anchors = linked_anchors(body_wikitext, target_title)

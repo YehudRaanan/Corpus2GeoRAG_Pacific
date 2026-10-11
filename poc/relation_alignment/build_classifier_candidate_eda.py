@@ -189,6 +189,128 @@ def build_seed_assertions(
     return seeds
 
 
+def build_infobox_relation_support(
+    resolved: list[dict[str, str]], audit_rows: list[dict[str, str]]
+) -> tuple[dict[str, dict[str, int]], list[dict]]:
+    """Learn field-to-relation support only from structured QID-pair matches."""
+    examples: dict[str, dict[str, set[tuple[str, str]]]] = defaultdict(
+        lambda: defaultdict(set)
+    )
+    bases: dict[str, dict[str, set[str]]] = defaultdict(lambda: defaultdict(set))
+
+    for row in audit_rows:
+        relations = {
+            relation
+            for column in ("current_target_relations", "alternative_forward_properties")
+            for relation in row[column].split("|")
+            if relation
+        }
+        for field in row["infobox_matching_fields"].split("|"):
+            if not field:
+                continue
+            for relation in relations:
+                examples[field][relation].add(
+                    (row["subject_qid"], row["object_qid"])
+                )
+                bases[field][relation].add("audited_structured_pair")
+
+    pages = audit.load_cache(audit.WIKITEXT_CACHE)
+    cached_resolved = [row for row in resolved if row["subject_qid"] in pages]
+    object_metadata = reference.load_wikidata(
+        {row["object_qid"] for row in cached_resolved}
+    )
+    for row in cached_resolved:
+        target = object_metadata.get(row["object_qid"], {})
+        target_title = target.get("enwiki_title", "")
+        if not target_title:
+            continue
+        fields = audit.infobox_field_matches(
+            pages[row["subject_qid"]].get("wikitext", ""),
+            target_title,
+            reference.aliases(target),
+        )
+        for field in fields:
+            relation = row["level2_relation"]
+            examples[field][relation].add(
+                (row["subject_qid"], row["object_qid"])
+            )
+            bases[field][relation].add("resolved_reference_pair")
+
+    support = {
+        field: {
+            relation: len(pairs) for relation, pairs in relation_examples.items()
+        }
+        for field, relation_examples in examples.items()
+    }
+    rows = [
+        {
+            "infobox_field": field,
+            "level2_relation": relation,
+            "structured_pair_support": count,
+            "support_basis": "|".join(sorted(bases[field][relation])),
+        }
+        for field, relations in support.items()
+        for relation, count in relations.items()
+    ]
+    rows.sort(
+        key=lambda row: (
+            row["infobox_field"],
+            -row["structured_pair_support"],
+            row["level2_relation"],
+        )
+    )
+    return support, rows
+
+
+def non_text_evidence(
+    source: dict[str, str],
+    candidates: list[str],
+    field_support: dict[str, dict[str, int]],
+) -> dict[str, str]:
+    status = classifier_input_status(source)
+    support = Counter()
+    for field in source["infobox_matching_fields"].split("|"):
+        support.update(field_support.get(field, {}))
+    support = Counter(
+        {
+            relation: count
+            for relation, count in support.items()
+            if relation in candidates
+        }
+    )
+    ranked = sorted(support, key=lambda relation: (-support[relation], relation))
+
+    paths = [path for path in source["qualifier_relation_paths"].split("|") if path]
+    main_properties = sorted(
+        {path.removeprefix("INVERSE:").split("/", 1)[0] for path in paths}
+    )
+    qualifier_properties = sorted({path.split("/", 1)[1] for path in paths})
+    if status == "INFOBOX_ONLY":
+        review = (
+            "INFOBOX_EMPIRICAL_CANDIDATES_READY"
+            if ranked
+            else "INFOBOX_NO_EMPIRICAL_CANDIDATE"
+        )
+    elif status == "ENTITY_LINK_ONLY":
+        review = "ENTITY_LINK_NEEDS_EVIDENCE"
+    elif status == "WIKIDATA_QUALIFIER_ONLY":
+        review = "QUALIFIER_CONTEXT_READY"
+        ranked = []
+    else:
+        review = ""
+
+    return {
+        "non_text_candidate_ids": "|".join(ranked),
+        "non_text_candidate_support": json.dumps(
+            {relation: support[relation] for relation in ranked if support[relation]},
+            sort_keys=True,
+        ),
+        "qualifier_main_properties": "|".join(main_properties),
+        "qualifier_properties": "|".join(qualifier_properties),
+        "non_text_review_status": review,
+    }
+
+
 def type_labels(qids: set[str], entities: dict[str, dict]) -> str:
     return "|".join(
         entities.get(qid, {}).get("labels", {}).get("en", {}).get("value", qid)
@@ -196,7 +318,7 @@ def type_labels(qids: set[str], entities: dict[str, dict]) -> str:
     )
 
 
-def build() -> tuple[list[dict], list[dict], list[dict], list[dict], dict]:
+def build() -> tuple[list[dict], list[dict], list[dict], list[dict], list[dict], dict]:
     audit_rows = reference.read_csv(AUDIT_INPUT)
     resolved = reference.read_csv(RESOLVED_INPUT)
     target_rows = [
@@ -236,6 +358,9 @@ def build() -> tuple[list[dict], list[dict], list[dict], list[dict], dict]:
         for subject, relation, obj in sorted(seed_assertions)
     ]
     metadata = relation_metadata()
+    field_support, field_relation_rows = build_infobox_relation_support(
+        resolved, audit_rows
+    )
     cases = []
     for source in target_rows:
         subject_types = direct_types(source["subject_qid"])
@@ -245,6 +370,7 @@ def build() -> tuple[list[dict], list[dict], list[dict], list[dict], dict]:
         )
         candidates = sorted(support, key=lambda code: (-support[code], code))
         channels = evidence_channels(source)
+        non_text = non_text_evidence(source, candidates, field_support)
         if not candidates:
             review = "NO_TYPE_MATCHED_CANDIDATE"
         elif len(candidates) > 1:
@@ -285,6 +411,7 @@ def build() -> tuple[list[dict], list[dict], list[dict], list[dict], dict]:
                 "review_status": review,
                 "infobox_matching_fields": source["infobox_matching_fields"],
                 "qualifier_relation_paths": source["qualifier_relation_paths"],
+                **non_text,
                 "evidence_text": source["full_article_evidence_text"]
                 or source["page_anchored_evidence_text"]
                 or source["lead_evidence_text"],
@@ -377,6 +504,11 @@ def build() -> tuple[list[dict], list[dict], list[dict], list[dict], dict]:
             "LEAD_SPAN_READY",
         }
     ]
+    non_text_status_counts = Counter(
+        row["non_text_review_status"]
+        for row in cases
+        if row["non_text_review_status"]
+    )
     summary = {
         "unresolved_pairs_with_checked_evidence": len(cases),
         "structured_seed_assertions": len(seed_assertions),
@@ -414,6 +546,18 @@ def build() -> tuple[list[dict], list[dict], list[dict], list[dict], dict]:
             for row in text_ready
         ),
         "non_text_evidence_pairs": len(cases) - len(text_ready),
+        "non_text_review_status_counts": dict(non_text_status_counts),
+        "infobox_field_relation_rows": len(field_relation_rows),
+        "infobox_pairs_with_empirical_candidates": non_text_status_counts[
+            "INFOBOX_EMPIRICAL_CANDIDATES_READY"
+        ],
+        "infobox_pairs_without_empirical_candidates": non_text_status_counts[
+            "INFOBOX_NO_EMPIRICAL_CANDIDATE"
+        ],
+        "qualifier_context_pairs": non_text_status_counts["QUALIFIER_CONTEXT_READY"],
+        "entity_link_pairs_needing_evidence": non_text_status_counts[
+            "ENTITY_LINK_NEEDS_EVIDENCE"
+        ],
         "type_pair_groups": len(type_group_rows),
         "classifier_run": False,
         "selection_rule": (
@@ -421,7 +565,14 @@ def build() -> tuple[list[dict], list[dict], list[dict], list[dict], dict]:
             "support ranks options but does not select a relation."
         ),
     }
-    return cases, type_group_rows, evidence_group_rows, relation_rows, summary
+    return (
+        cases,
+        type_group_rows,
+        evidence_group_rows,
+        relation_rows,
+        field_relation_rows,
+        summary,
+    )
 
 
 def write_report(summary: dict, relations: list[dict]) -> None:
@@ -463,6 +614,14 @@ def write_report(summary: dict, relations: list[dict]) -> None:
         f"- **{summary['text_span_ready_multiple_candidates']:,}** text-ready pairs need the classifier to choose among several candidates.",
         f"- **{summary['text_span_ready_single_supported_candidate']:,}** text-ready pairs have one candidate with at least two seed examples.",
         f"- **{summary['non_text_evidence_pairs']:,}** pairs have only structured, infobox, or link evidence and are outside the text-classifier input contract.",
+        "",
+        "## Non-text evidence",
+        "",
+        f"- **{summary['infobox_pairs_with_empirical_candidates']:,}** infobox pairs have relation candidates learned from structured QID-pair matches.",
+        f"- **{summary['infobox_pairs_without_empirical_candidates']:,}** infobox pairs have no empirical field mapping in the checked data.",
+        f"- **{summary['qualifier_context_pairs']:,}** qualifier pairs preserve the main property and qualifier property.",
+        f"- **{summary['entity_link_pairs_needing_evidence']:,}** pairs remain link-only.",
+        "- These signals rank candidates. They do not resolve a relation.",
         "",
         "## Evidence readiness",
         "",
@@ -509,6 +668,7 @@ def write_report(summary: dict, relations: list[dict]) -> None:
         "- `classifier_candidate_eda/type_pair_groups.csv`",
         "- `classifier_candidate_eda/evidence_groups.csv`",
         "- `classifier_candidate_eda/candidate_relations.csv`",
+        "- `classifier_candidate_eda/infobox_field_relations.csv`",
         "- `classifier_candidate_eda/summary.json`",
         "",
     ]
@@ -516,7 +676,14 @@ def write_report(summary: dict, relations: list[dict]) -> None:
 
 
 def main() -> None:
-    cases, type_groups, evidence_groups, relations, summary = build()
+    (
+        cases,
+        type_groups,
+        evidence_groups,
+        relations,
+        field_relations,
+        summary,
+    ) = build()
     OUT.mkdir(parents=True, exist_ok=True)
     reference.write_csv(OUT / "cases.csv", cases, list(cases[0]))
     reference.write_csv(
@@ -527,6 +694,11 @@ def main() -> None:
     )
     reference.write_csv(
         OUT / "candidate_relations.csv", relations, list(relations[0])
+    )
+    reference.write_csv(
+        OUT / "infobox_field_relations.csv",
+        field_relations,
+        list(field_relations[0]),
     )
     (OUT / "summary.json").write_text(
         json.dumps(summary, indent=2, ensure_ascii=False) + "\n", encoding="utf-8"

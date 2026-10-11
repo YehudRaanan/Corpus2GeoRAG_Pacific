@@ -36,12 +36,19 @@ sentence therefore needs to identify only the object in the article body.
 - **113** text-ready pairs have one candidate with at least two seed examples.
 - **104** pairs have only structured, infobox, or link evidence and are outside the text-classifier input contract.
 
+## Non-text evidence
+
+- **99** infobox pairs have relation candidates learned from structured QID-pair matches.
+- **3** infobox pairs have no empirical field mapping in the checked data.
+- **2** qualifier pairs preserve the main property and qualifier property.
+- **0** pairs remain link-only.
+- These signals rank candidates. They do not resolve a relation.
+
 ## Evidence readiness
 
 | Input status | Pairs |
 |---|---:|
-| `ENTITY_LINK_ONLY` | 4 |
-| `INFOBOX_ONLY` | 98 |
+| `INFOBOX_ONLY` | 102 |
 | `LEAD_SPAN_READY` | 1 |
 | `PAGE_ANCHORED_TEXT_READY` | 71 |
 | `TEXT_SPAN_READY` | 195 |
@@ -87,4 +94,5 @@ sentence therefore needs to identify only the object in the article body.
 - `classifier_candidate_eda/type_pair_groups.csv`
 - `classifier_candidate_eda/evidence_groups.csv`
 - `classifier_candidate_eda/candidate_relations.csv`
+- `classifier_candidate_eda/infobox_field_relations.csv`
 - `classifier_candidate_eda/summary.json`

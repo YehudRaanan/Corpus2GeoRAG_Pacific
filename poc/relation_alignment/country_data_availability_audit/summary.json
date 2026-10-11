@@ -4,15 +4,14 @@
     "PAGE_ANCHORED_BODY_TEXT_EVIDENCE_OBSERVED": 266,
     "DATA_NOT_OBSERVED_IN_CHECKED_SOURCES": 186,
     "ALTERNATIVE_WIKIDATA_RELATION_OBSERVED": 43,
-    "INFOBOX_ENTITY_EVIDENCE_OBSERVED": 99,
-    "FULL_ARTICLE_ENTITY_LINK_OBSERVED": 4,
+    "INFOBOX_ENTITY_EVIDENCE_OBSERVED": 103,
     "WIKIDATA_QUALIFIER_RELATION_OBSERVED": 2
   },
   "current_wikidata_target_relation_pairs": 0,
   "alternative_forward_relation_pairs": 43,
   "alternative_inverse_relation_pairs": 0,
   "qualifier_relation_pairs": 8,
-  "infobox_entity_evidence_pairs": 285,
+  "infobox_entity_evidence_pairs": 303,
   "full_article_object_link_pairs": 366,
   "full_article_complete_span_pairs": 217,
   "page_anchored_body_span_pairs": 296,
@@ -97,11 +96,15 @@
   "top_infobox_fields": [
     {
       "field": "country",
-      "pairs": 200
+      "pairs": 221
     },
     {
       "field": "allegiance",
-      "pairs": 73
+      "pairs": 74
+    },
+    {
+      "field": "fate",
+      "pairs": 22
     },
     {
       "field": "garrison",
@@ -113,7 +116,7 @@
     },
     {
       "field": "builder",
-      "pairs": 4
+      "pairs": 5
     },
     {
       "field": "death_place",
@@ -148,11 +151,7 @@
       "pairs": 2
     },
     {
-      "field": "name",
-      "pairs": 1
-    },
-    {
-      "field": "studio",
+      "field": "seal",
       "pairs": 1
     }
   ],

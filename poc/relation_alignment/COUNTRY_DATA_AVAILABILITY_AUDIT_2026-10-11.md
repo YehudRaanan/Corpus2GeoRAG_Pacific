@@ -13,7 +13,7 @@ the data needed to observe it?
 - Another forward Wikidata property connects the same QIDs for **43** pairs.
 - An inverse Wikidata property connects the same QIDs for **0** pairs.
 - A Wikidata qualifier path connects the same QIDs for **8** pairs.
-- A Wikipedia infobox field contains the object identity for **285** pairs.
+- A Wikipedia infobox field contains the object identity for **303** pairs.
 - The complete article links to the object identity for **366** pairs.
 - The complete article has a minimal sentence-to-paragraph span for **217** pairs.
 - With the page QID as the subject anchor, the article body has an object sentence for **296** pairs.
@@ -34,8 +34,7 @@ object identity in the body sentence.
 |---|---:|
 | `ALTERNATIVE_WIKIDATA_RELATION_OBSERVED` | 43 |
 | `DATA_NOT_OBSERVED_IN_CHECKED_SOURCES` | 186 |
-| `FULL_ARTICLE_ENTITY_LINK_OBSERVED` | 4 |
-| `INFOBOX_ENTITY_EVIDENCE_OBSERVED` | 99 |
+| `INFOBOX_ENTITY_EVIDENCE_OBSERVED` | 103 |
 | `PAGE_ANCHORED_BODY_TEXT_EVIDENCE_OBSERVED` | 266 |
 | `WIKIDATA_QUALIFIER_RELATION_OBSERVED` | 2 |
 
@@ -56,11 +55,12 @@ object identity in the body sentence.
 
 | Field | Pairs |
 |---|---:|
-| `country` | 200 |
-| `allegiance` | 73 |
+| `country` | 221 |
+| `allegiance` | 74 |
+| `fate` | 22 |
 | `garrison` | 15 |
 | `operations` | 6 |
-| `builder` | 4 |
+| `builder` | 5 |
 | `death_place` | 4 |
 | `image` | 4 |
 | `birth_place` | 3 |
@@ -69,8 +69,7 @@ object identity in the body sentence.
 | `image_caption` | 2 |
 | `office` | 2 |
 | `captured` | 2 |
-| `name` | 1 |
-| `studio` | 1 |
+| `seal` | 1 |
 
 ## Common Wikidata qualifier paths
 
@@ -100,7 +99,7 @@ The classifier was not run.
 - **Lötzen Infantry Brigade -> Nazi Germany**: `PAGE_ANCHORED_BODY_TEXT_EVIDENCE_OBSERVED`; allegiance
 - **Ambra -> Kingdom of Italy**: `ALTERNATIVE_WIKIDATA_RELATION_OBSERVED`; P495
 - **Come and See -> Soviet Union**: `ALTERNATIVE_WIKIDATA_RELATION_OBSERVED`; P495|P840
-- **NMS Regele Ferdinand I -> Soviet Union**: `PAGE_ANCHORED_BODY_TEXT_EVIDENCE_OBSERVED`; In early 1944 the Soviets were able to cut off and surround the port of Sevastopol on the Crimean Peninsula.
+- **NMS Regele Ferdinand I -> Soviet Union**: `PAGE_ANCHORED_BODY_TEXT_EVIDENCE_OBSERVED`; country|fate
 - **Curt Bruns -> Nazi Germany**: `INFOBOX_ENTITY_EVIDENCE_OBSERVED`; allegiance
 - **61st Division -> Empire of Japan**: `PAGE_ANCHORED_BODY_TEXT_EVIDENCE_OBSERVED`; country
 - **47th Division -> Empire of Japan**: `PAGE_ANCHORED_BODY_TEXT_EVIDENCE_OBSERVED`; country

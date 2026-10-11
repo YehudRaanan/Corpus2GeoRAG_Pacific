@@ -36,8 +36,7 @@
   "classifier_input_status_counts": {
     "TEXT_SPAN_READY": 195,
     "PAGE_ANCHORED_TEXT_READY": 71,
-    "INFOBOX_ONLY": 98,
-    "ENTITY_LINK_ONLY": 4,
+    "INFOBOX_ONLY": 102,
     "LEAD_SPAN_READY": 1,
     "WIKIDATA_QUALIFIER_ONLY": 2
   },
@@ -52,6 +51,16 @@
   "text_span_ready_multiple_candidates": 130,
   "text_span_ready_single_supported_candidate": 113,
   "non_text_evidence_pairs": 104,
+  "non_text_review_status_counts": {
+    "INFOBOX_EMPIRICAL_CANDIDATES_READY": 99,
+    "INFOBOX_NO_EMPIRICAL_CANDIDATE": 3,
+    "QUALIFIER_CONTEXT_READY": 2
+  },
+  "infobox_field_relation_rows": 23,
+  "infobox_pairs_with_empirical_candidates": 99,
+  "infobox_pairs_without_empirical_candidates": 3,
+  "qualifier_context_pairs": 2,
+  "entity_link_pairs_needing_evidence": 0,
   "type_pair_groups": 175,
   "classifier_run": false,
   "selection_rule": "Use the narrowest P31/P279 tier with structured examples. Candidate support ranks options but does not select a relation."
