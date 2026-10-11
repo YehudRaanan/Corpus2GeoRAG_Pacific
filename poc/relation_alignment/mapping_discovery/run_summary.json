@@ -1,0 +1,152 @@
+{
+  "population_qids": 53857,
+  "eventkg_mapped_qids": 38517,
+  "wikidata": {
+    "records": 53857,
+    "item_claims": 572283,
+    "boundary_item_claims": 464033,
+    "in_population_item_claims": 108250,
+    "qualified_item_claims": 99557,
+    "deprecated_item_claims": 990
+  },
+  "wikidata_distinct_pairs": 104588,
+  "eventkg": {
+    "reified_relations_events_other": 186407,
+    "unmapped_endpoint_relations_events_other": 135337,
+    "reified_wikidata_copy": 32193,
+    "reified_relations_entities_temporal": 108797,
+    "unmapped_endpoint_relations_entities_temporal": 100327,
+    "incomplete_relations_entities_other": 1,
+    "direct_relations_events_base": 16546,
+    "unmapped_direct_relations_events_base": 11632,
+    "direct_wikidata_copy": 243,
+    "incomplete_relations_entities_base": 1
+  },
+  "eventkg_non_wikidata_role_groups": 76,
+  "candidate_rows": 244,
+  "date_checks": {
+    "event_fields_with_dates": 4054,
+    "same_graph_multivalue_fields": 1002,
+    "cross_graph_multivalue_fields": 1851,
+    "same_graph_example_qids": [
+      "Q10130",
+      "Q10396694",
+      "Q1052120",
+      "Q105570",
+      "Q1091132",
+      "Q11044592",
+      "Q11050010",
+      "Q11147774",
+      "Q1117817",
+      "Q1129167"
+    ],
+    "cross_graph_example_qids": [
+      "Q10130",
+      "Q1034076",
+      "Q1035922",
+      "Q10396694",
+      "Q1047674",
+      "Q1048684",
+      "Q1052120",
+      "Q1052651",
+      "Q105570",
+      "Q1057207"
+    ],
+    "known_examples": {
+      "Q134949": {
+        "hasBeginTimeStamp": {
+          "yago": [
+            "1939-01-01"
+          ],
+          "wikidata": [
+            "1939-11-30"
+          ],
+          "dbpedia_en": [
+            "1939-11-30"
+          ],
+          "dbpedia_fr": [
+            "1939-11-30"
+          ],
+          "event_kg": [
+            "1939-11-30"
+          ]
+        },
+        "hasEndTimeStamp": {
+          "dbpedia_fr": [
+            "1940-03-13"
+          ],
+          "wikidata": [
+            "1940-03-13"
+          ],
+          "yago": [
+            "1939-12-31"
+          ],
+          "dbpedia_en": [
+            "1939-11-30"
+          ],
+          "event_kg": [
+            "1940-03-13"
+          ]
+        }
+      },
+      "Q122100": {
+        "hasBeginTimeStamp": {
+          "wikidata": [
+            "1941-06-25",
+            "1944-09-19"
+          ],
+          "dbpedia_fr": [
+            "1941-06-25"
+          ],
+          "dbpedia_en": [
+            "1941-06-25"
+          ],
+          "yago": [
+            "1941-06-25"
+          ],
+          "event_kg": [
+            "1941-06-25"
+          ]
+        },
+        "hasEndTimeStamp": {
+          "wikidata": [
+            "1944-09-19"
+          ],
+          "dbpedia_en": [
+            "1941-06-25"
+          ],
+          "yago": [
+            "1941-06-25"
+          ],
+          "dbpedia_fr": [
+            "1944-09-19"
+          ],
+          "event_kg": [
+            "1944-09-19"
+          ]
+        }
+      }
+    }
+  },
+  "warsampo_screened_shared_pairs": 122,
+  "warsampo_identity_status": {
+    "screened": 243,
+    "unresolved": 323,
+    "reviewed": 7,
+    "rejected": 3
+  },
+  "warsampo_eventkg_shared_pairs": 8,
+  "warsampo_eventkg_candidate_rows": 3,
+  "complete_eventkg_files": [
+    "relations_events_other",
+    "relations_entities_temporal",
+    "relations_events_literals",
+    "events",
+    "relations_events_base",
+    "entities"
+  ],
+  "incomplete_eventkg_files": [
+    "relations_entities_other",
+    "relations_entities_base"
+  ]
+}

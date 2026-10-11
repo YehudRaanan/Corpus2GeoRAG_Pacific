@@ -1,0 +1,4 @@
+war_predicate,ek_role,ek_graph,subject_kind,object_kind,format,direction,shared_pairs,example_qid_pairs
+http://ldf.fi/schema/warsa/actors/hasConflict,battle,dbpedia_en,entity,event,reified,same,5,Q4354424>Q122100|Q5412831>Q122100|Q5412831>Q134949
+http://www.cidoc-crm.org/cidoc-crm/P10_falls_within,hasSubEvent,source_unknown,event,event,direct,reverse,3,Q122100>Q362|Q134949>Q362|Q154940>Q362
+http://www.cidoc-crm.org/cidoc-crm/P10_falls_within,subEventOf,source_unknown,event,event,direct,same,3,Q122100>Q362|Q134949>Q362|Q154940>Q362

@@ -1,5 +1,8 @@
 # Finnish WWII relation-type alignment POC
 
+The [automatic mapping discovery](MAPPING_AUTOMATION_DISCOVERY_2026-10-11.md)
+tests broader three-source evidence and records the decision logic and gaps.
+
 The [executed two-source overlap audit](audit_2026-10-11/REPORT.md) checks the
 broader WarSampo–Wikidata candidate set and records the remaining identity and
 event-link gaps. This README preserves the original smaller POC.
