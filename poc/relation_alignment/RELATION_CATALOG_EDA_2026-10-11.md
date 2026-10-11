@@ -108,6 +108,14 @@ ontology definitions and domain/range data for DBpedia and YAGO predicates, and
 then freeze the allowed Level 2 values for each Level 1 family and endpoint type
 pair.
 
+## Data-driven mapping POC follow-up
+
+A name-blind POC ranked ten EventKG groups from QID-pair overlap, direction,
+endpoint kinds, source graph, and stability checks. Six groups produced a
+provisional mapping. Four remained unresolved. All three WarSampo bridge paths
+had fewer than 20 shared pairs and remained unresolved. See
+[`DATA_DRIVEN_MAPPING_POC_2026-10-11.md`](DATA_DRIVEN_MAPPING_POC_2026-10-11.md).
+
 ## Output files
 
 - `relation_catalog_eda/source_predicate_inventory.csv`: full source inventory

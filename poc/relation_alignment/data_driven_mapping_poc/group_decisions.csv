@@ -1,0 +1,11 @@
+ek_role,ek_graph,subject_kind,object_kind,format,top_wd_property,top_direction,top_score,runner_up,score_margin,decision,automatic_action
+award,dbpedia_en,entity,entity,reified,P166,same,98.5,P27,97.7,STRONG_CANDIDATE,PROVISIONAL_MAP
+battle,dbpedia_en,entity,event,reified,P607,same,98.1,P710,90.5,STRONG_CANDIDATE,PROVISIONAL_MAP
+country,dbpedia_en,entity,entity,reified,P17,same,72.6,P8047,37.2,PROMISING_BUT_MIXED,KEEP_UNRESOLVED
+hasPlace,dbpedia_en,event,entity,direct,P276,same,46.2,P17,21.2,MIXED_RELATION,KEEP_UNRESOLVED
+hasPlace,yago,event,entity,direct,P710,same,46.9,P276,15.7,MIXED_RELATION,KEEP_UNRESOLVED
+hasSubEvent,source_unknown,event,event,direct,P361,reverse,98.2,P527,80.2,STRONG_CANDIDATE,PROVISIONAL_MAP
+hasWonPrize,yago,entity,entity,reified,P166,same,100.0,,100.0,STRONG_CANDIDATE,PROVISIONAL_MAP
+isCitizenOf,yago,entity,entity,reified,P27,same,91.6,P945,5.8,INSUFFICIENT_SUPPORT,KEEP_UNRESOLVED
+subEventOf,source_unknown,event,event,direct,P361,same,98.2,P527,81.4,STRONG_CANDIDATE,PROVISIONAL_MAP
+usedInWar,dbpedia_en,entity,event,reified,P607,same,100.0,,100.0,STRONG_CANDIDATE,PROVISIONAL_MAP

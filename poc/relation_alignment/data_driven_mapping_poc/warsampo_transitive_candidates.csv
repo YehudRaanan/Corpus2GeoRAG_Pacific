@@ -1,0 +1,4 @@
+war_predicate,via_eventkg_predicate,candidate_wd_property,composed_direction,war_eventkg_shared_pairs,eventkg_wikidata_score,decision
+http://ldf.fi/schema/warsa/actors/hasConflict,battle,P607,same,5,98.1,INSUFFICIENT_SUPPORT
+http://www.cidoc-crm.org/cidoc-crm/P10_falls_within,hasSubEvent,P361,same,3,98.2,INSUFFICIENT_SUPPORT
+http://www.cidoc-crm.org/cidoc-crm/P10_falls_within,subEventOf,P361,same,3,98.2,INSUFFICIENT_SUPPORT

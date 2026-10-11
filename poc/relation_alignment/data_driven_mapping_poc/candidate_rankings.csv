@@ -1,0 +1,42 @@
+ek_role,ek_graph,subject_kind,object_kind,format,rank,wd_property,wd_label_for_review_only,direction,shared_pairs,pct_of_ek_co_connected,after_largest_target_pct,test_pairs,test_pct_of_ek_co_connected,distinct_targets,evidence_score,evidence_status
+award,dbpedia_en,entity,entity,reified,1,P166,award received,same,719,99.0,95.8,570,100.0,41,98.5,STRONG_CANDIDATE
+award,dbpedia_en,entity,entity,reified,2,P27,country of citizenship,same,5,0.7,0.0,0,0.0,1,0.8,INSUFFICIENT_SUPPORT
+award,dbpedia_en,entity,entity,reified,3,P945,allegiance,same,5,0.7,0.0,0,0.0,1,0.8,INSUFFICIENT_SUPPORT
+award,dbpedia_en,entity,entity,reified,4,P106,occupation,same,1,0.1,0.0,1,0.2,1,0.2,INSUFFICIENT_SUPPORT
+award,dbpedia_en,entity,entity,reified,5,P97,noble title,same,1,0.1,0.0,1,0.2,1,0.2,INSUFFICIENT_SUPPORT
+battle,dbpedia_en,entity,event,reified,1,P607,participated in conflict,same,7178,98.8,94.9,6047,99.6,227,98.1,STRONG_CANDIDATE
+battle,dbpedia_en,entity,event,reified,2,P710,participant,reverse,69,1.0,0.8,18,0.3,31,7.6,MIXED_RELATION
+battle,dbpedia_en,entity,event,reified,3,P793,significant event,same,24,0.3,0.2,8,0.1,10,2.6,MIXED_RELATION
+battle,dbpedia_en,entity,event,reified,4,P1344,participant in,same,23,0.3,0.2,13,0.2,16,2.5,MIXED_RELATION
+battle,dbpedia_en,entity,event,reified,5,P101,field of work,same,12,0.2,0.1,11,0.2,2,1.4,INSUFFICIENT_SUPPORT
+country,dbpedia_en,entity,entity,reified,1,P17,country,same,1376,54.1,89.4,217,79.5,17,72.6,PROMISING_BUT_MIXED
+country,dbpedia_en,entity,entity,reified,2,P8047,country of registry,same,1140,44.8,7.6,46,16.8,5,35.4,MIXED_RELATION
+country,dbpedia_en,entity,entity,reified,3,P945,allegiance,same,88,3.5,0.9,0,0.0,5,10.6,INSUFFICIENT_SUPPORT
+country,dbpedia_en,entity,entity,reified,4,P495,country of origin,same,43,1.7,2.9,17,6.2,4,7.0,INSUFFICIENT_SUPPORT
+country,dbpedia_en,entity,entity,reified,5,P749,parent organization or unit,same,9,0.4,0.0,0,0.0,1,1.1,INSUFFICIENT_SUPPORT
+hasPlace,dbpedia_en,event,entity,direct,1,P276,location,same,30,44.8,43.1,11,61.1,27,46.2,MIXED_RELATION
+hasPlace,dbpedia_en,event,entity,direct,2,P17,country,same,18,26.9,17.6,6,33.3,6,25.0,INSUFFICIENT_SUPPORT
+hasPlace,dbpedia_en,event,entity,direct,3,P710,participant,same,18,26.9,19.6,2,11.1,5,21.0,INSUFFICIENT_SUPPORT
+hasPlace,dbpedia_en,event,entity,direct,4,P793,significant event,reverse,6,9.0,7.6,2,11.1,6,8.8,INSUFFICIENT_SUPPORT
+hasPlace,dbpedia_en,event,entity,direct,5,P361,part of,reverse,3,4.5,3.0,1,5.6,3,4.2,INSUFFICIENT_SUPPORT
+hasPlace,yago,event,entity,direct,1,P710,participant,same,52,46.0,40.7,20,54.1,7,46.9,MIXED_RELATION
+hasPlace,yago,event,entity,direct,2,P276,location,same,39,34.5,32.1,7,18.9,30,31.2,MIXED_RELATION
+hasPlace,yago,event,entity,direct,3,P17,country,same,27,23.9,15.1,12,32.4,5,23.7,MIXED_RELATION
+hasPlace,yago,event,entity,direct,4,P793,significant event,reverse,8,7.1,6.2,2,5.4,8,6.6,INSUFFICIENT_SUPPORT
+hasPlace,yago,event,entity,direct,5,P1542,has effect,same,5,4.4,2.3,1,2.7,3,3.6,INSUFFICIENT_SUPPORT
+hasSubEvent,source_unknown,event,event,direct,1,P361,part of,reverse,1244,98.0,97.9,252,98.1,1151,98.2,STRONG_CANDIDATE
+hasSubEvent,source_unknown,event,event,direct,2,P527,has part(s),same,110,8.7,8.5,25,9.7,108,18.0,MIXED_RELATION
+hasSubEvent,source_unknown,event,event,direct,3,P179,part of the series,reverse,10,0.8,0.7,2,0.8,10,1.7,INSUFFICIENT_SUPPORT
+hasSubEvent,source_unknown,event,event,direct,4,P793,significant event,same,8,0.6,0.6,2,0.8,8,1.4,INSUFFICIENT_SUPPORT
+hasSubEvent,source_unknown,event,event,direct,5,P2348,time period,reverse,6,0.5,0.4,2,0.8,6,1.1,INSUFFICIENT_SUPPORT
+hasWonPrize,yago,entity,entity,reified,1,P166,award received,same,409,100.0,100.0,42,100.0,37,100.0,STRONG_CANDIDATE
+isCitizenOf,yago,entity,entity,reified,1,P27,country of citizenship,same,16,100.0,100.0,2,100.0,2,91.6,INSUFFICIENT_SUPPORT
+isCitizenOf,yago,entity,entity,reified,2,P945,allegiance,same,14,87.5,100.0,2,100.0,2,85.8,INSUFFICIENT_SUPPORT
+isCitizenOf,yago,entity,entity,reified,3,P210,party chief representative,reverse,1,6.2,0.0,0,0.0,1,2.9,INSUFFICIENT_SUPPORT
+isCitizenOf,yago,entity,entity,reified,4,P35,head of state,reverse,1,6.2,0.0,0,0.0,1,2.9,INSUFFICIENT_SUPPORT
+subEventOf,source_unknown,event,event,direct,1,P361,part of,same,1244,98.0,97.4,516,99.0,169,98.2,STRONG_CANDIDATE
+subEventOf,source_unknown,event,event,direct,2,P527,has part(s),reverse,110,8.7,8.2,23,4.4,41,16.8,MIXED_RELATION
+subEventOf,source_unknown,event,event,direct,3,P179,part of the series,same,10,0.8,0.0,0,0.0,1,1.4,INSUFFICIENT_SUPPORT
+subEventOf,source_unknown,event,event,direct,4,P793,significant event,reverse,8,0.6,0.3,0,0.0,3,1.1,INSUFFICIENT_SUPPORT
+subEventOf,source_unknown,event,event,direct,5,P2348,time period,same,6,0.5,0.0,6,1.2,1,1.1,INSUFFICIENT_SUPPORT
+usedInWar,dbpedia_en,entity,event,reified,1,P607,participated in conflict,same,507,100.0,100.0,454,100.0,12,100.0,STRONG_CANDIDATE

@@ -1,0 +1,18 @@
+{
+  "method": "name-blind endpoint evidence with endpoint-kind and source-graph context",
+  "sample_groups": 10,
+  "candidate_rows_ranked": 41,
+  "provisional_eventkg_wikidata_maps": 6,
+  "unresolved_eventkg_groups": 4,
+  "warsampo_transitive_paths": 3,
+  "warsampo_paths_with_enough_support": 0,
+  "hasplace_context_check": {
+    "pairs": 317,
+    "coded_pairs": 101,
+    "type_only_cv_exact_match": 0.495,
+    "all_context_cv_exact_match": 0.475,
+    "result": "context helps but does not resolve hasPlace"
+  },
+  "predicate_names_used_in_score": false,
+  "source_data_modified": false
+}
