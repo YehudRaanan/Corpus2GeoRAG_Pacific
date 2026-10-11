@@ -1,0 +1,489 @@
+{
+  "eventkg_relation": "country",
+  "eventkg_graph": "dbpedia_en",
+  "pair_count": 3099,
+  "coded_pairs": 2499,
+  "unrecorded_pairs": 600,
+  "observed_signatures": {
+    "P8047": 1123,
+    "P17": 1359,
+    "unrecorded": 600,
+    "P17|P8047": 17
+  },
+  "direct_subject_type_groups": 210,
+  "features": 227,
+  "type_features": 79,
+  "neighbor_property_features": 148,
+  "support_floor": 10,
+  "grouping_rule": "hold out complete direct-subject-P31 signatures",
+  "all_features": {
+    "folds": [
+      {
+        "fold": 1,
+        "train_pairs": 1480,
+        "test_pairs": 1019,
+        "held_out_type_groups": 1,
+        "exact_match": 0.985
+      },
+      {
+        "fold": 2,
+        "train_pairs": 2129,
+        "test_pairs": 370,
+        "held_out_type_groups": 51,
+        "exact_match": 0.986
+      },
+      {
+        "fold": 3,
+        "train_pairs": 2129,
+        "test_pairs": 370,
+        "held_out_type_groups": 52,
+        "exact_match": 0.997
+      },
+      {
+        "fold": 4,
+        "train_pairs": 2129,
+        "test_pairs": 370,
+        "held_out_type_groups": 52,
+        "exact_match": 0.995
+      },
+      {
+        "fold": 5,
+        "train_pairs": 2129,
+        "test_pairs": 370,
+        "held_out_type_groups": 54,
+        "exact_match": 0.986
+      }
+    ],
+    "exact_match": 0.989,
+    "macro_label_f1": 0.992,
+    "per_label": {
+      "P17": {
+        "precision": 0.996,
+        "recall": 0.983,
+        "f1": 0.99,
+        "support": 1376
+      },
+      "P8047": {
+        "precision": 0.995,
+        "recall": 0.996,
+        "f1": 0.995,
+        "support": 1140
+      }
+    },
+    "baseline_exact_match": 0.021,
+    "actual": {
+      "P8047": 1123,
+      "P17|P8047": 17,
+      "P17": 1359
+    },
+    "predicted": {
+      "P8047": 1141,
+      "P17": 1358
+    },
+    "signature_exact_counts": {
+      "P17": {
+        "correct": 1353,
+        "total": 1359
+      },
+      "P17|P8047": {
+        "correct": 0,
+        "total": 17
+      },
+      "P8047": {
+        "correct": 1118,
+        "total": 1123
+      }
+    }
+  },
+  "types_only": {
+    "folds": [
+      {
+        "fold": 1,
+        "train_pairs": 1480,
+        "test_pairs": 1019,
+        "held_out_type_groups": 1,
+        "exact_match": 0.0
+      },
+      {
+        "fold": 2,
+        "train_pairs": 2129,
+        "test_pairs": 370,
+        "held_out_type_groups": 51,
+        "exact_match": 0.965
+      },
+      {
+        "fold": 3,
+        "train_pairs": 2129,
+        "test_pairs": 370,
+        "held_out_type_groups": 52,
+        "exact_match": 0.954
+      },
+      {
+        "fold": 4,
+        "train_pairs": 2129,
+        "test_pairs": 370,
+        "held_out_type_groups": 52,
+        "exact_match": 0.897
+      },
+      {
+        "fold": 5,
+        "train_pairs": 2129,
+        "test_pairs": 370,
+        "held_out_type_groups": 54,
+        "exact_match": 0.97
+      }
+    ],
+    "exact_match": 0.561,
+    "macro_label_f1": 0.395,
+    "per_label": {
+      "P17": {
+        "precision": 0.56,
+        "recall": 0.999,
+        "f1": 0.718,
+        "support": 1376
+      },
+      "P8047": {
+        "precision": 1.0,
+        "recall": 0.038,
+        "f1": 0.073,
+        "support": 1140
+      }
+    },
+    "baseline_exact_match": 0.021,
+    "actual": {
+      "P8047": 1123,
+      "P17|P8047": 17,
+      "P17": 1359
+    },
+    "predicted": {
+      "P17": 2456,
+      "P8047": 43
+    },
+    "signature_exact_counts": {
+      "P17": {
+        "correct": 1359,
+        "total": 1359
+      },
+      "P17|P8047": {
+        "correct": 0,
+        "total": 17
+      },
+      "P8047": {
+        "correct": 42,
+        "total": 1123
+      }
+    }
+  },
+  "neighbor_properties_only": {
+    "folds": [
+      {
+        "fold": 1,
+        "train_pairs": 1480,
+        "test_pairs": 1019,
+        "held_out_type_groups": 1,
+        "exact_match": 0.985
+      },
+      {
+        "fold": 2,
+        "train_pairs": 2129,
+        "test_pairs": 370,
+        "held_out_type_groups": 51,
+        "exact_match": 0.986
+      },
+      {
+        "fold": 3,
+        "train_pairs": 2129,
+        "test_pairs": 370,
+        "held_out_type_groups": 52,
+        "exact_match": 0.997
+      },
+      {
+        "fold": 4,
+        "train_pairs": 2129,
+        "test_pairs": 370,
+        "held_out_type_groups": 52,
+        "exact_match": 0.995
+      },
+      {
+        "fold": 5,
+        "train_pairs": 2129,
+        "test_pairs": 370,
+        "held_out_type_groups": 54,
+        "exact_match": 0.986
+      }
+    ],
+    "exact_match": 0.989,
+    "macro_label_f1": 0.992,
+    "per_label": {
+      "P17": {
+        "precision": 0.996,
+        "recall": 0.983,
+        "f1": 0.99,
+        "support": 1376
+      },
+      "P8047": {
+        "precision": 0.995,
+        "recall": 0.996,
+        "f1": 0.995,
+        "support": 1140
+      }
+    },
+    "baseline_exact_match": 0.021,
+    "actual": {
+      "P8047": 1123,
+      "P17|P8047": 17,
+      "P17": 1359
+    },
+    "predicted": {
+      "P8047": 1141,
+      "P17": 1358
+    },
+    "signature_exact_counts": {
+      "P17": {
+        "correct": 1353,
+        "total": 1359
+      },
+      "P17|P8047": {
+        "correct": 0,
+        "total": 17
+      },
+      "P8047": {
+        "correct": 1118,
+        "total": 1123
+      }
+    }
+  },
+  "without_subject_p137": {
+    "folds": [
+      {
+        "fold": 1,
+        "train_pairs": 1480,
+        "test_pairs": 1019,
+        "held_out_type_groups": 1,
+        "exact_match": 0.985
+      },
+      {
+        "fold": 2,
+        "train_pairs": 2129,
+        "test_pairs": 370,
+        "held_out_type_groups": 51,
+        "exact_match": 0.981
+      },
+      {
+        "fold": 3,
+        "train_pairs": 2129,
+        "test_pairs": 370,
+        "held_out_type_groups": 52,
+        "exact_match": 0.997
+      },
+      {
+        "fold": 4,
+        "train_pairs": 2129,
+        "test_pairs": 370,
+        "held_out_type_groups": 52,
+        "exact_match": 0.989
+      },
+      {
+        "fold": 5,
+        "train_pairs": 2129,
+        "test_pairs": 370,
+        "held_out_type_groups": 54,
+        "exact_match": 0.984
+      }
+    ],
+    "exact_match": 0.987,
+    "macro_label_f1": 0.99,
+    "per_label": {
+      "P17": {
+        "precision": 0.996,
+        "recall": 0.98,
+        "f1": 0.988,
+        "support": 1376
+      },
+      "P8047": {
+        "precision": 0.99,
+        "recall": 0.996,
+        "f1": 0.993,
+        "support": 1140
+      }
+    },
+    "baseline_exact_match": 0.021,
+    "actual": {
+      "P8047": 1123,
+      "P17|P8047": 17,
+      "P17": 1359
+    },
+    "predicted": {
+      "P8047": 1146,
+      "P17": 1353
+    },
+    "signature_exact_counts": {
+      "P17": {
+        "correct": 1348,
+        "total": 1359
+      },
+      "P17|P8047": {
+        "correct": 0,
+        "total": 17
+      },
+      "P8047": {
+        "correct": 1118,
+        "total": 1123
+      }
+    }
+  },
+  "top_features": {
+    "P17": [
+      {
+        "target_code": "P17",
+        "feature": "S_PROP_P137",
+        "review_label": "operator",
+        "importance": 0.9967,
+        "support": 1277
+      },
+      {
+        "target_code": "P17",
+        "feature": "S_PROP_P361",
+        "review_label": "part of",
+        "importance": 0.0007,
+        "support": 1428
+      },
+      {
+        "target_code": "P17",
+        "feature": "O_PROP_P460",
+        "review_label": "said to be the same as",
+        "importance": 0.0007,
+        "support": 2014
+      },
+      {
+        "target_code": "P17",
+        "feature": "S_PARENT_Q2031121",
+        "review_label": "",
+        "importance": 0.0006,
+        "support": 58
+      },
+      {
+        "target_code": "P17",
+        "feature": "S_PROP_P1343",
+        "review_label": "described by source",
+        "importance": 0.0006,
+        "support": 1142
+      },
+      {
+        "target_code": "P17",
+        "feature": "S_PROP_P1889",
+        "review_label": "different from",
+        "importance": 0.0004,
+        "support": 356
+      },
+      {
+        "target_code": "P17",
+        "feature": "S_PROP_P176",
+        "review_label": "manufacturer",
+        "importance": 0.0003,
+        "support": 1300
+      },
+      {
+        "target_code": "P17",
+        "feature": "S_PROP_P1071",
+        "review_label": "location of creation",
+        "importance": 0.0001,
+        "support": 972
+      },
+      {
+        "target_code": "P17",
+        "feature": "S_TYPE_Q176799",
+        "review_label": "",
+        "importance": 0.0,
+        "support": 511
+      },
+      {
+        "target_code": "P17",
+        "feature": "O_TYPE_Q1323642",
+        "review_label": "",
+        "importance": 0.0,
+        "support": 570
+      }
+    ],
+    "P8047": [
+      {
+        "target_code": "P8047",
+        "feature": "S_PROP_P137",
+        "review_label": "operator",
+        "importance": 0.9984,
+        "support": 1277
+      },
+      {
+        "target_code": "P8047",
+        "feature": "O_PROP_P1464",
+        "review_label": "category for people born here",
+        "importance": 0.0007,
+        "support": 915
+      },
+      {
+        "target_code": "P8047",
+        "feature": "S_PROP_P1343",
+        "review_label": "described by source",
+        "importance": 0.0006,
+        "support": 1142
+      },
+      {
+        "target_code": "P8047",
+        "feature": "S_PROP_P176",
+        "review_label": "manufacturer",
+        "importance": 0.0003,
+        "support": 1300
+      },
+      {
+        "target_code": "P8047",
+        "feature": "S_TYPE_Q176799",
+        "review_label": "",
+        "importance": 0.0,
+        "support": 511
+      },
+      {
+        "target_code": "P8047",
+        "feature": "O_TYPE_Q1323642",
+        "review_label": "",
+        "importance": 0.0,
+        "support": 570
+      },
+      {
+        "target_code": "P8047",
+        "feature": "S_PROP_P1071",
+        "review_label": "location of creation",
+        "importance": 0.0,
+        "support": 972
+      }
+    ]
+  },
+  "trees": {
+    "P17": "|--- S_PROP_P137 <= 0.50\n|   |--- S_PROP_P176 <= 0.50\n|   |   |--- O_TYPE_Q1323642 <= 0.50\n|   |   |   |--- class: 1\n|   |   |--- O_TYPE_Q1323642 >  0.50\n|   |   |   |--- S_TYPE_Q176799 <= 0.50\n|   |   |   |   |--- class: 1\n|   |   |   |--- S_TYPE_Q176799 >  0.50\n|   |   |   |   |--- class: 1\n|   |--- S_PROP_P176 >  0.50\n|   |   |--- S_PROP_P1071 <= 0.50\n|   |   |   |--- class: 1\n|   |   |--- S_PROP_P1071 >  0.50\n|   |   |   |--- class: 1\n|--- S_PROP_P137 >  0.50\n|   |--- S_PROP_P1343 <= 0.50\n|   |   |--- S_PARENT_Q2031121 <= 0.50\n|   |   |   |--- O_PROP_P460 <= 0.50\n|   |   |   |   |--- class: 0\n|   |   |   |--- O_PROP_P460 >  0.50\n|   |   |   |   |--- class: 0\n|   |   |--- S_PARENT_Q2031121 >  0.50\n|   |   |   |--- class: 0\n|   |--- S_PROP_P1343 >  0.50\n|   |   |--- S_PROP_P1889 <= 0.50\n|   |   |   |--- S_PROP_P1071 <= 0.50\n|   |   |   |   |--- class: 0\n|   |   |   |--- S_PROP_P1071 >  0.50\n|   |   |   |   |--- class: 0\n|   |   |--- S_PROP_P1889 >  0.50\n|   |   |   |--- S_PROP_P361 <= 0.50\n|   |   |   |   |--- class: 0\n|   |   |   |--- S_PROP_P361 >  0.50\n|   |   |   |   |--- class: 0\n",
+    "P8047": "|--- S_PROP_P137 <= 0.50\n|   |--- S_PROP_P176 <= 0.50\n|   |   |--- O_TYPE_Q1323642 <= 0.50\n|   |   |   |--- class: 0\n|   |   |--- O_TYPE_Q1323642 >  0.50\n|   |   |   |--- S_TYPE_Q176799 <= 0.50\n|   |   |   |   |--- class: 0\n|   |   |   |--- S_TYPE_Q176799 >  0.50\n|   |   |   |   |--- class: 0\n|   |--- S_PROP_P176 >  0.50\n|   |   |--- S_PROP_P1071 <= 0.50\n|   |   |   |--- class: 0\n|   |   |--- S_PROP_P1071 >  0.50\n|   |   |   |--- class: 0\n|--- S_PROP_P137 >  0.50\n|   |--- S_PROP_P1343 <= 0.50\n|   |   |--- O_PROP_P1464 <= 0.50\n|   |   |   |--- class: 1\n|   |   |--- O_PROP_P1464 >  0.50\n|   |   |   |--- class: 1\n|   |--- S_PROP_P1343 >  0.50\n|   |   |--- class: 1\n"
+  },
+  "unrecorded_actions": {
+    "CANDIDATE_FOR_TEXT_CHECK": 600
+  },
+  "p137_by_observed_signature": {
+    "P17": {
+      "present": 6,
+      "absent": 1353
+    },
+    "P17|P8047": {
+      "present": 17,
+      "absent": 0
+    },
+    "P8047": {
+      "present": 1118,
+      "absent": 5
+    },
+    "unrecorded": {
+      "present": 136,
+      "absent": 464
+    }
+  },
+  "unrecorded_predictions_are_accepted": false,
+  "relation_names_used_as_features": false,
+  "target_codes_used_as_features": false,
+  "source_data_modified": false
+}

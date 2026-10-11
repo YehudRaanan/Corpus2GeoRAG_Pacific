@@ -107,6 +107,15 @@ The numeric weights and gates are POC settings. They need validation on more
 relations before production use. Repeated pairs show structural agreement;
 they do not prove that two predicate definitions are exactly equal.
 
+## `country` follow-up
+
+A separate context POC tested the unresolved DBpedia `country` group. Nearby
+graph properties separate the large `P17`-only and `P8047`-only groups with
+98.9% exact agreement under subject-type-group holdout. It identifies none of
+the 17 known pairs that contain both relations. The 600 unrecorded pairs remain
+text-check candidates, not accepted relations. See
+[`COUNTRY_CONTEXT_POC_2026-10-11.md`](COUNTRY_CONTEXT_POC_2026-10-11.md).
+
 ## Files
 
 - `data_driven_mapping_poc/candidate_rankings.csv`: top five Wikidata

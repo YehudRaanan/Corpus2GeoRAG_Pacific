@@ -1,0 +1,18 @@
+target_code,feature,review_label,importance,support
+P17,S_PROP_P137,operator,0.9967,1277
+P17,S_PROP_P361,part of,0.0007,1428
+P17,O_PROP_P460,said to be the same as,0.0007,2014
+P17,S_PARENT_Q2031121,,0.0006,58
+P17,S_PROP_P1343,described by source,0.0006,1142
+P17,S_PROP_P1889,different from,0.0004,356
+P17,S_PROP_P176,manufacturer,0.0003,1300
+P17,S_PROP_P1071,location of creation,0.0001,972
+P17,S_TYPE_Q176799,,0.0,511
+P17,O_TYPE_Q1323642,,0.0,570
+P8047,S_PROP_P137,operator,0.9984,1277
+P8047,O_PROP_P1464,category for people born here,0.0007,915
+P8047,S_PROP_P1343,described by source,0.0006,1142
+P8047,S_PROP_P176,manufacturer,0.0003,1300
+P8047,S_TYPE_Q176799,,0.0,511
+P8047,O_TYPE_Q1323642,,0.0,570
+P8047,S_PROP_P1071,location of creation,0.0,972
