@@ -1,0 +1,344 @@
+{
+  "source_role": "EventKG hasPlace",
+  "pairs": 317,
+  "coded_pairs": 101,
+  "unrecorded_pairs": 216,
+  "distinct_event_qids": 94,
+  "distinct_object_qids": 41,
+  "feature_count_raw_all_pairs": 16508,
+  "feature_count_raw_coded_pairs": 12458,
+  "feature_count_support_eligible": 6497,
+  "feature_families_raw": {
+    "object:ek:graph": 34,
+    "object:ek:literal_decade": 34,
+    "object:ek:literal_meta": 20,
+    "object:ek:near_relation": 22,
+    "object:ek:near_relation_graph": 35,
+    "object:ek:object_kind": 11,
+    "object:ek:predicate": 11,
+    "object:ek:predicate_graph": 94,
+    "object:ek:resource_link": 1,
+    "object:ek:text_token": 303,
+    "object:ek:value": 136,
+    "object:wd:aliases_language": 186,
+    "object:wd:aliases_token": 189,
+    "object:wd:claim_count": 743,
+    "object:wd:coordinate": 1,
+    "object:wd:datatype": 609,
+    "object:wd:descriptions_language": 183,
+    "object:wd:descriptions_token": 255,
+    "object:wd:labels_language": 320,
+    "object:wd:labels_token": 141,
+    "object:wd:lat_band": 8,
+    "object:wd:lon_band": 15,
+    "object:wd:property": 609,
+    "object:wd:qualifier": 343,
+    "object:wd:qualifier_datatype": 343,
+    "object:wd:quantity_magnitude": 36,
+    "object:wd:quantity_unit": 11,
+    "object:wd:rank": 638,
+    "object:wd:reference": 519,
+    "object:wd:sitelink": 336,
+    "object:wd:sitelink_count": 3,
+    "object:wd:string_length": 467,
+    "object:wd:text_language": 130,
+    "object:wd:text_token": 22,
+    "object:wd:time_decade": 26,
+    "object:wd:time_precision": 13,
+    "object:wd:value": 1382,
+    "pair_source_graph": 2,
+    "pair_text_context": 583,
+    "subject:ek:graph": 34,
+    "subject:ek:literal_decade": 40,
+    "subject:ek:literal_meta": 50,
+    "subject:ek:near_relation": 84,
+    "subject:ek:near_relation_graph": 146,
+    "subject:ek:object_kind": 17,
+    "subject:ek:predicate": 17,
+    "subject:ek:predicate_graph": 116,
+    "subject:ek:resource_link": 6,
+    "subject:ek:text_token": 2137,
+    "subject:ek:value": 86,
+    "subject:wd:aliases_language": 132,
+    "subject:wd:aliases_token": 200,
+    "subject:wd:claim_count": 385,
+    "subject:wd:coordinate": 1,
+    "subject:wd:datatype": 313,
+    "subject:wd:descriptions_language": 145,
+    "subject:wd:descriptions_token": 392,
+    "subject:wd:labels_language": 308,
+    "subject:wd:labels_token": 375,
+    "subject:wd:lat_band": 9,
+    "subject:wd:lon_band": 19,
+    "subject:wd:property": 313,
+    "subject:wd:qualifier": 154,
+    "subject:wd:qualifier_datatype": 154,
+    "subject:wd:quantity_magnitude": 17,
+    "subject:wd:rank": 321,
+    "subject:wd:reference": 271,
+    "subject:wd:sitelink": 324,
+    "subject:wd:sitelink_count": 4,
+    "subject:wd:string_length": 271,
+    "subject:wd:text_language": 11,
+    "subject:wd:text_token": 5,
+    "subject:wd:time_decade": 9,
+    "subject:wd:time_precision": 15,
+    "subject:wd:value": 813
+  },
+  "complete_eventkg_direct": [
+    "events",
+    "entities",
+    "preferred_labels",
+    "relations_events_base",
+    "relations_entities_base",
+    "events_first_sentences",
+    "events_descriptions_from_text_events",
+    "types",
+    "types_dbpedia",
+    "types_wikidata",
+    "text_events"
+  ],
+  "complete_eventkg_reified": [
+    "relations_events_other",
+    "relations_events_literals",
+    "relations_entities_temporal",
+    "text_event_links"
+  ],
+  "excluded_incomplete_eventkg": [
+    "entity_links",
+    "entity_mentions",
+    "event_links",
+    "event_mentions",
+    "relations_entities_other"
+  ],
+  "excluded_predictors": [
+    "event_qid and object_qid",
+    "EventKG resource and relation IDs",
+    "Wikidata P17, P276, and P710 claims",
+    "previous cluster, tree leaf, and model prediction outputs",
+    "technical revision, page, and modified-time metadata"
+  ],
+  "wikidata_scan": {
+    "entities": 343,
+    "excluded_target_statements": 974
+  },
+  "eventkg_direct_scan": {
+    "matched_events": 9369,
+    "matched_entities": 2389,
+    "matched_preferred_labels": 343,
+    "matched_relations_events_base": 9929,
+    "matched_relations_entities_base": 986,
+    "matched_events_first_sentences": 1960,
+    "matched_events_descriptions_from_text_events": 44,
+    "matched_types": 786,
+    "matched_types_dbpedia": 1678,
+    "matched_types_wikidata": 442,
+    "matched_text_events": 2642
+  },
+  "eventkg_relation_scan": {
+    "matched_relations_events_other": 22512,
+    "excluded_wikidata_copy_relations_events_other": 137540,
+    "matched_relations_events_literals": 13321,
+    "excluded_wikidata_copy_relations_events_literals": 116,
+    "excluded_wikidata_copy_relations_entities_temporal": 108205,
+    "matched_relations_entities_temporal": 4,
+    "matched_text_event_links": 15299
+  },
+  "warsampo_overlap": {
+    "screened_identity_qids_in_cases": 0,
+    "same_relation_pairs_in_cases": 0
+  },
+  "start_mixed_pairs": 101,
+  "selected_fields": [
+    "object:ek:near_relation:relations_events_other:out=participatedIn",
+    "subject:wd:reference:P950=P1476",
+    "subject:ek:text_token:label=invasion",
+    "subject:ek:text_token:description=off"
+  ],
+  "steps": [
+    {
+      "field": "object:ek:near_relation:relations_events_other:out=participatedIn",
+      "added_groups": 1,
+      "groups": 2,
+      "mixed_pairs": 66,
+      "ambiguity_reduction": 35,
+      "consistent_supported_pairs": 35
+    },
+    {
+      "field": "subject:wd:reference:P950=P1476",
+      "added_groups": 1,
+      "groups": 3,
+      "mixed_pairs": 60,
+      "ambiguity_reduction": 6,
+      "consistent_supported_pairs": 41
+    },
+    {
+      "field": "subject:ek:text_token:label=invasion",
+      "added_groups": 1,
+      "groups": 4,
+      "mixed_pairs": 55,
+      "ambiguity_reduction": 5,
+      "consistent_supported_pairs": 46
+    },
+    {
+      "field": "subject:ek:text_token:description=off",
+      "added_groups": 1,
+      "groups": 5,
+      "mixed_pairs": 52,
+      "ambiguity_reduction": 3,
+      "consistent_supported_pairs": 49
+    }
+  ],
+  "final_coded_groups": 5,
+  "all_pair_groups": 6,
+  "final_mixed_pairs": 52,
+  "final_consistent_pairs": 49,
+  "final_group_summary": [
+    {
+      "group": 1,
+      "selected_pattern": "0000",
+      "pairs": 81,
+      "coded_pairs": 35,
+      "unrecorded_pairs": 46,
+      "distinct_object_qids": 54,
+      "recorded_code_counts": {
+        "P276": 35
+      },
+      "coded_consistent": true
+    },
+    {
+      "group": 2,
+      "selected_pattern": "0100",
+      "pairs": 6,
+      "coded_pairs": 0,
+      "unrecorded_pairs": 6,
+      "distinct_object_qids": 6,
+      "recorded_code_counts": {},
+      "coded_consistent": false
+    },
+    {
+      "group": 3,
+      "selected_pattern": "1000",
+      "pairs": 196,
+      "coded_pairs": 52,
+      "unrecorded_pairs": 144,
+      "distinct_object_qids": 17,
+      "recorded_code_counts": {
+        "P17": 16,
+        "P17|P276": 2,
+        "P17|P276|P710": 1,
+        "P17|P710": 5,
+        "P276": 8,
+        "P276|P710": 1,
+        "P710": 19
+      },
+      "coded_consistent": false
+    },
+    {
+      "group": 4,
+      "selected_pattern": "1001",
+      "pairs": 5,
+      "coded_pairs": 3,
+      "unrecorded_pairs": 2,
+      "distinct_object_qids": 3,
+      "recorded_code_counts": {
+        "P710": 3
+      },
+      "coded_consistent": true
+    },
+    {
+      "group": 5,
+      "selected_pattern": "1010",
+      "pairs": 14,
+      "coded_pairs": 5,
+      "unrecorded_pairs": 9,
+      "distinct_object_qids": 8,
+      "recorded_code_counts": {
+        "P710": 5
+      },
+      "coded_consistent": true
+    },
+    {
+      "group": 6,
+      "selected_pattern": "1100",
+      "pairs": 15,
+      "coded_pairs": 6,
+      "unrecorded_pairs": 9,
+      "distinct_object_qids": 8,
+      "recorded_code_counts": {
+        "P710": 6
+      },
+      "coded_consistent": true
+    }
+  ],
+  "stop_reason": "no unused field creates a supported split and reduces mixed coded pairs",
+  "held_out_by_object": {
+    "rule_applications": 37,
+    "correct_recorded_code_sets": 32,
+    "folds": [
+      {
+        "fold": 1,
+        "test_pairs": 23,
+        "selected_fields": [
+          "object:ek:near_relation:relations_events_other:out=participatedIn",
+          "subject:ek:text_token:label=invasion",
+          "subject:wd:descriptions_language=nn"
+        ],
+        "rule_applications": 2,
+        "correct_recorded_code_sets": 1
+      },
+      {
+        "fold": 2,
+        "test_pairs": 20,
+        "selected_fields": [
+          "object:ek:near_relation:relations_events_other:out=participatedIn",
+          "subject:wd:value:P1343=Q26979622",
+          "subject:wd:claim_count:P3553=1",
+          "subject:ek:text_token:label=invasion"
+        ],
+        "rule_applications": 7,
+        "correct_recorded_code_sets": 6
+      },
+      {
+        "fold": 3,
+        "test_pairs": 20,
+        "selected_fields": [
+          "object:ek:near_relation:relations_events_other:out=participatedIn",
+          "subject:wd:value:P31=Q1261499",
+          "pair:text_context=military",
+          "subject:wd:sitelink_count=4_10"
+        ],
+        "rule_applications": 4,
+        "correct_recorded_code_sets": 3
+      },
+      {
+        "fold": 4,
+        "test_pairs": 19,
+        "selected_fields": [
+          "object:ek:near_relation:relations_events_other:out=participatedIn",
+          "subject:ek:text_token:label=invasion",
+          "subject:wd:claim_count:P1343=2_3",
+          "subject:wd:aliases_token=fourth",
+          "subject:wd:datatype:P1621=commonsMedia",
+          "subject:wd:qualifier:P268=P1810",
+          "subject:wd:descriptions_language=fr"
+        ],
+        "rule_applications": 11,
+        "correct_recorded_code_sets": 9
+      },
+      {
+        "fold": 5,
+        "test_pairs": 19,
+        "selected_fields": [
+          "object:ek:near_relation:relations_events_other:out=participatedIn",
+          "subject:wd:reference:P950=P1476",
+          "subject:ek:text_token:description=around",
+          "subject:ek:text_token:label=invasion",
+          "subject:ek:text_token:description=off"
+        ],
+        "rule_applications": 13,
+        "correct_recorded_code_sets": 13
+      }
+    ]
+  }
+}

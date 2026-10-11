@@ -1,4 +1,5 @@
 import run_incremental_distinct_poc as poc
+import run_all_fields_distinct_poc as all_fields
 
 
 def test_smallest_useful_split_then_stop():
@@ -51,3 +52,16 @@ def test_fewest_new_groups_wins_over_larger_ambiguity_reduction():
     selected, steps = poc.choose_fields(rows, initial=("base",))
     assert selected[1] == "small"
     assert steps[0]["added_groups"] == 1
+
+
+def test_all_fields_parser_handles_uri_and_literal():
+    uri = all_fields.parse_line("<s> <p> <o> <g> .\n")
+    literal = all_fields.parse_line('<s> <p> "Battle of X"@en <g> .\n')
+    assert uri == ("s", "p", "<o>", "g")
+    assert literal == ("s", "p", '"Battle of X"@en', "g")
+    assert all_fields.parse_object(uri[2]) == ("uri", "o", None)
+    assert all_fields.parse_object(literal[2]) == ("literal", "Battle of X", "en")
+
+
+def test_target_properties_are_excluded_from_wikidata_features():
+    assert all_fields.TARGET_PROPERTIES == {"P17", "P276", "P710"}
