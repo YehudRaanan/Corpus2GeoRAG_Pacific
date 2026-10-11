@@ -1,0 +1,31 @@
+{
+  "population_qids": 53857,
+  "records": 53857,
+  "eventkg_mapped_qids": 38517,
+  "source_predicates": {
+    "EventKG": 826,
+    "WarSampo": 165,
+    "Wikidata": 670
+  },
+  "observed_source_predicates": {
+    "EventKG": 826,
+    "WarSampo": 145,
+    "Wikidata": 670
+  },
+  "defined_not_observed": {
+    "WarSampo": 20
+  },
+  "excluded_predicates": 141,
+  "level1_families": 15,
+  "level2_relations": 1106,
+  "assigned_level2_relations": 229,
+  "defined_not_observed_level2_relations": 12,
+  "accepted_cross_vocabulary_rows": 11,
+  "accepted_definition_mappings": 7,
+  "accepted_data_supported_mappings": 4,
+  "eventkg_copied_only_predicates": 476,
+  "unassigned_level2_relations": 877,
+  "unresolved_label_candidates": 58,
+  "classifier_run": false,
+  "source_data_modified": false
+}

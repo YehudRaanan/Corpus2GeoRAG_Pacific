@@ -1,0 +1,4026 @@
+{
+  "source": "https://query.wikidata.org/sparql",
+  "fetched_at": "2026-10-11T12:30:17.450714+00:00",
+  "properties": {
+    "P101": {
+      "label": "field of work",
+      "description": "specialization of a person or organization; see P106 for the occupation/ P452 for industry",
+      "datatype": "http://wikiba.se/ontology#WikibaseItem",
+      "metadata_source": "https://query.wikidata.org/sparql"
+    },
+    "P102": {
+      "label": "member of political party",
+      "description": "the political party of which a person is or has been a member or otherwise affiliated",
+      "datatype": "http://wikiba.se/ontology#WikibaseItem",
+      "metadata_source": "https://query.wikidata.org/sparql"
+    },
+    "P103": {
+      "label": "native language",
+      "description": "language or languages a person (or group) has learned from early childhood",
+      "datatype": "http://wikiba.se/ontology#WikibaseItem",
+      "metadata_source": "https://query.wikidata.org/sparql"
+    },
+    "P105": {
+      "label": "taxon rank",
+      "description": "level in a taxonomic hierarchy",
+      "datatype": "http://wikiba.se/ontology#WikibaseItem",
+      "metadata_source": "https://query.wikidata.org/sparql"
+    },
+    "P108": {
+      "label": "employer",
+      "description": "person or organization for which the subject works or worked",
+      "datatype": "http://wikiba.se/ontology#WikibaseItem",
+      "metadata_source": "https://query.wikidata.org/sparql"
+    },
+    "P110": {
+      "label": "illustrator",
+      "description": "person drawing the pictures or taking the photographs in a book or similar work",
+      "datatype": "http://wikiba.se/ontology#WikibaseItem",
+      "metadata_source": "https://query.wikidata.org/sparql"
+    },
+    "P112": {
+      "label": "founder",
+      "description": "founder or co-founder of this organization, religion, place or entity",
+      "datatype": "http://wikiba.se/ontology#WikibaseItem",
+      "metadata_source": "https://query.wikidata.org/sparql"
+    },
+    "P106": {
+      "label": "occupation",
+      "description": "occupation of a person. See also \"field of work\" (Property:P101), \"position held\" (Property:P39). Not for groups of people. There, use \"field of work\" (Property:P101), \"industry\" (Property:P452), \"members have occupation\" (Property:P3989).",
+      "datatype": "http://wikiba.se/ontology#WikibaseItem",
+      "metadata_source": "https://query.wikidata.org/sparql"
+    },
+    "P113": {
+      "label": "airline hub",
+      "description": "airport that serves as a hub for an airline",
+      "datatype": "http://wikiba.se/ontology#WikibaseItem",
+      "metadata_source": "https://query.wikidata.org/sparql"
+    },
+    "P114": {
+      "label": "airline alliance",
+      "description": "alliance the airline belongs to",
+      "datatype": "http://wikiba.se/ontology#WikibaseItem",
+      "metadata_source": "https://query.wikidata.org/sparql"
+    },
+    "P118": {
+      "label": "league or competition",
+      "description": "league or competition in which team or player has played, or in which an event occurs",
+      "datatype": "http://wikiba.se/ontology#WikibaseItem",
+      "metadata_source": "https://query.wikidata.org/sparql"
+    },
+    "P119": {
+      "label": "place of burial",
+      "description": "location of grave, resting place, place of ash-scattering, etc. (e.g., town/city or cemetery) for a person or animal. There may be several places: e.g., re-burials, parts of body buried separately.",
+      "datatype": "http://wikiba.se/ontology#WikibaseItem",
+      "metadata_source": "https://query.wikidata.org/sparql"
+    },
+    "P121": {
+      "label": "item operated",
+      "description": "equipment, installation or service operated by the subject",
+      "datatype": "http://wikiba.se/ontology#WikibaseItem",
+      "metadata_source": "https://query.wikidata.org/sparql"
+    },
+    "P122": {
+      "label": "basic form of government",
+      "description": "subject's government",
+      "datatype": "http://wikiba.se/ontology#WikibaseItem",
+      "metadata_source": "https://query.wikidata.org/sparql"
+    },
+    "P127": {
+      "label": "owned by",
+      "description": "owner of the subject",
+      "datatype": "http://wikiba.se/ontology#WikibaseItem",
+      "metadata_source": "https://query.wikidata.org/sparql"
+    },
+    "P123": {
+      "label": "publisher",
+      "description": "organization or person responsible for publishing a work, such as a book, periodical, printed music, podcast, game or software",
+      "datatype": "http://wikiba.se/ontology#WikibaseItem",
+      "metadata_source": "https://query.wikidata.org/sparql"
+    },
+    "P126": {
+      "label": "maintained by",
+      "description": "person or organization in charge of keeping the subject (for instance an infrastructure) in functioning order",
+      "datatype": "http://wikiba.se/ontology#WikibaseItem",
+      "metadata_source": "https://query.wikidata.org/sparql"
+    },
+    "P135": {
+      "label": "movement",
+      "description": "literary, artistic, scientific or philosophical movement or scene associated with this person or work. For political ideologies use P1142.",
+      "datatype": "http://wikiba.se/ontology#WikibaseItem",
+      "metadata_source": "https://query.wikidata.org/sparql"
+    },
+    "P136": {
+      "label": "genre",
+      "description": "creative work's genre or an artist's field of work (P101). Use main subject (P921) to relate creative works to their topic",
+      "datatype": "http://wikiba.se/ontology#WikibaseItem",
+      "metadata_source": "https://query.wikidata.org/sparql"
+    },
+    "P137": {
+      "label": "operator",
+      "description": "person, profession, organization or entity that operates the equipment, facility, or service",
+      "datatype": "http://wikiba.se/ontology#WikibaseItem",
+      "metadata_source": "https://query.wikidata.org/sparql"
+    },
+    "P131": {
+      "label": "located in the administrative territorial entity",
+      "description": "the item is located on the territory of the following administrative entity. Use P276 for specifying locations that are non-administrative places and for items about events. Use P1382 if the item falls only partially into the administrative entity",
+      "datatype": "http://wikiba.se/ontology#WikibaseItem",
+      "metadata_source": "https://query.wikidata.org/sparql"
+    },
+    "P138": {
+      "label": "named after",
+      "description": "entity or event that inspired the subject's name, or namesake (in at least one language). Qualifier \"applies to name\" (P5168) can be used to indicate which one",
+      "datatype": "http://wikiba.se/ontology#WikibaseItem",
+      "metadata_source": "https://query.wikidata.org/sparql"
+    },
+    "P1000": {
+      "label": "record held",
+      "description": "notable record achieved by a person or entity, include qualifiers for dates held",
+      "datatype": "http://wikiba.se/ontology#WikibaseItem",
+      "metadata_source": "https://query.wikidata.org/sparql"
+    },
+    "P1001": {
+      "label": "applies to jurisdiction",
+      "description": "the item (institution, law, public office, public register, etc) or statement belongs to or has power over or applies to the value (a territorial jurisdiction: a country, state, municipality, etc)",
+      "datatype": "http://wikiba.se/ontology#WikibaseItem",
+      "metadata_source": "https://query.wikidata.org/sparql"
+    },
+    "P1002": {
+      "label": "engine configuration",
+      "description": "configuration of an engine's cylinders",
+      "datatype": "http://wikiba.se/ontology#WikibaseItem",
+      "metadata_source": "https://query.wikidata.org/sparql"
+    },
+    "P1038": {
+      "label": "relative",
+      "description": "family member (qualify with \"kinship to subject\", P1039; for direct family member please use specific property)",
+      "datatype": "http://wikiba.se/ontology#WikibaseItem",
+      "metadata_source": "https://query.wikidata.org/sparql"
+    },
+    "P1040": {
+      "label": "film editor",
+      "description": "person who works with the raw footage, selecting shots and combining them into sequences to create a finished motion picture",
+      "datatype": "http://wikiba.se/ontology#WikibaseItem",
+      "metadata_source": "https://query.wikidata.org/sparql"
+    },
+    "P1050": {
+      "label": "medical condition",
+      "description": "any state relevant to the health of an organism, including diseases and positive conditions",
+      "datatype": "http://wikiba.se/ontology#WikibaseItem",
+      "metadata_source": "https://query.wikidata.org/sparql"
+    },
+    "P1056": {
+      "label": "product or material produced",
+      "description": "material or product, including services, produced or provided by an organization, industry, facility, or process",
+      "datatype": "http://wikiba.se/ontology#WikibaseItem",
+      "metadata_source": "https://query.wikidata.org/sparql"
+    },
+    "P1028": {
+      "label": "donated by",
+      "description": "person or organization who donated the object",
+      "datatype": "http://wikiba.se/ontology#WikibaseItem",
+      "metadata_source": "https://query.wikidata.org/sparql"
+    },
+    "P1029": {
+      "label": "crew members",
+      "description": "people that participated operating or serving aboard this vehicle",
+      "datatype": "http://wikiba.se/ontology#WikibaseItem",
+      "metadata_source": "https://query.wikidata.org/sparql"
+    },
+    "P1035": {
+      "label": "honorific suffix",
+      "description": "word or expression with connotations conveying esteem or respect when used, after a name, in addressing or referring to a person",
+      "datatype": "http://wikiba.se/ontology#WikibaseItem",
+      "metadata_source": "https://query.wikidata.org/sparql"
+    },
+    "P1037": {
+      "label": "director / manager",
+      "description": "person who manages any kind of group or organisation",
+      "datatype": "http://wikiba.se/ontology#WikibaseItem",
+      "metadata_source": "https://query.wikidata.org/sparql"
+    },
+    "P1064": {
+      "label": "track gauge",
+      "description": "spacing of the rails on a railway track",
+      "datatype": "http://wikiba.se/ontology#WikibaseItem",
+      "metadata_source": "https://query.wikidata.org/sparql"
+    },
+    "P1066": {
+      "label": "student of",
+      "description": "person who has taught this person",
+      "datatype": "http://wikiba.se/ontology#WikibaseItem",
+      "metadata_source": "https://query.wikidata.org/sparql"
+    },
+    "P1071": {
+      "label": "location of creation",
+      "description": "place where the item was conceived or made; where applicable, location of final assembly",
+      "datatype": "http://wikiba.se/ontology#WikibaseItem",
+      "metadata_source": "https://query.wikidata.org/sparql"
+    },
+    "P1074": {
+      "label": "fictional or mythical analog of",
+      "description": "used to link an entity or class of entities appearing in a creative work with the analogous entity or class of entities in the real world",
+      "datatype": "http://wikiba.se/ontology#WikibaseItem",
+      "metadata_source": "https://query.wikidata.org/sparql"
+    },
+    "P1075": {
+      "label": "rector",
+      "description": "senior official in an educational institution.",
+      "datatype": "http://wikiba.se/ontology#WikibaseItem",
+      "metadata_source": "https://query.wikidata.org/sparql"
+    },
+    "P1151": {
+      "label": "topic's main Wikimedia portal",
+      "description": "Wikimedia portal associated with this topic",
+      "datatype": "http://wikiba.se/ontology#WikibaseItem",
+      "metadata_source": "https://query.wikidata.org/sparql"
+    },
+    "P1196": {
+      "label": "manner of death",
+      "description": "general circumstances of a person's death; e.g. natural causes, accident, suicide, homicide, etc. Use 'cause of death' (P509) for the specific physiological mechanism, e.g. heart attack, trauma, pneumonia etc.",
+      "datatype": "http://wikiba.se/ontology#WikibaseItem",
+      "metadata_source": "https://query.wikidata.org/sparql"
+    },
+    "P1026": {
+      "label": "academic thesis",
+      "description": "thesis or dissertation written for a degree",
+      "datatype": "http://wikiba.se/ontology#WikibaseItem",
+      "metadata_source": "https://query.wikidata.org/sparql"
+    },
+    "P1027": {
+      "label": "conferred by",
+      "description": "person or organization who grants an award, certification, grant, or role",
+      "datatype": "http://wikiba.se/ontology#WikibaseItem",
+      "metadata_source": "https://query.wikidata.org/sparql"
+    },
+    "P1269": {
+      "label": "facet of",
+      "description": "topic of which this item is an aspect; item that offers a broader perspective on the same topic",
+      "datatype": "http://wikiba.se/ontology#WikibaseItem",
+      "metadata_source": "https://query.wikidata.org/sparql"
+    },
+    "P1283": {
+      "label": "filmography",
+      "description": "item for the list of films a person has contributed to. Don't use it to add film items. Instead, add actors as \"cast member\" (P161) on items for films, directors with \"director\" (P57)",
+      "datatype": "http://wikiba.se/ontology#WikibaseItem",
+      "metadata_source": "https://query.wikidata.org/sparql"
+    },
+    "P1202": {
+      "label": "carries scientific instrument",
+      "description": "scientific instruments carried by a vessel, satellite, or device that are not required for propelling or navigating",
+      "datatype": "http://wikiba.se/ontology#WikibaseItem",
+      "metadata_source": "https://query.wikidata.org/sparql"
+    },
+    "P1210": {
+      "label": "supercharger",
+      "description": "supercharger or turbocharger used by an engine",
+      "datatype": "http://wikiba.se/ontology#WikibaseItem",
+      "metadata_source": "https://query.wikidata.org/sparql"
+    },
+    "P1211": {
+      "label": "fuel system",
+      "description": "fuel system that an engine uses",
+      "datatype": "http://wikiba.se/ontology#WikibaseItem",
+      "metadata_source": "https://query.wikidata.org/sparql"
+    },
+    "P1221": {
+      "label": "compressor type",
+      "description": "type of mechanical compressor technology used by subject",
+      "datatype": "http://wikiba.se/ontology#WikibaseItem",
+      "metadata_source": "https://query.wikidata.org/sparql"
+    },
+    "P1268": {
+      "label": "represents",
+      "description": "organization, individual, or concept that an entity represents",
+      "datatype": "http://wikiba.se/ontology#WikibaseItem",
+      "metadata_source": "https://query.wikidata.org/sparql"
+    },
+    "P1290": {
+      "label": "godparent",
+      "description": "person who sponsors the baptism of a given person",
+      "datatype": "http://wikiba.se/ontology#WikibaseItem",
+      "metadata_source": "https://query.wikidata.org/sparql"
+    },
+    "P1299": {
+      "label": "depicted by",
+      "description": "object depicting this subject (object being creative works such as books, films, paintings)",
+      "datatype": "http://wikiba.se/ontology#WikibaseItem",
+      "metadata_source": "https://query.wikidata.org/sparql"
+    },
+    "P1303": {
+      "label": "instrument",
+      "description": "musical instrument that a person plays or teaches or used in a music occupation",
+      "datatype": "http://wikiba.se/ontology#WikibaseItem",
+      "metadata_source": "https://query.wikidata.org/sparql"
+    },
+    "P1304": {
+      "label": "central bank",
+      "description": "country's central bank",
+      "datatype": "http://wikiba.se/ontology#WikibaseItem",
+      "metadata_source": "https://query.wikidata.org/sparql"
+    },
+    "P1308": {
+      "label": "position holder",
+      "description": "persons who hold and/or held the position",
+      "datatype": "http://wikiba.se/ontology#WikibaseItem",
+      "metadata_source": "https://query.wikidata.org/sparql"
+    },
+    "P1336": {
+      "label": "territory claimed by",
+      "description": "administrative divisions that claim control of a given area",
+      "datatype": "http://wikiba.se/ontology#WikibaseItem",
+      "metadata_source": "https://query.wikidata.org/sparql"
+    },
+    "P1340": {
+      "label": "eye color",
+      "description": "color of the irises of a person's eyes",
+      "datatype": "http://wikiba.se/ontology#WikibaseItem",
+      "metadata_source": "https://query.wikidata.org/sparql"
+    },
+    "P1313": {
+      "label": "office held by the head of government",
+      "description": "political office that is fulfilled by the head of the government of this item",
+      "datatype": "http://wikiba.se/ontology#WikibaseItem",
+      "metadata_source": "https://query.wikidata.org/sparql"
+    },
+    "P1321": {
+      "label": "municipal affiliation of a Swiss national",
+      "description": "lieu d'origine/Heimatort/luogo d'origine of a Swiss national. Not be confused with place of birth or place of residence",
+      "datatype": "http://wikiba.se/ontology#WikibaseItem",
+      "metadata_source": "https://query.wikidata.org/sparql"
+    },
+    "P1327": {
+      "label": "partner in business or sport",
+      "description": "professional collaborator",
+      "datatype": "http://wikiba.se/ontology#WikibaseItem",
+      "metadata_source": "https://query.wikidata.org/sparql"
+    },
+    "P1078": {
+      "label": "valvetrain configuration",
+      "description": "configuration of the valvetrain utilized by this engine",
+      "datatype": "http://wikiba.se/ontology#WikibaseItem",
+      "metadata_source": "https://query.wikidata.org/sparql"
+    },
+    "P1080": {
+      "label": "from narrative universe",
+      "description": "subject's fictional entity is in the object narrative. See also P1441 (present in work) and P1445 (fictional universe described in)",
+      "datatype": "http://wikiba.se/ontology#WikibaseItem",
+      "metadata_source": "https://query.wikidata.org/sparql"
+    },
+    "P1142": {
+      "label": "political ideology",
+      "description": "political ideology of an organization or person or of a work (such as a newspaper)",
+      "datatype": "http://wikiba.se/ontology#WikibaseItem",
+      "metadata_source": "https://query.wikidata.org/sparql"
+    },
+    "P1343": {
+      "label": "described by source",
+      "description": "work where this item is described, in statistical contexts, a methodological note describing the data",
+      "datatype": "http://wikiba.se/ontology#WikibaseItem",
+      "metadata_source": "https://query.wikidata.org/sparql"
+    },
+    "P1366": {
+      "label": "replaced by",
+      "description": "other person or item which continues the item by replacing it in its role. Use P156 (\"followed by\") if the item is not replaced nor identical, but adds to the series (e.g. books in a series)",
+      "datatype": "http://wikiba.se/ontology#WikibaseItem",
+      "metadata_source": "https://query.wikidata.org/sparql"
+    },
+    "P1376": {
+      "label": "capital of",
+      "description": "country, state, department, canton or other administrative division of which the municipality is the governmental seat",
+      "datatype": "http://wikiba.se/ontology#WikibaseItem",
+      "metadata_source": "https://query.wikidata.org/sparql"
+    },
+    "P1382": {
+      "label": "partially coincident with",
+      "description": "object that partially overlaps with the subject in its instances, parts, or members",
+      "datatype": "http://wikiba.se/ontology#WikibaseItem",
+      "metadata_source": "https://query.wikidata.org/sparql"
+    },
+    "P10129": {
+      "label": "protective marking",
+      "description": "label applied to an intellectual work to indicate how the document should be handled, particularly from a security or privacy perspective",
+      "datatype": "http://wikiba.se/ontology#WikibaseItem",
+      "metadata_source": "https://query.wikidata.org/sparql"
+    },
+    "P10241": {
+      "label": "individual of taxon",
+      "description": "the taxon of an individual named organism (animal, plant)",
+      "datatype": "http://wikiba.se/ontology#WikibaseItem",
+      "metadata_source": "https://query.wikidata.org/sparql"
+    },
+    "P13210": {
+      "label": "organisation tax status",
+      "description": "jurisdiction specific tax status of organisations like non-profits",
+      "datatype": "http://wikiba.se/ontology#WikibaseItem",
+      "metadata_source": "https://query.wikidata.org/sparql"
+    },
+    "P13459": {
+      "label": "research project that contributed to this data set",
+      "description": "research projects that have contributed to or otherwise created an item",
+      "datatype": "http://wikiba.se/ontology#WikibaseItem",
+      "metadata_source": "https://query.wikidata.org/sparql"
+    },
+    "P13574": {
+      "label": "most populous urban area",
+      "description": "city or town with the largest population in this area (country, state, county, continent, etc.)",
+      "datatype": "http://wikiba.se/ontology#WikibaseItem",
+      "metadata_source": "https://query.wikidata.org/sparql"
+    },
+    "P13773": {
+      "label": "LSF rating",
+      "description": "Indonesia film classification administered by the Film Censorship Board",
+      "datatype": "http://wikiba.se/ontology#WikibaseItem",
+      "metadata_source": "https://query.wikidata.org/sparql"
+    },
+    "P10254": {
+      "label": "associated cadastral district",
+      "description": "cadastral district in which a place is located. Use only if distinct from administrative entities (P131) in predefined countries. Use P14408 for cadastral districts of a municipality",
+      "datatype": "http://wikiba.se/ontology#WikibaseItem",
+      "metadata_source": "https://query.wikidata.org/sparql"
+    },
+    "P10280": {
+      "label": "category for honorary citizens of entity",
+      "description": "category containing the honorary citizens of a settlement (administrative unit, country). Honorary citizens may or may not be citizens of the country",
+      "datatype": "http://wikiba.se/ontology#WikibaseItem",
+      "metadata_source": "https://query.wikidata.org/sparql"
+    },
+    "P10290": {
+      "label": "hotel rating",
+      "description": "star rating of the hotel",
+      "datatype": "http://wikiba.se/ontology#WikibaseItem",
+      "metadata_source": "https://query.wikidata.org/sparql"
+    },
+    "P10527": {
+      "label": "documentation files at",
+      "description": "institution that holds documentation files about the subject",
+      "datatype": "http://wikiba.se/ontology#WikibaseItem",
+      "metadata_source": "https://query.wikidata.org/sparql"
+    },
+    "P10624": {
+      "label": "official observer status in organization",
+      "description": "organization by which the subject is granted observer status",
+      "datatype": "http://wikiba.se/ontology#WikibaseItem",
+      "metadata_source": "https://query.wikidata.org/sparql"
+    },
+    "P10642": {
+      "label": "place of disappearance",
+      "description": "place where people or things have disappeared; link with P746 (date of disappearance)",
+      "datatype": "http://wikiba.se/ontology#WikibaseItem",
+      "metadata_source": "https://query.wikidata.org/sparql"
+    },
+    "P10741": {
+      "label": "dance style",
+      "description": "dance style that the subject participates or participated in or is associated with",
+      "datatype": "http://wikiba.se/ontology#WikibaseItem",
+      "metadata_source": "https://query.wikidata.org/sparql"
+    },
+    "P12693": {
+      "label": "source of transfer",
+      "description": "entity that a transferred item is initially associated with, before this process associates it with another entity",
+      "datatype": "http://wikiba.se/ontology#WikibaseItem",
+      "metadata_source": "https://query.wikidata.org/sparql"
+    },
+    "P12714": {
+      "label": "tartan",
+      "description": "description of the subject's tartan",
+      "datatype": "http://wikiba.se/ontology#WikibaseItem",
+      "metadata_source": "https://query.wikidata.org/sparql"
+    },
+    "P12912": {
+      "label": "object of occurrence",
+      "description": "specific object to which an occurrence or class of occurrences applies",
+      "datatype": "http://wikiba.se/ontology#WikibaseItem",
+      "metadata_source": "https://query.wikidata.org/sparql"
+    },
+    "P12913": {
+      "label": "class of object(s) of occurrence",
+      "description": "class that includes the object(s) to which this occurrence (or class of occurrence) occurs or occurred",
+      "datatype": "http://wikiba.se/ontology#WikibaseItem",
+      "metadata_source": "https://query.wikidata.org/sparql"
+    },
+    "P12969": {
+      "label": "game designer",
+      "description": "person(s) who devised and developed this game",
+      "datatype": "http://wikiba.se/ontology#WikibaseItem",
+      "metadata_source": "https://query.wikidata.org/sparql"
+    },
+    "P12995": {
+      "label": "agent of action",
+      "description": "particular animate item that initiates this action or class of actions",
+      "datatype": "http://wikiba.se/ontology#WikibaseItem",
+      "metadata_source": "https://query.wikidata.org/sparql"
+    },
+    "P13044": {
+      "label": "characteristic of",
+      "description": "subject item or statement is a characteristic, quality, property, or state of this object (use a more specific property where possible)",
+      "datatype": "http://wikiba.se/ontology#WikibaseItem",
+      "metadata_source": "https://query.wikidata.org/sparql"
+    },
+    "P1344": {
+      "label": "participant in",
+      "description": "event in which a person, organization or creative work was/is a participant; inverse of P710 or P1923",
+      "datatype": "http://wikiba.se/ontology#WikibaseItem",
+      "metadata_source": "https://query.wikidata.org/sparql"
+    },
+    "P1346": {
+      "label": "winner",
+      "description": "winner of a competition or similar event, not to be used from the awardees record (instead use \"award received\" (P166), possibly qualified with \"for work\" (P1686)) nor for wars or battles",
+      "datatype": "http://wikiba.se/ontology#WikibaseItem",
+      "metadata_source": "https://query.wikidata.org/sparql"
+    },
+    "P1347": {
+      "label": "military casualty classification",
+      "description": "allowed values: killed in action (Q210392), missing in action (Q2344557), died of wounds (Q16861372), prisoner of war (Q179637), killed in flight accident (Q16861407), others used in military casualty classification",
+      "datatype": "http://wikiba.se/ontology#WikibaseItem",
+      "metadata_source": "https://query.wikidata.org/sparql"
+    },
+    "P1365": {
+      "label": "replaces",
+      "description": "person, state or item replaced. Use \"structure replaces\" (P1398) for structures. Use \"follows\" (P155) if the previous item was not replaced or predecessor and successor are identical",
+      "datatype": "http://wikiba.se/ontology#WikibaseItem",
+      "metadata_source": "https://query.wikidata.org/sparql"
+    },
+    "P11108": {
+      "label": "recorded participant",
+      "description": "agent taking an active role as a participant in a nonfiction moving image or other recorded work",
+      "datatype": "http://wikiba.se/ontology#WikibaseItem",
+      "metadata_source": "https://query.wikidata.org/sparql"
+    },
+    "P11146": {
+      "label": "collection items at",
+      "description": "institution (museum, collection, etc.) holding items (specimens or other objects) collected by the subject (collector) or at the subject (e.g. site). (use archive location P485 for the archives)",
+      "datatype": "http://wikiba.se/ontology#WikibaseItem",
+      "metadata_source": "https://query.wikidata.org/sparql"
+    },
+    "P11849": {
+      "label": "first performance by",
+      "description": "performer or performing group for the first performance of a work",
+      "datatype": "http://wikiba.se/ontology#WikibaseItem",
+      "metadata_source": "https://query.wikidata.org/sparql"
+    },
+    "P12011": {
+      "label": "tribe",
+      "description": "recognised membership in a society, mainly denoted by shared cultural heritage; for ethnicity use P172",
+      "datatype": "http://wikiba.se/ontology#WikibaseItem",
+      "metadata_source": "https://query.wikidata.org/sparql"
+    },
+    "P12020": {
+      "label": "state of transmission",
+      "description": "state in which a work is transmitted or its existence; for the state of its material witnesses (use with P5816)",
+      "datatype": "http://wikiba.se/ontology#WikibaseItem",
+      "metadata_source": "https://query.wikidata.org/sparql"
+    },
+    "P12095": {
+      "label": "fonds",
+      "description": "part of an archival collection which an item belongs to",
+      "datatype": "http://wikiba.se/ontology#WikibaseItem",
+      "metadata_source": "https://query.wikidata.org/sparql"
+    },
+    "P12328": {
+      "label": "simulates",
+      "description": "item simulated, imitated, or made to appear real by this item",
+      "datatype": "http://wikiba.se/ontology#WikibaseItem",
+      "metadata_source": "https://query.wikidata.org/sparql"
+    },
+    "P12330": {
+      "label": "Philippine middle name",
+      "description": "maternal surname generally placed in the middle of this person's name",
+      "datatype": "http://wikiba.se/ontology#WikibaseItem",
+      "metadata_source": "https://query.wikidata.org/sparql"
+    },
+    "P12363": {
+      "label": "clerked for",
+      "description": "this person has held a clerkship with the judge",
+      "datatype": "http://wikiba.se/ontology#WikibaseItem",
+      "metadata_source": "https://query.wikidata.org/sparql"
+    },
+    "P12439": {
+      "label": "civil rank",
+      "description": "non-military rank of a civil office holder in Russian Empire",
+      "datatype": "http://wikiba.se/ontology#WikibaseItem",
+      "metadata_source": "https://query.wikidata.org/sparql"
+    },
+    "P17": {
+      "label": "country",
+      "description": "sovereign state that this subject item is in (not to be used for human beings)",
+      "datatype": "http://wikiba.se/ontology#WikibaseItem",
+      "metadata_source": "https://query.wikidata.org/sparql"
+    },
+    "P140": {
+      "label": "religion or worldview",
+      "description": "religion of a person, organization or religious building, or associated with this subject",
+      "datatype": "http://wikiba.se/ontology#WikibaseItem",
+      "metadata_source": "https://query.wikidata.org/sparql"
+    },
+    "P144": {
+      "label": "based on",
+      "description": "the work(s) or inputs used as the basis for subject item; for fictional analog use P1074",
+      "datatype": "http://wikiba.se/ontology#WikibaseItem",
+      "metadata_source": "https://query.wikidata.org/sparql"
+    },
+    "P16": {
+      "label": "transport network",
+      "description": "network the infrastructure is a part of",
+      "datatype": "http://wikiba.se/ontology#WikibaseItem",
+      "metadata_source": "https://query.wikidata.org/sparql"
+    },
+    "P156": {
+      "label": "followed by",
+      "description": "immediately following item in a series of which the subject is a part, preferably use as qualifier of P179 [if the subject has been replaced, e.g. political offices, use \"replaced by\" (P1366)]",
+      "datatype": "http://wikiba.se/ontology#WikibaseItem",
+      "metadata_source": "https://query.wikidata.org/sparql"
+    },
+    "P155": {
+      "label": "follows",
+      "description": "immediately prior item in a series of which the subject is a part, preferably use as qualifier of P179 [if the subject has replaced the preceding item, e.g. political offices, use \"replaces\" (P1365)]",
+      "datatype": "http://wikiba.se/ontology#WikibaseItem",
+      "metadata_source": "https://query.wikidata.org/sparql"
+    },
+    "P157": {
+      "label": "killed by",
+      "description": "person or organization who killed the subject",
+      "datatype": "http://wikiba.se/ontology#WikibaseItem",
+      "metadata_source": "https://query.wikidata.org/sparql"
+    },
+    "P159": {
+      "label": "headquarters location",
+      "description": "city or town where an organization's headquarters is or has been situated. Use P276 qualifier for specific building",
+      "datatype": "http://wikiba.se/ontology#WikibaseItem",
+      "metadata_source": "https://query.wikidata.org/sparql"
+    },
+    "P161": {
+      "label": "cast member",
+      "description": "actor in the subject production [use \"character role\" (P453) and/or \"name of the character role\" (P4633) as qualifiers] [use \"voice actor\" (P725) for voice-only role] - [use \"recorded participant\" (P11108) for non-fiction productions]",
+      "datatype": "http://wikiba.se/ontology#WikibaseItem",
+      "metadata_source": "https://query.wikidata.org/sparql"
+    },
+    "P162": {
+      "label": "producer",
+      "description": "person(s) who produced the film, musical work, theatrical production, etc. (for film, this does not include executive producers, associate producers, etc.) [for production company, use P272, video games - use P178]",
+      "datatype": "http://wikiba.se/ontology#WikibaseItem",
+      "metadata_source": "https://query.wikidata.org/sparql"
+    },
+    "P163": {
+      "label": "flag",
+      "description": "subject's flag",
+      "datatype": "http://wikiba.se/ontology#WikibaseItem",
+      "metadata_source": "https://query.wikidata.org/sparql"
+    },
+    "P176": {
+      "label": "manufacturer",
+      "description": "(main or final) manufacturer or producer of this product",
+      "datatype": "http://wikiba.se/ontology#WikibaseItem",
+      "metadata_source": "https://query.wikidata.org/sparql"
+    },
+    "P149": {
+      "label": "architectural style",
+      "description": "architectural style of a structure",
+      "datatype": "http://wikiba.se/ontology#WikibaseItem",
+      "metadata_source": "https://query.wikidata.org/sparql"
+    },
+    "P150": {
+      "label": "contains the administrative territorial entity",
+      "description": "(list of) direct subdivisions of an administrative territorial entity",
+      "datatype": "http://wikiba.se/ontology#WikibaseItem",
+      "metadata_source": "https://query.wikidata.org/sparql"
+    },
+    "P167": {
+      "label": "structure replaced by",
+      "description": "the item which replaced this building or structure, at the same geographic location",
+      "datatype": "http://wikiba.se/ontology#WikibaseItem",
+      "metadata_source": "https://query.wikidata.org/sparql"
+    },
+    "P169": {
+      "label": "chief executive officer",
+      "description": "highest-ranking corporate officer appointed as the CEO within an organization",
+      "datatype": "http://wikiba.se/ontology#WikibaseItem",
+      "metadata_source": "https://query.wikidata.org/sparql"
+    },
+    "P166": {
+      "label": "award received",
+      "description": "award or recognition received by a person, organization or creative work",
+      "datatype": "http://wikiba.se/ontology#WikibaseItem",
+      "metadata_source": "https://query.wikidata.org/sparql"
+    },
+    "P170": {
+      "label": "creator",
+      "description": "maker of this creative work or other object (where no more specific property exists)",
+      "datatype": "http://wikiba.se/ontology#WikibaseItem",
+      "metadata_source": "https://query.wikidata.org/sparql"
+    },
+    "P171": {
+      "label": "parent taxon",
+      "description": "closest parent taxon of the taxon in question",
+      "datatype": "http://wikiba.se/ontology#WikibaseItem",
+      "metadata_source": "https://query.wikidata.org/sparql"
+    },
+    "P172": {
+      "label": "ethnic group",
+      "description": "subject's ethnicity (consensus is that a VERY high standard of proof is needed for this field to be used. In general this means 1) the subject claims it themselves, or 2) it is widely agreed on by scholars, or 3) is fictional and portrayed as such)",
+      "datatype": "http://wikiba.se/ontology#WikibaseItem",
+      "metadata_source": "https://query.wikidata.org/sparql"
+    },
+    "P175": {
+      "label": "performer",
+      "description": "actor, musician, band or other performer associated with this role or musical work",
+      "datatype": "http://wikiba.se/ontology#WikibaseItem",
+      "metadata_source": "https://query.wikidata.org/sparql"
+    },
+    "P184": {
+      "label": "doctoral advisor",
+      "description": "person who supervised the doctorate or PhD thesis of the subject",
+      "datatype": "http://wikiba.se/ontology#WikibaseItem",
+      "metadata_source": "https://query.wikidata.org/sparql"
+    },
+    "P185": {
+      "label": "doctoral student",
+      "description": "doctoral student(s) of a professor",
+      "datatype": "http://wikiba.se/ontology#WikibaseItem",
+      "metadata_source": "https://query.wikidata.org/sparql"
+    },
+    "P186": {
+      "label": "made from material",
+      "description": "material the subject or the object is made of or derived from (do not confuse with P10672 which is used for processes)",
+      "datatype": "http://wikiba.se/ontology#WikibaseItem",
+      "metadata_source": "https://query.wikidata.org/sparql"
+    },
+    "P1383": {
+      "label": "contains settlement",
+      "description": "settlement which an administrative division contains",
+      "datatype": "http://wikiba.se/ontology#WikibaseItem",
+      "metadata_source": "https://query.wikidata.org/sparql"
+    },
+    "P1412": {
+      "label": "languages spoken, written or signed",
+      "description": "language(s) that a person or a people speaks, writes or signs, including the native language(s)",
+      "datatype": "http://wikiba.se/ontology#WikibaseItem",
+      "metadata_source": "https://query.wikidata.org/sparql"
+    },
+    "P179": {
+      "label": "part of the series",
+      "description": "series which contains the subject",
+      "datatype": "http://wikiba.se/ontology#WikibaseItem",
+      "metadata_source": "https://query.wikidata.org/sparql"
+    },
+    "P180": {
+      "label": "depicts",
+      "description": "entity visually depicted in an image, literarily described in a work, or otherwise incorporated into an audiovisual or other medium; see also P921, 'main subject'",
+      "datatype": "http://wikiba.se/ontology#WikibaseItem",
+      "metadata_source": "https://query.wikidata.org/sparql"
+    },
+    "P1387": {
+      "label": "political alignment",
+      "description": "political position within the left–right political spectrum",
+      "datatype": "http://wikiba.se/ontology#WikibaseItem",
+      "metadata_source": "https://query.wikidata.org/sparql"
+    },
+    "P1398": {
+      "label": "structure replaces",
+      "description": "the item this building or structure replaced, at the same geographic location",
+      "datatype": "http://wikiba.se/ontology#WikibaseItem",
+      "metadata_source": "https://query.wikidata.org/sparql"
+    },
+    "P1399": {
+      "label": "convicted of",
+      "description": "crime a person or organization was convicted of",
+      "datatype": "http://wikiba.se/ontology#WikibaseItem",
+      "metadata_source": "https://query.wikidata.org/sparql"
+    },
+    "P1408": {
+      "label": "licensed to broadcast to",
+      "description": "place that a radio/TV station is licensed/required to broadcast to",
+      "datatype": "http://wikiba.se/ontology#WikibaseItem",
+      "metadata_source": "https://query.wikidata.org/sparql"
+    },
+    "P1411": {
+      "label": "nominated for",
+      "description": "award nomination received by a person, organisation or creative work (inspired from \"award received\" (Property:P166))",
+      "datatype": "http://wikiba.se/ontology#WikibaseItem",
+      "metadata_source": "https://query.wikidata.org/sparql"
+    },
+    "P1424": {
+      "label": "topic has template",
+      "description": "the main template relating to a topic",
+      "datatype": "http://wikiba.se/ontology#WikibaseItem",
+      "metadata_source": "https://query.wikidata.org/sparql"
+    },
+    "P1427": {
+      "label": "start point",
+      "description": "starting place of this journey, flight, voyage, trek, migration etc.",
+      "datatype": "http://wikiba.se/ontology#WikibaseItem",
+      "metadata_source": "https://query.wikidata.org/sparql"
+    },
+    "P1429": {
+      "label": "has pet",
+      "description": "pet that a person owns",
+      "datatype": "http://wikiba.se/ontology#WikibaseItem",
+      "metadata_source": "https://query.wikidata.org/sparql"
+    },
+    "P1431": {
+      "label": "executive producer",
+      "description": "executive producer of a movie, TV show, or other piece of media or entertainment",
+      "datatype": "http://wikiba.se/ontology#WikibaseItem",
+      "metadata_source": "https://query.wikidata.org/sparql"
+    },
+    "P1433": {
+      "label": "published in",
+      "description": "larger work that a given work was published in, like a journal, a website, a collection, a book or a music album",
+      "datatype": "http://wikiba.se/ontology#WikibaseItem",
+      "metadata_source": "https://query.wikidata.org/sparql"
+    },
+    "P1416": {
+      "label": "affiliation",
+      "description": "organization that a person or organization is affiliated with (not necessarily member of or employed by)",
+      "datatype": "http://wikiba.se/ontology#WikibaseItem",
+      "metadata_source": "https://query.wikidata.org/sparql"
+    },
+    "P1419": {
+      "label": "shape",
+      "description": "shape of an object",
+      "datatype": "http://wikiba.se/ontology#WikibaseItem",
+      "metadata_source": "https://query.wikidata.org/sparql"
+    },
+    "P1454": {
+      "label": "legal form",
+      "description": "legal form of an entity",
+      "datatype": "http://wikiba.se/ontology#WikibaseItem",
+      "metadata_source": "https://query.wikidata.org/sparql"
+    },
+    "P1455": {
+      "label": "list of works",
+      "description": "link to the article with the works of a person; use P358 for discographies",
+      "datatype": "http://wikiba.se/ontology#WikibaseItem",
+      "metadata_source": "https://query.wikidata.org/sparql"
+    },
+    "P1456": {
+      "label": "list of monuments",
+      "description": "link to the list of heritage monuments in the place/area",
+      "datatype": "http://wikiba.se/ontology#WikibaseItem",
+      "metadata_source": "https://query.wikidata.org/sparql"
+    },
+    "P1434": {
+      "label": "takes place in fictional universe",
+      "description": "the subject is a work describing a fictional universe, i.e. whose plot occurs in this universe",
+      "datatype": "http://wikiba.se/ontology#WikibaseItem",
+      "metadata_source": "https://query.wikidata.org/sparql"
+    },
+    "P1435": {
+      "label": "heritage designation",
+      "description": "heritage designation of a cultural or natural site",
+      "datatype": "http://wikiba.se/ontology#WikibaseItem",
+      "metadata_source": "https://query.wikidata.org/sparql"
+    },
+    "P177": {
+      "label": "crosses",
+      "description": "obstacle (body of water, road, railway...) which this bridge (ferry, ford) crosses over or this tunnel goes under",
+      "datatype": "http://wikiba.se/ontology#WikibaseItem",
+      "metadata_source": "https://query.wikidata.org/sparql"
+    },
+    "P178": {
+      "label": "developer",
+      "description": "organization or person that developed the item",
+      "datatype": "http://wikiba.se/ontology#WikibaseItem",
+      "metadata_source": "https://query.wikidata.org/sparql"
+    },
+    "P1441": {
+      "label": "present in work",
+      "description": "this (fictional or fictionalized) entity, place, or person appears in that work as part of the narration (use P2860 for works citing other works, P361/P1433 for works being part of other works, P1343 for entities described in non-fictional accounts)",
+      "datatype": "http://wikiba.se/ontology#WikibaseItem",
+      "metadata_source": "https://query.wikidata.org/sparql"
+    },
+    "P1444": {
+      "label": "destination point",
+      "description": "destination for this route (journey, flight, sailing, exploration, migration, etc.)",
+      "datatype": "http://wikiba.se/ontology#WikibaseItem",
+      "metadata_source": "https://query.wikidata.org/sparql"
+    },
+    "P1464": {
+      "label": "category for people born here",
+      "description": "category item that groups people born in this place",
+      "datatype": "http://wikiba.se/ontology#WikibaseItem",
+      "metadata_source": "https://query.wikidata.org/sparql"
+    },
+    "P1465": {
+      "label": "category for people who died here",
+      "description": "category item for people who died in this location",
+      "datatype": "http://wikiba.se/ontology#WikibaseItem",
+      "metadata_source": "https://query.wikidata.org/sparql"
+    },
+    "P1478": {
+      "label": "has immediate cause",
+      "description": "nearest, proximate thing that directly resulted in the subject as outcome or effect. Used in conjunction with 'has cause' (i.e. underlying cause) and 'has contributing factor'. See 'Help:Modeling causes'.",
+      "datatype": "http://wikiba.se/ontology#WikibaseItem",
+      "metadata_source": "https://query.wikidata.org/sparql"
+    },
+    "P1479": {
+      "label": "has contributing factor",
+      "description": "thing that significantly influenced, but did not directly cause, this outcome or effect. Used in conjunction with 'has cause' and 'has immediate cause'. See '[[Help:Modeling causes]]'.",
+      "datatype": "http://wikiba.se/ontology#WikibaseItem",
+      "metadata_source": "https://query.wikidata.org/sparql"
+    },
+    "P1532": {
+      "label": "country for sport",
+      "description": "country a person or a team represents when playing a sport",
+      "datatype": "http://wikiba.se/ontology#WikibaseItem",
+      "metadata_source": "https://query.wikidata.org/sparql"
+    },
+    "P1534": {
+      "label": "end cause",
+      "description": "qualifier used together with the end date qualifier (P582) to specify the reason for the end",
+      "datatype": "http://wikiba.se/ontology#WikibaseItem",
+      "metadata_source": "https://query.wikidata.org/sparql"
+    },
+    "P1542": {
+      "label": "has effect",
+      "description": "effect of this item",
+      "datatype": "http://wikiba.se/ontology#WikibaseItem",
+      "metadata_source": "https://query.wikidata.org/sparql"
+    },
+    "P1546": {
+      "label": "motto",
+      "description": "description of the motto of the subject",
+      "datatype": "http://wikiba.se/ontology#WikibaseItem",
+      "metadata_source": "https://query.wikidata.org/sparql"
+    },
+    "P1547": {
+      "label": "depends on software",
+      "description": "subject software depends on object software",
+      "datatype": "http://wikiba.se/ontology#WikibaseItem",
+      "metadata_source": "https://query.wikidata.org/sparql"
+    },
+    "P1535": {
+      "label": "used by",
+      "description": "item or concept that makes use of the subject (use sub-properties when appropriate)",
+      "datatype": "http://wikiba.se/ontology#WikibaseItem",
+      "metadata_source": "https://query.wikidata.org/sparql"
+    },
+    "P1536": {
+      "label": "immediate cause of",
+      "description": "immediate effect of this cause",
+      "datatype": "http://wikiba.se/ontology#WikibaseItem",
+      "metadata_source": "https://query.wikidata.org/sparql"
+    },
+    "P1537": {
+      "label": "contributing factor of",
+      "description": "thing that is significantly influenced by this cause, but does not directly result from it. See 'Help:Modeling causes' for examples and discussion.",
+      "datatype": "http://wikiba.se/ontology#WikibaseItem",
+      "metadata_source": "https://query.wikidata.org/sparql"
+    },
+    "P1589": {
+      "label": "lowest point",
+      "description": "point with lowest elevation in a region or path",
+      "datatype": "http://wikiba.se/ontology#WikibaseItem",
+      "metadata_source": "https://query.wikidata.org/sparql"
+    },
+    "P1591": {
+      "label": "defendant",
+      "description": "person or organization accused at a trial",
+      "datatype": "http://wikiba.se/ontology#WikibaseItem",
+      "metadata_source": "https://query.wikidata.org/sparql"
+    },
+    "P1592": {
+      "label": "prosecutor",
+      "description": "person representing the prosecuting authority, at a trial",
+      "datatype": "http://wikiba.se/ontology#WikibaseItem",
+      "metadata_source": "https://query.wikidata.org/sparql"
+    },
+    "P1552": {
+      "label": "has characteristic",
+      "description": "inherent or distinguishing quality or feature of the entity. Use a more specific property when possible",
+      "datatype": "http://wikiba.se/ontology#WikibaseItem",
+      "metadata_source": "https://query.wikidata.org/sparql"
+    },
+    "P1557": {
+      "label": "manifestation of",
+      "description": "inherent and characteristic embodiment of a given concept",
+      "datatype": "http://wikiba.se/ontology#WikibaseItem",
+      "metadata_source": "https://query.wikidata.org/sparql"
+    },
+    "P1576": {
+      "label": "lifestyle",
+      "description": "typical way of life of an individual, group, or culture",
+      "datatype": "http://wikiba.se/ontology#WikibaseItem",
+      "metadata_source": "https://query.wikidata.org/sparql"
+    },
+    "P1593": {
+      "label": "legal counsel",
+      "description": "person or organization who provides legal service",
+      "datatype": "http://wikiba.se/ontology#WikibaseItem",
+      "metadata_source": "https://query.wikidata.org/sparql"
+    },
+    "P1594": {
+      "label": "judge",
+      "description": "judge, magistrate or equivalent, presiding at a trial",
+      "datatype": "http://wikiba.se/ontology#WikibaseItem",
+      "metadata_source": "https://query.wikidata.org/sparql"
+    },
+    "P1595": {
+      "label": "charge",
+      "description": "offence with which someone is charged, at a trial",
+      "datatype": "http://wikiba.se/ontology#WikibaseItem",
+      "metadata_source": "https://query.wikidata.org/sparql"
+    },
+    "P1596": {
+      "label": "penalty",
+      "description": "penalty imposed by an authority",
+      "datatype": "http://wikiba.se/ontology#WikibaseItem",
+      "metadata_source": "https://query.wikidata.org/sparql"
+    },
+    "P1811": {
+      "label": "list of episodes",
+      "description": "link to the article with the list of episodes for this series",
+      "datatype": "http://wikiba.se/ontology#WikibaseItem",
+      "metadata_source": "https://query.wikidata.org/sparql"
+    },
+    "P1817": {
+      "label": "addressee",
+      "description": "person or organization to whom a letter or note is addressed",
+      "datatype": "http://wikiba.se/ontology#WikibaseItem",
+      "metadata_source": "https://query.wikidata.org/sparql"
+    },
+    "P1830": {
+      "label": "owner of",
+      "description": "entities owned by the subject",
+      "datatype": "http://wikiba.se/ontology#WikibaseItem",
+      "metadata_source": "https://query.wikidata.org/sparql"
+    },
+    "P1740": {
+      "label": "category for films shot at this location",
+      "description": "the object is a category for films shot at or in the subject",
+      "datatype": "http://wikiba.se/ontology#WikibaseItem",
+      "metadata_source": "https://query.wikidata.org/sparql"
+    },
+    "P1754": {
+      "label": "category related to list",
+      "description": "Wikimedia category that matches the Wikimedia list",
+      "datatype": "http://wikiba.se/ontology#WikibaseItem",
+      "metadata_source": "https://query.wikidata.org/sparql"
+    },
+    "P1789": {
+      "label": "chief operating officer",
+      "description": "the chief operating officer of an organization",
+      "datatype": "http://wikiba.se/ontology#WikibaseItem",
+      "metadata_source": "https://query.wikidata.org/sparql"
+    },
+    "P1791": {
+      "label": "category for people buried here",
+      "description": "Wikimedia category for people with a burial site within this area",
+      "datatype": "http://wikiba.se/ontology#WikibaseItem",
+      "metadata_source": "https://query.wikidata.org/sparql"
+    },
+    "P1792": {
+      "label": "category of associated people",
+      "description": "Wikimedia category for people associated with this place or organization",
+      "datatype": "http://wikiba.se/ontology#WikibaseItem",
+      "metadata_source": "https://query.wikidata.org/sparql"
+    },
+    "P1840": {
+      "label": "investigated by",
+      "description": "person or organization involved in investigation of the item",
+      "datatype": "http://wikiba.se/ontology#WikibaseItem",
+      "metadata_source": "https://query.wikidata.org/sparql"
+    },
+    "P1853": {
+      "label": "blood type",
+      "description": "blood type of the human or animal",
+      "datatype": "http://wikiba.se/ontology#WikibaseItem",
+      "metadata_source": "https://query.wikidata.org/sparql"
+    },
+    "P1598": {
+      "label": "consecrator",
+      "description": "bishop who presided as consecrator or co-consecrator of this bishop",
+      "datatype": "http://wikiba.se/ontology#WikibaseItem",
+      "metadata_source": "https://query.wikidata.org/sparql"
+    },
+    "P1611": {
+      "label": "NATO code for grade",
+      "description": "NATO Code for Grades of Military Personnel",
+      "datatype": "http://wikiba.se/ontology#WikibaseItem",
+      "metadata_source": "https://query.wikidata.org/sparql"
+    },
+    "P1620": {
+      "label": "plaintiff",
+      "description": "party who initiates a lawsuit",
+      "datatype": "http://wikiba.se/ontology#WikibaseItem",
+      "metadata_source": "https://query.wikidata.org/sparql"
+    },
+    "P1637": {
+      "label": "undercarriage",
+      "description": "type of aircraft landing gear the item is equipped with",
+      "datatype": "http://wikiba.se/ontology#WikibaseItem",
+      "metadata_source": "https://query.wikidata.org/sparql"
+    },
+    "P1640": {
+      "label": "curator",
+      "description": "content specialist responsible for this collection or exhibition",
+      "datatype": "http://wikiba.se/ontology#WikibaseItem",
+      "metadata_source": "https://query.wikidata.org/sparql"
+    },
+    "P1875": {
+      "label": "represented by",
+      "description": "person or agency that represents or manages the subject",
+      "datatype": "http://wikiba.se/ontology#WikibaseItem",
+      "metadata_source": "https://query.wikidata.org/sparql"
+    },
+    "P1876": {
+      "label": "vessel",
+      "description": "vessel involved in this mission, navigation or event",
+      "datatype": "http://wikiba.se/ontology#WikibaseItem",
+      "metadata_source": "https://query.wikidata.org/sparql"
+    },
+    "P1877": {
+      "label": "after a work by",
+      "description": "artist whose work strongly inspired / was copied in this item",
+      "datatype": "http://wikiba.se/ontology#WikibaseItem",
+      "metadata_source": "https://query.wikidata.org/sparql"
+    },
+    "P1881": {
+      "label": "list of characters",
+      "description": "Wikimedia page with the list of characters for this work",
+      "datatype": "http://wikiba.se/ontology#WikibaseItem",
+      "metadata_source": "https://query.wikidata.org/sparql"
+    },
+    "P1884": {
+      "label": "hair color",
+      "description": "person's hair color. Use P585 as qualifier if there's more than one value",
+      "datatype": "http://wikiba.se/ontology#WikibaseItem",
+      "metadata_source": "https://query.wikidata.org/sparql"
+    },
+    "P1889": {
+      "label": "different from",
+      "description": "item that is different from another item, with which it may be confused",
+      "datatype": "http://wikiba.se/ontology#WikibaseItem",
+      "metadata_source": "https://query.wikidata.org/sparql"
+    },
+    "P1891": {
+      "label": "signatory",
+      "description": "person, country, or organization that has signed an official document (use P50 for author)",
+      "datatype": "http://wikiba.se/ontology#WikibaseItem",
+      "metadata_source": "https://query.wikidata.org/sparql"
+    },
+    "P14005": {
+      "label": "Japanese court rank",
+      "description": "Japanese court rank of a person or a shrine",
+      "datatype": "http://wikiba.se/ontology#WikibaseItem",
+      "metadata_source": "https://query.wikidata.org/sparql"
+    },
+    "P14574": {
+      "label": "photographer",
+      "description": "person who took this photograph",
+      "datatype": "http://wikiba.se/ontology#WikibaseItem",
+      "metadata_source": "https://query.wikidata.org/sparql"
+    },
+    "P14834": {
+      "label": "substance control status",
+      "description": "control regime a substance is placed under in a jurisdiction or by an international treaty — schedule, class, or explicitly uncontrolled; qualify with \"applies to jurisdiction\" (P1001) and start/end time",
+      "datatype": "http://wikiba.se/ontology#WikibaseItem",
+      "metadata_source": "https://query.wikidata.org/sparql"
+    },
+    "P1654": {
+      "label": "wing configuration",
+      "description": "configuration of wing(s) used by an aircraft",
+      "datatype": "http://wikiba.se/ontology#WikibaseItem",
+      "metadata_source": "https://query.wikidata.org/sparql"
+    },
+    "P1656": {
+      "label": "unveiled by",
+      "description": "person who unveils a statue, sculpture, memorial or plaque, etc.",
+      "datatype": "http://wikiba.se/ontology#WikibaseItem",
+      "metadata_source": "https://query.wikidata.org/sparql"
+    },
+    "P1657": {
+      "label": "MPA film rating",
+      "description": "US film classification administered by the Motion Picture Association",
+      "datatype": "http://wikiba.se/ontology#WikibaseItem",
+      "metadata_source": "https://query.wikidata.org/sparql"
+    },
+    "P1716": {
+      "label": "brand",
+      "description": "commercial brand associated with the item",
+      "datatype": "http://wikiba.se/ontology#WikibaseItem",
+      "metadata_source": "https://query.wikidata.org/sparql"
+    },
+    "P19": {
+      "label": "place of birth",
+      "description": "most specific known birth location of a person, animal or fictional character",
+      "datatype": "http://wikiba.se/ontology#WikibaseItem",
+      "metadata_source": "https://query.wikidata.org/sparql"
+    },
+    "P21": {
+      "label": "sex or gender",
+      "description": "sex or gender identity of human or animal. For human: male, female, non-binary, intersex, transgender female, transgender male, agender, etc. For animal: male organism, female organism. Groups of same gender use subclass of (P279)",
+      "datatype": "http://wikiba.se/ontology#WikibaseItem",
+      "metadata_source": "https://query.wikidata.org/sparql"
+    },
+    "P27": {
+      "label": "country of citizenship",
+      "description": "the object is a country that recognizes the subject as its citizen",
+      "datatype": "http://wikiba.se/ontology#WikibaseItem",
+      "metadata_source": "https://query.wikidata.org/sparql"
+    },
+    "P22": {
+      "label": "father",
+      "description": "male parent of the subject. For stepfather, use \"stepparent\" (P3448)",
+      "datatype": "http://wikiba.se/ontology#WikibaseItem",
+      "metadata_source": "https://query.wikidata.org/sparql"
+    },
+    "P26": {
+      "label": "spouse",
+      "description": "the subject has the object as their spouse (husband, wife, partner, etc.). Use \"unmarried partner\" (P451) for non-married companions",
+      "datatype": "http://wikiba.se/ontology#WikibaseItem",
+      "metadata_source": "https://query.wikidata.org/sparql"
+    },
+    "P20": {
+      "label": "place of death",
+      "description": "most specific known (e.g. city instead of country, or hospital instead of city) death location of a person, animal or fictional character",
+      "datatype": "http://wikiba.se/ontology#WikibaseItem",
+      "metadata_source": "https://query.wikidata.org/sparql"
+    },
+    "P25": {
+      "label": "mother",
+      "description": "female parent of the subject. For stepmother, use \"stepparent\" (P3448)",
+      "datatype": "http://wikiba.se/ontology#WikibaseItem",
+      "metadata_source": "https://query.wikidata.org/sparql"
+    },
+    "P190": {
+      "label": "twinned administrative body",
+      "description": "twin towns, sister cities, twinned municipalities and other localities that have a partnership or cooperative agreement, either legally or informally acknowledged by their governments",
+      "datatype": "http://wikiba.se/ontology#WikibaseItem",
+      "metadata_source": "https://query.wikidata.org/sparql"
+    },
+    "P193": {
+      "label": "main building contractor",
+      "description": "the main organization (or person) responsible for construction of this structure or building",
+      "datatype": "http://wikiba.se/ontology#WikibaseItem",
+      "metadata_source": "https://query.wikidata.org/sparql"
+    },
+    "P199": {
+      "label": "organizational division",
+      "description": "organizational division of this organization (which is not an independent legal entity)",
+      "datatype": "http://wikiba.se/ontology#WikibaseItem",
+      "metadata_source": "https://query.wikidata.org/sparql"
+    },
+    "P200": {
+      "label": "inflows",
+      "description": "major inflow sources — rivers, aquifers, glacial runoff, etc. Some terms may not be place names, e.g. none",
+      "datatype": "http://wikiba.se/ontology#WikibaseItem",
+      "metadata_source": "https://query.wikidata.org/sparql"
+    },
+    "P201": {
+      "label": "outflows",
+      "description": "rivers and other outflows waterway names. If evaporation or seepage are notable outflows, they may be included. Some terms may not be place names, e.g. evaporation",
+      "datatype": "http://wikiba.se/ontology#WikibaseItem",
+      "metadata_source": "https://query.wikidata.org/sparql"
+    },
+    "P263": {
+      "label": "official residence",
+      "description": "the residence at which heads of government and other senior figures officially reside",
+      "datatype": "http://wikiba.se/ontology#WikibaseItem",
+      "metadata_source": "https://query.wikidata.org/sparql"
+    },
+    "P264": {
+      "label": "record label",
+      "description": "brand and trademark associated with the marketing of subject music recordings and music videos",
+      "datatype": "http://wikiba.se/ontology#WikibaseItem",
+      "metadata_source": "https://query.wikidata.org/sparql"
+    },
+    "P276": {
+      "label": "location",
+      "description": "location of the object, structure or event; use P131 to indicate the containing administrative entity, P8138 for statistical entities, or P706 for geographic entities; use P7153 for locations associated with the object",
+      "datatype": "http://wikiba.se/ontology#WikibaseItem",
+      "metadata_source": "https://query.wikidata.org/sparql"
+    },
+    "P241": {
+      "label": "military branch",
+      "description": "branch to which this military unit, award, office, or person belongs, e.g. Royal Navy",
+      "datatype": "http://wikiba.se/ontology#WikibaseItem",
+      "metadata_source": "https://query.wikidata.org/sparql"
+    },
+    "P248": {
+      "label": "stated in",
+      "description": "to be used in the references field to refer to the information document or database in which a claim is made; for qualifiers use P805; for the type of document in which a claim is made use P3865",
+      "datatype": "http://wikiba.se/ontology#WikibaseItem",
+      "metadata_source": "https://query.wikidata.org/sparql"
+    },
+    "P1906": {
+      "label": "office held by head of state",
+      "description": "political office that is fulfilled by the head of state of this item",
+      "datatype": "http://wikiba.se/ontology#WikibaseItem",
+      "metadata_source": "https://query.wikidata.org/sparql"
+    },
+    "P1923": {
+      "label": "participating team",
+      "description": "like 'Participant' (P710) but for teams. For an event like a cycle race or a football match you can use this property to list the teams and P710 to list the individuals (with 'member of sports team' (P54) as a qualifier for the individuals)",
+      "datatype": "http://wikiba.se/ontology#WikibaseItem",
+      "metadata_source": "https://query.wikidata.org/sparql"
+    },
+    "P272": {
+      "label": "production company",
+      "description": "company that produced this film, audio or performing arts work",
+      "datatype": "http://wikiba.se/ontology#WikibaseItem",
+      "metadata_source": "https://query.wikidata.org/sparql"
+    },
+    "P275": {
+      "label": "copyright license",
+      "description": "license under which this copyrighted work is released",
+      "datatype": "http://wikiba.se/ontology#WikibaseItem",
+      "metadata_source": "https://query.wikidata.org/sparql"
+    },
+    "P282": {
+      "label": "writing system",
+      "description": "alphabet, character set or other system of writing used by a language, word, or text, supported by a typeface",
+      "datatype": "http://wikiba.se/ontology#WikibaseItem",
+      "metadata_source": "https://query.wikidata.org/sparql"
+    },
+    "P286": {
+      "label": "head coach",
+      "description": "on-field manager or head coach of a sports club (not to be confused with a general manager P505, which is not a coaching position) or person",
+      "datatype": "http://wikiba.se/ontology#WikibaseItem",
+      "metadata_source": "https://query.wikidata.org/sparql"
+    },
+    "P2353": {
+      "label": "statistical unit of the dataset",
+      "description": "base item of this database or statistical set",
+      "datatype": "http://wikiba.se/ontology#WikibaseItem",
+      "metadata_source": "https://query.wikidata.org/sparql"
+    },
+    "P2354": {
+      "label": "has list",
+      "description": "Wikimedia list related to this subject",
+      "datatype": "http://wikiba.se/ontology#WikibaseItem",
+      "metadata_source": "https://query.wikidata.org/sparql"
+    },
+    "P208": {
+      "label": "executive body",
+      "description": "branch of government for the daily administration of the territorial entity",
+      "datatype": "http://wikiba.se/ontology#WikibaseItem",
+      "metadata_source": "https://query.wikidata.org/sparql"
+    },
+    "P210": {
+      "label": "party chief representative",
+      "description": "chief representative of a party in an institution or an administrative unit (use qualifier to identify the party)",
+      "datatype": "http://wikiba.se/ontology#WikibaseItem",
+      "metadata_source": "https://query.wikidata.org/sparql"
+    },
+    "P237": {
+      "label": "coat of arms",
+      "description": "subject's coat of arms",
+      "datatype": "http://wikiba.se/ontology#WikibaseItem",
+      "metadata_source": "https://query.wikidata.org/sparql"
+    },
+    "P2098": {
+      "label": "substitute/deputy/replacement of office/officeholder",
+      "description": "function that serves as deputy/replacement of this function/office (scope/conditions vary depending on office)",
+      "datatype": "http://wikiba.se/ontology#WikibaseItem",
+      "metadata_source": "https://query.wikidata.org/sparql"
+    },
+    "P2184": {
+      "label": "history of topic",
+      "description": "item about the historical development of a subject's topic, example: \"history of Argentina\" for \"Argentina\". To list key events of the topic, use \"significant event\" (P793)",
+      "datatype": "http://wikiba.se/ontology#WikibaseItem",
+      "metadata_source": "https://query.wikidata.org/sparql"
+    },
+    "P2238": {
+      "label": "official symbol",
+      "description": "official symbol of an organisation",
+      "datatype": "http://wikiba.se/ontology#WikibaseItem",
+      "metadata_source": "https://query.wikidata.org/sparql"
+    },
+    "P2283": {
+      "label": "uses",
+      "description": "item or concept used by the subject or in the operation (see also instrument [P1303] and armament [P520])",
+      "datatype": "http://wikiba.se/ontology#WikibaseItem",
+      "metadata_source": "https://query.wikidata.org/sparql"
+    },
+    "P1950": {
+      "label": "second family name in Spanish name",
+      "description": "second (generally maternal) family name in Spanish names (do not use for other double barrelled names) and in some French names",
+      "datatype": "http://wikiba.se/ontology#WikibaseItem",
+      "metadata_source": "https://query.wikidata.org/sparql"
+    },
+    "P1956": {
+      "label": "takeoff and landing capability",
+      "description": "type of takeoff and landing the aircraft is designed to operate",
+      "datatype": "http://wikiba.se/ontology#WikibaseItem",
+      "metadata_source": "https://query.wikidata.org/sparql"
+    },
+    "P1981": {
+      "label": "FSK film rating",
+      "description": "permitted audience of a film, according to the German film-rating system (add Prüfnummer with qualifier \"P2676\")",
+      "datatype": "http://wikiba.se/ontology#WikibaseItem",
+      "metadata_source": "https://query.wikidata.org/sparql"
+    },
+    "P2012": {
+      "label": "cuisine",
+      "description": "type of food served by a restaurant or restaurant chain or national food culture",
+      "datatype": "http://wikiba.se/ontology#WikibaseItem",
+      "metadata_source": "https://query.wikidata.org/sparql"
+    },
+    "P2058": {
+      "label": "depositary",
+      "description": "depositary of the treaty",
+      "datatype": "http://wikiba.se/ontology#WikibaseItem",
+      "metadata_source": "https://query.wikidata.org/sparql"
+    },
+    "P2359": {
+      "label": "nomen gentilicium",
+      "description": "standard part of the name of a Roman (and related cultures), link to items about the Roman gens only",
+      "datatype": "http://wikiba.se/ontology#WikibaseItem",
+      "metadata_source": "https://query.wikidata.org/sparql"
+    },
+    "P2360": {
+      "label": "intended public",
+      "description": "intended audience or user of this work, product, object, or event",
+      "datatype": "http://wikiba.se/ontology#WikibaseItem",
+      "metadata_source": "https://query.wikidata.org/sparql"
+    },
+    "P2363": {
+      "label": "NMHH film rating",
+      "description": "rating of a film in the Hungarian film rating system",
+      "datatype": "http://wikiba.se/ontology#WikibaseItem",
+      "metadata_source": "https://query.wikidata.org/sparql"
+    },
+    "P2365": {
+      "label": "cognomen",
+      "description": "standard part of the name of a Roman (and related cultures), link to items about specific Roman cognomen only",
+      "datatype": "http://wikiba.se/ontology#WikibaseItem",
+      "metadata_source": "https://query.wikidata.org/sparql"
+    },
+    "P194": {
+      "label": "legislative body",
+      "description": "legislative body governing this entity; political institution with elected representatives, such as a parliament/legislature or council",
+      "datatype": "http://wikiba.se/ontology#WikibaseItem",
+      "metadata_source": "https://query.wikidata.org/sparql"
+    },
+    "P195": {
+      "label": "collection",
+      "description": "art, museum, archival, or bibliographic collection of which the subject is part (item is in the collection of X)",
+      "datatype": "http://wikiba.se/ontology#WikibaseItem",
+      "metadata_source": "https://query.wikidata.org/sparql"
+    },
+    "P2378": {
+      "label": "issued by",
+      "description": "organisation or other agent that issues or allocates an identifier, code, classification number, etc.",
+      "datatype": "http://wikiba.se/ontology#WikibaseItem",
+      "metadata_source": "https://query.wikidata.org/sparql"
+    },
+    "P2388": {
+      "label": "position held by head of the organization",
+      "description": "position of the head of this item",
+      "datatype": "http://wikiba.se/ontology#WikibaseItem",
+      "metadata_source": "https://query.wikidata.org/sparql"
+    },
+    "P2061": {
+      "label": "aspect ratio (W:H)",
+      "description": "image width to height ratio of flags, films, photographs, and other images",
+      "datatype": "http://wikiba.se/ontology#WikibaseItem",
+      "metadata_source": "https://query.wikidata.org/sparql"
+    },
+    "P2079": {
+      "label": "fabrication method",
+      "description": "method, process or technique used to grow, cook, weave, build, assemble, manufacture the item",
+      "datatype": "http://wikiba.se/ontology#WikibaseItem",
+      "metadata_source": "https://query.wikidata.org/sparql"
+    },
+    "P2094": {
+      "label": "competition class",
+      "description": "official classification by a regulating body under which the subject (events, teams, participants, or equipment) qualifies for inclusion",
+      "datatype": "http://wikiba.se/ontology#WikibaseItem",
+      "metadata_source": "https://query.wikidata.org/sparql"
+    },
+    "P2308": {
+      "label": "class",
+      "description": "qualifier to define a property constraint in combination with \"property constraint\" (P2302)",
+      "datatype": "http://wikiba.se/ontology#WikibaseItem",
+      "metadata_source": "https://query.wikidata.org/sparql"
+    },
+    "P2348": {
+      "label": "time period",
+      "description": "time period (historic period or era, sports season, theatre season, legislative period etc.) in which the subject occurred or with which it is associated",
+      "datatype": "http://wikiba.se/ontology#WikibaseItem",
+      "metadata_source": "https://query.wikidata.org/sparql"
+    },
+    "P2828": {
+      "label": "corporate officer",
+      "description": "person who holds a specific position",
+      "datatype": "http://wikiba.se/ontology#WikibaseItem",
+      "metadata_source": "https://query.wikidata.org/sparql"
+    },
+    "P2846": {
+      "label": "disabled accessibility",
+      "description": "describes disabled accessibility of location or event",
+      "datatype": "http://wikiba.se/ontology#WikibaseItem",
+      "metadata_source": "https://query.wikidata.org/sparql"
+    },
+    "P2848": {
+      "label": "Wi-Fi access",
+      "description": "internet access availability through Wi-Fi",
+      "datatype": "http://wikiba.se/ontology#WikibaseItem",
+      "metadata_source": "https://query.wikidata.org/sparql"
+    },
+    "P2851": {
+      "label": "payment types accepted",
+      "description": "types of payment accepted by a venue",
+      "datatype": "http://wikiba.se/ontology#WikibaseItem",
+      "metadata_source": "https://query.wikidata.org/sparql"
+    },
+    "P2852": {
+      "label": "emergency phone number",
+      "description": "telephone number to contact emergency services",
+      "datatype": "http://wikiba.se/ontology#WikibaseItem",
+      "metadata_source": "https://query.wikidata.org/sparql"
+    },
+    "P2389": {
+      "label": "organization directed by the office or position",
+      "description": "organization or project which is directed by this office",
+      "datatype": "http://wikiba.se/ontology#WikibaseItem",
+      "metadata_source": "https://query.wikidata.org/sparql"
+    },
+    "P2408": {
+      "label": "set in period",
+      "description": "historical, contemporary, or future period, year, century or day the work or genre is set in or event featured in the story of the work",
+      "datatype": "http://wikiba.se/ontology#WikibaseItem",
+      "metadata_source": "https://query.wikidata.org/sparql"
+    },
+    "P2416": {
+      "label": "sports discipline competed in",
+      "description": "discipline an athlete competed in within a sport",
+      "datatype": "http://wikiba.se/ontology#WikibaseItem",
+      "metadata_source": "https://query.wikidata.org/sparql"
+    },
+    "P2438": {
+      "label": "narrator",
+      "description": "narrator, character or person that tells the story",
+      "datatype": "http://wikiba.se/ontology#WikibaseItem",
+      "metadata_source": "https://query.wikidata.org/sparql"
+    },
+    "P2632": {
+      "label": "place of detention",
+      "description": "place where this person is or was detained",
+      "datatype": "http://wikiba.se/ontology#WikibaseItem",
+      "metadata_source": "https://query.wikidata.org/sparql"
+    },
+    "P2633": {
+      "label": "geography of topic",
+      "description": "item that deals with the geography of the subject. Sample: \"Rio de Janeiro\" uses this property with value \"geography of Rio de Janeiro\" (Q10288853). For the location of a subject, use \"location\" (P276).",
+      "datatype": "http://wikiba.se/ontology#WikibaseItem",
+      "metadata_source": "https://query.wikidata.org/sparql"
+    },
+    "P2634": {
+      "label": "model",
+      "description": "person who appears in an artwork or photograph, in the role of an artist's model, rather than subject",
+      "datatype": "http://wikiba.se/ontology#WikibaseItem",
+      "metadata_source": "https://query.wikidata.org/sparql"
+    },
+    "P2637": {
+      "label": "RARS rating",
+      "description": "rating in the Russian media content rating system",
+      "datatype": "http://wikiba.se/ontology#WikibaseItem",
+      "metadata_source": "https://query.wikidata.org/sparql"
+    },
+    "P2853": {
+      "label": "electrical plug type",
+      "description": "standard plug type for mains electricity in a country",
+      "datatype": "http://wikiba.se/ontology#WikibaseItem",
+      "metadata_source": "https://query.wikidata.org/sparql"
+    },
+    "P2860": {
+      "label": "cites work",
+      "description": "citation from one creative or scholarly work to another",
+      "datatype": "http://wikiba.se/ontology#WikibaseItem",
+      "metadata_source": "https://query.wikidata.org/sparql"
+    },
+    "P205": {
+      "label": "basin country",
+      "description": "country that have drainage to/from or border the body of water",
+      "datatype": "http://wikiba.se/ontology#WikibaseItem",
+      "metadata_source": "https://query.wikidata.org/sparql"
+    },
+    "P206": {
+      "label": "located in or next to body of water",
+      "description": "body of water on or next to which a place is located",
+      "datatype": "http://wikiba.se/ontology#WikibaseItem",
+      "metadata_source": "https://query.wikidata.org/sparql"
+    },
+    "P2868": {
+      "label": "subject has role",
+      "description": "role held by the item the statement appears on (\"subject\") in the context of that statement. For the role of the statement object/value, use P3831 (\"object has role\"). For acting roles, use P453 (\"character role\"). For persons, use P39.",
+      "datatype": "http://wikiba.se/ontology#WikibaseItem",
+      "metadata_source": "https://query.wikidata.org/sparql"
+    },
+    "P2872": {
+      "label": "visitor center",
+      "description": "official tourist office of this destination",
+      "datatype": "http://wikiba.se/ontology#WikibaseItem",
+      "metadata_source": "https://query.wikidata.org/sparql"
+    },
+    "P2894": {
+      "label": "day of week",
+      "description": "day of the week on which this item occurs, applies to or is valid",
+      "datatype": "http://wikiba.se/ontology#WikibaseItem",
+      "metadata_source": "https://query.wikidata.org/sparql"
+    },
+    "P2922": {
+      "label": "month of the year",
+      "description": "month of the year during which this item occurs, applies to or is valid in",
+      "datatype": "http://wikiba.se/ontology#WikibaseItem",
+      "metadata_source": "https://query.wikidata.org/sparql"
+    },
+    "P2505": {
+      "label": "carries thoroughfare",
+      "description": "thoroughfare carried by a bridge, tunnel, or mountain pass",
+      "datatype": "http://wikiba.se/ontology#WikibaseItem",
+      "metadata_source": "https://query.wikidata.org/sparql"
+    },
+    "P2515": {
+      "label": "costume designer",
+      "description": "person who designed the costumes for a film, television programme, etc.",
+      "datatype": "http://wikiba.se/ontology#WikibaseItem",
+      "metadata_source": "https://query.wikidata.org/sparql"
+    },
+    "P2517": {
+      "label": "category for recipients of this award",
+      "description": "link to Wikimedia category for recipients of this award",
+      "datatype": "http://wikiba.se/ontology#WikibaseItem",
+      "metadata_source": "https://query.wikidata.org/sparql"
+    },
+    "P2522": {
+      "label": "competition won",
+      "description": "competition or sports event won by the subject",
+      "datatype": "http://wikiba.se/ontology#WikibaseItem",
+      "metadata_source": "https://query.wikidata.org/sparql"
+    },
+    "P2554": {
+      "label": "production designer",
+      "description": "person(s) responsible for overall aesthetic of the story of this motion picture, play, video game or similar; responsible for visual concept, producing interior, exterior, location, graphics, etc; deals with many and varied logistic related to this",
+      "datatype": "http://wikiba.se/ontology#WikibaseItem",
+      "metadata_source": "https://query.wikidata.org/sparql"
+    },
+    "P2564": {
+      "label": "Köppen climate classification",
+      "description": "indicates the characteristic climate of a place",
+      "datatype": "http://wikiba.se/ontology#WikibaseItem",
+      "metadata_source": "https://query.wikidata.org/sparql"
+    },
+    "P2568": {
+      "label": "repealed by",
+      "description": "document is repealed/inactived by specified other document",
+      "datatype": "http://wikiba.se/ontology#WikibaseItem",
+      "metadata_source": "https://query.wikidata.org/sparql"
+    },
+    "P2578": {
+      "label": "is the study of",
+      "description": "the object that an academic field studies; distinct from field of work (P101), which is used for human, organization, etc.",
+      "datatype": "http://wikiba.se/ontology#WikibaseItem",
+      "metadata_source": "https://query.wikidata.org/sparql"
+    },
+    "P2541": {
+      "label": "operating area",
+      "description": "geographic area or jurisdiction an organisation or industry operates in, serves, or has responsibility for",
+      "datatype": "http://wikiba.se/ontology#WikibaseItem",
+      "metadata_source": "https://query.wikidata.org/sparql"
+    },
+    "P2545": {
+      "label": "bowling style",
+      "description": "type of bowling employed by a cricketer",
+      "datatype": "http://wikiba.se/ontology#WikibaseItem",
+      "metadata_source": "https://query.wikidata.org/sparql"
+    },
+    "P2579": {
+      "label": "studied by",
+      "description": "subject is studied by this science or domain",
+      "datatype": "http://wikiba.se/ontology#WikibaseItem",
+      "metadata_source": "https://query.wikidata.org/sparql"
+    },
+    "P2614": {
+      "label": "World Heritage criteria",
+      "description": "selection criteria for UNESCO's cultural and natural 'World Heritage' designation since 2005",
+      "datatype": "http://wikiba.se/ontology#WikibaseItem",
+      "metadata_source": "https://query.wikidata.org/sparql"
+    },
+    "P2629": {
+      "label": "BBFC rating",
+      "description": "British media content rating (add BBFC reference with qualifier \"P2676\")",
+      "datatype": "http://wikiba.se/ontology#WikibaseItem",
+      "metadata_source": "https://query.wikidata.org/sparql"
+    },
+    "P2650": {
+      "label": "interested in",
+      "description": "item of special or vested interest to this person or organisation",
+      "datatype": "http://wikiba.se/ontology#WikibaseItem",
+      "metadata_source": "https://query.wikidata.org/sparql"
+    },
+    "P2652": {
+      "label": "partnership with",
+      "description": "partnership (commercial or/and non-commercial) between this organization and another organization or institution",
+      "datatype": "http://wikiba.se/ontology#WikibaseItem",
+      "metadata_source": "https://query.wikidata.org/sparql"
+    },
+    "P2670": {
+      "label": "has part(s) of the class",
+      "description": "the subject has one or more parts of the object class",
+      "datatype": "http://wikiba.se/ontology#WikibaseItem",
+      "metadata_source": "https://query.wikidata.org/sparql"
+    },
+    "P2675": {
+      "label": "reply to",
+      "description": "the intellectual work to which the subsequent work is a direct reply",
+      "datatype": "http://wikiba.se/ontology#WikibaseItem",
+      "metadata_source": "https://query.wikidata.org/sparql"
+    },
+    "P2684": {
+      "label": "Kijkwijzer rating",
+      "description": "Dutch media content rating system",
+      "datatype": "http://wikiba.se/ontology#WikibaseItem",
+      "metadata_source": "https://query.wikidata.org/sparql"
+    },
+    "P2738": {
+      "label": "disjoint union of",
+      "description": "every instance of this class is an instance of exactly one class in that list of classes. Use \"list item\" P11260 as qualifiers to specify the list of classes",
+      "datatype": "http://wikiba.se/ontology#WikibaseItem",
+      "metadata_source": "https://query.wikidata.org/sparql"
+    },
+    "P2747": {
+      "label": "Filmiroda rating",
+      "description": "rating of a film in the former (2004–2011) Hungarian film rating system",
+      "datatype": "http://wikiba.se/ontology#WikibaseItem",
+      "metadata_source": "https://query.wikidata.org/sparql"
+    },
+    "P2756": {
+      "label": "EIRIN film rating",
+      "description": "category in the Japanese film rating system (add EIRIN number with qualifier P2676)",
+      "datatype": "http://wikiba.se/ontology#WikibaseItem",
+      "metadata_source": "https://query.wikidata.org/sparql"
+    },
+    "P2758": {
+      "label": "CNC film rating (France)",
+      "description": "category assigned to a film by the Board of Film Classification (CNC) which what audiences may view it in France",
+      "datatype": "http://wikiba.se/ontology#WikibaseItem",
+      "metadata_source": "https://query.wikidata.org/sparql"
+    },
+    "P2789": {
+      "label": "connects with",
+      "description": "item with which the item is physically connected",
+      "datatype": "http://wikiba.se/ontology#WikibaseItem",
+      "metadata_source": "https://query.wikidata.org/sparql"
+    },
+    "P2813": {
+      "label": "house publication",
+      "description": "media that speaks for an organization or a movement, and that is usually edited by its members",
+      "datatype": "http://wikiba.se/ontology#WikibaseItem",
+      "metadata_source": "https://query.wikidata.org/sparql"
+    },
+    "P2817": {
+      "label": "appears in the heritage monument list",
+      "description": "heritage monument is a part of the list of heritage monuments",
+      "datatype": "http://wikiba.se/ontology#WikibaseItem",
+      "metadata_source": "https://query.wikidata.org/sparql"
+    },
+    "P279": {
+      "label": "subclass of",
+      "description": "this item is a subclass (subset) of that item; ALL instances of this item are instances of that item; different from P31 (instance of), e.g.: volcano is a subclass of mountain; Everest is an instance of mountain",
+      "datatype": "http://wikiba.se/ontology#WikibaseItem",
+      "metadata_source": "https://query.wikidata.org/sparql"
+    },
+    "P287": {
+      "label": "designed by",
+      "description": "person or organization which designed the object. For buildings use \"architect\" (Property:P84)",
+      "datatype": "http://wikiba.se/ontology#WikibaseItem",
+      "metadata_source": "https://query.wikidata.org/sparql"
+    },
+    "P289": {
+      "label": "vessel class",
+      "description": "series of vessels or other watercraft built to the same design of which this vessel is a member",
+      "datatype": "http://wikiba.se/ontology#WikibaseItem",
+      "metadata_source": "https://query.wikidata.org/sparql"
+    },
+    "P291": {
+      "label": "place of publication",
+      "description": "geographical place of publication of the edition (use 1st edition when referring to works)",
+      "datatype": "http://wikiba.se/ontology#WikibaseItem",
+      "metadata_source": "https://query.wikidata.org/sparql"
+    },
+    "P37": {
+      "label": "official language",
+      "description": "language designated as official by this item",
+      "datatype": "http://wikiba.se/ontology#WikibaseItem",
+      "metadata_source": "https://query.wikidata.org/sparql"
+    },
+    "P38": {
+      "label": "currency",
+      "description": "currency used by item",
+      "datatype": "http://wikiba.se/ontology#WikibaseItem",
+      "metadata_source": "https://query.wikidata.org/sparql"
+    },
+    "P39": {
+      "label": "position held",
+      "description": "subject currently or formerly holds the object position or public office",
+      "datatype": "http://wikiba.se/ontology#WikibaseItem",
+      "metadata_source": "https://query.wikidata.org/sparql"
+    },
+    "P31": {
+      "label": "instance of",
+      "description": "type to which this subject corresponds/belongs. Different from P279 (subclass of); for example: K2 is an instance of mountain; volcano is a subclass of mountain",
+      "datatype": "http://wikiba.se/ontology#WikibaseItem",
+      "metadata_source": "https://query.wikidata.org/sparql"
+    },
+    "P35": {
+      "label": "head of state",
+      "description": "official with the highest formal authority in a country/state",
+      "datatype": "http://wikiba.se/ontology#WikibaseItem",
+      "metadata_source": "https://query.wikidata.org/sparql"
+    },
+    "P36": {
+      "label": "capital",
+      "description": "seat of government of a country, province, state or other type of administrative territorial entity",
+      "datatype": "http://wikiba.se/ontology#WikibaseItem",
+      "metadata_source": "https://query.wikidata.org/sparql"
+    },
+    "P30": {
+      "label": "continent",
+      "description": "continent of which the subject is a part",
+      "datatype": "http://wikiba.se/ontology#WikibaseItem",
+      "metadata_source": "https://query.wikidata.org/sparql"
+    },
+    "P361": {
+      "label": "part of",
+      "description": "object of which the subject is a part (if this subject is already part of object A which is a part of object B, then please only make the subject part of object A), inverse property of \"has part\" (P527, see also \"has parts of the class\" (P2670))",
+      "datatype": "http://wikiba.se/ontology#WikibaseItem",
+      "metadata_source": "https://query.wikidata.org/sparql"
+    },
+    "P40": {
+      "label": "child",
+      "description": "subject has object as child. Do not use for stepchildren—use \"relative\" (P1038), qualified with \"kinship to subject\" (P1039)",
+      "datatype": "http://wikiba.se/ontology#WikibaseItem",
+      "metadata_source": "https://query.wikidata.org/sparql"
+    },
+    "P344": {
+      "label": "director of photography",
+      "description": "person responsible for the framing, lighting, and filtration of the subject work",
+      "datatype": "http://wikiba.se/ontology#WikibaseItem",
+      "metadata_source": "https://query.wikidata.org/sparql"
+    },
+    "P400": {
+      "label": "platform",
+      "description": "platform for which a work was developed or released, or the specific platform version of a software product",
+      "datatype": "http://wikiba.se/ontology#WikibaseItem",
+      "metadata_source": "https://query.wikidata.org/sparql"
+    },
+    "P403": {
+      "label": "mouth of the watercourse",
+      "description": "the body of water to which the watercourse drains",
+      "datatype": "http://wikiba.se/ontology#WikibaseItem",
+      "metadata_source": "https://query.wikidata.org/sparql"
+    },
+    "P404": {
+      "label": "game mode",
+      "description": "video game's available playing mode(s)",
+      "datatype": "http://wikiba.se/ontology#WikibaseItem",
+      "metadata_source": "https://query.wikidata.org/sparql"
+    },
+    "P406": {
+      "label": "soundtrack release",
+      "description": "music release that incorporates music directly recorded from the soundtrack of an audiovisual work",
+      "datatype": "http://wikiba.se/ontology#WikibaseItem",
+      "metadata_source": "https://query.wikidata.org/sparql"
+    },
+    "P355": {
+      "label": "child organization or unit",
+      "description": "child organization/unit of an org./unit; usually a fully owned separate org.; for non-independent sub-units, see org. division (P199); opposite of parent org./unit (P749); use instance of (P31) to distinguish org. (Q43229) and org. unit (Q10387680)",
+      "datatype": "http://wikiba.se/ontology#WikibaseItem",
+      "metadata_source": "https://query.wikidata.org/sparql"
+    },
+    "P358": {
+      "label": "discography",
+      "description": "item for list pages with discography of artist or band",
+      "datatype": "http://wikiba.se/ontology#WikibaseItem",
+      "metadata_source": "https://query.wikidata.org/sparql"
+    },
+    "P360": {
+      "label": "is a list of",
+      "description": "common element between all listed items",
+      "datatype": "http://wikiba.se/ontology#WikibaseItem",
+      "metadata_source": "https://query.wikidata.org/sparql"
+    },
+    "P412": {
+      "label": "voice type",
+      "description": "person's voice type. expected values: soprano, mezzo-soprano, contralto, countertenor, tenor, baritone, bass (and derivatives)",
+      "datatype": "http://wikiba.se/ontology#WikibaseItem",
+      "metadata_source": "https://query.wikidata.org/sparql"
+    },
+    "P413": {
+      "label": "position played on team / speciality",
+      "description": "position or specialism of a player on a team",
+      "datatype": "http://wikiba.se/ontology#WikibaseItem",
+      "metadata_source": "https://query.wikidata.org/sparql"
+    },
+    "P414": {
+      "label": "stock exchange",
+      "description": "exchange on which this company is traded",
+      "datatype": "http://wikiba.se/ontology#WikibaseItem",
+      "metadata_source": "https://query.wikidata.org/sparql"
+    },
+    "P423": {
+      "label": "shooting handedness",
+      "description": "whether the hockey player passes or shoots left- or right-handed",
+      "datatype": "http://wikiba.se/ontology#WikibaseItem",
+      "metadata_source": "https://query.wikidata.org/sparql"
+    },
+    "P407": {
+      "label": "language of work or name",
+      "description": "language associated with this creative work (such as books, shows, songs, broadcasts or websites) or a name (for persons use \"native language\" (P103) and \"languages spoken, written or signed\" (P1412))",
+      "datatype": "http://wikiba.se/ontology#WikibaseItem",
+      "metadata_source": "https://query.wikidata.org/sparql"
+    },
+    "P408": {
+      "label": "software engine",
+      "description": "software engine employed by the subject item",
+      "datatype": "http://wikiba.se/ontology#WikibaseItem",
+      "metadata_source": "https://query.wikidata.org/sparql"
+    },
+    "P410": {
+      "label": "military, police or special rank",
+      "description": "military, police or similar special rank achieved by a person (should usually have a \"start time\" qualifier), or military or police rank associated with a position",
+      "datatype": "http://wikiba.se/ontology#WikibaseItem",
+      "metadata_source": "https://query.wikidata.org/sparql"
+    },
+    "P411": {
+      "label": "canonization status",
+      "description": "formal stage in the process of attaining sainthood per the subject's religious organization",
+      "datatype": "http://wikiba.se/ontology#WikibaseItem",
+      "metadata_source": "https://query.wikidata.org/sparql"
+    },
+    "P417": {
+      "label": "patron saint",
+      "description": "patron saint adopted by the subject",
+      "datatype": "http://wikiba.se/ontology#WikibaseItem",
+      "metadata_source": "https://query.wikidata.org/sparql"
+    },
+    "P418": {
+      "label": "has seal, badge, or sigil",
+      "description": "links to the item for the subject's seal",
+      "datatype": "http://wikiba.se/ontology#WikibaseItem",
+      "metadata_source": "https://query.wikidata.org/sparql"
+    },
+    "P421": {
+      "label": "located in time zone",
+      "description": "time zone for this item",
+      "datatype": "http://wikiba.se/ontology#WikibaseItem",
+      "metadata_source": "https://query.wikidata.org/sparql"
+    },
+    "P3014": {
+      "label": "laws applied",
+      "description": "the constitutional and statutory provisions that were the primary basis for a decision or law",
+      "datatype": "http://wikiba.se/ontology#WikibaseItem",
+      "metadata_source": "https://query.wikidata.org/sparql"
+    },
+    "P3018": {
+      "label": "located in protected area",
+      "description": "protected area where a place or geographical feature is physically located",
+      "datatype": "http://wikiba.se/ontology#WikibaseItem",
+      "metadata_source": "https://query.wikidata.org/sparql"
+    },
+    "P3025": {
+      "label": "open days",
+      "description": "days in the week subject item is open within the opening season",
+      "datatype": "http://wikiba.se/ontology#WikibaseItem",
+      "metadata_source": "https://query.wikidata.org/sparql"
+    },
+    "P425": {
+      "label": "field of this occupation",
+      "description": "field corresponding to this occupation or profession (use only for occupations/professions - for people use Property:P101, for companies use P452)",
+      "datatype": "http://wikiba.se/ontology#WikibaseItem",
+      "metadata_source": "https://query.wikidata.org/sparql"
+    },
+    "P2925": {
+      "label": "domain of saint or deity",
+      "description": "domain(s) which this saint or deity controls or protects",
+      "datatype": "http://wikiba.se/ontology#WikibaseItem",
+      "metadata_source": "https://query.wikidata.org/sparql"
+    },
+    "P2936": {
+      "label": "language used",
+      "description": "language widely used (spoken or written) in this place or at this event or organisation",
+      "datatype": "http://wikiba.se/ontology#WikibaseItem",
+      "metadata_source": "https://query.wikidata.org/sparql"
+    },
+    "P2959": {
+      "label": "permanent duplicated item",
+      "description": "this item duplicates another item and they can't be merged, as one Wikimedia project includes two pages, e.g. in different scripts or languages (examples: cdowiki, gomwiki, nanwiki). Use P31=Q17362920 when the Wikimedia project could merge the pages.",
+      "datatype": "http://wikiba.se/ontology#WikibaseItem",
+      "metadata_source": "https://query.wikidata.org/sparql"
+    },
+    "P2962": {
+      "label": "title of chess person",
+      "description": "title awarded by a chess federation to a person",
+      "datatype": "http://wikiba.se/ontology#WikibaseItem",
+      "metadata_source": "https://query.wikidata.org/sparql"
+    },
+    "P2978": {
+      "label": "wheel arrangement",
+      "description": "wheel/axle arrangement for locomotives, railcars and other rolling stock",
+      "datatype": "http://wikiba.se/ontology#WikibaseItem",
+      "metadata_source": "https://query.wikidata.org/sparql"
+    },
+    "P3026": {
+      "label": "closed on",
+      "description": "exceptions to open days (P3025), usually special dates",
+      "datatype": "http://wikiba.se/ontology#WikibaseItem",
+      "metadata_source": "https://query.wikidata.org/sparql"
+    },
+    "P3032": {
+      "label": "adjacent structure or building",
+      "description": "structure or building adjacent to the item",
+      "datatype": "http://wikiba.se/ontology#WikibaseItem",
+      "metadata_source": "https://query.wikidata.org/sparql"
+    },
+    "P3075": {
+      "label": "official religion",
+      "description": "official religion in this administrative entity",
+      "datatype": "http://wikiba.se/ontology#WikibaseItem",
+      "metadata_source": "https://query.wikidata.org/sparql"
+    },
+    "P3081": {
+      "label": "damaged",
+      "description": "physical items damaged by this event",
+      "datatype": "http://wikiba.se/ontology#WikibaseItem",
+      "metadata_source": "https://query.wikidata.org/sparql"
+    },
+    "P3082": {
+      "label": "destroyed",
+      "description": "physical items destroyed by this event",
+      "datatype": "http://wikiba.se/ontology#WikibaseItem",
+      "metadata_source": "https://query.wikidata.org/sparql"
+    },
+    "P3091": {
+      "label": "mount",
+      "description": "creature ridden by the subject, for instance a horse",
+      "datatype": "http://wikiba.se/ontology#WikibaseItem",
+      "metadata_source": "https://query.wikidata.org/sparql"
+    },
+    "P3092": {
+      "label": "film crew member",
+      "description": "member of the crew creating an audiovisual work, used for miscellaneous roles qualified with the job title when no specific property exists. Don't use if such a property is available: notably for cast member (P161), director (P57), etc.",
+      "datatype": "http://wikiba.se/ontology#WikibaseItem",
+      "metadata_source": "https://query.wikidata.org/sparql"
+    },
+    "P3093": {
+      "label": "recovered by",
+      "description": "person, organisation or vehicle that recovered the item. Use the most specific value known.",
+      "datatype": "http://wikiba.se/ontology#WikibaseItem",
+      "metadata_source": "https://query.wikidata.org/sparql"
+    },
+    "P3094": {
+      "label": "develops from",
+      "description": "this class of items develops from another class of items (biology)",
+      "datatype": "http://wikiba.se/ontology#WikibaseItem",
+      "metadata_source": "https://query.wikidata.org/sparql"
+    },
+    "P3095": {
+      "label": "practiced by",
+      "description": "type of agents that study this subject or work in this field",
+      "datatype": "http://wikiba.se/ontology#WikibaseItem",
+      "metadata_source": "https://query.wikidata.org/sparql"
+    },
+    "P3096": {
+      "label": "KML file",
+      "description": "item with sitelinks to Wikimedia page containing text of a relevant KML file",
+      "datatype": "http://wikiba.se/ontology#WikibaseItem",
+      "metadata_source": "https://query.wikidata.org/sparql"
+    },
+    "P3137": {
+      "label": "parent peak",
+      "description": "higher peak whose territory this peak resides in, where the territory is defined by a contour line through a key col, which can be selected based on several competing approaches",
+      "datatype": "http://wikiba.se/ontology#WikibaseItem",
+      "metadata_source": "https://query.wikidata.org/sparql"
+    },
+    "P3148": {
+      "label": "repeals",
+      "description": "this document or act repeals that other document or act",
+      "datatype": "http://wikiba.se/ontology#WikibaseItem",
+      "metadata_source": "https://query.wikidata.org/sparql"
+    },
+    "P3150": {
+      "label": "birthday",
+      "description": "item for day and month on which the subject was born. Used when full \"date of birth\" (P569) isn't known.",
+      "datatype": "http://wikiba.se/ontology#WikibaseItem",
+      "metadata_source": "https://query.wikidata.org/sparql"
+    },
+    "P3156": {
+      "label": "Australian Classification",
+      "description": "content rating of an audiovisual work or video game in the Australian Classification system",
+      "datatype": "http://wikiba.se/ontology#WikibaseItem",
+      "metadata_source": "https://query.wikidata.org/sparql"
+    },
+    "P3174": {
+      "label": "art director",
+      "description": "person credited as the art director/artistic director of this work; manages the process of making the visuals, which is done by concept artists, graphic designers, set designers, costume designers, lighting designers; See also P8938 for organizations",
+      "datatype": "http://wikiba.se/ontology#WikibaseItem",
+      "metadata_source": "https://query.wikidata.org/sparql"
+    },
+    "P3306": {
+      "label": "ICAA rating",
+      "description": "rating in the Spanish motion picture content rating system",
+      "datatype": "http://wikiba.se/ontology#WikibaseItem",
+      "metadata_source": "https://query.wikidata.org/sparql"
+    },
+    "P3320": {
+      "label": "board member",
+      "description": "member(s) of the board for an organization",
+      "datatype": "http://wikiba.se/ontology#WikibaseItem",
+      "metadata_source": "https://query.wikidata.org/sparql"
+    },
+    "P3335": {
+      "label": "associated hazard",
+      "description": "hazards implicit in the subject item: that a sign warns of; that one may encounter in this place, on this thoroughfare; that are inherent properties of (or threats to) the subject; etc.",
+      "datatype": "http://wikiba.se/ontology#WikibaseItem",
+      "metadata_source": "https://query.wikidata.org/sparql"
+    },
+    "P3342": {
+      "label": "significant person",
+      "description": "person linked to the item in any possible way",
+      "datatype": "http://wikiba.se/ontology#WikibaseItem",
+      "metadata_source": "https://query.wikidata.org/sparql"
+    },
+    "P3179": {
+      "label": "territory overlaps",
+      "description": "part or all of the area associated with (this) entity overlaps part or all of the area associated with that entity",
+      "datatype": "http://wikiba.se/ontology#WikibaseItem",
+      "metadata_source": "https://query.wikidata.org/sparql"
+    },
+    "P3205": {
+      "label": "patient of",
+      "description": "was treated or studied as a patient by this person",
+      "datatype": "http://wikiba.se/ontology#WikibaseItem",
+      "metadata_source": "https://query.wikidata.org/sparql"
+    },
+    "P3216": {
+      "label": "ClassInd rating",
+      "description": "rating of an audiovisual work, video game or RPG in the Brazilian Advisory Rating System (ClassInd)",
+      "datatype": "http://wikiba.se/ontology#WikibaseItem",
+      "metadata_source": "https://query.wikidata.org/sparql"
+    },
+    "P3275": {
+      "label": "storyboard artist",
+      "description": "person credited as the storyboard artist of this work",
+      "datatype": "http://wikiba.se/ontology#WikibaseItem",
+      "metadata_source": "https://query.wikidata.org/sparql"
+    },
+    "P3301": {
+      "label": "broadcast by",
+      "description": "channel, network, website or service that broadcast this item over radio, television or the Internet",
+      "datatype": "http://wikiba.se/ontology#WikibaseItem",
+      "metadata_source": "https://query.wikidata.org/sparql"
+    },
+    "P366": {
+      "label": "has use",
+      "description": "main use of the subject (includes current and former usage)",
+      "datatype": "http://wikiba.se/ontology#WikibaseItem",
+      "metadata_source": "https://query.wikidata.org/sparql"
+    },
+    "P371": {
+      "label": "presenter",
+      "description": "main role in presenting a radio or television program or a performing arts show",
+      "datatype": "http://wikiba.se/ontology#WikibaseItem",
+      "metadata_source": "https://query.wikidata.org/sparql"
+    },
+    "P3349": {
+      "label": "designed to carry",
+      "description": "what the vehicle or class of vehicles is or was designed to carry",
+      "datatype": "http://wikiba.se/ontology#WikibaseItem",
+      "metadata_source": "https://query.wikidata.org/sparql"
+    },
+    "P3373": {
+      "label": "sibling",
+      "description": "the subject and the object have at least one common parent (brother, sister, etc. including half-siblings); use \"relative\" (P1038) for siblings-in-law (brother-in-law, sister-in-law, etc.) and step-siblings (step-brothers, step-sisters, etc.)",
+      "datatype": "http://wikiba.se/ontology#WikibaseItem",
+      "metadata_source": "https://query.wikidata.org/sparql"
+    },
+    "P3402": {
+      "label": "CNC film rating (Romania)",
+      "description": "rating of a movie in the Romanian content rating system",
+      "datatype": "http://wikiba.se/ontology#WikibaseItem",
+      "metadata_source": "https://query.wikidata.org/sparql"
+    },
+    "P3716": {
+      "label": "social classification",
+      "description": "social class as recognized in traditional or state law",
+      "datatype": "http://wikiba.se/ontology#WikibaseItem",
+      "metadata_source": "https://query.wikidata.org/sparql"
+    },
+    "P3719": {
+      "label": "regulated by",
+      "description": "organization that acts as regulator of an activity, financial market, or stock exchange",
+      "datatype": "http://wikiba.se/ontology#WikibaseItem",
+      "metadata_source": "https://query.wikidata.org/sparql"
+    },
+    "P3729": {
+      "label": "next lower rank",
+      "description": "lower rank or level in a ranked hierarchy like sport league, military ranks. If there are several possible, list each one and qualify with \"criterion used\" (P1013), avoid using ranks and date qualifiers. For sports leagues/taxa, use specific properties instead.",
+      "datatype": "http://wikiba.se/ontology#WikibaseItem",
+      "metadata_source": "https://query.wikidata.org/sparql"
+    },
+    "P364": {
+      "label": "original language of film or TV show",
+      "description": "language in which a film or a performance work was originally created. Deprecated for written works and songs; use P407 (\"language of work or name\") instead.",
+      "datatype": "http://wikiba.se/ontology#WikibaseItem",
+      "metadata_source": "https://query.wikidata.org/sparql"
+    },
+    "P3403": {
+      "label": "coextensive with",
+      "description": "this item has the same boundary as the target item; area associated with (this) entity is identical with the area associated with that entity",
+      "datatype": "http://wikiba.se/ontology#WikibaseItem",
+      "metadata_source": "https://query.wikidata.org/sparql"
+    },
+    "P3428": {
+      "label": "INCAA film rating",
+      "description": "rating of a movie in the Argentinian content rating system",
+      "datatype": "http://wikiba.se/ontology#WikibaseItem",
+      "metadata_source": "https://query.wikidata.org/sparql"
+    },
+    "P3438": {
+      "label": "vehicle normally used",
+      "description": "vehicle the subject normally uses",
+      "datatype": "http://wikiba.se/ontology#WikibaseItem",
+      "metadata_source": "https://query.wikidata.org/sparql"
+    },
+    "P3448": {
+      "label": "stepparent",
+      "description": "subject has the object as their stepparent",
+      "datatype": "http://wikiba.se/ontology#WikibaseItem",
+      "metadata_source": "https://query.wikidata.org/sparql"
+    },
+    "P3460": {
+      "label": "colonel-in-chief",
+      "description": "ceremonial position in a military regiment",
+      "datatype": "http://wikiba.se/ontology#WikibaseItem",
+      "metadata_source": "https://query.wikidata.org/sparql"
+    },
+    "P4151": {
+      "label": "game mechanics",
+      "description": "constructs of rules or methods designed for interaction with the game state",
+      "datatype": "http://wikiba.se/ontology#WikibaseItem",
+      "metadata_source": "https://query.wikidata.org/sparql"
+    },
+    "P4195": {
+      "label": "category for employees of the organization",
+      "description": "Wikimedia category for people who work or worked at this organization",
+      "datatype": "http://wikiba.se/ontology#WikibaseItem",
+      "metadata_source": "https://query.wikidata.org/sparql"
+    },
+    "P4220": {
+      "label": "order of battle",
+      "description": "arrangement of units and hierarchical organization of the armed forces involved in the specified military action",
+      "datatype": "http://wikiba.se/ontology#WikibaseItem",
+      "metadata_source": "https://query.wikidata.org/sparql"
+    },
+    "P4312": {
+      "label": "camera setup",
+      "description": "filmmaking method that the cameras were placed by. Use single-camera (Q2918907) or multiple-camera (Q738160)",
+      "datatype": "http://wikiba.se/ontology#WikibaseItem",
+      "metadata_source": "https://query.wikidata.org/sparql"
+    },
+    "P4330": {
+      "label": "contains",
+      "description": "contents, item or substance located within this wrapping item, but not part of this receptacle or container; does not describe the ingredients or components of this container",
+      "datatype": "http://wikiba.se/ontology#WikibaseItem",
+      "metadata_source": "https://query.wikidata.org/sparql"
+    },
+    "P3461": {
+      "label": "designated as terrorist by",
+      "description": "country or organization that has officially designated a given group as a terrorist organization (e.g. for India, listed on http://mha.nic.in/BO )",
+      "datatype": "http://wikiba.se/ontology#WikibaseItem",
+      "metadata_source": "https://query.wikidata.org/sparql"
+    },
+    "P3501": {
+      "label": "Christian liturgical rite",
+      "description": "Christian liturgical rite associated with this item",
+      "datatype": "http://wikiba.se/ontology#WikibaseItem",
+      "metadata_source": "https://query.wikidata.org/sparql"
+    },
+    "P3602": {
+      "label": "candidacy in election",
+      "description": "election where the subject is a candidate",
+      "datatype": "http://wikiba.se/ontology#WikibaseItem",
+      "metadata_source": "https://query.wikidata.org/sparql"
+    },
+    "P3650": {
+      "label": "JMK film rating",
+      "description": "rating of a film in the Austrian film rating system",
+      "datatype": "http://wikiba.se/ontology#WikibaseItem",
+      "metadata_source": "https://query.wikidata.org/sparql"
+    },
+    "P3712": {
+      "label": "has goal",
+      "description": "desired result or outcome",
+      "datatype": "http://wikiba.se/ontology#WikibaseItem",
+      "metadata_source": "https://query.wikidata.org/sparql"
+    },
+    "P3730": {
+      "label": "next higher rank",
+      "description": "higher rank or level in a ranked hierarchy like sport league, military ranks. If there are several possible, list each one and qualify with \"criterion used\" (P1013), avoid using ranks and date qualifiers. For sports leagues/taxa, use specific properties instead.",
+      "datatype": "http://wikiba.se/ontology#WikibaseItem",
+      "metadata_source": "https://query.wikidata.org/sparql"
+    },
+    "P3818": {
+      "label": "KMRB film rating",
+      "description": "rating of a film in the South Korean film/video rating system",
+      "datatype": "http://wikiba.se/ontology#WikibaseItem",
+      "metadata_source": "https://query.wikidata.org/sparql"
+    },
+    "P3828": {
+      "label": "wears",
+      "description": "clothing or accessory worn on subject's body",
+      "datatype": "http://wikiba.se/ontology#WikibaseItem",
+      "metadata_source": "https://query.wikidata.org/sparql"
+    },
+    "P3834": {
+      "label": "RTC film rating",
+      "description": "rating of a film in the Mexican film classification system",
+      "datatype": "http://wikiba.se/ontology#WikibaseItem",
+      "metadata_source": "https://query.wikidata.org/sparql"
+    },
+    "P3842": {
+      "label": "located in the present-day administrative territorial entity",
+      "description": "the item was located in the territory of this present-day administrative unit; however the two did not at any point coexist in time",
+      "datatype": "http://wikiba.se/ontology#WikibaseItem",
+      "metadata_source": "https://query.wikidata.org/sparql"
+    },
+    "P3858": {
+      "label": "route diagram template",
+      "description": "Wikimedia template with route diagram",
+      "datatype": "http://wikiba.se/ontology#WikibaseItem",
+      "metadata_source": "https://query.wikidata.org/sparql"
+    },
+    "P3876": {
+      "label": "category for alumni of educational institution",
+      "description": "category containing people who studied at this institution",
+      "datatype": "http://wikiba.se/ontology#WikibaseItem",
+      "metadata_source": "https://query.wikidata.org/sparql"
+    },
+    "P3912": {
+      "label": "newspaper format",
+      "description": "physical size of a newspaper (berliner, broadsheet, tabloid, etc.)",
+      "datatype": "http://wikiba.se/ontology#WikibaseItem",
+      "metadata_source": "https://query.wikidata.org/sparql"
+    },
+    "P3919": {
+      "label": "contributed to creative work",
+      "description": "the value of this property is some creative or published work or series (qualify with \"subject has role\", P2868), the subject is the person or organization who contributed",
+      "datatype": "http://wikiba.se/ontology#WikibaseItem",
+      "metadata_source": "https://query.wikidata.org/sparql"
+    },
+    "P3931": {
+      "label": "copyright holder",
+      "description": "person or organisation who holds the copyright of a work according to the Berne Convention",
+      "datatype": "http://wikiba.se/ontology#WikibaseItem",
+      "metadata_source": "https://query.wikidata.org/sparql"
+    },
+    "P3938": {
+      "label": "named by",
+      "description": "person or organisation that coined the name; use as qualifier for P2561 and its subproperties",
+      "datatype": "http://wikiba.se/ontology#WikibaseItem",
+      "metadata_source": "https://query.wikidata.org/sparql"
+    },
+    "P3975": {
+      "label": "general secretary",
+      "description": "leader of a political or international organization, sometimes below the chairperson (P488)",
+      "datatype": "http://wikiba.se/ontology#WikibaseItem",
+      "metadata_source": "https://query.wikidata.org/sparql"
+    },
+    "P3989": {
+      "label": "members have occupation",
+      "description": "some or all members of this group share the occupation",
+      "datatype": "http://wikiba.se/ontology#WikibaseItem",
+      "metadata_source": "https://query.wikidata.org/sparql"
+    },
+    "P4082": {
+      "label": "captured with",
+      "description": "equipment (e.g. model of camera, lens, microphone), used to capture this image, video, audio, or data",
+      "datatype": "http://wikiba.se/ontology#WikibaseItem",
+      "metadata_source": "https://query.wikidata.org/sparql"
+    },
+    "P50": {
+      "label": "author",
+      "description": "main creator(s) of a written work (use on works, not humans); use P2093 (author name string) when Wikidata item is unknown or does not exist",
+      "datatype": "http://wikiba.se/ontology#WikibaseItem",
+      "metadata_source": "https://query.wikidata.org/sparql"
+    },
+    "P6": {
+      "label": "head of government",
+      "description": "head of the executive power of this town, city, municipality, state, country, or other governmental body",
+      "datatype": "http://wikiba.se/ontology#WikibaseItem",
+      "metadata_source": "https://query.wikidata.org/sparql"
+    },
+    "P47": {
+      "label": "shares border with",
+      "description": "countries or administrative subdivisions, of equal level, that this item borders, either by land or water. A single common point is enough.",
+      "datatype": "http://wikiba.se/ontology#WikibaseItem",
+      "metadata_source": "https://query.wikidata.org/sparql"
+    },
+    "P58": {
+      "label": "screenwriter",
+      "description": "person(s) who wrote the script for subject item",
+      "datatype": "http://wikiba.se/ontology#WikibaseItem",
+      "metadata_source": "https://query.wikidata.org/sparql"
+    },
+    "P54": {
+      "label": "member of sports team",
+      "description": "sports teams or clubs that the subject represents or represented",
+      "datatype": "http://wikiba.se/ontology#WikibaseItem",
+      "metadata_source": "https://query.wikidata.org/sparql"
+    },
+    "P57": {
+      "label": "director",
+      "description": "director(s) of film, TV-series, stageplay, video game or similar",
+      "datatype": "http://wikiba.se/ontology#WikibaseItem",
+      "metadata_source": "https://query.wikidata.org/sparql"
+    },
+    "P61": {
+      "label": "discoverer or inventor",
+      "description": "subject who discovered, first described, invented, or developed this discovery or invention or scientific hypothesis or theory",
+      "datatype": "http://wikiba.se/ontology#WikibaseItem",
+      "metadata_source": "https://query.wikidata.org/sparql"
+    },
+    "P437": {
+      "label": "distribution format",
+      "description": "method (or type) of distribution for the subject",
+      "datatype": "http://wikiba.se/ontology#WikibaseItem",
+      "metadata_source": "https://query.wikidata.org/sparql"
+    },
+    "P449": {
+      "label": "original broadcaster",
+      "description": "network(s) or service(s) that originally broadcast a radio or television program",
+      "datatype": "http://wikiba.se/ontology#WikibaseItem",
+      "metadata_source": "https://query.wikidata.org/sparql"
+    },
+    "P451": {
+      "label": "unmarried partner",
+      "description": "someone with whom the person is in a relationship without being married. Use \"spouse\" (P26) for married couples",
+      "datatype": "http://wikiba.se/ontology#WikibaseItem",
+      "metadata_source": "https://query.wikidata.org/sparql"
+    },
+    "P457": {
+      "label": "foundational text",
+      "description": "text through which an institution or object has been created or established",
+      "datatype": "http://wikiba.se/ontology#WikibaseItem",
+      "metadata_source": "https://query.wikidata.org/sparql"
+    },
+    "P460": {
+      "label": "said to be the same as",
+      "description": "this item is said to be the same as that item, though this may be uncertain or disputed",
+      "datatype": "http://wikiba.se/ontology#WikibaseItem",
+      "metadata_source": "https://query.wikidata.org/sparql"
+    },
+    "P452": {
+      "label": "industry",
+      "description": "specific industry of company or organization",
+      "datatype": "http://wikiba.se/ontology#WikibaseItem",
+      "metadata_source": "https://query.wikidata.org/sparql"
+    },
+    "P466": {
+      "label": "occupant",
+      "description": "person or organization occupying property",
+      "datatype": "http://wikiba.se/ontology#WikibaseItem",
+      "metadata_source": "https://query.wikidata.org/sparql"
+    },
+    "P467": {
+      "label": "legislated by",
+      "description": "indicates that an act or bill was passed by a legislature. The value can be a particular session of the legislature",
+      "datatype": "http://wikiba.se/ontology#WikibaseItem",
+      "metadata_source": "https://query.wikidata.org/sparql"
+    },
+    "P461": {
+      "label": "opposite of",
+      "description": "item that is in some way the opposite of this item",
+      "datatype": "http://wikiba.se/ontology#WikibaseItem",
+      "metadata_source": "https://query.wikidata.org/sparql"
+    },
+    "P462": {
+      "label": "color",
+      "description": "color of subject",
+      "datatype": "http://wikiba.se/ontology#WikibaseItem",
+      "metadata_source": "https://query.wikidata.org/sparql"
+    },
+    "P53": {
+      "label": "family",
+      "description": "family, including dynasty and nobility houses. Not family name (use P734 for family name).",
+      "datatype": "http://wikiba.se/ontology#WikibaseItem",
+      "metadata_source": "https://query.wikidata.org/sparql"
+    },
+    "P463": {
+      "label": "member of",
+      "description": "organization, club or musical group to which the subject belongs. Do not use for membership in ethnic or social groups, nor for holding a political position, such as a member of parliament (use P39 for that)",
+      "datatype": "http://wikiba.se/ontology#WikibaseItem",
+      "metadata_source": "https://query.wikidata.org/sparql"
+    },
+    "P468": {
+      "label": "dan/kyu rank",
+      "description": "rank system used in several board games (e.g. go, shogi, renju), martial arts (e.g. judo, kendo, wushu) and some other games",
+      "datatype": "http://wikiba.se/ontology#WikibaseItem",
+      "metadata_source": "https://query.wikidata.org/sparql"
+    },
+    "P470": {
+      "label": "Eight Banner register",
+      "description": "Manchu household register for people of the Qing Dynasty",
+      "datatype": "http://wikiba.se/ontology#WikibaseItem",
+      "metadata_source": "https://query.wikidata.org/sparql"
+    },
+    "P479": {
+      "label": "input device",
+      "description": "input device used to interact with a software or a device",
+      "datatype": "http://wikiba.se/ontology#WikibaseItem",
+      "metadata_source": "https://query.wikidata.org/sparql"
+    },
+    "P483": {
+      "label": "recorded at studio or venue",
+      "description": "studio or location where a musical composition/release was recorded",
+      "datatype": "http://wikiba.se/ontology#WikibaseItem",
+      "metadata_source": "https://query.wikidata.org/sparql"
+    },
+    "P485": {
+      "label": "archives at",
+      "description": "the institution holding the subject's archives",
+      "datatype": "http://wikiba.se/ontology#WikibaseItem",
+      "metadata_source": "https://query.wikidata.org/sparql"
+    },
+    "P488": {
+      "label": "chairperson",
+      "description": "presiding member of an organization, group or body",
+      "datatype": "http://wikiba.se/ontology#WikibaseItem",
+      "metadata_source": "https://query.wikidata.org/sparql"
+    },
+    "P489": {
+      "label": "currency sign",
+      "description": "item with description of currency sign",
+      "datatype": "http://wikiba.se/ontology#WikibaseItem",
+      "metadata_source": "https://query.wikidata.org/sparql"
+    },
+    "P495": {
+      "label": "country of origin",
+      "description": "country of origin of this item (creative work, food, phrase, product, etc.)",
+      "datatype": "http://wikiba.se/ontology#WikibaseItem",
+      "metadata_source": "https://query.wikidata.org/sparql"
+    },
+    "P504": {
+      "label": "shipping port",
+      "description": "shipping port of the vessel (if different from \"ship registry\"): For civilian ships, the primary port from which the ship operates. Port of registry →P532 should be listed in \"Ship registry\". For warships, this will be the ship's assigned naval base",
+      "datatype": "http://wikiba.se/ontology#WikibaseItem",
+      "metadata_source": "https://query.wikidata.org/sparql"
+    },
+    "P509": {
+      "label": "cause of death",
+      "description": "underlying or immediate cause of death. Underlying cause (e.g. car accident, stomach cancer) preferred. Use 'manner of death' (P1196) for broadest category, e.g. natural causes, accident, homicide, suicide",
+      "datatype": "http://wikiba.se/ontology#WikibaseItem",
+      "metadata_source": "https://query.wikidata.org/sparql"
+    },
+    "P511": {
+      "label": "honorific prefix",
+      "description": "word or expression used before a name, in addressing or referring to a person",
+      "datatype": "http://wikiba.se/ontology#WikibaseItem",
+      "metadata_source": "https://query.wikidata.org/sparql"
+    },
+    "P512": {
+      "label": "academic degree",
+      "description": "academic degree that the person holds",
+      "datatype": "http://wikiba.se/ontology#WikibaseItem",
+      "metadata_source": "https://query.wikidata.org/sparql"
+    },
+    "P530": {
+      "label": "diplomatic relation",
+      "description": "diplomatic relations of the country",
+      "datatype": "http://wikiba.se/ontology#WikibaseItem",
+      "metadata_source": "https://query.wikidata.org/sparql"
+    },
+    "P531": {
+      "label": "diplomatic mission sent",
+      "description": "location of diplomatic mission, i.e. consulate of A in the capital city of B",
+      "datatype": "http://wikiba.se/ontology#WikibaseItem",
+      "metadata_source": "https://query.wikidata.org/sparql"
+    },
+    "P516": {
+      "label": "powered by",
+      "description": "equipment used by the subject to convert a source into mechanical or electrical energy",
+      "datatype": "http://wikiba.se/ontology#WikibaseItem",
+      "metadata_source": "https://query.wikidata.org/sparql"
+    },
+    "P518": {
+      "label": "applies to part",
+      "description": "part, aspect, or form of the item to which the claim applies",
+      "datatype": "http://wikiba.se/ontology#WikibaseItem",
+      "metadata_source": "https://query.wikidata.org/sparql"
+    },
+    "P552": {
+      "label": "handedness",
+      "description": "handedness of the person",
+      "datatype": "http://wikiba.se/ontology#WikibaseItem",
+      "metadata_source": "https://query.wikidata.org/sparql"
+    },
+    "P553": {
+      "label": "website account on",
+      "description": "website that the person or organization has an account on (use with P554) Note: only used with reliable source or if the person or organization disclosed it.",
+      "datatype": "http://wikiba.se/ontology#WikibaseItem",
+      "metadata_source": "https://query.wikidata.org/sparql"
+    },
+    "P520": {
+      "label": "armament",
+      "description": "equippable weapon item for the subject",
+      "datatype": "http://wikiba.se/ontology#WikibaseItem",
+      "metadata_source": "https://query.wikidata.org/sparql"
+    },
+    "P521": {
+      "label": "scheduled service destination",
+      "description": "airport or station connected by regular direct service to the subject; for the destination of a trip see P1444",
+      "datatype": "http://wikiba.se/ontology#WikibaseItem",
+      "metadata_source": "https://query.wikidata.org/sparql"
+    },
+    "P527": {
+      "label": "has part(s)",
+      "description": "part of this subject; inverse property of \"part of\" (P361). See also \"has parts of the class\" (P2670).",
+      "datatype": "http://wikiba.se/ontology#WikibaseItem",
+      "metadata_source": "https://query.wikidata.org/sparql"
+    },
+    "P532": {
+      "label": "port of registry",
+      "description": "ship's port of registry. This is generally painted on the ship's stern (for the \"home port\", see Property:P504)",
+      "datatype": "http://wikiba.se/ontology#WikibaseItem",
+      "metadata_source": "https://query.wikidata.org/sparql"
+    },
+    "P533": {
+      "label": "target",
+      "description": "target of an attack or military operation",
+      "datatype": "http://wikiba.se/ontology#WikibaseItem",
+      "metadata_source": "https://query.wikidata.org/sparql"
+    },
+    "P542": {
+      "label": "officially opened by",
+      "description": "person that officially opened the event or place",
+      "datatype": "http://wikiba.se/ontology#WikibaseItem",
+      "metadata_source": "https://query.wikidata.org/sparql"
+    },
+    "P547": {
+      "label": "commemorates",
+      "description": "what or whom is commemorated by the place, monument, memorial, or holiday",
+      "datatype": "http://wikiba.se/ontology#WikibaseItem",
+      "metadata_source": "https://query.wikidata.org/sparql"
+    },
+    "P551": {
+      "label": "residence",
+      "description": "the place where the person is or has been, resident",
+      "datatype": "http://wikiba.se/ontology#WikibaseItem",
+      "metadata_source": "https://query.wikidata.org/sparql"
+    },
+    "P608": {
+      "label": "exhibition history",
+      "description": "exhibitions where the item is or was displayed",
+      "datatype": "http://wikiba.se/ontology#WikibaseItem",
+      "metadata_source": "https://query.wikidata.org/sparql"
+    },
+    "P609": {
+      "label": "terminus location",
+      "description": "location of the terminus of a linear feature",
+      "datatype": "http://wikiba.se/ontology#WikibaseItem",
+      "metadata_source": "https://query.wikidata.org/sparql"
+    },
+    "P610": {
+      "label": "highest point",
+      "description": "point with highest elevation in a region or path",
+      "datatype": "http://wikiba.se/ontology#WikibaseItem",
+      "metadata_source": "https://query.wikidata.org/sparql"
+    },
+    "P559": {
+      "label": "terminus",
+      "description": "the feature (intersecting road, train station, etc.) at the end of a linear feature",
+      "datatype": "http://wikiba.se/ontology#WikibaseItem",
+      "metadata_source": "https://query.wikidata.org/sparql"
+    },
+    "P562": {
+      "label": "central bank/issuer",
+      "description": "central bank or other issuing authority for the currency",
+      "datatype": "http://wikiba.se/ontology#WikibaseItem",
+      "metadata_source": "https://query.wikidata.org/sparql"
+    },
+    "P566": {
+      "label": "has basionym",
+      "description": "the legitimate, previously published name on which a new combination or name at new rank is based",
+      "datatype": "http://wikiba.se/ontology#WikibaseItem",
+      "metadata_source": "https://query.wikidata.org/sparql"
+    },
+    "P4379": {
+      "label": "youth wing",
+      "description": "group of younger people associated with this organization",
+      "datatype": "http://wikiba.se/ontology#WikibaseItem",
+      "metadata_source": "https://query.wikidata.org/sparql"
+    },
+    "P4437": {
+      "label": "FPB rating",
+      "description": "rating of a film or video game in the South African media content rating system",
+      "datatype": "http://wikiba.se/ontology#WikibaseItem",
+      "metadata_source": "https://query.wikidata.org/sparql"
+    },
+    "P4552": {
+      "label": "mountain range",
+      "description": "range or subrange to which the geographical item belongs",
+      "datatype": "http://wikiba.se/ontology#WikibaseItem",
+      "metadata_source": "https://query.wikidata.org/sparql"
+    },
+    "P5096": {
+      "label": "member of the crew of",
+      "description": "vessel or spacecraft on which this person served. For spacecraft, inverse of crew members (P1029), backup or reserve team or crew (P3015)",
+      "datatype": "http://wikiba.se/ontology#WikibaseItem",
+      "metadata_source": "https://query.wikidata.org/sparql"
+    },
+    "P5125": {
+      "label": "Wikimedia outline",
+      "description": "item about an outline of the topic at Wikimedia sites",
+      "datatype": "http://wikiba.se/ontology#WikibaseItem",
+      "metadata_source": "https://query.wikidata.org/sparql"
+    },
+    "P5126": {
+      "label": "assistant director",
+      "description": "assistant stage director of a performing arts, film or television production",
+      "datatype": "http://wikiba.se/ontology#WikibaseItem",
+      "metadata_source": "https://query.wikidata.org/sparql"
+    },
+    "P5150": {
+      "label": "IGAC rating",
+      "description": "rating of a film or theatrical production in the Portuguese classification system",
+      "datatype": "http://wikiba.se/ontology#WikibaseItem",
+      "metadata_source": "https://query.wikidata.org/sparql"
+    },
+    "P5152": {
+      "label": "KAVI rating",
+      "description": "rating in the Finnish film and television rating system",
+      "datatype": "http://wikiba.se/ontology#WikibaseItem",
+      "metadata_source": "https://query.wikidata.org/sparql"
+    },
+    "P5201": {
+      "label": "IMDA rating",
+      "description": "rating in the Singaporean film and video game rating system",
+      "datatype": "http://wikiba.se/ontology#WikibaseItem",
+      "metadata_source": "https://query.wikidata.org/sparql"
+    },
+    "P5278": {
+      "label": "surname for other gender",
+      "description": "gender inflection of surname, patronymic or matronymic",
+      "datatype": "http://wikiba.se/ontology#WikibaseItem",
+      "metadata_source": "https://query.wikidata.org/sparql"
+    },
+    "P5323": {
+      "label": "attested in",
+      "description": "document or corpus where the lemma or form of a Lexeme entity, word or name is used, but not described",
+      "datatype": "http://wikiba.se/ontology#WikibaseItem",
+      "metadata_source": "https://query.wikidata.org/sparql"
+    },
+    "P5025": {
+      "label": "gens",
+      "description": "a clan or group of families from Ancient Rome who shared the same nomen",
+      "datatype": "http://wikiba.se/ontology#WikibaseItem",
+      "metadata_source": "https://query.wikidata.org/sparql"
+    },
+    "P5028": {
+      "label": "sound designer",
+      "description": "person responsible for the sound on a stage, in a film or in a radio drama",
+      "datatype": "http://wikiba.se/ontology#WikibaseItem",
+      "metadata_source": "https://query.wikidata.org/sparql"
+    },
+    "P5052": {
+      "label": "supervisory board member",
+      "description": "member(s) of the supervisory board for the organization",
+      "datatype": "http://wikiba.se/ontology#WikibaseItem",
+      "metadata_source": "https://query.wikidata.org/sparql"
+    },
+    "P5056": {
+      "label": "patronym or matronym",
+      "description": "part of a person's name that comes from the given name of a parent, in naming traditions that require it",
+      "datatype": "http://wikiba.se/ontology#WikibaseItem",
+      "metadata_source": "https://query.wikidata.org/sparql"
+    },
+    "P5072": {
+      "label": "presented in",
+      "description": "event at which a talk, film, paper, or poster was presented",
+      "datatype": "http://wikiba.se/ontology#WikibaseItem",
+      "metadata_source": "https://query.wikidata.org/sparql"
+    },
+    "P4608": {
+      "label": "scenographer",
+      "description": "person who designed the stage or film set of this item",
+      "datatype": "http://wikiba.se/ontology#WikibaseItem",
+      "metadata_source": "https://query.wikidata.org/sparql"
+    },
+    "P4614": {
+      "label": "drainage basin",
+      "description": "area where precipitation collects and drains off into a common outlet, such as into a river, bay, or other body of water",
+      "datatype": "http://wikiba.se/ontology#WikibaseItem",
+      "metadata_source": "https://query.wikidata.org/sparql"
+    },
+    "P4624": {
+      "label": "squadron embarked",
+      "description": "the aircraft squadrons that served/serving on an aircraft carrier",
+      "datatype": "http://wikiba.se/ontology#WikibaseItem",
+      "metadata_source": "https://query.wikidata.org/sparql"
+    },
+    "P4647": {
+      "label": "location of first performance",
+      "description": "location where a work was first debuted, performed or broadcasted",
+      "datatype": "http://wikiba.se/ontology#WikibaseItem",
+      "metadata_source": "https://query.wikidata.org/sparql"
+    },
+    "P5970": {
+      "label": "Medierådet rating",
+      "description": "rating of a film in the Danish movie content rating system",
+      "datatype": "http://wikiba.se/ontology#WikibaseItem",
+      "metadata_source": "https://query.wikidata.org/sparql"
+    },
+    "P6087": {
+      "label": "coach of sports team",
+      "description": "sports club or team for which this person is or was on-field manager or coach",
+      "datatype": "http://wikiba.se/ontology#WikibaseItem",
+      "metadata_source": "https://query.wikidata.org/sparql"
+    },
+    "P6104": {
+      "label": "maintained by WikiProject",
+      "description": "WikiProject that maintains this property, item, or linked pages. If the WikiProject is hosted outside of Wikidata, identify the hosting project using the qualifier \"part of\" (P361)",
+      "datatype": "http://wikiba.se/ontology#WikibaseItem",
+      "metadata_source": "https://query.wikidata.org/sparql"
+    },
+    "P5008": {
+      "label": "on focus list of Wikimedia project",
+      "description": "property to indicate that an item is of particular interest for a Wikimedia project. This property does not add notability. Items should not be created with this property if they are not notable for Wikidata. See also P6104, P972, P2354",
+      "datatype": "http://wikiba.se/ontology#WikibaseItem",
+      "metadata_source": "https://query.wikidata.org/sparql"
+    },
+    "P5009": {
+      "label": "complies with",
+      "description": "the product or work complies with a certain norm or passes a test",
+      "datatype": "http://wikiba.se/ontology#WikibaseItem",
+      "metadata_source": "https://query.wikidata.org/sparql"
+    },
+    "P5012": {
+      "label": "special rank or class rate",
+      "description": "non-military, non-police civil service, special, or diplomatic rank held by an official in Russia and other post-Soviet countries; for military and police and other special ranks, use P410.",
+      "datatype": "http://wikiba.se/ontology#WikibaseItem",
+      "metadata_source": "https://query.wikidata.org/sparql"
+    },
+    "P5021": {
+      "label": "assessment",
+      "description": "subject took the test or exam, or was assessed per test or method",
+      "datatype": "http://wikiba.se/ontology#WikibaseItem",
+      "metadata_source": "https://query.wikidata.org/sparql"
+    },
+    "P5023": {
+      "label": "activity policy in this place",
+      "description": "policy for activities in this place, for example no photos, photos allowed, no flash, lighting fires, flying drones, etc.",
+      "datatype": "http://wikiba.se/ontology#WikibaseItem",
+      "metadata_source": "https://query.wikidata.org/sparql"
+    },
+    "P5817": {
+      "label": "state of use",
+      "description": "to indicate state of use of a building, monument, etc. It is not related with its heritage protection (P1435), but to its present state of use. Ex.: abandoned, in use, temporarily closed, etc.",
+      "datatype": "http://wikiba.se/ontology#WikibaseItem",
+      "metadata_source": "https://query.wikidata.org/sparql"
+    },
+    "P5826": {
+      "label": "majority opinion by",
+      "description": "judicial opinion agreed to by more than half of the members of a court",
+      "datatype": "http://wikiba.se/ontology#WikibaseItem",
+      "metadata_source": "https://query.wikidata.org/sparql"
+    },
+    "P5869": {
+      "label": "model item",
+      "description": "defines which item is a best practice example of modelling a subject, which is described by the value of this property, usage instructions at Wikidata:Model items",
+      "datatype": "http://wikiba.se/ontology#WikibaseItem",
+      "metadata_source": "https://query.wikidata.org/sparql"
+    },
+    "P5961": {
+      "label": "depicted part",
+      "description": "use as qualifier for \"depicts\" (P180) or image (P18)",
+      "datatype": "http://wikiba.se/ontology#WikibaseItem",
+      "metadata_source": "https://query.wikidata.org/sparql"
+    },
+    "P588": {
+      "label": "coolant",
+      "description": "substance used by the subject to dissipate excess thermal energy",
+      "datatype": "http://wikiba.se/ontology#WikibaseItem",
+      "metadata_source": "https://query.wikidata.org/sparql"
+    },
+    "P598": {
+      "label": "commander of (DEPRECATED)",
+      "description": "for persons who are notable as commanding officers, the units they commanded",
+      "datatype": "http://wikiba.se/ontology#WikibaseItem",
+      "metadata_source": "https://query.wikidata.org/sparql"
+    },
+    "P607": {
+      "label": "participated in conflict",
+      "description": "battles, wars or other military engagements in which the person or item participated",
+      "datatype": "http://wikiba.se/ontology#WikibaseItem",
+      "metadata_source": "https://query.wikidata.org/sparql"
+    },
+    "P5460": {
+      "label": "grants",
+      "description": "confers degree, honor, award, prize, title, certificate or medal denoting achievement to a person or organization",
+      "datatype": "http://wikiba.se/ontology#WikibaseItem",
+      "metadata_source": "https://query.wikidata.org/sparql"
+    },
+    "P5514": {
+      "label": "accredited by",
+      "description": "optionally use together with \"subject has role\" (P2868)",
+      "datatype": "http://wikiba.se/ontology#WikibaseItem",
+      "metadata_source": "https://query.wikidata.org/sparql"
+    },
+    "P5707": {
+      "label": "samples from work",
+      "description": "audio or video which this work uses a raw excerpt of",
+      "datatype": "http://wikiba.se/ontology#WikibaseItem",
+      "metadata_source": "https://query.wikidata.org/sparql"
+    },
+    "P5769": {
+      "label": "editor-in-chief",
+      "description": "a publication's editorial leader who has final responsibility for its operations and policies and the selection of authors, translators, illustrators, and formats for publishing articles or books in collections or periodical papers",
+      "datatype": "http://wikiba.se/ontology#WikibaseItem",
+      "metadata_source": "https://query.wikidata.org/sparql"
+    },
+    "P5816": {
+      "label": "state of conservation",
+      "description": "to indicate physical state of conservation of a building, monument, artifact, etc. E.g. ruinous, demolished, correct, etc.",
+      "datatype": "http://wikiba.se/ontology#WikibaseItem",
+      "metadata_source": "https://query.wikidata.org/sparql"
+    },
+    "P4661": {
+      "label": "reservoir created",
+      "description": "reservoir created upstream of a dam by this dam",
+      "datatype": "http://wikiba.se/ontology#WikibaseItem",
+      "metadata_source": "https://query.wikidata.org/sparql"
+    },
+    "P4743": {
+      "label": "animal breed",
+      "description": "subject item belongs to a specific group of domestic animals, generally given by association",
+      "datatype": "http://wikiba.se/ontology#WikibaseItem",
+      "metadata_source": "https://query.wikidata.org/sparql"
+    },
+    "P4791": {
+      "label": "commanded by",
+      "description": "commander of a military unit/army/security service, operation, etc.",
+      "datatype": "http://wikiba.se/ontology#WikibaseItem",
+      "metadata_source": "https://query.wikidata.org/sparql"
+    },
+    "P4805": {
+      "label": "make-up artist",
+      "description": "person in charge of make-up",
+      "datatype": "http://wikiba.se/ontology#WikibaseItem",
+      "metadata_source": "https://query.wikidata.org/sparql"
+    },
+    "P4884": {
+      "label": "court",
+      "description": "specific court a legal case is or was heard or decided in",
+      "datatype": "http://wikiba.se/ontology#WikibaseItem",
+      "metadata_source": "https://query.wikidata.org/sparql"
+    },
+    "P4908": {
+      "label": "season",
+      "description": "season of a series (television, web, podcast)",
+      "datatype": "http://wikiba.se/ontology#WikibaseItem",
+      "metadata_source": "https://query.wikidata.org/sparql"
+    },
+    "P4952": {
+      "label": "safety classification and labelling",
+      "description": "classification data for the identification and labelling of chemical risks associated with a product",
+      "datatype": "http://wikiba.se/ontology#WikibaseItem",
+      "metadata_source": "https://query.wikidata.org/sparql"
+    },
+    "P4969": {
+      "label": "derivative work",
+      "description": "new work of art (film, book, software, etc.) derived from major part of this work",
+      "datatype": "http://wikiba.se/ontology#WikibaseItem",
+      "metadata_source": "https://query.wikidata.org/sparql"
+    },
+    "P5004": {
+      "label": "in opposition to",
+      "description": "object of a social action",
+      "datatype": "http://wikiba.se/ontology#WikibaseItem",
+      "metadata_source": "https://query.wikidata.org/sparql"
+    },
+    "P629": {
+      "label": "version, edition or translation of",
+      "description": "is a version, edition or translation of this entity",
+      "datatype": "http://wikiba.se/ontology#WikibaseItem",
+      "metadata_source": "https://query.wikidata.org/sparql"
+    },
+    "P631": {
+      "label": "structural engineer",
+      "description": "person, group or organisation responsible for the structural engineering of a building or structure",
+      "datatype": "http://wikiba.se/ontology#WikibaseItem",
+      "metadata_source": "https://query.wikidata.org/sparql"
+    },
+    "P641": {
+      "label": "sport",
+      "description": "sport that the subject participates or participated in or is associated with",
+      "datatype": "http://wikiba.se/ontology#WikibaseItem",
+      "metadata_source": "https://query.wikidata.org/sparql"
+    },
+    "P66": {
+      "label": "ancestral home",
+      "description": "place of origin for ancestors of subject",
+      "datatype": "http://wikiba.se/ontology#WikibaseItem",
+      "metadata_source": "https://query.wikidata.org/sparql"
+    },
+    "P69": {
+      "label": "educated at",
+      "description": "educational institution attended by subject",
+      "datatype": "http://wikiba.se/ontology#WikibaseItem",
+      "metadata_source": "https://query.wikidata.org/sparql"
+    },
+    "P676": {
+      "label": "lyricist",
+      "description": "author of song lyrics",
+      "datatype": "http://wikiba.se/ontology#WikibaseItem",
+      "metadata_source": "https://query.wikidata.org/sparql"
+    },
+    "P78": {
+      "label": "top-level Internet domain",
+      "description": "Internet domain name system top-level code",
+      "datatype": "http://wikiba.se/ontology#WikibaseItem",
+      "metadata_source": "https://query.wikidata.org/sparql"
+    },
+    "P669": {
+      "label": "located on street",
+      "description": "street, road, square, or trail, where the item is located. To add the number, use Property:P670 \"house number\" as qualifier. Use property P6375 \"street address\", if there is no item for the street",
+      "datatype": "http://wikiba.se/ontology#WikibaseItem",
+      "metadata_source": "https://query.wikidata.org/sparql"
+    },
+    "P674": {
+      "label": "characters",
+      "description": "characters which appear in this item (like plays, operas, operettas, books, comics, films, TV series, video games)",
+      "datatype": "http://wikiba.se/ontology#WikibaseItem",
+      "metadata_source": "https://query.wikidata.org/sparql"
+    },
+    "P706": {
+      "label": "located in/on physical feature",
+      "description": "located on the specified (geo)physical feature. Should not be used when the value is only political/administrative (P131) or a mountain range (P4552). Use P206 for things in/on bodies of water.",
+      "datatype": "http://wikiba.se/ontology#WikibaseItem",
+      "metadata_source": "https://query.wikidata.org/sparql"
+    },
+    "P708": {
+      "label": "diocese",
+      "description": "administrative division of the church to which the element belongs; use P5607 for other types of ecclesiastical territorial entities",
+      "datatype": "http://wikiba.se/ontology#WikibaseItem",
+      "metadata_source": "https://query.wikidata.org/sparql"
+    },
+    "P710": {
+      "label": "participant",
+      "description": "person, group of people or organization (object) that actively takes/took part in an event or process (subject). Preferably qualify with \"object has role\" (P3831). Use P1923 for participants that are teams.",
+      "datatype": "http://wikiba.se/ontology#WikibaseItem",
+      "metadata_source": "https://query.wikidata.org/sparql"
+    },
+    "P725": {
+      "label": "voice actor",
+      "description": "performer of a spoken role in a creative work such as animation, video game, radio drama, or dubbing over [use \"character role\" (P453) as qualifier] [use \"cast member\" (P161) for live acting]",
+      "datatype": "http://wikiba.se/ontology#WikibaseItem",
+      "metadata_source": "https://query.wikidata.org/sparql"
+    },
+    "P734": {
+      "label": "family name",
+      "description": "part of full name of person",
+      "datatype": "http://wikiba.se/ontology#WikibaseItem",
+      "metadata_source": "https://query.wikidata.org/sparql"
+    },
+    "P736": {
+      "label": "cover art by",
+      "description": "name of person or team creating cover artwork for book, record album, single record etc.",
+      "datatype": "http://wikiba.se/ontology#WikibaseItem",
+      "metadata_source": "https://query.wikidata.org/sparql"
+    },
+    "P737": {
+      "label": "influenced by",
+      "description": "the subject (person, idea, etc.) was influenced or inspired by this object entity, e.g. \"Heidegger was influenced by Aristotle\"",
+      "datatype": "http://wikiba.se/ontology#WikibaseItem",
+      "metadata_source": "https://query.wikidata.org/sparql"
+    },
+    "P611": {
+      "label": "religious order",
+      "description": "monastic or Sufi order to which an individual or religious institution belongs",
+      "datatype": "http://wikiba.se/ontology#WikibaseItem",
+      "metadata_source": "https://query.wikidata.org/sparql"
+    },
+    "P618": {
+      "label": "source of energy",
+      "description": "describes the source of energy an animated object (machine or animal) uses",
+      "datatype": "http://wikiba.se/ontology#WikibaseItem",
+      "metadata_source": "https://query.wikidata.org/sparql"
+    },
+    "P624": {
+      "label": "guidance system",
+      "description": "guidance system of a missile",
+      "datatype": "http://wikiba.se/ontology#WikibaseItem",
+      "metadata_source": "https://query.wikidata.org/sparql"
+    },
+    "P735": {
+      "label": "given name",
+      "description": "first name or another given name of this person; values used with the property should not link disambiguations nor family names",
+      "datatype": "http://wikiba.se/ontology#WikibaseItem",
+      "metadata_source": "https://query.wikidata.org/sparql"
+    },
+    "P741": {
+      "label": "playing hand",
+      "description": "hand used to play a racket sport, cricket, fencing, or curling",
+      "datatype": "http://wikiba.se/ontology#WikibaseItem",
+      "metadata_source": "https://query.wikidata.org/sparql"
+    },
+    "P747": {
+      "label": "has version, edition or translation",
+      "description": "item that is an edition or translation of this item",
+      "datatype": "http://wikiba.se/ontology#WikibaseItem",
+      "metadata_source": "https://query.wikidata.org/sparql"
+    },
+    "P748": {
+      "label": "appointed by",
+      "description": "who appointed the person to the position, can be used as a qualifier",
+      "datatype": "http://wikiba.se/ontology#WikibaseItem",
+      "metadata_source": "https://query.wikidata.org/sparql"
+    },
+    "P739": {
+      "label": "ammunition",
+      "description": "cartridge or other ammunition used by the subject firearm",
+      "datatype": "http://wikiba.se/ontology#WikibaseItem",
+      "metadata_source": "https://query.wikidata.org/sparql"
+    },
+    "P740": {
+      "label": "location of formation",
+      "description": "location where a group or organization was formed",
+      "datatype": "http://wikiba.se/ontology#WikibaseItem",
+      "metadata_source": "https://query.wikidata.org/sparql"
+    },
+    "P767": {
+      "label": "contributor to the creative work or subject",
+      "description": "the value of this property is a person or organization that contributed to the subject or work",
+      "datatype": "http://wikiba.se/ontology#WikibaseItem",
+      "metadata_source": "https://query.wikidata.org/sparql"
+    },
+    "P768": {
+      "label": "electoral district",
+      "description": "electoral district this person is representing, or of the office that is being contested. Use as qualifier for \"position held\" (P39) or \"office contested\" (P541) or \"candidacy in election\" (P3602)",
+      "datatype": "http://wikiba.se/ontology#WikibaseItem",
+      "metadata_source": "https://query.wikidata.org/sparql"
+    },
+    "P803": {
+      "label": "professorship",
+      "description": "professorship position held by this academic person",
+      "datatype": "http://wikiba.se/ontology#WikibaseItem",
+      "metadata_source": "https://query.wikidata.org/sparql"
+    },
+    "P805": {
+      "label": "statement is subject of",
+      "description": "(qualifying) item that describes the relation identified in this statement",
+      "datatype": "http://wikiba.se/ontology#WikibaseItem",
+      "metadata_source": "https://query.wikidata.org/sparql"
+    },
+    "P807": {
+      "label": "separated from",
+      "description": "subject was founded or started by separating from identified object",
+      "datatype": "http://wikiba.se/ontology#WikibaseItem",
+      "metadata_source": "https://query.wikidata.org/sparql"
+    },
+    "P795": {
+      "label": "located on linear feature",
+      "description": "linear feature along which distance is specified from a specified datum point",
+      "datatype": "http://wikiba.se/ontology#WikibaseItem",
+      "metadata_source": "https://query.wikidata.org/sparql"
+    },
+    "P797": {
+      "label": "authority",
+      "description": "entity having executive power on given entity",
+      "datatype": "http://wikiba.se/ontology#WikibaseItem",
+      "metadata_source": "https://query.wikidata.org/sparql"
+    },
+    "P800": {
+      "label": "notable work",
+      "description": "notable scientific, artistic or literary work, or other work of significance among subject's works",
+      "datatype": "http://wikiba.se/ontology#WikibaseItem",
+      "metadata_source": "https://query.wikidata.org/sparql"
+    },
+    "P749": {
+      "label": "parent organization or unit",
+      "description": "parent organization or unit of an organization or unit, opposite of child organization or unit (P355); use instance of (P31) to distinguish organization (Q43229) and organization unit (Q10387680)",
+      "datatype": "http://wikiba.se/ontology#WikibaseItem",
+      "metadata_source": "https://query.wikidata.org/sparql"
+    },
+    "P750": {
+      "label": "distributed by",
+      "description": "distributor of a creative work; distributor for a record label; news agency; film distributor",
+      "datatype": "http://wikiba.se/ontology#WikibaseItem",
+      "metadata_source": "https://query.wikidata.org/sparql"
+    },
+    "P655": {
+      "label": "translator",
+      "description": "agent who adapts any kind of written text from one language to another",
+      "datatype": "http://wikiba.se/ontology#WikibaseItem",
+      "metadata_source": "https://query.wikidata.org/sparql"
+    },
+    "P664": {
+      "label": "organizer",
+      "description": "person or institution organizing an event",
+      "datatype": "http://wikiba.se/ontology#WikibaseItem",
+      "metadata_source": "https://query.wikidata.org/sparql"
+    },
+    "P770": {
+      "label": "cause of destruction",
+      "description": "item which caused the destruction of the subject item",
+      "datatype": "http://wikiba.se/ontology#WikibaseItem",
+      "metadata_source": "https://query.wikidata.org/sparql"
+    },
+    "P790": {
+      "label": "approved by",
+      "description": "item is approved by other item(s) [qualifier: statement is approved by other item(s)]",
+      "datatype": "http://wikiba.se/ontology#WikibaseItem",
+      "metadata_source": "https://query.wikidata.org/sparql"
+    },
+    "P793": {
+      "label": "significant event",
+      "description": "significant or notable events associated with the subject",
+      "datatype": "http://wikiba.se/ontology#WikibaseItem",
+      "metadata_source": "https://query.wikidata.org/sparql"
+    },
+    "P802": {
+      "label": "student",
+      "description": "notable student(s) of the subject individual",
+      "datatype": "http://wikiba.se/ontology#WikibaseItem",
+      "metadata_source": "https://query.wikidata.org/sparql"
+    },
+    "P828": {
+      "label": "has cause",
+      "description": "underlying cause, entity that ultimately resulted in this effect",
+      "datatype": "http://wikiba.se/ontology#WikibaseItem",
+      "metadata_source": "https://query.wikidata.org/sparql"
+    },
+    "P6153": {
+      "label": "research site",
+      "description": "place where this item was researched",
+      "datatype": "http://wikiba.se/ontology#WikibaseItem",
+      "metadata_source": "https://query.wikidata.org/sparql"
+    },
+    "P6166": {
+      "label": "quotes work",
+      "description": "other creative work which this work quotes from textually, verbally or lyrically",
+      "datatype": "http://wikiba.se/ontology#WikibaseItem",
+      "metadata_source": "https://query.wikidata.org/sparql"
+    },
+    "P812": {
+      "label": "academic major",
+      "description": "major someone studied at college/university",
+      "datatype": "http://wikiba.se/ontology#WikibaseItem",
+      "metadata_source": "https://query.wikidata.org/sparql"
+    },
+    "P814": {
+      "label": "IUCN protected areas category",
+      "description": "protected areas category by the World Commission on Protected Areas. Used with dedicated items for each category.",
+      "datatype": "http://wikiba.se/ontology#WikibaseItem",
+      "metadata_source": "https://query.wikidata.org/sparql"
+    },
+    "P822": {
+      "label": "mascot",
+      "description": "mascot of an organization, e.g. a sports team or university",
+      "datatype": "http://wikiba.se/ontology#WikibaseItem",
+      "metadata_source": "https://query.wikidata.org/sparql"
+    },
+    "P823": {
+      "label": "speaker",
+      "description": "person who is speaker for this event, ceremony, keynote, presentation or in a literary work",
+      "datatype": "http://wikiba.se/ontology#WikibaseItem",
+      "metadata_source": "https://query.wikidata.org/sparql"
+    },
+    "P825": {
+      "label": "dedicated to",
+      "description": "person or organization to whom the subject was dedicated",
+      "datatype": "http://wikiba.se/ontology#WikibaseItem",
+      "metadata_source": "https://query.wikidata.org/sparql"
+    },
+    "P6186": {
+      "label": "category for eponymous categories",
+      "description": "Wikimedia category that contains subcategories dedicated to specific instances of the said item",
+      "datatype": "http://wikiba.se/ontology#WikibaseItem",
+      "metadata_source": "https://query.wikidata.org/sparql"
+    },
+    "P6193": {
+      "label": "ratified by",
+      "description": "used to specify that a treaty has been ratified by a given state or subject of international law",
+      "datatype": "http://wikiba.se/ontology#WikibaseItem",
+      "metadata_source": "https://query.wikidata.org/sparql"
+    },
+    "P6216": {
+      "label": "copyright status",
+      "description": "copyright status for intellectual creations like works of art, publications, software, etc.",
+      "datatype": "http://wikiba.se/ontology#WikibaseItem",
+      "metadata_source": "https://query.wikidata.org/sparql"
+    },
+    "P6224": {
+      "label": "level of description",
+      "description": "position of the unit of description in the hierarchy of the fonds",
+      "datatype": "http://wikiba.se/ontology#WikibaseItem",
+      "metadata_source": "https://query.wikidata.org/sparql"
+    },
+    "P6241": {
+      "label": "collection creator",
+      "description": "entity (person, organization, etc.) that caused a record or collection to be produced or gathered",
+      "datatype": "http://wikiba.se/ontology#WikibaseItem",
+      "metadata_source": "https://query.wikidata.org/sparql"
+    },
+    "P7137": {
+      "label": "acknowledges",
+      "description": "the subject creative work gives acknowledgement to this object",
+      "datatype": "http://wikiba.se/ontology#WikibaseItem",
+      "metadata_source": "https://query.wikidata.org/sparql"
+    },
+    "P7153": {
+      "label": "significant place",
+      "description": "significant or notable places associated with the subject",
+      "datatype": "http://wikiba.se/ontology#WikibaseItem",
+      "metadata_source": "https://query.wikidata.org/sparql"
+    },
+    "P7169": {
+      "label": "substitute director/manager",
+      "description": "substitute of the director/manager of an organization",
+      "datatype": "http://wikiba.se/ontology#WikibaseItem",
+      "metadata_source": "https://query.wikidata.org/sparql"
+    },
+    "P7228": {
+      "label": "access restriction status",
+      "description": "status of any access restrictions on the object, collection, or materials. Indicates whether the material is available to the general public or not",
+      "datatype": "http://wikiba.se/ontology#WikibaseItem",
+      "metadata_source": "https://query.wikidata.org/sparql"
+    },
+    "P7261": {
+      "label": "use restriction status",
+      "description": "status of any use restrictions on the object, collection, or materials",
+      "datatype": "http://wikiba.se/ontology#WikibaseItem",
+      "metadata_source": "https://query.wikidata.org/sparql"
+    },
+    "P6379": {
+      "label": "has works in the collection",
+      "description": "collection that has works of this person or organisation (use archives at [P485] for archives)",
+      "datatype": "http://wikiba.se/ontology#WikibaseItem",
+      "metadata_source": "https://query.wikidata.org/sparql"
+    },
+    "P6657": {
+      "label": "CHVRS Classification",
+      "description": "Canadian movie classification",
+      "datatype": "http://wikiba.se/ontology#WikibaseItem",
+      "metadata_source": "https://query.wikidata.org/sparql"
+    },
+    "P6658": {
+      "label": "RCQ classification",
+      "description": "movie classification for the Régie du Cinéma Québécois",
+      "datatype": "http://wikiba.se/ontology#WikibaseItem",
+      "metadata_source": "https://query.wikidata.org/sparql"
+    },
+    "P6758": {
+      "label": "supported sports team",
+      "description": "sports team for which a person or a group is a supporter",
+      "datatype": "http://wikiba.se/ontology#WikibaseItem",
+      "metadata_source": "https://query.wikidata.org/sparql"
+    },
+    "P6803": {
+      "label": "taxon found at location",
+      "description": "plant or animals taxon described as present in location, not countries or first-level subnational entities. Requires reference. Ref should cover a limited number of taxa for specific location.",
+      "datatype": "http://wikiba.se/ontology#WikibaseItem",
+      "metadata_source": "https://query.wikidata.org/sparql"
+    },
+    "P6872": {
+      "label": "has written for",
+      "description": "publication an author has contributed to",
+      "datatype": "http://wikiba.se/ontology#WikibaseItem",
+      "metadata_source": "https://query.wikidata.org/sparql"
+    },
+    "P6885": {
+      "label": "historical region",
+      "description": "geographic area which at some point in time had a cultural, ethnic, linguistic or political basis, regardless of present-day borders",
+      "datatype": "http://wikiba.se/ontology#WikibaseItem",
+      "metadata_source": "https://query.wikidata.org/sparql"
+    },
+    "P6886": {
+      "label": "writing language",
+      "description": "language in which the writer has written their work",
+      "datatype": "http://wikiba.se/ontology#WikibaseItem",
+      "metadata_source": "https://query.wikidata.org/sparql"
+    },
+    "P6275": {
+      "label": "copyright representative",
+      "description": "person or organisation who represents the copyright for this person or work of art",
+      "datatype": "http://wikiba.se/ontology#WikibaseItem",
+      "metadata_source": "https://query.wikidata.org/sparql"
+    },
+    "P6291": {
+      "label": "advertises",
+      "description": "cause, organization or product targeted by the advertising campaign, character, jingle or slogan",
+      "datatype": "http://wikiba.se/ontology#WikibaseItem",
+      "metadata_source": "https://query.wikidata.org/sparql"
+    },
+    "P6364": {
+      "label": "official color",
+      "description": "official colors chosen to represent or identify an item",
+      "datatype": "http://wikiba.se/ontology#WikibaseItem",
+      "metadata_source": "https://query.wikidata.org/sparql"
+    },
+    "P6365": {
+      "label": "member category",
+      "description": "category item for members of the organization",
+      "datatype": "http://wikiba.se/ontology#WikibaseItem",
+      "metadata_source": "https://query.wikidata.org/sparql"
+    },
+    "P7327": {
+      "label": "OFLC classification",
+      "description": "rating in the media content rating system of New Zealand",
+      "datatype": "http://wikiba.se/ontology#WikibaseItem",
+      "metadata_source": "https://query.wikidata.org/sparql"
+    },
+    "P7514": {
+      "label": "landscape architect",
+      "description": "person or architectural firm that designed this outdoor area, possibly including landmarks and structures",
+      "datatype": "http://wikiba.se/ontology#WikibaseItem",
+      "metadata_source": "https://query.wikidata.org/sparql"
+    },
+    "P7561": {
+      "label": "category for the interior of the item",
+      "description": "Commons category for media files depicting interior views of this item (object, place)",
+      "datatype": "http://wikiba.se/ontology#WikibaseItem",
+      "metadata_source": "https://query.wikidata.org/sparql"
+    },
+    "P7573": {
+      "label": "IFCO rating",
+      "description": "rating certificate of a film in the Irish content classification system",
+      "datatype": "http://wikiba.se/ontology#WikibaseItem",
+      "metadata_source": "https://query.wikidata.org/sparql"
+    },
+    "P7604": {
+      "label": "supervised by",
+      "description": "natural person who has the authority of giving instructions and/or orders to subordinates and is held responsible for the work and actions of subordinates",
+      "datatype": "http://wikiba.se/ontology#WikibaseItem",
+      "metadata_source": "https://query.wikidata.org/sparql"
+    },
+    "P7763": {
+      "label": "copyright status as a creator",
+      "description": "states if the body of work published during the lifetime of this creator is still copyrighted or in the public domain",
+      "datatype": "http://wikiba.se/ontology#WikibaseItem",
+      "metadata_source": "https://query.wikidata.org/sparql"
+    },
+    "P7779": {
+      "label": "military unit",
+      "description": "smallest military unit that a person is/was in",
+      "datatype": "http://wikiba.se/ontology#WikibaseItem",
+      "metadata_source": "https://query.wikidata.org/sparql"
+    },
+    "P6902": {
+      "label": "era name",
+      "description": "era name for rulers in East Asia",
+      "datatype": "http://wikiba.se/ontology#WikibaseItem",
+      "metadata_source": "https://query.wikidata.org/sparql"
+    },
+    "P6942": {
+      "label": "animator",
+      "description": "person creating animated sequences out of still images",
+      "datatype": "http://wikiba.se/ontology#WikibaseItem",
+      "metadata_source": "https://query.wikidata.org/sparql"
+    },
+    "P6978": {
+      "label": "Scandinavian middle family name",
+      "description": "middle name of some people from Sweden, Denmark or Norway where a family name, usually the mother's, is taken on as a \"middle name\". For given names based on family names, use \"given name\" (P735). For Spanish names, use P734/P1950.",
+      "datatype": "http://wikiba.se/ontology#WikibaseItem",
+      "metadata_source": "https://query.wikidata.org/sparql"
+    },
+    "P7045": {
+      "label": "chassis",
+      "description": "chassis type for cars, buses, trucks, etc.",
+      "datatype": "http://wikiba.se/ontology#WikibaseItem",
+      "metadata_source": "https://query.wikidata.org/sparql"
+    },
+    "P7047": {
+      "label": "enemy",
+      "description": "opponent character or group of this fictive character or group",
+      "datatype": "http://wikiba.se/ontology#WikibaseItem",
+      "metadata_source": "https://query.wikidata.org/sparql"
+    },
+    "P7084": {
+      "label": "related category",
+      "description": "Wikimedia category is related to this item",
+      "datatype": "http://wikiba.se/ontology#WikibaseItem",
+      "metadata_source": "https://query.wikidata.org/sparql"
+    },
+    "P7108": {
+      "label": "location of the point of view",
+      "description": "geographic location of point of view, may or may not be depicted",
+      "datatype": "http://wikiba.se/ontology#WikibaseItem",
+      "metadata_source": "https://query.wikidata.org/sparql"
+    },
+    "P7937": {
+      "label": "form of creative work",
+      "description": "structure of a creative work",
+      "datatype": "http://wikiba.se/ontology#WikibaseItem",
+      "metadata_source": "https://query.wikidata.org/sparql"
+    },
+    "P7938": {
+      "label": "associated electoral district",
+      "description": "constituencies/electoral districts in which a place is located or is part of. If a municipality/county is split into or part of several districts: add several values. Use only if distinct from administrative entities (P131) in predefined countries",
+      "datatype": "http://wikiba.se/ontology#WikibaseItem",
+      "metadata_source": "https://query.wikidata.org/sparql"
+    },
+    "P7959": {
+      "label": "historic county",
+      "description": "traditional, geographical division of Great Britain and Ireland",
+      "datatype": "http://wikiba.se/ontology#WikibaseItem",
+      "metadata_source": "https://query.wikidata.org/sparql"
+    },
+    "P8004": {
+      "label": "ordered by",
+      "description": "subject that ordered the act",
+      "datatype": "http://wikiba.se/ontology#WikibaseItem",
+      "metadata_source": "https://query.wikidata.org/sparql"
+    },
+    "P7781": {
+      "label": "exonerated of",
+      "description": "crime of which the subject was found not to be guilty after having previously been found guilty by a court for that crime",
+      "datatype": "http://wikiba.se/ontology#WikibaseItem",
+      "metadata_source": "https://query.wikidata.org/sparql"
+    },
+    "P7782": {
+      "label": "category for ship name",
+      "description": "Commons category for a name of a ship",
+      "datatype": "http://wikiba.se/ontology#WikibaseItem",
+      "metadata_source": "https://query.wikidata.org/sparql"
+    },
+    "P7867": {
+      "label": "category for maps or plans",
+      "description": "name of the Wikimedia category specifically for maps or plans of this item",
+      "datatype": "http://wikiba.se/ontology#WikibaseItem",
+      "metadata_source": "https://query.wikidata.org/sparql"
+    },
+    "P7888": {
+      "label": "merged into",
+      "description": "the subject was dissolved and merged into the object, that existed previously",
+      "datatype": "http://wikiba.se/ontology#WikibaseItem",
+      "metadata_source": "https://query.wikidata.org/sparql"
+    },
+    "P8030": {
+      "label": "military size designation",
+      "description": "organizational size classification or designation used to indicate relative size of an entity within an organization (property under development)",
+      "datatype": "http://wikiba.se/ontology#WikibaseItem",
+      "metadata_source": "https://query.wikidata.org/sparql"
+    },
+    "P8031": {
+      "label": "perpetrator",
+      "description": "person or organization who carried out this harmful, illegal, or immoral act",
+      "datatype": "http://wikiba.se/ontology#WikibaseItem",
+      "metadata_source": "https://query.wikidata.org/sparql"
+    },
+    "P8032": {
+      "label": "victim(s)",
+      "description": "person(s) who were harmed from an act or event",
+      "datatype": "http://wikiba.se/ontology#WikibaseItem",
+      "metadata_source": "https://query.wikidata.org/sparql"
+    },
+    "P8047": {
+      "label": "country of registry",
+      "description": "country where a ship is or has been registered",
+      "datatype": "http://wikiba.se/ontology#WikibaseItem",
+      "metadata_source": "https://query.wikidata.org/sparql"
+    },
+    "P8058": {
+      "label": "symbol of",
+      "description": "item of which the image is a symbol",
+      "datatype": "http://wikiba.se/ontology#WikibaseItem",
+      "metadata_source": "https://query.wikidata.org/sparql"
+    },
+    "P8138": {
+      "label": "located in the statistical territorial entity",
+      "description": "statistical territorial entity in which a place is located or is part of. If a municipality or county is split into or part of several regions: add several values",
+      "datatype": "http://wikiba.se/ontology#WikibaseItem",
+      "metadata_source": "https://query.wikidata.org/sparql"
+    },
+    "P8225": {
+      "label": "is metaclass for",
+      "description": "all instances of the subject are subclasses of the object",
+      "datatype": "http://wikiba.se/ontology#WikibaseItem",
+      "metadata_source": "https://query.wikidata.org/sparql"
+    },
+    "P84": {
+      "label": "architect",
+      "description": "person or architectural firm responsible for designing this building",
+      "datatype": "http://wikiba.se/ontology#WikibaseItem",
+      "metadata_source": "https://query.wikidata.org/sparql"
+    },
+    "P85": {
+      "label": "anthem",
+      "description": "subject's official anthem",
+      "datatype": "http://wikiba.se/ontology#WikibaseItem",
+      "metadata_source": "https://query.wikidata.org/sparql"
+    },
+    "P86": {
+      "label": "composer",
+      "description": "person(s) who wrote the music [for lyricist, use \"lyrics by\" (P676)]",
+      "datatype": "http://wikiba.se/ontology#WikibaseItem",
+      "metadata_source": "https://query.wikidata.org/sparql"
+    },
+    "P88": {
+      "label": "commissioned by",
+      "description": "person or organization that commissioned this work",
+      "datatype": "http://wikiba.se/ontology#WikibaseItem",
+      "metadata_source": "https://query.wikidata.org/sparql"
+    },
+    "P98": {
+      "label": "editor",
+      "description": "person who checks and corrects a work (such as a book, newspaper, academic journal, etc.) to comply with a rules of certain genre. Also applies to person who establishes the text of an ancient written work or manuscript.",
+      "datatype": "http://wikiba.se/ontology#WikibaseItem",
+      "metadata_source": "https://query.wikidata.org/sparql"
+    },
+    "P832": {
+      "label": "public holiday",
+      "description": "official public holiday that occurs in this place in its honor, usually a non-working day",
+      "datatype": "http://wikiba.se/ontology#WikibaseItem",
+      "metadata_source": "https://query.wikidata.org/sparql"
+    },
+    "P833": {
+      "label": "interchange station",
+      "description": "station to which passengers can transfer from this station, normally without extra expense",
+      "datatype": "http://wikiba.se/ontology#WikibaseItem",
+      "metadata_source": "https://query.wikidata.org/sparql"
+    },
+    "P91": {
+      "label": "sexual orientation",
+      "description": "the sexual orientation of the person relative to their declared gender — use ONLY IF they have stated it themselves, unambiguously, or it has been widely agreed upon by historians after their death",
+      "datatype": "http://wikiba.se/ontology#WikibaseItem",
+      "metadata_source": "https://query.wikidata.org/sparql"
+    },
+    "P92": {
+      "label": "main regulatory text",
+      "description": "text setting the main rules by which the subject is regulated",
+      "datatype": "http://wikiba.se/ontology#WikibaseItem",
+      "metadata_source": "https://query.wikidata.org/sparql"
+    },
+    "P97": {
+      "label": "noble title",
+      "description": "titles held by the person",
+      "datatype": "http://wikiba.se/ontology#WikibaseItem",
+      "metadata_source": "https://query.wikidata.org/sparql"
+    },
+    "P872": {
+      "label": "printed by",
+      "description": "organization or person who printed the creative work (if different from \"publisher\")",
+      "datatype": "http://wikiba.se/ontology#WikibaseItem",
+      "metadata_source": "https://query.wikidata.org/sparql"
+    },
+    "P885": {
+      "label": "origin of the watercourse",
+      "description": "main source of a river, stream or lake",
+      "datatype": "http://wikiba.se/ontology#WikibaseItem",
+      "metadata_source": "https://query.wikidata.org/sparql"
+    },
+    "P841": {
+      "label": "feast day",
+      "description": "saint's principal feast day",
+      "datatype": "http://wikiba.se/ontology#WikibaseItem",
+      "metadata_source": "https://query.wikidata.org/sparql"
+    },
+    "P852": {
+      "label": "ESRB rating",
+      "description": "North American video game content rating",
+      "datatype": "http://wikiba.se/ontology#WikibaseItem",
+      "metadata_source": "https://query.wikidata.org/sparql"
+    },
+    "P859": {
+      "label": "sponsor",
+      "description": "organization or individual that sponsors this item",
+      "datatype": "http://wikiba.se/ontology#WikibaseItem",
+      "metadata_source": "https://query.wikidata.org/sparql"
+    },
+    "P908": {
+      "label": "PEGI rating",
+      "description": "European video game content rating",
+      "datatype": "http://wikiba.se/ontology#WikibaseItem",
+      "metadata_source": "https://query.wikidata.org/sparql"
+    },
+    "P910": {
+      "label": "topic's main category",
+      "description": "main Wikimedia category",
+      "datatype": "http://wikiba.se/ontology#WikibaseItem",
+      "metadata_source": "https://query.wikidata.org/sparql"
+    },
+    "P912": {
+      "label": "has facility",
+      "description": "the subject item has this type of facility, e.g. toilet, car park",
+      "datatype": "http://wikiba.se/ontology#WikibaseItem",
+      "metadata_source": "https://query.wikidata.org/sparql"
+    },
+    "P914": {
+      "label": "USK rating",
+      "description": "German video game content rating - see talk page for appropriate values",
+      "datatype": "http://wikiba.se/ontology#WikibaseItem",
+      "metadata_source": "https://query.wikidata.org/sparql"
+    },
+    "P915": {
+      "label": "filming location",
+      "description": "actual place where this scene/film was shot. For the setting, use \"narrative location\" (P840)",
+      "datatype": "http://wikiba.se/ontology#WikibaseItem",
+      "metadata_source": "https://query.wikidata.org/sparql"
+    },
+    "P937": {
+      "label": "work location",
+      "description": "location where persons or organisations were actively participating in employment, business or other work",
+      "datatype": "http://wikiba.se/ontology#WikibaseItem",
+      "metadata_source": "https://query.wikidata.org/sparql"
+    },
+    "P941": {
+      "label": "inspired by",
+      "description": "work, human, place or event which inspired this creative work or fictional entity",
+      "datatype": "http://wikiba.se/ontology#WikibaseItem",
+      "metadata_source": "https://query.wikidata.org/sparql"
+    },
+    "P921": {
+      "label": "main subject",
+      "description": "primary topic of a work or act of communication",
+      "datatype": "http://wikiba.se/ontology#WikibaseItem",
+      "metadata_source": "https://query.wikidata.org/sparql"
+    },
+    "P931": {
+      "label": "place served by transport hub",
+      "description": "territorial entity or entities served by this transport hub (airport, train station, etc.)",
+      "datatype": "http://wikiba.se/ontology#WikibaseItem",
+      "metadata_source": "https://query.wikidata.org/sparql"
+    },
+    "P942": {
+      "label": "theme music",
+      "description": "theme music/song used by the item",
+      "datatype": "http://wikiba.se/ontology#WikibaseItem",
+      "metadata_source": "https://query.wikidata.org/sparql"
+    },
+    "P945": {
+      "label": "allegiance",
+      "description": "country (or other power) that the person or group serves",
+      "datatype": "http://wikiba.se/ontology#WikibaseItem",
+      "metadata_source": "https://query.wikidata.org/sparql"
+    },
+    "P972": {
+      "label": "catalog",
+      "description": "catalog for the item, or, as a qualifier of P528 – catalog for which the 'catalog code' is valid",
+      "datatype": "http://wikiba.se/ontology#WikibaseItem",
+      "metadata_source": "https://query.wikidata.org/sparql"
+    },
+    "P974": {
+      "label": "tributary",
+      "description": "watercourse that flows into an other one (for lake inflows use P200)",
+      "datatype": "http://wikiba.se/ontology#WikibaseItem",
+      "metadata_source": "https://query.wikidata.org/sparql"
+    },
+    "P8324": {
+      "label": "funder",
+      "description": "entity that gives money to a person, organization, or project for a specific purpose",
+      "datatype": "http://wikiba.se/ontology#WikibaseItem",
+      "metadata_source": "https://query.wikidata.org/sparql"
+    },
+    "P8371": {
+      "label": "references work, tradition or theory",
+      "description": "creative work, tradition or theory this creative work references by allusion, quote or similar means (for citations in scholarly and legal works use P2860, for other more specific properties have a look at \"see also\" on the property page)",
+      "datatype": "http://wikiba.se/ontology#WikibaseItem",
+      "metadata_source": "https://query.wikidata.org/sparql"
+    },
+    "P8402": {
+      "label": "open data portal",
+      "description": "platform with publicly accessible data of an organization",
+      "datatype": "http://wikiba.se/ontology#WikibaseItem",
+      "metadata_source": "https://query.wikidata.org/sparql"
+    },
+    "P8403": {
+      "label": "theorized by",
+      "description": "subject who suggested or proposed this concept or immaterial invention",
+      "datatype": "http://wikiba.se/ontology#WikibaseItem",
+      "metadata_source": "https://query.wikidata.org/sparql"
+    },
+    "P8411": {
+      "label": "set in environment",
+      "description": "environment (geographic feature, building type, etc.) the narrative work is set in",
+      "datatype": "http://wikiba.se/ontology#WikibaseItem",
+      "metadata_source": "https://query.wikidata.org/sparql"
+    },
+    "P8450": {
+      "label": "peak bagging classification",
+      "description": "recognised peak bagging classification of a mountain or hill",
+      "datatype": "http://wikiba.se/ontology#WikibaseItem",
+      "metadata_source": "https://query.wikidata.org/sparql"
+    },
+    "P8453": {
+      "label": "public transport stop",
+      "description": "general (e.g. nearest) public transport stop (bus, tram, train, subway)",
+      "datatype": "http://wikiba.se/ontology#WikibaseItem",
+      "metadata_source": "https://query.wikidata.org/sparql"
+    },
+    "P8464": {
+      "label": "content partnership category",
+      "description": "Wikimedia Commons category for media files contributed by this institution",
+      "datatype": "http://wikiba.se/ontology#WikibaseItem",
+      "metadata_source": "https://query.wikidata.org/sparql"
+    },
+    "P837": {
+      "label": "day in year for periodic occurrence",
+      "description": "when a specific holiday or periodic event occurs. It can be used as statement or qualifier",
+      "datatype": "http://wikiba.se/ontology#WikibaseItem",
+      "metadata_source": "https://query.wikidata.org/sparql"
+    },
+    "P840": {
+      "label": "narrative location",
+      "description": "the narrative of the work is set in this location",
+      "datatype": "http://wikiba.se/ontology#WikibaseItem",
+      "metadata_source": "https://query.wikidata.org/sparql"
+    },
+    "P9681": {
+      "label": "voted on by",
+      "description": "a legislative house in which a legislative act was voted on",
+      "datatype": "http://wikiba.se/ontology#WikibaseItem",
+      "metadata_source": "https://query.wikidata.org/sparql"
+    },
+    "P9929": {
+      "label": "madhhab",
+      "description": "Islamic school of thought within Fiqh",
+      "datatype": "http://wikiba.se/ontology#WikibaseItem",
+      "metadata_source": "https://query.wikidata.org/sparql"
+    },
+    "P9969": {
+      "label": "catalogue raisonné",
+      "description": "comprehensive, annotated listing of all the known artworks by an artist either in a particular medium or all media.",
+      "datatype": "http://wikiba.se/ontology#WikibaseItem",
+      "metadata_source": "https://query.wikidata.org/sparql"
+    },
+    "P8744": {
+      "label": "economy of topic",
+      "description": "item that deals with the economy of the subject",
+      "datatype": "http://wikiba.se/ontology#WikibaseItem",
+      "metadata_source": "https://query.wikidata.org/sparql"
+    },
+    "P8745": {
+      "label": "check-in time",
+      "description": "the earliest time of day at which a reserved room in a hotel, inn or lodge is available to an arriving guest",
+      "datatype": "http://wikiba.se/ontology#WikibaseItem",
+      "metadata_source": "https://query.wikidata.org/sparql"
+    },
+    "P8746": {
+      "label": "check-out time",
+      "description": "the latest time of day a guest may check out of a hotel or lodge without incurring additional cost",
+      "datatype": "http://wikiba.se/ontology#WikibaseItem",
+      "metadata_source": "https://query.wikidata.org/sparql"
+    },
+    "P8764": {
+      "label": "port calls",
+      "description": "harbor or port at which the ship stopped; port of call",
+      "datatype": "http://wikiba.se/ontology#WikibaseItem",
+      "metadata_source": "https://query.wikidata.org/sparql"
+    },
+    "P8786": {
+      "label": "dedicated heritage entity",
+      "description": "heritage entity dedicated to or associated with the item's subject",
+      "datatype": "http://wikiba.se/ontology#WikibaseItem",
+      "metadata_source": "https://query.wikidata.org/sparql"
+    },
+    "P8810": {
+      "label": "parent",
+      "description": "parent of the subject. Only use if neither father (P22) nor mother (P25) is applicable.",
+      "datatype": "http://wikiba.se/ontology#WikibaseItem",
+      "metadata_source": "https://query.wikidata.org/sparql"
+    },
+    "P8852": {
+      "label": "facial hair",
+      "description": "style of cutting, arranging, or combing the hair on the subject's face (usually on the chin, cheeks, and upper lip region); beard",
+      "datatype": "http://wikiba.se/ontology#WikibaseItem",
+      "metadata_source": "https://query.wikidata.org/sparql"
+    },
+    "P8500": {
+      "label": "Vietnamese middle name",
+      "description": "middle name of a Vietnamese person; use P735 qualified by P1545 for the middle name of a partially westernized name",
+      "datatype": "http://wikiba.se/ontology#WikibaseItem",
+      "metadata_source": "https://query.wikidata.org/sparql"
+    },
+    "P8596": {
+      "label": "category for the exterior of the item",
+      "description": "category for multimedia files depicting exterior views of this item (object, place)",
+      "datatype": "http://wikiba.se/ontology#WikibaseItem",
+      "metadata_source": "https://query.wikidata.org/sparql"
+    },
+    "P8625": {
+      "label": "bibliography",
+      "description": "Wikimedia page that gives a selection of relevant texts on the given topic",
+      "datatype": "http://wikiba.se/ontology#WikibaseItem",
+      "metadata_source": "https://query.wikidata.org/sparql"
+    },
+    "P8626": {
+      "label": "opening time",
+      "description": "time when an establishment or attraction opens, qualifier for P3025",
+      "datatype": "http://wikiba.se/ontology#WikibaseItem",
+      "metadata_source": "https://query.wikidata.org/sparql"
+    },
+    "P8627": {
+      "label": "closing time",
+      "description": "time when an establishment or attraction closes, qualifier for P3025",
+      "datatype": "http://wikiba.se/ontology#WikibaseItem",
+      "metadata_source": "https://query.wikidata.org/sparql"
+    },
+    "P8646": {
+      "label": "expansion of",
+      "description": "expansion pack of a game (video game, tabletop or board game)",
+      "datatype": "http://wikiba.se/ontology#WikibaseItem",
+      "metadata_source": "https://query.wikidata.org/sparql"
+    },
+    "P8670": {
+      "label": "character designer",
+      "description": "person in charge of developing the style and concept of a character in a video game, anime or other creative work",
+      "datatype": "http://wikiba.se/ontology#WikibaseItem",
+      "metadata_source": "https://query.wikidata.org/sparql"
+    },
+    "P8874": {
+      "label": "Hong Kong film rating",
+      "description": "Hong Kong film classification system",
+      "datatype": "http://wikiba.se/ontology#WikibaseItem",
+      "metadata_source": "https://query.wikidata.org/sparql"
+    },
+    "P8875": {
+      "label": "indexed in bibliographic review",
+      "description": "bibliographic review(s) and/or database(s) which index this academic journal",
+      "datatype": "http://wikiba.se/ontology#WikibaseItem",
+      "metadata_source": "https://query.wikidata.org/sparql"
+    },
+    "P8889": {
+      "label": "MTRCB rating",
+      "description": "rating of a film or television program in the Philippines",
+      "datatype": "http://wikiba.se/ontology#WikibaseItem",
+      "metadata_source": "https://query.wikidata.org/sparql"
+    },
+    "P8933": {
+      "label": "category for the view from the item",
+      "description": "category for the view from this item (object, place)",
+      "datatype": "http://wikiba.se/ontology#WikibaseItem",
+      "metadata_source": "https://query.wikidata.org/sparql"
+    },
+    "P8956": {
+      "label": "compatible with",
+      "description": "this work, product, object or standard can interact with another work, product, object or standard",
+      "datatype": "http://wikiba.se/ontology#WikibaseItem",
+      "metadata_source": "https://query.wikidata.org/sparql"
+    },
+    "P8989": {
+      "label": "category for the view of the item",
+      "description": "category for the view of this item (object, place)",
+      "datatype": "http://wikiba.se/ontology#WikibaseItem",
+      "metadata_source": "https://query.wikidata.org/sparql"
+    },
+    "P9192": {
+      "label": "sensors",
+      "description": "notable sensors in the electronic device",
+      "datatype": "http://wikiba.se/ontology#WikibaseItem",
+      "metadata_source": "https://query.wikidata.org/sparql"
+    },
+    "P9215": {
+      "label": "set during recurring event",
+      "description": "recurring event (e.g. time of day, season, month, holiday) during which this fictional work is set",
+      "datatype": "http://wikiba.se/ontology#WikibaseItem",
+      "metadata_source": "https://query.wikidata.org/sparql"
+    },
+    "P9235": {
+      "label": "seismic classification",
+      "description": "seismic risk zone which the administrative entity that receives the seismic classification is in",
+      "datatype": "http://wikiba.se/ontology#WikibaseItem",
+      "metadata_source": "https://query.wikidata.org/sparql"
+    },
+    "P9241": {
+      "label": "demographics of topic",
+      "description": "item that deals with demographics of the subject",
+      "datatype": "http://wikiba.se/ontology#WikibaseItem",
+      "metadata_source": "https://query.wikidata.org/sparql"
+    },
+    "P9419": {
+      "label": "personal library at",
+      "description": "institution holding the subject’s personal library",
+      "datatype": "http://wikiba.se/ontology#WikibaseItem",
+      "metadata_source": "https://query.wikidata.org/sparql"
+    },
+    "P9493": {
+      "label": "artist files at",
+      "description": "institution or collection that holds artist files about the subject",
+      "datatype": "http://wikiba.se/ontology#WikibaseItem",
+      "metadata_source": "https://query.wikidata.org/sparql"
+    },
+    "P9549": {
+      "label": "official podcast",
+      "description": "official podcast of this person or organization",
+      "datatype": "http://wikiba.se/ontology#WikibaseItem",
+      "metadata_source": "https://query.wikidata.org/sparql"
+    },
+    "P9600": {
+      "label": "oral history at",
+      "description": "institution holding an oral history of the subject",
+      "datatype": "http://wikiba.se/ontology#WikibaseItem",
+      "metadata_source": "https://query.wikidata.org/sparql"
+    },
+    "P9660": {
+      "label": "not found in",
+      "description": "publication or database relevant to the topic that would generally include similar subjects, but in which the subject isn't described or attested. Use if there is no external-id property for the work.",
+      "datatype": "http://wikiba.se/ontology#WikibaseItem",
+      "metadata_source": "https://query.wikidata.org/sparql"
+    }
+  }
+}

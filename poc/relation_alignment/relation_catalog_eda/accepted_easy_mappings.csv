@@ -1,0 +1,12 @@
+source,source_predicate,source_label,source_description,canonical_level2_id,mapping_status,direction,scope_constraint,level1_family,occurrence_count,mapping_evidence
+EventKG,http://dbpedia.org/ontology/author,author,,wd:P50,EXACT_DATA_SUPPORTED,same,entity -> entity,CREATION_AUTHORSHIP,652,38 shared endpoint pairs; 97.4% of co-connected pairs; 97.2% after largest target
+EventKG,http://dbpedia.org/ontology/manufacturer,manufacturer,,wd:P176,EXACT_DATA_SUPPORTED,same,entity -> entity,CREATION_AUTHORSHIP,1119,149 shared endpoint pairs; 96.8% of co-connected pairs; 96.1% after largest target
+EventKG,http://dbpedia.org/ontology/militaryBranch,military Branch,,wd:P241,EXACT_DATA_SUPPORTED,same,entity -> entity,CONFLICT_AFFILIATION,20416,3611 shared endpoint pairs; 93.5% of co-connected pairs; 92.4% after largest target
+EventKG,http://dbpedia.org/ontology/operator,operator,,wd:P137,EXACT_DATA_SUPPORTED,same,entity -> entity,OWNERSHIP_CONTROL,927,144 shared endpoint pairs; 97.3% of co-connected pairs; 94.5% after largest target
+EventKG,http://semanticweb.cs.vu.nl/2009/11/sem/hasPlace,has Place,,wd:P276,EXACT,same,event -> place,SPATIAL,12193,definition and scoped direction
+EventKG,http://semanticweb.cs.vu.nl/2009/11/sem/hasSubEvent,has Sub Event,,wd:P527,EXACT,same,event -> component event,PART_WHOLE_HIERARCHY,2484,definition and scoped direction
+EventKG,http://semanticweb.cs.vu.nl/2009/11/sem/subEventOf,sub Event Of,,wd:P361,EXACT,same,event -> containing event,PART_WHOLE_HIERARCHY,1869,definition and scoped direction
+WarSampo,http://ldf.fi/schema/warsa/actors/hasConflict,participated in conflict,,wd:P607,EXACT,same,military unit or person -> conflict,CONFLICT_AFFILIATION,15959,definition and scoped direction
+WarSampo,http://www.cidoc-crm.org/cidoc-crm/P10_falls_within,falls within,,wd:P361,EXACT,same,event or period -> containing event or period,PART_WHOLE_HIERARCHY,4,definition and scoped direction
+WarSampo,http://www.cidoc-crm.org/cidoc-crm/P11_had_participant,had participant,,wd:P710,EXACT,same,event -> participant,PARTICIPATION_ROLE,168087,definition and scoped direction
+WarSampo,http://www.cidoc-crm.org/cidoc-crm/P7_took_place_at,took place at,,wd:P276,EXACT,same,event -> place,SPATIAL,224825,definition and scoped direction

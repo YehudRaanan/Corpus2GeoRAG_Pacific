@@ -13,17 +13,17 @@
   "eventkg": {
     "reified_relations_events_other": 186407,
     "unmapped_endpoint_relations_events_other": 135337,
-    "reified_wikidata_copy": 32193,
+    "reified_wikidata_copy": 69140,
     "reified_relations_entities_temporal": 108797,
     "unmapped_endpoint_relations_entities_temporal": 100327,
-    "incomplete_relations_entities_other": 1,
+    "reified_relations_entities_other": 723923,
+    "unmapped_endpoint_relations_entities_other": 659928,
     "direct_relations_events_base": 16546,
     "unmapped_direct_relations_events_base": 11632,
-    "direct_wikidata_copy": 243,
-    "incomplete_relations_entities_base": 1
+    "direct_wikidata_copy": 243
   },
-  "eventkg_non_wikidata_role_groups": 76,
-  "candidate_rows": 244,
+  "eventkg_non_wikidata_role_groups": 216,
+  "candidate_rows": 751,
   "date_checks": {
     "event_fields_with_dates": 4054,
     "same_graph_multivalue_fields": 1002,
@@ -140,13 +140,12 @@
   "complete_eventkg_files": [
     "relations_events_other",
     "relations_entities_temporal",
+    "relations_entities_other",
     "relations_events_literals",
     "events",
     "relations_events_base",
-    "entities"
-  ],
-  "incomplete_eventkg_files": [
-    "relations_entities_other",
+    "entities",
     "relations_entities_base"
-  ]
+  ],
+  "incomplete_eventkg_files": []
 }

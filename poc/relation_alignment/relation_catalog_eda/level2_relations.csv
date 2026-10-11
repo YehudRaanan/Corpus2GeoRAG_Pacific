@@ -1,0 +1,1111 @@
+level1_family,canonical_level2_id,label,description,sources,source_predicates,source_occurrences_sum,independent_occurrences_sum,mapping_statuses,requires_review
+AFFILIATION_STATUS,http://dbpedia.org/ontology/affiliation,affiliation,,EventKG,http://dbpedia.org/ontology/affiliation,46,46,SOURCE_ONLY,True
+AFFILIATION_STATUS,http://dbpedia.org/ontology/citizenship,citizenship,,EventKG,http://dbpedia.org/ontology/citizenship,275,275,SOURCE_ONLY,True
+AFFILIATION_STATUS,http://dbpedia.org/ontology/ethnicGroup,ethnic Group,,EventKG,http://dbpedia.org/ontology/ethnicGroup,5,5,SOURCE_ONLY,True
+AFFILIATION_STATUS,http://dbpedia.org/ontology/internationalAffiliation,international Affiliation,,EventKG,http://dbpedia.org/ontology/internationalAffiliation,1,1,SOURCE_ONLY,True
+AFFILIATION_STATUS,http://dbpedia.org/ontology/language,language,,EventKG,http://dbpedia.org/ontology/language,148,148,SOURCE_ONLY,True
+AFFILIATION_STATUS,http://dbpedia.org/ontology/nationality,nationality,,EventKG,http://dbpedia.org/ontology/nationality,1208,1208,SOURCE_ONLY,True
+AFFILIATION_STATUS,http://dbpedia.org/ontology/officialLanguage,official Language,,EventKG,http://dbpedia.org/ontology/officialLanguage,6,6,SOURCE_ONLY,True
+AFFILIATION_STATUS,http://dbpedia.org/ontology/regionalLanguage,regional Language,,EventKG,http://dbpedia.org/ontology/regionalLanguage,22,22,SOURCE_ONLY,True
+AFFILIATION_STATUS,http://dbpedia.org/ontology/religion,religion,,EventKG,http://dbpedia.org/ontology/religion,33,33,SOURCE_ONLY,True
+AFFILIATION_STATUS,http://ldf.fi/schema/warsa/citizenship,Citizenship,,WarSampo,http://ldf.fi/schema/warsa/citizenship,94775,94775,SOURCE_ONLY,True
+AFFILIATION_STATUS,http://ldf.fi/schema/warsa/nationality,nationality,,WarSampo,http://ldf.fi/schema/warsa/nationality,94676,94676,SOURCE_ONLY,True
+AFFILIATION_STATUS,http://yago-knowledge.org/resource/hasOfficialLanguage,has Official Language,,EventKG,http://yago-knowledge.org/resource/hasOfficialLanguage,29,29,SOURCE_ONLY,True
+AFFILIATION_STATUS,wd:P102,member of political party,the political party of which a person is or has been a member or otherwise affiliated,EventKG|Wikidata,http://www.wikidata.org/prop/direct/P102|wd:P102,7487,3301,EXACT,False
+AFFILIATION_STATUS,wd:P103,native language,language or languages a person (or group) has learned from early childhood,EventKG|Wikidata,http://www.wikidata.org/prop/direct/P103|wd:P103,711,645,EXACT,False
+AFFILIATION_STATUS,wd:P1321,municipal affiliation of a Swiss national,lieu d'origine/Heimatort/luogo d'origine of a Swiss national. Not be confused with place of birth or place of residence,Wikidata,wd:P1321,15,15,EXACT,False
+AFFILIATION_STATUS,wd:P140,religion or worldview,"religion of a person, organization or religious building, or associated with this subject",EventKG|Wikidata,http://www.wikidata.org/prop/direct/P140|wd:P140,1140,749,EXACT,False
+AFFILIATION_STATUS,wd:P1416,affiliation,organization that a person or organization is affiliated with (not necessarily member of or employed by),EventKG|Wikidata,http://www.wikidata.org/prop/direct/P1416|wd:P1416,928,254,EXACT,False
+AFFILIATION_STATUS,wd:P172,ethnic group,"subject's ethnicity (consensus is that a VERY high standard of proof is needed for this field to be used. In general this means 1) the subject claims it themselves, or 2) it is widely agreed on by scholars, or 3) is fictional and portrayed as such)",EventKG|Wikidata,http://www.wikidata.org/prop/direct/P172|wd:P172,367,271,EXACT,False
+AFFILIATION_STATUS,wd:P27,country of citizenship,the object is a country that recognizes the subject as its citizen,EventKG|Wikidata,http://www.wikidata.org/prop/direct/P27|wd:P27,233269,18743,EXACT,False
+AFFILIATION_STATUS,wd:P2936,language used,language widely used (spoken or written) in this place or at this event or organisation,EventKG|Wikidata,http://www.wikidata.org/prop/direct/P2936|wd:P2936,101,82,EXACT,False
+AFFILIATION_STATUS,wd:P3075,official religion,official religion in this administrative entity,EventKG|Wikidata,http://www.wikidata.org/prop/direct/P3075|wd:P3075,38,26,EXACT,False
+AFFILIATION_STATUS,wd:P364,original language of film or TV show,"language in which a film or a performance work was originally created. Deprecated for written works and songs; use P407 (""language of work or name"") instead.",Wikidata,wd:P364,567,567,EXACT,False
+AFFILIATION_STATUS,wd:P37,official language,language designated as official by this item,EventKG|Wikidata,http://www.wikidata.org/prop/direct/P37|wd:P37,91,73,EXACT,False
+AFFILIATION_STATUS,wd:P407,language of work or name,"language associated with this creative work (such as books, shows, songs, broadcasts or websites) or a name (for persons use ""native language"" (P103) and ""languages spoken, written or signed"" (P1412))",EventKG|Wikidata,http://www.wikidata.org/prop/direct/P407|wd:P407,496,449,EXACT,False
+AFFILIATION_STATUS,wd:P530,diplomatic relation,diplomatic relations of the country,EventKG|Wikidata,http://www.wikidata.org/prop/direct/P530|wd:P530,34,26,EXACT,False
+AFFILIATION_STATUS,wd:P6886,writing language,language in which the writer has written their work,EventKG|Wikidata,http://www.wikidata.org/prop/direct/P6886|wd:P6886,519,447,EXACT,False
+AFFILIATION_STATUS,wd:P945,allegiance,country (or other power) that the person or group serves,EventKG|Wikidata,http://www.wikidata.org/prop/direct/P945|wd:P945,30263,5083,EXACT,False
+AWARD_RECOGNITION,http://dbpedia.org/ontology/award,award,,EventKG,http://dbpedia.org/ontology/award,8038,8038,SOURCE_ONLY,True
+AWARD_RECOGNITION,wd:P1411,nominated for,"award nomination received by a person, organisation or creative work (inspired from ""award received"" (Property:P166))",EventKG|Wikidata,http://www.wikidata.org/prop/direct/P1411|wd:P1411,1737,748,EXACT,False
+AWARD_RECOGNITION,wd:P166,award received,"award or recognition received by a person, organization or creative work",EventKG|Wikidata,http://www.wikidata.org/prop/direct/P166|wd:P166,155122,54175,EXACT,False
+AWARD_RECOGNITION,wd:P967,guest of honor,,EventKG,http://www.wikidata.org/prop/direct/P967,4,0,EXACT,False
+CAUSAL,http://dbpedia.org/ontology/deathCause,death Cause,,EventKG,http://dbpedia.org/ontology/deathCause,122,122,SOURCE_ONLY,True
+CAUSAL,wd:P1478,has immediate cause,"nearest, proximate thing that directly resulted in the subject as outcome or effect. Used in conjunction with 'has cause' (i.e. underlying cause) and 'has contributing factor'. See 'Help:Modeling causes'.",EventKG|Wikidata,http://www.wikidata.org/prop/direct/P1478|wd:P1478,27,20,EXACT,False
+CAUSAL,wd:P1534,end cause,,EventKG,http://www.wikidata.org/prop/direct/P1534,6,0,EXACT,False
+CAUSAL,wd:P1536,immediate cause of,immediate effect of this cause,EventKG|Wikidata,http://www.wikidata.org/prop/direct/P1536|wd:P1536,10,8,EXACT,False
+CAUSAL,wd:P1542,has effect,effect of this item,EventKG|Wikidata,http://www.wikidata.org/prop/direct/P1542|wd:P1542,108,78,EXACT,False
+CAUSAL,wd:P157,killed by,person or organization who killed the subject,EventKG|Wikidata,http://www.wikidata.org/prop/direct/P157|wd:P157,106,35,EXACT,False
+CAUSAL,wd:P509,cause of death,"underlying or immediate cause of death. Underlying cause (e.g. car accident, stomach cancer) preferred. Use 'manner of death' (P1196) for broadest category, e.g. natural causes, accident, homicide, suicide",EventKG|Wikidata,http://www.wikidata.org/prop/direct/P509|wd:P509,2211,1939,EXACT,False
+CAUSAL,wd:P770,cause of destruction,item which caused the destruction of the subject item,EventKG|Wikidata,http://www.wikidata.org/prop/direct/P770|wd:P770,272,109,EXACT,False
+CAUSAL,wd:P8031,perpetrator,"person or organization who carried out this harmful, illegal, or immoral act",EventKG|Wikidata,http://www.wikidata.org/prop/direct/P8031|wd:P8031,201,106,EXACT,False
+CAUSAL,wd:P828,has cause,"underlying cause, entity that ultimately resulted in this effect",EventKG|Wikidata,http://www.wikidata.org/prop/direct/P828|wd:P828,150,88,EXACT,False
+CONFLICT_AFFILIATION,http://dbpedia.org/ontology/battle,battle,,EventKG,http://dbpedia.org/ontology/battle,37246,37246,SOURCE_ONLY,True
+CONFLICT_AFFILIATION,http://dbpedia.org/ontology/usedInWar,used In War,,EventKG,http://dbpedia.org/ontology/usedInWar,1952,1952,SOURCE_ONLY,True
+CONFLICT_AFFILIATION,http://ldf.fi/schema/warsa/articles/mentionsWar,is related to war concept (automatic linking),,WarSampo,http://ldf.fi/schema/warsa/articles/mentionsWar,1193,1193,SOURCE_ONLY,True
+CONFLICT_AFFILIATION,wd:P241,military branch,"branch to which this military unit, award, office, or person belongs, e.g. Royal Navy",EventKG|Wikidata,http://dbpedia.org/ontology/militaryBranch|http://www.wikidata.org/prop/direct/P241|wd:P241,88972,34860,EXACT|EXACT_DATA_SUPPORTED,False
+CONFLICT_AFFILIATION,wd:P4220,order of battle,arrangement of units and hierarchical organization of the armed forces involved in the specified military action,EventKG|Wikidata,http://www.wikidata.org/prop/direct/P4220|wd:P4220,160,159,EXACT,False
+CONFLICT_AFFILIATION,wd:P607,participated in conflict,"battles, wars or other military engagements in which the person or item participated",EventKG|WarSampo|Wikidata,http://ldf.fi/schema/warsa/actors/hasConflict|http://www.wikidata.org/prop/direct/P607|wd:P607,144755,52878,EXACT,False
+CREATION_AUTHORSHIP,http://dbpedia.org/ontology/architect,architect,,EventKG,http://dbpedia.org/ontology/architect,41,41,SOURCE_ONLY,True
+CREATION_AUTHORSHIP,http://dbpedia.org/ontology/creator,creator,,EventKG,http://dbpedia.org/ontology/creator,122,122,SOURCE_ONLY,True
+CREATION_AUTHORSHIP,http://ldf.fi/schema/warsa/articles/author,author,,WarSampo,http://ldf.fi/schema/warsa/articles/author,3358,3358,SOURCE_ONLY,True
+CREATION_AUTHORSHIP,wd:P1056,product or material produced,"material or product, including services, produced or provided by an organization, industry, facility, or process",EventKG|Wikidata,http://www.wikidata.org/prop/direct/P1056|wd:P1056,1597,742,EXACT,False
+CREATION_AUTHORSHIP,wd:P10661,exhibited creator,,EventKG,http://www.wikidata.org/prop/direct/P10661,1,0,EXACT,False
+CREATION_AUTHORSHIP,wd:P170,creator,maker of this creative work or other object (where no more specific property exists),EventKG|Wikidata,http://www.wikidata.org/prop/direct/P170|wd:P170,1926,167,EXACT,False
+CREATION_AUTHORSHIP,wd:P176,manufacturer,(main or final) manufacturer or producer of this product,EventKG|Wikidata,http://dbpedia.org/ontology/manufacturer|http://www.wikidata.org/prop/direct/P176|wd:P176,17680,11157,EXACT|EXACT_DATA_SUPPORTED,False
+CREATION_AUTHORSHIP,wd:P2679,author of foreword,,EventKG,http://www.wikidata.org/prop/direct/P2679,12,0,EXACT,False
+CREATION_AUTHORSHIP,wd:P2680,author of afterword,,EventKG,http://www.wikidata.org/prop/direct/P2680,1,0,EXACT,False
+CREATION_AUTHORSHIP,wd:P287,designed by,"person or organization which designed the object. For buildings use ""architect"" (Property:P84)",EventKG|Wikidata,http://www.wikidata.org/prop/direct/P287|wd:P287,1431,698,EXACT,False
+CREATION_AUTHORSHIP,wd:P3349,designed to carry,what the vehicle or class of vehicles is or was designed to carry,EventKG|Wikidata,http://www.wikidata.org/prop/direct/P3349|wd:P3349,6,5,EXACT,False
+CREATION_AUTHORSHIP,wd:P50,author,"main creator(s) of a written work (use on works, not humans); use P2093 (author name string) when Wikidata item is unknown or does not exist",EventKG|Wikidata,http://dbpedia.org/ontology/author|http://www.wikidata.org/prop/direct/P50|wd:P50,6348,975,EXACT|EXACT_DATA_SUPPORTED,False
+CREATION_AUTHORSHIP,wd:P6241,collection creator,"entity (person, organization, etc.) that caused a record or collection to be produced or gathered",EventKG|Wikidata,http://www.wikidata.org/prop/direct/P6241|wd:P6241,9,1,EXACT,False
+CREATION_AUTHORSHIP,wd:P7514,landscape architect,"person or architectural firm that designed this outdoor area, possibly including landmarks and structures",EventKG|Wikidata,http://www.wikidata.org/prop/direct/P7514|wd:P7514,14,6,EXACT,False
+CREATION_AUTHORSHIP,wd:P7763,copyright status as a creator,states if the body of work published during the lifetime of this creator is still copyrighted or in the public domain,Wikidata,wd:P7763,373,373,EXACT,False
+CREATION_AUTHORSHIP,wd:P84,architect,person or architectural firm responsible for designing this building,EventKG|Wikidata,http://www.wikidata.org/prop/direct/P84|wd:P84,294,157,EXACT,False
+EDUCATION_EMPLOYMENT,http://dbpedia.org/ontology/academicAdvisor,academic Advisor,,EventKG,http://dbpedia.org/ontology/academicAdvisor,46,46,SOURCE_ONLY,True
+EDUCATION_EMPLOYMENT,http://dbpedia.org/ontology/doctoralStudent,doctoral Student,,EventKG,http://dbpedia.org/ontology/doctoralStudent,195,195,SOURCE_ONLY,True
+EDUCATION_EMPLOYMENT,http://dbpedia.org/ontology/notableStudent,notable Student,,EventKG,http://dbpedia.org/ontology/notableStudent,22,22,SOURCE_ONLY,True
+EDUCATION_EMPLOYMENT,http://yago-knowledge.org/resource/hasAcademicAdvisor,has Academic Advisor,,EventKG,http://yago-knowledge.org/resource/hasAcademicAdvisor,107,107,SOURCE_ONLY,True
+EDUCATION_EMPLOYMENT,wd:P1066,student of,person who has taught this person,EventKG|Wikidata,http://www.wikidata.org/prop/direct/P1066|wd:P1066,280,110,EXACT,False
+EDUCATION_EMPLOYMENT,wd:P185,doctoral student,doctoral student(s) of a professor,EventKG|Wikidata,http://www.wikidata.org/prop/direct/P185|wd:P185,1068,497,EXACT,False
+EDUCATION_EMPLOYMENT,wd:P69,educated at,educational institution attended by subject,EventKG|Wikidata,http://www.wikidata.org/prop/direct/P69|wd:P69,25079,12375,EXACT,False
+EDUCATION_EMPLOYMENT,wd:P802,student,notable student(s) of the subject individual,EventKG|Wikidata,http://www.wikidata.org/prop/direct/P802|wd:P802,231,86,EXACT,False
+FAMILY_PERSONAL,http://dbpedia.org/ontology/child,child,,EventKG,http://dbpedia.org/ontology/child,243,243,SOURCE_ONLY,True
+FAMILY_PERSONAL,http://dbpedia.org/ontology/father,father,,EventKG,http://dbpedia.org/ontology/father,38,38,SOURCE_ONLY,True
+FAMILY_PERSONAL,http://dbpedia.org/ontology/mother,mother,,EventKG,http://dbpedia.org/ontology/mother,6,6,SOURCE_ONLY,True
+FAMILY_PERSONAL,http://dbpedia.org/ontology/relative,relative,,EventKG,http://dbpedia.org/ontology/relative,358,358,SOURCE_ONLY,True
+FAMILY_PERSONAL,http://dbpedia.org/ontology/spouse,spouse,,EventKG,http://dbpedia.org/ontology/spouse,61,61,SOURCE_ONLY,True
+FAMILY_PERSONAL,http://ldf.fi/schema/bioc/has_family_relation,has family relation,,WarSampo,http://ldf.fi/schema/bioc/has_family_relation,2,2,SOURCE_ONLY,True
+FAMILY_PERSONAL,http://www.cidoc-crm.org/cidoc-crm/P96_by_mother,by mother,,WarSampo,http://www.cidoc-crm.org/cidoc-crm/P96_by_mother,0,0,SOURCE_ONLY,True
+FAMILY_PERSONAL,http://www.cidoc-crm.org/cidoc-crm/P97_from_father,from father,,WarSampo,http://www.cidoc-crm.org/cidoc-crm/P97_from_father,1,1,SOURCE_ONLY,True
+FAMILY_PERSONAL,http://yago-knowledge.org/resource/hasChild,has Child,,EventKG,http://yago-knowledge.org/resource/hasChild,169,169,SOURCE_ONLY,True
+FAMILY_PERSONAL,wd:P1038,relative,"family member (qualify with ""kinship to subject"", P1039; for direct family member please use specific property)",EventKG|Wikidata,http://www.wikidata.org/prop/direct/P1038|wd:P1038,989,456,EXACT,False
+FAMILY_PERSONAL,wd:P22,father,"male parent of the subject. For stepfather, use ""stepparent"" (P3448)",EventKG|Wikidata,http://www.wikidata.org/prop/direct/P22|wd:P22,4743,1630,EXACT,False
+FAMILY_PERSONAL,wd:P25,mother,"female parent of the subject. For stepmother, use ""stepparent"" (P3448)",EventKG|Wikidata,http://www.wikidata.org/prop/direct/P25|wd:P25,1551,973,EXACT,False
+FAMILY_PERSONAL,wd:P26,spouse,"the subject has the object as their spouse (husband, wife, partner, etc.). Use ""unmarried partner"" (P451) for non-married companions",EventKG|Wikidata,http://www.wikidata.org/prop/direct/P26|wd:P26,5436,1857,EXACT,False
+FAMILY_PERSONAL,wd:P3373,sibling,"the subject and the object have at least one common parent (brother, sister, etc. including half-siblings); use ""relative"" (P1038) for siblings-in-law (brother-in-law, sister-in-law, etc.) and step-siblings (step-brothers, step-sisters, etc.)",EventKG|Wikidata,http://www.wikidata.org/prop/direct/P3373|wd:P3373,3018,1288,EXACT,False
+FAMILY_PERSONAL,wd:P40,child,"subject has object as child. Do not use for stepchildren—use ""relative"" (P1038), qualified with ""kinship to subject"" (P1039)",EventKG|Wikidata,http://www.wikidata.org/prop/direct/P40|wd:P40,6555,2834,EXACT,False
+FORMATION_DISSOLUTION,http://www.cidoc-crm.org/cidoc-crm/P143_joined,joined,,WarSampo,http://www.cidoc-crm.org/cidoc-crm/P143_joined,102681,102681,SOURCE_ONLY,True
+FORMATION_DISSOLUTION,http://www.cidoc-crm.org/cidoc-crm/P144_joined_with,joined with,,WarSampo,http://www.cidoc-crm.org/cidoc-crm/P144_joined_with,103210,103210,SOURCE_ONLY,True
+FORMATION_DISSOLUTION,http://www.cidoc-crm.org/cidoc-crm/P94_has_created,has created,,WarSampo,http://www.cidoc-crm.org/cidoc-crm/P94_has_created,166214,166214,SOURCE_ONLY,True
+FORMATION_DISSOLUTION,http://www.cidoc-crm.org/cidoc-crm/P95_has_formed,has formed,,WarSampo,http://www.cidoc-crm.org/cidoc-crm/P95_has_formed,17365,17365,SOURCE_ONLY,True
+FORMATION_DISSOLUTION,http://www.cidoc-crm.org/cidoc-crm/P98_brought_into_life,brought into life,,WarSampo,http://www.cidoc-crm.org/cidoc-crm/P98_brought_into_life,99830,99830,SOURCE_ONLY,True
+FORMATION_DISSOLUTION,http://yago-knowledge.org/resource/created,created,,EventKG,http://yago-knowledge.org/resource/created,2053,2053,SOURCE_ONLY,True
+FORMATION_DISSOLUTION,wd:P4661,reservoir created,reservoir created upstream of a dam by this dam,Wikidata,wd:P4661,1,1,EXACT,False
+FORMATION_DISSOLUTION,wd:P807,separated from,subject was founded or started by separating from identified object,EventKG|Wikidata,http://www.wikidata.org/prop/direct/P807|wd:P807,7,5,EXACT,False
+FORMATION_DISSOLUTION,wd:P9899,music created for,,EventKG,http://www.wikidata.org/prop/direct/P9899,1,0,EXACT,False
+ORGANIZATION_HIERARCHY,http://dbpedia.org/ontology/childOrganisation,child Organisation,,EventKG,http://dbpedia.org/ontology/childOrganisation,35,35,SOURCE_ONLY,True
+ORGANIZATION_HIERARCHY,http://dbpedia.org/ontology/commandStructure,command Structure,,EventKG,http://dbpedia.org/ontology/commandStructure,3447,3447,SOURCE_ONLY,True
+ORGANIZATION_HIERARCHY,http://dbpedia.org/ontology/parentCompany,parent Company,,EventKG,http://dbpedia.org/ontology/parentCompany,61,61,SOURCE_ONLY,True
+ORGANIZATION_HIERARCHY,http://dbpedia.org/ontology/parentOrganisation,parent Organisation,,EventKG,http://dbpedia.org/ontology/parentOrganisation,43,43,SOURCE_ONLY,True
+ORGANIZATION_HIERARCHY,http://ldf.fi/warsa/actors/hasUpperUnit,has Upper Unit,,WarSampo,http://ldf.fi/warsa/actors/hasUpperUnit,78,78,SOURCE_ONLY,True
+ORGANIZATION_HIERARCHY,wd:P355,child organization or unit,"child organization/unit of an org./unit; usually a fully owned separate org.; for non-independent sub-units, see org. division (P199); opposite of parent org./unit (P749); use instance of (P31) to distinguish org. (Q43229) and org. unit (Q10387680)",EventKG|Wikidata,http://www.wikidata.org/prop/direct/P355|wd:P355,1339,1325,EXACT,False
+ORGANIZATION_HIERARCHY,wd:P749,parent organization or unit,"parent organization or unit of an organization or unit, opposite of child organization or unit (P355); use instance of (P31) to distinguish organization (Q43229) and organization unit (Q10387680)",EventKG|Wikidata,http://www.wikidata.org/prop/direct/P749|wd:P749,1151,614,EXACT,False
+OWNERSHIP_CONTROL,http://dbpedia.org/ontology/owner,owner,,EventKG,http://dbpedia.org/ontology/owner,1156,1156,SOURCE_ONLY,True
+OWNERSHIP_CONTROL,wd:P127,owned by,owner of the subject,EventKG|Wikidata,http://www.wikidata.org/prop/direct/P127|wd:P127,1150,468,EXACT,False
+OWNERSHIP_CONTROL,wd:P137,operator,"person, profession, organization or entity that operates the equipment, facility, or service",EventKG|Wikidata,http://dbpedia.org/ontology/operator|http://www.wikidata.org/prop/direct/P137|wd:P137,29867,14795,EXACT|EXACT_DATA_SUPPORTED,False
+OWNERSHIP_CONTROL,wd:P1830,owner of,entities owned by the subject,EventKG|Wikidata,http://www.wikidata.org/prop/direct/P1830|wd:P1830,303,139,EXACT,False
+PARTICIPATION_ROLE,http://dbpedia.org/ontology/commander,commander,,EventKG,http://dbpedia.org/ontology/commander,7223,7223,SOURCE_ONLY,True
+PARTICIPATION_ROLE,http://dbpedia.org/ontology/employer,employer,,EventKG,http://dbpedia.org/ontology/employer,149,149,SOURCE_ONLY,True
+PARTICIPATION_ROLE,http://dbpedia.org/ontology/fourthCommander,fourth Commander,,EventKG,http://dbpedia.org/ontology/fourthCommander,29,29,SOURCE_ONLY,True
+PARTICIPATION_ROLE,http://dbpedia.org/ontology/militaryRank,military Rank,,EventKG,http://dbpedia.org/ontology/militaryRank,14,14,SOURCE_ONLY,True
+PARTICIPATION_ROLE,http://dbpedia.org/ontology/militaryUnit,military Unit,,EventKG,http://dbpedia.org/ontology/militaryUnit,6718,6718,SOURCE_ONLY,True
+PARTICIPATION_ROLE,http://dbpedia.org/ontology/notableCommander,notable Commander,,EventKG,http://dbpedia.org/ontology/notableCommander,3951,3951,SOURCE_ONLY,True
+PARTICIPATION_ROLE,http://dbpedia.org/ontology/occupation,occupation,,EventKG,http://dbpedia.org/ontology/occupation,1544,1544,SOURCE_ONLY,True
+PARTICIPATION_ROLE,http://dbpedia.org/ontology/secondCommander,second Commander,,EventKG,http://dbpedia.org/ontology/secondCommander,101,101,SOURCE_ONLY,True
+PARTICIPATION_ROLE,http://dbpedia.org/ontology/thirdCommander,third Commander,,EventKG,http://dbpedia.org/ontology/thirdCommander,45,45,SOURCE_ONLY,True
+PARTICIPATION_ROLE,http://ldf.fi/schema/bioc/has_occupation,has occupation,,WarSampo,http://ldf.fi/schema/bioc/has_occupation,182096,182096,SOURCE_ONLY,True
+PARTICIPATION_ROLE,http://ldf.fi/schema/warsa/actors/hasRank,Military Rank,,WarSampo,http://ldf.fi/schema/warsa/actors/hasRank,105652,105652,SOURCE_ONLY,True
+PARTICIPATION_ROLE,http://ldf.fi/schema/warsa/actors/hasUnitCategory,has Unit Category,,WarSampo,http://ldf.fi/schema/warsa/actors/hasUnitCategory,4519,4519,SOURCE_ONLY,True
+PARTICIPATION_ROLE,http://ldf.fi/schema/warsa/articles/mentionsUnit,is related to military unit (automatic linking),,WarSampo,http://ldf.fi/schema/warsa/articles/mentionsUnit,74,74,SOURCE_ONLY,True
+PARTICIPATION_ROLE,http://ldf.fi/schema/warsa/articles/unit,is related to military unit,,WarSampo,http://ldf.fi/schema/warsa/articles/unit,3357,3357,SOURCE_ONLY,True
+PARTICIPATION_ROLE,http://ldf.fi/schema/warsa/casualties/rank,rank,,WarSampo,http://ldf.fi/schema/warsa/casualties/rank,93557,93557,SOURCE_ONLY,True
+PARTICIPATION_ROLE,http://ldf.fi/schema/warsa/casualties/unit,unit,Henkilön joukko-osasto kuolinhetkellä,WarSampo,http://ldf.fi/schema/warsa/casualties/unit,88189,88189,SOURCE_ONLY,True
+PARTICIPATION_ROLE,http://ldf.fi/schema/warsa/prisoners/rank,rank,,WarSampo,http://ldf.fi/schema/warsa/prisoners/rank,4138,4138,SOURCE_ONLY,True
+PARTICIPATION_ROLE,http://ldf.fi/schema/warsa/prisoners/unit,unit,,WarSampo,http://ldf.fi/schema/warsa/prisoners/unit,3861,3861,SOURCE_ONLY,True
+PARTICIPATION_ROLE,http://ldf.fi/schema/warsa/prisoners/warsa_unit,warsa unit,Henkilön tiedossa oleva joukko-osasto vangitsemishetkellä,WarSampo,http://ldf.fi/schema/warsa/prisoners/warsa_unit,0,0,SOURCE_ONLY,True
+PARTICIPATION_ROLE,http://ldf.fi/schema/warsa/unit,unit,,WarSampo,http://ldf.fi/schema/warsa/unit,0,0,SOURCE_ONLY,True
+PARTICIPATION_ROLE,http://ldf.fi/warsa/actors/hasUnitCategory,has Unit Category,,WarSampo,http://ldf.fi/warsa/actors/hasUnitCategory,1,1,SOURCE_ONLY,True
+PARTICIPATION_ROLE,http://rdf.muninn-project.org/ontologies/organization#rankSeniorTo,rank Senior To,,WarSampo,http://rdf.muninn-project.org/ontologies/organization#rankSeniorTo,42,42,SOURCE_ONLY,True
+PARTICIPATION_ROLE,http://www.cidoc-crm.org/cidoc-crm/P14_carried_out_by,carried out by,,WarSampo,http://www.cidoc-crm.org/cidoc-crm/P14_carried_out_by,87530,87530,SOURCE_ONLY,True
+PARTICIPATION_ROLE,wd:P105,taxon rank,level in a taxonomic hierarchy,Wikidata,wd:P105,1,1,EXACT,False
+PARTICIPATION_ROLE,wd:P106,occupation,"occupation of a person. See also ""field of work"" (Property:P101), ""position held"" (Property:P39). Not for groups of people. There, use ""field of work"" (Property:P101), ""industry"" (Property:P452), ""members have occupation"" (Property:P3989).",EventKG|Wikidata,http://www.wikidata.org/prop/direct/P106|wd:P106,32744,28816,EXACT,False
+PARTICIPATION_ROLE,wd:P108,employer,person or organization for which the subject works or worked,EventKG|Wikidata,http://www.wikidata.org/prop/direct/P108|wd:P108,6777,2255,EXACT,False
+PARTICIPATION_ROLE,wd:P12439,civil rank,non-military rank of a civil office holder in Russian Empire,Wikidata,wd:P12439,1,1,EXACT,False
+PARTICIPATION_ROLE,wd:P1313,office held by the head of government,political office that is fulfilled by the head of the government of this item,EventKG|Wikidata,http://www.wikidata.org/prop/direct/P1313|wd:P1313,25,17,EXACT,False
+PARTICIPATION_ROLE,wd:P14005,Japanese court rank,Japanese court rank of a person or a shrine,Wikidata,wd:P14005,31,31,EXACT,False
+PARTICIPATION_ROLE,wd:P1906,office held by head of state,political office that is fulfilled by the head of state of this item,EventKG|Wikidata,http://www.wikidata.org/prop/direct/P1906|wd:P1906,23,9,EXACT,False
+PARTICIPATION_ROLE,wd:P2353,statistical unit,,EventKG,http://www.wikidata.org/prop/direct/P2353,1,0,EXACT,False
+PARTICIPATION_ROLE,wd:P2868,subject has role,"role held by the item the statement appears on (""subject"") in the context of that statement. For the role of the statement object/value, use P3831 (""object has role""). For acting roles, use P453 (""character role""). For persons, use P39.",EventKG|Wikidata,http://www.wikidata.org/prop/direct/P2868|wd:P2868,457,432,EXACT,False
+PARTICIPATION_ROLE,wd:P3729,next lower rank,,EventKG,http://www.wikidata.org/prop/direct/P3729,103,0,EXACT,False
+PARTICIPATION_ROLE,wd:P3730,next higher rank,,EventKG,http://www.wikidata.org/prop/direct/P3730,111,0,EXACT,False
+PARTICIPATION_ROLE,wd:P3989,members have occupation,some or all members of this group share the occupation,Wikidata,wd:P3989,8,8,EXACT,False
+PARTICIPATION_ROLE,wd:P410,"military, police or special rank","military, police or similar special rank achieved by a person (should usually have a ""start time"" qualifier), or military or police rank associated with a position",EventKG|Wikidata,http://www.wikidata.org/prop/direct/P410|wd:P410,18426,13477,EXACT,False
+PARTICIPATION_ROLE,wd:P425,field of this occupation,"field corresponding to this occupation or profession (use only for occupations/professions - for people use Property:P101, for companies use P452)",EventKG|Wikidata,http://www.wikidata.org/prop/direct/P425|wd:P425,11,10,EXACT,False
+PARTICIPATION_ROLE,wd:P463,member of,"organization, club or musical group to which the subject belongs. Do not use for membership in ethnic or social groups, nor for holding a political position, such as a member of parliament (use P39 for that)",EventKG|Wikidata,http://www.wikidata.org/prop/direct/P463|wd:P463,11057,3253,EXACT,False
+PARTICIPATION_ROLE,wd:P468,dan/kyu rank,"rank system used in several board games (e.g. go, shogi, renju), martial arts (e.g. judo, kendo, wushu) and some other games",Wikidata,wd:P468,1,1,EXACT,False
+PARTICIPATION_ROLE,wd:P4791,commanded by,"commander of a military unit/army/security service, operation, etc.",EventKG|Wikidata,http://www.wikidata.org/prop/direct/P4791|wd:P4791,3361,1164,EXACT,False
+PARTICIPATION_ROLE,wd:P5012,special rank or class rate,"non-military, non-police civil service, special, or diplomatic rank held by an official in Russia and other post-Soviet countries; for military and police and other special ranks, use P410.",EventKG|Wikidata,http://www.wikidata.org/prop/direct/P5012|wd:P5012,3,1,EXACT,False
+PARTICIPATION_ROLE,wd:P5096,member of the crew of,"vessel or spacecraft on which this person served. For spacecraft, inverse of crew members (P1029), backup or reserve team or crew (P3015)",EventKG|Wikidata,http://www.wikidata.org/prop/direct/P5096|wd:P5096,987,231,EXACT,False
+PARTICIPATION_ROLE,wd:P54,member of sports team,sports teams or clubs that the subject represents or represented,EventKG|Wikidata,http://www.wikidata.org/prop/direct/P54|wd:P54,1130,496,EXACT,False
+PARTICIPATION_ROLE,wd:P598,commander of (DEPRECATED),"for persons who are notable as commanding officers, the units they commanded",EventKG|Wikidata,http://www.wikidata.org/prop/direct/P598|wd:P598,6342,2098,EXACT,False
+PARTICIPATION_ROLE,wd:P710,participant,"person, group of people or organization (object) that actively takes/took part in an event or process (subject). Preferably qualify with ""object has role"" (P3831). Use P1923 for participants that are teams.",EventKG|WarSampo|Wikidata,http://www.cidoc-crm.org/cidoc-crm/P11_had_participant|http://www.wikidata.org/prop/direct/P710|wd:P710,172034,169979,EXACT,False
+PARTICIPATION_ROLE,wd:P725,voice actor,"performer of a spoken role in a creative work such as animation, video game, radio drama, or dubbing over [use ""character role"" (P453) as qualifier] [use ""cast member"" (P161) for live acting]",EventKG|Wikidata,http://www.wikidata.org/prop/direct/P725|wd:P725,205,40,EXACT,False
+PARTICIPATION_ROLE,wd:P7779,military unit,smallest military unit that a person is/was in,EventKG|Wikidata,http://www.wikidata.org/prop/direct/P7779|wd:P7779,1467,662,EXACT,False
+PART_WHOLE_HIERARCHY,http://ldf.fi/schema/hipla/topology,Temporal part of relations,,WarSampo,http://ldf.fi/schema/hipla/topology,625,625,SOURCE_ONLY,True
+PART_WHOLE_HIERARCHY,http://purl.org/dc/terms/isPartOf,is Part Of,,WarSampo,http://purl.org/dc/terms/isPartOf,171,171,SOURCE_ONLY,True
+PART_WHOLE_HIERARCHY,http://www.opengis.net/ont/geosparql#sfWithin,Preferred part of relation,,WarSampo,http://www.opengis.net/ont/geosparql#sfWithin,30906,30906,SOURCE_ONLY,True
+PART_WHOLE_HIERARCHY,http://www.w3.org/2004/02/skos/core#broader,broader,,WarSampo,http://www.w3.org/2004/02/skos/core#broader,1783,1783,SOURCE_ONLY,True
+PART_WHOLE_HIERARCHY,http://www.w3.org/2004/02/skos/core#narrower,narrower,,WarSampo,http://www.w3.org/2004/02/skos/core#narrower,441,441,SOURCE_ONLY,True
+PART_WHOLE_HIERARCHY,wd:P179,part of the series,series which contains the subject,EventKG|Wikidata,http://www.wikidata.org/prop/direct/P179|wd:P179,542,148,EXACT,False
+PART_WHOLE_HIERARCHY,wd:P2670,has part(s) of the class,the subject has one or more parts of the object class,EventKG|Wikidata,http://www.wikidata.org/prop/direct/P2670|wd:P2670,244,121,EXACT,False
+PART_WHOLE_HIERARCHY,wd:P361,part of,"object of which the subject is a part (if this subject is already part of object A which is a part of object B, then please only make the subject part of object A), inverse property of ""has part"" (P527, see also ""has parts of the class"" (P2670))",EventKG|WarSampo|Wikidata,http://semanticweb.cs.vu.nl/2009/11/sem/subEventOf|http://www.cidoc-crm.org/cidoc-crm/P10_falls_within|http://www.wikidata.org/prop/direct/P361|wd:P361,11009,8844,EXACT,False
+PART_WHOLE_HIERARCHY,wd:P527,has part(s),"part of this subject; inverse property of ""part of"" (P361). See also ""has parts of the class"" (P2670).",EventKG|Wikidata,http://semanticweb.cs.vu.nl/2009/11/sem/hasSubEvent|http://www.wikidata.org/prop/direct/P527|wd:P527,11369,6517,EXACT,False
+SPATIAL,http://dbpedia.org/ontology/beatifiedPlace,beatified Place,,EventKG,http://dbpedia.org/ontology/beatifiedPlace,46,46,SOURCE_ONLY,True
+SPATIAL,http://dbpedia.org/ontology/birthPlace,birth Place,,EventKG,http://dbpedia.org/ontology/birthPlace,19196,19196,SOURCE_ONLY,True
+SPATIAL,http://dbpedia.org/ontology/canonizedPlace,canonized Place,,EventKG,http://dbpedia.org/ontology/canonizedPlace,13,13,SOURCE_ONLY,True
+SPATIAL,http://dbpedia.org/ontology/capital,capital,,EventKG,http://dbpedia.org/ontology/capital,47,47,SOURCE_ONLY,True
+SPATIAL,http://dbpedia.org/ontology/country,country,,EventKG,http://dbpedia.org/ontology/country,8561,8561,SOURCE_ONLY,True
+SPATIAL,http://dbpedia.org/ontology/countryOrigin,country Origin,,EventKG,http://dbpedia.org/ontology/countryOrigin,12,12,SOURCE_ONLY,True
+SPATIAL,http://dbpedia.org/ontology/deathPlace,death Place,,EventKG,http://dbpedia.org/ontology/deathPlace,6569,6569,SOURCE_ONLY,True
+SPATIAL,http://dbpedia.org/ontology/headquarter,headquarter,,EventKG,http://dbpedia.org/ontology/headquarter,206,206,SOURCE_ONLY,True
+SPATIAL,http://dbpedia.org/ontology/locatedInArea,located In Area,,EventKG,http://dbpedia.org/ontology/locatedInArea,17,17,SOURCE_ONLY,True
+SPATIAL,http://dbpedia.org/ontology/locationCity,location City,,EventKG,http://dbpedia.org/ontology/locationCity,29,29,SOURCE_ONLY,True
+SPATIAL,http://dbpedia.org/ontology/locationCountry,location Country,,EventKG,http://dbpedia.org/ontology/locationCountry,18,18,SOURCE_ONLY,True
+SPATIAL,http://dbpedia.org/ontology/mouthPlace,mouth Place,,EventKG,http://dbpedia.org/ontology/mouthPlace,3,3,SOURCE_ONLY,True
+SPATIAL,http://dbpedia.org/ontology/placeOfBurial,place Of Burial,,EventKG,http://dbpedia.org/ontology/placeOfBurial,7,7,SOURCE_ONLY,True
+SPATIAL,http://dbpedia.org/ontology/populationPlace,population Place,,EventKG,http://dbpedia.org/ontology/populationPlace,4,4,SOURCE_ONLY,True
+SPATIAL,http://dbpedia.org/ontology/premierePlace,premiere Place,,EventKG,http://dbpedia.org/ontology/premierePlace,1,1,SOURCE_ONLY,True
+SPATIAL,http://dbpedia.org/ontology/restingPlace,resting Place,,EventKG,http://dbpedia.org/ontology/restingPlace,3685,3685,SOURCE_ONLY,True
+SPATIAL,http://dbpedia.org/ontology/routeStartLocation,route Start Location,,EventKG,http://dbpedia.org/ontology/routeStartLocation,1,1,SOURCE_ONLY,True
+SPATIAL,http://dbpedia.org/ontology/usingCountry,using Country,,EventKG,http://dbpedia.org/ontology/usingCountry,15,15,SOURCE_ONLY,True
+SPATIAL,http://ldf.fi/schema/hipla/within,within,,WarSampo,http://ldf.fi/schema/hipla/within,625,625,SOURCE_ONLY,True
+SPATIAL,http://ldf.fi/schema/warsa/articles/mentionsPlace,is related to place (automatic linking),,WarSampo,http://ldf.fi/schema/warsa/articles/mentionsPlace,593,593,SOURCE_ONLY,True
+SPATIAL,http://ldf.fi/schema/warsa/articles/place,is related to place,,WarSampo,http://ldf.fi/schema/warsa/articles/place,3854,3854,SOURCE_ONLY,True
+SPATIAL,http://ldf.fi/schema/warsa/casualties/municipality_of_burial,municipality of burial,,WarSampo,http://ldf.fi/schema/warsa/casualties/municipality_of_burial,94432,94432,SOURCE_ONLY,True
+SPATIAL,http://ldf.fi/schema/warsa/prisoners/location,location,,WarSampo,http://ldf.fi/schema/warsa/prisoners/location,8845,8845,SOURCE_ONLY,True
+SPATIAL,http://schema.org/containedInPlace,contained In Place,,EventKG,http://schema.org/containedInPlace,3122,3122,SOURCE_ONLY,True
+SPATIAL,http://yago-knowledge.org/resource/hasCapital,has Capital,,EventKG,http://yago-knowledge.org/resource/hasCapital,26,26,SOURCE_ONLY,True
+SPATIAL,wd:P1071,location of creation,"place where the item was conceived or made; where applicable, location of final assembly",EventKG|Wikidata,http://www.wikidata.org/prop/direct/P1071|wd:P1071,3129,2777,EXACT,False
+SPATIAL,wd:P119,place of burial,"location of grave, resting place, place of ash-scattering, etc. (e.g., town/city or cemetery) for a person or animal. There may be several places: e.g., re-burials, parts of body buried separately.",EventKG|Wikidata,http://www.wikidata.org/prop/direct/P119|wd:P119,9584,5118,EXACT,False
+SPATIAL,wd:P131,located in the administrative territorial entity,the item is located on the territory of the following administrative entity. Use P276 for specifying locations that are non-administrative places and for items about events. Use P1382 if the item falls only partially into the administrative entity,EventKG|Wikidata,http://www.wikidata.org/prop/direct/P131|wd:P131,4304,3968,EXACT,False
+SPATIAL,wd:P1376,capital of,"country, state, department, canton or other administrative division of which the municipality is the governmental seat",EventKG|Wikidata,http://www.wikidata.org/prop/direct/P1376|wd:P1376,80,45,EXACT,False
+SPATIAL,wd:P1434,takes place in fictional universe,"the subject is a work describing a fictional universe, i.e. whose plot occurs in this universe",Wikidata,wd:P1434,3,3,EXACT,False
+SPATIAL,wd:P1532,country for sport,country a person or a team represents when playing a sport,EventKG|Wikidata,http://www.wikidata.org/prop/direct/P1532|wd:P1532,7311,86,EXACT,False
+SPATIAL,wd:P159,headquarters location,city or town where an organization's headquarters is or has been situated. Use P276 qualifier for specific building,EventKG|Wikidata,http://www.wikidata.org/prop/direct/P159|wd:P159,2831,1455,EXACT,False
+SPATIAL,wd:P17,country,sovereign state that this subject item is in (not to be used for human beings),EventKG|Wikidata,http://www.wikidata.org/prop/direct/P17|wd:P17,19508,15715,EXACT,False
+SPATIAL,wd:P1740,category for films shot at this location,the object is a category for films shot at or in the subject,Wikidata,wd:P1740,2,2,EXACT,False
+SPATIAL,wd:P19,place of birth,"most specific known birth location of a person, animal or fictional character",EventKG|Wikidata,http://www.wikidata.org/prop/direct/P19|wd:P19,23035,15054,EXACT,False
+SPATIAL,wd:P20,place of death,"most specific known (e.g. city instead of country, or hospital instead of city) death location of a person, animal or fictional character",EventKG|Wikidata,http://www.wikidata.org/prop/direct/P20|wd:P20,63479,13620,EXACT,False
+SPATIAL,wd:P205,basin country,country that have drainage to/from or border the body of water,Wikidata,wd:P205,1,1,EXACT,False
+SPATIAL,wd:P206,located in or next to body of water,body of water on or next to which a place is located,EventKG|Wikidata,http://www.wikidata.org/prop/direct/P206|wd:P206,103,101,EXACT,False
+SPATIAL,wd:P2632,place of detention,place where this person is or was detained,EventKG|Wikidata,http://www.wikidata.org/prop/direct/P2632|wd:P2632,30189,1123,EXACT,False
+SPATIAL,wd:P276,location,"location of the object, structure or event; use P131 to indicate the containing administrative entity, P8138 for statistical entities, or P706 for geographic entities; use P7153 for locations associated with the object",EventKG|WarSampo|Wikidata,http://semanticweb.cs.vu.nl/2009/11/sem/hasPlace|http://www.cidoc-crm.org/cidoc-crm/P7_took_place_at|http://www.wikidata.org/prop/direct/P276|wd:P276,241176,238315,EXACT,False
+SPATIAL,wd:P291,place of publication,geographical place of publication of the edition (use 1st edition when referring to works),EventKG|Wikidata,http://www.wikidata.org/prop/direct/P291|wd:P291,401,22,EXACT,False
+SPATIAL,wd:P3018,located in protected area,protected area where a place or geographical feature is physically located,Wikidata,wd:P3018,27,27,EXACT,False
+SPATIAL,wd:P36,capital,"seat of government of a country, province, state or other type of administrative territorial entity",EventKG|Wikidata,http://www.wikidata.org/prop/direct/P36|wd:P36,106,84,EXACT,False
+SPATIAL,wd:P3842,located in the present-day administrative territorial entity,the item was located in the territory of this present-day administrative unit; however the two did not at any point coexist in time,EventKG|Wikidata,http://www.wikidata.org/prop/direct/P3842|wd:P3842,62,29,EXACT,False
+SPATIAL,wd:P421,located in time zone,time zone for this item,EventKG|Wikidata,http://www.wikidata.org/prop/direct/P421|wd:P421,31,17,EXACT,False
+SPATIAL,wd:P4647,location of first performance,"location where a work was first debuted, performed or broadcasted",EventKG|Wikidata,http://www.wikidata.org/prop/direct/P4647|wd:P4647,8,3,EXACT,False
+SPATIAL,wd:P495,country of origin,"country of origin of this item (creative work, food, phrase, product, etc.)",EventKG|Wikidata,http://www.wikidata.org/prop/direct/P495|wd:P495,17332,7666,EXACT,False
+SPATIAL,wd:P5023,activity policy in this place,"policy for activities in this place, for example no photos, photos allowed, no flash, lighting fires, flying drones, etc.",EventKG|Wikidata,http://www.wikidata.org/prop/direct/P5023|wd:P5023,8,2,EXACT,False
+SPATIAL,wd:P609,terminus location,location of the terminus of a linear feature,EventKG|Wikidata,http://www.wikidata.org/prop/direct/P609|wd:P609,7,6,EXACT,False
+SPATIAL,wd:P669,located on street,"street, road, square, or trail, where the item is located. To add the number, use Property:P670 ""house number"" as qualifier. Use property P6375 ""street address"", if there is no item for the street",Wikidata,wd:P669,82,82,EXACT,False
+SPATIAL,wd:P706,located in/on physical feature,located on the specified (geo)physical feature. Should not be used when the value is only political/administrative (P131) or a mountain range (P4552). Use P206 for things in/on bodies of water.,Wikidata,wd:P706,96,96,EXACT,False
+SPATIAL,wd:P7108,location of the point of view,"geographic location of point of view, may or may not be depicted",Wikidata,wd:P7108,3,3,EXACT,False
+SPATIAL,wd:P7153,significant place,significant or notable places associated with the subject,EventKG|Wikidata,http://www.wikidata.org/prop/direct/P7153|wd:P7153,68,28,EXACT,False
+SPATIAL,wd:P740,location of formation,location where a group or organization was formed,EventKG|Wikidata,http://www.wikidata.org/prop/direct/P740|wd:P740,206,90,EXACT,False
+SPATIAL,wd:P795,located on linear feature,linear feature along which distance is specified from a specified datum point,EventKG|Wikidata,http://www.wikidata.org/prop/direct/P795|wd:P795,9,7,EXACT,False
+SPATIAL,wd:P8047,country of registry,country where a ship is or has been registered,EventKG|Wikidata,http://www.wikidata.org/prop/direct/P8047|wd:P8047,8557,7064,EXACT,False
+SPATIAL,wd:P8138,located in the statistical territorial entity,statistical territorial entity in which a place is located or is part of. If a municipality or county is split into or part of several regions: add several values,Wikidata,wd:P8138,12,12,EXACT,False
+SPATIAL,wd:P840,narrative location,the narrative of the work is set in this location,EventKG|Wikidata,http://www.wikidata.org/prop/direct/P840|wd:P840,326,301,EXACT,False
+SPATIAL,wd:P915,filming location,"actual place where this scene/film was shot. For the setting, use ""narrative location"" (P840)",EventKG|Wikidata,http://www.wikidata.org/prop/direct/P915|wd:P915,168,167,EXACT,False
+SPATIAL,wd:P931,place served by transport hub,"territorial entity or entities served by this transport hub (airport, train station, etc.)",Wikidata,wd:P931,319,319,EXACT,False
+SPATIAL,wd:P937,work location,"location where persons or organisations were actively participating in employment, business or other work",EventKG|Wikidata,http://www.wikidata.org/prop/direct/P937|wd:P937,3724,1111,EXACT,False
+TEMPORAL_SUCCESSION,http://dbpedia.org/ontology/predecessor,predecessor,,EventKG,http://dbpedia.org/ontology/predecessor,326,326,SOURCE_ONLY,True
+TEMPORAL_SUCCESSION,http://dbpedia.org/ontology/successor,successor,,EventKG,http://dbpedia.org/ontology/successor,348,348,SOURCE_ONLY,True
+TEMPORAL_SUCCESSION,wd:P1366,replaced by,"other person or item which continues the item by replacing it in its role. Use P156 (""followed by"") if the item is not replaced nor identical, but adds to the series (e.g. books in a series)",EventKG|Wikidata,http://www.wikidata.org/prop/direct/P1366|wd:P1366,1029,487,EXACT,False
+TEMPORAL_SUCCESSION,wd:P155,follows,"immediately prior item in a series of which the subject is a part, preferably use as qualifier of P179 [if the subject has replaced the preceding item, e.g. political offices, use ""replaces"" (P1365)]",EventKG|Wikidata,http://www.wikidata.org/prop/direct/P155|wd:P155,582,570,EXACT,False
+TEMPORAL_SUCCESSION,wd:P156,followed by,"immediately following item in a series of which the subject is a part, preferably use as qualifier of P179 [if the subject has been replaced, e.g. political offices, use ""replaced by"" (P1366)]",EventKG|Wikidata,http://www.wikidata.org/prop/direct/P156|wd:P156,661,647,EXACT,False
+TEMPORAL_SUCCESSION,wd:P167,structure replaced by,"the item which replaced this building or structure, at the same geographic location",EventKG|Wikidata,http://www.wikidata.org/prop/direct/P167|wd:P167,44,23,EXACT,False
+UNASSIGNED_REVIEW,http://dbpedia.org/ontology/academicDiscipline,academic Discipline,,EventKG,http://dbpedia.org/ontology/academicDiscipline,162,162,SOURCE_ONLY,True
+UNASSIGNED_REVIEW,http://dbpedia.org/ontology/administrativeCenter,administrative Center,,EventKG,http://dbpedia.org/ontology/administrativeCenter,4,4,SOURCE_ONLY,True
+UNASSIGNED_REVIEW,http://dbpedia.org/ontology/aircraftAttack,aircraft Attack,,EventKG,http://dbpedia.org/ontology/aircraftAttack,143,143,SOURCE_ONLY,True
+UNASSIGNED_REVIEW,http://dbpedia.org/ontology/aircraftBomber,aircraft Bomber,,EventKG,http://dbpedia.org/ontology/aircraftBomber,230,230,SOURCE_ONLY,True
+UNASSIGNED_REVIEW,http://dbpedia.org/ontology/aircraftElectronic,aircraft Electronic,,EventKG,http://dbpedia.org/ontology/aircraftElectronic,24,24,SOURCE_ONLY,True
+UNASSIGNED_REVIEW,http://dbpedia.org/ontology/aircraftFighter,aircraft Fighter,,EventKG,http://dbpedia.org/ontology/aircraftFighter,330,330,SOURCE_ONLY,True
+UNASSIGNED_REVIEW,http://dbpedia.org/ontology/aircraftHelicopter,aircraft Helicopter,,EventKG,http://dbpedia.org/ontology/aircraftHelicopter,31,31,SOURCE_ONLY,True
+UNASSIGNED_REVIEW,http://dbpedia.org/ontology/aircraftHelicopterAttack,aircraft Helicopter Attack,,EventKG,http://dbpedia.org/ontology/aircraftHelicopterAttack,11,11,SOURCE_ONLY,True
+UNASSIGNED_REVIEW,http://dbpedia.org/ontology/aircraftHelicopterMultirole,aircraft Helicopter Multirole,,EventKG,http://dbpedia.org/ontology/aircraftHelicopterMultirole,8,8,SOURCE_ONLY,True
+UNASSIGNED_REVIEW,http://dbpedia.org/ontology/aircraftHelicopterUtility,aircraft Helicopter Utility,,EventKG,http://dbpedia.org/ontology/aircraftHelicopterUtility,2,2,SOURCE_ONLY,True
+UNASSIGNED_REVIEW,http://dbpedia.org/ontology/aircraftInterceptor,aircraft Interceptor,,EventKG,http://dbpedia.org/ontology/aircraftInterceptor,5,5,SOURCE_ONLY,True
+UNASSIGNED_REVIEW,http://dbpedia.org/ontology/aircraftPatrol,aircraft Patrol,,EventKG,http://dbpedia.org/ontology/aircraftPatrol,164,164,SOURCE_ONLY,True
+UNASSIGNED_REVIEW,http://dbpedia.org/ontology/aircraftRecon,aircraft Recon,,EventKG,http://dbpedia.org/ontology/aircraftRecon,78,78,SOURCE_ONLY,True
+UNASSIGNED_REVIEW,http://dbpedia.org/ontology/aircraftTrainer,aircraft Trainer,,EventKG,http://dbpedia.org/ontology/aircraftTrainer,150,150,SOURCE_ONLY,True
+UNASSIGNED_REVIEW,http://dbpedia.org/ontology/aircraftTransport,aircraft Transport,,EventKG,http://dbpedia.org/ontology/aircraftTransport,134,134,SOURCE_ONLY,True
+UNASSIGNED_REVIEW,http://dbpedia.org/ontology/album,album,,EventKG,http://dbpedia.org/ontology/album,2,2,SOURCE_ONLY,True
+UNASSIGNED_REVIEW,http://dbpedia.org/ontology/almaMater,alma Mater,,EventKG,http://dbpedia.org/ontology/almaMater,508,508,SOURCE_ONLY,True
+UNASSIGNED_REVIEW,http://dbpedia.org/ontology/alumni,alumni,,EventKG,http://dbpedia.org/ontology/alumni,3,3,SOURCE_ONLY,True
+UNASSIGNED_REVIEW,http://dbpedia.org/ontology/anthem,anthem,,EventKG,http://dbpedia.org/ontology/anthem,18,18,SOURCE_ONLY,True
+UNASSIGNED_REVIEW,http://dbpedia.org/ontology/archipelago,archipelago,,EventKG,http://dbpedia.org/ontology/archipelago,1,1,SOURCE_ONLY,True
+UNASSIGNED_REVIEW,http://dbpedia.org/ontology/architecturalStyle,architectural Style,,EventKG,http://dbpedia.org/ontology/architecturalStyle,27,27,SOURCE_ONLY,True
+UNASSIGNED_REVIEW,http://dbpedia.org/ontology/areaOfSearch,area Of Search,,EventKG,http://dbpedia.org/ontology/areaOfSearch,1,1,SOURCE_ONLY,True
+UNASSIGNED_REVIEW,http://dbpedia.org/ontology/artist,artist,,EventKG,http://dbpedia.org/ontology/artist,25,25,SOURCE_ONLY,True
+UNASSIGNED_REVIEW,http://dbpedia.org/ontology/assembly,assembly,,EventKG,http://dbpedia.org/ontology/assembly,6,6,SOURCE_ONLY,True
+UNASSIGNED_REVIEW,http://dbpedia.org/ontology/associate,associate,,EventKG,http://dbpedia.org/ontology/associate,4,4,SOURCE_ONLY,True
+UNASSIGNED_REVIEW,http://dbpedia.org/ontology/associatedBand,associated Band,,EventKG,http://dbpedia.org/ontology/associatedBand,111,111,SOURCE_ONLY,True
+UNASSIGNED_REVIEW,http://dbpedia.org/ontology/associatedMusicalArtist,associated Musical Artist,,EventKG,http://dbpedia.org/ontology/associatedMusicalArtist,111,111,SOURCE_ONLY,True
+UNASSIGNED_REVIEW,http://dbpedia.org/ontology/basedOn,based On,,EventKG,http://dbpedia.org/ontology/basedOn,3,3,SOURCE_ONLY,True
+UNASSIGNED_REVIEW,http://dbpedia.org/ontology/beatifiedBy,beatified By,,EventKG,http://dbpedia.org/ontology/beatifiedBy,2,2,SOURCE_ONLY,True
+UNASSIGNED_REVIEW,http://dbpedia.org/ontology/billed,billed,,EventKG,http://dbpedia.org/ontology/billed,4,4,SOURCE_ONLY,True
+UNASSIGNED_REVIEW,http://dbpedia.org/ontology/board,board,,EventKG,http://dbpedia.org/ontology/board,13,13,SOURCE_ONLY,True
+UNASSIGNED_REVIEW,http://dbpedia.org/ontology/bodyDiscovered,body Discovered,,EventKG,http://dbpedia.org/ontology/bodyDiscovered,1,1,SOURCE_ONLY,True
+UNASSIGNED_REVIEW,http://dbpedia.org/ontology/bodyStyle,body Style,,EventKG,http://dbpedia.org/ontology/bodyStyle,1,1,SOURCE_ONLY,True
+UNASSIGNED_REVIEW,http://dbpedia.org/ontology/breeder,breeder,,EventKG,http://dbpedia.org/ontology/breeder,17,17,SOURCE_ONLY,True
+UNASSIGNED_REVIEW,http://dbpedia.org/ontology/broadcastArea,broadcast Area,,EventKG,http://dbpedia.org/ontology/broadcastArea,10,10,SOURCE_ONLY,True
+UNASSIGNED_REVIEW,http://dbpedia.org/ontology/broadcastNetwork,broadcast Network,,EventKG,http://dbpedia.org/ontology/broadcastNetwork,7,7,SOURCE_ONLY,True
+UNASSIGNED_REVIEW,http://dbpedia.org/ontology/bronzeMedalist,bronze Medalist,,EventKG,http://dbpedia.org/ontology/bronzeMedalist,11,11,SOURCE_ONLY,True
+UNASSIGNED_REVIEW,http://dbpedia.org/ontology/builder,builder,,EventKG,http://dbpedia.org/ontology/builder,5699,5699,SOURCE_ONLY,True
+UNASSIGNED_REVIEW,http://dbpedia.org/ontology/campus,campus,,EventKG,http://dbpedia.org/ontology/campus,3,3,SOURCE_ONLY,True
+UNASSIGNED_REVIEW,http://dbpedia.org/ontology/canonizedBy,canonized By,,EventKG,http://dbpedia.org/ontology/canonizedBy,4,4,SOURCE_ONLY,True
+UNASSIGNED_REVIEW,http://dbpedia.org/ontology/ceremonialCounty,ceremonial County,,EventKG,http://dbpedia.org/ontology/ceremonialCounty,3,3,SOURCE_ONLY,True
+UNASSIGNED_REVIEW,http://dbpedia.org/ontology/chain,chain,,EventKG,http://dbpedia.org/ontology/chain,3,3,SOURCE_ONLY,True
+UNASSIGNED_REVIEW,http://dbpedia.org/ontology/chairman,chairman,,EventKG,http://dbpedia.org/ontology/chairman,3,3,SOURCE_ONLY,True
+UNASSIGNED_REVIEW,http://dbpedia.org/ontology/chairperson,chairperson,,EventKG,http://dbpedia.org/ontology/chairperson,2,2,SOURCE_ONLY,True
+UNASSIGNED_REVIEW,http://dbpedia.org/ontology/champion,champion,,EventKG,http://dbpedia.org/ontology/champion,1,1,SOURCE_ONLY,True
+UNASSIGNED_REVIEW,http://dbpedia.org/ontology/championInDoubleMale,champion In Double Male,,EventKG,http://dbpedia.org/ontology/championInDoubleMale,2,2,SOURCE_ONLY,True
+UNASSIGNED_REVIEW,http://dbpedia.org/ontology/championInSingleMale,champion In Single Male,,EventKG,http://dbpedia.org/ontology/championInSingleMale,1,1,SOURCE_ONLY,True
+UNASSIGNED_REVIEW,http://dbpedia.org/ontology/chancellor,chancellor,,EventKG,http://dbpedia.org/ontology/chancellor,4,4,SOURCE_ONLY,True
+UNASSIGNED_REVIEW,http://dbpedia.org/ontology/channel,channel,,EventKG,http://dbpedia.org/ontology/channel,15,15,SOURCE_ONLY,True
+UNASSIGNED_REVIEW,http://dbpedia.org/ontology/cinematography,cinematography,,EventKG,http://dbpedia.org/ontology/cinematography,293,293,SOURCE_ONLY,True
+UNASSIGNED_REVIEW,http://dbpedia.org/ontology/city,city,,EventKG,http://dbpedia.org/ontology/city,374,374,SOURCE_ONLY,True
+UNASSIGNED_REVIEW,http://dbpedia.org/ontology/class,class,,EventKG,http://dbpedia.org/ontology/class,990,990,SOURCE_ONLY,True
+UNASSIGNED_REVIEW,http://dbpedia.org/ontology/club,club,,EventKG,http://dbpedia.org/ontology/club,7,7,SOURCE_ONLY,True
+UNASSIGNED_REVIEW,http://dbpedia.org/ontology/coach,coach,,EventKG,http://dbpedia.org/ontology/coach,13,13,SOURCE_ONLY,True
+UNASSIGNED_REVIEW,http://dbpedia.org/ontology/college,college,,EventKG,http://dbpedia.org/ontology/college,9,9,SOURCE_ONLY,True
+UNASSIGNED_REVIEW,http://dbpedia.org/ontology/colour,colour,,EventKG,http://dbpedia.org/ontology/colour,41,41,SOURCE_ONLY,True
+UNASSIGNED_REVIEW,http://dbpedia.org/ontology/company,company,,EventKG,http://dbpedia.org/ontology/company,33,33,SOURCE_ONLY,True
+UNASSIGNED_REVIEW,http://dbpedia.org/ontology/composer,composer,,EventKG,http://dbpedia.org/ontology/composer,40,40,SOURCE_ONLY,True
+UNASSIGNED_REVIEW,http://dbpedia.org/ontology/computingPlatform,computing Platform,,EventKG,http://dbpedia.org/ontology/computingPlatform,17,17,SOURCE_ONLY,True
+UNASSIGNED_REVIEW,http://dbpedia.org/ontology/convictionPenalty,conviction Penalty,,EventKG,http://dbpedia.org/ontology/convictionPenalty,60,60,SOURCE_ONLY,True
+UNASSIGNED_REVIEW,http://dbpedia.org/ontology/councilArea,council Area,,EventKG,http://dbpedia.org/ontology/councilArea,1,1,SOURCE_ONLY,True
+UNASSIGNED_REVIEW,http://dbpedia.org/ontology/coverArtist,cover Artist,,EventKG,http://dbpedia.org/ontology/coverArtist,14,14,SOURCE_ONLY,True
+UNASSIGNED_REVIEW,http://dbpedia.org/ontology/crewMember,crew Member,,EventKG,http://dbpedia.org/ontology/crewMember,2,2,SOURCE_ONLY,True
+UNASSIGNED_REVIEW,http://dbpedia.org/ontology/crosses,crosses,,EventKG,http://dbpedia.org/ontology/crosses,5,5,SOURCE_ONLY,True
+UNASSIGNED_REVIEW,http://dbpedia.org/ontology/curator,curator,,EventKG,http://dbpedia.org/ontology/curator,2,2,SOURCE_ONLY,True
+UNASSIGNED_REVIEW,http://dbpedia.org/ontology/currency,currency,,EventKG,http://dbpedia.org/ontology/currency,30,30,SOURCE_ONLY,True
+UNASSIGNED_REVIEW,http://dbpedia.org/ontology/dean,dean,,EventKG,http://dbpedia.org/ontology/dean,1,1,SOURCE_ONLY,True
+UNASSIGNED_REVIEW,http://dbpedia.org/ontology/debutTeam,debut Team,,EventKG,http://dbpedia.org/ontology/debutTeam,5,5,SOURCE_ONLY,True
+UNASSIGNED_REVIEW,http://dbpedia.org/ontology/depiction,depiction,,EventKG,http://dbpedia.org/ontology/depiction,2,2,SOURCE_ONLY,True
+UNASSIGNED_REVIEW,http://dbpedia.org/ontology/deputy,deputy,,EventKG,http://dbpedia.org/ontology/deputy,3,3,SOURCE_ONLY,True
+UNASSIGNED_REVIEW,http://dbpedia.org/ontology/designCompany,design Company,,EventKG,http://dbpedia.org/ontology/designCompany,4,4,SOURCE_ONLY,True
+UNASSIGNED_REVIEW,http://dbpedia.org/ontology/designer,designer,,EventKG,http://dbpedia.org/ontology/designer,293,293,SOURCE_ONLY,True
+UNASSIGNED_REVIEW,http://dbpedia.org/ontology/destination,destination,,EventKG,http://dbpedia.org/ontology/destination,7,7,SOURCE_ONLY,True
+UNASSIGNED_REVIEW,http://dbpedia.org/ontology/developer,developer,,EventKG,http://dbpedia.org/ontology/developer,10,10,SOURCE_ONLY,True
+UNASSIGNED_REVIEW,http://dbpedia.org/ontology/diocese,diocese,,EventKG,http://dbpedia.org/ontology/diocese,8,8,SOURCE_ONLY,True
+UNASSIGNED_REVIEW,http://dbpedia.org/ontology/director,director,,EventKG,http://dbpedia.org/ontology/director,664,664,SOURCE_ONLY,True
+UNASSIGNED_REVIEW,http://dbpedia.org/ontology/discipline,discipline,,EventKG,http://dbpedia.org/ontology/discipline,14,14,SOURCE_ONLY,True
+UNASSIGNED_REVIEW,http://dbpedia.org/ontology/distributor,distributor,,EventKG,http://dbpedia.org/ontology/distributor,321,321,SOURCE_ONLY,True
+UNASSIGNED_REVIEW,http://dbpedia.org/ontology/district,district,,EventKG,http://dbpedia.org/ontology/district,3,3,SOURCE_ONLY,True
+UNASSIGNED_REVIEW,http://dbpedia.org/ontology/division,division,,EventKG,http://dbpedia.org/ontology/division,1,1,SOURCE_ONLY,True
+UNASSIGNED_REVIEW,http://dbpedia.org/ontology/doctoralAdvisor,doctoral Advisor,,EventKG,http://dbpedia.org/ontology/doctoralAdvisor,38,38,SOURCE_ONLY,True
+UNASSIGNED_REVIEW,http://dbpedia.org/ontology/editing,editing,,EventKG,http://dbpedia.org/ontology/editing,173,173,SOURCE_ONLY,True
+UNASSIGNED_REVIEW,http://dbpedia.org/ontology/editor,editor,,EventKG,http://dbpedia.org/ontology/editor,17,17,SOURCE_ONLY,True
+UNASSIGNED_REVIEW,http://dbpedia.org/ontology/education,education,,EventKG,http://dbpedia.org/ontology/education,432,432,SOURCE_ONLY,True
+UNASSIGNED_REVIEW,http://dbpedia.org/ontology/engine,engine,,EventKG,http://dbpedia.org/ontology/engine,2,2,SOURCE_ONLY,True
+UNASSIGNED_REVIEW,http://dbpedia.org/ontology/era,era,,EventKG,http://dbpedia.org/ontology/era,3,3,SOURCE_ONLY,True
+UNASSIGNED_REVIEW,http://dbpedia.org/ontology/executiveProducer,executive Producer,,EventKG,http://dbpedia.org/ontology/executiveProducer,31,31,SOURCE_ONLY,True
+UNASSIGNED_REVIEW,http://dbpedia.org/ontology/fastestDriver,fastest Driver,,EventKG,http://dbpedia.org/ontology/fastestDriver,3,3,SOURCE_ONLY,True
+UNASSIGNED_REVIEW,http://dbpedia.org/ontology/federalState,federal State,,EventKG,http://dbpedia.org/ontology/federalState,1,1,SOURCE_ONLY,True
+UNASSIGNED_REVIEW,http://dbpedia.org/ontology/field,field,,EventKG,http://dbpedia.org/ontology/field,21,21,SOURCE_ONLY,True
+UNASSIGNED_REVIEW,http://dbpedia.org/ontology/firstAscentPerson,first Ascent Person,,EventKG,http://dbpedia.org/ontology/firstAscentPerson,12,12,SOURCE_ONLY,True
+UNASSIGNED_REVIEW,http://dbpedia.org/ontology/firstDriver,first Driver,,EventKG,http://dbpedia.org/ontology/firstDriver,5,5,SOURCE_ONLY,True
+UNASSIGNED_REVIEW,http://dbpedia.org/ontology/firstLeader,first Leader,,EventKG,http://dbpedia.org/ontology/firstLeader,114,114,SOURCE_ONLY,True
+UNASSIGNED_REVIEW,http://dbpedia.org/ontology/firstRace,first Race,,EventKG,http://dbpedia.org/ontology/firstRace,1,1,SOURCE_ONLY,True
+UNASSIGNED_REVIEW,http://dbpedia.org/ontology/formerBandMember,former Band Member,,EventKG,http://dbpedia.org/ontology/formerBandMember,3,3,SOURCE_ONLY,True
+UNASSIGNED_REVIEW,http://dbpedia.org/ontology/formerCoach,former Coach,,EventKG,http://dbpedia.org/ontology/formerCoach,1,1,SOURCE_ONLY,True
+UNASSIGNED_REVIEW,http://dbpedia.org/ontology/formerTeam,former Team,,EventKG,http://dbpedia.org/ontology/formerTeam,11,11,SOURCE_ONLY,True
+UNASSIGNED_REVIEW,http://dbpedia.org/ontology/foundedBy,founded By,,EventKG,http://dbpedia.org/ontology/foundedBy,109,109,SOURCE_ONLY,True
+UNASSIGNED_REVIEW,http://dbpedia.org/ontology/founder,founder,,EventKG,http://dbpedia.org/ontology/founder,12,12,SOURCE_ONLY,True
+UNASSIGNED_REVIEW,http://dbpedia.org/ontology/frazioni,frazioni,,EventKG,http://dbpedia.org/ontology/frazioni,3,3,SOURCE_ONLY,True
+UNASSIGNED_REVIEW,http://dbpedia.org/ontology/gameArtist,game Artist,,EventKG,http://dbpedia.org/ontology/gameArtist,1,1,SOURCE_ONLY,True
+UNASSIGNED_REVIEW,http://dbpedia.org/ontology/garrison,garrison,,EventKG,http://dbpedia.org/ontology/garrison,2779,2779,SOURCE_ONLY,True
+UNASSIGNED_REVIEW,http://dbpedia.org/ontology/genre,genre,,EventKG,http://dbpedia.org/ontology/genre,72,72,SOURCE_ONLY,True
+UNASSIGNED_REVIEW,http://dbpedia.org/ontology/goldMedalist,gold Medalist,,EventKG,http://dbpedia.org/ontology/goldMedalist,23,23,SOURCE_ONLY,True
+UNASSIGNED_REVIEW,http://dbpedia.org/ontology/governingBody,governing Body,,EventKG,http://dbpedia.org/ontology/governingBody,2,2,SOURCE_ONLY,True
+UNASSIGNED_REVIEW,http://dbpedia.org/ontology/governmentType,government Type,,EventKG,http://dbpedia.org/ontology/governmentType,54,54,SOURCE_ONLY,True
+UNASSIGNED_REVIEW,http://dbpedia.org/ontology/governor,governor,,EventKG,http://dbpedia.org/ontology/governor,2,2,SOURCE_ONLY,True
+UNASSIGNED_REVIEW,http://dbpedia.org/ontology/ground,ground,,EventKG,http://dbpedia.org/ontology/ground,26,26,SOURCE_ONLY,True
+UNASSIGNED_REVIEW,http://dbpedia.org/ontology/head,head,,EventKG,http://dbpedia.org/ontology/head,3,3,SOURCE_ONLY,True
+UNASSIGNED_REVIEW,http://dbpedia.org/ontology/highschool,highschool,,EventKG,http://dbpedia.org/ontology/highschool,7,7,SOURCE_ONLY,True
+UNASSIGNED_REVIEW,http://dbpedia.org/ontology/homeport,homeport,,EventKG,http://dbpedia.org/ontology/homeport,234,234,SOURCE_ONLY,True
+UNASSIGNED_REVIEW,http://dbpedia.org/ontology/hometown,hometown,,EventKG,http://dbpedia.org/ontology/hometown,163,163,SOURCE_ONLY,True
+UNASSIGNED_REVIEW,http://dbpedia.org/ontology/honours,honours,,EventKG,http://dbpedia.org/ontology/honours,622,622,SOURCE_ONLY,True
+UNASSIGNED_REVIEW,http://dbpedia.org/ontology/hubAirport,hub Airport,,EventKG,http://dbpedia.org/ontology/hubAirport,46,46,SOURCE_ONLY,True
+UNASSIGNED_REVIEW,http://dbpedia.org/ontology/ideology,ideology,,EventKG,http://dbpedia.org/ontology/ideology,323,323,SOURCE_ONLY,True
+UNASSIGNED_REVIEW,http://dbpedia.org/ontology/illustrator,illustrator,,EventKG,http://dbpedia.org/ontology/illustrator,10,10,SOURCE_ONLY,True
+UNASSIGNED_REVIEW,http://dbpedia.org/ontology/incumbent,incumbent,,EventKG,http://dbpedia.org/ontology/incumbent,1,1,SOURCE_ONLY,True
+UNASSIGNED_REVIEW,http://dbpedia.org/ontology/industry,industry,,EventKG,http://dbpedia.org/ontology/industry,52,52,SOURCE_ONLY,True
+UNASSIGNED_REVIEW,http://dbpedia.org/ontology/inflow,inflow,,EventKG,http://dbpedia.org/ontology/inflow,1,1,SOURCE_ONLY,True
+UNASSIGNED_REVIEW,http://dbpedia.org/ontology/influenced,influenced,,EventKG,http://dbpedia.org/ontology/influenced,40,40,SOURCE_ONLY,True
+UNASSIGNED_REVIEW,http://dbpedia.org/ontology/influencedBy,influenced By,,EventKG,http://dbpedia.org/ontology/influencedBy,199,199,SOURCE_ONLY,True
+UNASSIGNED_REVIEW,http://dbpedia.org/ontology/institution,institution,,EventKG,http://dbpedia.org/ontology/institution,255,255,SOURCE_ONLY,True
+UNASSIGNED_REVIEW,http://dbpedia.org/ontology/instrument,instrument,,EventKG,http://dbpedia.org/ontology/instrument,10,10,SOURCE_ONLY,True
+UNASSIGNED_REVIEW,http://dbpedia.org/ontology/intercommunality,intercommunality,,EventKG,http://dbpedia.org/ontology/intercommunality,1,1,SOURCE_ONLY,True
+UNASSIGNED_REVIEW,http://dbpedia.org/ontology/island,island,,EventKG,http://dbpedia.org/ontology/island,2,2,SOURCE_ONLY,True
+UNASSIGNED_REVIEW,http://dbpedia.org/ontology/jurisdiction,jurisdiction,,EventKG,http://dbpedia.org/ontology/jurisdiction,60,60,SOURCE_ONLY,True
+UNASSIGNED_REVIEW,http://dbpedia.org/ontology/keyPerson,key Person,,EventKG,http://dbpedia.org/ontology/keyPerson,104,104,SOURCE_ONLY,True
+UNASSIGNED_REVIEW,http://dbpedia.org/ontology/knownFor,known For,,EventKG,http://dbpedia.org/ontology/knownFor,771,771,SOURCE_ONLY,True
+UNASSIGNED_REVIEW,http://dbpedia.org/ontology/largestCity,largest City,,EventKG,http://dbpedia.org/ontology/largestCity,5,5,SOURCE_ONLY,True
+UNASSIGNED_REVIEW,http://dbpedia.org/ontology/lastRace,last Race,,EventKG,http://dbpedia.org/ontology/lastRace,1,1,SOURCE_ONLY,True
+UNASSIGNED_REVIEW,http://dbpedia.org/ontology/leader,leader,,EventKG,http://dbpedia.org/ontology/leader,113,113,SOURCE_ONLY,True
+UNASSIGNED_REVIEW,http://dbpedia.org/ontology/leaderName,leader Name,,EventKG,http://dbpedia.org/ontology/leaderName,1,1,SOURCE_ONLY,True
+UNASSIGNED_REVIEW,http://dbpedia.org/ontology/leaderParty,leader Party,,EventKG,http://dbpedia.org/ontology/leaderParty,1,1,SOURCE_ONLY,True
+UNASSIGNED_REVIEW,http://dbpedia.org/ontology/legislature,legislature,,EventKG,http://dbpedia.org/ontology/legislature,4,4,SOURCE_ONLY,True
+UNASSIGNED_REVIEW,http://dbpedia.org/ontology/lieutenant,lieutenant,,EventKG,http://dbpedia.org/ontology/lieutenant,3,3,SOURCE_ONLY,True
+UNASSIGNED_REVIEW,http://dbpedia.org/ontology/literaryGenre,literary Genre,,EventKG,http://dbpedia.org/ontology/literaryGenre,55,55,SOURCE_ONLY,True
+UNASSIGNED_REVIEW,http://dbpedia.org/ontology/logo,logo,,EventKG,http://dbpedia.org/ontology/logo,2,2,SOURCE_ONLY,True
+UNASSIGNED_REVIEW,http://dbpedia.org/ontology/maidenFlightRocket,maiden Flight Rocket,,EventKG,http://dbpedia.org/ontology/maidenFlightRocket,6,6,SOURCE_ONLY,True
+UNASSIGNED_REVIEW,http://dbpedia.org/ontology/mainInterest,main Interest,,EventKG,http://dbpedia.org/ontology/mainInterest,26,26,SOURCE_ONLY,True
+UNASSIGNED_REVIEW,http://dbpedia.org/ontology/mainOrgan,main Organ,,EventKG,http://dbpedia.org/ontology/mainOrgan,2,2,SOURCE_ONLY,True
+UNASSIGNED_REVIEW,http://dbpedia.org/ontology/majorShrine,major Shrine,,EventKG,http://dbpedia.org/ontology/majorShrine,9,9,SOURCE_ONLY,True
+UNASSIGNED_REVIEW,http://dbpedia.org/ontology/manager,manager,,EventKG,http://dbpedia.org/ontology/manager,2,2,SOURCE_ONLY,True
+UNASSIGNED_REVIEW,http://dbpedia.org/ontology/managerClub,manager Club,,EventKG,http://dbpedia.org/ontology/managerClub,3,3,SOURCE_ONLY,True
+UNASSIGNED_REVIEW,http://dbpedia.org/ontology/map,map,,EventKG,http://dbpedia.org/ontology/map,10,10,SOURCE_ONLY,True
+UNASSIGNED_REVIEW,http://dbpedia.org/ontology/march,march,,EventKG,http://dbpedia.org/ontology/march,53,53,SOURCE_ONLY,True
+UNASSIGNED_REVIEW,http://dbpedia.org/ontology/material,material,,EventKG,http://dbpedia.org/ontology/material,2,2,SOURCE_ONLY,True
+UNASSIGNED_REVIEW,http://dbpedia.org/ontology/mergedWith,merged With,,EventKG,http://dbpedia.org/ontology/mergedWith,8,8,SOURCE_ONLY,True
+UNASSIGNED_REVIEW,http://dbpedia.org/ontology/mission,mission,,EventKG,http://dbpedia.org/ontology/mission,1,1,SOURCE_ONLY,True
+UNASSIGNED_REVIEW,http://dbpedia.org/ontology/monarch,monarch,,EventKG,http://dbpedia.org/ontology/monarch,35,35,SOURCE_ONLY,True
+UNASSIGNED_REVIEW,http://dbpedia.org/ontology/mouthMountain,mouth Mountain,,EventKG,http://dbpedia.org/ontology/mouthMountain,3,3,SOURCE_ONLY,True
+UNASSIGNED_REVIEW,http://dbpedia.org/ontology/movement,movement,,EventKG,http://dbpedia.org/ontology/movement,28,28,SOURCE_ONLY,True
+UNASSIGNED_REVIEW,http://dbpedia.org/ontology/museum,museum,,EventKG,http://dbpedia.org/ontology/museum,8,8,SOURCE_ONLY,True
+UNASSIGNED_REVIEW,http://dbpedia.org/ontology/musicComposer,music Composer,,EventKG,http://dbpedia.org/ontology/musicComposer,318,318,SOURCE_ONLY,True
+UNASSIGNED_REVIEW,http://dbpedia.org/ontology/musicType,music Type,,EventKG,http://dbpedia.org/ontology/musicType,1,1,SOURCE_ONLY,True
+UNASSIGNED_REVIEW,http://dbpedia.org/ontology/namedAfter,named After,,EventKG,http://dbpedia.org/ontology/namedAfter,24,24,SOURCE_ONLY,True
+UNASSIGNED_REVIEW,http://dbpedia.org/ontology/narrator,narrator,,EventKG,http://dbpedia.org/ontology/narrator,129,129,SOURCE_ONLY,True
+UNASSIGNED_REVIEW,http://dbpedia.org/ontology/nearestCity,nearest City,,EventKG,http://dbpedia.org/ontology/nearestCity,40,40,SOURCE_ONLY,True
+UNASSIGNED_REVIEW,http://dbpedia.org/ontology/network,network,,EventKG,http://dbpedia.org/ontology/network,26,26,SOURCE_ONLY,True
+UNASSIGNED_REVIEW,http://dbpedia.org/ontology/nextEvent,next Event,,EventKG,http://dbpedia.org/ontology/nextEvent,16,16,SOURCE_ONLY,True
+UNASSIGNED_REVIEW,http://dbpedia.org/ontology/nonFictionSubject,non Fiction Subject,,EventKG,http://dbpedia.org/ontology/nonFictionSubject,136,136,SOURCE_ONLY,True
+UNASSIGNED_REVIEW,http://dbpedia.org/ontology/notableIdea,notable Idea,,EventKG,http://dbpedia.org/ontology/notableIdea,2,2,SOURCE_ONLY,True
+UNASSIGNED_REVIEW,http://dbpedia.org/ontology/notableWork,notable Work,,EventKG,http://dbpedia.org/ontology/notableWork,71,71,SOURCE_ONLY,True
+UNASSIGNED_REVIEW,http://dbpedia.org/ontology/openingTheme,opening Theme,,EventKG,http://dbpedia.org/ontology/openingTheme,1,1,SOURCE_ONLY,True
+UNASSIGNED_REVIEW,http://dbpedia.org/ontology/opponent,opponent,,EventKG,http://dbpedia.org/ontology/opponent,9,9,SOURCE_ONLY,True
+UNASSIGNED_REVIEW,http://dbpedia.org/ontology/origin,origin,,EventKG,http://dbpedia.org/ontology/origin,863,863,SOURCE_ONLY,True
+UNASSIGNED_REVIEW,http://dbpedia.org/ontology/otherParty,other Party,,EventKG,http://dbpedia.org/ontology/otherParty,3,3,SOURCE_ONLY,True
+UNASSIGNED_REVIEW,http://dbpedia.org/ontology/outflow,outflow,,EventKG,http://dbpedia.org/ontology/outflow,1,1,SOURCE_ONLY,True
+UNASSIGNED_REVIEW,http://dbpedia.org/ontology/owningCompany,owning Company,,EventKG,http://dbpedia.org/ontology/owningCompany,10,10,SOURCE_ONLY,True
+UNASSIGNED_REVIEW,http://dbpedia.org/ontology/owningOrganisation,owning Organisation,,EventKG,http://dbpedia.org/ontology/owningOrganisation,1,1,SOURCE_ONLY,True
+UNASSIGNED_REVIEW,http://dbpedia.org/ontology/parent,parent,,EventKG,http://dbpedia.org/ontology/parent,397,397,SOURCE_ONLY,True
+UNASSIGNED_REVIEW,http://dbpedia.org/ontology/partner,partner,,EventKG,http://dbpedia.org/ontology/partner,25,25,SOURCE_ONLY,True
+UNASSIGNED_REVIEW,http://dbpedia.org/ontology/party,party,,EventKG,http://dbpedia.org/ontology/party,865,865,SOURCE_ONLY,True
+UNASSIGNED_REVIEW,http://dbpedia.org/ontology/patron,patron,,EventKG,http://dbpedia.org/ontology/patron,75,75,SOURCE_ONLY,True
+UNASSIGNED_REVIEW,http://dbpedia.org/ontology/person,person,,EventKG,http://dbpedia.org/ontology/person,8,8,SOURCE_ONLY,True
+UNASSIGNED_REVIEW,http://dbpedia.org/ontology/philosophicalSchool,philosophical School,,EventKG,http://dbpedia.org/ontology/philosophicalSchool,11,11,SOURCE_ONLY,True
+UNASSIGNED_REVIEW,http://dbpedia.org/ontology/picture,picture,,EventKG,http://dbpedia.org/ontology/picture,9,9,SOURCE_ONLY,True
+UNASSIGNED_REVIEW,http://dbpedia.org/ontology/portrayer,portrayer,,EventKG,http://dbpedia.org/ontology/portrayer,5,5,SOURCE_ONLY,True
+UNASSIGNED_REVIEW,http://dbpedia.org/ontology/position,position,,EventKG,http://dbpedia.org/ontology/position,30,30,SOURCE_ONLY,True
+UNASSIGNED_REVIEW,http://dbpedia.org/ontology/powerType,power Type,,EventKG,http://dbpedia.org/ontology/powerType,112,112,SOURCE_ONLY,True
+UNASSIGNED_REVIEW,http://dbpedia.org/ontology/presenter,presenter,,EventKG,http://dbpedia.org/ontology/presenter,180,180,SOURCE_ONLY,True
+UNASSIGNED_REVIEW,http://dbpedia.org/ontology/president,president,,EventKG,http://dbpedia.org/ontology/president,62,62,SOURCE_ONLY,True
+UNASSIGNED_REVIEW,http://dbpedia.org/ontology/previousEditor,previous Editor,,EventKG,http://dbpedia.org/ontology/previousEditor,2,2,SOURCE_ONLY,True
+UNASSIGNED_REVIEW,http://dbpedia.org/ontology/previousEvent,previous Event,,EventKG,http://dbpedia.org/ontology/previousEvent,9,9,SOURCE_ONLY,True
+UNASSIGNED_REVIEW,http://dbpedia.org/ontology/primeMinister,prime Minister,,EventKG,http://dbpedia.org/ontology/primeMinister,27,27,SOURCE_ONLY,True
+UNASSIGNED_REVIEW,http://dbpedia.org/ontology/principal,principal,,EventKG,http://dbpedia.org/ontology/principal,1,1,SOURCE_ONLY,True
+UNASSIGNED_REVIEW,http://dbpedia.org/ontology/producer,producer,,EventKG,http://dbpedia.org/ontology/producer,530,530,SOURCE_ONLY,True
+UNASSIGNED_REVIEW,http://dbpedia.org/ontology/product,product,,EventKG,http://dbpedia.org/ontology/product,109,109,SOURCE_ONLY,True
+UNASSIGNED_REVIEW,http://dbpedia.org/ontology/productionCompany,production Company,,EventKG,http://dbpedia.org/ontology/productionCompany,201,201,SOURCE_ONLY,True
+UNASSIGNED_REVIEW,http://dbpedia.org/ontology/profession,profession,,EventKG,http://dbpedia.org/ontology/profession,83,83,SOURCE_ONLY,True
+UNASSIGNED_REVIEW,http://dbpedia.org/ontology/province,province,,EventKG,http://dbpedia.org/ontology/province,1,1,SOURCE_ONLY,True
+UNASSIGNED_REVIEW,http://dbpedia.org/ontology/publisher,publisher,,EventKG,http://dbpedia.org/ontology/publisher,60,60,SOURCE_ONLY,True
+UNASSIGNED_REVIEW,http://dbpedia.org/ontology/race,race,,EventKG,http://dbpedia.org/ontology/race,2,2,SOURCE_ONLY,True
+UNASSIGNED_REVIEW,http://dbpedia.org/ontology/raceHorse,race Horse,,EventKG,http://dbpedia.org/ontology/raceHorse,2,2,SOURCE_ONLY,True
+UNASSIGNED_REVIEW,http://dbpedia.org/ontology/railwayLineUsingTunnel,railway Line Using Tunnel,,EventKG,http://dbpedia.org/ontology/railwayLineUsingTunnel,1,1,SOURCE_ONLY,True
+UNASSIGNED_REVIEW,http://dbpedia.org/ontology/railwayRollingStock,railway Rolling Stock,,EventKG,http://dbpedia.org/ontology/railwayRollingStock,1,1,SOURCE_ONLY,True
+UNASSIGNED_REVIEW,http://dbpedia.org/ontology/rebuilder,rebuilder,,EventKG,http://dbpedia.org/ontology/rebuilder,1,1,SOURCE_ONLY,True
+UNASSIGNED_REVIEW,http://dbpedia.org/ontology/recordLabel,record Label,,EventKG,http://dbpedia.org/ontology/recordLabel,27,27,SOURCE_ONLY,True
+UNASSIGNED_REVIEW,http://dbpedia.org/ontology/region,region,,EventKG,http://dbpedia.org/ontology/region,15,15,SOURCE_ONLY,True
+UNASSIGNED_REVIEW,http://dbpedia.org/ontology/regionServed,region Served,,EventKG,http://dbpedia.org/ontology/regionServed,34,34,SOURCE_ONLY,True
+UNASSIGNED_REVIEW,http://dbpedia.org/ontology/related,related,,EventKG,http://dbpedia.org/ontology/related,4,4,SOURCE_ONLY,True
+UNASSIGNED_REVIEW,http://dbpedia.org/ontology/relatedMeanOfTransportation,related Mean Of Transportation,,EventKG,http://dbpedia.org/ontology/relatedMeanOfTransportation,1,1,SOURCE_ONLY,True
+UNASSIGNED_REVIEW,http://dbpedia.org/ontology/relation,relation,,EventKG,http://dbpedia.org/ontology/relation,1361,1361,SOURCE_ONLY,True
+UNASSIGNED_REVIEW,http://dbpedia.org/ontology/residence,residence,,EventKG,http://dbpedia.org/ontology/residence,70,70,SOURCE_ONLY,True
+UNASSIGNED_REVIEW,http://dbpedia.org/ontology/retiredRocket,retired Rocket,,EventKG,http://dbpedia.org/ontology/retiredRocket,5,5,SOURCE_ONLY,True
+UNASSIGNED_REVIEW,http://dbpedia.org/ontology/river,river,,EventKG,http://dbpedia.org/ontology/river,1,1,SOURCE_ONLY,True
+UNASSIGNED_REVIEW,http://dbpedia.org/ontology/routeEnd,route End,,EventKG,http://dbpedia.org/ontology/routeEnd,29,29,SOURCE_ONLY,True
+UNASSIGNED_REVIEW,http://dbpedia.org/ontology/routeJunction,route Junction,,EventKG,http://dbpedia.org/ontology/routeJunction,13,13,SOURCE_ONLY,True
+UNASSIGNED_REVIEW,http://dbpedia.org/ontology/routeStart,route Start,,EventKG,http://dbpedia.org/ontology/routeStart,20,20,SOURCE_ONLY,True
+UNASSIGNED_REVIEW,http://dbpedia.org/ontology/school,school,,EventKG,http://dbpedia.org/ontology/school,19,19,SOURCE_ONLY,True
+UNASSIGNED_REVIEW,http://dbpedia.org/ontology/secondDriver,second Driver,,EventKG,http://dbpedia.org/ontology/secondDriver,4,4,SOURCE_ONLY,True
+UNASSIGNED_REVIEW,http://dbpedia.org/ontology/secondLeader,second Leader,,EventKG,http://dbpedia.org/ontology/secondLeader,56,56,SOURCE_ONLY,True
+UNASSIGNED_REVIEW,http://dbpedia.org/ontology/series,series,,EventKG,http://dbpedia.org/ontology/series,4,4,SOURCE_ONLY,True
+UNASSIGNED_REVIEW,http://dbpedia.org/ontology/service,service,,EventKG,http://dbpedia.org/ontology/service,2,2,SOURCE_ONLY,True
+UNASSIGNED_REVIEW,http://dbpedia.org/ontology/servingRailwayLine,serving Railway Line,,EventKG,http://dbpedia.org/ontology/servingRailwayLine,4,4,SOURCE_ONLY,True
+UNASSIGNED_REVIEW,http://dbpedia.org/ontology/significantBuilding,significant Building,,EventKG,http://dbpedia.org/ontology/significantBuilding,9,9,SOURCE_ONLY,True
+UNASSIGNED_REVIEW,http://dbpedia.org/ontology/significantDesign,significant Design,,EventKG,http://dbpedia.org/ontology/significantDesign,4,4,SOURCE_ONLY,True
+UNASSIGNED_REVIEW,http://dbpedia.org/ontology/significantProject,significant Project,,EventKG,http://dbpedia.org/ontology/significantProject,34,34,SOURCE_ONLY,True
+UNASSIGNED_REVIEW,http://dbpedia.org/ontology/silverMedalist,silver Medalist,,EventKG,http://dbpedia.org/ontology/silverMedalist,14,14,SOURCE_ONLY,True
+UNASSIGNED_REVIEW,http://dbpedia.org/ontology/similar,similar,,EventKG,http://dbpedia.org/ontology/similar,15,15,SOURCE_ONLY,True
+UNASSIGNED_REVIEW,http://dbpedia.org/ontology/sisterNewspaper,sister Newspaper,,EventKG,http://dbpedia.org/ontology/sisterNewspaper,2,2,SOURCE_ONLY,True
+UNASSIGNED_REVIEW,http://dbpedia.org/ontology/sisterStation,sister Station,,EventKG,http://dbpedia.org/ontology/sisterStation,1,1,SOURCE_ONLY,True
+UNASSIGNED_REVIEW,http://dbpedia.org/ontology/splitFromParty,split From Party,,EventKG,http://dbpedia.org/ontology/splitFromParty,3,3,SOURCE_ONLY,True
+UNASSIGNED_REVIEW,http://dbpedia.org/ontology/spokenIn,spoken In,,EventKG,http://dbpedia.org/ontology/spokenIn,5,5,SOURCE_ONLY,True
+UNASSIGNED_REVIEW,http://dbpedia.org/ontology/stadium,stadium,,EventKG,http://dbpedia.org/ontology/stadium,2,2,SOURCE_ONLY,True
+UNASSIGNED_REVIEW,http://dbpedia.org/ontology/starring,starring,,EventKG,http://dbpedia.org/ontology/starring,2258,2258,SOURCE_ONLY,True
+UNASSIGNED_REVIEW,http://dbpedia.org/ontology/state,state,,EventKG,http://dbpedia.org/ontology/state,5,5,SOURCE_ONLY,True
+UNASSIGNED_REVIEW,http://dbpedia.org/ontology/stateOfOrigin,state Of Origin,,EventKG,http://dbpedia.org/ontology/stateOfOrigin,285,285,SOURCE_ONLY,True
+UNASSIGNED_REVIEW,http://dbpedia.org/ontology/structuralSystem,structural System,,EventKG,http://dbpedia.org/ontology/structuralSystem,1,1,SOURCE_ONLY,True
+UNASSIGNED_REVIEW,http://dbpedia.org/ontology/subdivision,subdivision,,EventKG,http://dbpedia.org/ontology/subdivision,95,95,SOURCE_ONLY,True
+UNASSIGNED_REVIEW,http://dbpedia.org/ontology/subject,subject,,EventKG,http://dbpedia.org/ontology/subject,44,44,SOURCE_ONLY,True
+UNASSIGNED_REVIEW,http://dbpedia.org/ontology/subsidiary,subsidiary,,EventKG,http://dbpedia.org/ontology/subsidiary,18,18,SOURCE_ONLY,True
+UNASSIGNED_REVIEW,http://dbpedia.org/ontology/targetAirport,target Airport,,EventKG,http://dbpedia.org/ontology/targetAirport,62,62,SOURCE_ONLY,True
+UNASSIGNED_REVIEW,http://dbpedia.org/ontology/team,team,,EventKG,http://dbpedia.org/ontology/team,141,141,SOURCE_ONLY,True
+UNASSIGNED_REVIEW,http://dbpedia.org/ontology/tenant,tenant,,EventKG,http://dbpedia.org/ontology/tenant,7,7,SOURCE_ONLY,True
+UNASSIGNED_REVIEW,http://dbpedia.org/ontology/territory,territory,,EventKG,http://dbpedia.org/ontology/territory,145,145,SOURCE_ONLY,True
+UNASSIGNED_REVIEW,http://dbpedia.org/ontology/thirdDriver,third Driver,,EventKG,http://dbpedia.org/ontology/thirdDriver,4,4,SOURCE_ONLY,True
+UNASSIGNED_REVIEW,http://dbpedia.org/ontology/timeZone,time Zone,,EventKG,http://dbpedia.org/ontology/timeZone,4,4,SOURCE_ONLY,True
+UNASSIGNED_REVIEW,http://dbpedia.org/ontology/trainer,trainer,,EventKG,http://dbpedia.org/ontology/trainer,4,4,SOURCE_ONLY,True
+UNASSIGNED_REVIEW,http://dbpedia.org/ontology/training,training,,EventKG,http://dbpedia.org/ontology/training,37,37,SOURCE_ONLY,True
+UNASSIGNED_REVIEW,http://dbpedia.org/ontology/translator,translator,,EventKG,http://dbpedia.org/ontology/translator,7,7,SOURCE_ONLY,True
+UNASSIGNED_REVIEW,http://dbpedia.org/ontology/university,university,,EventKG,http://dbpedia.org/ontology/university,2,2,SOURCE_ONLY,True
+UNASSIGNED_REVIEW,http://dbpedia.org/ontology/veneratedIn,venerated In,,EventKG,http://dbpedia.org/ontology/veneratedIn,5,5,SOURCE_ONLY,True
+UNASSIGNED_REVIEW,http://dbpedia.org/ontology/vicePresident,vice President,,EventKG,http://dbpedia.org/ontology/vicePresident,1,1,SOURCE_ONLY,True
+UNASSIGNED_REVIEW,http://dbpedia.org/ontology/victim,victim,,EventKG,http://dbpedia.org/ontology/victim,138,138,SOURCE_ONLY,True
+UNASSIGNED_REVIEW,http://dbpedia.org/ontology/voice,voice,,EventKG,http://dbpedia.org/ontology/voice,58,58,SOURCE_ONLY,True
+UNASSIGNED_REVIEW,http://dbpedia.org/ontology/writer,writer,,EventKG,http://dbpedia.org/ontology/writer,647,647,SOURCE_ONLY,True
+UNASSIGNED_REVIEW,http://dbpedia.org/ontology/youthWing,youth Wing,,EventKG,http://dbpedia.org/ontology/youthWing,3,3,SOURCE_ONLY,True
+UNASSIGNED_REVIEW,http://ldf.fi/ammo/coo1980/socioeconomic_status,socioeconomic status,,WarSampo,http://ldf.fi/ammo/coo1980/socioeconomic_status,419,419,SOURCE_ONLY,True
+UNASSIGNED_REVIEW,http://ldf.fi/schema/ammo/hisclass12,hisclass12,,WarSampo,http://ldf.fi/schema/ammo/hisclass12,2453,2453,SOURCE_ONLY,True
+UNASSIGNED_REVIEW,http://ldf.fi/schema/ammo/hisclass5,hisclass5,,WarSampo,http://ldf.fi/schema/ammo/hisclass5,2452,2452,SOURCE_ONLY,True
+UNASSIGNED_REVIEW,http://ldf.fi/schema/ammo/hisclass7,hisclass7,,WarSampo,http://ldf.fi/schema/ammo/hisclass7,2452,2452,SOURCE_ONLY,True
+UNASSIGNED_REVIEW,http://ldf.fi/schema/ammo/hisco_product,hisco product,,WarSampo,http://ldf.fi/schema/ammo/hisco_product,32,32,SOURCE_ONLY,True
+UNASSIGNED_REVIEW,http://ldf.fi/schema/ammo/hisco_relation,hisco relation,,WarSampo,http://ldf.fi/schema/ammo/hisco_relation,208,208,SOURCE_ONLY,True
+UNASSIGNED_REVIEW,http://ldf.fi/schema/ammo/hisco_status,hisco status,,WarSampo,http://ldf.fi/schema/ammo/hisco_status,650,650,SOURCE_ONLY,True
+UNASSIGNED_REVIEW,http://ldf.fi/schema/bioc/inheres_in,inheres in,,WarSampo,http://ldf.fi/schema/bioc/inheres_in,2,2,SOURCE_ONLY,True
+UNASSIGNED_REVIEW,http://ldf.fi/schema/ldf/dataVisualization,data Visualization,,WarSampo,http://ldf.fi/schema/ldf/dataVisualization,1,1,SOURCE_ONLY,True
+UNASSIGNED_REVIEW,http://ldf.fi/schema/narc-menehtyneet1939-45/menehtymisluokka,menehtymisluokka,,WarSampo,http://ldf.fi/schema/narc-menehtyneet1939-45/menehtymisluokka,604,604,SOURCE_ONLY,True
+UNASSIGNED_REVIEW,http://ldf.fi/schema/warsa/actors/genicom,genicom,,WarSampo,http://ldf.fi/schema/warsa/actors/genicom,9355,9355,SOURCE_ONLY,True
+UNASSIGNED_REVIEW,http://ldf.fi/schema/warsa/actors/genitree,genitree,,WarSampo,http://ldf.fi/schema/warsa/actors/genitree,9355,9355,SOURCE_ONLY,True
+UNASSIGNED_REVIEW,http://ldf.fi/schema/warsa/articles/arms_of_service,arms of service,,WarSampo,http://ldf.fi/schema/warsa/articles/arms_of_service,3357,3357,SOURCE_ONLY,True
+UNASSIGNED_REVIEW,http://ldf.fi/schema/warsa/articles/event,is related to an event,,WarSampo,http://ldf.fi/schema/warsa/articles/event,2826,2826,SOURCE_ONLY,True
+UNASSIGNED_REVIEW,http://ldf.fi/schema/warsa/articles/issue,issue,,WarSampo,http://ldf.fi/schema/warsa/articles/issue,3357,3357,SOURCE_ONLY,True
+UNASSIGNED_REVIEW,http://ldf.fi/schema/warsa/articles/mentionsGeneral,is related to general concept (automatic linking),,WarSampo,http://ldf.fi/schema/warsa/articles/mentionsGeneral,3381,3381,SOURCE_ONLY,True
+UNASSIGNED_REVIEW,http://ldf.fi/schema/warsa/articles/mentionsPerson,is related to person (automatic linking),,WarSampo,http://ldf.fi/schema/warsa/articles/mentionsPerson,3963,3963,SOURCE_ONLY,True
+UNASSIGNED_REVIEW,http://ldf.fi/schema/warsa/articles/volume,volume,,WarSampo,http://ldf.fi/schema/warsa/articles/volume,3357,3357,SOURCE_ONLY,True
+UNASSIGNED_REVIEW,http://ldf.fi/schema/warsa/buried_in,Buried in,,WarSampo,http://ldf.fi/schema/warsa/buried_in,84310,84310,SOURCE_ONLY,True
+UNASSIGNED_REVIEW,http://ldf.fi/schema/warsa/casualties/buried_in,buried in,,WarSampo,http://ldf.fi/schema/warsa/casualties/buried_in,5,5,SOURCE_ONLY,True
+UNASSIGNED_REVIEW,http://ldf.fi/schema/warsa/casualties/current_municipality,current municipality,,WarSampo,http://ldf.fi/schema/warsa/casualties/current_municipality,558,558,SOURCE_ONLY,True
+UNASSIGNED_REVIEW,http://ldf.fi/schema/warsa/casualties/municipality_of_birth,Municipality of birth,,WarSampo,http://ldf.fi/schema/warsa/casualties/municipality_of_birth,81661,81661,SOURCE_ONLY,True
+UNASSIGNED_REVIEW,http://ldf.fi/schema/warsa/casualties/municipality_of_death,municipality of death,,WarSampo,http://ldf.fi/schema/warsa/casualties/municipality_of_death,41679,41679,SOURCE_ONLY,True
+UNASSIGNED_REVIEW,http://ldf.fi/schema/warsa/casualties/municipality_of_domicile,municipality of domicile,Henkilön kirjoillaolokunta,WarSampo,http://ldf.fi/schema/warsa/casualties/municipality_of_domicile,92633,92633,SOURCE_ONLY,True
+UNASSIGNED_REVIEW,http://ldf.fi/schema/warsa/casualties/municipality_of_going_mia,municipality of going mia,,WarSampo,http://ldf.fi/schema/warsa/casualties/municipality_of_going_mia,4117,4117,SOURCE_ONLY,True
+UNASSIGNED_REVIEW,http://ldf.fi/schema/warsa/casualties/municipality_of_residence,municipality of residence,,WarSampo,http://ldf.fi/schema/warsa/casualties/municipality_of_residence,88176,88176,SOURCE_ONLY,True
+UNASSIGNED_REVIEW,http://ldf.fi/schema/warsa/casualties/municipality_of_wounding,municipality of wounding,,WarSampo,http://ldf.fi/schema/warsa/casualties/municipality_of_wounding,7673,7673,SOURCE_ONLY,True
+UNASSIGNED_REVIEW,http://ldf.fi/schema/warsa/casualties/perishing_category,perishing category,,WarSampo,http://ldf.fi/schema/warsa/casualties/perishing_category,94677,94677,SOURCE_ONLY,True
+UNASSIGNED_REVIEW,http://ldf.fi/schema/warsa/casualties/preferred_municipality,preferred municipality,,WarSampo,http://ldf.fi/schema/warsa/casualties/preferred_municipality,632,632,SOURCE_ONLY,True
+UNASSIGNED_REVIEW,http://ldf.fi/schema/warsa/casualties/wartime_municipality,wartime municipality,,WarSampo,http://ldf.fi/schema/warsa/casualties/wartime_municipality,577,577,SOURCE_ONLY,True
+UNASSIGNED_REVIEW,http://ldf.fi/schema/warsa/events/related_period,Related period,,WarSampo,http://ldf.fi/schema/warsa/events/related_period,113023,113023,SOURCE_ONLY,True
+UNASSIGNED_REVIEW,http://ldf.fi/schema/warsa/municipality_of_birth,Municipality of birth,,WarSampo,http://ldf.fi/schema/warsa/municipality_of_birth,3915,3915,SOURCE_ONLY,True
+UNASSIGNED_REVIEW,http://ldf.fi/schema/warsa/municipality_of_death,municipality of death,,WarSampo,http://ldf.fi/schema/warsa/municipality_of_death,0,0,SOURCE_ONLY,True
+UNASSIGNED_REVIEW,http://ldf.fi/schema/warsa/municipality_of_domicile,municipality of domicile,Henkilön kirjoillaolokunta,WarSampo,http://ldf.fi/schema/warsa/municipality_of_domicile,0,0,SOURCE_ONLY,True
+UNASSIGNED_REVIEW,http://ldf.fi/schema/warsa/municipality_of_going_mia,municipality of going mia,,WarSampo,http://ldf.fi/schema/warsa/municipality_of_going_mia,0,0,SOURCE_ONLY,True
+UNASSIGNED_REVIEW,http://ldf.fi/schema/warsa/municipality_of_residence,municipality of residence,,WarSampo,http://ldf.fi/schema/warsa/municipality_of_residence,0,0,SOURCE_ONLY,True
+UNASSIGNED_REVIEW,http://ldf.fi/schema/warsa/municipality_of_wounding,municipality of wounding,,WarSampo,http://ldf.fi/schema/warsa/municipality_of_wounding,0,0,SOURCE_ONLY,True
+UNASSIGNED_REVIEW,http://ldf.fi/schema/warsa/person_document,person document,,WarSampo,http://ldf.fi/schema/warsa/person_document,4620,4620,SOURCE_ONLY,True
+UNASSIGNED_REVIEW,http://ldf.fi/schema/warsa/prisoners/captivity,Captivity locations,"Ne kuulustelupaikat, vankileirit, vankilat ja sairaalat, joissa vanki on eri lähteistä saatujen tietojen mukaan ollut sotavankeusaikanaan sekä kussakin paikassa oleskelun päivämäärät.  Leirin tai sairaalan numeroa klikkaamalla näet sen tiedossa olevan sijainnin ja mahdolliset muut tiedot. Mikäli vankeuspaikkamerkintää ei voi klikata, on se tuntematon (esim. tiedossa on vankeuspaikan paikkakunta, mutta ei virallista numeroa tai nimeä)",WarSampo,http://ldf.fi/schema/warsa/prisoners/captivity,10983,10983,SOURCE_ONLY,True
+UNASSIGNED_REVIEW,http://ldf.fi/schema/warsa/prisoners/municipality_of_capture,Municipality of capture,"Kunta, jonka alueella henkilö on jäänyt sotavangiksi.
+      Mikäli lähdettä ei ole mainittu, ovat käytetyt lähteet tiedosta yksimielisiä
+      tai lähde on KA T-26073/1, KA T-26073/2–KA T-26073/22, KA T-26073/23,
+      KA T-26073/24-KA T-26073/47, KA T-26073/48, KA T-26073/49,
+      Kansallisarkisto kantakortit",WarSampo,http://ldf.fi/schema/warsa/prisoners/municipality_of_capture,3082,3082,SOURCE_ONLY,True
+UNASSIGNED_REVIEW,http://ldf.fi/schema/warsa/prisoners/municipality_of_death,municipality of death,,WarSampo,http://ldf.fi/schema/warsa/prisoners/municipality_of_death,2192,2192,SOURCE_ONLY,True
+UNASSIGNED_REVIEW,http://ldf.fi/schema/warsa/prisoners/municipality_of_domicile,municipality of domicile,"Kunta, jossa henkilö on ollut kirjoilla vangitsemishetkellä",WarSampo,http://ldf.fi/schema/warsa/prisoners/municipality_of_domicile,3908,3908,SOURCE_ONLY,True
+UNASSIGNED_REVIEW,http://ldf.fi/schema/warsa/prisoners/municipality_of_residence,municipality of residence,"Kunta, jossa henkilö on tosiasiassa asunut sotaan lähtiessä. Mikäli lähdettä ei ole mainittu, ovat käytetyt lähteet tiedosta yksimielisiä tai on lähde on Kansallisarkisto: Suomen sodissa 1939–1945 menehtyneiden tietokanta, KA T-26073/1, KA T-26073/2–KA T-26073/22, KA T-26073/23, KA T-26073/24–KA-T 26073/47, KA T-26073/48, KA T-26073/49, Kansallisarkisto kantakortit",WarSampo,http://ldf.fi/schema/warsa/prisoners/municipality_of_residence,4006,4006,SOURCE_ONLY,True
+UNASSIGNED_REVIEW,http://ldf.fi/schema/warsa/prisoners/propaganda_magazine_link,propaganda magazine link,,WarSampo,http://ldf.fi/schema/warsa/prisoners/propaganda_magazine_link,188,188,SOURCE_ONLY,True
+UNASSIGNED_REVIEW,http://ldf.fi/schema/warsa/sotilaan_aani_magazine,sotilaan aani magazine,,WarSampo,http://ldf.fi/schema/warsa/sotilaan_aani_magazine,3964,3964,SOURCE_ONLY,True
+UNASSIGNED_REVIEW,http://purl.org/dc/terms/,,,WarSampo,http://purl.org/dc/terms/,1,1,SOURCE_ONLY,True
+UNASSIGNED_REVIEW,http://rdf.muninn-project.org/ontologies/organization#equalTo,equal To,,WarSampo,http://rdf.muninn-project.org/ontologies/organization#equalTo,106,106,SOURCE_ONLY,True
+UNASSIGNED_REVIEW,http://www.cidoc-crm.org/cidoc-crm/P100_was_death_of,was death of,,WarSampo,http://www.cidoc-crm.org/cidoc-crm/P100_was_death_of,99294,99294,SOURCE_ONLY,True
+UNASSIGNED_REVIEW,http://www.cidoc-crm.org/cidoc-crm/P138_represents,represents,,WarSampo,http://www.cidoc-crm.org/cidoc-crm/P138_represents,521904,521904,SOURCE_ONLY,True
+UNASSIGNED_REVIEW,http://www.cidoc-crm.org/cidoc-crm/P138i_has_representation,i has representation,,WarSampo,http://www.cidoc-crm.org/cidoc-crm/P138i_has_representation,496211,496211,SOURCE_ONLY,True
+UNASSIGNED_REVIEW,http://www.cidoc-crm.org/cidoc-crm/P141_assigned,assigned,,WarSampo,http://www.cidoc-crm.org/cidoc-crm/P141_assigned,6086,6086,SOURCE_ONLY,True
+UNASSIGNED_REVIEW,http://www.cidoc-crm.org/cidoc-crm/P4_has_time-span,has time-span,,WarSampo,http://www.cidoc-crm.org/cidoc-crm/P4_has_time-span,347347,347347,SOURCE_ONLY,True
+UNASSIGNED_REVIEW,http://www.cidoc-crm.org/cidoc-crm/P67_refers_to,refers to,,WarSampo,http://www.cidoc-crm.org/cidoc-crm/P67_refers_to,1,1,SOURCE_ONLY,True
+UNASSIGNED_REVIEW,http://www.cidoc-crm.org/cidoc-crm/P70_documents,documents,,WarSampo,http://www.cidoc-crm.org/cidoc-crm/P70_documents,125457,125457,SOURCE_ONLY,True
+UNASSIGNED_REVIEW,http://www.cidoc-crm.org/cidoc-crm/P99_dissolved,dissolved,,WarSampo,http://www.cidoc-crm.org/cidoc-crm/P99_dissolved,7711,7711,SOURCE_ONLY,True
+UNASSIGNED_REVIEW,http://www.w3.org/1999/02/22-rdf-syntax-ns#Property,Property,The class of RDF properties.,WarSampo,http://www.w3.org/1999/02/22-rdf-syntax-ns#Property,0,0,SOURCE_ONLY,True
+UNASSIGNED_REVIEW,http://www.w3.org/2000/01/rdf-schema#seeAlso,see Also,,EventKG,http://www.w3.org/2000/01/rdf-schema#seeAlso,1634,1634,SOURCE_ONLY,True
+UNASSIGNED_REVIEW,http://www.w3.org/2000/01/rdf-schema#subClassof,sub Classof,,WarSampo,http://www.w3.org/2000/01/rdf-schema#subClassof,2,2,SOURCE_ONLY,True
+UNASSIGNED_REVIEW,http://www.w3.org/2002/07/owl#AnnotationProperty,Annotation Property,The class of annotation properties.,WarSampo,http://www.w3.org/2002/07/owl#AnnotationProperty,0,0,SOURCE_ONLY,True
+UNASSIGNED_REVIEW,http://www.w3.org/2002/07/owl#DatatypeProperty,Datatype Property,The class of data properties.,WarSampo,http://www.w3.org/2002/07/owl#DatatypeProperty,0,0,SOURCE_ONLY,True
+UNASSIGNED_REVIEW,http://www.w3.org/2002/07/owl#ObjectProperty,Object Property,The class of object properties.,WarSampo,http://www.w3.org/2002/07/owl#ObjectProperty,0,0,SOURCE_ONLY,True
+UNASSIGNED_REVIEW,http://www.w3.org/2002/07/owl#disjointWith,disjoint With,,WarSampo,http://www.w3.org/2002/07/owl#disjointWith,1,1,SOURCE_ONLY,True
+UNASSIGNED_REVIEW,http://www.w3.org/2002/07/owl#inverseOf,inverse Of,,WarSampo,http://www.w3.org/2002/07/owl#inverseOf,1,1,SOURCE_ONLY,True
+UNASSIGNED_REVIEW,http://www.w3.org/2002/07/owl#same,same,,WarSampo,http://www.w3.org/2002/07/owl#same,1,1,SOURCE_ONLY,True
+UNASSIGNED_REVIEW,http://www.w3.org/2004/02/skos/core#broadMatch,broad Match,,WarSampo,http://www.w3.org/2004/02/skos/core#broadMatch,3,3,SOURCE_ONLY,True
+UNASSIGNED_REVIEW,http://www.w3.org/2004/02/skos/core#hasTopConcept,has top concept,"Relates, by convention, a concept scheme to a concept which is topmost in the broader/narrower concept hierarchies for that scheme, providing an entry point to these hierarchies.",WarSampo,http://www.w3.org/2004/02/skos/core#hasTopConcept,3221,3221,SOURCE_ONLY,True
+UNASSIGNED_REVIEW,http://www.w3.org/2004/02/skos/core#member,member,,WarSampo,http://www.w3.org/2004/02/skos/core#member,607,607,SOURCE_ONLY,True
+UNASSIGNED_REVIEW,http://www.w3.org/2004/02/skos/core#narrowMatch,narrow Match,,WarSampo,http://www.w3.org/2004/02/skos/core#narrowMatch,3,3,SOURCE_ONLY,True
+UNASSIGNED_REVIEW,http://www.w3.org/2004/02/skos/core#related,related,,WarSampo,http://www.w3.org/2004/02/skos/core#related,584,584,SOURCE_ONLY,True
+UNASSIGNED_REVIEW,http://www.w3.org/2004/02/skos/core#relatedMatch,related Match,,WarSampo,http://www.w3.org/2004/02/skos/core#relatedMatch,2880,2880,SOURCE_ONLY,True
+UNASSIGNED_REVIEW,http://www.w3.org/2004/02/skos/core#topConceptOf,top Concept Of,,WarSampo,http://www.w3.org/2004/02/skos/core#topConceptOf,41,41,SOURCE_ONLY,True
+UNASSIGNED_REVIEW,http://yago-knowledge.org/resource/actedIn,acted In,,EventKG,http://yago-knowledge.org/resource/actedIn,1684,1684,SOURCE_ONLY,True
+UNASSIGNED_REVIEW,http://yago-knowledge.org/resource/dealsWith,deals With,,EventKG,http://yago-knowledge.org/resource/dealsWith,24,24,SOURCE_ONLY,True
+UNASSIGNED_REVIEW,http://yago-knowledge.org/resource/diedIn,died In,,EventKG,http://yago-knowledge.org/resource/diedIn,4550,4550,SOURCE_ONLY,True
+UNASSIGNED_REVIEW,http://yago-knowledge.org/resource/directed,directed,,EventKG,http://yago-knowledge.org/resource/directed,553,553,SOURCE_ONLY,True
+UNASSIGNED_REVIEW,http://yago-knowledge.org/resource/edited,edited,,EventKG,http://yago-knowledge.org/resource/edited,105,105,SOURCE_ONLY,True
+UNASSIGNED_REVIEW,http://yago-knowledge.org/resource/graduatedFrom,graduated From,,EventKG,http://yago-knowledge.org/resource/graduatedFrom,355,355,SOURCE_ONLY,True
+UNASSIGNED_REVIEW,http://yago-knowledge.org/resource/hasCurrency,has Currency,,EventKG,http://yago-knowledge.org/resource/hasCurrency,18,18,SOURCE_ONLY,True
+UNASSIGNED_REVIEW,http://yago-knowledge.org/resource/hasWonPrize,has Won Prize,,EventKG,http://yago-knowledge.org/resource/hasWonPrize,10366,10366,SOURCE_ONLY,True
+UNASSIGNED_REVIEW,http://yago-knowledge.org/resource/influences,influences,,EventKG,http://yago-knowledge.org/resource/influences,644,644,SOURCE_ONLY,True
+UNASSIGNED_REVIEW,http://yago-knowledge.org/resource/isAffiliatedTo,is Affiliated To,,EventKG,http://yago-knowledge.org/resource/isAffiliatedTo,860,860,SOURCE_ONLY,True
+UNASSIGNED_REVIEW,http://yago-knowledge.org/resource/isCitizenOf,is Citizen Of,,EventKG,http://yago-knowledge.org/resource/isCitizenOf,17627,17627,SOURCE_ONLY,True
+UNASSIGNED_REVIEW,http://yago-knowledge.org/resource/isConnectedTo,is Connected To,,EventKG,http://yago-knowledge.org/resource/isConnectedTo,1036,1036,SOURCE_ONLY,True
+UNASSIGNED_REVIEW,http://yago-knowledge.org/resource/isInterestedIn,is Interested In,,EventKG,http://yago-knowledge.org/resource/isInterestedIn,21,21,SOURCE_ONLY,True
+UNASSIGNED_REVIEW,http://yago-knowledge.org/resource/isKnownFor,is Known For,,EventKG,http://yago-knowledge.org/resource/isKnownFor,2,2,SOURCE_ONLY,True
+UNASSIGNED_REVIEW,http://yago-knowledge.org/resource/isLeaderOf,is Leader Of,,EventKG,http://yago-knowledge.org/resource/isLeaderOf,340,340,SOURCE_ONLY,True
+UNASSIGNED_REVIEW,http://yago-knowledge.org/resource/isMarriedTo,is Married To,,EventKG,http://yago-knowledge.org/resource/isMarriedTo,203,203,SOURCE_ONLY,True
+UNASSIGNED_REVIEW,http://yago-knowledge.org/resource/isPoliticianOf,is Politician Of,,EventKG,http://yago-knowledge.org/resource/isPoliticianOf,536,536,SOURCE_ONLY,True
+UNASSIGNED_REVIEW,http://yago-knowledge.org/resource/livesIn,lives In,,EventKG,http://yago-knowledge.org/resource/livesIn,165,165,SOURCE_ONLY,True
+UNASSIGNED_REVIEW,http://yago-knowledge.org/resource/owns,owns,,EventKG,http://yago-knowledge.org/resource/owns,355,355,SOURCE_ONLY,True
+UNASSIGNED_REVIEW,http://yago-knowledge.org/resource/participatedIn,participated In,,EventKG,http://yago-knowledge.org/resource/participatedIn,4837,4837,SOURCE_ONLY,True
+UNASSIGNED_REVIEW,http://yago-knowledge.org/resource/playsFor,plays For,,EventKG,http://yago-knowledge.org/resource/playsFor,289,289,SOURCE_ONLY,True
+UNASSIGNED_REVIEW,http://yago-knowledge.org/resource/wasBornIn,was Born In,,EventKG,http://yago-knowledge.org/resource/wasBornIn,5226,5226,SOURCE_ONLY,True
+UNASSIGNED_REVIEW,http://yago-knowledge.org/resource/worksAt,works At,,EventKG,http://yago-knowledge.org/resource/worksAt,259,259,SOURCE_ONLY,True
+UNASSIGNED_REVIEW,http://yago-knowledge.org/resource/wroteMusicFor,wrote Music For,,EventKG,http://yago-knowledge.org/resource/wroteMusicFor,285,285,SOURCE_ONLY,True
+UNASSIGNED_REVIEW,wd:P1000,record held,"notable record achieved by a person or entity, include qualifiers for dates held",EventKG|Wikidata,http://www.wikidata.org/prop/direct/P1000|wd:P1000,4,2,EXACT,True
+UNASSIGNED_REVIEW,wd:P1001,applies to jurisdiction,"the item (institution, law, public office, public register, etc) or statement belongs to or has power over or applies to the value (a territorial jurisdiction: a country, state, municipality, etc)",EventKG|Wikidata,http://www.wikidata.org/prop/direct/P1001|wd:P1001,480,118,EXACT,True
+UNASSIGNED_REVIEW,wd:P1002,engine configuration,configuration of an engine's cylinders,Wikidata,wd:P1002,40,40,EXACT,True
+UNASSIGNED_REVIEW,wd:P101,field of work,specialization of a person or organization; see P106 for the occupation/ P452 for industry,EventKG|Wikidata,http://www.wikidata.org/prop/direct/P101|wd:P101,2831,2011,EXACT,True
+UNASSIGNED_REVIEW,wd:P10129,protective marking,"label applied to an intellectual work to indicate how the document should be handled, particularly from a security or privacy perspective",EventKG|Wikidata,http://www.wikidata.org/prop/direct/P10129|wd:P10129,2,1,EXACT,True
+UNASSIGNED_REVIEW,wd:P10241,individual of taxon,"the taxon of an individual named organism (animal, plant)",Wikidata,wd:P10241,22,22,EXACT,True
+UNASSIGNED_REVIEW,wd:P10254,associated cadastral district,cadastral district in which a place is located. Use only if distinct from administrative entities (P131) in predefined countries. Use P14408 for cadastral districts of a municipality,EventKG|Wikidata,http://www.wikidata.org/prop/direct/P10254|wd:P10254,6,5,EXACT,True
+UNASSIGNED_REVIEW,wd:P1026,academic thesis,thesis or dissertation written for a degree,EventKG|Wikidata,http://www.wikidata.org/prop/direct/P1026|wd:P1026,41,19,EXACT,True
+UNASSIGNED_REVIEW,wd:P1027,conferred by,"person or organization who grants an award, certification, grant, or role",EventKG|Wikidata,http://www.wikidata.org/prop/direct/P1027|wd:P1027,57,28,EXACT,True
+UNASSIGNED_REVIEW,wd:P1028,donated by,person or organization who donated the object,EventKG|Wikidata,http://www.wikidata.org/prop/direct/P1028|wd:P1028,7,1,EXACT,True
+UNASSIGNED_REVIEW,wd:P10280,category for honorary citizens of entity,"category containing the honorary citizens of a settlement (administrative unit, country). Honorary citizens may or may not be citizens of the country",Wikidata,wd:P10280,5,5,EXACT,True
+UNASSIGNED_REVIEW,wd:P1029,crew members,people that participated operating or serving aboard this vehicle,EventKG|Wikidata,http://www.wikidata.org/prop/direct/P1029|wd:P1029,996,383,EXACT,True
+UNASSIGNED_REVIEW,wd:P10290,hotel rating,star rating of the hotel,Wikidata,wd:P10290,6,6,EXACT,True
+UNASSIGNED_REVIEW,wd:P1035,honorific suffix,"word or expression with connotations conveying esteem or respect when used, after a name, in addressing or referring to a person",EventKG|Wikidata,http://www.wikidata.org/prop/direct/P1035|wd:P1035,10,4,EXACT,True
+UNASSIGNED_REVIEW,wd:P1037,director / manager,person who manages any kind of group or organisation,EventKG|Wikidata,http://www.wikidata.org/prop/direct/P1037|wd:P1037,540,162,EXACT,True
+UNASSIGNED_REVIEW,wd:P1040,film editor,"person who works with the raw footage, selecting shots and combining them into sequences to create a finished motion picture",Wikidata,wd:P1040,176,176,EXACT,True
+UNASSIGNED_REVIEW,wd:P10449,trained by,,EventKG,http://www.wikidata.org/prop/direct/P10449,1,0,EXACT,True
+UNASSIGNED_REVIEW,wd:P1050,medical condition,"any state relevant to the health of an organism, including diseases and positive conditions",EventKG|Wikidata,http://www.wikidata.org/prop/direct/P1050|wd:P1050,196,136,EXACT,True
+UNASSIGNED_REVIEW,wd:P10624,official observer status in organization,organization by which the subject is granted observer status,Wikidata,wd:P10624,1,1,EXACT,True
+UNASSIGNED_REVIEW,wd:P1064,track gauge,spacing of the rails on a railway track,Wikidata,wd:P1064,10,10,EXACT,True
+UNASSIGNED_REVIEW,wd:P1074,fictional or mythical analog of,used to link an entity or class of entities appearing in a creative work with the analogous entity or class of entities in the real world,EventKG|Wikidata,http://www.wikidata.org/prop/direct/P1074|wd:P1074,3,1,EXACT,True
+UNASSIGNED_REVIEW,wd:P10741,dance style,dance style that the subject participates or participated in or is associated with,Wikidata,wd:P10741,1,1,EXACT,True
+UNASSIGNED_REVIEW,wd:P1075,rector,senior official in an educational institution.,EventKG|Wikidata,http://www.wikidata.org/prop/direct/P1075|wd:P1075,7,1,EXACT,True
+UNASSIGNED_REVIEW,wd:P1078,valvetrain configuration,configuration of the valvetrain utilized by this engine,Wikidata,wd:P1078,2,2,EXACT,True
+UNASSIGNED_REVIEW,wd:P1080,from narrative universe,subject's fictional entity is in the object narrative. See also P1441 (present in work) and P1445 (fictional universe described in),Wikidata,wd:P1080,1,1,EXACT,True
+UNASSIGNED_REVIEW,wd:P10894,spoken by,,EventKG,http://www.wikidata.org/prop/direct/P10894,1,0,EXACT,True
+UNASSIGNED_REVIEW,wd:P110,illustrator,person drawing the pictures or taking the photographs in a book or similar work,Wikidata,wd:P110,3,3,EXACT,True
+UNASSIGNED_REVIEW,wd:P11146,collection items at,"institution (museum, collection, etc.) holding items (specimens or other objects) collected by the subject (collector) or at the subject (e.g. site). (use archive location P485 for the archives)",Wikidata,wd:P11146,20,20,EXACT,True
+UNASSIGNED_REVIEW,wd:P112,founder,"founder or co-founder of this organization, religion, place or entity",EventKG|Wikidata,http://www.wikidata.org/prop/direct/P112|wd:P112,849,269,EXACT,True
+UNASSIGNED_REVIEW,wd:P113,airline hub,airport that serves as a hub for an airline,EventKG|Wikidata,http://www.wikidata.org/prop/direct/P113|wd:P113,3,2,EXACT,True
+UNASSIGNED_REVIEW,wd:P1136,solved by,,EventKG,http://www.wikidata.org/prop/direct/P1136,1,0,EXACT,True
+UNASSIGNED_REVIEW,wd:P114,airline alliance,alliance the airline belongs to,EventKG|Wikidata,http://www.wikidata.org/prop/direct/P114|wd:P114,2,1,EXACT,True
+UNASSIGNED_REVIEW,wd:P1142,political ideology,political ideology of an organization or person or of a work (such as a newspaper),EventKG|Wikidata,http://www.wikidata.org/prop/direct/P1142|wd:P1142,298,209,EXACT,True
+UNASSIGNED_REVIEW,wd:P115,home venue,,EventKG,http://www.wikidata.org/prop/direct/P115,1,0,EXACT,True
+UNASSIGNED_REVIEW,wd:P118,league or competition,"league or competition in which team or player has played, or in which an event occurs",EventKG|Wikidata,http://www.wikidata.org/prop/direct/P118|wd:P118,33,19,EXACT,True
+UNASSIGNED_REVIEW,wd:P11849,first performance by,performer or performing group for the first performance of a work,Wikidata,wd:P11849,1,1,EXACT,True
+UNASSIGNED_REVIEW,wd:P1196,manner of death,"general circumstances of a person's death; e.g. natural causes, accident, suicide, homicide, etc. Use 'cause of death' (P509) for the specific physiological mechanism, e.g. heart attack, trauma, pneumonia etc.",EventKG|Wikidata,http://www.wikidata.org/prop/direct/P1196|wd:P1196,2491,2352,EXACT,True
+UNASSIGNED_REVIEW,wd:P12011,tribe,"recognised membership in a society, mainly denoted by shared cultural heritage; for ethnicity use P172",Wikidata,wd:P12011,2,2,EXACT,True
+UNASSIGNED_REVIEW,wd:P1202,carries scientific instrument,"scientific instruments carried by a vessel, satellite, or device that are not required for propelling or navigating",Wikidata,wd:P1202,1,1,EXACT,True
+UNASSIGNED_REVIEW,wd:P12020,state of transmission,state in which a work is transmitted or its existence; for the state of its material witnesses (use with P5816),Wikidata,wd:P12020,3,3,EXACT,True
+UNASSIGNED_REVIEW,wd:P12095,fonds,part of an archival collection which an item belongs to,Wikidata,wd:P12095,1,1,EXACT,True
+UNASSIGNED_REVIEW,wd:P121,item operated,"equipment, installation or service operated by the subject",EventKG|Wikidata,http://www.wikidata.org/prop/direct/P121|wd:P121,1486,497,EXACT,True
+UNASSIGNED_REVIEW,wd:P1210,supercharger,supercharger or turbocharger used by an engine,Wikidata,wd:P1210,3,3,EXACT,True
+UNASSIGNED_REVIEW,wd:P1211,fuel system,fuel system that an engine uses,Wikidata,wd:P1211,5,5,EXACT,True
+UNASSIGNED_REVIEW,wd:P122,basic form of government,subject's government,EventKG|Wikidata,http://www.wikidata.org/prop/direct/P122|wd:P122,96,68,EXACT,True
+UNASSIGNED_REVIEW,wd:P1221,compressor type,type of mechanical compressor technology used by subject,Wikidata,wd:P1221,1,1,EXACT,True
+UNASSIGNED_REVIEW,wd:P123,publisher,"organization or person responsible for publishing a work, such as a book, periodical, printed music, podcast, game or software",EventKG|Wikidata,http://www.wikidata.org/prop/direct/P123|wd:P123,241,145,EXACT,True
+UNASSIGNED_REVIEW,wd:P12328,simulates,"item simulated, imitated, or made to appear real by this item",Wikidata,wd:P12328,8,8,EXACT,True
+UNASSIGNED_REVIEW,wd:P12330,Philippine middle name,maternal surname generally placed in the middle of this person's name,Wikidata,wd:P12330,4,4,EXACT,True
+UNASSIGNED_REVIEW,wd:P12363,clerked for,this person has held a clerkship with the judge,Wikidata,wd:P12363,5,5,EXACT,True
+UNASSIGNED_REVIEW,wd:P126,maintained by,person or organization in charge of keeping the subject (for instance an infrastructure) in functioning order,EventKG|Wikidata,http://www.wikidata.org/prop/direct/P126|wd:P126,153,37,EXACT,True
+UNASSIGNED_REVIEW,wd:P1264,valid in period,,EventKG,http://www.wikidata.org/prop/direct/P1264,5,0,EXACT,True
+UNASSIGNED_REVIEW,wd:P1268,represents,"organization, individual, or concept that an entity represents",EventKG|Wikidata,http://www.wikidata.org/prop/direct/P1268|wd:P1268,9,3,EXACT,True
+UNASSIGNED_REVIEW,wd:P1269,facet of,topic of which this item is an aspect; item that offers a broader perspective on the same topic,EventKG|Wikidata,http://www.wikidata.org/prop/direct/P1269|wd:P1269,2279,490,EXACT,True
+UNASSIGNED_REVIEW,wd:P12714,tartan,description of the subject's tartan,Wikidata,wd:P12714,1,1,EXACT,True
+UNASSIGNED_REVIEW,wd:P1283,filmography,"item for the list of films a person has contributed to. Don't use it to add film items. Instead, add actors as ""cast member"" (P161) on items for films, directors with ""director"" (P57)",Wikidata,wd:P1283,12,12,EXACT,True
+UNASSIGNED_REVIEW,wd:P1290,godparent,person who sponsors the baptism of a given person,EventKG|Wikidata,http://www.wikidata.org/prop/direct/P1290|wd:P1290,69,20,EXACT,True
+UNASSIGNED_REVIEW,wd:P12912,object of occurrence,specific object to which an occurrence or class of occurrences applies,Wikidata,wd:P12912,12,12,EXACT,True
+UNASSIGNED_REVIEW,wd:P12913,class of object(s) of occurrence,class that includes the object(s) to which this occurrence (or class of occurrence) occurs or occurred,Wikidata,wd:P12913,3,3,EXACT,True
+UNASSIGNED_REVIEW,wd:P12969,game designer,person(s) who devised and developed this game,Wikidata,wd:P12969,2,2,EXACT,True
+UNASSIGNED_REVIEW,wd:P1299,depicted by,"object depicting this subject (object being creative works such as books, films, paintings)",EventKG|Wikidata,http://www.wikidata.org/prop/direct/P1299|wd:P1299,459,293,EXACT,True
+UNASSIGNED_REVIEW,wd:P12995,agent of action,particular animate item that initiates this action or class of actions,Wikidata,wd:P12995,5,5,EXACT,True
+UNASSIGNED_REVIEW,wd:P1302,primary destinations,,EventKG,http://www.wikidata.org/prop/direct/P1302,1,0,EXACT,True
+UNASSIGNED_REVIEW,wd:P1303,instrument,musical instrument that a person plays or teaches or used in a music occupation,EventKG|Wikidata,http://www.wikidata.org/prop/direct/P1303|wd:P1303,82,66,EXACT,True
+UNASSIGNED_REVIEW,wd:P1304,central bank,country's central bank,EventKG|Wikidata,http://www.wikidata.org/prop/direct/P1304|wd:P1304,6,3,EXACT,True
+UNASSIGNED_REVIEW,wd:P13044,characteristic of,"subject item or statement is a characteristic, quality, property, or state of this object (use a more specific property where possible)",Wikidata,wd:P13044,2,2,EXACT,True
+UNASSIGNED_REVIEW,wd:P1308,position holder,persons who hold and/or held the position,EventKG|Wikidata,http://www.wikidata.org/prop/direct/P1308|wd:P1308,621,42,EXACT,True
+UNASSIGNED_REVIEW,wd:P13210,organisation tax status,jurisdiction specific tax status of organisations like non-profits,Wikidata,wd:P13210,1,1,EXACT,True
+UNASSIGNED_REVIEW,wd:P1327,partner in business or sport,professional collaborator,EventKG|Wikidata,http://www.wikidata.org/prop/direct/P1327|wd:P1327,66,35,EXACT,True
+UNASSIGNED_REVIEW,wd:P1336,territory claimed by,administrative divisions that claim control of a given area,EventKG|Wikidata,http://www.wikidata.org/prop/direct/P1336|wd:P1336,5,3,EXACT,True
+UNASSIGNED_REVIEW,wd:P1340,eye color,color of the irises of a person's eyes,Wikidata,wd:P1340,22,22,EXACT,True
+UNASSIGNED_REVIEW,wd:P1344,participant in,"event in which a person, organization or creative work was/is a participant; inverse of P710 or P1923",EventKG|Wikidata,http://www.wikidata.org/prop/direct/P1344|wd:P1344,7335,2001,EXACT,True
+UNASSIGNED_REVIEW,wd:P13459,research project that contributed to this data set,research projects that have contributed to or otherwise created an item,Wikidata,wd:P13459,74,74,EXACT,True
+UNASSIGNED_REVIEW,wd:P1346,winner,"winner of a competition or similar event, not to be used from the awardees record (instead use ""award received"" (P166), possibly qualified with ""for work"" (P1686)) nor for wars or battles",EventKG|Wikidata,http://www.wikidata.org/prop/direct/P1346|wd:P1346,362,13,EXACT,True
+UNASSIGNED_REVIEW,wd:P1347,military casualty classification,"allowed values: killed in action (Q210392), missing in action (Q2344557), died of wounds (Q16861372), prisoner of war (Q179637), killed in flight accident (Q16861407), others used in military casualty classification",EventKG|Wikidata,http://www.wikidata.org/prop/direct/P1347|wd:P1347,986,835,EXACT,True
+UNASSIGNED_REVIEW,wd:P135,movement,"literary, artistic, scientific or philosophical movement or scene associated with this person or work. For political ideologies use P1142.",EventKG|Wikidata,http://www.wikidata.org/prop/direct/P135|wd:P135,128,77,EXACT,True
+UNASSIGNED_REVIEW,wd:P13574,most populous urban area,"city or town with the largest population in this area (country, state, county, continent, etc.)",Wikidata,wd:P13574,1,1,EXACT,True
+UNASSIGNED_REVIEW,wd:P136,genre,creative work's genre or an artist's field of work (P101). Use main subject (P921) to relate creative works to their topic,EventKG|Wikidata,http://www.wikidata.org/prop/direct/P136|wd:P136,1386,1275,EXACT,True
+UNASSIGNED_REVIEW,wd:P1363,points/goal scored by,,EventKG,http://www.wikidata.org/prop/direct/P1363,1,0,EXACT,True
+UNASSIGNED_REVIEW,wd:P1365,replaces,"person, state or item replaced. Use ""structure replaces"" (P1398) for structures. Use ""follows"" (P155) if the previous item was not replaced or predecessor and successor are identical",EventKG|Wikidata,http://www.wikidata.org/prop/direct/P1365|wd:P1365,1061,515,EXACT,True
+UNASSIGNED_REVIEW,wd:P13773,LSF rating,Indonesia film classification administered by the Film Censorship Board,Wikidata,wd:P13773,1,1,EXACT,True
+UNASSIGNED_REVIEW,wd:P138,named after,"entity or event that inspired the subject's name, or namesake (in at least one language). Qualifier ""applies to name"" (P5168) can be used to indicate which one",EventKG|Wikidata,http://www.wikidata.org/prop/direct/P138|wd:P138,5474,2670,EXACT,True
+UNASSIGNED_REVIEW,wd:P1382,partially coincident with,"object that partially overlaps with the subject in its instances, parts, or members",EventKG|Wikidata,http://www.wikidata.org/prop/direct/P1382|wd:P1382,21,17,EXACT,True
+UNASSIGNED_REVIEW,wd:P1383,contains settlement,settlement which an administrative division contains,Wikidata,wd:P1383,13,13,EXACT,True
+UNASSIGNED_REVIEW,wd:P1387,political alignment,political position within the left–right political spectrum,EventKG|Wikidata,http://www.wikidata.org/prop/direct/P1387|wd:P1387,42,39,EXACT,True
+UNASSIGNED_REVIEW,wd:P1398,structure replaces,"the item this building or structure replaced, at the same geographic location",EventKG|Wikidata,http://www.wikidata.org/prop/direct/P1398|wd:P1398,20,6,EXACT,True
+UNASSIGNED_REVIEW,wd:P1399,convicted of,crime a person or organization was convicted of,EventKG|Wikidata,http://www.wikidata.org/prop/direct/P1399|wd:P1399,955,541,EXACT,True
+UNASSIGNED_REVIEW,wd:P1408,licensed to broadcast to,place that a radio/TV station is licensed/required to broadcast to,EventKG|Wikidata,http://www.wikidata.org/prop/direct/P1408|wd:P1408,10,2,EXACT,True
+UNASSIGNED_REVIEW,wd:P1412,"languages spoken, written or signed","language(s) that a person or a people speaks, writes or signs, including the native language(s)",EventKG|Wikidata,http://www.wikidata.org/prop/direct/P1412|wd:P1412,9765,9428,EXACT,True
+UNASSIGNED_REVIEW,wd:P1419,shape,shape of an object,Wikidata,wd:P1419,1,1,EXACT,True
+UNASSIGNED_REVIEW,wd:P1424,topic has template,the main template relating to a topic,Wikidata,wd:P1424,319,319,EXACT,True
+UNASSIGNED_REVIEW,wd:P1427,start point,"starting place of this journey, flight, voyage, trek, migration etc.",EventKG|Wikidata,http://www.wikidata.org/prop/direct/P1427|wd:P1427,29,28,EXACT,True
+UNASSIGNED_REVIEW,wd:P1429,has pet,pet that a person owns,EventKG|Wikidata,http://www.wikidata.org/prop/direct/P1429|wd:P1429,3,2,EXACT,True
+UNASSIGNED_REVIEW,wd:P1433,published in,,EventKG,http://www.wikidata.org/prop/direct/P1433,300,0,EXACT,True
+UNASSIGNED_REVIEW,wd:P1435,heritage designation,heritage designation of a cultural or natural site,EventKG|Wikidata,http://www.wikidata.org/prop/direct/P1435|wd:P1435,1213,739,EXACT,True
+UNASSIGNED_REVIEW,wd:P144,based on,the work(s) or inputs used as the basis for subject item; for fictional analog use P1074,EventKG|Wikidata,http://www.wikidata.org/prop/direct/P144|wd:P144,480,213,EXACT,True
+UNASSIGNED_REVIEW,wd:P1441,present in work,"this (fictional or fictionalized) entity, place, or person appears in that work as part of the narration (use P2860 for works citing other works, P361/P1433 for works being part of other works, P1343 for entities described in non-fictional accounts)",EventKG|Wikidata,http://www.wikidata.org/prop/direct/P1441|wd:P1441,160,111,EXACT,True
+UNASSIGNED_REVIEW,wd:P1444,destination point,"destination for this route (journey, flight, sailing, exploration, migration, etc.)",EventKG|Wikidata,http://www.wikidata.org/prop/direct/P1444|wd:P1444,319,26,EXACT,True
+UNASSIGNED_REVIEW,wd:P1445,fictional universe described in,,EventKG,http://www.wikidata.org/prop/direct/P1445,1,0,EXACT,True
+UNASSIGNED_REVIEW,wd:P1454,legal form,legal form of an entity,EventKG|Wikidata,http://www.wikidata.org/prop/direct/P1454|wd:P1454,119,110,EXACT,True
+UNASSIGNED_REVIEW,wd:P1455,list of works,link to the article with the works of a person; use P358 for discographies,Wikidata,wd:P1455,7,7,EXACT,True
+UNASSIGNED_REVIEW,wd:P1456,list of monuments,link to the list of heritage monuments in the place/area,Wikidata,wd:P1456,8,8,EXACT,True
+UNASSIGNED_REVIEW,wd:P14574,photographer,person who took this photograph,Wikidata,wd:P14574,10,10,EXACT,True
+UNASSIGNED_REVIEW,wd:P1464,category for people born here,category item that groups people born in this place,Wikidata,wd:P1464,26,26,EXACT,True
+UNASSIGNED_REVIEW,wd:P1465,category for people who died here,category item for people who died in this location,Wikidata,wd:P1465,46,46,EXACT,True
+UNASSIGNED_REVIEW,wd:P1479,has contributing factor,"thing that significantly influenced, but did not directly cause, this outcome or effect. Used in conjunction with 'has cause' and 'has immediate cause'. See '[[Help:Modeling causes]]'.",EventKG|Wikidata,http://www.wikidata.org/prop/direct/P1479|wd:P1479,15,12,EXACT,True
+UNASSIGNED_REVIEW,wd:P14834,substance control status,"control regime a substance is placed under in a jurisdiction or by an international treaty — schedule, class, or explicitly uncontrolled; qualify with ""applies to jurisdiction"" (P1001) and start/end time",Wikidata,wd:P14834,1,1,EXACT,True
+UNASSIGNED_REVIEW,wd:P149,architectural style,architectural style of a structure,EventKG|Wikidata,http://www.wikidata.org/prop/direct/P149|wd:P149,87,63,EXACT,True
+UNASSIGNED_REVIEW,wd:P150,contains the administrative territorial entity,(list of) direct subdivisions of an administrative territorial entity,EventKG|Wikidata,http://www.wikidata.org/prop/direct/P150|wd:P150,255,145,EXACT,True
+UNASSIGNED_REVIEW,wd:P1535,used by,item or concept that makes use of the subject (use sub-properties when appropriate),EventKG|Wikidata,http://www.wikidata.org/prop/direct/P1535|wd:P1535,177,108,EXACT,True
+UNASSIGNED_REVIEW,wd:P1537,contributing factor of,"thing that is significantly influenced by this cause, but does not directly result from it. See 'Help:Modeling causes' for examples and discussion.",EventKG|Wikidata,http://www.wikidata.org/prop/direct/P1537|wd:P1537,5,2,EXACT,True
+UNASSIGNED_REVIEW,wd:P1546,motto,description of the motto of the subject,EventKG|Wikidata,http://www.wikidata.org/prop/direct/P1546|wd:P1546,25,19,EXACT,True
+UNASSIGNED_REVIEW,wd:P1547,depends on software,subject software depends on object software,Wikidata,wd:P1547,1,1,EXACT,True
+UNASSIGNED_REVIEW,wd:P1552,has characteristic,inherent or distinguishing quality or feature of the entity. Use a more specific property when possible,EventKG|Wikidata,http://www.wikidata.org/prop/direct/P1552|wd:P1552,110,105,EXACT,True
+UNASSIGNED_REVIEW,wd:P1557,manifestation of,inherent and characteristic embodiment of a given concept,EventKG|Wikidata,http://www.wikidata.org/prop/direct/P1557|wd:P1557,3,2,EXACT,True
+UNASSIGNED_REVIEW,wd:P1576,lifestyle,"typical way of life of an individual, group, or culture",Wikidata,wd:P1576,2,2,EXACT,True
+UNASSIGNED_REVIEW,wd:P1589,lowest point,point with lowest elevation in a region or path,Wikidata,wd:P1589,3,3,EXACT,True
+UNASSIGNED_REVIEW,wd:P1591,defendant,person or organization accused at a trial,EventKG|Wikidata,http://www.wikidata.org/prop/direct/P1591|wd:P1591,544,230,EXACT,True
+UNASSIGNED_REVIEW,wd:P1592,prosecutor,"person representing the prosecuting authority, at a trial",EventKG|Wikidata,http://www.wikidata.org/prop/direct/P1592|wd:P1592,8,3,EXACT,True
+UNASSIGNED_REVIEW,wd:P1593,legal counsel,person or organization who provides legal service,Wikidata,wd:P1593,3,3,EXACT,True
+UNASSIGNED_REVIEW,wd:P1594,judge,"judge, magistrate or equivalent, presiding at a trial",EventKG|Wikidata,http://www.wikidata.org/prop/direct/P1594|wd:P1594,58,29,EXACT,True
+UNASSIGNED_REVIEW,wd:P1595,charge,"offence with which someone is charged, at a trial",EventKG|Wikidata,http://www.wikidata.org/prop/direct/P1595|wd:P1595,24,11,EXACT,True
+UNASSIGNED_REVIEW,wd:P1596,penalty,penalty imposed by an authority,EventKG|Wikidata,http://www.wikidata.org/prop/direct/P1596|wd:P1596,46,39,EXACT,True
+UNASSIGNED_REVIEW,wd:P1598,consecrator,bishop who presided as consecrator or co-consecrator of this bishop,EventKG|Wikidata,http://www.wikidata.org/prop/direct/P1598|wd:P1598,63,17,EXACT,True
+UNASSIGNED_REVIEW,wd:P16,transport network,network the infrastructure is a part of,EventKG|Wikidata,http://www.wikidata.org/prop/direct/P16|wd:P16,7,5,EXACT,True
+UNASSIGNED_REVIEW,wd:P161,cast member,"actor in the subject production [use ""character role"" (P453) and/or ""name of the character role"" (P4633) as qualifiers] [use ""voice actor"" (P725) for voice-only role] - [use ""recorded participant"" (P11108) for non-fiction productions]",EventKG|Wikidata,http://www.wikidata.org/prop/direct/P161|wd:P161,10116,4084,EXACT,True
+UNASSIGNED_REVIEW,wd:P162,producer,"person(s) who produced the film, musical work, theatrical production, etc. (for film, this does not include executive producers, associate producers, etc.) [for production company, use P272, video games - use P178]",Wikidata,wd:P162,369,369,EXACT,True
+UNASSIGNED_REVIEW,wd:P1620,plaintiff,party who initiates a lawsuit,EventKG|Wikidata,http://www.wikidata.org/prop/direct/P1620|wd:P1620,11,6,EXACT,True
+UNASSIGNED_REVIEW,wd:P1625,has melody,,EventKG,http://www.wikidata.org/prop/direct/P1625,3,0,EXACT,True
+UNASSIGNED_REVIEW,wd:P163,flag,subject's flag,EventKG|Wikidata,http://www.wikidata.org/prop/direct/P163|wd:P163,43,25,EXACT,True
+UNASSIGNED_REVIEW,wd:P1637,undercarriage,type of aircraft landing gear the item is equipped with,Wikidata,wd:P1637,87,87,EXACT,True
+UNASSIGNED_REVIEW,wd:P1640,curator,content specialist responsible for this collection or exhibition,EventKG|Wikidata,http://www.wikidata.org/prop/direct/P1640|wd:P1640,3,1,EXACT,True
+UNASSIGNED_REVIEW,wd:P1652,referee,,EventKG,http://www.wikidata.org/prop/direct/P1652,3,0,EXACT,True
+UNASSIGNED_REVIEW,wd:P1654,wing configuration,configuration of wing(s) used by an aircraft,Wikidata,wd:P1654,163,163,EXACT,True
+UNASSIGNED_REVIEW,wd:P1656,unveiled by,"person who unveils a statue, sculpture, memorial or plaque, etc.",EventKG|Wikidata,http://www.wikidata.org/prop/direct/P1656|wd:P1656,33,10,EXACT,True
+UNASSIGNED_REVIEW,wd:P1657,MPA film rating,US film classification administered by the Motion Picture Association,EventKG|Wikidata,http://www.wikidata.org/prop/direct/P1657|wd:P1657,37,36,EXACT,True
+UNASSIGNED_REVIEW,wd:P169,chief executive officer,highest-ranking corporate officer appointed as the CEO within an organization,EventKG|Wikidata,http://www.wikidata.org/prop/direct/P169|wd:P169,10,5,EXACT,True
+UNASSIGNED_REVIEW,wd:P171,parent taxon,closest parent taxon of the taxon in question,Wikidata,wd:P171,1,1,EXACT,True
+UNASSIGNED_REVIEW,wd:P1716,brand,commercial brand associated with the item,EventKG|Wikidata,http://www.wikidata.org/prop/direct/P1716|wd:P1716,20,9,EXACT,True
+UNASSIGNED_REVIEW,wd:P175,performer,"actor, musician, band or other performer associated with this role or musical work",EventKG|Wikidata,http://www.wikidata.org/prop/direct/P175|wd:P175,254,23,EXACT,True
+UNASSIGNED_REVIEW,wd:P177,crosses,"obstacle (body of water, road, railway...) which this bridge (ferry, ford) crosses over or this tunnel goes under",EventKG|Wikidata,http://www.wikidata.org/prop/direct/P177|wd:P177,12,8,EXACT,True
+UNASSIGNED_REVIEW,wd:P178,developer,organization or person that developed the item,EventKG|Wikidata,http://www.wikidata.org/prop/direct/P178|wd:P178,911,414,EXACT,True
+UNASSIGNED_REVIEW,wd:P1789,chief operating officer,the chief operating officer of an organization,EventKG|Wikidata,http://www.wikidata.org/prop/direct/P1789|wd:P1789,2,1,EXACT,True
+UNASSIGNED_REVIEW,wd:P180,depicts,,EventKG,http://www.wikidata.org/prop/direct/P180,3165,0,EXACT,True
+UNASSIGNED_REVIEW,wd:P1809,choreographer,,EventKG,http://www.wikidata.org/prop/direct/P1809,1,0,EXACT,True
+UNASSIGNED_REVIEW,wd:P1811,list of episodes,link to the article with the list of episodes for this series,Wikidata,wd:P1811,5,5,EXACT,True
+UNASSIGNED_REVIEW,wd:P1817,addressee,person or organization to whom a letter or note is addressed,EventKG|Wikidata,http://www.wikidata.org/prop/direct/P1817|wd:P1817,21,8,EXACT,True
+UNASSIGNED_REVIEW,wd:P184,doctoral advisor,person who supervised the doctorate or PhD thesis of the subject,EventKG|Wikidata,http://www.wikidata.org/prop/direct/P184|wd:P184,609,148,EXACT,True
+UNASSIGNED_REVIEW,wd:P1840,investigated by,person or organization involved in investigation of the item,EventKG|Wikidata,http://www.wikidata.org/prop/direct/P1840|wd:P1840,31,11,EXACT,True
+UNASSIGNED_REVIEW,wd:P1853,blood type,blood type of the human or animal,Wikidata,wd:P1853,9,9,EXACT,True
+UNASSIGNED_REVIEW,wd:P186,made from material,material the subject or the object is made of or derived from (do not confuse with P10672 which is used for processes),EventKG|Wikidata,http://www.wikidata.org/prop/direct/P186|wd:P186,226,201,EXACT,True
+UNASSIGNED_REVIEW,wd:P1875,represented by,person or agency that represents or manages the subject,EventKG|Wikidata,http://www.wikidata.org/prop/direct/P1875|wd:P1875,19,12,EXACT,True
+UNASSIGNED_REVIEW,wd:P1876,vessel,"vessel involved in this mission, navigation or event",EventKG|Wikidata,http://www.wikidata.org/prop/direct/P1876|wd:P1876,30,19,EXACT,True
+UNASSIGNED_REVIEW,wd:P1877,after a work by,artist whose work strongly inspired / was copied in this item,EventKG|Wikidata,http://www.wikidata.org/prop/direct/P1877|wd:P1877,174,53,EXACT,True
+UNASSIGNED_REVIEW,wd:P1884,hair color,person's hair color. Use P585 as qualifier if there's more than one value,EventKG|Wikidata,http://www.wikidata.org/prop/direct/P1884|wd:P1884,27,24,EXACT,True
+UNASSIGNED_REVIEW,wd:P1885,cathedral,,EventKG,http://www.wikidata.org/prop/direct/P1885,1,0,EXACT,True
+UNASSIGNED_REVIEW,wd:P1891,signatory,"person, country, or organization that has signed an official document (use P50 for author)",EventKG|Wikidata,http://www.wikidata.org/prop/direct/P1891|wd:P1891,822,138,EXACT,True
+UNASSIGNED_REVIEW,wd:P190,twinned administrative body,"twin towns, sister cities, twinned municipalities and other localities that have a partnership or cooperative agreement, either legally or informally acknowledged by their governments",EventKG|Wikidata,http://www.wikidata.org/prop/direct/P190|wd:P190,270,114,EXACT,True
+UNASSIGNED_REVIEW,wd:P1923,participating team,like 'Participant' (P710) but for teams. For an event like a cycle race or a football match you can use this property to list the teams and P710 to list the individuals (with 'member of sports team' (P54) as a qualifier for the individuals),EventKG|Wikidata,http://www.wikidata.org/prop/direct/P1923|wd:P1923,6,2,EXACT,True
+UNASSIGNED_REVIEW,wd:P193,main building contractor,the main organization (or person) responsible for construction of this structure or building,EventKG|Wikidata,http://www.wikidata.org/prop/direct/P193|wd:P193,59,29,EXACT,True
+UNASSIGNED_REVIEW,wd:P194,legislative body,"legislative body governing this entity; political institution with elected representatives, such as a parliament/legislature or council",EventKG|Wikidata,http://www.wikidata.org/prop/direct/P194|wd:P194,16,9,EXACT,True
+UNASSIGNED_REVIEW,wd:P195,collection,"art, museum, archival, or bibliographic collection of which the subject is part (item is in the collection of X)",EventKG|Wikidata,http://www.wikidata.org/prop/direct/P195|wd:P195,466,112,EXACT,True
+UNASSIGNED_REVIEW,wd:P1950,second family name in Spanish name,second (generally maternal) family name in Spanish names (do not use for other double barrelled names) and in some French names,Wikidata,wd:P1950,73,73,EXACT,True
+UNASSIGNED_REVIEW,wd:P1951,investor,,EventKG,http://www.wikidata.org/prop/direct/P1951,1,0,EXACT,True
+UNASSIGNED_REVIEW,wd:P1956,takeoff and landing capability,type of takeoff and landing the aircraft is designed to operate,Wikidata,wd:P1956,2,2,EXACT,True
+UNASSIGNED_REVIEW,wd:P1981,FSK film rating,"permitted audience of a film, according to the German film-rating system (add Prüfnummer with qualifier ""P2676"")",Wikidata,wd:P1981,108,108,EXACT,True
+UNASSIGNED_REVIEW,wd:P199,organizational division,organizational division of this organization (which is not an independent legal entity),Wikidata,wd:P199,4,4,EXACT,True
+UNASSIGNED_REVIEW,wd:P200,inflows,"major inflow sources — rivers, aquifers, glacial runoff, etc. Some terms may not be place names, e.g. none",Wikidata,wd:P200,2,2,EXACT,True
+UNASSIGNED_REVIEW,wd:P201,outflows,"rivers and other outflows waterway names. If evaporation or seepage are notable outflows, they may be included. Some terms may not be place names, e.g. evaporation",Wikidata,wd:P201,1,1,EXACT,True
+UNASSIGNED_REVIEW,wd:P2012,cuisine,type of food served by a restaurant or restaurant chain or national food culture,EventKG|Wikidata,http://www.wikidata.org/prop/direct/P2012|wd:P2012,2,1,EXACT,True
+UNASSIGNED_REVIEW,wd:P2058,depositary,depositary of the treaty,Wikidata,wd:P2058,1,1,EXACT,True
+UNASSIGNED_REVIEW,wd:P2079,fabrication method,"method, process or technique used to grow, cook, weave, build, assemble, manufacture the item",Wikidata,wd:P2079,17,17,EXACT,True
+UNASSIGNED_REVIEW,wd:P208,executive body,branch of government for the daily administration of the territorial entity,EventKG|Wikidata,http://www.wikidata.org/prop/direct/P208|wd:P208,7,4,EXACT,True
+UNASSIGNED_REVIEW,wd:P2094,competition class,"official classification by a regulating body under which the subject (events, teams, participants, or equipment) qualifies for inclusion",Wikidata,wd:P2094,1,1,EXACT,True
+UNASSIGNED_REVIEW,wd:P2098,substitute/deputy/replacement of office/officeholder,function that serves as deputy/replacement of this function/office (scope/conditions vary depending on office),EventKG|Wikidata,http://www.wikidata.org/prop/direct/P2098|wd:P2098,4,2,EXACT,True
+UNASSIGNED_REVIEW,wd:P210,party chief representative,chief representative of a party in an institution or an administrative unit (use qualifier to identify the party),EventKG|Wikidata,http://www.wikidata.org/prop/direct/P210|wd:P210,26,7,EXACT,True
+UNASSIGNED_REVIEW,wd:P2184,history of topic,"item about the historical development of a subject's topic, example: ""history of Argentina"" for ""Argentina"". To list key events of the topic, use ""significant event"" (P793)",EventKG|Wikidata,http://www.wikidata.org/prop/direct/P2184|wd:P2184,36,30,EXACT,True
+UNASSIGNED_REVIEW,wd:P2238,official symbol,official symbol of an organisation,EventKG|Wikidata,http://www.wikidata.org/prop/direct/P2238|wd:P2238,6,5,EXACT,True
+UNASSIGNED_REVIEW,wd:P2283,uses,item or concept used by the subject or in the operation (see also instrument [P1303] and armament [P520]),EventKG|Wikidata,http://www.wikidata.org/prop/direct/P2283|wd:P2283,63,47,EXACT,True
+UNASSIGNED_REVIEW,wd:P2308,class,"qualifier to define a property constraint in combination with ""property constraint"" (P2302)",Wikidata,wd:P2308,2,2,EXACT,True
+UNASSIGNED_REVIEW,wd:P2318,debut participant,,EventKG,http://www.wikidata.org/prop/direct/P2318,1,0,EXACT,True
+UNASSIGNED_REVIEW,wd:P2341,indigenous to,,EventKG,http://www.wikidata.org/prop/direct/P2341,1,0,EXACT,True
+UNASSIGNED_REVIEW,wd:P2348,time period,"time period (historic period or era, sports season, theatre season, legislative period etc.) in which the subject occurred or with which it is associated",EventKG|Wikidata,http://www.wikidata.org/prop/direct/P2348|wd:P2348,555,197,EXACT,True
+UNASSIGNED_REVIEW,wd:P2359,nomen gentilicium,"standard part of the name of a Roman (and related cultures), link to items about the Roman gens only",Wikidata,wd:P2359,1,1,EXACT,True
+UNASSIGNED_REVIEW,wd:P2360,intended public,"intended audience or user of this work, product, object, or event",EventKG|Wikidata,http://www.wikidata.org/prop/direct/P2360|wd:P2360,5,4,EXACT,True
+UNASSIGNED_REVIEW,wd:P2363,NMHH film rating,rating of a film in the Hungarian film rating system,Wikidata,wd:P2363,27,27,EXACT,True
+UNASSIGNED_REVIEW,wd:P2365,cognomen,"standard part of the name of a Roman (and related cultures), link to items about specific Roman cognomen only",Wikidata,wd:P2365,1,1,EXACT,True
+UNASSIGNED_REVIEW,wd:P237,coat of arms,subject's coat of arms,EventKG|Wikidata,http://www.wikidata.org/prop/direct/P237|wd:P237,48,34,EXACT,True
+UNASSIGNED_REVIEW,wd:P2388,position held by head of the organization,position of the head of this item,EventKG|Wikidata,http://www.wikidata.org/prop/direct/P2388|wd:P2388,45,38,EXACT,True
+UNASSIGNED_REVIEW,wd:P2389,organization directed by the office or position,organization or project which is directed by this office,EventKG|Wikidata,http://www.wikidata.org/prop/direct/P2389|wd:P2389,23,13,EXACT,True
+UNASSIGNED_REVIEW,wd:P2408,set in period,"historical, contemporary, or future period, year, century or day the work or genre is set in or event featured in the story of the work",EventKG|Wikidata,http://www.wikidata.org/prop/direct/P2408|wd:P2408,590,391,EXACT,True
+UNASSIGNED_REVIEW,wd:P2416,sports discipline competed in,discipline an athlete competed in within a sport,EventKG|Wikidata,http://www.wikidata.org/prop/direct/P2416|wd:P2416,31,25,EXACT,True
+UNASSIGNED_REVIEW,wd:P2438,narrator,"narrator, character or person that tells the story",EventKG|Wikidata,http://www.wikidata.org/prop/direct/P2438|wd:P2438,40,14,EXACT,True
+UNASSIGNED_REVIEW,wd:P248,stated in,,EventKG,http://www.wikidata.org/prop/direct/P248,2,0,EXACT,True
+UNASSIGNED_REVIEW,wd:P2505,carries thoroughfare,"thoroughfare carried by a bridge, tunnel, or mountain pass",EventKG|Wikidata,http://www.wikidata.org/prop/direct/P2505|wd:P2505,12,6,EXACT,True
+UNASSIGNED_REVIEW,wd:P2515,costume designer,"person who designed the costumes for a film, television programme, etc.",EventKG|Wikidata,http://www.wikidata.org/prop/direct/P2515|wd:P2515,63,33,EXACT,True
+UNASSIGNED_REVIEW,wd:P2522,competition won,competition or sports event won by the subject,EventKG|Wikidata,http://www.wikidata.org/prop/direct/P2522|wd:P2522,4,2,EXACT,True
+UNASSIGNED_REVIEW,wd:P2541,operating area,"geographic area or jurisdiction an organisation or industry operates in, serves, or has responsibility for",EventKG|Wikidata,http://www.wikidata.org/prop/direct/P2541|wd:P2541,44,22,EXACT,True
+UNASSIGNED_REVIEW,wd:P2545,bowling style,type of bowling employed by a cricketer,Wikidata,wd:P2545,8,8,EXACT,True
+UNASSIGNED_REVIEW,wd:P2554,production designer,"person(s) responsible for overall aesthetic of the story of this motion picture, play, video game or similar; responsible for visual concept, producing interior, exterior, location, graphics, etc; deals with many and varied logistic related to this",EventKG|Wikidata,http://www.wikidata.org/prop/direct/P2554|wd:P2554,131,52,EXACT,True
+UNASSIGNED_REVIEW,wd:P2564,Köppen climate classification,indicates the characteristic climate of a place,Wikidata,wd:P2564,2,2,EXACT,True
+UNASSIGNED_REVIEW,wd:P2568,repealed by,document is repealed/inactived by specified other document,EventKG|Wikidata,http://www.wikidata.org/prop/direct/P2568|wd:P2568,17,5,EXACT,True
+UNASSIGNED_REVIEW,wd:P2578,is the study of,"the object that an academic field studies; distinct from field of work (P101), which is used for human, organization, etc.",Wikidata,wd:P2578,3,3,EXACT,True
+UNASSIGNED_REVIEW,wd:P2579,studied by,subject is studied by this science or domain,EventKG|Wikidata,http://www.wikidata.org/prop/direct/P2579|wd:P2579,10,8,EXACT,True
+UNASSIGNED_REVIEW,wd:P2614,World Heritage criteria,selection criteria for UNESCO's cultural and natural 'World Heritage' designation since 2005,Wikidata,wd:P2614,10,10,EXACT,True
+UNASSIGNED_REVIEW,wd:P263,official residence,the residence at which heads of government and other senior figures officially reside,EventKG|Wikidata,http://www.wikidata.org/prop/direct/P263|wd:P263,11,5,EXACT,True
+UNASSIGNED_REVIEW,wd:P2633,geography of topic,"item that deals with the geography of the subject. Sample: ""Rio de Janeiro"" uses this property with value ""geography of Rio de Janeiro"" (Q10288853). For the location of a subject, use ""location"" (P276).",Wikidata,wd:P2633,1,1,EXACT,True
+UNASSIGNED_REVIEW,wd:P2634,model,"person who appears in an artwork or photograph, in the role of an artist's model, rather than subject",EventKG|Wikidata,http://www.wikidata.org/prop/direct/P2634|wd:P2634,5,2,EXACT,True
+UNASSIGNED_REVIEW,wd:P264,record label,brand and trademark associated with the marketing of subject music recordings and music videos,EventKG|Wikidata,http://www.wikidata.org/prop/direct/P264|wd:P264,70,43,EXACT,True
+UNASSIGNED_REVIEW,wd:P2650,interested in,item of special or vested interest to this person or organisation,EventKG|Wikidata,http://www.wikidata.org/prop/direct/P2650|wd:P2650,160,117,EXACT,True
+UNASSIGNED_REVIEW,wd:P2652,partnership with,partnership (commercial or/and non-commercial) between this organization and another organization or institution,EventKG|Wikidata,http://www.wikidata.org/prop/direct/P2652|wd:P2652,79,42,EXACT,True
+UNASSIGNED_REVIEW,wd:P2675,reply to,the intellectual work to which the subsequent work is a direct reply,Wikidata,wd:P2675,1,1,EXACT,True
+UNASSIGNED_REVIEW,wd:P272,production company,"company that produced this film, audio or performing arts work",EventKG|Wikidata,http://www.wikidata.org/prop/direct/P272|wd:P272,492,269,EXACT,True
+UNASSIGNED_REVIEW,wd:P2737,union of,,EventKG,http://www.wikidata.org/prop/direct/P2737,2,0,EXACT,True
+UNASSIGNED_REVIEW,wd:P2738,disjoint union of,"every instance of this class is an instance of exactly one class in that list of classes. Use ""list item"" P11260 as qualifiers to specify the list of classes",Wikidata,wd:P2738,1,1,EXACT,True
+UNASSIGNED_REVIEW,wd:P2747,Filmiroda rating,rating of a film in the former (2004–2011) Hungarian film rating system,Wikidata,wd:P2747,36,36,EXACT,True
+UNASSIGNED_REVIEW,wd:P2756,EIRIN film rating,category in the Japanese film rating system (add EIRIN number with qualifier P2676),Wikidata,wd:P2756,38,38,EXACT,True
+UNASSIGNED_REVIEW,wd:P2758,CNC film rating (France),category assigned to a film by the Board of Film Classification (CNC) which what audiences may view it in France,Wikidata,wd:P2758,92,92,EXACT,True
+UNASSIGNED_REVIEW,wd:P2789,connects with,item with which the item is physically connected,EventKG|Wikidata,http://www.wikidata.org/prop/direct/P2789|wd:P2789,39,31,EXACT,True
+UNASSIGNED_REVIEW,wd:P2813,house publication,,EventKG,http://www.wikidata.org/prop/direct/P2813,4,0,EXACT,True
+UNASSIGNED_REVIEW,wd:P2817,appears in the heritage monument list,heritage monument is a part of the list of heritage monuments,Wikidata,wd:P2817,35,35,EXACT,True
+UNASSIGNED_REVIEW,wd:P282,writing system,"alphabet, character set or other system of writing used by a language, word, or text, supported by a typeface",EventKG|Wikidata,http://www.wikidata.org/prop/direct/P282|wd:P282,3,2,EXACT,True
+UNASSIGNED_REVIEW,wd:P2825,via,,EventKG,http://www.wikidata.org/prop/direct/P2825,2,0,EXACT,True
+UNASSIGNED_REVIEW,wd:P2828,corporate officer,person who holds a specific position,EventKG|Wikidata,http://www.wikidata.org/prop/direct/P2828|wd:P2828,6,4,EXACT,True
+UNASSIGNED_REVIEW,wd:P2846,disabled accessibility,describes disabled accessibility of location or event,Wikidata,wd:P2846,6,6,EXACT,True
+UNASSIGNED_REVIEW,wd:P2848,Wi-Fi access,internet access availability through Wi-Fi,Wikidata,wd:P2848,6,6,EXACT,True
+UNASSIGNED_REVIEW,wd:P2851,payment types accepted,types of payment accepted by a venue,EventKG|Wikidata,http://www.wikidata.org/prop/direct/P2851|wd:P2851,8,4,EXACT,True
+UNASSIGNED_REVIEW,wd:P2852,emergency phone number,telephone number to contact emergency services,EventKG|Wikidata,http://www.wikidata.org/prop/direct/P2852|wd:P2852,2,1,EXACT,True
+UNASSIGNED_REVIEW,wd:P2853,electrical plug type,standard plug type for mains electricity in a country,Wikidata,wd:P2853,2,2,EXACT,True
+UNASSIGNED_REVIEW,wd:P286,head coach,"on-field manager or head coach of a sports club (not to be confused with a general manager P505, which is not a coaching position) or person",EventKG|Wikidata,http://www.wikidata.org/prop/direct/P286|wd:P286,58,3,EXACT,True
+UNASSIGNED_REVIEW,wd:P2860,cites work,citation from one creative or scholarly work to another,EventKG|Wikidata,http://www.wikidata.org/prop/direct/P2860|wd:P2860,14,6,EXACT,True
+UNASSIGNED_REVIEW,wd:P2872,visitor center,official tourist office of this destination,Wikidata,wd:P2872,3,3,EXACT,True
+UNASSIGNED_REVIEW,wd:P289,vessel class,series of vessels or other watercraft built to the same design of which this vessel is a member,EventKG|Wikidata,http://www.wikidata.org/prop/direct/P289|wd:P289,8818,7277,EXACT,True
+UNASSIGNED_REVIEW,wd:P2894,day of week,"day of the week on which this item occurs, applies to or is valid",EventKG|Wikidata,http://www.wikidata.org/prop/direct/P2894|wd:P2894,2,1,EXACT,True
+UNASSIGNED_REVIEW,wd:P2922,month of the year,"month of the year during which this item occurs, applies to or is valid in",Wikidata,wd:P2922,2,2,EXACT,True
+UNASSIGNED_REVIEW,wd:P2925,domain of saint or deity,domain(s) which this saint or deity controls or protects,Wikidata,wd:P2925,1,1,EXACT,True
+UNASSIGNED_REVIEW,wd:P2937,parliamentary term,,EventKG,http://www.wikidata.org/prop/direct/P2937,1,0,EXACT,True
+UNASSIGNED_REVIEW,wd:P2962,title of chess person,title awarded by a chess federation to a person,EventKG|Wikidata,http://www.wikidata.org/prop/direct/P2962|wd:P2962,18,9,EXACT,True
+UNASSIGNED_REVIEW,wd:P2964,right to vote,,EventKG,http://www.wikidata.org/prop/direct/P2964,1,0,EXACT,True
+UNASSIGNED_REVIEW,wd:P2978,wheel arrangement,"wheel/axle arrangement for locomotives, railcars and other rolling stock",Wikidata,wd:P2978,4,4,EXACT,True
+UNASSIGNED_REVIEW,wd:P30,continent,continent of which the subject is a part,Wikidata,wd:P30,82,82,EXACT,True
+UNASSIGNED_REVIEW,wd:P3014,laws applied,the constitutional and statutory provisions that were the primary basis for a decision or law,Wikidata,wd:P3014,3,3,EXACT,True
+UNASSIGNED_REVIEW,wd:P3022,flag bearer,,EventKG,http://www.wikidata.org/prop/direct/P3022,5,0,EXACT,True
+UNASSIGNED_REVIEW,wd:P3025,open days,days in the week subject item is open within the opening season,Wikidata,wd:P3025,17,17,EXACT,True
+UNASSIGNED_REVIEW,wd:P3026,closed on,"exceptions to open days (P3025), usually special dates",Wikidata,wd:P3026,3,3,EXACT,True
+UNASSIGNED_REVIEW,wd:P3032,adjacent structure or building,structure or building adjacent to the item,Wikidata,wd:P3032,21,21,EXACT,True
+UNASSIGNED_REVIEW,wd:P3081,damaged,physical items damaged by this event,EventKG|Wikidata,http://www.wikidata.org/prop/direct/P3081|wd:P3081,10,5,EXACT,True
+UNASSIGNED_REVIEW,wd:P3082,destroyed,physical items destroyed by this event,EventKG|Wikidata,http://www.wikidata.org/prop/direct/P3082|wd:P3082,43,21,EXACT,True
+UNASSIGNED_REVIEW,wd:P3091,mount,"creature ridden by the subject, for instance a horse",EventKG|Wikidata,http://www.wikidata.org/prop/direct/P3091|wd:P3091,5,3,EXACT,True
+UNASSIGNED_REVIEW,wd:P3092,film crew member,"member of the crew creating an audiovisual work, used for miscellaneous roles qualified with the job title when no specific property exists. Don't use if such a property is available: notably for cast member (P161), director (P57), etc.",EventKG|Wikidata,http://www.wikidata.org/prop/direct/P3092|wd:P3092,27,14,EXACT,True
+UNASSIGNED_REVIEW,wd:P3093,recovered by,"person, organisation or vehicle that recovered the item. Use the most specific value known.",EventKG|Wikidata,http://www.wikidata.org/prop/direct/P3093|wd:P3093,11,1,EXACT,True
+UNASSIGNED_REVIEW,wd:P3094,develops from,this class of items develops from another class of items (biology),Wikidata,wd:P3094,1,1,EXACT,True
+UNASSIGNED_REVIEW,wd:P3095,practiced by,type of agents that study this subject or work in this field,EventKG|Wikidata,http://www.wikidata.org/prop/direct/P3095|wd:P3095,12,9,EXACT,True
+UNASSIGNED_REVIEW,wd:P3137,parent peak,"higher peak whose territory this peak resides in, where the territory is defined by a contour line through a key col, which can be selected based on several competing approaches",Wikidata,wd:P3137,1,1,EXACT,True
+UNASSIGNED_REVIEW,wd:P3148,repeals,this document or act repeals that other document or act,EventKG|Wikidata,http://www.wikidata.org/prop/direct/P3148|wd:P3148,7,4,EXACT,True
+UNASSIGNED_REVIEW,wd:P3156,Australian Classification,content rating of an audiovisual work or video game in the Australian Classification system,EventKG|Wikidata,http://www.wikidata.org/prop/direct/P3156|wd:P3156,12,11,EXACT,True
+UNASSIGNED_REVIEW,wd:P3173,offers view on,,EventKG,http://www.wikidata.org/prop/direct/P3173,1,0,EXACT,True
+UNASSIGNED_REVIEW,wd:P3174,art director,"person credited as the art director/artistic director of this work; manages the process of making the visuals, which is done by concept artists, graphic designers, set designers, costume designers, lighting designers; See also P8938 for organizations",EventKG|Wikidata,http://www.wikidata.org/prop/direct/P3174|wd:P3174,26,15,EXACT,True
+UNASSIGNED_REVIEW,wd:P3179,territory overlaps,part or all of the area associated with (this) entity overlaps part or all of the area associated with that entity,Wikidata,wd:P3179,2,2,EXACT,True
+UNASSIGNED_REVIEW,wd:P3205,patient of,was treated or studied as a patient by this person,EventKG|Wikidata,http://www.wikidata.org/prop/direct/P3205|wd:P3205,8,2,EXACT,True
+UNASSIGNED_REVIEW,wd:P3216,ClassInd rating,"rating of an audiovisual work, video game or RPG in the Brazilian Advisory Rating System (ClassInd)",Wikidata,wd:P3216,19,19,EXACT,True
+UNASSIGNED_REVIEW,wd:P3275,storyboard artist,person credited as the storyboard artist of this work,EventKG|Wikidata,http://www.wikidata.org/prop/direct/P3275|wd:P3275,14,7,EXACT,True
+UNASSIGNED_REVIEW,wd:P3300,musical conductor,,EventKG,http://www.wikidata.org/prop/direct/P3300,7,0,EXACT,True
+UNASSIGNED_REVIEW,wd:P3301,broadcast by,,EventKG,http://www.wikidata.org/prop/direct/P3301,2,0,EXACT,True
+UNASSIGNED_REVIEW,wd:P3306,ICAA rating,rating in the Spanish motion picture content rating system,Wikidata,wd:P3306,17,17,EXACT,True
+UNASSIGNED_REVIEW,wd:P3320,board member,member(s) of the board for an organization,EventKG|Wikidata,http://www.wikidata.org/prop/direct/P3320|wd:P3320,51,13,EXACT,True
+UNASSIGNED_REVIEW,wd:P3335,associated hazard,"hazards implicit in the subject item: that a sign warns of; that one may encounter in this place, on this thoroughfare; that are inherent properties of (or threats to) the subject; etc.",Wikidata,wd:P3335,5,5,EXACT,True
+UNASSIGNED_REVIEW,wd:P3342,significant person,person linked to the item in any possible way,EventKG|Wikidata,http://www.wikidata.org/prop/direct/P3342|wd:P3342,1771,579,EXACT,True
+UNASSIGNED_REVIEW,wd:P3402,CNC film rating (Romania),rating of a movie in the Romanian content rating system,Wikidata,wd:P3402,10,10,EXACT,True
+UNASSIGNED_REVIEW,wd:P3403,coextensive with,this item has the same boundary as the target item; area associated with (this) entity is identical with the area associated with that entity,Wikidata,wd:P3403,1,1,EXACT,True
+UNASSIGNED_REVIEW,wd:P3428,INCAA film rating,rating of a movie in the Argentinian content rating system,Wikidata,wd:P3428,7,7,EXACT,True
+UNASSIGNED_REVIEW,wd:P3438,vehicle normally used,vehicle the subject normally uses,EventKG|Wikidata,http://www.wikidata.org/prop/direct/P3438|wd:P3438,11,6,EXACT,True
+UNASSIGNED_REVIEW,wd:P344,director of photography,"person responsible for the framing, lighting, and filtration of the subject work",Wikidata,wd:P344,251,251,EXACT,True
+UNASSIGNED_REVIEW,wd:P3448,stepparent,subject has the object as their stepparent,EventKG|Wikidata,http://www.wikidata.org/prop/direct/P3448|wd:P3448,25,6,EXACT,True
+UNASSIGNED_REVIEW,wd:P3460,colonel-in-chief,ceremonial position in a military regiment,EventKG|Wikidata,http://www.wikidata.org/prop/direct/P3460|wd:P3460,12,6,EXACT,True
+UNASSIGNED_REVIEW,wd:P3461,designated as terrorist by,"country or organization that has officially designated a given group as a terrorist organization (e.g. for India, listed on http://mha.nic.in/BO )",EventKG|Wikidata,http://www.wikidata.org/prop/direct/P3461|wd:P3461,6,3,EXACT,True
+UNASSIGNED_REVIEW,wd:P35,head of state,official with the highest formal authority in a country/state,EventKG|Wikidata,http://www.wikidata.org/prop/direct/P35|wd:P35,121,28,EXACT,True
+UNASSIGNED_REVIEW,wd:P3501,Christian liturgical rite,Christian liturgical rite associated with this item,Wikidata,wd:P3501,8,8,EXACT,True
+UNASSIGNED_REVIEW,wd:P358,discography,item for list pages with discography of artist or band,Wikidata,wd:P358,7,7,EXACT,True
+UNASSIGNED_REVIEW,wd:P360,is a list of,common element between all listed items,EventKG|Wikidata,http://www.wikidata.org/prop/direct/P360|wd:P360,428,425,EXACT,True
+UNASSIGNED_REVIEW,wd:P3602,candidacy in election,election where the subject is a candidate,EventKG|Wikidata,http://www.wikidata.org/prop/direct/P3602|wd:P3602,680,376,EXACT,True
+UNASSIGNED_REVIEW,wd:P3650,JMK film rating,rating of a film in the Austrian film rating system,Wikidata,wd:P3650,16,16,EXACT,True
+UNASSIGNED_REVIEW,wd:P366,has use,main use of the subject (includes current and former usage),EventKG|Wikidata,http://www.wikidata.org/prop/direct/P366|wd:P366,4178,2479,EXACT,True
+UNASSIGNED_REVIEW,wd:P371,presenter,main role in presenting a radio or television program or a performing arts show,EventKG|Wikidata,http://www.wikidata.org/prop/direct/P371|wd:P371,19,1,EXACT,True
+UNASSIGNED_REVIEW,wd:P3712,has goal,desired result or outcome,EventKG|Wikidata,http://www.wikidata.org/prop/direct/P3712|wd:P3712,40,29,EXACT,True
+UNASSIGNED_REVIEW,wd:P3716,social classification,social class as recognized in traditional or state law,EventKG|Wikidata,http://www.wikidata.org/prop/direct/P3716|wd:P3716,39,37,EXACT,True
+UNASSIGNED_REVIEW,wd:P3719,regulated by,"organization that acts as regulator of an activity, financial market, or stock exchange",EventKG|Wikidata,http://www.wikidata.org/prop/direct/P3719|wd:P3719,10,6,EXACT,True
+UNASSIGNED_REVIEW,wd:P3764,pole position,,EventKG,http://www.wikidata.org/prop/direct/P3764,1,0,EXACT,True
+UNASSIGNED_REVIEW,wd:P38,currency,currency used by item,EventKG|Wikidata,http://www.wikidata.org/prop/direct/P38|wd:P38,94,45,EXACT,True
+UNASSIGNED_REVIEW,wd:P3818,KMRB film rating,rating of a film in the South Korean film/video rating system,Wikidata,wd:P3818,6,6,EXACT,True
+UNASSIGNED_REVIEW,wd:P3828,wears,clothing or accessory worn on subject's body,EventKG|Wikidata,http://www.wikidata.org/prop/direct/P3828|wd:P3828,5,4,EXACT,True
+UNASSIGNED_REVIEW,wd:P3834,RTC film rating,rating of a film in the Mexican film classification system,Wikidata,wd:P3834,13,13,EXACT,True
+UNASSIGNED_REVIEW,wd:P3876,category for alumni of educational institution,category containing people who studied at this institution,Wikidata,wd:P3876,10,10,EXACT,True
+UNASSIGNED_REVIEW,wd:P39,position held,subject currently or formerly holds the object position or public office,EventKG|Wikidata,http://www.wikidata.org/prop/direct/P39|wd:P39,11261,5961,EXACT,True
+UNASSIGNED_REVIEW,wd:P3919,contributed to creative work,"the value of this property is some creative or published work or series (qualify with ""subject has role"", P2868), the subject is the person or organization who contributed",EventKG|Wikidata,http://www.wikidata.org/prop/direct/P3919|wd:P3919,29,13,EXACT,True
+UNASSIGNED_REVIEW,wd:P3931,copyright holder,person or organisation who holds the copyright of a work according to the Berne Convention,EventKG|Wikidata,http://www.wikidata.org/prop/direct/P3931|wd:P3931,7,2,EXACT,True
+UNASSIGNED_REVIEW,wd:P3938,named by,person or organisation that coined the name; use as qualifier for P2561 and its subproperties,EventKG|Wikidata,http://www.wikidata.org/prop/direct/P3938|wd:P3938,14,7,EXACT,True
+UNASSIGNED_REVIEW,wd:P3975,general secretary,"leader of a political or international organization, sometimes below the chairperson (P488)",EventKG|Wikidata,http://www.wikidata.org/prop/direct/P3975|wd:P3975,18,2,EXACT,True
+UNASSIGNED_REVIEW,wd:P400,platform,"platform for which a work was developed or released, or the specific platform version of a software product",EventKG|Wikidata,http://www.wikidata.org/prop/direct/P400|wd:P400,57,38,EXACT,True
+UNASSIGNED_REVIEW,wd:P403,mouth of the watercourse,the body of water to which the watercourse drains,Wikidata,wd:P403,1,1,EXACT,True
+UNASSIGNED_REVIEW,wd:P404,game mode,video game's available playing mode(s),EventKG|Wikidata,http://www.wikidata.org/prop/direct/P404|wd:P404,27,17,EXACT,True
+UNASSIGNED_REVIEW,wd:P406,soundtrack release,music release that incorporates music directly recorded from the soundtrack of an audiovisual work,EventKG|Wikidata,http://www.wikidata.org/prop/direct/P406|wd:P406,11,8,EXACT,True
+UNASSIGNED_REVIEW,wd:P408,software engine,software engine employed by the subject item,EventKG|Wikidata,http://www.wikidata.org/prop/direct/P408|wd:P408,8,4,EXACT,True
+UNASSIGNED_REVIEW,wd:P411,canonization status,formal stage in the process of attaining sainthood per the subject's religious organization,EventKG|Wikidata,http://www.wikidata.org/prop/direct/P411|wd:P411,29,13,EXACT,True
+UNASSIGNED_REVIEW,wd:P412,voice type,"person's voice type. expected values: soprano, mezzo-soprano, contralto, countertenor, tenor, baritone, bass (and derivatives)",EventKG|Wikidata,http://www.wikidata.org/prop/direct/P412|wd:P412,16,7,EXACT,True
+UNASSIGNED_REVIEW,wd:P413,position played on team / speciality,position or specialism of a player on a team,EventKG|Wikidata,http://www.wikidata.org/prop/direct/P413|wd:P413,155,122,EXACT,True
+UNASSIGNED_REVIEW,wd:P414,stock exchange,exchange on which this company is traded,Wikidata,wd:P414,3,3,EXACT,True
+UNASSIGNED_REVIEW,wd:P4151,game mechanics,constructs of rules or methods designed for interaction with the game state,Wikidata,wd:P4151,2,2,EXACT,True
+UNASSIGNED_REVIEW,wd:P417,patron saint,patron saint adopted by the subject,EventKG|Wikidata,http://www.wikidata.org/prop/direct/P417|wd:P417,13,6,EXACT,True
+UNASSIGNED_REVIEW,wd:P418,"has seal, badge, or sigil",links to the item for the subject's seal,EventKG|Wikidata,http://www.wikidata.org/prop/direct/P418|wd:P418,2,1,EXACT,True
+UNASSIGNED_REVIEW,wd:P423,shooting handedness,whether the hockey player passes or shoots left- or right-handed,Wikidata,wd:P423,2,2,EXACT,True
+UNASSIGNED_REVIEW,wd:P4312,camera setup,filmmaking method that the cameras were placed by. Use single-camera (Q2918907) or multiple-camera (Q738160),Wikidata,wd:P4312,2,2,EXACT,True
+UNASSIGNED_REVIEW,wd:P4330,contains,"contents, item or substance located within this wrapping item, but not part of this receptacle or container; does not describe the ingredients or components of this container",EventKG|Wikidata,http://www.wikidata.org/prop/direct/P4330|wd:P4330,11,7,EXACT,True
+UNASSIGNED_REVIEW,wd:P4345,director of archaeological fieldwork,,EventKG,http://www.wikidata.org/prop/direct/P4345,5,0,EXACT,True
+UNASSIGNED_REVIEW,wd:P4379,youth wing,group of younger people associated with this organization,EventKG|Wikidata,http://www.wikidata.org/prop/direct/P4379|wd:P4379,3,1,EXACT,True
+UNASSIGNED_REVIEW,wd:P449,original broadcaster,network(s) or service(s) that originally broadcast a radio or television program,EventKG|Wikidata,http://www.wikidata.org/prop/direct/P449|wd:P449,101,55,EXACT,True
+UNASSIGNED_REVIEW,wd:P450,astronaut mission,,EventKG,http://www.wikidata.org/prop/direct/P450,3,0,EXACT,True
+UNASSIGNED_REVIEW,wd:P451,unmarried partner,"someone with whom the person is in a relationship without being married. Use ""spouse"" (P26) for married couples",EventKG|Wikidata,http://www.wikidata.org/prop/direct/P451|wd:P451,266,107,EXACT,True
+UNASSIGNED_REVIEW,wd:P452,industry,specific industry of company or organization,EventKG|Wikidata,http://www.wikidata.org/prop/direct/P452|wd:P452,285,224,EXACT,True
+UNASSIGNED_REVIEW,wd:P4552,mountain range,range or subrange to which the geographical item belongs,Wikidata,wd:P4552,16,16,EXACT,True
+UNASSIGNED_REVIEW,wd:P457,foundational text,text through which an institution or object has been created or established,EventKG|Wikidata,http://www.wikidata.org/prop/direct/P457|wd:P457,29,24,EXACT,True
+UNASSIGNED_REVIEW,wd:P4608,scenographer,person who designed the stage or film set of this item,EventKG|Wikidata,http://www.wikidata.org/prop/direct/P4608|wd:P4608,2,1,EXACT,True
+UNASSIGNED_REVIEW,wd:P461,opposite of,item that is in some way the opposite of this item,EventKG|Wikidata,http://www.wikidata.org/prop/direct/P461|wd:P461,28,22,EXACT,True
+UNASSIGNED_REVIEW,wd:P4614,drainage basin,"area where precipitation collects and drains off into a common outlet, such as into a river, bay, or other body of water",Wikidata,wd:P4614,2,2,EXACT,True
+UNASSIGNED_REVIEW,wd:P462,color,color of subject,EventKG|Wikidata,http://www.wikidata.org/prop/direct/P462|wd:P462,482,479,EXACT,True
+UNASSIGNED_REVIEW,wd:P4622,trophy awarded,,EventKG,http://www.wikidata.org/prop/direct/P4622,7,0,EXACT,True
+UNASSIGNED_REVIEW,wd:P4624,squadron embarked,the aircraft squadrons that served/serving on an aircraft carrier,Wikidata,wd:P4624,4,4,EXACT,True
+UNASSIGNED_REVIEW,wd:P466,occupant,person or organization occupying property,EventKG|Wikidata,http://www.wikidata.org/prop/direct/P466|wd:P466,530,150,EXACT,True
+UNASSIGNED_REVIEW,wd:P467,legislated by,indicates that an act or bill was passed by a legislature. The value can be a particular session of the legislature,EventKG|Wikidata,http://www.wikidata.org/prop/direct/P467|wd:P467,49,13,EXACT,True
+UNASSIGNED_REVIEW,wd:P47,shares border with,"countries or administrative subdivisions, of equal level, that this item borders, either by land or water. A single common point is enough.",EventKG|Wikidata,http://www.wikidata.org/prop/direct/P47|wd:P47,317,266,EXACT,True
+UNASSIGNED_REVIEW,wd:P470,Eight Banner register,Manchu household register for people of the Qing Dynasty,Wikidata,wd:P470,1,1,EXACT,True
+UNASSIGNED_REVIEW,wd:P4743,animal breed,"subject item belongs to a specific group of domestic animals, generally given by association",EventKG|Wikidata,http://www.wikidata.org/prop/direct/P4743|wd:P4743,12,11,EXACT,True
+UNASSIGNED_REVIEW,wd:P479,input device,input device used to interact with a software or a device,EventKG|Wikidata,http://www.wikidata.org/prop/direct/P479|wd:P479,11,8,EXACT,True
+UNASSIGNED_REVIEW,wd:P4805,make-up artist,person in charge of make-up,EventKG|Wikidata,http://www.wikidata.org/prop/direct/P4805|wd:P4805,3,2,EXACT,True
+UNASSIGNED_REVIEW,wd:P483,recorded at studio or venue,studio or location where a musical composition/release was recorded,Wikidata,wd:P483,1,1,EXACT,True
+UNASSIGNED_REVIEW,wd:P485,archives at,the institution holding the subject's archives,EventKG|Wikidata,http://www.wikidata.org/prop/direct/P485|wd:P485,1120,863,EXACT,True
+UNASSIGNED_REVIEW,wd:P488,chairperson,"presiding member of an organization, group or body",EventKG|Wikidata,http://www.wikidata.org/prop/direct/P488|wd:P488,482,85,EXACT,True
+UNASSIGNED_REVIEW,wd:P4884,court,specific court a legal case is or was heard or decided in,EventKG|Wikidata,http://www.wikidata.org/prop/direct/P4884|wd:P4884,8,4,EXACT,True
+UNASSIGNED_REVIEW,wd:P489,currency sign,item with description of currency sign,Wikidata,wd:P489,1,1,EXACT,True
+UNASSIGNED_REVIEW,wd:P4908,season,"season of a series (television, web, podcast)",EventKG|Wikidata,http://www.wikidata.org/prop/direct/P4908|wd:P4908,12,11,EXACT,True
+UNASSIGNED_REVIEW,wd:P4952,safety classification and labelling,classification data for the identification and labelling of chemical risks associated with a product,Wikidata,wd:P4952,4,4,EXACT,True
+UNASSIGNED_REVIEW,wd:P4969,derivative work,"new work of art (film, book, software, etc.) derived from major part of this work",EventKG|Wikidata,http://www.wikidata.org/prop/direct/P4969|wd:P4969,151,73,EXACT,True
+UNASSIGNED_REVIEW,wd:P5004,in opposition to,object of a social action,EventKG|Wikidata,http://www.wikidata.org/prop/direct/P5004|wd:P5004,20,16,EXACT,True
+UNASSIGNED_REVIEW,wd:P5009,complies with,the product or work complies with a certain norm or passes a test,Wikidata,wd:P5009,3,3,EXACT,True
+UNASSIGNED_REVIEW,wd:P5021,assessment,"subject took the test or exam, or was assessed per test or method",EventKG|Wikidata,http://www.wikidata.org/prop/direct/P5021|wd:P5021,215,122,EXACT,True
+UNASSIGNED_REVIEW,wd:P5025,gens,a clan or group of families from Ancient Rome who shared the same nomen,Wikidata,wd:P5025,1,1,EXACT,True
+UNASSIGNED_REVIEW,wd:P5028,sound designer,"person responsible for the sound on a stage, in a film or in a radio drama",EventKG|Wikidata,http://www.wikidata.org/prop/direct/P5028|wd:P5028,6,5,EXACT,True
+UNASSIGNED_REVIEW,wd:P5030,talk show guest,,EventKG,http://www.wikidata.org/prop/direct/P5030,6,0,EXACT,True
+UNASSIGNED_REVIEW,wd:P504,shipping port,"shipping port of the vessel (if different from ""ship registry""): For civilian ships, the primary port from which the ship operates. Port of registry →P532 should be listed in ""Ship registry"". For warships, this will be the ship's assigned naval base",EventKG|Wikidata,http://www.wikidata.org/prop/direct/P504|wd:P504,834,778,EXACT,True
+UNASSIGNED_REVIEW,wd:P5052,supervisory board member,member(s) of the supervisory board for the organization,EventKG|Wikidata,http://www.wikidata.org/prop/direct/P5052|wd:P5052,13,3,EXACT,True
+UNASSIGNED_REVIEW,wd:P5053,fastest lap,,EventKG,http://www.wikidata.org/prop/direct/P5053,3,0,EXACT,True
+UNASSIGNED_REVIEW,wd:P5056,patronym or matronym,"part of a person's name that comes from the given name of a parent, in naming traditions that require it",Wikidata,wd:P5056,87,87,EXACT,True
+UNASSIGNED_REVIEW,wd:P5059,modified version of,,EventKG,http://www.wikidata.org/prop/direct/P5059,1,0,EXACT,True
+UNASSIGNED_REVIEW,wd:P5072,presented in,"event at which a talk, film, paper, or poster was presented",Wikidata,wd:P5072,1,1,EXACT,True
+UNASSIGNED_REVIEW,wd:P511,honorific prefix,"word or expression used before a name, in addressing or referring to a person",EventKG|Wikidata,http://www.wikidata.org/prop/direct/P511|wd:P511,181,149,EXACT,True
+UNASSIGNED_REVIEW,wd:P512,academic degree,academic degree that the person holds,EventKG|Wikidata,http://www.wikidata.org/prop/direct/P512|wd:P512,387,302,EXACT,True
+UNASSIGNED_REVIEW,wd:P5126,assistant director,"assistant stage director of a performing arts, film or television production",EventKG|Wikidata,http://www.wikidata.org/prop/direct/P5126|wd:P5126,8,5,EXACT,True
+UNASSIGNED_REVIEW,wd:P5150,IGAC rating,rating of a film or theatrical production in the Portuguese classification system,Wikidata,wd:P5150,5,5,EXACT,True
+UNASSIGNED_REVIEW,wd:P5152,KAVI rating,rating in the Finnish film and television rating system,Wikidata,wd:P5152,1,1,EXACT,True
+UNASSIGNED_REVIEW,wd:P516,powered by,,EventKG,http://www.wikidata.org/prop/direct/P516,94,0,EXACT,True
+UNASSIGNED_REVIEW,wd:P518,applies to part,"part, aspect, or form of the item to which the claim applies",Wikidata,wd:P518,1,1,EXACT,True
+UNASSIGNED_REVIEW,wd:P520,armament,equippable weapon item for the subject,EventKG|Wikidata,http://www.wikidata.org/prop/direct/P520|wd:P520,1754,1272,EXACT,True
+UNASSIGNED_REVIEW,wd:P5201,IMDA rating,rating in the Singaporean film and video game rating system,Wikidata,wd:P5201,9,9,EXACT,True
+UNASSIGNED_REVIEW,wd:P521,scheduled service destination,airport or station connected by regular direct service to the subject; for the destination of a trip see P1444,EventKG|Wikidata,http://www.wikidata.org/prop/direct/P521|wd:P521,231,129,EXACT,True
+UNASSIGNED_REVIEW,wd:P53,family,"family, including dynasty and nobility houses. Not family name (use P734 for family name).",EventKG|Wikidata,http://www.wikidata.org/prop/direct/P53|wd:P53,291,238,EXACT,True
+UNASSIGNED_REVIEW,wd:P531,diplomatic mission sent,"location of diplomatic mission, i.e. consulate of A in the capital city of B",EventKG|Wikidata,http://www.wikidata.org/prop/direct/P531|wd:P531,5,2,EXACT,True
+UNASSIGNED_REVIEW,wd:P532,port of registry,"ship's port of registry. This is generally painted on the ship's stern (for the ""home port"", see Property:P504)",EventKG|Wikidata,http://www.wikidata.org/prop/direct/P532|wd:P532,139,47,EXACT,True
+UNASSIGNED_REVIEW,wd:P5323,attested in,"document or corpus where the lemma or form of a Lexeme entity, word or name is used, but not described",Wikidata,wd:P5323,5,5,EXACT,True
+UNASSIGNED_REVIEW,wd:P533,target,target of an attack or military operation,EventKG|Wikidata,http://www.wikidata.org/prop/direct/P533|wd:P533,207,123,EXACT,True
+UNASSIGNED_REVIEW,wd:P542,officially opened by,person that officially opened the event or place,EventKG|Wikidata,http://www.wikidata.org/prop/direct/P542|wd:P542,91,20,EXACT,True
+UNASSIGNED_REVIEW,wd:P5460,grants,"confers degree, honor, award, prize, title, certificate or medal denoting achievement to a person or organization",Wikidata,wd:P5460,1,1,EXACT,True
+UNASSIGNED_REVIEW,wd:P547,commemorates,"what or whom is commemorated by the place, monument, memorial, or holiday",EventKG|Wikidata,http://www.wikidata.org/prop/direct/P547|wd:P547,4222,163,EXACT,True
+UNASSIGNED_REVIEW,wd:P551,residence,"the place where the person is or has been, resident",EventKG|Wikidata,http://www.wikidata.org/prop/direct/P551|wd:P551,997,788,EXACT,True
+UNASSIGNED_REVIEW,wd:P5514,accredited by,"optionally use together with ""subject has role"" (P2868)",EventKG|Wikidata,http://www.wikidata.org/prop/direct/P5514|wd:P5514,6,2,EXACT,True
+UNASSIGNED_REVIEW,wd:P552,handedness,handedness of the person,Wikidata,wd:P552,15,15,EXACT,True
+UNASSIGNED_REVIEW,wd:P559,terminus,"the feature (intersecting road, train station, etc.) at the end of a linear feature",EventKG|Wikidata,http://www.wikidata.org/prop/direct/P559|wd:P559,18,6,EXACT,True
+UNASSIGNED_REVIEW,wd:P562,central bank/issuer,central bank or other issuing authority for the currency,EventKG|Wikidata,http://www.wikidata.org/prop/direct/P562|wd:P562,4,2,EXACT,True
+UNASSIGNED_REVIEW,wd:P566,has basionym,"the legitimate, previously published name on which a new combination or name at new rank is based",Wikidata,wd:P566,1,1,EXACT,True
+UNASSIGNED_REVIEW,wd:P57,director,"director(s) of film, TV-series, stageplay, video game or similar",EventKG|Wikidata,http://www.wikidata.org/prop/direct/P57|wd:P57,1349,526,EXACT,True
+UNASSIGNED_REVIEW,wd:P5707,samples from work,audio or video which this work uses a raw excerpt of,EventKG|Wikidata,http://www.wikidata.org/prop/direct/P5707|wd:P5707,2,1,EXACT,True
+UNASSIGNED_REVIEW,wd:P5769,editor-in-chief,"a publication's editorial leader who has final responsibility for its operations and policies and the selection of authors, translators, illustrators, and formats for publishing articles or books in collections or periodical papers",EventKG|Wikidata,http://www.wikidata.org/prop/direct/P5769|wd:P5769,16,3,EXACT,True
+UNASSIGNED_REVIEW,wd:P58,screenwriter,person(s) who wrote the script for subject item,Wikidata,wd:P58,405,405,EXACT,True
+UNASSIGNED_REVIEW,wd:P5816,state of conservation,"to indicate physical state of conservation of a building, monument, artifact, etc. E.g. ruinous, demolished, correct, etc.",EventKG|Wikidata,http://www.wikidata.org/prop/direct/P5816|wd:P5816,34,33,EXACT,True
+UNASSIGNED_REVIEW,wd:P5817,state of use,"to indicate state of use of a building, monument, etc. It is not related with its heritage protection (P1435), but to its present state of use. Ex.: abandoned, in use, temporarily closed, etc.",Wikidata,wd:P5817,275,275,EXACT,True
+UNASSIGNED_REVIEW,wd:P5826,majority opinion by,judicial opinion agreed to by more than half of the members of a court,Wikidata,wd:P5826,1,1,EXACT,True
+UNASSIGNED_REVIEW,wd:P5832,political coalition,,EventKG,http://www.wikidata.org/prop/direct/P5832,1,0,EXACT,True
+UNASSIGNED_REVIEW,wd:P5869,model item,,EventKG,http://www.wikidata.org/prop/direct/P5869,11,0,EXACT,True
+UNASSIGNED_REVIEW,wd:P588,coolant,substance used by the subject to dissipate excess thermal energy,Wikidata,wd:P588,12,12,EXACT,True
+UNASSIGNED_REVIEW,wd:P5961,depicted part,,EventKG,http://www.wikidata.org/prop/direct/P5961,1,0,EXACT,True
+UNASSIGNED_REVIEW,wd:P5970,Medierådet rating,rating of a film in the Danish movie content rating system,Wikidata,wd:P5970,55,55,EXACT,True
+UNASSIGNED_REVIEW,wd:P6,head of government,"head of the executive power of this town, city, municipality, state, country, or other governmental body",EventKG|Wikidata,http://www.wikidata.org/prop/direct/P6|wd:P6,213,42,EXACT,True
+UNASSIGNED_REVIEW,wd:P608,exhibition history,exhibitions where the item is or was displayed,EventKG|Wikidata,http://www.wikidata.org/prop/direct/P608|wd:P608,92,45,EXACT,True
+UNASSIGNED_REVIEW,wd:P6087,coach of sports team,sports club or team for which this person is or was on-field manager or coach,EventKG|Wikidata,http://www.wikidata.org/prop/direct/P6087|wd:P6087,7,5,EXACT,True
+UNASSIGNED_REVIEW,wd:P61,discoverer or inventor,"subject who discovered, first described, invented, or developed this discovery or invention or scientific hypothesis or theory",EventKG|Wikidata,http://www.wikidata.org/prop/direct/P61|wd:P61,57,19,EXACT,True
+UNASSIGNED_REVIEW,wd:P610,highest point,point with highest elevation in a region or path,Wikidata,wd:P610,5,5,EXACT,True
+UNASSIGNED_REVIEW,wd:P6104,maintained by WikiProject,"WikiProject that maintains this property, item, or linked pages. If the WikiProject is hosted outside of Wikidata, identify the hosting project using the qualifier ""part of"" (P361)",Wikidata,wd:P6104,312,312,EXACT,True
+UNASSIGNED_REVIEW,wd:P611,religious order,monastic or Sufi order to which an individual or religious institution belongs,EventKG|Wikidata,http://www.wikidata.org/prop/direct/P611|wd:P611,35,19,EXACT,True
+UNASSIGNED_REVIEW,wd:P6153,research site,place where this item was researched,EventKG|Wikidata,http://www.wikidata.org/prop/direct/P6153|wd:P6153,53,1,EXACT,True
+UNASSIGNED_REVIEW,wd:P6166,quotes work,"other creative work which this work quotes from textually, verbally or lyrically",EventKG|Wikidata,http://www.wikidata.org/prop/direct/P6166|wd:P6166,6,2,EXACT,True
+UNASSIGNED_REVIEW,wd:P6193,ratified by,used to specify that a treaty has been ratified by a given state or subject of international law,EventKG|Wikidata,http://www.wikidata.org/prop/direct/P6193|wd:P6193,5,3,EXACT,True
+UNASSIGNED_REVIEW,wd:P6216,copyright status,"copyright status for intellectual creations like works of art, publications, software, etc.",EventKG|Wikidata,http://www.wikidata.org/prop/direct/P6216|wd:P6216,67,65,EXACT,True
+UNASSIGNED_REVIEW,wd:P6224,level of description,position of the unit of description in the hierarchy of the fonds,Wikidata,wd:P6224,4,4,EXACT,True
+UNASSIGNED_REVIEW,wd:P624,guidance system,guidance system of a missile,Wikidata,wd:P624,6,6,EXACT,True
+UNASSIGNED_REVIEW,wd:P6275,copyright representative,person or organisation who represents the copyright for this person or work of art,EventKG|Wikidata,http://www.wikidata.org/prop/direct/P6275|wd:P6275,72,64,EXACT,True
+UNASSIGNED_REVIEW,wd:P629,"version, edition or translation of","is a version, edition or translation of this entity",EventKG|Wikidata,http://www.wikidata.org/prop/direct/P629|wd:P629,15,1,EXACT,True
+UNASSIGNED_REVIEW,wd:P6291,advertises,"cause, organization or product targeted by the advertising campaign, character, jingle or slogan",Wikidata,wd:P6291,1,1,EXACT,True
+UNASSIGNED_REVIEW,wd:P631,structural engineer,"person, group or organisation responsible for the structural engineering of a building or structure",EventKG|Wikidata,http://www.wikidata.org/prop/direct/P631|wd:P631,9,7,EXACT,True
+UNASSIGNED_REVIEW,wd:P6364,official color,official colors chosen to represent or identify an item,Wikidata,wd:P6364,4,4,EXACT,True
+UNASSIGNED_REVIEW,wd:P6365,member category,category item for members of the organization,Wikidata,wd:P6365,12,12,EXACT,True
+UNASSIGNED_REVIEW,wd:P6379,has works in the collection,collection that has works of this person or organisation (use archives at [P485] for archives),EventKG|Wikidata,http://www.wikidata.org/prop/direct/P6379|wd:P6379,2197,1203,EXACT,True
+UNASSIGNED_REVIEW,wd:P641,sport,sport that the subject participates or participated in or is associated with,EventKG|Wikidata,http://www.wikidata.org/prop/direct/P641|wd:P641,1020,764,EXACT,True
+UNASSIGNED_REVIEW,wd:P647,drafted by,,EventKG,http://www.wikidata.org/prop/direct/P647,2,0,EXACT,True
+UNASSIGNED_REVIEW,wd:P65,site of astronomical discovery,,EventKG,http://www.wikidata.org/prop/direct/P65,1,0,EXACT,True
+UNASSIGNED_REVIEW,wd:P655,translator,agent who adapts any kind of written text from one language to another,EventKG|Wikidata,http://www.wikidata.org/prop/direct/P655|wd:P655,13,7,EXACT,True
+UNASSIGNED_REVIEW,wd:P6568,inscription mentions,,EventKG,http://www.wikidata.org/prop/direct/P6568,40,0,EXACT,True
+UNASSIGNED_REVIEW,wd:P66,ancestral home,place of origin for ancestors of subject,Wikidata,wd:P66,12,12,EXACT,True
+UNASSIGNED_REVIEW,wd:P664,organizer,person or institution organizing an event,EventKG|Wikidata,http://www.wikidata.org/prop/direct/P664|wd:P664,123,34,EXACT,True
+UNASSIGNED_REVIEW,wd:P6657,CHVRS Classification,Canadian movie classification,Wikidata,wd:P6657,3,3,EXACT,True
+UNASSIGNED_REVIEW,wd:P6658,RCQ classification,movie classification for the Régie du Cinéma Québécois,Wikidata,wd:P6658,10,10,EXACT,True
+UNASSIGNED_REVIEW,wd:P674,characters,"characters which appear in this item (like plays, operas, operettas, books, comics, films, TV series, video games)",EventKG|Wikidata,http://www.wikidata.org/prop/direct/P674|wd:P674,1228,355,EXACT,True
+UNASSIGNED_REVIEW,wd:P6758,supported sports team,sports team for which a person or a group is a supporter,EventKG|Wikidata,http://www.wikidata.org/prop/direct/P6758|wd:P6758,7,5,EXACT,True
+UNASSIGNED_REVIEW,wd:P676,lyricist,author of song lyrics,EventKG|Wikidata,http://www.wikidata.org/prop/direct/P676|wd:P676,37,7,EXACT,True
+UNASSIGNED_REVIEW,wd:P6872,has written for,publication an author has contributed to,EventKG|Wikidata,http://www.wikidata.org/prop/direct/P6872|wd:P6872,54,29,EXACT,True
+UNASSIGNED_REVIEW,wd:P6885,historical region,"geographic area which at some point in time had a cultural, ethnic, linguistic or political basis, regardless of present-day borders",EventKG|Wikidata,http://www.wikidata.org/prop/direct/P6885|wd:P6885,4,3,EXACT,True
+UNASSIGNED_REVIEW,wd:P6902,era name,era name for rulers in East Asia,EventKG|Wikidata,http://www.wikidata.org/prop/direct/P6902|wd:P6902,8,4,EXACT,True
+UNASSIGNED_REVIEW,wd:P6942,animator,person creating animated sequences out of still images,EventKG|Wikidata,http://www.wikidata.org/prop/direct/P6942|wd:P6942,68,31,EXACT,True
+UNASSIGNED_REVIEW,wd:P6977,review of,,EventKG,http://www.wikidata.org/prop/direct/P6977,2,0,EXACT,True
+UNASSIGNED_REVIEW,wd:P6978,Scandinavian middle family name,"middle name of some people from Sweden, Denmark or Norway where a family name, usually the mother's, is taken on as a ""middle name"". For given names based on family names, use ""given name"" (P735). For Spanish names, use P734/P1950.",Wikidata,wd:P6978,19,19,EXACT,True
+UNASSIGNED_REVIEW,wd:P7045,chassis,"chassis type for cars, buses, trucks, etc.",Wikidata,wd:P7045,3,3,EXACT,True
+UNASSIGNED_REVIEW,wd:P7047,enemy,opponent character or group of this fictive character or group,EventKG|Wikidata,http://www.wikidata.org/prop/direct/P7047|wd:P7047,33,15,EXACT,True
+UNASSIGNED_REVIEW,wd:P708,diocese,administrative division of the church to which the element belongs; use P5607 for other types of ecclesiastical territorial entities,EventKG|Wikidata,http://www.wikidata.org/prop/direct/P708|wd:P708,31,16,EXACT,True
+UNASSIGNED_REVIEW,wd:P7137,acknowledges,the subject creative work gives acknowledgement to this object,EventKG|Wikidata,http://www.wikidata.org/prop/direct/P7137|wd:P7137,5,1,EXACT,True
+UNASSIGNED_REVIEW,wd:P7169,substitute director/manager,substitute of the director/manager of an organization,Wikidata,wd:P7169,1,1,EXACT,True
+UNASSIGNED_REVIEW,wd:P7228,access restriction status,"status of any access restrictions on the object, collection, or materials. Indicates whether the material is available to the general public or not",EventKG|Wikidata,http://www.wikidata.org/prop/direct/P7228|wd:P7228,5,3,EXACT,True
+UNASSIGNED_REVIEW,wd:P726,candidate,,EventKG,http://www.wikidata.org/prop/direct/P726,246,0,EXACT,True
+UNASSIGNED_REVIEW,wd:P7261,use restriction status,"status of any use restrictions on the object, collection, or materials",EventKG|Wikidata,http://www.wikidata.org/prop/direct/P7261|wd:P7261,4,2,EXACT,True
+UNASSIGNED_REVIEW,wd:P734,family name,part of full name of person,EventKG|Wikidata,http://www.wikidata.org/prop/direct/P734|wd:P734,12546,12516,EXACT,True
+UNASSIGNED_REVIEW,wd:P735,given name,first name or another given name of this person; values used with the property should not link disambiguations nor family names,EventKG|Wikidata,http://www.wikidata.org/prop/direct/P735|wd:P735,18365,18310,EXACT,True
+UNASSIGNED_REVIEW,wd:P736,cover art by,"name of person or team creating cover artwork for book, record album, single record etc.",EventKG|Wikidata,http://www.wikidata.org/prop/direct/P736|wd:P736,18,5,EXACT,True
+UNASSIGNED_REVIEW,wd:P737,influenced by,"the subject (person, idea, etc.) was influenced or inspired by this object entity, e.g. ""Heidegger was influenced by Aristotle""",EventKG|Wikidata,http://www.wikidata.org/prop/direct/P737|wd:P737,510,159,EXACT,True
+UNASSIGNED_REVIEW,wd:P7376,worn by,,EventKG,http://www.wikidata.org/prop/direct/P7376,1,0,EXACT,True
+UNASSIGNED_REVIEW,wd:P7378,item disputed by,,EventKG,http://www.wikidata.org/prop/direct/P7378,1,0,EXACT,True
+UNASSIGNED_REVIEW,wd:P739,ammunition,cartridge or other ammunition used by the subject firearm,EventKG|Wikidata,http://www.wikidata.org/prop/direct/P739|wd:P739,678,388,EXACT,True
+UNASSIGNED_REVIEW,wd:P741,playing hand,"hand used to play a racket sport, cricket, fencing, or curling",Wikidata,wd:P741,1,1,EXACT,True
+UNASSIGNED_REVIEW,wd:P747,"has version, edition or translation",item that is an edition or translation of this item,EventKG|Wikidata,http://www.wikidata.org/prop/direct/P747|wd:P747,132,118,EXACT,True
+UNASSIGNED_REVIEW,wd:P748,appointed by,"who appointed the person to the position, can be used as a qualifier",EventKG|Wikidata,http://www.wikidata.org/prop/direct/P748|wd:P748,12,4,EXACT,True
+UNASSIGNED_REVIEW,wd:P750,distributed by,distributor of a creative work; distributor for a record label; news agency; film distributor,EventKG|Wikidata,http://www.wikidata.org/prop/direct/P750|wd:P750,889,448,EXACT,True
+UNASSIGNED_REVIEW,wd:P7573,IFCO rating,rating certificate of a film in the Irish content classification system,Wikidata,wd:P7573,8,8,EXACT,True
+UNASSIGNED_REVIEW,wd:P7604,supervised by,natural person who has the authority of giving instructions and/or orders to subordinates and is held responsible for the work and actions of subordinates,EventKG|Wikidata,http://www.wikidata.org/prop/direct/P7604|wd:P7604,9,1,EXACT,True
+UNASSIGNED_REVIEW,wd:P767,contributor to the creative work or subject,the value of this property is a person or organization that contributed to the subject or work,EventKG|Wikidata,http://www.wikidata.org/prop/direct/P767|wd:P767,50,19,EXACT,True
+UNASSIGNED_REVIEW,wd:P768,electoral district,"electoral district this person is representing, or of the office that is being contested. Use as qualifier for ""position held"" (P39) or ""office contested"" (P541) or ""candidacy in election"" (P3602)",EventKG|Wikidata,http://www.wikidata.org/prop/direct/P768|wd:P768,2,1,EXACT,True
+UNASSIGNED_REVIEW,wd:P7781,exonerated of,crime of which the subject was found not to be guilty after having previously been found guilty by a court for that crime,EventKG|Wikidata,http://www.wikidata.org/prop/direct/P7781|wd:P7781,4,3,EXACT,True
+UNASSIGNED_REVIEW,wd:P7782,category for ship name,Commons category for a name of a ship,Wikidata,wd:P7782,272,272,EXACT,True
+UNASSIGNED_REVIEW,wd:P78,top-level Internet domain,,EventKG,http://www.wikidata.org/prop/direct/P78,1,0,EXACT,True
+UNASSIGNED_REVIEW,wd:P7888,merged into,"the subject was dissolved and merged into the object, that existed previously",EventKG|Wikidata,http://www.wikidata.org/prop/direct/P7888|wd:P7888,43,11,EXACT,True
+UNASSIGNED_REVIEW,wd:P790,approved by,item is approved by other item(s) [qualifier: statement is approved by other item(s)],EventKG|Wikidata,http://www.wikidata.org/prop/direct/P790|wd:P790,5,1,EXACT,True
+UNASSIGNED_REVIEW,wd:P793,significant event,significant or notable events associated with the subject,EventKG|Wikidata,http://www.wikidata.org/prop/direct/P793|wd:P793,48664,30328,EXACT,True
+UNASSIGNED_REVIEW,wd:P7937,form of creative work,structure of a creative work,EventKG|Wikidata,http://www.wikidata.org/prop/direct/P7937|wd:P7937,98,97,EXACT,True
+UNASSIGNED_REVIEW,wd:P7938,associated electoral district,constituencies/electoral districts in which a place is located or is part of. If a municipality/county is split into or part of several districts: add several values. Use only if distinct from administrative entities (P131) in predefined countries,EventKG|Wikidata,http://www.wikidata.org/prop/direct/P7938|wd:P7938,44,35,EXACT,True
+UNASSIGNED_REVIEW,wd:P7959,historic county,"traditional, geographical division of Great Britain and Ireland",EventKG|Wikidata,http://www.wikidata.org/prop/direct/P7959|wd:P7959,780,710,EXACT,True
+UNASSIGNED_REVIEW,wd:P797,authority,entity having executive power on given entity,EventKG|Wikidata,http://www.wikidata.org/prop/direct/P797|wd:P797,62,19,EXACT,True
+UNASSIGNED_REVIEW,wd:P800,notable work,"notable scientific, artistic or literary work, or other work of significance among subject's works",EventKG|Wikidata,http://www.wikidata.org/prop/direct/P800|wd:P800,894,518,EXACT,True
+UNASSIGNED_REVIEW,wd:P8001,endorsed by,,EventKG,http://www.wikidata.org/prop/direct/P8001,1,0,EXACT,True
+UNASSIGNED_REVIEW,wd:P8004,ordered by,subject that ordered the act,Wikidata,wd:P8004,1,1,EXACT,True
+UNASSIGNED_REVIEW,wd:P803,professorship,professorship position held by this academic person,EventKG|Wikidata,http://www.wikidata.org/prop/direct/P803|wd:P803,35,27,EXACT,True
+UNASSIGNED_REVIEW,wd:P8032,victim(s),person(s) who were harmed from an act or event,EventKG|Wikidata,http://www.wikidata.org/prop/direct/P8032|wd:P8032,225,127,EXACT,True
+UNASSIGNED_REVIEW,wd:P805,statement is subject of,(qualifying) item that describes the relation identified in this statement,EventKG|Wikidata,http://www.wikidata.org/prop/direct/P805|wd:P805,6,4,EXACT,True
+UNASSIGNED_REVIEW,wd:P81,connecting line,,EventKG,http://www.wikidata.org/prop/direct/P81,12,0,EXACT,True
+UNASSIGNED_REVIEW,wd:P812,academic major,major someone studied at college/university,Wikidata,wd:P812,4,4,EXACT,True
+UNASSIGNED_REVIEW,wd:P814,IUCN protected areas category,protected areas category by the World Commission on Protected Areas. Used with dedicated items for each category.,Wikidata,wd:P814,10,10,EXACT,True
+UNASSIGNED_REVIEW,wd:P822,mascot,"mascot of an organization, e.g. a sports team or university",EventKG|Wikidata,http://www.wikidata.org/prop/direct/P822|wd:P822,13,11,EXACT,True
+UNASSIGNED_REVIEW,wd:P8225,is metaclass for,all instances of the subject are subclasses of the object,Wikidata,wd:P8225,4,4,EXACT,True
+UNASSIGNED_REVIEW,wd:P823,speaker,"person who is speaker for this event, ceremony, keynote, presentation or in a literary work",EventKG|Wikidata,http://www.wikidata.org/prop/direct/P823|wd:P823,78,19,EXACT,True
+UNASSIGNED_REVIEW,wd:P825,dedicated to,person or organization to whom the subject was dedicated,EventKG|Wikidata,http://www.wikidata.org/prop/direct/P825|wd:P825,99,20,EXACT,True
+UNASSIGNED_REVIEW,wd:P832,public holiday,"official public holiday that occurs in this place in its honor, usually a non-working day",EventKG|Wikidata,http://www.wikidata.org/prop/direct/P832|wd:P832,10,2,EXACT,True
+UNASSIGNED_REVIEW,wd:P8324,funder,"entity that gives money to a person, organization, or project for a specific purpose",EventKG|Wikidata,http://www.wikidata.org/prop/direct/P8324|wd:P8324,9,2,EXACT,True
+UNASSIGNED_REVIEW,wd:P8329,principal investigator,,EventKG,http://www.wikidata.org/prop/direct/P8329,1,0,EXACT,True
+UNASSIGNED_REVIEW,wd:P833,interchange station,"station to which passengers can transfer from this station, normally without extra expense",EventKG|Wikidata,http://www.wikidata.org/prop/direct/P833|wd:P833,3,1,EXACT,True
+UNASSIGNED_REVIEW,wd:P837,day in year for periodic occurrence,when a specific holiday or periodic event occurs. It can be used as statement or qualifier,EventKG|Wikidata,http://www.wikidata.org/prop/direct/P837|wd:P837,47,30,EXACT,True
+UNASSIGNED_REVIEW,wd:P8371,"references work, tradition or theory","creative work, tradition or theory this creative work references by allusion, quote or similar means (for citations in scholarly and legal works use P2860, for other more specific properties have a look at ""see also"" on the property page)",EventKG|Wikidata,http://www.wikidata.org/prop/direct/P8371|wd:P8371,7,1,EXACT,True
+UNASSIGNED_REVIEW,wd:P8402,open data portal,platform with publicly accessible data of an organization,Wikidata,wd:P8402,1,1,EXACT,True
+UNASSIGNED_REVIEW,wd:P8403,theorized by,subject who suggested or proposed this concept or immaterial invention,Wikidata,wd:P8403,3,3,EXACT,True
+UNASSIGNED_REVIEW,wd:P841,feast day,saint's principal feast day,EventKG|Wikidata,http://www.wikidata.org/prop/direct/P841|wd:P841,11,10,EXACT,True
+UNASSIGNED_REVIEW,wd:P8411,set in environment,"environment (geographic feature, building type, etc.) the narrative work is set in",EventKG|Wikidata,http://www.wikidata.org/prop/direct/P8411|wd:P8411,49,48,EXACT,True
+UNASSIGNED_REVIEW,wd:P8450,peak bagging classification,recognised peak bagging classification of a mountain or hill,Wikidata,wd:P8450,1,1,EXACT,True
+UNASSIGNED_REVIEW,wd:P8453,public transport stop,"general (e.g. nearest) public transport stop (bus, tram, train, subway)",Wikidata,wd:P8453,2,2,EXACT,True
+UNASSIGNED_REVIEW,wd:P85,anthem,subject's official anthem,EventKG|Wikidata,http://www.wikidata.org/prop/direct/P85|wd:P85,79,45,EXACT,True
+UNASSIGNED_REVIEW,wd:P8500,Vietnamese middle name,middle name of a Vietnamese person; use P735 qualified by P1545 for the middle name of a partially westernized name,Wikidata,wd:P8500,9,9,EXACT,True
+UNASSIGNED_REVIEW,wd:P852,ESRB rating,North American video game content rating,EventKG|Wikidata,http://www.wikidata.org/prop/direct/P852|wd:P852,2,1,EXACT,True
+UNASSIGNED_REVIEW,wd:P859,sponsor,organization or individual that sponsors this item,EventKG|Wikidata,http://www.wikidata.org/prop/direct/P859|wd:P859,24,6,EXACT,True
+UNASSIGNED_REVIEW,wd:P8596,category for the exterior of the item,"category for multimedia files depicting exterior views of this item (object, place)",Wikidata,wd:P8596,13,13,EXACT,True
+UNASSIGNED_REVIEW,wd:P86,composer,"person(s) who wrote the music [for lyricist, use ""lyrics by"" (P676)]",EventKG|Wikidata,http://www.wikidata.org/prop/direct/P86|wd:P86,845,328,EXACT,True
+UNASSIGNED_REVIEW,wd:P8625,bibliography,,EventKG,http://www.wikidata.org/prop/direct/P8625,1,0,EXACT,True
+UNASSIGNED_REVIEW,wd:P8626,opening time,"time when an establishment or attraction opens, qualifier for P3025",Wikidata,wd:P8626,1,1,EXACT,True
+UNASSIGNED_REVIEW,wd:P8627,closing time,"time when an establishment or attraction closes, qualifier for P3025",Wikidata,wd:P8627,1,1,EXACT,True
+UNASSIGNED_REVIEW,wd:P8646,expansion of,"expansion pack of a game (video game, tabletop or board game)",EventKG|Wikidata,http://www.wikidata.org/prop/direct/P8646|wd:P8646,2,1,EXACT,True
+UNASSIGNED_REVIEW,wd:P8670,character designer,"person in charge of developing the style and concept of a character in a video game, anime or other creative work",EventKG|Wikidata,http://www.wikidata.org/prop/direct/P8670|wd:P8670,2,1,EXACT,True
+UNASSIGNED_REVIEW,wd:P87,librettist,,EventKG,http://www.wikidata.org/prop/direct/P87,4,0,EXACT,True
+UNASSIGNED_REVIEW,wd:P872,printed by,"organization or person who printed the creative work (if different from ""publisher"")",EventKG|Wikidata,http://www.wikidata.org/prop/direct/P872|wd:P872,5,1,EXACT,True
+UNASSIGNED_REVIEW,wd:P8744,economy of topic,item that deals with the economy of the subject,Wikidata,wd:P8744,8,8,EXACT,True
+UNASSIGNED_REVIEW,wd:P8745,check-in time,"the earliest time of day at which a reserved room in a hotel, inn or lodge is available to an arriving guest",Wikidata,wd:P8745,2,2,EXACT,True
+UNASSIGNED_REVIEW,wd:P8746,check-out time,the latest time of day a guest may check out of a hotel or lodge without incurring additional cost,Wikidata,wd:P8746,2,2,EXACT,True
+UNASSIGNED_REVIEW,wd:P8764,port calls,harbor or port at which the ship stopped; port of call,EventKG|Wikidata,http://www.wikidata.org/prop/direct/P8764|wd:P8764,40,19,EXACT,True
+UNASSIGNED_REVIEW,wd:P8786,dedicated heritage entity,heritage entity dedicated to or associated with the item's subject,EventKG|Wikidata,http://www.wikidata.org/prop/direct/P8786|wd:P8786,23,13,EXACT,True
+UNASSIGNED_REVIEW,wd:P88,commissioned by,person or organization that commissioned this work,EventKG|Wikidata,http://www.wikidata.org/prop/direct/P88|wd:P88,236,92,EXACT,True
+UNASSIGNED_REVIEW,wd:P8810,parent,parent of the subject. Only use if neither father (P22) nor mother (P25) is applicable.,Wikidata,wd:P8810,1,1,EXACT,True
+UNASSIGNED_REVIEW,wd:P8852,facial hair,"style of cutting, arranging, or combing the hair on the subject's face (usually on the chin, cheeks, and upper lip region); beard",Wikidata,wd:P8852,29,29,EXACT,True
+UNASSIGNED_REVIEW,wd:P8874,Hong Kong film rating,Hong Kong film classification system,Wikidata,wd:P8874,1,1,EXACT,True
+UNASSIGNED_REVIEW,wd:P8889,MTRCB rating,rating of a film or television program in the Philippines,Wikidata,wd:P8889,1,1,EXACT,True
+UNASSIGNED_REVIEW,wd:P8933,category for the view from the item,"category for the view from this item (object, place)",Wikidata,wd:P8933,16,16,EXACT,True
+UNASSIGNED_REVIEW,wd:P8956,compatible with,"this work, product, object or standard can interact with another work, product, object or standard",Wikidata,wd:P8956,2,2,EXACT,True
+UNASSIGNED_REVIEW,wd:P8989,category for the view of the item,"category for the view of this item (object, place)",Wikidata,wd:P8989,20,20,EXACT,True
+UNASSIGNED_REVIEW,wd:P908,PEGI rating,European video game content rating,EventKG|Wikidata,http://www.wikidata.org/prop/direct/P908|wd:P908,3,2,EXACT,True
+UNASSIGNED_REVIEW,wd:P912,has facility,"the subject item has this type of facility, e.g. toilet, car park",EventKG|Wikidata,http://www.wikidata.org/prop/direct/P912|wd:P912,75,72,EXACT,True
+UNASSIGNED_REVIEW,wd:P914,USK rating,German video game content rating - see talk page for appropriate values,Wikidata,wd:P914,4,4,EXACT,True
+UNASSIGNED_REVIEW,wd:P9161,thesis committee member,,EventKG,http://www.wikidata.org/prop/direct/P9161,6,0,EXACT,True
+UNASSIGNED_REVIEW,wd:P9192,sensors,notable sensors in the electronic device,Wikidata,wd:P9192,4,4,EXACT,True
+UNASSIGNED_REVIEW,wd:P92,main regulatory text,text setting the main rules by which the subject is regulated,EventKG|Wikidata,http://www.wikidata.org/prop/direct/P92|wd:P92,41,24,EXACT,True
+UNASSIGNED_REVIEW,wd:P921,main subject,primary topic of a work or act of communication,EventKG|Wikidata,http://www.wikidata.org/prop/direct/P921|wd:P921,6833,983,EXACT,True
+UNASSIGNED_REVIEW,wd:P9215,set during recurring event,"recurring event (e.g. time of day, season, month, holiday) during which this fictional work is set",EventKG|Wikidata,http://www.wikidata.org/prop/direct/P9215|wd:P9215,10,5,EXACT,True
+UNASSIGNED_REVIEW,wd:P9235,seismic classification,seismic risk zone which the administrative entity that receives the seismic classification is in,Wikidata,wd:P9235,1,1,EXACT,True
+UNASSIGNED_REVIEW,wd:P9241,demographics of topic,item that deals with demographics of the subject,Wikidata,wd:P9241,3,3,EXACT,True
+UNASSIGNED_REVIEW,wd:P941,inspired by,"work, human, place or event which inspired this creative work or fictional entity",EventKG|Wikidata,http://www.wikidata.org/prop/direct/P941|wd:P941,40,14,EXACT,True
+UNASSIGNED_REVIEW,wd:P9419,personal library at,institution holding the subject’s personal library,EventKG|Wikidata,http://www.wikidata.org/prop/direct/P9419|wd:P9419,4,2,EXACT,True
+UNASSIGNED_REVIEW,wd:P942,theme music,theme music/song used by the item,EventKG|Wikidata,http://www.wikidata.org/prop/direct/P942|wd:P942,5,4,EXACT,True
+UNASSIGNED_REVIEW,wd:P9493,artist files at,institution or collection that holds artist files about the subject,EventKG|Wikidata,http://www.wikidata.org/prop/direct/P9493|wd:P9493,163,105,EXACT,True
+UNASSIGNED_REVIEW,wd:P9549,official podcast,official podcast of this person or organization,Wikidata,wd:P9549,2,2,EXACT,True
+UNASSIGNED_REVIEW,wd:P9600,oral history at,institution holding an oral history of the subject,EventKG|Wikidata,http://www.wikidata.org/prop/direct/P9600|wd:P9600,31,29,EXACT,True
+UNASSIGNED_REVIEW,wd:P9681,voted on by,a legislative house in which a legislative act was voted on,Wikidata,wd:P9681,2,2,EXACT,True
+UNASSIGNED_REVIEW,wd:P97,noble title,titles held by the person,EventKG|Wikidata,http://www.wikidata.org/prop/direct/P97|wd:P97,471,335,EXACT,True
+UNASSIGNED_REVIEW,wd:P974,tributary,watercourse that flows into an other one (for lake inflows use P200),EventKG|Wikidata,http://www.wikidata.org/prop/direct/P974|wd:P974,4,3,EXACT,True
+UNASSIGNED_REVIEW,wd:P9745,translation of,,EventKG,http://www.wikidata.org/prop/direct/P9745,3,0,EXACT,True
+UNASSIGNED_REVIEW,wd:P98,editor,"person who checks and corrects a work (such as a book, newspaper, academic journal, etc.) to comply with a rules of certain genre. Also applies to person who establishes the text of an ancient written work or manuscript.",EventKG|Wikidata,http://www.wikidata.org/prop/direct/P98|wd:P98,73,25,EXACT,True
+UNASSIGNED_REVIEW,wd:P991,successful candidate,,EventKG,http://www.wikidata.org/prop/direct/P991,334,0,EXACT,True
+UNASSIGNED_REVIEW,wd:P9929,madhhab,Islamic school of thought within Fiqh,Wikidata,wd:P9929,1,1,EXACT,True
