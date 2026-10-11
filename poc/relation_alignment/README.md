@@ -4,6 +4,10 @@ The [country reference dataset EDA](COUNTRY_REFERENCE_DATASET_EDA_2026-10-11.md)
 separates resolved Wikidata assertions from unresolved EventKG `country` pairs
 and measures minimal Wikipedia lead-span coverage before text classification.
 
+The [country data-availability audit](COUNTRY_DATA_AVAILABILITY_AUDIT_2026-10-11.md)
+checks those unresolved pairs against current Wikidata statements, Wikipedia
+infoboxes, entity links, and complete article text before classification.
+
 The [automatic mapping discovery](MAPPING_AUTOMATION_DISCOVERY_2026-10-11.md)
 tests broader three-source evidence and records the decision logic and gaps.
 

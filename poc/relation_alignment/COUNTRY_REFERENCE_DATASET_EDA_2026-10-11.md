@@ -37,7 +37,8 @@ contiguous set of complete sentences that contains an alias of both QID
 endpoints. It never crosses a paragraph boundary. Wikidata labels, aliases,
 and English page titles provide the allowed names.
 
-A text span is `COOCCURRENCE_ONLY`. It does not prove a relation. The later
+A text span is `COOCCURRENCE_IN_LEAD_ONLY`. It does not prove a relation.
+The later
 classifier can select `P17`, `P8047`, both, or neither.
 
 ## Finding

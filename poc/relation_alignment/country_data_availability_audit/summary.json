@@ -1,0 +1,161 @@
+{
+  "pairs": 600,
+  "status_counts": {
+    "INFOBOX_ENTITY_EVIDENCE_OBSERVED": 259,
+    "DATA_NOT_OBSERVED_IN_CHECKED_SOURCES": 200,
+    "ALTERNATIVE_WIKIDATA_RELATION_OBSERVED": 43,
+    "FULL_ARTICLE_ENTITY_LINK_OBSERVED": 82,
+    "FULL_ARTICLE_TEXT_COOCCURRENCE_OBSERVED": 11,
+    "LEAD_TEXT_COOCCURRENCE_OBSERVED": 3,
+    "WIKIDATA_QUALIFIER_RELATION_OBSERVED": 2
+  },
+  "current_wikidata_target_relation_pairs": 0,
+  "alternative_forward_relation_pairs": 43,
+  "alternative_inverse_relation_pairs": 0,
+  "qualifier_relation_pairs": 8,
+  "infobox_entity_evidence_pairs": 285,
+  "full_article_object_link_pairs": 366,
+  "full_article_complete_span_pairs": 213,
+  "lead_complete_span_pairs": 154,
+  "relation_semantics_unresolved_pairs": 557,
+  "resolved_by_structured_wikidata_pairs": 43,
+  "unresolved_with_checked_evidence_pairs": 357,
+  "unresolved_without_checked_evidence_pairs": 200,
+  "top_forward_properties": [
+    {
+      "property": "P495",
+      "label": "country of origin",
+      "pairs": 20
+    },
+    {
+      "property": "P945",
+      "label": "allegiance",
+      "pairs": 16
+    },
+    {
+      "property": "P27",
+      "label": "country of citizenship",
+      "pairs": 5
+    },
+    {
+      "property": "P1532",
+      "label": "country for sport",
+      "pairs": 2
+    },
+    {
+      "property": "P361",
+      "label": "part of",
+      "pairs": 2
+    },
+    {
+      "property": "P840",
+      "label": "narrative location",
+      "pairs": 1
+    },
+    {
+      "property": "P276",
+      "label": "location",
+      "pairs": 1
+    },
+    {
+      "property": "P137",
+      "label": "operator",
+      "pairs": 1
+    }
+  ],
+  "top_inverse_properties": [],
+  "top_qualifier_paths": [
+    {
+      "path": "P577/P291",
+      "pairs": 3
+    },
+    {
+      "path": "P17/P518",
+      "pairs": 3
+    },
+    {
+      "path": "P1411/P2453",
+      "pairs": 1
+    },
+    {
+      "path": "P2142/P3005",
+      "pairs": 1
+    },
+    {
+      "path": "P793/P12995",
+      "pairs": 1
+    },
+    {
+      "path": "P793/P276",
+      "pairs": 1
+    },
+    {
+      "path": "P17/P2348",
+      "pairs": 1
+    }
+  ],
+  "top_infobox_fields": [
+    {
+      "field": "country",
+      "pairs": 200
+    },
+    {
+      "field": "allegiance",
+      "pairs": 73
+    },
+    {
+      "field": "garrison",
+      "pairs": 15
+    },
+    {
+      "field": "operations",
+      "pairs": 6
+    },
+    {
+      "field": "builder",
+      "pairs": 4
+    },
+    {
+      "field": "death_place",
+      "pairs": 4
+    },
+    {
+      "field": "image",
+      "pairs": 4
+    },
+    {
+      "field": "birth_place",
+      "pairs": 3
+    },
+    {
+      "field": "caption",
+      "pairs": 3
+    },
+    {
+      "field": "battles",
+      "pairs": 2
+    },
+    {
+      "field": "image_caption",
+      "pairs": 2
+    },
+    {
+      "field": "office",
+      "pairs": 2
+    },
+    {
+      "field": "captured",
+      "pairs": 2
+    },
+    {
+      "field": "name",
+      "pairs": 1
+    },
+    {
+      "field": "studio",
+      "pairs": 1
+    }
+  ],
+  "classifier_run": false,
+  "interpretation": "An absent relation or text span means not observed in the checked source, not a negative fact."
+}

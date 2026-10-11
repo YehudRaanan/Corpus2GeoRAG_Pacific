@@ -373,7 +373,7 @@ def unresolved_rows(
             rows.append(
                 base
                 | {
-                    "evidence_status": "NO_MINIMAL_COMPLETE_SPAN",
+                    "evidence_status": "NO_MINIMAL_COMPLETE_SPAN_IN_LEAD",
                     "paragraph_index": "",
                     "sentence_start": "",
                     "sentence_end": "",
@@ -385,7 +385,9 @@ def unresolved_rows(
             )
         else:
             for span in spans:
-                rows.append(base | {"evidence_status": "COOCCURRENCE_ONLY"} | span)
+                rows.append(
+                    base | {"evidence_status": "COOCCURRENCE_IN_LEAD_ONLY"} | span
+                )
     return rows
 
 
@@ -398,10 +400,12 @@ def make_summary(
     covered_pairs = {
         (row["subject_qid"], row["object_qid"])
         for row in unresolved
-        if row["evidence_status"] == "COOCCURRENCE_ONLY"
+        if row["evidence_status"] == "COOCCURRENCE_IN_LEAD_ONLY"
     }
     references = [
-        row for row in unresolved if row["evidence_status"] == "COOCCURRENCE_ONLY"
+        row
+        for row in unresolved
+        if row["evidence_status"] == "COOCCURRENCE_IN_LEAD_ONLY"
     ]
     pair_rows = {
         (row["subject_qid"], row["object_qid"]): row for row in unresolved
@@ -418,7 +422,8 @@ def make_summary(
             if row["context_suggestion"] == suggestion
         ]
         with_span = sum(
-            row["evidence_status"] == "COOCCURRENCE_ONLY" for row in matching
+            row["evidence_status"] == "COOCCURRENCE_IN_LEAD_ONLY"
+            for row in matching
         )
         suggestion_coverage[suggestion] = {
             "pairs": len(matching),
@@ -485,10 +490,12 @@ def write_report(summary: dict, unresolved: list[dict]) -> None:
     missing = [
         row
         for row in unresolved
-        if row["evidence_status"] == "NO_MINIMAL_COMPLETE_SPAN"
+        if row["evidence_status"] == "NO_MINIMAL_COMPLETE_SPAN_IN_LEAD"
     ][:10]
     examples = [
-        row for row in unresolved if row["evidence_status"] == "COOCCURRENCE_ONLY"
+        row
+        for row in unresolved
+        if row["evidence_status"] == "COOCCURRENCE_IN_LEAD_ONLY"
     ][:5]
     lines = [
         "# Country relation reference dataset EDA",
@@ -538,7 +545,8 @@ def write_report(summary: dict, unresolved: list[dict]) -> None:
         "endpoints. It never crosses a paragraph boundary. Wikidata labels, aliases,",
         "and English page titles provide the allowed names.",
         "",
-        "A text span is `COOCCURRENCE_ONLY`. It does not prove a relation. The later",
+        "A text span is `COOCCURRENCE_IN_LEAD_ONLY`. It does not prove a relation.",
+        "The later",
         "classifier can select `P17`, `P8047`, both, or neither.",
         "",
         "## Finding",
