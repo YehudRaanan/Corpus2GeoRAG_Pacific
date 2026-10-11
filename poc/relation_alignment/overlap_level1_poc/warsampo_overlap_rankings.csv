@@ -1,0 +1,4 @@
+source,source_relation_uri,rank,wd_property,direction,shared_pairs,war_co_connected_pairs,wd_co_connected_pairs,war_coverage_pct,wd_coverage_pct,evidence_status,wikidata_parent_count,top_group_action
+WarSampo,http://ldf.fi/schema/warsa/actors/hasConflict,1,P607,same,115,115,115,100.0,100.0,STRONG_CANDIDATE,1,PROVISIONAL_LEVEL1
+WarSampo,http://ldf.fi/warsa/actors/hasUpperUnit,1,P527,reverse,3,3,3,100.0,100.0,INSUFFICIENT_SUPPORT,1,KEEP_UNRESOLVED
+WarSampo,http://ldf.fi/warsa/actors/hasUpperUnit,2,P361,same,3,3,6,100.0,50.0,INSUFFICIENT_SUPPORT,2,NOT_TOP_RANKED

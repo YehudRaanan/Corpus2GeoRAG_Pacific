@@ -1,0 +1,23 @@
+{
+  "unresolved_source_relations": 650,
+  "unresolved_by_source": {
+    "EventKG": 271,
+    "WarSampo": 72,
+    "Wikidata": 307
+  },
+  "eventkg_overlap_context_groups": 27,
+  "eventkg_unresolved_relations_with_overlap": 20,
+  "warsampo_unresolved_relations_with_overlap": 2,
+  "level1_candidate_rows": 179,
+  "provisional_level1_rows": 1,
+  "provisional_level1_relations": 1,
+  "coverage_results": {
+    "LEVEL1_REVIEW_CANDIDATE": 20,
+    "LEVEL2_ONLY_NO_WIKIDATA_PARENT": 1,
+    "NO_AVAILABLE_QID_PAIR_OVERLAP": 321,
+    "PROVISIONAL_LEVEL1": 1,
+    "REFERENCE_SOURCE_NOT_EVALUATED": 307
+  },
+  "classifier_run": false,
+  "source_data_modified": false
+}
