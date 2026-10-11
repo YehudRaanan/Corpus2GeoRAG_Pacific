@@ -1,9 +1,15 @@
 # Finnish WWII relation-type alignment POC
 
+The [source ontology Level 1 to Level 2 map](SOURCE_ONTOLOGY_LEVEL1_LEVEL2_2026-10-11.md)
+uses published source hierarchies and EventKG mapping files. It preserves
+multiple parents and marks predicates for which the public ontology declares
+no parent. This is the authoritative input for the next EDA.
+
 The [full Level 1 to Level 2 map](FULL_LEVEL1_LEVEL2_MAP_2026-10-11.md)
 contains every eligible relation in the current three-source inventory. It
 keeps distinct Level 2 meanings separate and ranks Level 1 options for cases
-that still need review.
+that still need review. Its 14 Level 1 families are project-made review groups,
+not source ontology classes.
 
 The [country reference dataset EDA](COUNTRY_REFERENCE_DATASET_EDA_2026-10-11.md)
 separates resolved Wikidata assertions from unresolved EventKG `country` pairs

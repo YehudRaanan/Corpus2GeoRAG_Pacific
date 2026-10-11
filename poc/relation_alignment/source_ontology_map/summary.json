@@ -1,0 +1,19 @@
+{
+  "retrieved_at_utc": "2026-10-11T19:08:43.713721+00:00",
+  "eligible_source_level2_rows": 1520,
+  "source_level2_with_declared_parent": 870,
+  "source_level2_without_declared_parent": 650,
+  "source_level2_with_multiple_parents": 144,
+  "declared_parent_edges": 1055,
+  "unique_level1_parent_uris": 204,
+  "source_level1_options": 313,
+  "mapping_basis_counts": {
+    "EVENTKG_MANUAL_MAPPING": 20,
+    "NO_DECLARED_PARENT": 650,
+    "RDFS_SUBPROPERTY": 356,
+    "WIKIDATA_P1647": 558,
+    "WIKIDATA_P2235_EXTERNAL": 121
+  },
+  "classifier_run": false,
+  "source_data_modified": false
+}

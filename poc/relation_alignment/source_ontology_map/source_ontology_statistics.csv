@@ -1,0 +1,4 @@
+source,eligible_level2_rows,level2_with_declared_parent,level2_without_declared_parent,level2_with_multiple_parents,declared_parent_edges,coverage_pct
+EventKG,808,537,271,74,634,66.46
+WarSampo,111,39,72,5,44,35.14
+Wikidata,601,294,307,65,377,48.92

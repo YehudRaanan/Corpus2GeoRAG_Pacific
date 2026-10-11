@@ -1,0 +1,314 @@
+source,level1_uri,level1_label,level2_count,total_level2_occurrences,mapping_bases
+EventKG,http://www.ontologydesignpatterns.org/ont/dul/DUL.owl#coparticipatesWith,coparticipates With,112,38148,RDFS_SUBPROPERTY
+EventKG,http://www.ontologydesignpatterns.org/ont/dul/DUL.owl#sameSettingAs,same Setting As,56,9431,RDFS_SUBPROPERTY
+EventKG,http://www.ontologydesignpatterns.org/ont/dul/DUL.owl#hasLocation,has Location,31,43582,RDFS_SUBPROPERTY
+EventKG,http://www.wikidata.org/prop/direct/P3342,significant person,30,18267,WIKIDATA_P1647
+EventKG,http://www.ontologydesignpatterns.org/ont/dul/DUL.owl#isMemberOf,is Member Of,18,28643,RDFS_SUBPROPERTY
+EventKG,http://semanticweb.cs.vu.nl/2009/11/sem/hasPlace,has Place,15,4698,EVENTKG_MANUAL_MAPPING
+EventKG,http://www.wikidata.org/prop/direct/P276,location,15,65878,WIKIDATA_P1647
+EventKG,http://www.wikidata.org/prop/direct/P361,part of,15,69287,WIKIDATA_P1647
+EventKG,http://www.ontologydesignpatterns.org/ont/dul/DUL.owl#hasParticipant,has Participant,14,401,RDFS_SUBPROPERTY
+EventKG,http://www.wikidata.org/prop/direct/P7153,significant place,13,15096,WIKIDATA_P1647
+EventKG,http://www.wikidata.org/prop/direct/P710,participant,12,1239,WIKIDATA_P1647
+EventKG,http://www.ontologydesignpatterns.org/ont/dul/DUL.owl#isPartOf,is Part Of,9,37315,RDFS_SUBPROPERTY
+EventKG,http://www.wikidata.org/prop/direct/P170,creator,9,8568,WIKIDATA_P1647
+EventKG,http://www.wikidata.org/prop/direct/P463,member of,8,6452,WIKIDATA_P1647
+EventKG,http://www.ontologydesignpatterns.org/ont/dul/DUL.owl#hasCommonBoundary,has Common Boundary,7,928,RDFS_SUBPROPERTY
+EventKG,http://www.ontologydesignpatterns.org/ont/dul/DUL.owl#isClassifiedBy,is Classified By,7,1336,RDFS_SUBPROPERTY
+EventKG,http://www.wikidata.org/prop/direct/P1037,director / manager,7,690,WIKIDATA_P1647
+EventKG,http://www.wikidata.org/prop/direct/P527,has part(s),7,4005,WIKIDATA_P1647
+EventKG,http://www.ontologydesignpatterns.org/ont/dul/DUL.owl#isDescribedBy,is Described By,6,837,RDFS_SUBPROPERTY
+EventKG,http://www.ontologydesignpatterns.org/ont/dul/DUL.owl#isParticipantIn,is Participant In,6,1961,RDFS_SUBPROPERTY
+EventKG,http://schema.org/containedInPlace,contained In Place,5,4296,EVENTKG_MANUAL_MAPPING
+EventKG,http://www.ontologydesignpatterns.org/ont/dul/DUL.owl#hasPart,has Part,5,14,RDFS_SUBPROPERTY
+EventKG,http://www.wikidata.org/prop/direct/P1038,relative,5,9098,WIKIDATA_P1647
+EventKG,http://www.wikidata.org/prop/direct/P2283,uses,5,1083,WIKIDATA_P1647
+EventKG,http://www.ontologydesignpatterns.org/ont/dul/DUL.owl#isLocationOf,is Location Of,4,76,RDFS_SUBPROPERTY
+EventKG,http://www.wikidata.org/prop/direct/P1344,participant in,4,92197,WIKIDATA_P1647
+EventKG,http://www.wikidata.org/prop/direct/P156,followed by,4,685,WIKIDATA_P1647
+EventKG,http://www.wikidata.org/prop/direct/P17,country,4,232910,WIKIDATA_P1647
+EventKG,http://www.wikidata.org/prop/direct/P3092,film crew member,4,288,WIKIDATA_P1647
+EventKG,http://www.wikidata.org/prop/direct/P8371,"references work, tradition or theory",4,279,WIKIDATA_P1647
+EventKG,https://schema.org/contentRating,content Rating,4,4,WIKIDATA_P2235_EXTERNAL
+EventKG,http://d-nb.info/standards/elementset/gnd#designer,designer,3,110,WIKIDATA_P2235_EXTERNAL
+EventKG,http://dbpedia.org/ontology/Medalist,Medalist,3,48,RDFS_SUBPROPERTY
+EventKG,http://semanticweb.cs.vu.nl/2009/11/sem/eventProperty,event Property,3,16546,RDFS_SUBPROPERTY
+EventKG,http://www.ontologydesignpatterns.org/ont/dul/DUL.owl#conceptualizes,conceptualizes,3,382,RDFS_SUBPROPERTY
+EventKG,http://www.wikidata.org/prop/direct/P12912,object of occurrence,3,496,WIKIDATA_P1647
+EventKG,http://www.wikidata.org/prop/direct/P1416,affiliation,3,25030,WIKIDATA_P1647
+EventKG,http://www.wikidata.org/prop/direct/P155,follows,3,711,WIKIDATA_P1647
+EventKG,http://www.wikidata.org/prop/direct/P180,depicts,3,5876,WIKIDATA_P1647
+EventKG,http://www.wikidata.org/prop/direct/P2670,has part(s) of the class,3,7,WIKIDATA_P1647
+EventKG,http://www.wikidata.org/prop/direct/P31,instance of,3,2024,WIKIDATA_P1647
+EventKG,http://www.wikidata.org/prop/direct/P488,chairperson,3,270,WIKIDATA_P1647
+EventKG,http://www.wikidata.org/prop/direct/P828,has cause,3,173,WIKIDATA_P1647
+EventKG,http://www.wikidata.org/prop/direct/P859,sponsor,3,37,WIKIDATA_P1647
+EventKG,https://schema.org/memberOf,member Of,3,2195,WIKIDATA_P2235_EXTERNAL
+EventKG,http://d-nb.info/standards/elementset/gnd#broaderTermPartitive,broader Term Partitive,2,9969,WIKIDATA_P2235_EXTERNAL
+EventKG,http://dbpedia.org/ontology/location,location,2,47,RDFS_SUBPROPERTY
+EventKG,http://id.loc.gov/entities/relationships/setting,setting,2,224,WIKIDATA_P2235_EXTERNAL
+EventKG,http://id.loc.gov/vocabulary/relators/stg,stg,2,224,WIKIDATA_P2235_EXTERNAL
+EventKG,http://vocab.getty.edu/ontology#ulan1317_member_of,ulan1317 member of,2,7857,WIKIDATA_P2235_EXTERNAL
+EventKG,http://vocab.getty.edu/ontology#ulan1511_child_of,ulan1511 child of,2,3691,WIKIDATA_P2235_EXTERNAL
+EventKG,http://www.ontologydesignpatterns.org/ont/dul/DUL.owl#hasMember,has Member,2,114,RDFS_SUBPROPERTY
+EventKG,http://www.ontologydesignpatterns.org/ont/dul/DUL.owl#hasRole,has Role,2,1627,RDFS_SUBPROPERTY
+EventKG,http://www.ontologydesignpatterns.org/ont/dul/DUL.owl#isAbout,is About,2,298,RDFS_SUBPROPERTY
+EventKG,http://www.ontologydesignpatterns.org/ont/dul/DUL.owl#isSettingFor,is Setting For,2,146,RDFS_SUBPROPERTY
+EventKG,http://www.ontologydesignpatterns.org/ont/dul/DUL.owl#nearTo,near To,2,41,RDFS_SUBPROPERTY
+EventKG,http://www.openlinksw.com/schemas/virtrdf#geo_cont,geo cont,2,25765,RDFS_SUBPROPERTY
+EventKG,http://www.w3.org/2006/vcard/ns#Parent,Parent,2,3691,WIKIDATA_P2235_EXTERNAL
+EventKG,http://www.wikidata.org/prop/direct/P101,field of work,2,7,WIKIDATA_P1647
+EventKG,http://www.wikidata.org/prop/direct/P1066,student of,2,462,WIKIDATA_P1647
+EventKG,http://www.wikidata.org/prop/direct/P10894,spoken by,2,85,WIKIDATA_P1647
+EventKG,http://www.wikidata.org/prop/direct/P121,item operated,2,6,WIKIDATA_P1647
+EventKG,http://www.wikidata.org/prop/direct/P12694,destination of transfer,2,306,WIKIDATA_P1647
+EventKG,http://www.wikidata.org/prop/direct/P127,owned by,2,542,WIKIDATA_P1647
+EventKG,http://www.wikidata.org/prop/direct/P131,located in the administrative territorial entity,2,3828,WIKIDATA_P1647
+EventKG,http://www.wikidata.org/prop/direct/P1412,"languages spoken, written or signed",2,138,WIKIDATA_P1647
+EventKG,http://www.wikidata.org/prop/direct/P1535,used by,2,15452,WIKIDATA_P1647
+EventKG,http://www.wikidata.org/prop/direct/P1542,has effect,2,5,WIKIDATA_P1647
+EventKG,http://www.wikidata.org/prop/direct/P161,cast member,2,183,WIKIDATA_P1647
+EventKG,http://www.wikidata.org/prop/direct/P2561,name,2,85,WIKIDATA_P1647
+EventKG,http://www.wikidata.org/prop/direct/P50,author,2,34,WIKIDATA_P1647
+EventKG,http://www.wikidata.org/prop/direct/P551,residence,2,29072,WIKIDATA_P1647
+EventKG,http://www.wikidata.org/prop/direct/P767,contributor to the creative work or subject,2,1054,WIKIDATA_P1647
+EventKG,http://www.wikidata.org/prop/direct/P793,significant event,2,5342,WIKIDATA_P1647
+EventKG,http://www.wikidata.org/prop/direct/P8810,parent,2,3691,WIKIDATA_P1647
+EventKG,http://www.wikidata.org/prop/direct/P921,main subject,2,4061,WIKIDATA_P1647
+EventKG,http://www.wikidata.org/prop/direct/P941,inspired by,2,269,WIKIDATA_P1647
+EventKG,https://schema.org/isPartOf,is Part Of,2,748,WIKIDATA_P2235_EXTERNAL
+EventKG,https://schema.org/member,member,2,435,WIKIDATA_P2235_EXTERNAL
+EventKG,https://schema.org/parent,parent,2,3691,WIKIDATA_P2235_EXTERNAL
+EventKG,https://schema.org/publication,publication,2,475,WIKIDATA_P2235_EXTERNAL
+EventKG,http://d-nb.info/standards/elementset/gnd#narrowerTermPartitive,narrower Term Partitive,1,4852,WIKIDATA_P2235_EXTERNAL
+EventKG,http://d-nb.info/standards/elementset/gnd#sponsorOrPatron,sponsor Or Patron,1,18,WIKIDATA_P2235_EXTERNAL
+EventKG,http://dbpedia.org/ontology/administrativeHeadCity,administrative Head City,1,47,RDFS_SUBPROPERTY
+EventKG,http://dbpedia.org/ontology/championInDouble,champion In Double,1,2,RDFS_SUBPROPERTY
+EventKG,http://dbpedia.org/ontology/championInSingle,champion In Single,1,1,RDFS_SUBPROPERTY
+EventKG,http://dbpedia.org/ontology/followedBy,followed By,1,16,RDFS_SUBPROPERTY
+EventKG,http://dbpedia.org/ontology/genre,genre,1,55,RDFS_SUBPROPERTY
+EventKG,http://dbpedia.org/ontology/owner,owner,1,1,RDFS_SUBPROPERTY
+EventKG,http://id.loc.gov/ontologies/bibframe/historyOfWork,history Of Work,1,47,WIKIDATA_P2235_EXTERNAL
+EventKG,http://id.loc.gov/ontologies/bibframe/originPlace,origin Place,1,9666,WIKIDATA_P2235_EXTERNAL
+EventKG,http://pcp-on-web.de/ontology#hasParent,has Parent,1,3113,WIKIDATA_P2235_EXTERNAL
+EventKG,http://schema.org/memberOf,member Of,1,4186,WIKIDATA_P2235_EXTERNAL
+EventKG,http://www.ontologydesignpatterns.org/ont/dul/DUL.owl#associatedWith,associated With,1,4,RDFS_SUBPROPERTY
+EventKG,http://www.ontologydesignpatterns.org/ont/dul/DUL.owl#concretelyExpresses,concretely Expresses,1,9,RDFS_SUBPROPERTY
+EventKG,http://www.ontologydesignpatterns.org/ont/dul/DUL.owl#follows,follows,1,9,RDFS_SUBPROPERTY
+EventKG,http://www.ontologydesignpatterns.org/ont/dul/DUL.owl#hasComponent,has Component,1,2,RDFS_SUBPROPERTY
+EventKG,http://www.ontologydesignpatterns.org/ont/dul/DUL.owl#hasConstituent,has Constituent,1,1,RDFS_SUBPROPERTY
+EventKG,http://www.ontologydesignpatterns.org/ont/dul/DUL.owl#hasQuality,has Quality,1,41,RDFS_SUBPROPERTY
+EventKG,http://www.ontologydesignpatterns.org/ont/dul/DUL.owl#isRoleOf,is Role Of,1,8,RDFS_SUBPROPERTY
+EventKG,http://www.ontologydesignpatterns.org/ont/dul/DUL.owl#precedes,precedes,1,16,RDFS_SUBPROPERTY
+EventKG,http://www.wikidata.org/prop/direct/P10527,documentation files at,1,58,WIKIDATA_P1647
+EventKG,http://www.wikidata.org/prop/direct/P1071,location of creation,1,116,WIKIDATA_P1647
+EventKG,http://www.wikidata.org/prop/direct/P11108,recorded participant,1,6,WIKIDATA_P1647
+EventKG,http://www.wikidata.org/prop/direct/P12693,source of transfer,1,1,WIKIDATA_P1647
+EventKG,http://www.wikidata.org/prop/direct/P129,physically interacts with,1,8,WIKIDATA_P1647
+EventKG,http://www.wikidata.org/prop/direct/P12995,agent of action,1,95,WIKIDATA_P1647
+EventKG,http://www.wikidata.org/prop/direct/P13044,characteristic of,1,362,WIKIDATA_P1647
+EventKG,http://www.wikidata.org/prop/direct/P1329,phone number,1,1,WIKIDATA_P1647
+EventKG,http://www.wikidata.org/prop/direct/P1346,winner,1,334,WIKIDATA_P1647
+EventKG,http://www.wikidata.org/prop/direct/P135,movement,1,24,WIKIDATA_P1647
+EventKG,http://www.wikidata.org/prop/direct/P1365,replaces,1,14,WIKIDATA_P1647
+EventKG,http://www.wikidata.org/prop/direct/P1366,replaced by,1,21,WIKIDATA_P1647
+EventKG,http://www.wikidata.org/prop/direct/P1382,partially coincident with,1,2165,WIKIDATA_P1647
+EventKG,http://www.wikidata.org/prop/direct/P144,based on,1,1,WIKIDATA_P1647
+EventKG,http://www.wikidata.org/prop/direct/P1536,immediate cause of,1,855,WIKIDATA_P1647
+EventKG,http://www.wikidata.org/prop/direct/P159,headquarters location,1,1,WIKIDATA_P1647
+EventKG,http://www.wikidata.org/prop/direct/P175,performer,1,6032,WIKIDATA_P1647
+EventKG,http://www.wikidata.org/prop/direct/P176,manufacturer,1,30,WIKIDATA_P1647
+EventKG,http://www.wikidata.org/prop/direct/P1830,owner of,1,14,WIKIDATA_P1647
+EventKG,http://www.wikidata.org/prop/direct/P1889,different from,1,4,WIKIDATA_P1647
+EventKG,http://www.wikidata.org/prop/direct/P189,location of discovery,1,1,WIKIDATA_P1647
+EventKG,http://www.wikidata.org/prop/direct/P1923,participating team,1,349,WIKIDATA_P1647
+EventKG,http://www.wikidata.org/prop/direct/P2541,operating area,1,362,WIKIDATA_P1647
+EventKG,http://www.wikidata.org/prop/direct/P2579,studied by,1,6,WIKIDATA_P1647
+EventKG,http://www.wikidata.org/prop/direct/P2650,interested in,1,820,WIKIDATA_P1647
+EventKG,http://www.wikidata.org/prop/direct/P2828,corporate officer,1,5,WIKIDATA_P1647
+EventKG,http://www.wikidata.org/prop/direct/P2860,cites work,1,4,WIKIDATA_P1647
+EventKG,http://www.wikidata.org/prop/direct/P2868,subject has role,1,3928,WIKIDATA_P1647
+EventKG,http://www.wikidata.org/prop/direct/P287,designed by,1,137,WIKIDATA_P1647
+EventKG,http://www.wikidata.org/prop/direct/P2936,language used,1,18,WIKIDATA_P1647
+EventKG,http://www.wikidata.org/prop/direct/P3174,art director,1,79,WIKIDATA_P1647
+EventKG,http://www.wikidata.org/prop/direct/P3301,broadcast by,1,46,WIKIDATA_P1647
+EventKG,http://www.wikidata.org/prop/direct/P355,child organization or unit,1,2,WIKIDATA_P1647
+EventKG,http://www.wikidata.org/prop/direct/P366,has use,1,10,WIKIDATA_P1647
+EventKG,http://www.wikidata.org/prop/direct/P39,position held,1,8,WIKIDATA_P1647
+EventKG,http://www.wikidata.org/prop/direct/P462,color,1,3,WIKIDATA_P1647
+EventKG,http://www.wikidata.org/prop/direct/P629,"version, edition or translation of",1,3,WIKIDATA_P1647
+EventKG,http://www.wikidata.org/prop/direct/P706,located in/on physical feature,1,2,WIKIDATA_P1647
+EventKG,http://www.wikidata.org/prop/direct/P726,candidate,1,334,WIKIDATA_P1647
+EventKG,http://www.wikidata.org/prop/direct/P7604,supervised by,1,461,WIKIDATA_P1647
+EventKG,http://www.wikidata.org/prop/direct/P790,approved by,1,36,WIKIDATA_P1647
+EventKG,http://www.wikidata.org/prop/direct/P802,student,1,571,WIKIDATA_P1647
+EventKG,http://www.wikidata.org/prop/direct/P8546,recording location,1,1,WIKIDATA_P1647
+EventKG,http://www.wikidata.org/prop/direct/P8956,compatible with,1,290,WIKIDATA_P1647
+EventKG,http://www.wikidata.org/prop/direct/P912,has facility,1,482,WIKIDATA_P1647
+EventKG,http://www.wikidata.org/prop/direct/P9234,supplement to,1,1,WIKIDATA_P1647
+EventKG,http://www.wikidata.org/prop/direct/P9883,created for,1,1,WIKIDATA_P1647
+EventKG,https://d-nb.info/standards/elementset/gnd#hierarchicalSuperiorOfPlaceOrGeographicName,hierarchical Superior Of Place Or Geographic Name,1,336,WIKIDATA_P2235_EXTERNAL
+EventKG,https://schema.org/containedInPlace,contained In Place,1,336,WIKIDATA_P2235_EXTERNAL
+EventKG,https://schema.org/containsPlace,contains Place,1,110,WIKIDATA_P2235_EXTERNAL
+EventKG,https://schema.org/event,event,1,18336,WIKIDATA_P2235_EXTERNAL
+EventKG,https://schema.org/jobTitle,job Title,1,8,WIKIDATA_P2235_EXTERNAL
+EventKG,https://schema.org/subjectOf,subject Of,1,3165,WIKIDATA_P2235_EXTERNAL
+EventKG,https://w3id.org/gso/1.0/common/location,location,1,163,WIKIDATA_P2235_EXTERNAL
+EventKG,https://www.commoncoreontologies.org/ont00001842,ont00001842,1,3113,WIKIDATA_P2235_EXTERNAL
+WarSampo,http://www.cidoc-crm.org/cidoc-crm/P67_refers_to,refers to,7,656565,RDFS_SUBPROPERTY
+WarSampo,http://www.cidoc-crm.org/cidoc-crm/P11_had_participant,had participant,5,301132,RDFS_SUBPROPERTY
+WarSampo,http://www.cidoc-crm.org/cidoc-crm/P92_brought_into_existence,brought into existence,3,283409,RDFS_SUBPROPERTY
+WarSampo,http://www.w3.org/2004/02/skos/core#mappingRelation,mapping Relation,3,2886,RDFS_SUBPROPERTY
+WarSampo,http://ldf.fi/schema/warsa/municipality_of_domicile,municipality of domicile,2,96541,RDFS_SUBPROPERTY
+WarSampo,http://ldf.fi/schema/warsa/municipality_of_residence,municipality of residence,2,92182,RDFS_SUBPROPERTY
+WarSampo,http://ldf.fi/schema/warsa/unit,unit,2,88189,RDFS_SUBPROPERTY
+WarSampo,http://www.cidoc-crm.org/cidoc-crm/P93_took_out_of_existence,took out of existence,2,107005,RDFS_SUBPROPERTY
+WarSampo,http://ldf.fi/schema/warsa/cause_of_death,cause of death,1,94677,RDFS_SUBPROPERTY
+WarSampo,http://ldf.fi/schema/warsa/municipality_of_birth,municipality of birth,1,81661,RDFS_SUBPROPERTY
+WarSampo,http://ldf.fi/schema/warsa/municipality_of_burial,municipality of burial,1,94432,RDFS_SUBPROPERTY
+WarSampo,http://ldf.fi/schema/warsa/municipality_of_death,municipality of death,1,41679,RDFS_SUBPROPERTY
+WarSampo,http://ldf.fi/schema/warsa/municipality_of_going_mia,municipality of going mia,1,4117,RDFS_SUBPROPERTY
+WarSampo,http://ldf.fi/schema/warsa/municipality_of_wounding,municipality of wounding,1,7673,RDFS_SUBPROPERTY
+WarSampo,http://purl.org/dc/elements/1.1/relation,relation,1,171,RDFS_SUBPROPERTY
+WarSampo,http://purl.org/dc/terms/relation,relation,1,171,RDFS_SUBPROPERTY
+WarSampo,http://www.cidoc-crm.org/cidoc-crm/P12_occurred_in_the_presence_of,occurred in the presence of,1,168087,RDFS_SUBPROPERTY
+WarSampo,http://www.cidoc-crm.org/cidoc-crm/P132_spatiotemporally_overlaps_with,spatiotemporally overlaps with,1,4,RDFS_SUBPROPERTY
+WarSampo,http://www.cidoc-crm.org/cidoc-crm/P67i_is_referred_to_by,P67i is referred to by,1,496211,RDFS_SUBPROPERTY
+WarSampo,http://www.w3.org/2004/02/skos/core#broader,broader,1,3,RDFS_SUBPROPERTY
+WarSampo,http://www.w3.org/2004/02/skos/core#broaderTransitive,broader Transitive,1,1783,RDFS_SUBPROPERTY
+WarSampo,http://www.w3.org/2004/02/skos/core#inScheme,in Scheme,1,41,RDFS_SUBPROPERTY
+WarSampo,http://www.w3.org/2004/02/skos/core#narrower,narrower,1,3,RDFS_SUBPROPERTY
+WarSampo,http://www.w3.org/2004/02/skos/core#narrowerTransitive,narrower Transitive,1,441,RDFS_SUBPROPERTY
+WarSampo,http://www.w3.org/2004/02/skos/core#related,related,1,2880,RDFS_SUBPROPERTY
+WarSampo,http://www.w3.org/2004/02/skos/core#semanticRelation,semantic Relation,1,584,RDFS_SUBPROPERTY
+Wikidata,http://www.wikidata.org/prop/direct/P3342,significant person,26,12033,WIKIDATA_P1647
+Wikidata,https://schema.org/contentRating,content Rating,26,536,WIKIDATA_P2235_EXTERNAL
+Wikidata,http://www.wikidata.org/prop/direct/P361,part of,17,24999,WIKIDATA_P1647
+Wikidata,http://www.wikidata.org/prop/direct/P276,location,16,40004,WIKIDATA_P1647
+Wikidata,http://www.wikidata.org/prop/direct/P7153,significant place,15,15503,WIKIDATA_P1647
+Wikidata,http://www.wikidata.org/prop/direct/P170,creator,11,2592,WIKIDATA_P1647
+Wikidata,http://www.wikidata.org/prop/direct/P710,participant,11,557,WIKIDATA_P1647
+Wikidata,http://www.wikidata.org/prop/direct/P463,member of,9,4950,WIKIDATA_P1647
+Wikidata,http://www.wikidata.org/prop/direct/P2283,uses,8,833,WIKIDATA_P1647
+Wikidata,http://www.wikidata.org/prop/direct/P527,has part(s),8,2550,WIKIDATA_P1647
+Wikidata,http://www.wikidata.org/prop/direct/P1037,director / manager,7,167,WIKIDATA_P1647
+Wikidata,http://www.wikidata.org/prop/direct/P3092,film crew member,7,962,WIKIDATA_P1647
+Wikidata,https://schema.org/category,category,7,381,WIKIDATA_P2235_EXTERNAL
+Wikidata,http://www.wikidata.org/prop/direct/P1038,relative,6,6006,WIKIDATA_P1647
+Wikidata,http://www.wikidata.org/prop/direct/P31,instance of,5,8149,WIKIDATA_P1647
+Wikidata,http://www.wikidata.org/prop/direct/P1344,participant in,4,37316,WIKIDATA_P1647
+Wikidata,http://www.wikidata.org/prop/direct/P17,country,4,33559,WIKIDATA_P1647
+Wikidata,http://www.wikidata.org/prop/direct/P2561,name,4,30839,WIKIDATA_P1647
+Wikidata,http://www.wikidata.org/prop/direct/P7084,related category,4,79,WIKIDATA_P1647
+Wikidata,http://www.wikidata.org/prop/direct/P8371,"references work, tradition or theory",4,221,WIKIDATA_P1647
+Wikidata,http://d-nb.info/standards/elementset/gnd#designer,designer,3,90,WIKIDATA_P2235_EXTERNAL
+Wikidata,http://www.wikidata.org/prop/direct/P101,field of work,3,27,WIKIDATA_P1647
+Wikidata,http://www.wikidata.org/prop/direct/P12912,object of occurrence,3,480,WIKIDATA_P1647
+Wikidata,http://www.wikidata.org/prop/direct/P131,located in the administrative territorial entity,3,15787,WIKIDATA_P1647
+Wikidata,http://www.wikidata.org/prop/direct/P1416,affiliation,3,17883,WIKIDATA_P1647
+Wikidata,http://www.wikidata.org/prop/direct/P1455,list of works,3,27,WIKIDATA_P1647
+Wikidata,http://www.wikidata.org/prop/direct/P156,followed by,3,573,WIKIDATA_P1647
+Wikidata,http://www.wikidata.org/prop/direct/P180,depicts,3,1332,WIKIDATA_P1647
+Wikidata,http://www.wikidata.org/prop/direct/P2354,has list,3,20,WIKIDATA_P1647
+Wikidata,http://www.wikidata.org/prop/direct/P2670,has part(s) of the class,3,501,WIKIDATA_P1647
+Wikidata,http://www.wikidata.org/prop/direct/P488,chairperson,3,71,WIKIDATA_P1647
+Wikidata,http://www.wikidata.org/prop/direct/P706,located in/on physical feature,3,185,WIKIDATA_P1647
+Wikidata,http://www.wikidata.org/prop/direct/P767,contributor to the creative work or subject,3,552,WIKIDATA_P1647
+Wikidata,http://www.wikidata.org/prop/direct/P828,has cause,3,141,WIKIDATA_P1647
+Wikidata,http://www.wikidata.org/prop/direct/P912,has facility,3,1360,WIKIDATA_P1647
+Wikidata,http://www.wikidata.org/prop/direct/P941,inspired by,3,215,WIKIDATA_P1647
+Wikidata,https://schema.org/memberOf,member Of,3,1389,WIKIDATA_P2235_EXTERNAL
+Wikidata,http://d-nb.info/standards/elementset/gnd#broaderTermPartitive,broader Term Partitive,2,10224,WIKIDATA_P2235_EXTERNAL
+Wikidata,http://id.loc.gov/entities/relationships/setting,setting,2,692,WIKIDATA_P2235_EXTERNAL
+Wikidata,http://id.loc.gov/vocabulary/relators/stg,stg,2,692,WIKIDATA_P2235_EXTERNAL
+Wikidata,http://vocab.getty.edu/ontology#ulan1317_member_of,ulan1317 member of,2,3491,WIKIDATA_P2235_EXTERNAL
+Wikidata,http://vocab.getty.edu/ontology#ulan1511_child_of,ulan1511 child of,2,2603,WIKIDATA_P2235_EXTERNAL
+Wikidata,http://www.w3.org/2006/vcard/ns#Parent,Parent,2,2603,WIKIDATA_P2235_EXTERNAL
+Wikidata,http://www.wikidata.org/prop/direct/P10894,spoken by,2,33,WIKIDATA_P1647
+Wikidata,http://www.wikidata.org/prop/direct/P121,item operated,2,10,WIKIDATA_P1647
+Wikidata,http://www.wikidata.org/prop/direct/P12694,destination of transfer,2,34,WIKIDATA_P1647
+Wikidata,http://www.wikidata.org/prop/direct/P127,owned by,2,616,WIKIDATA_P1647
+Wikidata,http://www.wikidata.org/prop/direct/P1382,partially coincident with,2,6973,WIKIDATA_P1647
+Wikidata,http://www.wikidata.org/prop/direct/P1412,"languages spoken, written or signed",2,1092,WIKIDATA_P1647
+Wikidata,http://www.wikidata.org/prop/direct/P1535,used by,2,14018,WIKIDATA_P1647
+Wikidata,http://www.wikidata.org/prop/direct/P1542,has effect,2,10,WIKIDATA_P1647
+Wikidata,http://www.wikidata.org/prop/direct/P155,follows,2,603,WIKIDATA_P1647
+Wikidata,http://www.wikidata.org/prop/direct/P161,cast member,2,41,WIKIDATA_P1647
+Wikidata,http://www.wikidata.org/prop/direct/P175,performer,2,4085,WIKIDATA_P1647
+Wikidata,http://www.wikidata.org/prop/direct/P2579,studied by,2,38,WIKIDATA_P1647
+Wikidata,http://www.wikidata.org/prop/direct/P355,child organization or unit,2,5,WIKIDATA_P1647
+Wikidata,http://www.wikidata.org/prop/direct/P462,color,2,46,WIKIDATA_P1647
+Wikidata,http://www.wikidata.org/prop/direct/P50,author,2,412,WIKIDATA_P1647
+Wikidata,http://www.wikidata.org/prop/direct/P551,residence,2,1128,WIKIDATA_P1647
+Wikidata,http://www.wikidata.org/prop/direct/P734,family name,2,92,WIKIDATA_P1647
+Wikidata,http://www.wikidata.org/prop/direct/P793,significant event,2,2003,WIKIDATA_P1647
+Wikidata,http://www.wikidata.org/prop/direct/P8546,recording location,2,168,WIKIDATA_P1647
+Wikidata,http://www.wikidata.org/prop/direct/P859,sponsor,2,30,WIKIDATA_P1647
+Wikidata,http://www.wikidata.org/prop/direct/P8810,parent,2,2603,WIKIDATA_P1647
+Wikidata,http://www.wikidata.org/prop/direct/P921,main subject,2,164,WIKIDATA_P1647
+Wikidata,https://schema.org/containsPlace,contains Place,2,158,WIKIDATA_P2235_EXTERNAL
+Wikidata,https://schema.org/isPartOf,is Part Of,2,260,WIKIDATA_P2235_EXTERNAL
+Wikidata,https://schema.org/member,member,2,98,WIKIDATA_P2235_EXTERNAL
+Wikidata,https://schema.org/parent,parent,2,2603,WIKIDATA_P2235_EXTERNAL
+Wikidata,https://schema.org/publication,publication,2,167,WIKIDATA_P2235_EXTERNAL
+Wikidata,http://d-nb.info/standards/elementset/gnd#illustratorOrIlluminator,illustrator Or Illuminator,1,3,WIKIDATA_P2235_EXTERNAL
+Wikidata,http://d-nb.info/standards/elementset/gnd#narrowerTermPartitive,narrower Term Partitive,1,4033,WIKIDATA_P2235_EXTERNAL
+Wikidata,http://d-nb.info/standards/elementset/gnd#sponsorOrPatron,sponsor Or Patron,1,6,WIKIDATA_P2235_EXTERNAL
+Wikidata,http://gov.genealogy.net/ontology.owl#hasType,has Type,1,2,WIKIDATA_P2235_EXTERNAL
+Wikidata,http://id.loc.gov/ontologies/bibframe/historyOfWork,history Of Work,1,45,WIKIDATA_P2235_EXTERNAL
+Wikidata,http://id.loc.gov/ontologies/bibframe/originPlace,origin Place,1,7666,WIKIDATA_P2235_EXTERNAL
+Wikidata,http://pcp-on-web.de/ontology#hasParent,has Parent,1,1630,WIKIDATA_P2235_EXTERNAL
+Wikidata,http://schema.org/memberOf,member Of,1,3301,WIKIDATA_P2235_EXTERNAL
+Wikidata,http://schema.org/recordedAt,recorded At,1,1,WIKIDATA_P2235_EXTERNAL
+Wikidata,http://www.wikidata.org/prop/direct/P10527,documentation files at,1,105,WIKIDATA_P1647
+Wikidata,http://www.wikidata.org/prop/direct/P1056,product or material produced,1,1,WIKIDATA_P1647
+Wikidata,http://www.wikidata.org/prop/direct/P1066,student of,1,148,WIKIDATA_P1647
+Wikidata,http://www.wikidata.org/prop/direct/P1071,location of creation,1,90,WIKIDATA_P1647
+Wikidata,http://www.wikidata.org/prop/direct/P126,maintained by,1,312,WIKIDATA_P1647
+Wikidata,http://www.wikidata.org/prop/direct/P12693,source of transfer,1,28,WIKIDATA_P1647
+Wikidata,http://www.wikidata.org/prop/direct/P129,physically interacts with,1,31,WIKIDATA_P1647
+Wikidata,http://www.wikidata.org/prop/direct/P12995,agent of action,1,106,WIKIDATA_P1647
+Wikidata,http://www.wikidata.org/prop/direct/P13044,characteristic of,1,118,WIKIDATA_P1647
+Wikidata,http://www.wikidata.org/prop/direct/P1329,phone number,1,1,WIKIDATA_P1647
+Wikidata,http://www.wikidata.org/prop/direct/P135,movement,1,63,WIKIDATA_P1647
+Wikidata,http://www.wikidata.org/prop/direct/P1365,replaces,1,6,WIKIDATA_P1647
+Wikidata,http://www.wikidata.org/prop/direct/P1366,replaced by,1,23,WIKIDATA_P1647
+Wikidata,http://www.wikidata.org/prop/direct/P1435,heritage designation,1,10,WIKIDATA_P1647
+Wikidata,http://www.wikidata.org/prop/direct/P1536,immediate cause of,1,742,WIKIDATA_P1647
+Wikidata,http://www.wikidata.org/prop/direct/P1557,manifestation of,1,1,WIKIDATA_P1647
+Wikidata,http://www.wikidata.org/prop/direct/P176,manufacturer,1,29,WIKIDATA_P1647
+Wikidata,http://www.wikidata.org/prop/direct/P1830,owner of,1,1325,WIKIDATA_P1647
+Wikidata,http://www.wikidata.org/prop/direct/P1889,different from,1,17,WIKIDATA_P1647
+Wikidata,http://www.wikidata.org/prop/direct/P1923,participating team,1,13,WIKIDATA_P1647
+Wikidata,http://www.wikidata.org/prop/direct/P206,located in or next to body of water,1,1,WIKIDATA_P1647
+Wikidata,http://www.wikidata.org/prop/direct/P2541,operating area,1,118,WIKIDATA_P1647
+Wikidata,http://www.wikidata.org/prop/direct/P2650,interested in,1,2011,WIKIDATA_P1647
+Wikidata,http://www.wikidata.org/prop/direct/P2737,union of,1,1,WIKIDATA_P1647
+Wikidata,http://www.wikidata.org/prop/direct/P2789,connects with,1,21,WIKIDATA_P1647
+Wikidata,http://www.wikidata.org/prop/direct/P279,subclass of,1,1,WIKIDATA_P1647
+Wikidata,http://www.wikidata.org/prop/direct/P2828,corporate officer,1,5,WIKIDATA_P1647
+Wikidata,http://www.wikidata.org/prop/direct/P2860,cites work,1,2,WIKIDATA_P1647
+Wikidata,http://www.wikidata.org/prop/direct/P2868,subject has role,1,28816,WIKIDATA_P1647
+Wikidata,http://www.wikidata.org/prop/direct/P287,designed by,1,157,WIKIDATA_P1647
+Wikidata,http://www.wikidata.org/prop/direct/P2936,language used,1,73,WIKIDATA_P1647
+Wikidata,http://www.wikidata.org/prop/direct/P3174,art director,1,52,WIKIDATA_P1647
+Wikidata,http://www.wikidata.org/prop/direct/P3301,broadcast by,1,55,WIKIDATA_P1647
+Wikidata,http://www.wikidata.org/prop/direct/P366,has use,1,17,WIKIDATA_P1647
+Wikidata,http://www.wikidata.org/prop/direct/P39,position held,1,27,WIKIDATA_P1647
+Wikidata,http://www.wikidata.org/prop/direct/P407,language of work or name,1,567,WIKIDATA_P1647
+Wikidata,http://www.wikidata.org/prop/direct/P4688,geomorphological unit,1,16,WIKIDATA_P1647
+Wikidata,http://www.wikidata.org/prop/direct/P552,handedness,1,2,WIKIDATA_P1647
+Wikidata,http://www.wikidata.org/prop/direct/P7604,supervised by,1,148,WIKIDATA_P1647
+Wikidata,http://www.wikidata.org/prop/direct/P790,approved by,1,13,WIKIDATA_P1647
+Wikidata,http://www.wikidata.org/prop/direct/P802,student,1,497,WIKIDATA_P1647
+Wikidata,http://www.wikidata.org/prop/direct/P8956,compatible with,1,388,WIKIDATA_P1647
+Wikidata,http://www.wikidata.org/prop/direct/P910,topic's main category,1,10,WIKIDATA_P1647
+Wikidata,http://www.wikidata.org/prop/direct/P913,notation,1,1,WIKIDATA_P1647
+Wikidata,http://www.wikidata.org/prop/direct/P9234,supplement to,1,1,WIKIDATA_P1647
+Wikidata,https://d-nb.info/standards/elementset/gnd#hierarchicalSuperiorOfPlaceOrGeographicName,hierarchical Superior Of Place Or Geographic Name,1,3968,WIKIDATA_P2235_EXTERNAL
+Wikidata,https://schema.org/containedInPlace,contained In Place,1,3968,WIKIDATA_P2235_EXTERNAL
+Wikidata,https://schema.org/event,event,1,30328,WIKIDATA_P2235_EXTERNAL
+Wikidata,https://schema.org/jobTitle,job Title,1,17,WIKIDATA_P2235_EXTERNAL
+Wikidata,https://schema.org/streetAddress,street Address,1,82,WIKIDATA_P2235_EXTERNAL
+Wikidata,https://w3id.org/gso/1.0/common/location,location,1,3995,WIKIDATA_P2235_EXTERNAL
+Wikidata,https://www.commoncoreontologies.org/ont00001842,ont00001842,1,1630,WIKIDATA_P2235_EXTERNAL
