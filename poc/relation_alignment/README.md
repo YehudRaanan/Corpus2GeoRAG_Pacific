@@ -63,7 +63,8 @@ Level 2 key for `schema:containedInPlace`.
 
 The [unresolved EventKG examples](unresolved_relation_examples/README.md) give
 up to three local source records for each of the 164 predicates for which the
-public-mapping audit found no declared Wikidata mapping.
+public-mapping audit found no declared Wikidata mapping. Each stays as an
+independent source-native Level 2 relation.
 
 ## Purpose
 

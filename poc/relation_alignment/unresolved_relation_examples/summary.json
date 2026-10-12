@@ -1,5 +1,6 @@
 {
   "selection_rule": "EventKG predicate audit status NO_DECLARED_MAPPING_FOUND",
+  "level2_decision": "Keep every unresolved predicate as an independent source-native Level 2 relation",
   "target_relation_count": 164,
   "source_occurrence_sum": 3848,
   "sample_limit_per_relation": 3,

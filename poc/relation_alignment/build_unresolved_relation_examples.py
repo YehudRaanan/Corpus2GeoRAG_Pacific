@@ -163,6 +163,8 @@ def build() -> dict[str, object]:
                 "source_predicate": predicate,
                 "source_label": audit["eventkg_label"],
                 "source_occurrence_count": audit["source_occurrence_count"],
+                "level2_decision": "KEEP_INDEPENDENT_SOURCE_LEVEL2",
+                "independent_level2_id": predicate,
                 "example_count": len(samples),
                 "expected_example_count": expected,
                 "coverage_status": (
@@ -183,6 +185,8 @@ def build() -> dict[str, object]:
                     "source_predicate": predicate,
                     "source_label": audit["eventkg_label"],
                     "mapping_gap_status": audit["audit_status"],
+                    "level2_decision": "KEEP_INDEPENDENT_SOURCE_LEVEL2",
+                    "independent_level2_id": predicate,
                     "current_eda_status": eda.get("eda_status", ""),
                     "level1_family": eda.get("level1_family", ""),
                     "level1_candidate": eda.get("level1_candidate", ""),
@@ -218,6 +222,7 @@ def build() -> dict[str, object]:
     status_counts = Counter(row["current_eda_status"] for row in coverage_rows)
     summary: dict[str, object] = {
         "selection_rule": "EventKG predicate audit status NO_DECLARED_MAPPING_FOUND",
+        "level2_decision": "Keep every unresolved predicate as an independent source-native Level 2 relation",
         "target_relation_count": len(targets),
         "source_occurrence_sum": sum(
             int(row["source_occurrence_count"]) for row in audit_rows
