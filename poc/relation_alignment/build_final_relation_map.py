@@ -18,7 +18,7 @@ INDEPENDENT = HERE / "unresolved_relation_examples" / "relation_example_coverage
 OUT = HERE / "final_relation_map"
 REPORT = HERE / "FINAL_RELATION_MAP_2026-10-12.md"
 RELATION_MAP_VERSION = "relation-map-v1.0.0"
-DELIVERY_TABLE = HERE.parent.parent / "deliveries" / "RELATION_MAPPING_TABLE_v1.0.0.csv"
+DELIVERY_TABLE = HERE.parent.parent / "GG_Data" / "mapping" / "RELATION_MAPPING_TABLE_v1.0.0.csv"
 
 RUNTIME_RULES = {
     "EventKG": {
