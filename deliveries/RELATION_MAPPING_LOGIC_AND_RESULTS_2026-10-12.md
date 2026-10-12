@@ -6,6 +6,8 @@
 
 **Scope:** Relations present in the current local source inventories
 
+**Relation map version:** `relation-map-v1.0.0`
+
 ## 1. Purpose
 
 This process creates one common relation catalog without changing any source
@@ -122,7 +124,143 @@ independent Level 2 relations.
 - `PROVISIONAL`: strong automatic or observation-based candidate that still
   needs semantic confirmation.
 
-## 4. Final results
+## 4. Observation-level mapping logic
+
+This layer applies the relation catalog to source records. It creates at most
+one selected Level 2 relation for one relation observation. It does not change
+or delete the source records used to make that selection.
+
+### 4.1 Define one observation
+
+A source assertion is one relation record from one source. A relation
+observation can contain several source assertions only when they describe the
+same fact. They must have:
+
+- the same canonical subject and object Wikidata IDs;
+- the same direction after direction normalization;
+- compatible evidence references or compatible relation periods; and
+- no evidence that they describe different occurrences.
+
+Every entity endpoint must have a Wikidata ID. An assertion with an unresolved
+endpoint stays outside the final graph until identity resolution supplies that
+ID. The process does not create a replacement entity ID.
+
+The same entity pair can produce several observations. Keep them separate when
+they have different references, relation meanings, or periods. Therefore, one
+pair can have different selected relations when different evidence supports
+them.
+
+### 4.2 Normalize each candidate
+
+For each source assertion:
+
+1. Map its source predicate through `final_relation_source_map.csv`.
+2. Apply the recorded direction transformation.
+3. Keep the original predicate, record ID, evidence reference, mapping status,
+   and mapping method.
+4. Add the source assertion to an observation only when the rules in section
+   4.1 pass.
+
+### 4.3 Select one relation
+
+Select the first available candidate in this order:
+
+1. A resolved WarSampo and Wikidata relation: a WarSampo predicate has an
+   accepted mapping to a Wikidata property. Use that common Wikidata Level 2
+   ID and its normalized direction. A matching Wikidata assertion, when
+   present, becomes supporting evidence; it is not required for this priority.
+2. An unresolved WarSampo relation: keep the independent WarSampo Level 2 ID.
+3. An EventKG relation: use its mapped or independent EventKG Level 2 ID.
+4. A Wikidata relation: use its Wikidata property ID.
+
+This priority applies only to source assertions already grouped as the same
+observation. It must not remove a second fact that has different evidence,
+meaning, direction, or time.
+
+If two candidates remain at the same priority and the evidence does not select
+one, set `selection_status=AMBIGUOUS`, keep the candidate list, and do not make
+an arbitrary final edge. A later classifier or review can resolve that case.
+
+The selected output keeps all supporting source assertions in provenance. A
+lower-priority assertion is evidence for the selected relation; it is not a
+second output relation for that observation.
+
+### 4.4 Map relation time
+
+Time is an attribute of the relation observation. It is not a relation type.
+Read only time values attached to the selected relation assertion or to an
+equivalent supporting assertion in the same observation.
+
+| Source | Start input | End input | Point input |
+|---|---|---|---|
+| Wikidata | `P580` | `P582` | `P585` |
+| EventKG | `sem:hasBeginTimeStamp` | `sem:hasEndTimeStamp` | — |
+| WarSampo | `crm:P4_has_time-span` → `crm:P82a_begin_of_the_begin` | `crm:P4_has_time-span` → `crm:P82b_end_of_the_end` | — |
+
+Apply these rules:
+
+1. Store a start value in `time_from` and an end value in `time_to`.
+2. Store `P585` in `time_point`. Do not turn a point into an artificial period.
+3. If only one boundary exists, leave the other boundary empty.
+4. Keep the source precision, such as day, month, or year. Do not invent a day
+   for a year-only value.
+5. Do not copy an event date, entity lifespan, or article date to the relation
+   unless the source explicitly attaches that time to the relation assertion.
+6. If equivalent sources disagree, use the time attached to the selected
+   assertion, retain every conflicting raw value in provenance, and set
+   `time_status=CONFLICT`.
+7. If the selected source has several incompatible time values, keep them for
+   review and leave the single normalized value empty.
+8. Validate that `time_from` is not after `time_to`. Flag an invalid source
+   period; do not silently reverse it.
+
+The current local inputs confirm that these values are available, but not for
+every relation:
+
+- EventKG has at least one relation boundary on 118,763 of 1,064,397 reified
+  relation observations; 95,484 have both boundaries.
+- The scoped Wikidata data has a time qualifier on 74,288 of 572,495
+  non-deprecated item-valued statements; 18,152 have both `P580` and `P582`.
+- WarSampo contains linked CIDOC CRM time spans. Its time coverage must be
+  measured after joining each activity or event to its time-span record.
+
+### 4.5 Required output fields
+
+| Field | Purpose |
+|---|---|
+| `observation_id` | Stable ID for the grouped fact |
+| `subject_qid` | Canonical subject Wikidata ID |
+| `object_qid` | Canonical object Wikidata ID |
+| `level1_relation` | Broad source-supported relation family |
+| `level2_relation` | One selected final relation |
+| `selection_priority` | Applied priority from 1 to 4 |
+| `selection_status` | `SELECTED` or `AMBIGUOUS` |
+| `direction` | Normalized edge direction |
+| `time_from` | Relation start, when available |
+| `time_to` | Relation end, when available |
+| `time_point` | Relation point in time, when available |
+| `time_precision` | Precision of each normalized time value |
+| `time_status` | `DIRECT`, `PARTIAL`, `CONFLICT`, `MULTIPLE`, or `NONE` |
+| `source_support` | All source assertions and original predicates |
+| `evidence_references` | Source record and text or graph references |
+| `relation_map_version` | Version used to select the relation |
+
+### 4.6 Version rule
+
+Every mapped observation must store `relation_map_version`. The current value
+is `relation-map-v1.0.0`.
+
+- Increase the major version when an existing relation changes meaning or the
+  output contract becomes incompatible.
+- Increase the minor version when a relation mapping or selection rule is
+  added or changed without breaking the output contract.
+- Increase the patch version for corrections that do not change a selected
+  relation or its meaning.
+
+Keep the map version with the output data so a later run can reproduce each
+selection.
+
+## 5. Final results
 
 | Measure | Result |
 |---|---:|
@@ -142,7 +280,7 @@ independent Level 2 relations.
 | WarSampo | 111 | 111 |
 | **Total** | **1,520** | — |
 
-## 5. WarSampo results
+## 6. WarSampo results
 
 WarSampo contributes 111 relation types. Four are mapped to common Wikidata
 relations. The other 107 remain independent WarSampo Level 2 relations.
@@ -154,7 +292,7 @@ relations. The other 107 remain independent WarSampo Level 2 relations.
 | `crm:P11_had_participant` | `wd:P710` | same | accepted |
 | `crm:P7_took_place_at` | `wd:P276` | same | accepted |
 
-## 6. Reviewed EventKG special cases
+## 7. Reviewed EventKG special cases
 
 | EventKG relation | Final Level 2 | Reason |
 |---|---|---|
@@ -169,7 +307,7 @@ The combined `containedInPlace` direction is **contained object to containing
 place**. `P36`, `P150`, and `P1383` are reversed before the common edge is
 created.
 
-## 7. Public declared exact EventKG mappings
+## 8. Public declared exact EventKG mappings
 
 | EventKG relation | Wikidata relation |
 |---|---|
@@ -221,7 +359,7 @@ These mappings are accepted from published exact ontology paths in the current
 catalog. Their evidence paths are retained in the machine-readable decision
 file.
 
-## 8. Provisional mappings
+## 9. Provisional mappings
 
 ### Automatic EventKG alignment candidates
 
@@ -244,7 +382,7 @@ file.
 | `dbo:usedInWar` | `wd:P607` | 507 |
 | `yago:hasWonPrize` | `wd:P166` | 409 |
 
-## 9. Interpretation and limits
+## 10. Interpretation and limits
 
 - This is the complete mapping for the **current local relation inventory**. It
   is not a universal list of every relation in EventKG, Wikidata, or WarSampo.
@@ -260,7 +398,7 @@ file.
 - The 11 provisional mappings require later semantic review. They must remain
   marked as provisional until that review passes.
 
-## 10. Delivery files and reproducibility
+## 11. Delivery files and reproducibility
 
 The machine-readable outputs are:
 
