@@ -81,7 +81,9 @@ URI as the final Level 2 ID. Their examples and coverage remain in
 
 ## Files
 
-- `final_relation_map/final_relation_source_map.csv`: every source relation
+- `final_relation_map/final_relation_source_map.csv`: every source relation,
+  selection priority, time join rule, evidence policy, conflict policy, and map
+  version
 - `final_relation_map/final_relation_groups.csv`: one row per final Level 2 ID
 - `final_relation_map/audited_eventkg_decisions.csv`: the 217 final audit decisions
 - `final_relation_map/summary.json`: validation counts

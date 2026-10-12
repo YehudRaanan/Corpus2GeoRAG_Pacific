@@ -17,6 +17,33 @@ RESOLUTIONS = AUDIT_DIR / "conflict_broader_resolutions.csv"
 INDEPENDENT = HERE / "unresolved_relation_examples" / "relation_example_coverage.csv"
 OUT = HERE / "final_relation_map"
 REPORT = HERE / "FINAL_RELATION_MAP_2026-10-12.md"
+RELATION_MAP_VERSION = "relation-map-v1.0.0"
+
+RUNTIME_RULES = {
+    "EventKG": {
+        "time_from_input": "sem:hasBeginTimeStamp",
+        "time_to_input": "sem:hasEndTimeStamp",
+        "time_point_input": "",
+        "time_join_rule": "READ_REIFIED_RELATION",
+        "evidence_requirements": "relation_uri|named_graph|source_uri|raw_time_values",
+    },
+    "WarSampo": {
+        "time_from_input": ("crm:P4_has_time-span->crm:P82a_begin_of_the_begin"),
+        "time_to_input": "crm:P4_has_time-span->crm:P82b_end_of_the_end",
+        "time_point_input": "",
+        "time_join_rule": "FOLLOW_P4_TIME_SPAN",
+        "evidence_requirements": (
+            "assertion_or_activity_uri|named_graph|source_uri|time_span_uri|raw_time_values"
+        ),
+    },
+    "Wikidata": {
+        "time_from_input": "qualifiers.P580",
+        "time_to_input": "qualifiers.P582",
+        "time_point_input": "qualifiers.P585",
+        "time_join_rule": "READ_STATEMENT_QUALIFIERS",
+        "evidence_requirements": "statement_id|references|qualifiers|rank|raw_time_values",
+    },
+}
 
 
 def read_csv(path: Path) -> list[dict[str, str]]:
@@ -33,6 +60,30 @@ def write_csv(path: Path, rows: list[dict[str, object]]) -> None:
 
 def common_id(value: str) -> str:
     return f"wd:{value}" if re.fullmatch(r"P\d+", value) else value
+
+
+def runtime_fields(
+    source: str, final_relation_id: str, review_status: str
+) -> dict[str, object]:
+    if source == "WarSampo":
+        priority = (
+            1
+            if final_relation_id.startswith("wd:") and review_status == "ACCEPTED"
+            else 2
+        )
+    elif source == "EventKG":
+        priority = 3
+    else:
+        assert source == "Wikidata"
+        priority = 4
+
+    return {
+        "selection_priority": priority,
+        **RUNTIME_RULES[source],
+        "evidence_policy": "PRESERVE_ALL_SUPPORTING_ASSERTIONS",
+        "time_conflict_policy": "SELECTED_ASSERTION_VALUE_KEEP_ALL_CONFLICTS",
+        "relation_map_version": RELATION_MAP_VERSION,
+    }
 
 
 def build() -> dict[str, object]:
@@ -184,6 +235,7 @@ def build() -> dict[str, object]:
                 "decision_evidence": evidence,
                 "prior_common_relation_id": base["common_relation_id"],
                 "source_data_modified": False,
+                **runtime_fields(base["source"], final_id, review),
             }
         )
 
@@ -235,8 +287,47 @@ def build() -> dict[str, object]:
         "INDEPENDENT_NO_PUBLIC_MAPPING": 164,
     }
     assert all(row["final_relation_id"] for row in final_rows)
+    assert len({(row["source"], row["source_predicate"]) for row in final_rows}) == 1520
+    priority_counts = Counter(int(row["selection_priority"]) for row in final_rows)
+    assert priority_counts == {1: 4, 2: 107, 3: 808, 4: 601}
+    assert all(
+        row["relation_map_version"] == RELATION_MAP_VERSION for row in final_rows
+    )
+    assert all(row["time_from_input"] and row["time_to_input"] for row in final_rows)
+
+    by_source_predicate = {
+        (str(row["source"]), str(row["source_predicate"])): row for row in final_rows
+    }
+    sample_checks = {
+        (
+            "WarSampo",
+            "http://ldf.fi/schema/warsa/actors/hasConflict",
+        ): (1, "wd:P607", "FOLLOW_P4_TIME_SPAN"),
+        (
+            "WarSampo",
+            "http://ldf.fi/ammo/coo1980/socioeconomic_status",
+        ): (
+            2,
+            "http://ldf.fi/ammo/coo1980/socioeconomic_status",
+            "FOLLOW_P4_TIME_SPAN",
+        ),
+        (
+            "EventKG",
+            "http://dbpedia.org/ontology/affiliation",
+        ): (3, "wd:P1416", "READ_REIFIED_RELATION"),
+        ("Wikidata", "wd:P1000"): (4, "wd:P1000", "READ_STATEMENT_QUALIFIERS"),
+    }
+    for key, expected in sample_checks.items():
+        row = by_source_predicate[key]
+        actual = (
+            int(row["selection_priority"]),
+            row["final_relation_id"],
+            row["time_join_rule"],
+        )
+        assert actual == expected, (key, actual, expected)
 
     summary: dict[str, object] = {
+        "relation_map_version": RELATION_MAP_VERSION,
         "source_relation_rows": len(final_rows),
         "final_relation_ids": len(group_rows),
         "multi_source_relation_ids": sum(
@@ -245,6 +336,9 @@ def build() -> dict[str, object]:
         "audited_eventkg_relations": len(decision_rows),
         "audited_decision_counts": dict(sorted(class_counts.items())),
         "all_rows_review_status_counts": dict(sorted(review_counts.items())),
+        "selection_priority_counts": dict(sorted(priority_counts.items())),
+        "runtime_sample_checks": len(sample_checks),
+        "runtime_table_ready": True,
         "source_data_modified": False,
     }
 
@@ -297,7 +391,9 @@ URI as the final Level 2 ID. Their examples and coverage remain in
 
 ## Files
 
-- `final_relation_map/final_relation_source_map.csv`: every source relation
+- `final_relation_map/final_relation_source_map.csv`: every source relation,
+  selection priority, time join rule, evidence policy, conflict policy, and map
+  version
 - `final_relation_map/final_relation_groups.csv`: one row per final Level 2 ID
 - `final_relation_map/audited_eventkg_decisions.csv`: the 217 final audit decisions
 - `final_relation_map/summary.json`: validation counts
