@@ -1,7 +1,9 @@
 # Relation Mapping Logic and Results
 
-**Delivery date:** 2026-10-12  
-**Sources:** EventKG, Wikidata, and WarSampo  
+**Delivery date:** 2026-10-12
+
+**Sources:** EventKG, Wikidata, and WarSampo
+
 **Scope:** Relations present in the current local source inventories
 
 ## 1. Purpose
