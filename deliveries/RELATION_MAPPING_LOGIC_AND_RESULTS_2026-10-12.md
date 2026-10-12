@@ -402,7 +402,7 @@ file.
 
 The machine-readable outputs are:
 
-- [`final_relation_source_map.csv`](../poc/relation_alignment/final_relation_map/final_relation_source_map.csv): the runtime lookup table, with one row for every source predicate, selection priority, source-specific time inputs, evidence and conflict policies, and `relation-map-v1.0.0`;
+- [`RELATION_MAPPING_TABLE_v1.0.0.csv`](RELATION_MAPPING_TABLE_v1.0.0.csv): the delivered runtime lookup table, with one row for every source predicate, selection priority, source-specific time inputs, evidence and conflict policies, and `relation-map-v1.0.0`;
 - [`final_relation_groups.csv`](../poc/relation_alignment/final_relation_map/final_relation_groups.csv): one row for every final Level 2 identifier;
 - [`audited_eventkg_decisions.csv`](../poc/relation_alignment/final_relation_map/audited_eventkg_decisions.csv): the 217 EventKG audit decisions; and
 - [`summary.json`](../poc/relation_alignment/final_relation_map/summary.json): validation totals.
