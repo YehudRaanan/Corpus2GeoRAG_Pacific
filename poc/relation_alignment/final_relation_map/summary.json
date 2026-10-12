@@ -1,0 +1,19 @@
+{
+  "source_relation_rows": 1520,
+  "final_relation_ids": 1051,
+  "multi_source_relation_ids": 405,
+  "audited_eventkg_relations": 217,
+  "audited_decision_counts": {
+    "ACCEPT_COMBINED": 1,
+    "ACCEPT_ONE_REJECT_ONE": 2,
+    "ACCEPT_SCOPED_BROADER": 3,
+    "AUTOMATIC_ALIGNMENT": 4,
+    "INDEPENDENT_NO_PUBLIC_MAPPING": 164,
+    "PUBLIC_DECLARED_EXACT": 43
+  },
+  "all_rows_review_status_counts": {
+    "ACCEPTED": 1509,
+    "PROVISIONAL": 11
+  },
+  "source_data_modified": false
+}
