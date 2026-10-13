@@ -163,3 +163,23 @@ The POC showed that an exact QID is strong identity evidence, but it does not
 always define which spatial representation is correct. Place type and the
 project-period selection rule resolve the main repeatable cases. Unclear
 identities still require review.
+
+## First 50 place-node run
+
+The first 50 nodes classified as `location` in the WWII draft graph were run
+on 2026-10-13 with policy `geo-object-selection-v0.4.0`:
+
+- 41 received one valid Shapely geometry: 9 from OHM and 32 from OSM.
+- The geometries contain 20 points, 18 polygons, and 3 multipolygons.
+- 6 places remain unresolved because no exact-QID OHM or OSM object was found.
+- 3 inputs were rejected because they are ships or an organization, not places.
+- WHG was called once with 34 queries for cases with zero or multiple exact-QID
+  objects. Its candidates remain reconciliation evidence and did not prove an
+  additional geometry in this run.
+- Gabon's selected historical OHM record had no retrievable valid geometry. The
+  source-order fallback selected its exact-QID OSM administrative boundary.
+
+The unresolved places are Nilgiri Mountains, Bathurst Island Airfield, Port
+Keats Airfield, Urakami, Provence, and Dachau concentration camp. They need the
+documented name-and-context or specialist-source stages. They did not receive a
+guessed geometry.
