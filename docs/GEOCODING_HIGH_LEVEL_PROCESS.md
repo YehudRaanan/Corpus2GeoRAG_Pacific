@@ -154,4 +154,3 @@ The four GeoNames results are points. They are usable starting geometries and ca
 - The Agent contract still needs to define the required coordinate reference system and the method used to load the Shapely geometry table.
 - Public query services can time out or limit requests. A complete run should use stable endpoints, controlled retries, persistent caches, and resumable checkpoints.
 - Source coverage does not prove geographic truth. Candidate evidence and provenance must remain available for quality review.
-
