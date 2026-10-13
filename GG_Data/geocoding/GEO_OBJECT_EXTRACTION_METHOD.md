@@ -63,9 +63,10 @@ and
 end_date > selected_date, or end_date is absent
 ```
 
-The end date is exclusive. An undated source object remains eligible. WHG is
-queried for the year of the selected date and includes undated candidates. A
-WHG candidate must still match the required identity and geometry meaning.
+The end date is exclusive. If an exact-identity, type-compatible source geometry
+is undated, use it. WHG is queried for the year of the selected date and includes
+undated candidates. A WHG candidate must still match the required identity and
+geometry meaning.
 
 When several exact-QID candidates pass the identity, type, and selected-date
 checks, select the first candidate in the project period. Use the source object

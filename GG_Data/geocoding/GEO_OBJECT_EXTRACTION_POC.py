@@ -430,7 +430,7 @@ def main() -> None:
         "selection_flow": [
             "collect exact-QID objects from OpenHistoricalMap and OpenStreetMap",
             "use the earliest related date in the project period, or the project start when no related date exists",
-            "allow an undated source object; reject a dated object that does not cover the selection date",
+            "use an undated exact-identity, type-compatible source object; reject a dated object that does not cover the selection date",
             "query World Historical Gazetteer only when the exact-QID count is zero or greater than one",
             "apply the place-type rule",
             "when several candidates remain, select the first in the project period",
