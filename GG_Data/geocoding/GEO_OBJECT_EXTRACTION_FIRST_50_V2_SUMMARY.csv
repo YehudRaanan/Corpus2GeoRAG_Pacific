@@ -1,0 +1,51 @@
+﻿input_rank,qid,name,place_type,selection_date,exact_qid_count,selected_source,selected_object_id,review_status,geometry_valid,decision_reason
+1,Q100,Boston,settlement,1941-12-07,3,OpenStreetMap,N158809705,ACCEPTED_AUTO,True,selected the first of 2 best type-compatible candidate(s) in the project period
+2,Q1000,Gabon,country,1941-12-07,5,OpenStreetMap,R192793,ACCEPTED_AUTO,True,selected the first of 1 best type-compatible candidate(s) in the project period; earlier source had no retrievable valid geometry
+3,Q1010,Maribor,settlement,1941-12-07,8,OpenHistoricalMap,N2103423974,ACCEPTED_AUTO,True,selected the first of 1 best type-compatible candidate(s) in the project period
+4,Q1011,Cape Verde,archipelago,1941-12-07,4,OpenStreetMap,N424311151,ACCEPTED_AUTO,True,selected the first of 2 best type-compatible candidate(s) in the project period
+5,Q1012,Celje,settlement,1941-12-07,4,OpenHistoricalMap,N2125761099,ACCEPTED_AUTO,True,selected the first of 1 best type-compatible candidate(s) in the project period
+6,Q1763,Murmansk,settlement,1944-09-19,2,OpenStreetMap,N269342417,ACCEPTED_AUTO,True,selected the first of 2 best type-compatible candidate(s) in the project period
+7,Q2765,Gelsenkirchen,settlement,1941-12-07,5,OpenHistoricalMap,N2093449533,ACCEPTED_AUTO,True,selected the first of 1 best type-compatible candidate(s) in the project period
+8,Q4065,Stralsund,settlement,1945-01-01,2,OpenStreetMap,N24486765,ACCEPTED_AUTO,True,selected the first of 2 best type-compatible candidate(s) in the project period
+9,Q8680,British Empire,historical_country,1941-12-07,322,OpenHistoricalMap,R2831548,ACCEPTED_AUTO,True,selected the first of 1 best type-compatible candidate(s) in the project period
+10,Q8725,Bristol Airport,airport,1941-12-07,2,OpenStreetMap,W47483196,ACCEPTED_AUTO,True,selected the first of 1 best type-compatible candidate(s) in the project period
+11,Q10001,Deventer,administrative_area,1941-12-07,1,OpenStreetMap,R1002142,ACCEPTED_AUTO,True,selected the first of 1 best type-compatible candidate(s) in the project period
+12,Q10019,Raalte,administrative_area,1941-12-07,1,OpenStreetMap,R416053,ACCEPTED_AUTO,True,selected the first of 1 best type-compatible candidate(s) in the project period
+13,Q10040,Rhenen,administrative_area,1941-12-07,2,OpenStreetMap,R418958,ACCEPTED_AUTO,True,selected the first of 1 best type-compatible candidate(s) in the project period
+14,Q10041,Soest,administrative_area,1941-12-07,2,OpenStreetMap,R419157,ACCEPTED_AUTO,True,selected the first of 1 best type-compatible candidate(s) in the project period
+15,Q10043,Utrechtse Heuvelrug,administrative_area,1941-12-07,1,OpenStreetMap,R419184,ACCEPTED_AUTO,True,selected the first of 1 best type-compatible candidate(s) in the project period
+16,Q10046,Leusden,administrative_area,1941-12-07,2,OpenStreetMap,R310005,ACCEPTED_AUTO,True,selected the first of 1 best type-compatible candidate(s) in the project period
+17,Q10081,Terneuzen,administrative_area,1941-12-07,1,OpenStreetMap,R47619,ACCEPTED_AUTO,True,selected the first of 1 best type-compatible candidate(s) in the project period
+18,Q10084,Vlissingen,administrative_area,1941-12-07,9,OpenHistoricalMap,N2153114624,ACCEPTED_AUTO,True,selected the first of 1 best type-compatible candidate(s) in the project period
+19,Q10086,Mysore,settlement,1941-12-07,4,OpenHistoricalMap,N2152798635,ACCEPTED_AUTO,True,selected the first of 1 best type-compatible candidate(s) in the project period
+20,Q10094,Nilgiri Mountains,mountain_range,1941-12-07,0,GeoNames,1261390,ACCEPTED_AUTO,True,"one GeoNames record matched exact aliases, mountain-range type, and Tamil Nadu parent"
+21,Q15180,Soviet Union,historical_country,1941-12-30,27,OpenHistoricalMap,R2851156,ACCEPTED_AUTO,True,selected the first of 1 best type-compatible candidate(s) in the project period
+22,Q17607,Bathurst Island Airfield,airport,1941-12-07,0,OpenStreetMap,W314167636,ACCEPTED_AUTO,True,one aerodrome matched IATA BRT and ICAO YBTI
+23,Q17619,Port Keats Airfield,airport,1941-12-07,0,OpenStreetMap,W458461644,ACCEPTED_AUTO,True,one aerodrome matched IATA PKT and ICAO YPKT
+24,Q18998,Herborn,settlement,1941-12-07,1,OpenStreetMap,R215969,ACCEPTED_AUTO,True,selected the first of 1 best type-compatible candidate(s) in the project period
+25,Q25804,Trondheim,settlement,1943-06-01,2,OpenStreetMap,N31264142,ACCEPTED_AUTO,True,selected the first of 2 best type-compatible candidate(s) in the project period
+26,Q29759,Fano Airfield,airport,1941-12-07,1,OpenStreetMap,R6029931,ACCEPTED_AUTO,True,selected the first of 1 best type-compatible candidate(s) in the project period
+27,Q34664,Hiroshima,settlement,1945-08-06,2,OpenStreetMap,N1590291928,ACCEPTED_AUTO,True,selected the first of 2 best type-compatible candidate(s) in the project period
+28,Q35462,RMS Aquitania,not_place,1941-12-07,0,,,REJECTED_NOT_PLACE,False,no exact-QID candidate covers the selection date
+29,Q42308,Kharkiv,settlement,1941-12-31,2,OpenStreetMap,N1685829423,ACCEPTED_AUTO,True,selected the first of 2 best type-compatible candidate(s) in the project period
+30,Q43296,Wake Island,atoll,1941-12-08,3,OpenStreetMap,R3991103,ACCEPTED_AUTO,True,selected the first of 1 best type-compatible candidate(s) in the project period
+31,Q47421,Mezzegra,settlement,1941-12-07,1,OpenStreetMap,N62510052,ACCEPTED_AUTO,True,selected the first of 1 best type-compatible candidate(s) in the project period
+32,Q47887,Nijmegen,administrative_area,1942-01-01,4,OpenHistoricalMap,N2103812452,ACCEPTED_AUTO,True,selected the first of 1 best type-compatible candidate(s) in the project period
+33,Q55527,United States Military Government of the Ryukyu Islands,not_place,1941-12-07,0,,,REJECTED_NOT_PLACE,False,no exact-QID candidate covers the selection date
+34,Q59580,Rennell Island,archipelago,1943-01-29,1,OpenStreetMap,R6376571,ACCEPTED_AUTO,True,selected the first of 1 best type-compatible candidate(s) in the project period
+35,Q63252,Urakami,settlement,1941-12-07,0,GeoNames,1849209,ACCEPTED_AUTO,True,"one GeoNames record matched exact alias, populated-place section type, and Nagasaki parent"
+36,Q100037,Margraten,settlement,1941-12-07,2,OpenStreetMap,N2558814448,ACCEPTED_AUTO,True,selected the first of 1 best type-compatible candidate(s) in the project period
+37,Q100043,Castelfranco Emilia,settlement,1941-12-07,2,OpenStreetMap,N69300436,ACCEPTED_AUTO,True,selected the first of 2 best type-compatible candidate(s) in the project period
+38,Q100166,Orkney Islands,archipelago,1941-12-07,1,OpenStreetMap,R375982,ACCEPTED_AUTO,True,selected the first of 1 best type-compatible candidate(s) in the project period
+39,Q101081,Provence,administrative_area,1941-12-07,0,GeoNames,2985246,ACCEPTED_AUTO,True,one GeoNames record matched exact Wikidata-to-GeoNames identity link and region type
+40,Q101254,Newport,settlement,1941-12-07,3,OpenHistoricalMap,N2104017433,ACCEPTED_AUTO,True,selected the first of 1 best type-compatible candidate(s) in the project period
+41,Q101341,Lillehammer,administrative_area,1941-12-07,1,OpenStreetMap,R412416,ACCEPTED_AUTO,True,selected the first of 1 best type-compatible candidate(s) in the project period
+42,Q123076,Palmyra Atoll,atoll,1941-12-12,5,OpenStreetMap,N356696542,ACCEPTED_AUTO,True,selected the first of 4 best type-compatible candidate(s) in the project period
+43,Q126277,SS Ceramic,not_place,1941-12-07,0,,,REJECTED_NOT_PLACE,False,no exact-QID candidate covers the selection date
+44,Q127091,Pearl Harbor,island,1941-12-07,1,OpenStreetMap,R7378187,ACCEPTED_AUTO,True,selected the first of 1 best type-compatible candidate(s) in the project period
+45,Q151198,Dachau concentration camp,facility,1942-01-01,0,GeoNames,12493313,ACCEPTED_AUTO,True,one GeoNames record matched exact full name and historical-site type
+46,Q153494,Rothenburg ob der Tauber,settlement,1945-01-01,1,OpenStreetMap,R287759,ACCEPTED_AUTO,True,selected the first of 1 best type-compatible candidate(s) in the project period
+47,Q155921,Bletchley Park,facility,1942-01-01,2,OpenStreetMap,N10571887678,ACCEPTED_AUTO,True,selected the first of 2 best type-compatible candidate(s) in the project period
+48,Q161258,Clipperton Island,atoll,1941-12-07,3,OpenStreetMap,R2573009,ACCEPTED_AUTO,True,selected the first of 3 best type-compatible candidate(s) in the project period
+49,Q176381,Adak Island,island,1941-12-07,1,OpenStreetMap,R3957015,ACCEPTED_AUTO,True,selected the first of 1 best type-compatible candidate(s) in the project period
+50,Q181632,Vileyka,settlement,1944-09-19,2,OpenStreetMap,N242978923,ACCEPTED_AUTO,True,selected the first of 2 best type-compatible candidate(s) in the project period

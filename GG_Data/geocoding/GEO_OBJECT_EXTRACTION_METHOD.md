@@ -4,7 +4,7 @@
 
 This document records the agreed method for assigning one geographic geometry to each place entity in the WWII graph.
 
-Policy version: `geo-object-selection-v0.4.0`
+Policy version: `geo-object-selection-v0.5.0`
 Last verified: `2026-10-13`
 
 The method is a project policy. It does not change the source datasets.
@@ -40,8 +40,13 @@ Sources are used in this order:
    - Use the geometry and provenance of a selected original record. Do not automatically use a WHG union of several geometries.
    - Read `WHG_key` from the local `.env` file and send it in the `Authorization` header. Do not store the key in results or logs.
 4. **Name and alias evidence**
-   - Search WHG or [Nominatim](https://nominatim.org/release-docs/latest/api/Search/) with the name, aliases, parent area, country, and place type.
+   - Search WHG, [Nominatim](https://nominatim.org/release-docs/latest/api/Search/),
+     or the [GeoNames country files](https://download.geonames.org/export/dump/)
+     with the name, aliases, parent area, country, and place type.
    - Treat each result as a candidate. A name match alone is not sufficient for automatic acceptance.
+   - Accept a unique candidate when at least one additional identity field agrees,
+     such as an external identifier, feature type and parent area, or two standard
+     airport codes.
 5. **Specialist source or manual construction**
    - Use an appropriate public boundary or feature dataset when the first four steps fail.
    - Georeference and digitize a documented historical map when no suitable structured geometry exists.
@@ -183,3 +188,22 @@ The unresolved places are Nilgiri Mountains, Bathurst Island Airfield, Port
 Keats Airfield, Urakami, Provence, and Dachau concentration camp. They need the
 documented name-and-context or specialist-source stages. They did not receive a
 guessed geometry.
+
+### Six-place fallback run
+
+The six unresolved places were run through the name, alias, type, parent, and
+external-identifier fallback on 2026-10-13:
+
+- Bathurst Island Airfield and Port Keats Airfield matched one OSM aerodrome
+  each by both IATA and ICAO codes. Their site polygons were accepted.
+- Nilgiri Mountains matched one GeoNames hills record by two aliases, feature
+  type, and the Tamil Nadu parent.
+- Urakami matched one GeoNames populated-place section by alias, feature type,
+  and the Nagasaki parent.
+- Provence matched the GeoNames region record linked by Wikidata property P1566.
+- Dachau concentration camp matched one GeoNames historical-site record by its
+  full name and feature type.
+
+The four GeoNames results are points. The fallback resolved all six cases. The
+version 2 result therefore contains 47 valid place geometries and 3 rejected
+inputs that are not places.

@@ -1,0 +1,135 @@
+{
+  "policy_version": "geo-object-selection-v0.5.0",
+  "generated_at": "2026-10-13T07:38:52.649243+00:00",
+  "summary": {
+    "input_unresolved": 6,
+    "accepted_auto": 6,
+    "still_unresolved": 0,
+    "sources": {
+      "OpenStreetMap": 2,
+      "GeoNames": 4
+    }
+  },
+  "results": [
+    {
+      "qid": "Q17607",
+      "name": "Bathurst Island Airfield",
+      "source_dataset": "OpenStreetMap",
+      "source_object_id": "W314167636",
+      "source_url": "https://www.openstreetmap.org/way/314167636",
+      "match_method": "EXACT_IATA_ICAO_AND_TYPE",
+      "decision_reason": "one aerodrome matched IATA BRT and ICAO YBTI",
+      "evidence": {
+        "query": "Bathurst Island Airport, Northern Territory, Australia",
+        "iata": "BRT",
+        "icao": "YBTI",
+        "source_name": "Bathurst Island Airport"
+      },
+      "selection_date": "1941-12-07",
+      "geometry_type": "Polygon",
+      "geometry_valid": true,
+      "review_status": "ACCEPTED_AUTO"
+    },
+    {
+      "qid": "Q17619",
+      "name": "Port Keats Airfield",
+      "source_dataset": "OpenStreetMap",
+      "source_object_id": "W458461644",
+      "source_url": "https://www.openstreetmap.org/way/458461644",
+      "match_method": "EXACT_IATA_ICAO_AND_TYPE",
+      "decision_reason": "one aerodrome matched IATA PKT and ICAO YPKT",
+      "evidence": {
+        "query": "Port Keats Aerodrome, Northern Territory, Australia",
+        "iata": "PKT",
+        "icao": "YPKT",
+        "source_name": "Port Keats Airport"
+      },
+      "selection_date": "1941-12-07",
+      "geometry_type": "Polygon",
+      "geometry_valid": true,
+      "review_status": "ACCEPTED_AUTO"
+    },
+    {
+      "qid": "Q10094",
+      "name": "Nilgiri Mountains",
+      "source_dataset": "GeoNames",
+      "source_object_id": "1261390",
+      "source_url": "https://www.geonames.org/1261390",
+      "match_method": "EXACT_NAME_ALIAS_TYPE_AND_CONTEXT",
+      "decision_reason": "one GeoNames record matched exact aliases, mountain-range type, and Tamil Nadu parent",
+      "evidence": {
+        "source_name": "Nīlgiri Hills",
+        "feature_code": "HLLS",
+        "admin1": "25",
+        "admin2": "",
+        "wikidata_p1566": []
+      },
+      "selection_date": "1941-12-07",
+      "geometry_type": "Point",
+      "geometry_valid": true,
+      "review_status": "ACCEPTED_AUTO"
+    },
+    {
+      "qid": "Q63252",
+      "name": "Urakami",
+      "source_dataset": "GeoNames",
+      "source_object_id": "1849209",
+      "source_url": "https://www.geonames.org/1849209",
+      "match_method": "EXACT_NAME_ALIAS_TYPE_AND_CONTEXT",
+      "decision_reason": "one GeoNames record matched exact alias, populated-place section type, and Nagasaki parent",
+      "evidence": {
+        "source_name": "Urakamimachi",
+        "feature_code": "PPLX",
+        "admin1": "27",
+        "admin2": "1856152",
+        "wikidata_p1566": []
+      },
+      "selection_date": "1941-12-07",
+      "geometry_type": "Point",
+      "geometry_valid": true,
+      "review_status": "ACCEPTED_AUTO"
+    },
+    {
+      "qid": "Q101081",
+      "name": "Provence",
+      "source_dataset": "GeoNames",
+      "source_object_id": "2985246",
+      "source_url": "https://www.geonames.org/2985246",
+      "match_method": "EXACT_NAME_ALIAS_TYPE_AND_CONTEXT",
+      "decision_reason": "one GeoNames record matched exact Wikidata-to-GeoNames identity link and region type",
+      "evidence": {
+        "source_name": "Provence",
+        "feature_code": "RGN",
+        "admin1": "93",
+        "admin2": "",
+        "wikidata_p1566": [
+          "2985246"
+        ]
+      },
+      "selection_date": "1941-12-07",
+      "geometry_type": "Point",
+      "geometry_valid": true,
+      "review_status": "ACCEPTED_AUTO"
+    },
+    {
+      "qid": "Q151198",
+      "name": "Dachau concentration camp",
+      "source_dataset": "GeoNames",
+      "source_object_id": "12493313",
+      "source_url": "https://www.geonames.org/12493313",
+      "match_method": "EXACT_NAME_ALIAS_TYPE_AND_CONTEXT",
+      "decision_reason": "one GeoNames record matched exact full name and historical-site type",
+      "evidence": {
+        "source_name": "Dachau concentration camp",
+        "feature_code": "HSTS",
+        "admin1": "02",
+        "admin2": "091",
+        "wikidata_p1566": []
+      },
+      "selection_date": "1942-01-01",
+      "geometry_type": "Point",
+      "geometry_valid": true,
+      "review_status": "ACCEPTED_AUTO"
+    }
+  ]
+}
