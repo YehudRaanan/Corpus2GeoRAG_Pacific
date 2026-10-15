@@ -1,0 +1,703 @@
+{
+  "retrieved_at_utc": "2026-10-15T19:23:16.264778+00:00",
+  "queries": {
+    "wd163": {
+      "request_url": "https://www.wikidata.org/w/api.php?action=query&format=json&titles=Q4029071&prop=revisions&rvstartid=2388118776&rvprop=ids%7Ctimestamp%7Ccomment&rvlimit=500",
+      "status": 200,
+      "response": {
+        "batchcomplete": "",
+        "query": {
+          "pages": {
+            "3840065": {
+              "pageid": 3840065,
+              "ns": 0,
+              "title": "Q4029071",
+              "revisions": [
+                {
+                  "revid": 2388118776,
+                  "parentid": 2257203917,
+                  "timestamp": "2025-08-04T21:52:11Z",
+                  "comment": "/* wbsetdescription-add:1|pl */ związek taktyczny Armii Czerwonej"
+                },
+                {
+                  "revid": 2257203917,
+                  "parentid": 2251944989,
+                  "timestamp": "2024-10-07T00:33:34Z",
+                  "comment": "/* wbeditentity-update-languages-short:0||en */ import labels from sitelinks"
+                },
+                {
+                  "revid": 2251944989,
+                  "parentid": 2251816601,
+                  "timestamp": "2024-09-23T07:47:53Z",
+                  "comment": "/* wbeditentity-update-languages-short:0||en */ Importing description from enwiki: military unit"
+                },
+                {
+                  "revid": 2251816601,
+                  "parentid": 1543208409,
+                  "timestamp": "2024-09-23T00:56:19Z",
+                  "comment": "/* wbsetsitelink-add:1|enwiki */ 163rd Rifle Division"
+                },
+                {
+                  "revid": 1543208409,
+                  "parentid": 1387717521,
+                  "timestamp": "2021-12-13T14:45:36Z",
+                  "comment": "/* wbeditentity-update:0| */ ([[:toollabs:editgroups/b/harvesttemplates/d07c25c6a65f|details]])"
+                },
+                {
+                  "revid": 1387717521,
+                  "parentid": 779505031,
+                  "timestamp": "2021-03-22T16:00:57Z",
+                  "comment": "/* wbcreateclaim-create:1| */ [[Property:P2671]]: /g/121mkmgm"
+                },
+                {
+                  "revid": 779505031,
+                  "parentid": 779235806,
+                  "timestamp": "2018-11-01T22:06:01Z",
+                  "comment": "/* wbsetdescription-add:1|ru */ войсковое формирование стрелковых войск РККА"
+                },
+                {
+                  "revid": 779235806,
+                  "parentid": 770677654,
+                  "timestamp": "2018-11-01T13:30:57Z",
+                  "comment": "/* wbcreateclaim-create:1| */ [[Property:P31]]: [[Q4443691]], #quickstatements; [[:toollabs:quickstatements/#/batch/4974|batch #4974]] by [[User:Infovarius|]]"
+                },
+                {
+                  "revid": 770677654,
+                  "parentid": 762228817,
+                  "timestamp": "2018-10-22T22:36:08Z",
+                  "comment": "/* wbeditentity-update:0| */ add missing labels"
+                },
+                {
+                  "revid": 762228817,
+                  "parentid": 543764298,
+                  "timestamp": "2018-10-11T18:02:12Z",
+                  "comment": "/* wbsetsitelink-add:1|plwiki */ 163 Dywizja Strzelecka (ZSRR)"
+                },
+                {
+                  "revid": 543764298,
+                  "parentid": 543764263,
+                  "timestamp": "2017-08-22T08:29:29Z",
+                  "comment": "/* wbsetclaim-create:2||1 */ [[Property:P241]]: [[Q37726]]"
+                },
+                {
+                  "revid": 543764263,
+                  "parentid": 543764256,
+                  "timestamp": "2017-08-22T08:29:24Z",
+                  "comment": "/* wbsetclaim-create:2||1 */ [[Property:P166]]: [[Q1644917]]"
+                },
+                {
+                  "revid": 543764256,
+                  "parentid": 543764249,
+                  "timestamp": "2017-08-22T08:29:23Z",
+                  "comment": "/* wbsetclaim-create:2||1 */ [[Property:P166]]: [[Q286471]]"
+                },
+                {
+                  "revid": 543764249,
+                  "parentid": 543764240,
+                  "timestamp": "2017-08-22T08:29:22Z",
+                  "comment": "/* wbsetclaim-create:2||1 */ [[Property:P166]]: [[Q337463]]"
+                },
+                {
+                  "revid": 543764240,
+                  "parentid": 466095806,
+                  "timestamp": "2017-08-22T08:29:22Z",
+                  "comment": "/* wbsetclaim-create:2||1 */ [[Property:P166]]: [[Q185493]]"
+                },
+                {
+                  "revid": 466095806,
+                  "parentid": 466095758,
+                  "timestamp": "2017-03-14T03:14:53Z",
+                  "comment": "/* wbsetclaim-create:2||1 */ [[Property:P1365]]: [[Q4029071]]"
+                },
+                {
+                  "revid": 466095758,
+                  "parentid": 466095754,
+                  "timestamp": "2017-03-14T03:14:40Z",
+                  "comment": "/* wbsetclaim-create:2||1 */ [[Property:P576]]: 1957"
+                },
+                {
+                  "revid": 466095754,
+                  "parentid": 311020065,
+                  "timestamp": "2017-03-14T03:14:38Z",
+                  "comment": "/* wbsetclaim-create:2||1 */ [[Property:P571]]: December 1941"
+                },
+                {
+                  "revid": 311020065,
+                  "parentid": 310301316,
+                  "timestamp": "2016-03-08T11:07:01Z",
+                  "comment": "/* wbsetlabel-add:1|fr */ 163. strelska divizija, #quickstatements"
+                },
+                {
+                  "revid": 310301316,
+                  "parentid": 308840207,
+                  "timestamp": "2016-03-05T12:01:58Z",
+                  "comment": "/* wbmergeitems-from:0||Q11884250 */"
+                },
+                {
+                  "revid": 308840207,
+                  "parentid": 308840163,
+                  "timestamp": "2016-03-01T14:05:42Z",
+                  "comment": "/* wbcreateclaim-create:1| */ [[Property:P17]]: [[Q15180]], #autolist2"
+                },
+                {
+                  "revid": 308840163,
+                  "parentid": 285497129,
+                  "timestamp": "2016-03-01T14:05:31Z",
+                  "comment": "/* wbcreateclaim-create:1| */ [[Property:P31]]: [[Q176799]], #autolist2"
+                },
+                {
+                  "revid": 285497129,
+                  "parentid": 285484740,
+                  "timestamp": "2015-12-24T11:30:20Z",
+                  "comment": "/* wbcreateclaim-create:1| */ [[Property:P166]]: [[Q21292818]]"
+                },
+                {
+                  "revid": 285484740,
+                  "parentid": 284259093,
+                  "timestamp": "2015-12-24T10:13:41Z",
+                  "comment": "/* wbcreateclaim-create:1| */ [[Property:P166]]: [[Q21292821]]"
+                },
+                {
+                  "revid": 284259093,
+                  "parentid": 5694645,
+                  "timestamp": "2015-12-18T10:41:52Z",
+                  "comment": "/* wbsetsitelink-add:1|fiwiki */ Neuvostoliiton 163. divisioona"
+                },
+                {
+                  "revid": 5694645,
+                  "parentid": 0,
+                  "timestamp": "2013-02-03T02:02:58Z",
+                  "comment": "/* wbeditentity-create */ Bot: adding interwikilink: ru, sl"
+                }
+              ]
+            }
+          }
+        }
+      }
+    },
+    "wd77": {
+      "request_url": "https://www.wikidata.org/w/api.php?action=query&format=json&titles=Q4032386&prop=revisions&rvstartid=1893947395&rvprop=ids%7Ctimestamp%7Ccomment&rvlimit=500",
+      "status": 200,
+      "response": {
+        "batchcomplete": "",
+        "query": {
+          "pages": {
+            "3843213": {
+              "pageid": 3843213,
+              "ns": 0,
+              "title": "Q4032386",
+              "revisions": [
+                {
+                  "revid": 1893947395,
+                  "parentid": 1802941961,
+                  "timestamp": "2023-05-10T22:58:42Z",
+                  "comment": "/* wbsetdescription-add:1|uk */ військова частина, [[:toollabs:quickstatements/#/batch/194754|batch #194754]]"
+                },
+                {
+                  "revid": 1802941961,
+                  "parentid": 1802941954,
+                  "timestamp": "2023-01-04T17:19:53Z",
+                  "comment": "/* wbsetclaim-create:2||1 */ [[Property:P1366]]: [[Q16161496]]"
+                },
+                {
+                  "revid": 1802941954,
+                  "parentid": 1802941904,
+                  "timestamp": "2023-01-04T17:19:53Z",
+                  "comment": "/* wbsetclaim-create:2||1 */ [[Property:P1366]]: [[Q4032386]]"
+                },
+                {
+                  "revid": 1802941904,
+                  "parentid": 1802941830,
+                  "timestamp": "2023-01-04T17:19:48Z",
+                  "comment": "/* wbsetclaim-create:2||1 */ [[Property:P1365]]: [[Q4032386]]"
+                },
+                {
+                  "revid": 1802941830,
+                  "parentid": 1802941824,
+                  "timestamp": "2023-01-04T17:19:41Z",
+                  "comment": "/* wbsetclaim-create:2||1 */ [[Property:P166]]: [[Q337463]]"
+                },
+                {
+                  "revid": 1802941824,
+                  "parentid": 1802941736,
+                  "timestamp": "2023-01-04T17:19:40Z",
+                  "comment": "/* wbsetclaim-create:2||1 */ [[Property:P166]]: [[Q185493]]"
+                },
+                {
+                  "revid": 1802941736,
+                  "parentid": 1802941671,
+                  "timestamp": "2023-01-04T17:19:35Z",
+                  "comment": "/* wbsetclaim-create:2||1 */ [[Property:P576]]: 1 December 2000"
+                },
+                {
+                  "revid": 1802941671,
+                  "parentid": 1464947740,
+                  "timestamp": "2023-01-04T17:19:31Z",
+                  "comment": "/* wbsetclaim-create:2||1 */ [[Property:P241]]: [[Q29171]]"
+                },
+                {
+                  "revid": 1464947740,
+                  "parentid": 1354817911,
+                  "timestamp": "2021-07-23T17:08:02Z",
+                  "comment": "/* wbeditentity-update-languages-short:0||en */ Importing description from enwiki: military unit"
+                },
+                {
+                  "revid": 1354817911,
+                  "parentid": 1015024969,
+                  "timestamp": "2021-02-04T23:06:53Z",
+                  "comment": "/* wbcreateclaim-create:1| */ [[Property:P646]]: /m/0t53vkx"
+                },
+                {
+                  "revid": 1015024969,
+                  "parentid": 1013991916,
+                  "timestamp": "2019-09-17T08:18:29Z",
+                  "comment": "/* undo:0||1013991916|Andrew J.Kurbiko */ misc ([[:toollabs:editgroups/b/EG/e4fb145|details]])"
+                },
+                {
+                  "revid": 1013991916,
+                  "parentid": 789792834,
+                  "timestamp": "2019-09-15T17:25:23Z",
+                  "comment": "/* wbcreateclaim-create:1| */ [[Property:P17]]: [[Q15180]], [[:toollabs:quickstatements/#/batch/18624|batch #18624]]"
+                },
+                {
+                  "revid": 789792834,
+                  "parentid": 789792782,
+                  "timestamp": "2018-11-14T15:43:07Z",
+                  "comment": "/* wbsetreference-add:2| */ [[Property:P571]]: 1943"
+                },
+                {
+                  "revid": 789792782,
+                  "parentid": 779516505,
+                  "timestamp": "2018-11-14T15:43:02Z",
+                  "comment": "/* wbcreateclaim-create:1| */ [[Property:P571]]: 1943, Member of an inception category, 'Category:Military units and formations established in 1943' Q9484693"
+                },
+                {
+                  "revid": 779516505,
+                  "parentid": 779365471,
+                  "timestamp": "2018-11-01T22:28:38Z",
+                  "comment": "/* wbsetdescription-add:1|ru */ войсковое формирование стрелковых войск РККА"
+                },
+                {
+                  "revid": 779365471,
+                  "parentid": 285488531,
+                  "timestamp": "2018-11-01T16:55:34Z",
+                  "comment": "/* wbcreateclaim-create:1| */ [[Property:P31]]: [[Q4443691]], #quickstatements; [[:toollabs:quickstatements/#/batch/4974|batch #4974]] by [[User:Infovarius|]]"
+                },
+                {
+                  "revid": 285488531,
+                  "parentid": 128196364,
+                  "timestamp": "2015-12-24T10:36:04Z",
+                  "comment": "/* wbcreateclaim-create:1| */ [[Property:P166]]: [[Q21292821]]"
+                },
+                {
+                  "revid": 128196364,
+                  "parentid": 128196330,
+                  "timestamp": "2014-05-11T16:49:39Z",
+                  "comment": "/* wbcreateclaim-create:1| */ [[Property:P607]]: [[Q362]]"
+                },
+                {
+                  "revid": 128196330,
+                  "parentid": 27740837,
+                  "timestamp": "2014-05-11T16:49:35Z",
+                  "comment": "/* wbcreateclaim-create:1| */ [[Property:P31]]: [[Q169534]]"
+                },
+                {
+                  "revid": 27740837,
+                  "parentid": 27740828,
+                  "timestamp": "2013-04-20T03:28:25Z",
+                  "comment": "/* wbsetlabel-set:1|en */ 77th Guards Rifle Division"
+                },
+                {
+                  "revid": 27740828,
+                  "parentid": 5698126,
+                  "timestamp": "2013-04-20T03:28:24Z",
+                  "comment": "/* wbsetsitelink-set:1|enwiki */ 77th Guards Rifle Division"
+                },
+                {
+                  "revid": 5698126,
+                  "parentid": 0,
+                  "timestamp": "2013-02-03T03:19:22Z",
+                  "comment": "/* wbeditentity-create */ Bot: adding interwikilink: ru"
+                }
+              ]
+            }
+          }
+        }
+      }
+    },
+    "ru77_snapshot": {
+      "request_url": "https://ru.wikipedia.org/w/api.php?action=query&format=json&titles=77-%D1%8F+%D0%B3%D0%B2%D0%B0%D1%80%D0%B4%D0%B5%D0%B9%D1%81%D0%BA%D0%B0%D1%8F+%D1%81%D1%82%D1%80%D0%B5%D0%BB%D0%BA%D0%BE%D0%B2%D0%B0%D1%8F+%D0%B4%D0%B8%D0%B2%D0%B8%D0%B7%D0%B8%D1%8F&prop=revisions&rvprop=ids%7Ctimestamp%7Ccontent&rvslots=main&rvstart=2023-05-10T22%3A58%3A42Z&rvlimit=1",
+      "status": 200,
+      "response": {
+        "continue": {
+          "rvcontinue": "20221122211111|126813872",
+          "continue": "||"
+        },
+        "query": {
+          "pages": {
+            "2219981": {
+              "pageid": 2219981,
+              "ns": 0,
+              "title": "77-я гвардейская стрелковая дивизия",
+              "revisions": [
+                {
+                  "revid": 129014098,
+                  "parentid": 126813872,
+                  "timestamp": "2023-03-03T23:32:57Z",
+                  "slots": {
+                    "main": {
+                      "contentmodel": "wikitext",
+                      "contentformat": "text/x-wiki",
+                      "*": "{{другие значения|21-я дивизия}}\n{{Другие формирования|173-я стрелковая дивизия|4}}\n{{Воинское формирование СССР\n| оформление = общее\n| гвардия = да\n| наименование                    = 77-я гвардейская стрелковая Черниговская ордена Ленина Краснознамённая ордена Суворова дивизия<br>''(77-я гв. сд)''\n| награды                         = {{Советский гвардейский знак}} {{Орден Ленина|тип=воинская часть}} {{Орден Красного Знамени|тип=воинская часть}} {{Орден Суворова 2 степени|тип=воинская часть}}\n| почётные наименования = '''«[[Чернигов|Черниговская]]»'''\n| войска =[[Сухопутные войска]]\n| род войск = [[пехота]]\n| формирование = 01.07.1941\n| расформирование (преобразование) =1.12.2000\n| предшественник = [[173-я стрелковая дивизия (2-го формирования)|173-я стрелковая дивизия]]\n| преемник = 10-я отдельная гвардейская стрелковая бригада →<br>[[77-я гвардейская мотострелковая дивизия]]→<br>[[77-я гвардейская дивизия береговой обороны]]→<br>[[77-я гвардейская отдельная бригада морской пехоты|77-я гвардейская отдельная  Московско-Черниговская ордена Ленина Краснознамённая ордена Суворова бригада морской пехоты]]\n| районы боевых действий = '''[[Великая Отечественная война]]''': <br> [[Битва за Москву]], [[Сталинградская битва]], [[Орловская наступательная операция]], [[Битва за Днепр]], [[Гомельско-Речицкая наступательная операция]], [[Люблин-Брестская операция]], [[Висло-Одерская операция]], [[Берлинская операция]]\n}}\n'''77-я гвардейская стрелковая Черниговская ордена Ленина Краснознамённая ордена Суворова дивизия''' — [[Соединение (военное дело)|соединение]] [[Вооружённые силы СССР|Вооружённых сил СССР]] в [[Великая Отечественная война|Великой Отечественной войне]]\n\n== История ==\n\n=== Формирование ===\nСформирована в июле 1941 в [[Москва|Москве]], в [[Медведниковская гимназия|школе № 59]] (Староконюшенный переулок, дом 18), как '''21-я дивизия [[Ополчение#Народное ополчение в годы Великой Отечественной войны (1941—1945)|народного ополчения]] [[Киевский район (Москва)|Киевского района]]''' из рабочих и служащих Дорогомиловского химического завода имени Фрунзе, [[Бабаевский (концерн)|кондитерской фабрики имени Бабаева]], [[Московский завод пишущих принадлежностей им. Сакко и Ванцетти|карандашной фабрики имени Сакко и Ванцетти]], Московского холодильного комбината, сотрудников [[киностудия «Мосфильм»|киностудии «Мосфильм»]], колхозников Пушкинского района.\nВ дивизию вступило много научных сотрудников: институтов экономики, мирового хозяйства и мировой политики, философии и истории [[Академия наук СССР|Академии наук СССР]].\n\n=== Боевой путь, даты основных сражений ===\n1. [[Битва за Москву]] — в оборонительной и наступательной операциях с 2 октября 1941 г. по 20 апреля 1942 г.\n\n2. [[Сталинградская битва]] — в оборонительной и наступательной операциях битвы — с 5 сентября 1942 г. по 2 февраля 1943 г.\n\n3. [[Курская битва]] — в Орловской наступательной операции с 12 июля по 5 августа 1943 г.\n\n4. В освобождении Украины и [[Битва за Днепр|битве за Днепр]] — с 16 сентября по 10 ноября 1943 г.\n\n5. В освобождении Белоруссии — [[Гомельско-Речицкая наступательная операция]] с 10 ноября 1943 г. по март 1944 г.\n"
+                    }
+                  }
+                }
+              ]
+            }
+          }
+        }
+      },
+      "content_scope": "Article wikitext excerpt: first 35 lines only; original request returned full content."
+    },
+    "wd163_creation": {
+      "request_url": "https://www.wikidata.org/w/api.php?action=query&format=json&prop=revisions&revids=466095806&rvprop=ids%7Ctimestamp%7Ccontent&rvslots=main",
+      "status": 200,
+      "response": {
+        "batchcomplete": "",
+        "query": {
+          "pages": {
+            "3840065": {
+              "pageid": 3840065,
+              "ns": 0,
+              "title": "Q4029071",
+              "revisions": [
+                {
+                  "revid": 466095806,
+                  "parentid": 466095758,
+                  "timestamp": "2017-03-14T03:14:53Z",
+                  "slots": {
+                    "main": {
+                      "contentmodel": "wikibase-item",
+                      "contentformat": "application/json",
+                      "*": "{\"id\": \"Q4029071\", \"claims\": {\"P1365\": [{\"mainsnak\": {\"snaktype\": \"value\", \"property\": \"P1365\", \"hash\": \"b5ae507805d3b7aafcfaf87fec5d71d1ca3f0e0f\", \"datavalue\": {\"value\": {\"entity-type\": \"item\", \"numeric-id\": 4029071, \"id\": \"Q4029071\"}, \"type\": \"wikibase-entityid\"}}, \"type\": \"statement\", \"id\": \"Q4029071$1d576372-4433-3e7e-e976-818a285e47fb\", \"rank\": \"normal\", \"references\": [{\"hash\": \"288ab581e7d2d02995a26dfa8b091d96e78457fc\", \"snaks\": {\"P143\": [{\"snaktype\": \"value\", \"property\": \"P143\", \"hash\": \"6a164248fc96bfa583bbb495cb63ae6401ec203c\", \"datavalue\": {\"value\": {\"entity-type\": \"item\", \"numeric-id\": 206855, \"id\": \"Q206855\"}, \"type\": \"wikibase-entityid\"}}]}, \"snaks-order\": [\"P143\"]}]}], \"P1366\": []}}"
+                    }
+                  }
+                }
+              ]
+            }
+          }
+        }
+      },
+      "content_scope": "Selected entity ID and P1365/P1366 claims only; original API content reduced for this evidence file."
+    },
+    "wd77_creation": {
+      "request_url": "https://www.wikidata.org/w/api.php?action=query&format=json&prop=revisions&revids=1802941904%7C1802941954&rvprop=ids%7Ctimestamp%7Ccontent&rvslots=main",
+      "status": 200,
+      "response": {
+        "batchcomplete": "",
+        "query": {
+          "pages": {
+            "3843213": {
+              "pageid": 3843213,
+              "ns": 0,
+              "title": "Q4032386",
+              "revisions": [
+                {
+                  "revid": 1802941904,
+                  "parentid": 1802941830,
+                  "timestamp": "2023-01-04T17:19:48Z",
+                  "slots": {
+                    "main": {
+                      "contentmodel": "wikibase-item",
+                      "contentformat": "application/json",
+                      "*": "{\"id\": \"Q4032386\", \"claims\": {\"P1365\": [{\"mainsnak\": {\"snaktype\": \"value\", \"property\": \"P1365\", \"hash\": \"91e96455415a3460d4284b7d329e99f375284e14\", \"datavalue\": {\"value\": {\"entity-type\": \"item\", \"numeric-id\": 4032386, \"id\": \"Q4032386\"}, \"type\": \"wikibase-entityid\"}}, \"type\": \"statement\", \"id\": \"Q4032386$0ad48795-4dc5-9ec0-d9c0-c4d6774b57a3\", \"rank\": \"normal\", \"references\": [{\"hash\": \"2b9c514efbd9f84d2342ceb08adfaf0aeedf9402\", \"snaks\": {\"P143\": [{\"snaktype\": \"value\", \"property\": \"P143\", \"hash\": \"6a164248fc96bfa583bbb495cb63ae6401ec203c\", \"datavalue\": {\"value\": {\"entity-type\": \"item\", \"numeric-id\": 206855, \"id\": \"Q206855\"}, \"type\": \"wikibase-entityid\"}}], \"P4656\": [{\"snaktype\": \"value\", \"property\": \"P4656\", \"hash\": \"36bb7e23ca8dfec6e340b54a38fa5b19d59f8950\", \"datavalue\": {\"value\": \"https://ru.wikipedia.org/?oldid=122348199\", \"type\": \"string\"}}]}, \"snaks-order\": [\"P143\", \"P4656\"]}]}], \"P1366\": []}}"
+                    }
+                  }
+                },
+                {
+                  "revid": 1802941954,
+                  "parentid": 1802941904,
+                  "timestamp": "2023-01-04T17:19:53Z",
+                  "slots": {
+                    "main": {
+                      "contentmodel": "wikibase-item",
+                      "contentformat": "application/json",
+                      "*": "{\"id\": \"Q4032386\", \"claims\": {\"P1365\": [{\"mainsnak\": {\"snaktype\": \"value\", \"property\": \"P1365\", \"hash\": \"91e96455415a3460d4284b7d329e99f375284e14\", \"datavalue\": {\"value\": {\"entity-type\": \"item\", \"numeric-id\": 4032386, \"id\": \"Q4032386\"}, \"type\": \"wikibase-entityid\"}}, \"type\": \"statement\", \"id\": \"Q4032386$0ad48795-4dc5-9ec0-d9c0-c4d6774b57a3\", \"rank\": \"normal\", \"references\": [{\"hash\": \"2b9c514efbd9f84d2342ceb08adfaf0aeedf9402\", \"snaks\": {\"P143\": [{\"snaktype\": \"value\", \"property\": \"P143\", \"hash\": \"6a164248fc96bfa583bbb495cb63ae6401ec203c\", \"datavalue\": {\"value\": {\"entity-type\": \"item\", \"numeric-id\": 206855, \"id\": \"Q206855\"}, \"type\": \"wikibase-entityid\"}}], \"P4656\": [{\"snaktype\": \"value\", \"property\": \"P4656\", \"hash\": \"36bb7e23ca8dfec6e340b54a38fa5b19d59f8950\", \"datavalue\": {\"value\": \"https://ru.wikipedia.org/?oldid=122348199\", \"type\": \"string\"}}]}, \"snaks-order\": [\"P143\", \"P4656\"]}]}], \"P1366\": [{\"mainsnak\": {\"snaktype\": \"value\", \"property\": \"P1366\", \"hash\": \"b348a0b9fabbd13def4c20705e719c3b962679bd\", \"datavalue\": {\"value\": {\"entity-type\": \"item\", \"numeric-id\": 4032386, \"id\": \"Q4032386\"}, \"type\": \"wikibase-entityid\"}}, \"type\": \"statement\", \"id\": \"Q4032386$e8138f0e-4e73-e0ff-df3e-f23d99bada38\", \"rank\": \"normal\", \"references\": [{\"hash\": \"2b9c514efbd9f84d2342ceb08adfaf0aeedf9402\", \"snaks\": {\"P143\": [{\"snaktype\": \"value\", \"property\": \"P143\", \"hash\": \"6a164248fc96bfa583bbb495cb63ae6401ec203c\", \"datavalue\": {\"value\": {\"entity-type\": \"item\", \"numeric-id\": 206855, \"id\": \"Q206855\"}, \"type\": \"wikibase-entityid\"}}], \"P4656\": [{\"snaktype\": \"value\", \"property\": \"P4656\", \"hash\": \"36bb7e23ca8dfec6e340b54a38fa5b19d59f8950\", \"datavalue\": {\"value\": \"https://ru.wikipedia.org/?oldid=122348199\", \"type\": \"string\"}}]}, \"snaks-order\": [\"P143\", \"P4656\"]}]}]}}"
+                    }
+                  }
+                }
+              ]
+            }
+          }
+        }
+      },
+      "content_scope": "Selected entity ID and P1365/P1366 claims only; original API content reduced for this evidence file."
+    },
+    "ru163_at_import": {
+      "request_url": "https://ru.wikipedia.org/w/api.php?action=query&format=json&titles=163-%D1%8F+%D1%81%D1%82%D1%80%D0%B5%D0%BB%D0%BA%D0%BE%D0%B2%D0%B0%D1%8F+%D0%B4%D0%B8%D0%B2%D0%B8%D0%B7%D0%B8%D1%8F&prop=revisions&rvprop=ids%7Ctimestamp%7Ccontent&rvslots=main&rvstart=2017-03-14T03%3A14%3A53Z&rvlimit=1",
+      "status": 200,
+      "response": {
+        "continue": {
+          "rvcontinue": "20170210134739|83586914",
+          "continue": "||"
+        },
+        "query": {
+          "pages": {
+            "1512969": {
+              "pageid": 1512969,
+              "ns": 0,
+              "title": "163-я стрелковая дивизия",
+              "revisions": [
+                {
+                  "revid": 83854655,
+                  "parentid": 83586914,
+                  "timestamp": "2017-02-23T18:29:46Z",
+                  "slots": {
+                    "main": {
+                      "contentmodel": "wikitext",
+                      "contentformat": "text/x-wiki",
+                      "*": "{{Воинское формирование СССР (2-я мировая, пехота)\n | наименование                    = 163-я стрелковая дивизия (163-я сд)\n | награды                         = {{Орден Ленина|тип=воинская часть}} {{Орден Красного Знамени|тип=воинская часть}} {{Орден Суворова 2 степени|тип=воинская часть}} {{Орден Кутузова 2 степени|тип=воинская часть}}\n | почётные наименования           = «Роменская» <br /> «Киевская» \n | войска                          = сухопутные\n | род войск                       = [[Сухопутные войска|пехота]]\n | формирование                    = декабрь 1941\n | расформирование (преобразование)  = 1957 ?\n | предшественник                  =[[163-я моторизованная дивизия]] \n | преемник                        = [[25-я механизированная дивизия]] (после ВОВ)\n | районы боевых действий          =\n'''1939—1940'''  <br />\n'''[[Советско-финская война (1939—1940)|Советско-финская война]]'''  <br /> [[Битва при Суомуссалми]]  <br />\n'''1941''' <br /> '''[[Ленинградская стратегическая оборонительная операция]]''' <br /> [[Контрудар под Сольцами]] <br /> [[Контрудар под Старой Руссой]] <br /> [[Демянская оборонительная операция]] <br />\n'''1942''' <br /> '''[[Демянская операция (1942)|Демянская операция]]''' <br />\n'''1943''' <br /> '''[[Демянская наступательная операция (1943)|Демянская наступательная операция]]''' <br /> '''[[Черниговско-Полтавская операция]]''' <br /> [[Сумско-Прилукская наступательная операция]] <br /> '''[[Киевская наступательная операция]]''' <br />\n'''1944''' <br /> '''[[Днепровско-Карпатская операция]]''' <br /> [[Житомирско-Бердичевская операция]] <br /> [[Корсунь-Шевченковская операция]] <br /> [[Уманско-Ботошанская операция]] <br /> '''[[Ясско-Кишинёвская операция]]''' <br /> [[Ясско-Фокшанская операция]] <br /> '''[[Дебреценская операция]]''' <br /> '''[[Будапештская операция]]''' <br /> [[Ньиредьхаза-Мишкольцкая операция]] <br />\n'''1945''' <br /> '''[[Балатонская оборонительная операция]]''' <br /> '''[[Венская наступательная операция]]''' <br /> [[Веспремская наступательная операция]] <br /> [[Надьканиже-Кермендская операция]] \n}}\n\n'''163-я стрелковая дивизия''' — войсковое соединение вооружённых сил [[СССР]], принимавшее участие в [[Советско-финская война (1939—1940)|Советско-финской]] и [[Великая Отечественная война|Великой Отечественной]] войнах.\n\n== История ==\n\nДивизия формировалась с августа по начало сентября 1939 года в [[Тульская область|Тульской области]] как 163-я стрелковая дивизия на базе стрелкового полка [[84-я стрелковая дивизия|84-й стрелковой дивизии]].\n\nВ сентябре 1939 года дивизия была сосредоточена на латвийской границе, в конце октября — начале ноября 1939 года переброшена в [[Карелия|Карелию]] в состав Особого корпуса [[8-я армия (СССР)|8-й армии]], затем [[9-я армия (СССР)|9-й армии]].\n\nС ноября 1939 года принимала участие [[Зимняя война|Зимней войне]]. 11.12.1939 года соединение попало в окружение финских войск под [[Суомуссалми]]. 27—30.12.1939 года подверглась [[Битва при Суомуссалми|фактическому разгрому]]. Командование 662-го стрелкового полка дивизии за оставление поля боя и устранение от руководства полком было расстреляно перед строем. После войны остатки дивизии отведены в [[Новгород]]. В апреле 1940 года имела всего 753 человека кадрового состава, однако в середине апреля 1940 года численность дивизии доведена до шеститысячного состава.\n\nВ июне 1940 года на базе 530-го гаубичного артполка 163-й стрелковой дивизии формировался 3-й гаубичный артиллерийский полк, а на базе 759-го стрелкового полка 163-й стрелковой дивизии — 3-й мотострелковый полк [[3-я танковая Краснознамённая дивизия|3-й танковой дивизии]].\n\nПереформирована в моторизованную дивизию в июне 1940 во [[Псков]]е и [[Черёха (Псковская область)|Черёхе]], в таком виде и начала боевые действия в ходе Великой Отечественной войны.\n\nВ действующей армии во время ВОВ с 22.06.1941 по 15.09.1941 как 163-я моторизованная дивизия, с 15.09.1941 по 08.04.1943 и с 09.07.1943 по 09.05.1945 как 163-я стрелковая дивизия."
+                    }
+                  }
+                }
+              ]
+            }
+          }
+        }
+      },
+      "content_scope": "First 35 source lines only."
+    },
+    "ru77_at_import": {
+      "request_url": "https://ru.wikipedia.org/w/api.php?action=query&format=json&titles=77-%D1%8F+%D0%B3%D0%B2%D0%B0%D1%80%D0%B4%D0%B5%D0%B9%D1%81%D0%BA%D0%B0%D1%8F+%D1%81%D1%82%D1%80%D0%B5%D0%BB%D0%BA%D0%BE%D0%B2%D0%B0%D1%8F+%D0%B4%D0%B8%D0%B2%D0%B8%D0%B7%D0%B8%D1%8F&prop=revisions&rvprop=ids%7Ctimestamp%7Ccontent&rvslots=main&rvstart=2023-01-04T17%3A19%3A48Z&rvlimit=1",
+      "status": 200,
+      "response": {
+        "continue": {
+          "rvcontinue": "20221013074020|126031364",
+          "continue": "||"
+        },
+        "query": {
+          "pages": {
+            "2219981": {
+              "pageid": 2219981,
+              "ns": 0,
+              "title": "77-я гвардейская стрелковая дивизия",
+              "revisions": [
+                {
+                  "revid": 126813872,
+                  "parentid": 126031364,
+                  "timestamp": "2022-11-22T21:11:11Z",
+                  "slots": {
+                    "main": {
+                      "contentmodel": "wikitext",
+                      "contentformat": "text/x-wiki",
+                      "*": "{{другие значения|21-я дивизия}}\n{{Другие формирования|173-я стрелковая дивизия|4}}\n{{Воинское формирование СССР\n| оформление = общее\n| гвардия = да\n| наименование                    = 77-я гвардейская стрелковая Черниговская ордена Ленина Краснознамённая ордена Суворова дивизия<br>''(77-я гв. сд)''\n| награды                         = {{Советский гвардейский знак}} {{Орден Ленина|тип=воинская часть}} {{Орден Красного Знамени|тип=воинская часть}} {{Орден Суворова 2 степени|тип=воинская часть}}\n| почётные наименования = '''«[[Чернигов|Черниговская]]»'''\n| войска =[[Сухопутные войска]]\n| род войск = [[пехота]]\n| формирование = 01.07.1941\n| расформирование (преобразование) =1.12.2000\n| предшественник = [[173-я стрелковая дивизия (2-го формирования)|173-я стрелковая дивизия]]\n| преемник = 10-я отдельная гвардейская стрелковая бригада →<br>[[77-я гвардейская мотострелковая дивизия]]→<br>[[77-я гвардейская дивизия береговой обороны]]→<br>[[77-я гвардейская отдельная бригада морской пехоты|77-я гвардейская отдельная  Московско-Черниговская ордена Ленина Краснознамённая ордена Суворова бригада морской пехоты]]\n| районы боевых действий = '''[[Великая Отечественная война]]''': <br> [[Битва за Москву]], [[Сталинградская битва]], [[Орловская наступательная операция]], [[Битва за Днепр]], [[Гомельско-Речицкая наступательная операция]], [[Люблин-Брестская операция]], [[Висло-Одерская операция]], [[Берлинская операция]]\n}}\n'''77-я гвардейская стрелковая Черниговская ордена Ленина Краснознамённая ордена Суворова дивизия''' — [[Соединение (военное дело)|соединение]] [[Вооружённые силы СССР|Вооружённых сил СССР]] в [[Великая Отечественная война|Великой Отечественной войне]]\n\n== История ==\n\n=== Формирование ===\nСформирована в июле 1941 в [[Москва|Москве]], в [[Медведниковская гимназия|школе № 59]] (Староконюшенный переулок, дом 18), как '''21-я дивизия [[Ополчение#Народное ополчение в годы Великой Отечественной войны (1941—1945)|народного ополчения]] [[Киевский район (Москва)|Киевского района]]''' из рабочих и служащих Дорогомиловского химического завода имени Фрунзе, [[Бабаевский (концерн)|кондитерской фабрики имени Бабаева]], [[Московский завод пишущих принадлежностей им. Сакко и Ванцетти|карандашной фабрики имени Сакко и Ванцетти]], Московского холодильного комбината, сотрудников [[киностудия «Мосфильм»|киностудии «Мосфильм»]], колхозников Пушкинского района.\nВ дивизию вступило много научных сотрудников: институтов экономики, мирового хозяйства и мировой политики, философии и истории [[Академия наук СССР|Академии наук СССР]].\n\n=== Боевой путь, даты основных сражений ===\n1. [[Битва за Москву]] — в оборонительной и наступательной операциях с 2 октября 1941 г. по 20 апреля 1942 г.\n\n2. [[Сталинградская битва]] — в оборонительной и наступательной операциях битвы — с 5 сентября 1942 г. по 2 февраля 1943 г.\n\n3. [[Курская битва]] — в Орловской наступательной операции с 12 июля по 5 августа 1943 г.\n\n4. В освобождении Украины и [[Битва за Днепр|битве за Днепр]] — с 16 сентября по 10 ноября 1943 г.\n\n5. В освобождении Белоруссии — [[Гомельско-Речицкая наступательная операция]] с 10 ноября 1943 г. по март 1944 г.\n"
+                    }
+                  }
+                }
+              ]
+            }
+          }
+        }
+      },
+      "content_scope": "First 35 source lines only."
+    },
+    "163motor": {
+      "request_url": "https://ru.wikipedia.org/w/api.php?action=query&format=json&titles=163-%D1%8F+%D0%BC%D0%BE%D1%82%D0%BE%D1%80%D0%B8%D0%B7%D0%BE%D0%B2%D0%B0%D0%BD%D0%BD%D0%B0%D1%8F+%D0%B4%D0%B8%D0%B2%D0%B8%D0%B7%D0%B8%D1%8F&prop=revisions&rvprop=ids%7Ctimestamp%7Ccontent&rvslots=main&rvstart=2017-03-14T03%3A14%3A53Z&rvlimit=1",
+      "status": 200,
+      "response": {
+        "batchcomplete": "",
+        "query": {
+          "pages": {
+            "2070353": {
+              "pageid": 2070353,
+              "ns": 0,
+              "title": "163-я моторизованная дивизия",
+              "revisions": [
+                {
+                  "revid": 19570814,
+                  "parentid": 0,
+                  "timestamp": "2009-11-02T10:20:38Z",
+                  "slots": {
+                    "main": {
+                      "contentmodel": "wikitext",
+                      "contentformat": "text/x-wiki",
+                      "*": "#REDIRECT [[163-я стрелковая дивизия]]"
+                    }
+                  }
+                }
+              ]
+            }
+          }
+        }
+      }
+    },
+    "173second": {
+      "request_url": "https://ru.wikipedia.org/w/api.php?action=query&format=json&titles=173-%D1%8F+%D1%81%D1%82%D1%80%D0%B5%D0%BB%D0%BA%D0%BE%D0%B2%D0%B0%D1%8F+%D0%B4%D0%B8%D0%B2%D0%B8%D0%B7%D0%B8%D1%8F+%282-%D0%B3%D0%BE+%D1%84%D0%BE%D1%80%D0%BC%D0%B8%D1%80%D0%BE%D0%B2%D0%B0%D0%BD%D0%B8%D1%8F%29&prop=revisions&rvprop=ids%7Ctimestamp%7Ccontent&rvslots=main&rvstart=2023-01-04T17%3A19%3A48Z&rvlimit=1",
+      "status": 200,
+      "response": {
+        "batchcomplete": "",
+        "query": {
+          "pages": {
+            "5170373": {
+              "pageid": 5170373,
+              "ns": 0,
+              "title": "173-я стрелковая дивизия (2-го формирования)",
+              "revisions": [
+                {
+                  "revid": 64807950,
+                  "parentid": 0,
+                  "timestamp": "2014-08-14T20:42:10Z",
+                  "slots": {
+                    "main": {
+                      "contentmodel": "wikitext",
+                      "contentformat": "text/x-wiki",
+                      "*": "#REDIRECT [[77-я гвардейская стрелковая дивизия]]"
+                    }
+                  }
+                }
+              ]
+            }
+          }
+        }
+      }
+    },
+    "77motor": {
+      "request_url": "https://ru.wikipedia.org/w/api.php?action=query&format=json&titles=77-%D1%8F+%D0%B3%D0%B2%D0%B0%D1%80%D0%B4%D0%B5%D0%B9%D1%81%D0%BA%D0%B0%D1%8F+%D0%BC%D0%BE%D1%82%D0%BE%D1%81%D1%82%D1%80%D0%B5%D0%BB%D0%BA%D0%BE%D0%B2%D0%B0%D1%8F+%D0%B4%D0%B8%D0%B2%D0%B8%D0%B7%D0%B8%D1%8F&prop=revisions&rvprop=ids%7Ctimestamp%7Ccontent&rvslots=main&rvstart=2023-01-04T17%3A19%3A53Z&rvlimit=1",
+      "status": 200,
+      "response": {
+        "batchcomplete": "",
+        "query": {
+          "pages": {
+            "8156468": {
+              "pageid": 8156468,
+              "ns": 0,
+              "title": "77-я гвардейская мотострелковая дивизия",
+              "revisions": [
+                {
+                  "revid": 104417582,
+                  "parentid": 0,
+                  "timestamp": "2020-01-07T15:31:49Z",
+                  "slots": {
+                    "main": {
+                      "contentmodel": "wikitext",
+                      "contentformat": "text/x-wiki",
+                      "*": "#перенаправление [[77-я гвардейская стрелковая дивизия]]"
+                    }
+                  }
+                }
+              ]
+            }
+          }
+        }
+      }
+    },
+    "77coastal": {
+      "request_url": "https://ru.wikipedia.org/w/api.php?action=query&format=json&titles=77-%D1%8F+%D0%B3%D0%B2%D0%B0%D1%80%D0%B4%D0%B5%D0%B9%D1%81%D0%BA%D0%B0%D1%8F+%D0%B4%D0%B8%D0%B2%D0%B8%D0%B7%D0%B8%D1%8F+%D0%B1%D0%B5%D1%80%D0%B5%D0%B3%D0%BE%D0%B2%D0%BE%D0%B9+%D0%BE%D0%B1%D0%BE%D1%80%D0%BE%D0%BD%D1%8B&prop=revisions&rvprop=ids%7Ctimestamp%7Ccontent&rvslots=main&rvstart=2023-01-04T17%3A19%3A53Z&rvlimit=1",
+      "status": 200,
+      "response": {
+        "batchcomplete": "",
+        "query": {
+          "pages": {
+            "6901498": {
+              "pageid": 6901498,
+              "ns": 0,
+              "title": "77-я гвардейская дивизия береговой обороны",
+              "revisions": [
+                {
+                  "revid": 85176238,
+                  "parentid": 0,
+                  "timestamp": "2017-05-02T11:49:15Z",
+                  "slots": {
+                    "main": {
+                      "contentmodel": "wikitext",
+                      "contentformat": "text/x-wiki",
+                      "*": "#REDIRECT [[77-я_гвардейская_отдельная_бригада_морской_пехоты]]"
+                    }
+                  }
+                }
+              ]
+            }
+          }
+        }
+      }
+    },
+    "remaining_current_resolution": {
+      "request_url": "https://ru.wikipedia.org/w/api.php?action=query&format=json&titles=163-%D1%8F+%D0%BC%D0%BE%D1%82%D0%BE%D1%80%D0%B8%D0%B7%D0%BE%D0%B2%D0%B0%D0%BD%D0%BD%D0%B0%D1%8F+%D0%B4%D0%B8%D0%B2%D0%B8%D0%B7%D0%B8%D1%8F%7C173-%D1%8F+%D1%81%D1%82%D1%80%D0%B5%D0%BB%D0%BA%D0%BE%D0%B2%D0%B0%D1%8F+%D0%B4%D0%B8%D0%B2%D0%B8%D0%B7%D0%B8%D1%8F+%282-%D0%B3%D0%BE+%D1%84%D0%BE%D1%80%D0%BC%D0%B8%D1%80%D0%BE%D0%B2%D0%B0%D0%BD%D0%B8%D1%8F%29%7C77-%D1%8F+%D0%B3%D0%B2%D0%B0%D1%80%D0%B4%D0%B5%D0%B9%D1%81%D0%BA%D0%B0%D1%8F+%D0%BC%D0%BE%D1%82%D0%BE%D1%81%D1%82%D1%80%D0%B5%D0%BB%D0%BA%D0%BE%D0%B2%D0%B0%D1%8F+%D0%B4%D0%B8%D0%B2%D0%B8%D0%B7%D0%B8%D1%8F%7C77-%D1%8F+%D0%B3%D0%B2%D0%B0%D1%80%D0%B4%D0%B5%D0%B9%D1%81%D0%BA%D0%B0%D1%8F+%D0%B4%D0%B8%D0%B2%D0%B8%D0%B7%D0%B8%D1%8F+%D0%B1%D0%B5%D1%80%D0%B5%D0%B3%D0%BE%D0%B2%D0%BE%D0%B9+%D0%BE%D0%B1%D0%BE%D1%80%D0%BE%D0%BD%D1%8B%7C77-%D1%8F+%D0%B3%D0%B2%D0%B0%D1%80%D0%B4%D0%B5%D0%B9%D1%81%D0%BA%D0%B0%D1%8F+%D0%BE%D1%82%D0%B4%D0%B5%D0%BB%D1%8C%D0%BD%D0%B0%D1%8F+%D0%B1%D1%80%D0%B8%D0%B3%D0%B0%D0%B4%D0%B0+%D0%BC%D0%BE%D1%80%D1%81%D0%BA%D0%BE%D0%B9+%D0%BF%D0%B5%D1%85%D0%BE%D1%82%D1%8B&redirects=1&prop=pageprops%7Cinfo&ppprop=wikibase_item",
+      "status": 200,
+      "response": {
+        "batchcomplete": "",
+        "query": {
+          "redirects": [
+            {
+              "from": "163-я моторизованная дивизия",
+              "to": "163-я стрелковая дивизия"
+            },
+            {
+              "from": "173-я стрелковая дивизия (2-го формирования)",
+              "to": "77-я гвардейская стрелковая дивизия"
+            },
+            {
+              "from": "77-я гвардейская дивизия береговой обороны",
+              "to": "77-я отдельная гвардейская бригада морской пехоты"
+            },
+            {
+              "from": "77-я гвардейская мотострелковая дивизия",
+              "to": "77-я гвардейская стрелковая дивизия"
+            },
+            {
+              "from": "77-я гвардейская отдельная бригада морской пехоты",
+              "to": "77-я отдельная гвардейская бригада морской пехоты"
+            }
+          ],
+          "pages": {
+            "1512969": {
+              "pageid": 1512969,
+              "ns": 0,
+              "title": "163-я стрелковая дивизия",
+              "pageprops": {
+                "wikibase_item": "Q4029071"
+              },
+              "contentmodel": "wikitext",
+              "pagelanguage": "ru",
+              "pagelanguagehtmlcode": "ru",
+              "pagelanguagedir": "ltr",
+              "touched": "2026-10-14T16:43:04Z",
+              "lastrevid": 155396632,
+              "length": 67333
+            },
+            "2219981": {
+              "pageid": 2219981,
+              "ns": 0,
+              "title": "77-я гвардейская стрелковая дивизия",
+              "pageprops": {
+                "wikibase_item": "Q4032386"
+              },
+              "contentmodel": "wikitext",
+              "pagelanguage": "ru",
+              "pagelanguagehtmlcode": "ru",
+              "pagelanguagedir": "ltr",
+              "touched": "2026-10-15T18:24:23Z",
+              "lastrevid": 155386730,
+              "length": 81678
+            },
+            "4868376": {
+              "pageid": 4868376,
+              "ns": 0,
+              "title": "77-я отдельная гвардейская бригада морской пехоты",
+              "pageprops": {
+                "wikibase_item": "Q16161496"
+              },
+              "contentmodel": "wikitext",
+              "pagelanguage": "ru",
+              "pagelanguagehtmlcode": "ru",
+              "pagelanguagedir": "ltr",
+              "touched": "2026-10-14T16:46:18Z",
+              "lastrevid": 155397834,
+              "length": 24953
+            }
+          }
+        }
+      }
+    }
+  }
+}

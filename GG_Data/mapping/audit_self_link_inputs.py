@@ -20,12 +20,14 @@ ROOT = HERE.parents[1]
 DATA = ROOT / "Data/external/wwii_task_force"
 OUT = HERE / "self_link_review_2026-10-15"
 ASSERTIONS = HERE / "outputs/relation-map-v1.0.0/complete_mapped_relations_v1.0.0.csv"
+RETAINED_SUCCESSOR_ID = "Q4032386$59d1f104-45e5-53bc-90f2-e254f0f4873c"
 
 
 def main() -> None:
     rules = load_exclusions()
     self_links: list[dict[str, str]] = []
     excluded: list[dict[str, str]] = []
+    retained_successor: list[dict[str, str]] = []
     total = 0
     with ASSERTIONS.open(encoding="utf-8-sig", newline="") as stream:
         for row in csv.DictReader(stream):
@@ -37,13 +39,26 @@ def main() -> None:
                 "subject_qid": subject,
                 "object_qid": target,
             }
-            if exclusion_reason(row["selected_source"], record, rules):
+            reason = exclusion_reason(row["selected_source"], record, rules)
+            if reason:
                 excluded.append(row)
+            if (
+                row["selected_source"] == "Wikidata"
+                and row["source_record_id"] == RETAINED_SUCCESSOR_ID
+            ):
+                assert not reason
+                assert (record["predicate"], subject, target) == (
+                    "wd:P1366",
+                    "Q4032386",
+                    "Q16161496",
+                )
+                retained_successor.append(row)
             if subject == target:
                 self_links.append(row)
     assert Counter(
         (r["selected_source"], r["source_record_id"]) for r in excluded
     ) == Counter({key: 1 for key in rules})
+    assert len(retained_successor) == 1
 
     # Keep original N-Quads and absolute decompressed line numbers for every
     # EventKG self-link, not only the three approved exclusions.
@@ -113,7 +128,7 @@ def main() -> None:
                         explanation = "P17 officially includes Germany -> country -> Germany as an example; self-reference alone is not an error. Review historical country/territory scope separately."
                     elif prop in {"P1365", "P1366"}:
                         review = "REVIEW_SUCCESSION_IDENTITY_OR_SOURCE_IMPORT"
-                        explanation = "Same item is its own predecessor/successor. Reference says imported from Russian Wikipedia. SUCCESSION_TRACE.md documents five verified source-field/current-redirect paths and three unresolved cases; exact import edits are not traced."
+                        explanation = "Invalid unqualified succession self-target. SUCCESSION_TRACE.md documents all eight source paths: five from referenced revisions and three from contemporaneous history. Original historical phase identities are not restored by code translation."
                     elif prop == "P6379":
                         review = "REVIEW_SUBJECT_ROLE_AND_REFERENCE"
                         explanation = "Museum is said to have works in its own collection. Reference title concerns a photo series; inspect whether collection holder was used as subject. Cause not established."
@@ -193,6 +208,12 @@ def main() -> None:
         "approved_wikidata_exclusions": sum(
             r["selected_source"] == "Wikidata" for r in excluded
         ),
+        "approved_succession_self_link_exclusions": sum(
+            r["selected_source"] == "Wikidata"
+            and r["selected_source_predicate"] in {"wd:P1365", "wd:P1366"}
+            for r in excluded
+        ),
+        "distinct_successor_assertion_retained": len(retained_successor),
         "input_modified": False,
         "graph_rebuilt": False,
         "filtered_assertion_csv_written": False,
@@ -205,6 +226,7 @@ def main() -> None:
         ),
         "assertion_input": str(ASSERTIONS.relative_to(ROOT)),
         "approved_excluded_assertions": excluded,
+        "retained_distinct_successor_assertions": retained_successor,
         "eventkg": eventkg,
         "wikidata": wikidata,
     }

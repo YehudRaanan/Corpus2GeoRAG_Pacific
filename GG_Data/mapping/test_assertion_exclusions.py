@@ -17,7 +17,7 @@ HERE = Path(__file__).resolve().parent
 class ExclusionChecks(unittest.TestCase):
     def test_exact_records_only_and_changed_content_stops(self) -> None:
         rules = load_exclusions()
-        self.assertEqual(len(rules), 6)
+        self.assertEqual(len(rules), 14)
         for rule in rules.values():
             record = {
                 "source_record_id": rule["source_record_id"],
@@ -72,10 +72,20 @@ class ExclusionChecks(unittest.TestCase):
             ]
             namespace["write_source"](writer, source_name, iter(records))
             self.assertEqual(
-                namespace["stats"][f"{source_name}.excluded_reviewed_input"], 3
+                namespace["stats"][f"{source_name}.excluded_reviewed_input"],
+                3 if source_name == "EventKG" else 11,
             )
             self.assertNotIn(f"{source_name}.written", namespace["stats"])
         self.assertEqual(output.getvalue(), "")
+
+    def test_distinct_successor_of_same_unit_is_retained(self) -> None:
+        record = {
+            "source_record_id": "Q4032386$59d1f104-45e5-53bc-90f2-e254f0f4873c",
+            "predicate": "wd:P1366",
+            "subject_qid": "Q4032386",
+            "object_qid": "Q16161496",
+        }
+        self.assertIsNone(exclusion_reason("Wikidata", record, load_exclusions()))
 
 
 if __name__ == "__main__":
