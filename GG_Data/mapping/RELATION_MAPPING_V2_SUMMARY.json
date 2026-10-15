@@ -1,0 +1,53 @@
+{
+  "relation_map_version": "relation-map-v2.0.0",
+  "eligible_source_relation_rows": 1520,
+  "source_occurrences": 5617651,
+  "unique_connection_rows": 589,
+  "same_code_connections": 403,
+  "cross_identifier_connections": 186,
+  "cross_identifier_directions": {
+    "same": 113,
+    "reverse": 73
+  },
+  "cross_identifier_decisions": {
+    "ACCEPT_FORMAL_TRANSLATION": 124,
+    "KEEP_SEPARATE_OPTIONAL_LEVEL1_SEARCH_VIEW": 21,
+    "BLOCK_FORMAL_TRANSLATION_COMPONENT_CONFLICT": 35,
+    "BLOCK_FORMAL_TRANSLATION_SEMANTIC_CONTRADICTION": 4,
+    "ACCEPT_FORMAL_TRANSLATION_ASSERTION_QA_REQUIRED": 2
+  },
+  "source_relation_coverage": {
+    "FORMAL_CONNECTION_ONLY": {
+      "source_relation_rows": 112,
+      "source_occurrences": 1144587
+    },
+    "FORMAL_EXTERNAL_TARGET_ONLY": {
+      "source_relation_rows": 1,
+      "source_occurrences": 319
+    },
+    "NO_CONNECTION_RETAIN_SOURCE_ID": {
+      "source_relation_rows": 601,
+      "source_occurrences": 3219044
+    },
+    "SAME_CODE_AND_FORMAL_CONNECTION": {
+      "source_relation_rows": 278,
+      "source_occurrences": 910814
+    },
+    "SAME_CODE_CONNECTION_ONLY": {
+      "source_relation_rows": 528,
+      "source_occurrences": 342887
+    }
+  },
+  "unconnected_source_relation_rows": 602,
+  "unconnected_source_occurrences": 3219363,
+  "effective_level2_relations": 1009,
+  "level1_effective_relation_status": {
+    "EXISTING_CATALOG_ASSIGNMENT": 215,
+    "RANKED_REVIEW_REQUIRED": 794
+  },
+  "accepted_reverse_source_rows": 71,
+  "symmetric_level2_relations": 5,
+  "opposite_direction_policy": "Store one source assertion. Use formal inverse or symmetry for query rewriting; otherwise use inbound traversal.",
+  "level1_policy": "Optional search view only. Ranked candidates remain unresolved until reviewed.",
+  "source_data_modified": false
+}
