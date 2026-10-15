@@ -26,6 +26,7 @@ The formula used to validate the relation catalog remains an audit rule. It is n
 |---|---|
 | `GG_Data/mapping/RELATION_MAPPING_TABLE_v2.1.0.csv` | Source-to-Level-2 mapping plus the complete reverse output contract |
 | `GG_Data/mapping/RELATION_DIRECTION_CATALOG_v2.1.0.csv` | One reverse-direction decision for each effective Level 2 relation |
+| `GG_Data/mapping/RELATION_DIRECTION_LOOKUP_v2.1.0.csv` | Direct lookup from every relation ID to its reverse relation ID and label |
 | `GG_Data/mapping/RELATION_MAPPING_V2_1_SUMMARY.json` | Counts and acceptance results |
 | `poc/relation_alignment/build_relation_mapping_v2_1.py` | Reproducible standard-library builder and assertions |
 
@@ -36,6 +37,13 @@ The v2.0 artifacts remain unchanged.
 The input mapping has 1,520 source-relation rows, 1,009 effective Level 2 relations, and 5,617,651 source occurrences.
 
 Every effective Level 2 relation now has a non-empty reverse relation ID and label.
+
+The operational lookup has 1,995 rows for 1,002 direction pairs:
+
+- 1,986 rows represent both sides of 993 non-symmetric pairs;
+- 9 rows represent 9 symmetric relations as explicit self-mappings.
+
+For a non-symmetric pair, each relation ID has its own input row. For a symmetric relation, the explicit row maps the relation ID to itself. The data layer still returns a reversed assertion with swapped endpoints, so the Agent can find the relation from either entity.
 
 | Reverse resolution | Level 2 relations | Source occurrences |
 |---|---:|---:|
@@ -124,7 +132,7 @@ This operation makes the stored Level 2 assertion semantically consistent.
 
 ### B. Return the reverse directional view
 
-Use the associated `direction_pair_id` and the row in `RELATION_DIRECTION_CATALOG_v2.1.0.csv`.
+Look up the normalized relation ID in `RELATION_DIRECTION_LOOKUP_v2.1.0.csv`.
 
 - Swap the normalized source and target.
 - Set the relation ID to `reverse_relation_id`.
@@ -133,6 +141,8 @@ Use the associated `direction_pair_id` and the row in `RELATION_DIRECTION_CATALO
 - Mark the result as a derived directional view.
 
 The data layer can create this view during graph export or query execution. It does not need to store a duplicate source assertion.
+
+For each non-self assertion, the Agent-facing data must contain both directional views. This rule also applies to a symmetric relation. A symmetric reverse view uses the same relation ID and label but swaps the source and target. A self-loop does not need an exact duplicate.
 
 ## Agent-facing record
 
@@ -199,6 +209,9 @@ The builder stops if any of these checks fail:
 6. A synthetic inverse does not use the `inverse:` namespace.
 7. A named inverse uses the `inverse:` namespace.
 8. `reverse_of_reverse_relation_id` does not return the original Level 2 relation.
+9. The direct lookup does not contain exactly one row for every searchable relation ID.
+10. A second lookup does not return to the original relation ID.
+11. A symmetric relation does not have an explicit self-mapping row.
 
 The builder, Ruff, Python compilation, CSV checks, and JSON checks passed on 2026-10-15.
 

@@ -26,6 +26,7 @@ REVERSE_VALIDATION = (
 )
 OUT = ROOT / "GG_Data" / "mapping"
 VERSION = "relation-map-v2.1.0"
+LOOKUP_NAME = "RELATION_DIRECTION_LOOKUP_v2.1.0.csv"
 
 
 def read_csv(path: Path) -> list[dict[str, str]]:
@@ -205,6 +206,74 @@ def build() -> dict[str, Any]:
             assert left["reverse_relation_id"] == right["level2_relation_id"]
             assert right["reverse_relation_id"] == left["level2_relation_id"]
 
+    lookup_by_relation: dict[str, dict[str, Any]] = {}
+    for direction in direction_catalog:
+        forward_id = direction["level2_relation_id"]
+        reverse_id = direction["reverse_relation_id"]
+        entries = [
+            (
+                forward_id,
+                direction["level2_relation_label"],
+                reverse_id,
+                direction["reverse_relation_label"],
+                "SYMMETRIC" if forward_id == reverse_id else "FORWARD_TO_REVERSE",
+                True,
+            )
+        ]
+        if forward_id != reverse_id:
+            entries.append(
+                (
+                    reverse_id,
+                    direction["reverse_relation_label"],
+                    forward_id,
+                    direction["level2_relation_label"],
+                    "REVERSE_TO_FORWARD",
+                    reverse_id in direction_by_level2,
+                )
+            )
+
+        for (
+            input_id,
+            input_label,
+            output_id,
+            output_label,
+            lookup_side,
+            input_is_level2,
+        ) in entries:
+            lookup = {
+                "direction_pair_id": direction["direction_pair_id"],
+                "input_relation_id": input_id,
+                "input_relation_label": input_label,
+                "output_reverse_relation_id": output_id,
+                "output_reverse_relation_label": output_label,
+                "lookup_side": lookup_side,
+                "input_is_effective_level2_relation": str(input_is_level2).lower(),
+                "reverse_resolution_type": direction["reverse_resolution_type"],
+                "is_symmetric": str(forward_id == reverse_id).lower(),
+                "endpoint_action": "SWAP_SOURCE_TARGET",
+                "formal_sources": direction["formal_sources"],
+                "formal_bases": direction["formal_bases"],
+                "formal_evidence_urls": direction["formal_evidence_urls"],
+                "agent_action_required": "NONE",
+                "relation_map_version": VERSION,
+            }
+            existing = lookup_by_relation.get(input_id)
+            if existing:
+                assert existing["output_reverse_relation_id"] == output_id
+                assert existing["output_reverse_relation_label"] == output_label
+                assert existing["direction_pair_id"] == direction["direction_pair_id"]
+                continue
+            lookup_by_relation[input_id] = lookup
+
+    direction_lookup = [lookup_by_relation[key] for key in sorted(lookup_by_relation)]
+    assert len(direction_lookup) == 1995
+    assert sum(row["lookup_side"] == "SYMMETRIC" for row in direction_lookup) == 9
+    assert all(row["agent_action_required"] == "NONE" for row in direction_lookup)
+    for row in direction_lookup:
+        reverse = lookup_by_relation[row["output_reverse_relation_id"]]
+        assert reverse["output_reverse_relation_id"] == row["input_relation_id"]
+        assert reverse["direction_pair_id"] == row["direction_pair_id"]
+
     mapping_v2_1: list[dict[str, Any]] = []
     for row in mapping:
         direction = direction_by_level2[row["level2_relation_id"]]
@@ -271,6 +340,7 @@ def build() -> dict[str, Any]:
     )
 
     write_csv(OUT / "RELATION_DIRECTION_CATALOG_v2.1.0.csv", direction_catalog)
+    write_csv(OUT / LOOKUP_NAME, direction_lookup)
     write_csv(OUT / "RELATION_MAPPING_TABLE_v2.1.0.csv", mapping_v2_1)
 
     type_counts = Counter(row["reverse_resolution_type"] for row in direction_catalog)
@@ -287,6 +357,14 @@ def build() -> dict[str, Any]:
             int(row["source_occurrence_count"]) for row in mapping_v2_1
         ),
         "effective_level2_relations": len(direction_catalog),
+        "unique_direction_pairs": len(direction_pairs),
+        "direction_lookup_rows": len(direction_lookup),
+        "direction_lookup_non_symmetric_rows": sum(
+            row["lookup_side"] != "SYMMETRIC" for row in direction_lookup
+        ),
+        "direction_lookup_symmetric_rows": sum(
+            row["lookup_side"] == "SYMMETRIC" for row in direction_lookup
+        ),
         "reverse_resolution_types": dict(type_counts),
         "reverse_statuses": dict(status_counts),
         "source_occurrences_by_reverse_resolution_type": dict(occurrence_counts),

@@ -3,6 +3,10 @@
   "source_mapping_rows": 1520,
   "source_occurrences": 5617651,
   "effective_level2_relations": 1009,
+  "unique_direction_pairs": 1002,
+  "direction_lookup_rows": 1995,
+  "direction_lookup_non_symmetric_rows": 1986,
+  "direction_lookup_symmetric_rows": 9,
   "reverse_resolution_types": {
     "SYNTHETIC_INVERSE": 917,
     "NAMED_INVERSE": 83,
