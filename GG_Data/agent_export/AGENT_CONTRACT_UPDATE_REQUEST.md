@@ -48,8 +48,8 @@ The current draft loads successfully into `GraphStore`, but successful loading o
 | Node type | Mainly `event`, `person`, `location`, and `org` | 110,744 nodes are `other` | Open types load, but type-specific questions have limited coverage |
 | Node name | Human-readable name and aliases | 92,307 nodes use their QID as the name | Name search is limited for these nodes |
 | Source text | Raw Wikipedia paragraphs | Mostly short Wikidata descriptions | 94,444 nodes have no text |
-| Location geometry | Geometry expected for every location | 509 of 1,172 locations have draft Wikidata points | Geometry is deferred and is not an acceptance requirement for this relation handoff |
-| Non-location geometry | Expected to be `null` | 7,096 non-location nodes have draft Wikidata points | These points are mechanism-test data, not approved GG geometry |
+| Location geometry | Geometry expected for every location | 509 of 1,172 locations have geometry | 663 locations cannot be mapped |
+| Non-location geometry | Expected to be `null` | 7,096 non-location nodes have geometry | Current map behavior differs from the README |
 | Event dates | Start and end dates in attributes | 1,245 of 6,224 events have selected start or end dates | Event date coverage is partial |
 | Scope | WWII Pacific | Broader WWII population | This difference is intentional for the current proof of concept |
 
@@ -84,9 +84,6 @@ Use these relation fields:
 - `type` is case-preserving and must not be converted to uppercase.
 - The top-level `relation_catalog` defines labels, families, source predicates, directions, and mapping status.
 - Relation filters must support an exact Level 2 ID and a Level 1 family.
-- Level 2 translation is active only for the same normalized identifier or an accepted explicit formal mapping value.
-- Names, descriptions, endpoint types, examples, overlap, and model output can validate or contradict a deterministic candidate. They cannot create a Level 2 mapping.
-- Level 1 is an optional search aid. An unresolved family stays unresolved and does not change Level 2 meaning or direction.
 
 **Rationale:** The precise source meaning remains available, while the family supports broad Agent queries. This also supports unresolved source relations without inventing a false match.
 
@@ -175,11 +172,14 @@ Two sources can state different relations between the same entities. These state
 
 ### 4.8 Node Types and Geometry
 
-Formally allow `other` as a node type. Geometry is deferred at this stage and must remain nullable for every node type. The relation and identity handoff must work without geometry.
+Formally allow `other` as a node type. Define one of these geometry rules in the contract:
 
-Draft Wikidata points can remain isolated mechanism-test inputs, but they are not approved GG geometry and must not be reported as geometry progress. A later geometry contract must define the accepted geometry source, representation, and conversion into the Agent's GeoJSON input.
+1. Geometry is allowed on any node when the source gives a direct coordinate; or
+2. Geometry is only allowed on locations, and the exporter must move other coordinates to linked location nodes.
 
-**Rationale:** Missing geometry is expected at this stage. Relation meaning, endpoint identity, provenance, and direction can be validated before the geometry gate opens.
+The recommended rule is option 1. The map code must clearly mark direct node geometry and geometry reached through a relation.
+
+**Rationale:** Wikidata can provide coordinates for events, organizations, and other objects. Deleting those coordinates can remove useful evidence.
 
 ### 4.9 Graph Metadata and Scope
 
@@ -206,7 +206,7 @@ The following items remain export or enrichment work:
 
 - Resolve more `other` node classifications.
 - Fetch names and aliases for QID-only nodes.
-- Add approved geometry only after the separate geometry gate opens.
+- Add geometry for missing locations.
 - Add event dates where the sources support them.
 - Add Wikipedia paragraphs when text retrieval and Wikipedia citation are required.
 - Validate whether coordinates on non-location nodes describe the node itself or a related place.
@@ -225,7 +225,7 @@ The update is complete when all these checks pass:
 6. Source output separates source provider, record ID, URL, Wikipedia page, and paragraph.
 7. The Agent does not call a Wikidata statement ID a Wikipedia page.
 8. `graph_schema()` reports the graph scope, schema version, relation-map version, and Level 1 families.
-9. The graph and relation queries work when geometry is `null`; draft coordinates are not treated as approved GG geometry.
+9. Direct geometry and relation-derived geometry follow the selected geometry rule.
 10. The Agent reports missing names, text, types, dates, and geometry as data limitations.
 11. Every non-self assertion is searchable from both endpoint directions.
 12. A symmetric reverse result uses the same relation ID with swapped endpoints.
@@ -242,7 +242,7 @@ Please confirm:
 3. Removal of forced uppercase conversion for relation IDs.
 4. Support for point dates in date filters.
 5. The generalized provenance structure.
-6. Deferral of geometry acceptance to the separate geometry gate.
+6. The geometry rule for non-location nodes.
 7. Use of graph metadata to set the Agent scope.
 8. Use of the v2.1 explicit relation-direction lookup and resolved two-direction data delivery.
 
