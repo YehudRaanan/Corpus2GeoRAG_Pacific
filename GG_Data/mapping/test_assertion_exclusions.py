@@ -17,7 +17,7 @@ HERE = Path(__file__).resolve().parent
 class ExclusionChecks(unittest.TestCase):
     def test_exact_records_only_and_changed_content_stops(self) -> None:
         rules = load_exclusions()
-        self.assertEqual(len(rules), 3)
+        self.assertEqual(len(rules), 6)
         for rule in rules.values():
             record = {
                 "source_record_id": rule["source_record_id"],
@@ -26,7 +26,7 @@ class ExclusionChecks(unittest.TestCase):
                 "object_qid": rule["object_qid"],
             }
             self.assertTrue(exclusion_reason(rule["source"], record, rules))
-            self.assertIsNone(exclusion_reason("Wikidata", record, rules))
+            self.assertIsNone(exclusion_reason("WarSampo", record, rules))
             changed_id = dict(record, source_record_id="unreviewed-record")
             self.assertIsNone(exclusion_reason(rule["source"], changed_id, rules))
             with self.assertRaisesRegex(ValueError, "changed"):
@@ -59,19 +59,23 @@ class ExclusionChecks(unittest.TestCase):
         exec(compile(source, "mapping_notebook_cell", "exec"), namespace)
         output = io.StringIO()
         writer = csv.DictWriter(output, fieldnames=namespace["OUTPUT_COLUMNS"])
-        records = [
-            {
-                "source_record_id": r["source_record_id"],
-                "predicate": r["source_predicate"],
-                "subject_qid": r["subject_qid"],
-                "object_qid": r["object_qid"],
-            }
-            for r in load_exclusions().values()
-        ]
-        namespace["write_source"](writer, "EventKG", iter(records))
+        for source_name in ("EventKG", "Wikidata"):
+            records = [
+                {
+                    "source_record_id": r["source_record_id"],
+                    "predicate": r["source_predicate"],
+                    "subject_qid": r["subject_qid"],
+                    "object_qid": r["object_qid"],
+                }
+                for r in load_exclusions().values()
+                if r["source"] == source_name
+            ]
+            namespace["write_source"](writer, source_name, iter(records))
+            self.assertEqual(
+                namespace["stats"][f"{source_name}.excluded_reviewed_input"], 3
+            )
+            self.assertNotIn(f"{source_name}.written", namespace["stats"])
         self.assertEqual(output.getvalue(), "")
-        self.assertEqual(namespace["stats"]["EventKG.excluded_reviewed_input"], 3)
-        self.assertNotIn("EventKG.written", namespace["stats"])
 
 
 if __name__ == "__main__":

@@ -7,10 +7,10 @@ Date: 2026-10-15
 - **Three EventKG assertions are confirmed erroneous inputs and approved for exclusion from future assertion outputs.** The exact source-record keys and content guards are in [ASSERTION_EXCLUSIONS.csv](../ASSERTION_EXCLUSIONS.csv). Original source records remain preserved.
 - **All 16 Wikidata-selected self-links were matched to their exact statement IDs in the saved Wikidata entity archive.** All already have the same QID as subject and main-statement target. Our relation mapping did not create these self-links.
 - **Do not reject all self-links.** The official P17 documentation explicitly includes Germany → country → Germany. Three historical-country cases follow this convention; a fourth territorial case needs scope review.
-- The 16 Wikidata rows have been reviewed and documented, but **no additional exclusion decision is activated for them in this change**. The user explicitly approved exclusion of the three EventKG examples and requested investigation of the 16 Wikidata cases.
-- The existing CSV and draft graph have not been rewritten. The approved gate has been added to the shared mapping function in the existing assertion-building notebook. A dry run over the current 700,890 rows matches exactly three exclusions, leaving **700,887** retained rows. This is a verified filtering result, not a claim that a new graph has been generated.
+- **Three Wikidata assertions are also approved for exclusion:** Kampfgeschwader 25 as its own parent unit, Michiaki Kamada as his own child, and Omaha-class cruiser as its own manufacturer. The active ledger therefore has **six exclusions: three EventKG and three Wikidata**. The eight succession statements remain under review; their source trace is documented below.
+- The existing CSV and draft graph have not been rewritten. The approved gate has been added to the shared mapping function in the existing assertion-building notebook. A dry run over the current 700,890 rows matches exactly six exclusions, leaving **700,884** retained rows. This is a verified filtering result, not a claim that a new graph has been generated.
 
-## 1. The three approved exclusions
+## 1. The three approved EventKG exclusions
 
 | Person | Original relation | Original EventKG resource on both ends | Source relation record | Decision |
 |---|---|---|---|---|
@@ -46,8 +46,8 @@ Each row below has the same QID on both ends. The full statement, rank, referenc
 | 2 | Independent State of Croatia, Q153128 | P17 country | Historical-country self-reference convention; does not assert modern political recognition | Retain |
 | 3 | 50th Guards Rifle Division, Q16625079 | P1365 replaces | Same entity is its own predecessor; source/import/identity review needed | Retain pending review |
 | 4 | 162nd Fighter Aviation Regiment, Q21634743 | P1366 replaced by | Same entity is its own successor; source/import/identity review needed | Retain pending review |
-| 5 | Kampfgeschwader 25, Q3192509 | P749 parent organization or unit | Strong input-error candidate: a unit is its own parent | Retain pending exclusion decision |
-| 6 | Michiaki Kamada, Q3424805 | P40 child | Strong input-error candidate: a historical person is his own child | Retain pending exclusion decision |
+| 5 | Kampfgeschwader 25, Q3192509 | P749 parent organization or unit | Confirmed input error: a unit is its own parent | Exclude, approved |
+| 6 | Michiaki Kamada, Q3424805 | P40 child | Confirmed input error: a historical person is his own child | Exclude, approved |
 | 7 | 16th Guards Fighter Aviation Regiment, Q4029011 | P1365 replaces | Same entity is its own predecessor | Retain pending review |
 | 8 | 163rd Rifle Division, Q4029071 | P1365 replaces | Same entity is its own predecessor | Retain pending review |
 | 9 | 39th Guards Rifle Division, Q4031132 | P1365 replaces | Same entity is its own predecessor | Retain pending review |
@@ -57,7 +57,7 @@ Each row below has the same QID on both ends. The full statement, rank, referenc
 | 13 | British occupation zone in Germany, Q55306 | P17 country | Territory points to itself as its country; review occupation-zone versus country scope | Retain pending review |
 | 14 | Dutch Resistance Museum, Q828307 | P6379 has works in the collection | Review creator/collection-holder roles and the referenced photo-series record | Retain pending review |
 | 15 | British Empire, Q8680 | P17 country | Historical-country self-reference convention; scope can still require separate review | Retain |
-| 16 | Omaha-class cruiser, Q917282 | P176 manufacturer | Strong input-error candidate: ship class is its own manufacturer | Retain pending exclusion decision |
+| 16 | Omaha-class cruiser, Q917282 | P176 manufacturer | Confirmed input error: ship class is its own manufacturer | Exclude, approved |
 
 These are 16 statements about **15 entities**, because Q4032386 has both P1365 and P1366 self-statements. They are not duplicate rows.
 
@@ -74,17 +74,21 @@ The Soviet Union, Independent State of Croatia and British Empire rows are compa
 - None of the eight has statement qualifiers. Their exported form cannot distinguish predecessor and successor phases or date intervals.
 - [P1365's documented meaning](https://www.wikidata.org/wiki/Property:P1365) distinguishes replacement from a sequence in which the predecessor and successor are identical. It points to P155 for that latter case. [P1366](https://www.wikidata.org/wiki/Property:P1366) describes an entity that replaces the subject in its role.
 
-**Interpretation:** these are unsuitable as straightforward links between distinct predecessor/successor entities without further review. An import may have followed a link or redirect back to the same item; alternatively, one item may cover multiple historical formations or phases. These are hypotheses, not verified causes. The import pointer alone does not show the exact earlier Wikipedia field or establish a bot error.
+**Source investigation after approval:** five statements now have a demonstrable source-field → link → redirect → same current QID path. The original fields name a predecessor or successor differently from the subject, but the linked article resolves to the same graph identity. Four of those target pages already redirected directly back to the source article at the referenced source-revision time. The fifth has an older redirect to the 16th Guards name and a current resolution to the 689th Guards article under the same QID. Details and evidence limits are in [SUCCESSION_TRACE.md](SUCCESSION_TRACE.md).
 
-**Next evidence:** inspect the pinned source revision, its predecessor/successor field and original link target, then Wikidata statement/item history. Do not automatically substitute P155, reverse endpoints, split an entity, or invent a new target.
+The other three statements remain unresolved: the 163rd Division reference has no revision pointer, and both 77th Division statements cite one revision that the API reports missing. These are not evidence that the assertions are correct.
 
-### 2.3 Three strong value-error candidates
+**Interpretation:** a Wikipedia article can cover a unit through several names or organizational phases. Resolving article links to one QID can remove the distinction expressed by the original predecessor/successor field. The resulting self-link cannot represent that transition between phases. The source path is verified for five cases; the exact Wikidata statement-creation/import operation is not established. None of the eight has been corrected or added to the approved exclusion ledger in this step.
+
+**Next evidence:** recover the missing source history and decide whether the data should represent a continuing unit with dated names or separate predecessor/successor entities. Do not automatically substitute P155, reverse endpoints, split an entity, or invent a new target. Relation-code translation cannot restore missing entity-phase distinctions.
+
+### 2.3 Three approved Wikidata value-error exclusions
 
 - **Michiaki Kamada → P40 child → Michiaki Kamada.** The exact saved main statement contains the same QID. There are no qualifiers or references. This fails the ordinary historical-person child role; the source gives no evidence for a correct child target. [P40 definition](https://www.wikidata.org/wiki/Property:P40).
 - **Kampfgeschwader 25 → P749 parent organization or unit → Kampfgeschwader 25.** The exact saved main statement contains the same QID. There are no qualifiers or references. A parent-organization link to itself does not identify a superior unit. [P749 definition](https://www.wikidata.org/wiki/Property:P749).
 - **Omaha-class cruiser → P176 manufacturer → Omaha-class cruiser.** The exact saved main statement contains the same QID. There are no qualifiers or references. The target is the class being manufactured, not a manufacturer. [P176 definition](https://www.wikidata.org/wiki/Property:P176).
 
-Their target values are already present in the source snapshot. None requires a change in relation translation to explain the fault. They are documented for the next exclusion decision; the active ledger remains limited to the three user-approved EventKG records.
+Their target values are already present in the source snapshot. None requires a change in relation translation to explain the fault. Following user approval, their exact source statement IDs and original endpoint guards have been added to the active ledger. There are now six approved exclusions in total. No corrected target is invented.
 
 ### 2.4 Museum: one case needs its reference inspected
 
@@ -109,11 +113,11 @@ The policy is implemented in [assertion_exclusions.py](../assertion_exclusions.p
 4. If the same source record ID now has corrected/different contents, stop for review. Do not silently suppress the changed record under an old exclusion decision.
 5. Unlisted records, including other self-links and other assertions about the same people, remain unaffected.
 
-The existing [assertion notebook](../RELATION_MAPPING_ALL_ITEMS_v1.0.0.ipynb) loads this ledger and calls the policy inside `map_relation`, the shared function used by all three source readers. Exclusions are counted separately as `EventKG.excluded_reviewed_input`. They are not counted as mapped/written assertions.
+The existing [assertion notebook](../RELATION_MAPPING_ALL_ITEMS_v1.0.0.ipynb) loads this ledger and calls the policy inside `map_relation`, the shared function used by all three source readers. Exclusions are counted separately as `<source>.excluded_reviewed_input`, currently three for EventKG and three for Wikidata. They are not counted as mapped/written assertions.
 
 **Version boundary:** this notebook still uses the legacy v1 relation mapping. This change implements the assertion exclusion gate only; it does not promote the notebook to a v2.1 exporter. The later v2.1 assertion/export builder must use the same source-oriented gate before applying the current mapping and before creating both directional views. Rebuilding mapping catalogs alone does not create filtered assertion data.
 
-**Existing-artifact boundary:** the already-built 700,890-row CSV, original EDA and draft graph retain the three rows as historical audit evidence. Running a graph builder against that old CSV would still include them. The assertion output must be regenerated through the gate before a new graph is built. No new filtered graph or assertion CSV was generated in this review.
+**Existing-artifact boundary:** the already-built 700,890-row CSV, original EDA and draft graph retain the six rows as historical audit evidence. Running a graph builder against that old CSV would still include them. The assertion output must be regenerated through the gate before a new graph is built. No new filtered graph or assertion CSV was generated in this review.
 
 ## 4. Verification and reproduction
 
@@ -122,18 +126,18 @@ The existing [assertion notebook](../RELATION_MAPPING_ALL_ITEMS_v1.0.0.ipynb) lo
 & 'Agent/.venv/Scripts/python.exe' 'GG_Data/mapping/audit_self_link_inputs.py'
 ```
 
-The regression check exercises the actual notebook mapping/writer cell and proves that the three approved records emit no rows. It also checks that unreviewed IDs and other sources are retained, and changed contents under an excluded ID stop with an error. The audit reads all 700,890 existing assertions and confirms exactly three ledger matches, then checks the raw EventKG records and all 16 Wikidata statements.
+The regression check exercises the actual notebook mapping/writer cell and proves that all six approved records emit no rows across both source readers. It also checks that unreviewed IDs and other sources have no exclusion match, and changed contents under an excluded ID stop with an error. The audit reads all 700,890 existing assertions and confirms exactly six ledger matches, then checks the raw EventKG records and all 16 Wikidata statements.
 
 | Check | Result |
 |---|---:|
 | Current input assertions | 700,890 |
-| Approved exclusions matched exactly once | 3 |
-| Retained by a replay of this gate | 700,887 |
+| Approved exclusions matched exactly once | 6 |
+| Retained by a replay of this gate | 700,884 |
 | Self-links in original input | 45 |
-| Self-links retained by this gate | 42 |
+| Self-links retained by this gate | 39 |
 | EventKG raw self-links checked / identical endpoints | 29 / 29 |
 | Wikidata saved statement IDs checked / self-targets confirmed | 16 / 16 |
-| New Wikidata exclusions activated | 0 |
+| Approved Wikidata exclusions activated | 3 |
 
 All writes are inside `GG_Data`. No original source, existing assertion CSV, graph, geocoding result or Agent contract request is changed. Counts refer to the saved local snapshot; live Wikidata statement persistence and earlier source-edit causes are not established by this audit.
 
@@ -142,6 +146,11 @@ All writes are inside `GG_Data`. No original source, existing assertion CSV, gra
 - `source_evidence.json`: complete approved rejected rows, raw N-Quad evidence for all 29 EventKG self-links, and full saved statements/references for all 16 Wikidata self-links.
 - `wikidata_review.csv`: one review row for each of the 16 Wikidata statements, with revision-pinned entity links and source pointers.
 - `summary.json`: reconciled counts and explicit generation/verification boundaries.
-- `../ASSERTION_EXCLUSIONS.csv`: the three approved source-record exclusions.
+- `../ASSERTION_EXCLUSIONS.csv`: the six approved source-record exclusions.
+- `SUCCESSION_TRACE.md`: case-by-case source investigation for the eight succession self-links.
+- `succession_entities.json`: selected identity, sitelink and succession fields from the seven saved source entities.
+- `succession_source_trace.json`: pinned source fields, line numbers, retrieval URLs, current redirect/QID resolution and the missing-revision response.
+- `succession_historical_redirects.json`: target-page revisions at or before the referenced source time; response content is limited to the first 600 characters, explicitly recorded as `content_start`.
+- `../trace_succession_sources.py`: repeatable retrieval of the source fields and current target resolution. Historical redirect queries can be repeated with the exact request URLs in their evidence file.
 
 The earlier [EDA](../assertion_eda_v2_1_2026-10-15/README.md) remains the unfiltered baseline.

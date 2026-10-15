@@ -1,0 +1,2136 @@
+[
+  {
+    "id": "Q16625079",
+    "labels": {
+      "ru": {
+        "language": "ru",
+        "value": "50-я гвардейская стрелковая дивизия"
+      },
+      "en": {
+        "language": "en",
+        "value": "50th Guards Rifle Division"
+      },
+      "be": {
+        "language": "be",
+        "value": "50-я гвардзейская стралковая дывізія"
+      }
+    },
+    "descriptions": {
+      "ru": {
+        "language": "ru",
+        "value": "стрелковая дивизия РККА"
+      },
+      "en": {
+        "language": "en",
+        "value": "Soviet Army rifle division"
+      },
+      "uk": {
+        "language": "uk",
+        "value": "військова частина"
+      }
+    },
+    "aliases": {
+      "ru": [
+        {
+          "language": "ru",
+          "value": "50-я гвардейская стрелковая Сталинская дважды Краснознамённая орденов Суворова и Кутузова дивизия"
+        }
+      ]
+    },
+    "sitelinks": {
+      "bewiki": {
+        "site": "bewiki",
+        "title": "50-я гвардзейская стралковая дывізія",
+        "badges": []
+      },
+      "enwiki": {
+        "site": "enwiki",
+        "title": "50th Guards Rifle Division",
+        "badges": []
+      },
+      "ruwiki": {
+        "site": "ruwiki",
+        "title": "50-я гвардейская стрелковая дивизия",
+        "badges": []
+      }
+    },
+    "lastrevid": 2494484743,
+    "modified": "2026-05-19T21:29:12Z",
+    "succession_claims": {
+      "P31": [
+        {
+          "mainsnak": {
+            "snaktype": "value",
+            "property": "P31",
+            "hash": "275a1f8e13116f0da6852c9b731ea42741c2b8df",
+            "datavalue": {
+              "value": {
+                "entity-type": "item",
+                "numeric-id": 4443691,
+                "id": "Q4443691"
+              },
+              "type": "wikibase-entityid"
+            },
+            "datatype": "wikibase-item"
+          },
+          "type": "statement",
+          "id": "Q16625079$CA5ED0DC-BFA4-426C-970D-49B6DFE70298",
+          "rank": "normal"
+        }
+      ],
+      "P571": [
+        {
+          "mainsnak": {
+            "snaktype": "value",
+            "property": "P571",
+            "hash": "22064471b24185cbb735f069249ca4b43a4977a9",
+            "datavalue": {
+              "value": {
+                "time": "+1942-11-17T00:00:00Z",
+                "timezone": 0,
+                "before": 0,
+                "after": 0,
+                "precision": 11,
+                "calendarmodel": "http://www.wikidata.org/entity/Q1985727"
+              },
+              "type": "time"
+            },
+            "datatype": "time"
+          },
+          "type": "statement",
+          "id": "Q16625079$55E088E9-8032-4FCB-88CD-E562E0A2389A",
+          "rank": "normal",
+          "references": [
+            {
+              "hash": "9abc127ad1215be5fd7070f792fd25dd16ecaddf",
+              "snaks": {
+                "P143": [
+                  {
+                    "snaktype": "value",
+                    "property": "P143",
+                    "hash": "6a164248fc96bfa583bbb495cb63ae6401ec203c",
+                    "datavalue": {
+                      "value": {
+                        "entity-type": "item",
+                        "numeric-id": 206855,
+                        "id": "Q206855"
+                      },
+                      "type": "wikibase-entityid"
+                    },
+                    "datatype": "wikibase-item"
+                  }
+                ],
+                "P4656": [
+                  {
+                    "snaktype": "value",
+                    "property": "P4656",
+                    "hash": "e5b3998a41bdbe5cf7421576a3a6bc68aa7103d4",
+                    "datavalue": {
+                      "value": "https://ru.wikipedia.org/w/index.php?title=50-я_гвардейская_стрелковая_дивизия&oldid=102159170",
+                      "type": "string"
+                    },
+                    "datatype": "url"
+                  }
+                ]
+              },
+              "snaks-order": [
+                "P143",
+                "P4656"
+              ]
+            }
+          ]
+        }
+      ],
+      "P576": [
+        {
+          "mainsnak": {
+            "snaktype": "value",
+            "property": "P576",
+            "hash": "d7dc22457a450bbf3f32e7c173ee03fdc9d9a8c8",
+            "datavalue": {
+              "value": {
+                "time": "+1992-00-00T00:00:00Z",
+                "timezone": 0,
+                "before": 0,
+                "after": 0,
+                "precision": 9,
+                "calendarmodel": "http://www.wikidata.org/entity/Q1985727"
+              },
+              "type": "time"
+            },
+            "datatype": "time"
+          },
+          "type": "statement",
+          "id": "Q16625079$3bc806e6-48c0-f9cf-eb58-274cf3c2633b",
+          "rank": "normal",
+          "references": [
+            {
+              "hash": "c625981eb21317872652c5e5bf318f24802a0a23",
+              "snaks": {
+                "P143": [
+                  {
+                    "snaktype": "value",
+                    "property": "P143",
+                    "hash": "6a164248fc96bfa583bbb495cb63ae6401ec203c",
+                    "datavalue": {
+                      "value": {
+                        "entity-type": "item",
+                        "numeric-id": 206855,
+                        "id": "Q206855"
+                      },
+                      "type": "wikibase-entityid"
+                    },
+                    "datatype": "wikibase-item"
+                  }
+                ],
+                "P4656": [
+                  {
+                    "snaktype": "value",
+                    "property": "P4656",
+                    "hash": "39f5579df111a94ac508049fefc713363b1482f6",
+                    "datavalue": {
+                      "value": "https://ru.wikipedia.org/?oldid=134503510",
+                      "type": "string"
+                    },
+                    "datatype": "url"
+                  }
+                ]
+              },
+              "snaks-order": [
+                "P143",
+                "P4656"
+              ]
+            }
+          ]
+        }
+      ],
+      "P1365": [
+        {
+          "mainsnak": {
+            "snaktype": "value",
+            "property": "P1365",
+            "hash": "4a1e938c495d84fa7eae248cec9c5b1570ec9826",
+            "datavalue": {
+              "value": {
+                "entity-type": "item",
+                "numeric-id": 16625079,
+                "id": "Q16625079"
+              },
+              "type": "wikibase-entityid"
+            },
+            "datatype": "wikibase-item"
+          },
+          "type": "statement",
+          "id": "Q16625079$726dd34d-4239-f8c5-2b81-03258dedd55e",
+          "rank": "normal",
+          "references": [
+            {
+              "hash": "c625981eb21317872652c5e5bf318f24802a0a23",
+              "snaks": {
+                "P143": [
+                  {
+                    "snaktype": "value",
+                    "property": "P143",
+                    "hash": "6a164248fc96bfa583bbb495cb63ae6401ec203c",
+                    "datavalue": {
+                      "value": {
+                        "entity-type": "item",
+                        "numeric-id": 206855,
+                        "id": "Q206855"
+                      },
+                      "type": "wikibase-entityid"
+                    },
+                    "datatype": "wikibase-item"
+                  }
+                ],
+                "P4656": [
+                  {
+                    "snaktype": "value",
+                    "property": "P4656",
+                    "hash": "39f5579df111a94ac508049fefc713363b1482f6",
+                    "datavalue": {
+                      "value": "https://ru.wikipedia.org/?oldid=134503510",
+                      "type": "string"
+                    },
+                    "datatype": "url"
+                  }
+                ]
+              },
+              "snaks-order": [
+                "P143",
+                "P4656"
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  },
+  {
+    "id": "Q21634743",
+    "labels": {
+      "ru": {
+        "language": "ru",
+        "value": "162-й истребительный авиационный полк"
+      },
+      "en": {
+        "language": "en",
+        "value": "162nd Fighter Aviation Regiment"
+      }
+    },
+    "descriptions": {
+      "en": {
+        "language": "en",
+        "value": "military unit"
+      },
+      "uk": {
+        "language": "uk",
+        "value": "військова частина"
+      }
+    },
+    "aliases": {},
+    "sitelinks": {
+      "enwiki": {
+        "site": "enwiki",
+        "title": "162nd Fighter Aviation Regiment",
+        "badges": []
+      },
+      "ruwiki": {
+        "site": "ruwiki",
+        "title": "162-й истребительный авиационный полк",
+        "badges": []
+      }
+    },
+    "lastrevid": 2234719732,
+    "modified": "2024-08-23T20:25:01Z",
+    "succession_claims": {
+      "P571": [
+        {
+          "mainsnak": {
+            "snaktype": "value",
+            "property": "P571",
+            "hash": "b3ddcc64379fe29777545205874c4f485540eac6",
+            "datavalue": {
+              "value": {
+                "time": "+1941-01-01T00:00:00Z",
+                "timezone": 0,
+                "before": 0,
+                "after": 0,
+                "precision": 11,
+                "calendarmodel": "http://www.wikidata.org/entity/Q1985727"
+              },
+              "type": "time"
+            },
+            "datatype": "time"
+          },
+          "type": "statement",
+          "id": "Q21634743$E4AC3A0F-4B5D-4984-B812-F866361E003B",
+          "rank": "normal",
+          "references": [
+            {
+              "hash": "99ba2be7b6331b8473a44e2516bb0faa0655e58b",
+              "snaks": {
+                "P143": [
+                  {
+                    "snaktype": "value",
+                    "property": "P143",
+                    "hash": "6a164248fc96bfa583bbb495cb63ae6401ec203c",
+                    "datavalue": {
+                      "value": {
+                        "entity-type": "item",
+                        "numeric-id": 206855,
+                        "id": "Q206855"
+                      },
+                      "type": "wikibase-entityid"
+                    },
+                    "datatype": "wikibase-item"
+                  }
+                ],
+                "P4656": [
+                  {
+                    "snaktype": "value",
+                    "property": "P4656",
+                    "hash": "811949cf05986fccf70594aa141aad20733478ed",
+                    "datavalue": {
+                      "value": "https://ru.wikipedia.org/w/index.php?title=162-й_истребительный_авиационный_полк&oldid=90139741",
+                      "type": "string"
+                    },
+                    "datatype": "url"
+                  }
+                ]
+              },
+              "snaks-order": [
+                "P143",
+                "P4656"
+              ]
+            }
+          ]
+        }
+      ],
+      "P31": [
+        {
+          "mainsnak": {
+            "snaktype": "value",
+            "property": "P31",
+            "hash": "933042ad0494405913c33f2d6df69f5038ab4de9",
+            "datavalue": {
+              "value": {
+                "entity-type": "item",
+                "numeric-id": 176799,
+                "id": "Q176799"
+              },
+              "type": "wikibase-entityid"
+            },
+            "datatype": "wikibase-item"
+          },
+          "type": "statement",
+          "id": "Q21634743$DE1DEB5A-C0F6-4C29-801D-0CA6CBF8A9D4",
+          "rank": "normal"
+        }
+      ],
+      "P576": [
+        {
+          "mainsnak": {
+            "snaktype": "value",
+            "property": "P576",
+            "hash": "b988f2e2510a73c5e48f16fbf433c3b6b5312e54",
+            "datavalue": {
+              "value": {
+                "time": "+1959-10-05T00:00:00Z",
+                "timezone": 0,
+                "before": 0,
+                "after": 0,
+                "precision": 11,
+                "calendarmodel": "http://www.wikidata.org/entity/Q1985727"
+              },
+              "type": "time"
+            },
+            "datatype": "time"
+          },
+          "type": "statement",
+          "id": "Q21634743$f38d845c-4dde-b960-7a55-7f852f65173a",
+          "rank": "normal",
+          "references": [
+            {
+              "hash": "537570cb817bb992ba681a33dee53bc168e05b94",
+              "snaks": {
+                "P143": [
+                  {
+                    "snaktype": "value",
+                    "property": "P143",
+                    "hash": "6a164248fc96bfa583bbb495cb63ae6401ec203c",
+                    "datavalue": {
+                      "value": {
+                        "entity-type": "item",
+                        "numeric-id": 206855,
+                        "id": "Q206855"
+                      },
+                      "type": "wikibase-entityid"
+                    },
+                    "datatype": "wikibase-item"
+                  }
+                ],
+                "P4656": [
+                  {
+                    "snaktype": "value",
+                    "property": "P4656",
+                    "hash": "128e9d6ca911adae1f36158387b9373b8d6e26d5",
+                    "datavalue": {
+                      "value": "https://ru.wikipedia.org/?oldid=138985762",
+                      "type": "string"
+                    },
+                    "datatype": "url"
+                  }
+                ]
+              },
+              "snaks-order": [
+                "P143",
+                "P4656"
+              ]
+            }
+          ]
+        }
+      ],
+      "P1366": [
+        {
+          "mainsnak": {
+            "snaktype": "value",
+            "property": "P1366",
+            "hash": "6d15ff72e29909b62d3a0a445baad234fc4f6e24",
+            "datavalue": {
+              "value": {
+                "entity-type": "item",
+                "numeric-id": 21634743,
+                "id": "Q21634743"
+              },
+              "type": "wikibase-entityid"
+            },
+            "datatype": "wikibase-item"
+          },
+          "type": "statement",
+          "id": "Q21634743$049daf7c-48d3-fa02-ff7f-900896db2246",
+          "rank": "normal",
+          "references": [
+            {
+              "hash": "537570cb817bb992ba681a33dee53bc168e05b94",
+              "snaks": {
+                "P143": [
+                  {
+                    "snaktype": "value",
+                    "property": "P143",
+                    "hash": "6a164248fc96bfa583bbb495cb63ae6401ec203c",
+                    "datavalue": {
+                      "value": {
+                        "entity-type": "item",
+                        "numeric-id": 206855,
+                        "id": "Q206855"
+                      },
+                      "type": "wikibase-entityid"
+                    },
+                    "datatype": "wikibase-item"
+                  }
+                ],
+                "P4656": [
+                  {
+                    "snaktype": "value",
+                    "property": "P4656",
+                    "hash": "128e9d6ca911adae1f36158387b9373b8d6e26d5",
+                    "datavalue": {
+                      "value": "https://ru.wikipedia.org/?oldid=138985762",
+                      "type": "string"
+                    },
+                    "datatype": "url"
+                  }
+                ]
+              },
+              "snaks-order": [
+                "P143",
+                "P4656"
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  },
+  {
+    "id": "Q4029011",
+    "labels": {
+      "ru": {
+        "language": "ru",
+        "value": "16-й гвардейский истребительный авиационный полк"
+      },
+      "ja": {
+        "language": "ja",
+        "value": "第16親衛戦闘機連隊"
+      },
+      "fr": {
+        "language": "fr",
+        "value": "16e régiment d'aviation de chasse de la Garde"
+      },
+      "ro": {
+        "language": "ro",
+        "value": "Regimentul 16 de aviație de vânătoare al Gărzii"
+      },
+      "en": {
+        "language": "en",
+        "value": "16th Guards Fighter Aviation Regiment"
+      },
+      "ko": {
+        "language": "ko",
+        "value": "제16근위전투항공연대"
+      },
+      "de": {
+        "language": "de",
+        "value": "16. Gardejagdfliegerregiment"
+      }
+    },
+    "descriptions": {
+      "ru": {
+        "language": "ru",
+        "value": "полк ВВС РККА СССР"
+      },
+      "de": {
+        "language": "de",
+        "value": "Verband der sowjetischen Luftstreitkräfte"
+      },
+      "en": {
+        "language": "en",
+        "value": "Russian Aerospace Forces fighter regiment based in Kaliningrad"
+      }
+    },
+    "aliases": {
+      "ru": [
+        {
+          "language": "ru",
+          "value": "16 ГвИАП"
+        },
+        {
+          "language": "ru",
+          "value": "16 ГИАП"
+        },
+        {
+          "language": "ru",
+          "value": "55-й истребительный авиационный полк"
+        },
+        {
+          "language": "ru",
+          "value": "55-й иап"
+        },
+        {
+          "language": "ru",
+          "value": "55 иап"
+        },
+        {
+          "language": "ru",
+          "value": "16-й гвардейский истребительный авиационный Сандомирский ордена Александра Невского полк"
+        }
+      ],
+      "de": [
+        {
+          "language": "de",
+          "value": "16. Garde-Jagdfliegerregiment"
+        },
+        {
+          "language": "de",
+          "value": "16. Gw IAP"
+        }
+      ]
+    },
+    "sitelinks": {
+      "enwiki": {
+        "site": "enwiki",
+        "title": "689th Guards Fighter Aviation Regiment",
+        "badges": []
+      },
+      "frwiki": {
+        "site": "frwiki",
+        "title": "16e régiment d'aviation de chasse de la Garde",
+        "badges": []
+      },
+      "rowiki": {
+        "site": "rowiki",
+        "title": "Regimentul 16 de aviație de vânătoare al Gărzii",
+        "badges": []
+      },
+      "ruwiki": {
+        "site": "ruwiki",
+        "title": "689-й гвардейский истребительный авиационный полк",
+        "badges": []
+      }
+    },
+    "lastrevid": 2350204172,
+    "modified": "2025-05-19T12:01:40Z",
+    "succession_claims": {
+      "P31": [
+        {
+          "mainsnak": {
+            "snaktype": "value",
+            "property": "P31",
+            "hash": "933042ad0494405913c33f2d6df69f5038ab4de9",
+            "datavalue": {
+              "value": {
+                "entity-type": "item",
+                "numeric-id": 176799,
+                "id": "Q176799"
+              },
+              "type": "wikibase-entityid"
+            },
+            "datatype": "wikibase-item"
+          },
+          "type": "statement",
+          "id": "Q4029011$0AD1C3EB-2AF6-4B54-A474-720B5C29B47E",
+          "rank": "normal"
+        }
+      ],
+      "P571": [
+        {
+          "mainsnak": {
+            "snaktype": "value",
+            "property": "P571",
+            "hash": "9f5cc49c9c5cdbbe5e933cc4c20257d1af2d16af",
+            "datavalue": {
+              "value": {
+                "time": "+1942-03-07T00:00:00Z",
+                "timezone": 0,
+                "before": 0,
+                "after": 0,
+                "precision": 11,
+                "calendarmodel": "http://www.wikidata.org/entity/Q1985727"
+              },
+              "type": "time"
+            },
+            "datatype": "time"
+          },
+          "type": "statement",
+          "id": "Q4029011$aa64c1e5-418d-7b55-5704-1749af3e22ff",
+          "rank": "normal",
+          "references": [
+            {
+              "hash": "f2ae799bb61efd1a0b756a4281483dcc43d26da9",
+              "snaks": {
+                "P143": [
+                  {
+                    "snaktype": "value",
+                    "property": "P143",
+                    "hash": "6a164248fc96bfa583bbb495cb63ae6401ec203c",
+                    "datavalue": {
+                      "value": {
+                        "entity-type": "item",
+                        "numeric-id": 206855,
+                        "id": "Q206855"
+                      },
+                      "type": "wikibase-entityid"
+                    },
+                    "datatype": "wikibase-item"
+                  }
+                ],
+                "P4656": [
+                  {
+                    "snaktype": "value",
+                    "property": "P4656",
+                    "hash": "63e82495fb31d7d7046eb56e185a2fb50a26e52f",
+                    "datavalue": {
+                      "value": "https://ru.wikipedia.org/?oldid=122882432",
+                      "type": "string"
+                    },
+                    "datatype": "url"
+                  }
+                ]
+              },
+              "snaks-order": [
+                "P143",
+                "P4656"
+              ]
+            }
+          ]
+        }
+      ],
+      "P1365": [
+        {
+          "mainsnak": {
+            "snaktype": "value",
+            "property": "P1365",
+            "hash": "8aab9cc4ad3e9bcb0a1feaabb2d2061c9ea78edb",
+            "datavalue": {
+              "value": {
+                "entity-type": "item",
+                "numeric-id": 4029011,
+                "id": "Q4029011"
+              },
+              "type": "wikibase-entityid"
+            },
+            "datatype": "wikibase-item"
+          },
+          "type": "statement",
+          "id": "Q4029011$3d4a5af5-4c2e-47e9-fbad-532ad348c83d",
+          "rank": "normal",
+          "references": [
+            {
+              "hash": "b87bd30bb3815885a08bba42b6cdea783083506c",
+              "snaks": {
+                "P143": [
+                  {
+                    "snaktype": "value",
+                    "property": "P143",
+                    "hash": "6a164248fc96bfa583bbb495cb63ae6401ec203c",
+                    "datavalue": {
+                      "value": {
+                        "entity-type": "item",
+                        "numeric-id": 206855,
+                        "id": "Q206855"
+                      },
+                      "type": "wikibase-entityid"
+                    },
+                    "datatype": "wikibase-item"
+                  }
+                ],
+                "P4656": [
+                  {
+                    "snaktype": "value",
+                    "property": "P4656",
+                    "hash": "4b1552a23f581e633673cfd0d3a4dc1e4f2fc03b",
+                    "datavalue": {
+                      "value": "https://ru.wikipedia.org/?oldid=128844657",
+                      "type": "string"
+                    },
+                    "datatype": "url"
+                  }
+                ]
+              },
+              "snaks-order": [
+                "P143",
+                "P4656"
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  },
+  {
+    "id": "Q4029071",
+    "labels": {
+      "ru": {
+        "language": "ru",
+        "value": "163-я стрелковая дивизия"
+      },
+      "sl": {
+        "language": "sl",
+        "value": "163. strelska divizija (ZSSR)"
+      },
+      "fi": {
+        "language": "fi",
+        "value": "Neuvostoliiton 163. divisioona"
+      },
+      "fr": {
+        "language": "fr",
+        "value": "163. strelska divizija"
+      },
+      "pl": {
+        "language": "pl",
+        "value": "163 Dywizja Strzelecka (ZSRR)"
+      },
+      "en": {
+        "language": "en",
+        "value": "163rd Rifle Division"
+      }
+    },
+    "descriptions": {
+      "ru": {
+        "language": "ru",
+        "value": "войсковое формирование стрелковых войск РККА"
+      },
+      "en": {
+        "language": "en",
+        "value": "military unit"
+      },
+      "pl": {
+        "language": "pl",
+        "value": "związek taktyczny Armii Czerwonej"
+      }
+    },
+    "aliases": {
+      "ru": [
+        {
+          "language": "ru",
+          "value": "163-я моторизованная дивизия"
+        }
+      ]
+    },
+    "sitelinks": {
+      "enwiki": {
+        "site": "enwiki",
+        "title": "163rd Rifle Division",
+        "badges": []
+      },
+      "fiwiki": {
+        "site": "fiwiki",
+        "title": "Neuvostoliiton 163. divisioona",
+        "badges": []
+      },
+      "plwiki": {
+        "site": "plwiki",
+        "title": "163 Dywizja Strzelecka (ZSRR)",
+        "badges": []
+      },
+      "ruwiki": {
+        "site": "ruwiki",
+        "title": "163-я стрелковая дивизия",
+        "badges": []
+      },
+      "slwiki": {
+        "site": "slwiki",
+        "title": "163. strelska divizija (ZSSR)",
+        "badges": []
+      }
+    },
+    "lastrevid": 2388118776,
+    "modified": "2025-08-04T21:52:11Z",
+    "succession_claims": {
+      "P31": [
+        {
+          "mainsnak": {
+            "snaktype": "value",
+            "property": "P31",
+            "hash": "933042ad0494405913c33f2d6df69f5038ab4de9",
+            "datavalue": {
+              "value": {
+                "entity-type": "item",
+                "numeric-id": 176799,
+                "id": "Q176799"
+              },
+              "type": "wikibase-entityid"
+            },
+            "datatype": "wikibase-item"
+          },
+          "type": "statement",
+          "id": "Q4029071$BAEEEFD1-7EF7-4899-A836-07934F4664FD",
+          "rank": "normal"
+        },
+        {
+          "mainsnak": {
+            "snaktype": "value",
+            "property": "P31",
+            "hash": "275a1f8e13116f0da6852c9b731ea42741c2b8df",
+            "datavalue": {
+              "value": {
+                "entity-type": "item",
+                "numeric-id": 4443691,
+                "id": "Q4443691"
+              },
+              "type": "wikibase-entityid"
+            },
+            "datatype": "wikibase-item"
+          },
+          "type": "statement",
+          "id": "Q4029071$C5A57E7C-ADE8-47F5-9DAE-B8FA9CD7CCD5",
+          "rank": "normal"
+        }
+      ],
+      "P571": [
+        {
+          "mainsnak": {
+            "snaktype": "value",
+            "property": "P571",
+            "hash": "421967e6845372d9efd99659c92f0e0229f751e5",
+            "datavalue": {
+              "value": {
+                "time": "+1941-12-00T00:00:00Z",
+                "timezone": 0,
+                "before": 0,
+                "after": 0,
+                "precision": 10,
+                "calendarmodel": "http://www.wikidata.org/entity/Q1985727"
+              },
+              "type": "time"
+            },
+            "datatype": "time"
+          },
+          "type": "statement",
+          "id": "Q4029071$d3f148ef-40aa-ab76-2b72-24e69a9d0f07",
+          "rank": "normal",
+          "references": [
+            {
+              "hash": "288ab581e7d2d02995a26dfa8b091d96e78457fc",
+              "snaks": {
+                "P143": [
+                  {
+                    "snaktype": "value",
+                    "property": "P143",
+                    "hash": "6a164248fc96bfa583bbb495cb63ae6401ec203c",
+                    "datavalue": {
+                      "value": {
+                        "entity-type": "item",
+                        "numeric-id": 206855,
+                        "id": "Q206855"
+                      },
+                      "type": "wikibase-entityid"
+                    },
+                    "datatype": "wikibase-item"
+                  }
+                ]
+              },
+              "snaks-order": [
+                "P143"
+              ]
+            }
+          ]
+        }
+      ],
+      "P576": [
+        {
+          "mainsnak": {
+            "snaktype": "value",
+            "property": "P576",
+            "hash": "c3cc487a3740b5a2edc105bd4a0134a60d9743ab",
+            "datavalue": {
+              "value": {
+                "time": "+1957-00-00T00:00:00Z",
+                "timezone": 0,
+                "before": 0,
+                "after": 0,
+                "precision": 9,
+                "calendarmodel": "http://www.wikidata.org/entity/Q1985727"
+              },
+              "type": "time"
+            },
+            "datatype": "time"
+          },
+          "type": "statement",
+          "id": "Q4029071$ef216af9-4342-0e4e-08bf-09766ea1ff9e",
+          "rank": "normal",
+          "references": [
+            {
+              "hash": "288ab581e7d2d02995a26dfa8b091d96e78457fc",
+              "snaks": {
+                "P143": [
+                  {
+                    "snaktype": "value",
+                    "property": "P143",
+                    "hash": "6a164248fc96bfa583bbb495cb63ae6401ec203c",
+                    "datavalue": {
+                      "value": {
+                        "entity-type": "item",
+                        "numeric-id": 206855,
+                        "id": "Q206855"
+                      },
+                      "type": "wikibase-entityid"
+                    },
+                    "datatype": "wikibase-item"
+                  }
+                ]
+              },
+              "snaks-order": [
+                "P143"
+              ]
+            }
+          ]
+        }
+      ],
+      "P1365": [
+        {
+          "mainsnak": {
+            "snaktype": "value",
+            "property": "P1365",
+            "hash": "b5ae507805d3b7aafcfaf87fec5d71d1ca3f0e0f",
+            "datavalue": {
+              "value": {
+                "entity-type": "item",
+                "numeric-id": 4029071,
+                "id": "Q4029071"
+              },
+              "type": "wikibase-entityid"
+            },
+            "datatype": "wikibase-item"
+          },
+          "type": "statement",
+          "id": "Q4029071$1d576372-4433-3e7e-e976-818a285e47fb",
+          "rank": "normal",
+          "references": [
+            {
+              "hash": "288ab581e7d2d02995a26dfa8b091d96e78457fc",
+              "snaks": {
+                "P143": [
+                  {
+                    "snaktype": "value",
+                    "property": "P143",
+                    "hash": "6a164248fc96bfa583bbb495cb63ae6401ec203c",
+                    "datavalue": {
+                      "value": {
+                        "entity-type": "item",
+                        "numeric-id": 206855,
+                        "id": "Q206855"
+                      },
+                      "type": "wikibase-entityid"
+                    },
+                    "datatype": "wikibase-item"
+                  }
+                ]
+              },
+              "snaks-order": [
+                "P143"
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  },
+  {
+    "id": "Q4031132",
+    "labels": {
+      "ru": {
+        "language": "ru",
+        "value": "39-я гвардейская мотострелковая дивизия"
+      },
+      "en": {
+        "language": "en",
+        "value": "39th Guards Rifle Division"
+      },
+      "sl": {
+        "language": "sl",
+        "value": "39. gardna strelska divizija"
+      },
+      "fr": {
+        "language": "fr",
+        "value": "39th Guards Rifle Division"
+      },
+      "ja": {
+        "language": "ja",
+        "value": "第39親衛狙撃師団"
+      },
+      "zh": {
+        "language": "zh",
+        "value": "蘇聯紅軍第39禁衛師"
+      },
+      "uk": {
+        "language": "uk",
+        "value": "39-та гвардійська мотострілецька дивізія"
+      },
+      "cs": {
+        "language": "cs",
+        "value": "39. motostřelecká divize"
+      },
+      "pl": {
+        "language": "pl",
+        "value": "39 Dywizja Zmechanizowana"
+      },
+      "be": {
+        "language": "be",
+        "value": "39-я гвардзейская мотастралковая дывізія"
+      }
+    },
+    "descriptions": {
+      "en": {
+        "language": "en",
+        "value": "military unit"
+      },
+      "ru": {
+        "language": "ru",
+        "value": "войсковое формирование стрелковых войск РККА"
+      },
+      "cs": {
+        "language": "cs",
+        "value": "sovětská vojenská jednotka"
+      },
+      "uk": {
+        "language": "uk",
+        "value": "військова частина"
+      }
+    },
+    "aliases": {
+      "ru": [
+        {
+          "language": "ru",
+          "value": "39 гвардейская Барвенковская мотострелковая дивизия"
+        },
+        {
+          "language": "ru",
+          "value": "39 гвардейская мотострелковая дивизия"
+        },
+        {
+          "language": "ru",
+          "value": "39-я гвардейская стрелковая дивизия"
+        },
+        {
+          "language": "ru",
+          "value": "39-я гвардейская Барвенковская мотострелковая дивизия"
+        },
+        {
+          "language": "ru",
+          "value": "ВЧ ПП 38865"
+        },
+        {
+          "language": "ru",
+          "value": "39 ГМСД"
+        },
+        {
+          "language": "ru",
+          "value": "Барвенковская"
+        },
+        {
+          "language": "ru",
+          "value": "38865"
+        },
+        {
+          "language": "ru",
+          "value": "39-я мотострелковая дивизия"
+        }
+      ],
+      "ja": [
+        {
+          "language": "ja",
+          "value": "第39親衛自動車化狙撃兵師団"
+        }
+      ]
+    },
+    "sitelinks": {
+      "commonswiki": {
+        "site": "commonswiki",
+        "title": "Category:39th Guards Motor Rifle Division",
+        "badges": []
+      },
+      "enwiki": {
+        "site": "enwiki",
+        "title": "39th Guards Motor Rifle Division",
+        "badges": []
+      },
+      "plwiki": {
+        "site": "plwiki",
+        "title": "39 Dywizja Zmechanizowana",
+        "badges": []
+      },
+      "ruwiki": {
+        "site": "ruwiki",
+        "title": "39-я гвардейская мотострелковая дивизия",
+        "badges": []
+      },
+      "slwiki": {
+        "site": "slwiki",
+        "title": "39. gardna strelska divizija (ZSSR)",
+        "badges": []
+      },
+      "ukwiki": {
+        "site": "ukwiki",
+        "title": "39-та гвардійська мотострілецька дивізія (СРСР)",
+        "badges": []
+      }
+    },
+    "lastrevid": 2019351197,
+    "modified": "2023-11-28T04:50:53Z",
+    "succession_claims": {
+      "P31": [
+        {
+          "mainsnak": {
+            "snaktype": "value",
+            "property": "P31",
+            "hash": "275a1f8e13116f0da6852c9b731ea42741c2b8df",
+            "datavalue": {
+              "value": {
+                "entity-type": "item",
+                "numeric-id": 4443691,
+                "id": "Q4443691"
+              },
+              "type": "wikibase-entityid"
+            },
+            "datatype": "wikibase-item"
+          },
+          "type": "statement",
+          "id": "Q4031132$296A47EF-EC7E-42AC-812B-BCBC72602C19",
+          "rank": "normal"
+        }
+      ],
+      "P571": [
+        {
+          "mainsnak": {
+            "snaktype": "value",
+            "property": "P571",
+            "hash": "354f124beea79e894e896bada69e0837c731bc0a",
+            "datavalue": {
+              "value": {
+                "time": "+1942-08-02T00:00:00Z",
+                "timezone": 0,
+                "before": 0,
+                "after": 0,
+                "precision": 11,
+                "calendarmodel": "http://www.wikidata.org/entity/Q1985727"
+              },
+              "type": "time"
+            },
+            "datatype": "time"
+          },
+          "type": "statement",
+          "id": "Q4031132$62374C41-FD6D-4CAF-A07E-30F8376660A9",
+          "rank": "normal"
+        }
+      ],
+      "P576": [
+        {
+          "mainsnak": {
+            "snaktype": "value",
+            "property": "P576",
+            "hash": "24808a05eb4473f936e12fb1997e8d887742e782",
+            "datavalue": {
+              "value": {
+                "time": "+1991-00-00T00:00:00Z",
+                "timezone": 0,
+                "before": 0,
+                "after": 0,
+                "precision": 9,
+                "calendarmodel": "http://www.wikidata.org/entity/Q1985727"
+              },
+              "type": "time"
+            },
+            "datatype": "time"
+          },
+          "type": "statement",
+          "id": "Q4031132$a061d5d2-408b-3e4e-d098-8e54225da91b",
+          "rank": "normal",
+          "references": [
+            {
+              "hash": "f6a014f214817b14d845eeae4b244e42dc8b0771",
+              "snaks": {
+                "P143": [
+                  {
+                    "snaktype": "value",
+                    "property": "P143",
+                    "hash": "6a164248fc96bfa583bbb495cb63ae6401ec203c",
+                    "datavalue": {
+                      "value": {
+                        "entity-type": "item",
+                        "numeric-id": 206855,
+                        "id": "Q206855"
+                      },
+                      "type": "wikibase-entityid"
+                    },
+                    "datatype": "wikibase-item"
+                  }
+                ],
+                "P4656": [
+                  {
+                    "snaktype": "value",
+                    "property": "P4656",
+                    "hash": "a08d1682d800e2c82e2227bd4ae412ec2da2aa69",
+                    "datavalue": {
+                      "value": "https://ru.wikipedia.org/?oldid=134502410",
+                      "type": "string"
+                    },
+                    "datatype": "url"
+                  }
+                ]
+              },
+              "snaks-order": [
+                "P143",
+                "P4656"
+              ]
+            }
+          ]
+        }
+      ],
+      "P1365": [
+        {
+          "mainsnak": {
+            "snaktype": "value",
+            "property": "P1365",
+            "hash": "e935c14db03ce4178a8a2b3479b6df755e0dc432",
+            "datavalue": {
+              "value": {
+                "entity-type": "item",
+                "numeric-id": 4031595,
+                "id": "Q4031595"
+              },
+              "type": "wikibase-entityid"
+            },
+            "datatype": "wikibase-item"
+          },
+          "type": "statement",
+          "id": "Q4031132$b8905c4e-4a26-420c-2862-bd70f91b32fc",
+          "rank": "normal",
+          "references": [
+            {
+              "hash": "f6a014f214817b14d845eeae4b244e42dc8b0771",
+              "snaks": {
+                "P143": [
+                  {
+                    "snaktype": "value",
+                    "property": "P143",
+                    "hash": "6a164248fc96bfa583bbb495cb63ae6401ec203c",
+                    "datavalue": {
+                      "value": {
+                        "entity-type": "item",
+                        "numeric-id": 206855,
+                        "id": "Q206855"
+                      },
+                      "type": "wikibase-entityid"
+                    },
+                    "datatype": "wikibase-item"
+                  }
+                ],
+                "P4656": [
+                  {
+                    "snaktype": "value",
+                    "property": "P4656",
+                    "hash": "a08d1682d800e2c82e2227bd4ae412ec2da2aa69",
+                    "datavalue": {
+                      "value": "https://ru.wikipedia.org/?oldid=134502410",
+                      "type": "string"
+                    },
+                    "datatype": "url"
+                  }
+                ]
+              },
+              "snaks-order": [
+                "P143",
+                "P4656"
+              ]
+            }
+          ]
+        },
+        {
+          "mainsnak": {
+            "snaktype": "value",
+            "property": "P1365",
+            "hash": "3e4952e9ab963699ba95b402d25b1e02388abded",
+            "datavalue": {
+              "value": {
+                "entity-type": "item",
+                "numeric-id": 4031132,
+                "id": "Q4031132"
+              },
+              "type": "wikibase-entityid"
+            },
+            "datatype": "wikibase-item"
+          },
+          "type": "statement",
+          "id": "Q4031132$ac087f9e-4b84-cb32-ac2d-3905f033f687",
+          "rank": "normal",
+          "references": [
+            {
+              "hash": "f6a014f214817b14d845eeae4b244e42dc8b0771",
+              "snaks": {
+                "P143": [
+                  {
+                    "snaktype": "value",
+                    "property": "P143",
+                    "hash": "6a164248fc96bfa583bbb495cb63ae6401ec203c",
+                    "datavalue": {
+                      "value": {
+                        "entity-type": "item",
+                        "numeric-id": 206855,
+                        "id": "Q206855"
+                      },
+                      "type": "wikibase-entityid"
+                    },
+                    "datatype": "wikibase-item"
+                  }
+                ],
+                "P4656": [
+                  {
+                    "snaktype": "value",
+                    "property": "P4656",
+                    "hash": "a08d1682d800e2c82e2227bd4ae412ec2da2aa69",
+                    "datavalue": {
+                      "value": "https://ru.wikipedia.org/?oldid=134502410",
+                      "type": "string"
+                    },
+                    "datatype": "url"
+                  }
+                ]
+              },
+              "snaks-order": [
+                "P143",
+                "P4656"
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  },
+  {
+    "id": "Q4032386",
+    "labels": {
+      "ru": {
+        "language": "ru",
+        "value": "77-я гвардейская стрелковая дивизия"
+      },
+      "en": {
+        "language": "en",
+        "value": "77th Guards Rifle Division"
+      }
+    },
+    "descriptions": {
+      "ru": {
+        "language": "ru",
+        "value": "войсковое формирование стрелковых войск РККА"
+      },
+      "en": {
+        "language": "en",
+        "value": "military unit"
+      },
+      "uk": {
+        "language": "uk",
+        "value": "військова частина"
+      }
+    },
+    "aliases": {
+      "ru": [
+        {
+          "language": "ru",
+          "value": "218 Гв СП 77 Гв СД"
+        },
+        {
+          "language": "ru",
+          "value": "77-я гвардейская Черниговская стрелковая дивизия"
+        },
+        {
+          "language": "ru",
+          "value": "21-я дивизия народного ополчения"
+        }
+      ]
+    },
+    "sitelinks": {
+      "enwiki": {
+        "site": "enwiki",
+        "title": "77th Guards Rifle Division",
+        "badges": []
+      },
+      "ruwiki": {
+        "site": "ruwiki",
+        "title": "77-я гвардейская стрелковая дивизия",
+        "badges": []
+      }
+    },
+    "lastrevid": 1893947395,
+    "modified": "2023-05-10T22:58:42Z",
+    "succession_claims": {
+      "P31": [
+        {
+          "mainsnak": {
+            "snaktype": "value",
+            "property": "P31",
+            "hash": "405cf058724142d5538eac17842e7a620a7caadf",
+            "datavalue": {
+              "value": {
+                "entity-type": "item",
+                "numeric-id": 169534,
+                "id": "Q169534"
+              },
+              "type": "wikibase-entityid"
+            },
+            "datatype": "wikibase-item"
+          },
+          "type": "statement",
+          "id": "Q4032386$0BCD48B6-7F8B-46B7-A617-264D96E6DFF4",
+          "rank": "normal"
+        },
+        {
+          "mainsnak": {
+            "snaktype": "value",
+            "property": "P31",
+            "hash": "275a1f8e13116f0da6852c9b731ea42741c2b8df",
+            "datavalue": {
+              "value": {
+                "entity-type": "item",
+                "numeric-id": 4443691,
+                "id": "Q4443691"
+              },
+              "type": "wikibase-entityid"
+            },
+            "datatype": "wikibase-item"
+          },
+          "type": "statement",
+          "id": "Q4032386$C1A4A65B-4D95-490F-8DC1-837FFFCD1F6B",
+          "rank": "normal"
+        }
+      ],
+      "P571": [
+        {
+          "mainsnak": {
+            "snaktype": "value",
+            "property": "P571",
+            "hash": "e4f07cfe61c399254ddd79e330c7f1f985dbb7b3",
+            "datavalue": {
+              "value": {
+                "time": "+1943-01-01T00:00:00Z",
+                "timezone": 0,
+                "before": 0,
+                "after": 0,
+                "precision": 9,
+                "calendarmodel": "http://www.wikidata.org/entity/Q1985727"
+              },
+              "type": "time"
+            },
+            "datatype": "time"
+          },
+          "type": "statement",
+          "id": "Q4032386$5AB350D7-20A3-4235-9F0B-C7E92FC80E1D",
+          "rank": "normal",
+          "references": [
+            {
+              "hash": "1a05208d42238fc0e8e3c3c328c536a4d300ca6c",
+              "snaks": {
+                "P3452": [
+                  {
+                    "snaktype": "value",
+                    "property": "P3452",
+                    "hash": "cc55d4bf3a067de7b6e776263a6ffc849d42cac3",
+                    "datavalue": {
+                      "value": {
+                        "entity-type": "item",
+                        "numeric-id": 9484693,
+                        "id": "Q9484693"
+                      },
+                      "type": "wikibase-entityid"
+                    },
+                    "datatype": "wikibase-item"
+                  }
+                ],
+                "P813": [
+                  {
+                    "snaktype": "value",
+                    "property": "P813",
+                    "hash": "c3332e3c6e73e1ec6d83aebdef4b2923b9268f96",
+                    "datavalue": {
+                      "value": {
+                        "time": "+2018-11-14T00:00:00Z",
+                        "timezone": 0,
+                        "before": 0,
+                        "after": 0,
+                        "precision": 11,
+                        "calendarmodel": "http://www.wikidata.org/entity/Q1985727"
+                      },
+                      "type": "time"
+                    },
+                    "datatype": "time"
+                  }
+                ]
+              },
+              "snaks-order": [
+                "P3452",
+                "P813"
+              ]
+            }
+          ]
+        }
+      ],
+      "P576": [
+        {
+          "mainsnak": {
+            "snaktype": "value",
+            "property": "P576",
+            "hash": "322719cc010c0ca3e60f66314f4bec2125d5eb41",
+            "datavalue": {
+              "value": {
+                "time": "+2000-12-01T00:00:00Z",
+                "timezone": 0,
+                "before": 0,
+                "after": 0,
+                "precision": 11,
+                "calendarmodel": "http://www.wikidata.org/entity/Q1985727"
+              },
+              "type": "time"
+            },
+            "datatype": "time"
+          },
+          "type": "statement",
+          "id": "Q4032386$d43efb63-4b54-eea8-e898-fbf80d588731",
+          "rank": "normal",
+          "references": [
+            {
+              "hash": "2b9c514efbd9f84d2342ceb08adfaf0aeedf9402",
+              "snaks": {
+                "P143": [
+                  {
+                    "snaktype": "value",
+                    "property": "P143",
+                    "hash": "6a164248fc96bfa583bbb495cb63ae6401ec203c",
+                    "datavalue": {
+                      "value": {
+                        "entity-type": "item",
+                        "numeric-id": 206855,
+                        "id": "Q206855"
+                      },
+                      "type": "wikibase-entityid"
+                    },
+                    "datatype": "wikibase-item"
+                  }
+                ],
+                "P4656": [
+                  {
+                    "snaktype": "value",
+                    "property": "P4656",
+                    "hash": "36bb7e23ca8dfec6e340b54a38fa5b19d59f8950",
+                    "datavalue": {
+                      "value": "https://ru.wikipedia.org/?oldid=122348199",
+                      "type": "string"
+                    },
+                    "datatype": "url"
+                  }
+                ]
+              },
+              "snaks-order": [
+                "P143",
+                "P4656"
+              ]
+            }
+          ]
+        }
+      ],
+      "P1365": [
+        {
+          "mainsnak": {
+            "snaktype": "value",
+            "property": "P1365",
+            "hash": "91e96455415a3460d4284b7d329e99f375284e14",
+            "datavalue": {
+              "value": {
+                "entity-type": "item",
+                "numeric-id": 4032386,
+                "id": "Q4032386"
+              },
+              "type": "wikibase-entityid"
+            },
+            "datatype": "wikibase-item"
+          },
+          "type": "statement",
+          "id": "Q4032386$0ad48795-4dc5-9ec0-d9c0-c4d6774b57a3",
+          "rank": "normal",
+          "references": [
+            {
+              "hash": "2b9c514efbd9f84d2342ceb08adfaf0aeedf9402",
+              "snaks": {
+                "P143": [
+                  {
+                    "snaktype": "value",
+                    "property": "P143",
+                    "hash": "6a164248fc96bfa583bbb495cb63ae6401ec203c",
+                    "datavalue": {
+                      "value": {
+                        "entity-type": "item",
+                        "numeric-id": 206855,
+                        "id": "Q206855"
+                      },
+                      "type": "wikibase-entityid"
+                    },
+                    "datatype": "wikibase-item"
+                  }
+                ],
+                "P4656": [
+                  {
+                    "snaktype": "value",
+                    "property": "P4656",
+                    "hash": "36bb7e23ca8dfec6e340b54a38fa5b19d59f8950",
+                    "datavalue": {
+                      "value": "https://ru.wikipedia.org/?oldid=122348199",
+                      "type": "string"
+                    },
+                    "datatype": "url"
+                  }
+                ]
+              },
+              "snaks-order": [
+                "P143",
+                "P4656"
+              ]
+            }
+          ]
+        }
+      ],
+      "P1366": [
+        {
+          "mainsnak": {
+            "snaktype": "value",
+            "property": "P1366",
+            "hash": "b348a0b9fabbd13def4c20705e719c3b962679bd",
+            "datavalue": {
+              "value": {
+                "entity-type": "item",
+                "numeric-id": 4032386,
+                "id": "Q4032386"
+              },
+              "type": "wikibase-entityid"
+            },
+            "datatype": "wikibase-item"
+          },
+          "type": "statement",
+          "id": "Q4032386$e8138f0e-4e73-e0ff-df3e-f23d99bada38",
+          "rank": "normal",
+          "references": [
+            {
+              "hash": "2b9c514efbd9f84d2342ceb08adfaf0aeedf9402",
+              "snaks": {
+                "P143": [
+                  {
+                    "snaktype": "value",
+                    "property": "P143",
+                    "hash": "6a164248fc96bfa583bbb495cb63ae6401ec203c",
+                    "datavalue": {
+                      "value": {
+                        "entity-type": "item",
+                        "numeric-id": 206855,
+                        "id": "Q206855"
+                      },
+                      "type": "wikibase-entityid"
+                    },
+                    "datatype": "wikibase-item"
+                  }
+                ],
+                "P4656": [
+                  {
+                    "snaktype": "value",
+                    "property": "P4656",
+                    "hash": "36bb7e23ca8dfec6e340b54a38fa5b19d59f8950",
+                    "datavalue": {
+                      "value": "https://ru.wikipedia.org/?oldid=122348199",
+                      "type": "string"
+                    },
+                    "datatype": "url"
+                  }
+                ]
+              },
+              "snaks-order": [
+                "P143",
+                "P4656"
+              ]
+            }
+          ]
+        },
+        {
+          "mainsnak": {
+            "snaktype": "value",
+            "property": "P1366",
+            "hash": "74f1cc1172cd6bda715e19bdf8a0ef38f8ed96e4",
+            "datavalue": {
+              "value": {
+                "entity-type": "item",
+                "numeric-id": 16161496,
+                "id": "Q16161496"
+              },
+              "type": "wikibase-entityid"
+            },
+            "datatype": "wikibase-item"
+          },
+          "type": "statement",
+          "id": "Q4032386$59d1f104-45e5-53bc-90f2-e254f0f4873c",
+          "rank": "normal",
+          "references": [
+            {
+              "hash": "2b9c514efbd9f84d2342ceb08adfaf0aeedf9402",
+              "snaks": {
+                "P143": [
+                  {
+                    "snaktype": "value",
+                    "property": "P143",
+                    "hash": "6a164248fc96bfa583bbb495cb63ae6401ec203c",
+                    "datavalue": {
+                      "value": {
+                        "entity-type": "item",
+                        "numeric-id": 206855,
+                        "id": "Q206855"
+                      },
+                      "type": "wikibase-entityid"
+                    },
+                    "datatype": "wikibase-item"
+                  }
+                ],
+                "P4656": [
+                  {
+                    "snaktype": "value",
+                    "property": "P4656",
+                    "hash": "36bb7e23ca8dfec6e340b54a38fa5b19d59f8950",
+                    "datavalue": {
+                      "value": "https://ru.wikipedia.org/?oldid=122348199",
+                      "type": "string"
+                    },
+                    "datatype": "url"
+                  }
+                ]
+              },
+              "snaks-order": [
+                "P143",
+                "P4656"
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  },
+  {
+    "id": "Q4096918",
+    "labels": {
+      "ru": {
+        "language": "ru",
+        "value": "Бронебашенная батарея-35"
+      },
+      "uk": {
+        "language": "uk",
+        "value": "35-а берегова батарея"
+      },
+      "en": {
+        "language": "en",
+        "value": "Maxim Gorky Fortresses"
+      },
+      "ja": {
+        "language": "ja",
+        "value": "マクシム・ゴーリキー要塞"
+      },
+      "zh": {
+        "language": "zh",
+        "value": "马克西姆·高尔基炮台"
+      }
+    },
+    "descriptions": {
+      "de": {
+        "language": "de",
+        "value": "Museum in der Ukraine"
+      },
+      "ar": {
+        "language": "ar",
+        "value": "متحف في روسيا"
+      },
+      "pt": {
+        "language": "pt",
+        "value": "Museu na União Soviética"
+      },
+      "en": {
+        "language": "en",
+        "value": "coastal batteries used by the Soviet Union in the Crimea during World War II"
+      },
+      "bn": {
+        "language": "bn",
+        "value": "রাশিয়ার একটি সংগ্রহালয়"
+      }
+    },
+    "aliases": {
+      "ru": [
+        {
+          "language": "ru",
+          "value": "35-я береговая батарея"
+        },
+        {
+          "language": "ru",
+          "value": "35-я батарея"
+        },
+        {
+          "language": "ru",
+          "value": "Форт Максим Горький 2"
+        },
+        {
+          "language": "ru",
+          "value": "Максим Горький 2"
+        }
+      ],
+      "uk": [
+        {
+          "language": "uk",
+          "value": "Бронебаштова батарея-35"
+        },
+        {
+          "language": "uk",
+          "value": "Максим Горький II (форт)"
+        }
+      ]
+    },
+    "sitelinks": {
+      "commonswiki": {
+        "site": "commonswiki",
+        "title": "Category:Maxim Gorky Fortresses",
+        "badges": []
+      },
+      "enwiki": {
+        "site": "enwiki",
+        "title": "Maxim Gorky Fortresses",
+        "badges": []
+      },
+      "ruwiki": {
+        "site": "ruwiki",
+        "title": "Береговая батарея № 35",
+        "badges": []
+      },
+      "ukwiki": {
+        "site": "ukwiki",
+        "title": "35-та берегова батарея",
+        "badges": []
+      },
+      "zhwiki": {
+        "site": "zhwiki",
+        "title": "马克西姆·高尔基炮台",
+        "badges": []
+      }
+    },
+    "lastrevid": 2498880751,
+    "modified": "2026-05-28T19:34:18Z",
+    "succession_claims": {
+      "P31": [
+        {
+          "mainsnak": {
+            "snaktype": "value",
+            "property": "P31",
+            "hash": "4cb858cccdb4e3c1fbe0aac4e40c2715bed4b17c",
+            "datavalue": {
+              "value": {
+                "entity-type": "item",
+                "numeric-id": 33506,
+                "id": "Q33506"
+              },
+              "type": "wikibase-entityid"
+            },
+            "datatype": "wikibase-item"
+          },
+          "type": "statement",
+          "id": "Q4096918$D7629F64-2760-449B-9F69-CADCF6457978",
+          "rank": "normal"
+        }
+      ],
+      "P571": [
+        {
+          "mainsnak": {
+            "snaktype": "value",
+            "property": "P571",
+            "hash": "85a6e95f979a79ed75e206d7c2dbb64d24581b18",
+            "datavalue": {
+              "value": {
+                "time": "+1929-00-00T00:00:00Z",
+                "timezone": 0,
+                "before": 0,
+                "after": 0,
+                "precision": 9,
+                "calendarmodel": "http://www.wikidata.org/entity/Q1985727"
+              },
+              "type": "time"
+            },
+            "datatype": "time"
+          },
+          "type": "statement",
+          "id": "Q4096918$24f621fb-4787-97d8-9a93-b7604981dc8f",
+          "rank": "normal",
+          "references": [
+            {
+              "hash": "524ff765eefbc236a43a00cda00535af163bc8c3",
+              "snaks": {
+                "P143": [
+                  {
+                    "snaktype": "value",
+                    "property": "P143",
+                    "hash": "6a164248fc96bfa583bbb495cb63ae6401ec203c",
+                    "datavalue": {
+                      "value": {
+                        "entity-type": "item",
+                        "numeric-id": 206855,
+                        "id": "Q206855"
+                      },
+                      "type": "wikibase-entityid"
+                    },
+                    "datatype": "wikibase-item"
+                  }
+                ],
+                "P4656": [
+                  {
+                    "snaktype": "value",
+                    "property": "P4656",
+                    "hash": "ad90794530b75ade8c6f75a327bf8fd3f39f1c97",
+                    "datavalue": {
+                      "value": "https://ru.wikipedia.org/?oldid=138040864",
+                      "type": "string"
+                    },
+                    "datatype": "url"
+                  }
+                ]
+              },
+              "snaks-order": [
+                "P143",
+                "P4656"
+              ]
+            }
+          ]
+        }
+      ],
+      "P576": [
+        {
+          "mainsnak": {
+            "snaktype": "value",
+            "property": "P576",
+            "hash": "daca207eaf7c24bee112a8c38e23cbbcc4f24eb3",
+            "datavalue": {
+              "value": {
+                "time": "+1943-00-00T00:00:00Z",
+                "timezone": 0,
+                "before": 0,
+                "after": 0,
+                "precision": 9,
+                "calendarmodel": "http://www.wikidata.org/entity/Q1985727"
+              },
+              "type": "time"
+            },
+            "datatype": "time"
+          },
+          "type": "statement",
+          "id": "Q4096918$5260992f-4241-d69f-ab92-f955190a37bf",
+          "rank": "normal",
+          "references": [
+            {
+              "hash": "524ff765eefbc236a43a00cda00535af163bc8c3",
+              "snaks": {
+                "P143": [
+                  {
+                    "snaktype": "value",
+                    "property": "P143",
+                    "hash": "6a164248fc96bfa583bbb495cb63ae6401ec203c",
+                    "datavalue": {
+                      "value": {
+                        "entity-type": "item",
+                        "numeric-id": 206855,
+                        "id": "Q206855"
+                      },
+                      "type": "wikibase-entityid"
+                    },
+                    "datatype": "wikibase-item"
+                  }
+                ],
+                "P4656": [
+                  {
+                    "snaktype": "value",
+                    "property": "P4656",
+                    "hash": "ad90794530b75ade8c6f75a327bf8fd3f39f1c97",
+                    "datavalue": {
+                      "value": "https://ru.wikipedia.org/?oldid=138040864",
+                      "type": "string"
+                    },
+                    "datatype": "url"
+                  }
+                ]
+              },
+              "snaks-order": [
+                "P143",
+                "P4656"
+              ]
+            }
+          ]
+        }
+      ],
+      "P1365": [
+        {
+          "mainsnak": {
+            "snaktype": "value",
+            "property": "P1365",
+            "hash": "cbd04b5e33fda09ec62b52f53e2ffa61b0e0c7d5",
+            "datavalue": {
+              "value": {
+                "entity-type": "item",
+                "numeric-id": 4096918,
+                "id": "Q4096918"
+              },
+              "type": "wikibase-entityid"
+            },
+            "datatype": "wikibase-item"
+          },
+          "type": "statement",
+          "id": "Q4096918$c263c597-4c89-853f-e606-6d15f86db815",
+          "rank": "normal",
+          "references": [
+            {
+              "hash": "524ff765eefbc236a43a00cda00535af163bc8c3",
+              "snaks": {
+                "P143": [
+                  {
+                    "snaktype": "value",
+                    "property": "P143",
+                    "hash": "6a164248fc96bfa583bbb495cb63ae6401ec203c",
+                    "datavalue": {
+                      "value": {
+                        "entity-type": "item",
+                        "numeric-id": 206855,
+                        "id": "Q206855"
+                      },
+                      "type": "wikibase-entityid"
+                    },
+                    "datatype": "wikibase-item"
+                  }
+                ],
+                "P4656": [
+                  {
+                    "snaktype": "value",
+                    "property": "P4656",
+                    "hash": "ad90794530b75ade8c6f75a327bf8fd3f39f1c97",
+                    "datavalue": {
+                      "value": "https://ru.wikipedia.org/?oldid=138040864",
+                      "type": "string"
+                    },
+                    "datatype": "url"
+                  }
+                ]
+              },
+              "snaks-order": [
+                "P143",
+                "P4656"
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  }
+]

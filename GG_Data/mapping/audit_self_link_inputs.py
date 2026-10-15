@@ -113,7 +113,7 @@ def main() -> None:
                         explanation = "P17 officially includes Germany -> country -> Germany as an example; self-reference alone is not an error. Review historical country/territory scope separately."
                     elif prop in {"P1365", "P1366"}:
                         review = "REVIEW_SUCCESSION_IDENTITY_OR_SOURCE_IMPORT"
-                        explanation = "Same item is its own predecessor/successor. Reference says imported from Russian Wikipedia; different historical phases or source links may have collapsed. Cause not established."
+                        explanation = "Same item is its own predecessor/successor. Reference says imported from Russian Wikipedia. SUCCESSION_TRACE.md documents five verified source-field/current-redirect paths and three unresolved cases; exact import edits are not traced."
                     elif prop == "P6379":
                         review = "REVIEW_SUBJECT_ROLE_AND_REFERENCE"
                         explanation = "Museum is said to have works in its own collection. Reference title concerns a photo series; inspect whether collection holder was used as subject. Cause not established."
@@ -132,6 +132,9 @@ def main() -> None:
                         for snak in snaks
                         if "datavalue" in snak
                     ]
+                    approved = ("Wikidata", sid) in rules
+                    if approved:
+                        review = "EXCLUDE_APPROVED_INPUT_ERROR"
                     profile.append(
                         {
                             "observation_id": row["observation_id"],
@@ -149,7 +152,11 @@ def main() -> None:
                             "reference_urls": "|".join(reference_urls),
                             "review_status": review,
                             "explanation": explanation,
-                            "output_action": "RETAIN_PENDING_REVIEW_NO_NEW_EXCLUSION",
+                            "output_action": (
+                                "EXCLUDE_APPROVED_INPUT_ERROR"
+                                if approved
+                                else "RETAIN_NO_APPROVED_EXCLUSION"
+                            ),
                             "pinned_entity_url": f"https://www.wikidata.org/w/index.php?title={qid}&oldid={entity.get('lastrevid')}",
                         }
                     )
@@ -183,7 +190,9 @@ def main() -> None:
         "wikidata_rank_counts": dict(Counter(r["rank"] for r in profile)),
         "wikidata_with_qualifiers": sum(bool(r["qualifier_count"]) for r in profile),
         "wikidata_with_references": sum(bool(r["reference_count"]) for r in profile),
-        "new_wikidata_exclusions": 0,
+        "approved_wikidata_exclusions": sum(
+            r["selected_source"] == "Wikidata" for r in excluded
+        ),
         "input_modified": False,
         "graph_rebuilt": False,
         "filtered_assertion_csv_written": False,

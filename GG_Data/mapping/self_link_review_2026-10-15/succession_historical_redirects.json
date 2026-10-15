@@ -1,0 +1,191 @@
+{
+  "retrieved_at_utc": "2026-10-15T19:08:06.160142+00:00",
+  "records": [
+    {
+      "qid": "Q16625079",
+      "target_title": "124-я стрелковая дивизия (2-го формирования)",
+      "at_source_time": "2023-11-27T11:48:52Z",
+      "request_url": "https://ru.wikipedia.org/w/api.php?action=query&format=json&prop=revisions&rvprop=ids%7Ctimestamp%7Ccontent&rvslots=main&titles=124-%D1%8F+%D1%81%D1%82%D1%80%D0%B5%D0%BB%D0%BA%D0%BE%D0%B2%D0%B0%D1%8F+%D0%B4%D0%B8%D0%B2%D0%B8%D0%B7%D0%B8%D1%8F+%282-%D0%B3%D0%BE+%D1%84%D0%BE%D1%80%D0%BC%D0%B8%D1%80%D0%BE%D0%B2%D0%B0%D0%BD%D0%B8%D1%8F%29&rvstart=2023-11-27T11%3A48%3A52Z&rvlimit=1",
+      "http_status": 200,
+      "response": {
+        "batchcomplete": "",
+        "query": {
+          "pages": {
+            "5162674": {
+              "pageid": 5162674,
+              "ns": 0,
+              "title": "124-я стрелковая дивизия (2-го формирования)",
+              "revisions": [
+                {
+                  "revid": 64687574,
+                  "parentid": 0,
+                  "timestamp": "2014-08-08T20:39:14Z",
+                  "slots": {
+                    "main": {
+                      "contentmodel": "wikitext",
+                      "contentformat": "text/x-wiki",
+                      "*": "#REDIRECT [[50-я гвардейская стрелковая дивизия]]"
+                    }
+                  }
+                }
+              ]
+            }
+          }
+        }
+      },
+      "revision": 64687574,
+      "revision_timestamp": "2014-08-08T20:39:14Z",
+      "content_start": "#REDIRECT [[50-я гвардейская стрелковая дивизия]]"
+    },
+    {
+      "qid": "Q21634743",
+      "target_title": "162-й истребительный авиационный полк ПВО",
+      "at_source_time": "2024-07-16T19:56:51Z",
+      "request_url": "https://ru.wikipedia.org/w/api.php?action=query&format=json&prop=revisions&rvprop=ids%7Ctimestamp%7Ccontent&rvslots=main&titles=162-%D0%B9+%D0%B8%D1%81%D1%82%D1%80%D0%B5%D0%B1%D0%B8%D1%82%D0%B5%D0%BB%D1%8C%D0%BD%D1%8B%D0%B9+%D0%B0%D0%B2%D0%B8%D0%B0%D1%86%D0%B8%D0%BE%D0%BD%D0%BD%D1%8B%D0%B9+%D0%BF%D0%BE%D0%BB%D0%BA+%D0%9F%D0%92%D0%9E&rvstart=2024-07-16T19%3A56%3A51Z&rvlimit=1",
+      "http_status": 200,
+      "response": {
+        "batchcomplete": "",
+        "query": {
+          "pages": {
+            "6102447": {
+              "pageid": 6102447,
+              "ns": 0,
+              "title": "162-й истребительный авиационный полк ПВО",
+              "revisions": [
+                {
+                  "revid": 74659281,
+                  "parentid": 0,
+                  "timestamp": "2015-11-21T17:53:37Z",
+                  "slots": {
+                    "main": {
+                      "contentmodel": "wikitext",
+                      "contentformat": "text/x-wiki",
+                      "*": "#перенаправление [[162-й истребительный авиационный полк]]"
+                    }
+                  }
+                }
+              ]
+            }
+          }
+        }
+      },
+      "revision": 74659281,
+      "revision_timestamp": "2015-11-21T17:53:37Z",
+      "content_start": "#перенаправление [[162-й истребительный авиационный полк]]"
+    },
+    {
+      "qid": "Q4029011",
+      "target_title": "55-й истребительный авиационный полк",
+      "at_source_time": "2023-03-01T08:51:00Z",
+      "request_url": "https://ru.wikipedia.org/w/api.php?action=query&format=json&prop=revisions&rvprop=ids%7Ctimestamp%7Ccontent&rvslots=main&titles=55-%D0%B9+%D0%B8%D1%81%D1%82%D1%80%D0%B5%D0%B1%D0%B8%D1%82%D0%B5%D0%BB%D1%8C%D0%BD%D1%8B%D0%B9+%D0%B0%D0%B2%D0%B8%D0%B0%D1%86%D0%B8%D0%BE%D0%BD%D0%BD%D1%8B%D0%B9+%D0%BF%D0%BE%D0%BB%D0%BA&rvstart=2023-03-01T08%3A51%3A00Z&rvlimit=1",
+      "http_status": 200,
+      "response": {
+        "continue": {
+          "rvcontinue": "20120425030002|43857265",
+          "continue": "||"
+        },
+        "query": {
+          "pages": {
+            "1766206": {
+              "pageid": 1766206,
+              "ns": 0,
+              "title": "55-й истребительный авиационный полк",
+              "revisions": [
+                {
+                  "revid": 44327647,
+                  "parentid": 43857265,
+                  "timestamp": "2012-05-11T13:10:46Z",
+                  "slots": {
+                    "main": {
+                      "contentmodel": "wikitext",
+                      "contentformat": "text/x-wiki",
+                      "*": "#REDIRECT [[16-й гвардейский истребительный авиационный полк]]"
+                    }
+                  }
+                }
+              ]
+            }
+          }
+        }
+      },
+      "revision": 44327647,
+      "revision_timestamp": "2012-05-11T13:10:46Z",
+      "content_start": "#REDIRECT [[16-й гвардейский истребительный авиационный полк]]"
+    },
+    {
+      "qid": "Q4031132",
+      "target_title": "39-я гвардейская стрелковая дивизия",
+      "at_source_time": "2023-11-27T10:50:14Z",
+      "request_url": "https://ru.wikipedia.org/w/api.php?action=query&format=json&prop=revisions&rvprop=ids%7Ctimestamp%7Ccontent&rvslots=main&titles=39-%D1%8F+%D0%B3%D0%B2%D0%B0%D1%80%D0%B4%D0%B5%D0%B9%D1%81%D0%BA%D0%B0%D1%8F+%D1%81%D1%82%D1%80%D0%B5%D0%BB%D0%BA%D0%BE%D0%B2%D0%B0%D1%8F+%D0%B4%D0%B8%D0%B2%D0%B8%D0%B7%D0%B8%D1%8F&rvstart=2023-11-27T10%3A50%3A14Z&rvlimit=1",
+      "http_status": 200,
+      "response": {
+        "batchcomplete": "",
+        "query": {
+          "pages": {
+            "3169391": {
+              "pageid": 3169391,
+              "ns": 0,
+              "title": "39-я гвардейская стрелковая дивизия",
+              "revisions": [
+                {
+                  "revid": 33253658,
+                  "parentid": 0,
+                  "timestamp": "2011-03-31T20:39:06Z",
+                  "slots": {
+                    "main": {
+                      "contentmodel": "wikitext",
+                      "contentformat": "text/x-wiki",
+                      "*": "#REDIRECT [[39-я гвардейская мотострелковая дивизия]]"
+                    }
+                  }
+                }
+              ]
+            }
+          }
+        }
+      },
+      "revision": 33253658,
+      "revision_timestamp": "2011-03-31T20:39:06Z",
+      "content_start": "#REDIRECT [[39-я гвардейская мотострелковая дивизия]]"
+    },
+    {
+      "qid": "Q4096918",
+      "target_title": "Отдельная батарея № 8 6-го крепостного артиллерийского полка Береговой обороны Чёрного моря",
+      "at_source_time": "2024-05-27T12:37:34Z",
+      "request_url": "https://ru.wikipedia.org/w/api.php?action=query&format=json&prop=revisions&rvprop=ids%7Ctimestamp%7Ccontent&rvslots=main&titles=%D0%9E%D1%82%D0%B4%D0%B5%D0%BB%D1%8C%D0%BD%D0%B0%D1%8F+%D0%B1%D0%B0%D1%82%D0%B0%D1%80%D0%B5%D1%8F+%E2%84%96+8+6-%D0%B3%D0%BE+%D0%BA%D1%80%D0%B5%D0%BF%D0%BE%D1%81%D1%82%D0%BD%D0%BE%D0%B3%D0%BE+%D0%B0%D1%80%D1%82%D0%B8%D0%BB%D0%BB%D0%B5%D1%80%D0%B8%D0%B9%D1%81%D0%BA%D0%BE%D0%B3%D0%BE+%D0%BF%D0%BE%D0%BB%D0%BA%D0%B0+%D0%91%D0%B5%D1%80%D0%B5%D0%B3%D0%BE%D0%B2%D0%BE%D0%B9+%D0%BE%D0%B1%D0%BE%D1%80%D0%BE%D0%BD%D1%8B+%D0%A7%D1%91%D1%80%D0%BD%D0%BE%D0%B3%D0%BE+%D0%BC%D0%BE%D1%80%D1%8F&rvstart=2024-05-27T12%3A37%3A34Z&rvlimit=1",
+      "http_status": 200,
+      "response": {
+        "continue": {
+          "rvcontinue": "20200308161711|105562018",
+          "continue": "||"
+        },
+        "query": {
+          "pages": {
+            "6818768": {
+              "pageid": 6818768,
+              "ns": 0,
+              "title": "Отдельная батарея № 8 6-го крепостного артиллерийского полка Береговой обороны Чёрного моря",
+              "revisions": [
+                {
+                  "revid": 127080909,
+                  "parentid": 105562018,
+                  "timestamp": "2022-12-05T15:18:15Z",
+                  "slots": {
+                    "main": {
+                      "contentmodel": "wikitext",
+                      "contentformat": "text/x-wiki",
+                      "*": "#перенаправление [[Береговая батарея № 35]]"
+                    }
+                  }
+                }
+              ]
+            }
+          }
+        }
+      },
+      "revision": 127080909,
+      "revision_timestamp": "2022-12-05T15:18:15Z",
+      "content_start": "#перенаправление [[Береговая батарея № 35]]"
+    }
+  ]
+}
