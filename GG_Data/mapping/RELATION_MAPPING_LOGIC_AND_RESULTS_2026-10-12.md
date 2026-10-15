@@ -8,6 +8,39 @@
 
 **Relation map version:** `relation-map-v1.0.0`
 
+**Status:** Historical v1 result. Its counts and decisions describe the 2026-10-12 build. The current mapping contract is [`relation-map-v2.1.0`](../../docs/RELATION_MAPPING_V2_1_DATA_LAYER_REVERSE_2026-10-15.md). V2.1 permits Level 2 translation only from the same normalized identifier or explicit formal mapping values, keeps Level 1 optional, and requires explicit data-layer reverse delivery.
+
+## Current v2.1 process
+
+The rules below supersede the v1 mapping and direction process in the rest of this document:
+
+1. Preserve the source predicate, source assertion ID, endpoints, dates, and provenance.
+2. Create a Level 2 connection only when the normalized relation ID is the same or an explicit formal mapping value connects the IDs.
+3. Use relation names, descriptions, endpoint types, and up to ten assertion examples only to validate or contradict that deterministic candidate. They cannot create a mapping.
+4. If validation contradicts a formal mapping, record the formal evidence and block automatic translation. If assertion examples conflict while the mapping meaning remains valid, keep the mapping and flag assertion quality.
+5. Keep every relation without deterministic translation under its own source relation ID.
+6. Treat Level 1 as an optional search view. An unresolved Level 1 candidate stays unresolved and does not change Level 2 meaning or direction.
+7. Normalize the source assertion to its accepted Level 2 direction with `RELATION_MAPPING_TABLE_v2.1.0.csv`.
+8. Resolve the opposite direction with `RELATION_DIRECTION_LOOKUP_v2.1.0.csv`. The data layer supplies the reversed endpoints and the exact named, symmetric, or synthetic reverse relation ID and label.
+9. Return both endpoint directions for every non-self assertion, including symmetric assertions. Both views retain one source assertion identity and one support count. A self-loop has one view.
+10. Do not require the Agent to infer reverse meaning, choose an inverse, detect symmetry, or swap endpoints.
+
+The v2 evidence table contains 589 unique candidate connections: 403 same-code connections and 186 cross-identifier formal-path connections. These are evaluated connections, not 589 automatic merges. Each row in `RELATION_CONNECTIONS_v2.0.0.csv` records its source logic, formal evidence, direction, semantic review, example review, and final merge or separation decision.
+
+The current runtime artifacts are:
+
+| File | Role |
+|---|---|
+| `RELATION_CONNECTIONS_v2.0.0.csv` | One audit row for each of the 589 deterministic candidate connections |
+| `RELATION_MAPPING_TABLE_v2.1.0.csv` | Source predicate to effective Level 2 mapping, occurrence count, evidence, direction normalization, and reverse contract |
+| `RELATION_DIRECTION_CATALOG_v2.1.0.csv` | One reverse decision for each effective Level 2 relation |
+| `RELATION_DIRECTION_LOOKUP_v2.1.0.csv` | Direct lookup from each searchable relation ID to its opposite-direction ID and label |
+| `RELATION_MAPPING_V2_1_SUMMARY.json` | Versioned totals and acceptance results |
+
+The v2.1 lookup has 1,995 rows for 1,002 direction pairs. It has two lookup rows for each of 993 non-symmetric pairs and one explicit self-mapping row for each of 9 symmetric relations. This lookup-row rule is separate from Agent-facing assertion delivery: a non-self symmetric assertion still produces two endpoint directions.
+
+The sections below remain as historical evidence for v1. They must not be used as the active mapping or direction contract.
+
 ## 1. Purpose
 
 This process creates one common relation catalog without changing any source
@@ -46,10 +79,11 @@ not merged only because they share a family.
 
 ### Direction and provenance
 
-Direction is part of every mapping. Reverse relations are transformed before
-they enter the common direction. Each output row also keeps its source
-predicate and decision evidence. Two relations can connect the same entities
-when separate source statements support different meanings.
+Direction is part of every mapping. This v1 report normalized reverse relations
+before they entered the common direction. Under v2.1, the data layer also uses
+an explicit reverse lookup and returns both endpoint directions for every
+non-self assertion. Each directional view keeps the source predicate, source
+assertion identity, and decision evidence.
 
 ## 3. Mapping process
 
@@ -403,9 +437,9 @@ file.
 The machine-readable outputs are:
 
 - [`RELATION_MAPPING_TABLE_v1.0.0.csv`](RELATION_MAPPING_TABLE_v1.0.0.csv): the delivered runtime lookup table, with one row for every source predicate, selection priority, source-specific time inputs, evidence and conflict policies, and `relation-map-v1.0.0`;
-- [`final_relation_groups.csv`](../poc/relation_alignment/final_relation_map/final_relation_groups.csv): one row for every final Level 2 identifier;
-- [`audited_eventkg_decisions.csv`](../poc/relation_alignment/final_relation_map/audited_eventkg_decisions.csv): the 217 EventKG audit decisions; and
-- [`summary.json`](../poc/relation_alignment/final_relation_map/summary.json): validation totals.
+- [`final_relation_groups.csv`](../../poc/relation_alignment/final_relation_map/final_relation_groups.csv): one row for every final Level 2 identifier;
+- [`audited_eventkg_decisions.csv`](../../poc/relation_alignment/final_relation_map/audited_eventkg_decisions.csv): the 217 EventKG audit decisions; and
+- [`summary.json`](../../poc/relation_alignment/final_relation_map/summary.json): validation totals.
 
 The catalog can be rebuilt with:
 

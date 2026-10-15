@@ -2,12 +2,14 @@
 
 ## Status
 
-This document records the agreed method for assigning one geographic geometry to each place entity in the WWII graph.
+This document records the proposed method for assigning one geographic geometry to each place entity in the WWII graph.
 
 Policy version: `geo-object-selection-v0.5.0`
 Last verified: `2026-10-13`
 
 The method is a project policy. It does not change the source datasets.
+
+**Delivery boundary:** Geometry is deferred from the current relation and identity handoff. The results in this document are proof of concept and audit evidence. They are not approved production geometry, and they must not be included in an Agent release until the separate geometry gate approves the source, representation, CRS, and export conversion.
 
 ## Output rule
 
