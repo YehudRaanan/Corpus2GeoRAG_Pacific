@@ -37,6 +37,18 @@ The current runtime artifacts are:
 | `RELATION_DIRECTION_LOOKUP_v2.1.0.csv` | Direct lookup from each searchable relation ID to its opposite-direction ID and label |
 | `RELATION_MAPPING_V2_1_SUMMARY.json` | Versioned totals and acceptance results |
 
+Use `GG_Data/mapping/rebuild_relation_mapping.py` to rebuild v2 and v2.1 from
+the saved deterministic audit inputs, then run
+`GG_Data/mapping/test_relation_mapping_keys.py` and
+`GG_Data/mapping/run_relation_mapping_sanity.py`. The corrected build joins the
+inventory and registry by source plus normalized full predicate ID, preserves
+the original URI in the runtime table, and rejects duplicate or lost source
+keys. This fixes the short-name join in the historical standalone v2 builder
+under `poc`; that old command must not be used for table regeneration.
+The correction restores 15 WarSampo source keys and two optional Level 1
+candidate fields. Both current tables have 1,520 distinct source keys, including
+111 WarSampo keys. Level 2 mapping decisions and directions are unchanged.
+
 The v2.1 lookup has 1,995 rows for 1,002 direction pairs. It has two lookup rows for each of 993 non-symmetric pairs and one explicit self-mapping row for each of 9 symmetric relations. This lookup-row rule is separate from Agent-facing assertion delivery: a non-self symmetric assertion still produces two endpoint directions.
 
 The sections below remain as historical evidence for v1. They must not be used as the active mapping or direction contract.

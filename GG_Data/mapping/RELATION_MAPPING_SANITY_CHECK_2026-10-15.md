@@ -16,20 +16,24 @@ The exact Level 2 mappings in the reviewed sample are generally reasonable. The
 formal reverse examples also preserve the intended direction. However, the data
 layer is not ready to apply v2.1 to the whole draft export.
 
-There are three separate blockers:
+There are two remaining blockers:
 
 1. **Coverage:** v2.1 has a lookup row for 598,736 of 700,890 draft assertions
    (85.43%). It has no lookup row for 102,154 assertions (14.57%) across 75
    source-predicate keys.
-2. **Ambiguous lookup keys:** ten WarSampo `source + source_predicate` keys occur
-   more than once and produce different Level 2 IDs. A data layer that uses only
-   those two fields cannot select one result deterministically.
-3. **Question sufficiency:** several exact relations are valid but are too broad
+2. **Question sufficiency:** several exact relations are valid but are too broad
    for the Agent question. A participant relation does not prove who attacked.
    Administrative containment does not always prove where an event occurred.
 
 The direction contract itself passed: all 1,995 direction lookup rows returned
 to the original relation after applying reverse twice.
+
+The WarSampo lookup collision found in the initial audit is fixed. The corrected
+build restores 15 original full source predicates. Both v2 and v2.1 now contain
+1,520 unique `source + source_predicate` keys, including 111 WarSampo keys.
+The 589 connection decisions and all Level 2 identifiers and directions remain
+the same. Two optional Level 1 candidate fields are also corrected because they
+previously came from the wrong source row.
 
 ## Gold or Silver question set
 
@@ -77,20 +81,39 @@ This produced 130 review rows. Sampling is reproducible with seed `20261015`.
 | Check | Result | Meaning |
 |---|---:|---|
 | Mapping rows | 1,520 | Rows in the v2.1 table |
-| Duplicate `source + source_predicate` keys | 10 | These keys have 25 rows, or 15 rows beyond one row per key |
-| Conflicting duplicate keys | 10 | Each duplicate key can lead to more than one Level 2 result |
+| Duplicate `source + source_predicate` keys | 0 | Initial result was 10; full predicate identity is now preserved |
+| Conflicting duplicate keys | 0 | Each source predicate now has one mapping row |
 | Direction lookup rows | 1,995 | Forward and reverse lookup rows |
 | Direction contract errors | 0 | Each reverse points back to the original relation |
 | Draft assertions replayed | 700,890 | Complete draft assertion input |
 | Assertions with one v2.1 mapping | 598,736 (85.43%) | Deterministic replay was possible |
 | Assertions with no v2.1 mapping | 102,154 (14.57%) | No v2.1 row exists |
-| Assertions affected by ambiguous WarSampo keys in this draft | 0 | The draft subset has no such WarSampo assertion |
+| Assertions affected by ambiguous WarSampo keys in this draft | 0 | No ambiguous mapping keys remain |
 
-The ten conflicting keys matter even though this draft does not use them. They
-include `warsa/unit`, `municipality_of_birth`, `municipality_of_death`,
-`municipality_of_residence`, and `rank`. The table must use a stronger key, such
-as the source graph and normalized predicate ID that distinguish the WarSampo
-subschemas.
+### Fixed WarSampo source-key collision
+
+The historical v2 builder indexed the source inventory by `source` and a short
+predicate name. Names such as `unit` occur in several WarSampo subschemas.
+A Python dictionary retained the last inventory row for that short name, then
+attached its full predicate URI and some v1 metadata to the other rows.
+V2.1 inherited those wrong source keys from v2.
+
+The corrected build indexes the inventory by `source` and the normalized full
+`predicate_uri`, then joins it to the registry's `normalized_relation`.
+It preserves the original full URI in the exported `source_predicate` field.
+It fails if identifiers collide or if the inventory, registry, and v1 source
+predicate sets do not agree. The source graph is not needed to distinguish
+these predicates: the full URI already contains the subschema path.
+
+For example, all four predicates now retain their own rows:
+
+- `http://ldf.fi/schema/warsa/articles/unit`
+- `http://ldf.fi/schema/warsa/casualties/unit`
+- `http://ldf.fi/schema/warsa/prisoners/unit`
+- `http://ldf.fi/schema/warsa/unit`
+
+The source counts are EventKG 808, Wikidata 601, and WarSampo 111. Their sum is
+1,520; that total does not describe WarSampo alone.
 
 The missing v2.1 rows are concentrated in:
 
@@ -107,6 +130,13 @@ The missing v2.1 rows are concentrated in:
 These seven keys account for 99,507 of the 102,154 missing assertions. The data
 layer needs an explicit pass-through row or an explicit exclusion rule for each
 missing predicate. Silent fallback is not deterministic mapping.
+
+An independent recount confirmed 75 distinct source-predicate keys and 75
+distinct v1 Level 2 IDs: 69 Wikidata keys and six EventKG keys. These 75 keys
+were absent from the v1 mapping table too. The v1 runtime retained them through
+its `runtime_independent` fallback; their presence in the assertion export does
+not mean they had an explicit v1 mapping rule. This is the accepted current
+export scope, not a claim about every raw source dataset.
 
 ## Random mapping examples
 
@@ -211,6 +241,24 @@ Level 2 relation, such as birth place, headquarters, administrative area, or
 event location. These relations are not interchangeable.
 
 ## Recommended acceptance process
+
+Rebuild the mapping tables with the corrected entry point:
+
+```powershell
+& 'Agent\.venv\Scripts\python.exe' `
+  'GG_Data\mapping\rebuild_relation_mapping.py'
+& 'Agent\.venv\Scripts\python.exe' `
+  'GG_Data\mapping\test_relation_mapping_keys.py'
+```
+
+This command rebuilds v2 and invokes the existing v2.1 reverse builder. It reads
+the saved deterministic audit inputs without fetching new evidence. All outputs
+are under `GG_Data/mapping`. The historical standalone v2 builder under `poc`
+still uses short names and must not be used to regenerate these tables.
+
+The regression checks failed on both original tables and passed after the fix.
+They check every original source predicate, occurrence count, time/evidence
+policy, the four WarSampo unit predicates, and reverse lookup completeness.
 
 Run the sanity check after every mapping-table build and after every graph
 export:
