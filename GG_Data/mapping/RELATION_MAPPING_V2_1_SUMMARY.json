@@ -1,0 +1,36 @@
+{
+  "relation_map_version": "relation-map-v2.1.0",
+  "source_mapping_rows": 1520,
+  "source_occurrences": 5617651,
+  "effective_level2_relations": 1009,
+  "reverse_resolution_types": {
+    "SYNTHETIC_INVERSE": 917,
+    "NAMED_INVERSE": 83,
+    "SYMMETRIC": 9
+  },
+  "reverse_statuses": {
+    "ACTIVE_SYNTHETIC_NO_FORMAL_NAMED_INVERSE": 906,
+    "ACTIVE_FORMAL_NAMED_INVERSE": 83,
+    "ACTIVE_FORMAL_SYMMETRIC": 9,
+    "ACTIVE_SYNTHETIC_AMBIGUOUS_NAMED_INVERSE": 11
+  },
+  "source_occurrences_by_reverse_resolution_type": {
+    "SYNTHETIC_INVERSE": 2861896,
+    "NAMED_INVERSE": 2741980,
+    "SYMMETRIC": 13775
+  },
+  "relations_with_explicit_reverse_id": 1009,
+  "relations_with_explicit_reverse_label": 1009,
+  "formal_safe_relations_activated": 92,
+  "previous_v2_formal_reverse_relations_preserved": 50,
+  "previous_v2_missing_formal_reverse_relations_activated": 42,
+  "formal_ambiguous_relations_using_synthetic_inverse": 11,
+  "agent_reverse_interpretation_required": false,
+  "endpoint_action": "SWAP_SOURCE_TARGET",
+  "delivery_policy": "The data layer returns a resolved directional assertion. The Agent receives the reversed subject, explicit relation ID and label, and reversed object.",
+  "inputs": {
+    "mapping_v2": "GG_Data\\mapping\\RELATION_MAPPING_TABLE_v2.0.0.csv",
+    "reverse_validation": "poc\\relation_alignment\\reverse_formula_validation\\reverse_contract_validation.csv",
+    "source_inventory": "poc\\relation_alignment\\relation_catalog_eda\\source_predicate_inventory.csv"
+  }
+}
