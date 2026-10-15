@@ -1,0 +1,29 @@
+{
+  "date": "2026-10-15",
+  "input_rows": 700890,
+  "approved_excluded_rows": 3,
+  "rows_retained_by_exclusion_gate": 700887,
+  "self_links_before": 45,
+  "self_links_after_approved_gate": 42,
+  "eventkg_raw_self_links_confirmed": 29,
+  "wikidata_saved_self_statements_confirmed": 16,
+  "wikidata_entities": 15,
+  "wikidata_review_status_counts": {
+    "KEEP_COUNTRY_SELF_REFERENCE_CONVENTION": 3,
+    "REVIEW_SUCCESSION_IDENTITY_OR_SOURCE_IMPORT": 8,
+    "STRONG_INPUT_ERROR_CANDIDATE": 3,
+    "REVIEW_TERRITORY_SCOPE": 1,
+    "REVIEW_SUBJECT_ROLE_AND_REFERENCE": 1
+  },
+  "wikidata_rank_counts": {
+    "normal": 15,
+    "preferred": 1
+  },
+  "wikidata_with_qualifiers": 0,
+  "wikidata_with_references": 9,
+  "new_wikidata_exclusions": 0,
+  "input_modified": false,
+  "graph_rebuilt": false,
+  "filtered_assertion_csv_written": false,
+  "verification": "Streaming dry run of approved gate; shared notebook writer tested separately."
+}

@@ -1,0 +1,3032 @@
+{
+  "wikidata_archive": "Data\\external\\wwii_task_force\\wikidata_entities.jsonl.gz",
+  "assertion_input": "GG_Data\\mapping\\outputs\\relation-map-v1.0.0\\complete_mapped_relations_v1.0.0.csv",
+  "approved_excluded_assertions": [
+    {
+      "observation_id": "obs-1e6292c907fe34ec4dacde5e",
+      "subject_qid": "Q207955",
+      "object_qid": "Q207955",
+      "level1_relation": "FAMILY_PERSONAL",
+      "level1_assignment_status": "RANKED_REVIEW_REQUIRED",
+      "level2_relation": "http://dbpedia.org/ontology/honours",
+      "level2_label": "honours",
+      "selection_priority": "3",
+      "selection_status": "SELECTED",
+      "direction": "same",
+      "time_from": "",
+      "time_to": "",
+      "time_point": "",
+      "time_precision": "{\"from\":[],\"to\":[]}",
+      "time_status": "NONE",
+      "selected_source": "EventKG",
+      "selected_source_predicate": "http://dbpedia.org/ontology/honours",
+      "source_record_id": "https://eventkg.l3s.uni-hannover.de/resource/relation_3670253|https://eventkg.l3s.uni-hannover.de/graph/dbpedia_en",
+      "source_graph": "https://eventkg.l3s.uni-hannover.de/graph/dbpedia_en",
+      "source_reference": "relations_entities_other/part_00034.nq.gz:https://eventkg.l3s.uni-hannover.de/resource/relation_3670253",
+      "source_support": "[{\"graph\":\"https://eventkg.l3s.uni-hannover.de/graph/dbpedia_en\",\"object_qid\":\"Q207955\",\"predicate\":\"http://dbpedia.org/ontology/honours\",\"record_id\":\"https://eventkg.l3s.uni-hannover.de/resource/relation_3670253|https://eventkg.l3s.uni-hannover.de/graph/dbpedia_en\",\"source\":\"EventKG\",\"subject_qid\":\"Q207955\"}]",
+      "evidence_references": "[{\"graph\":\"https://eventkg.l3s.uni-hannover.de/graph/dbpedia_en\",\"record_id\":\"https://eventkg.l3s.uni-hannover.de/resource/relation_3670253|https://eventkg.l3s.uni-hannover.de/graph/dbpedia_en\",\"reference\":\"relations_entities_other/part_00034.nq.gz:https://eventkg.l3s.uni-hannover.de/resource/relation_3670253\"}]",
+      "final_review_status": "ACCEPTED",
+      "final_mapping_class": "INDEPENDENT_EXISTING_SOURCE_ONLY",
+      "mapping_origin": "catalog",
+      "relation_map_version": "relation-map-v1.0.0"
+    },
+    {
+      "observation_id": "obs-c1a8756daf295aee6859aeef",
+      "subject_qid": "Q4708746",
+      "object_qid": "Q4708746",
+      "level1_relation": "PARTICIPATION_ROLE",
+      "level1_assignment_status": "EXISTING_CATALOG_ASSIGNMENT",
+      "level2_relation": "http://dbpedia.org/ontology/occupation",
+      "level2_label": "occupation",
+      "selection_priority": "3",
+      "selection_status": "SELECTED",
+      "direction": "same",
+      "time_from": "",
+      "time_to": "",
+      "time_point": "",
+      "time_precision": "{\"from\":[],\"to\":[]}",
+      "time_status": "NONE",
+      "selected_source": "EventKG",
+      "selected_source_predicate": "http://dbpedia.org/ontology/occupation",
+      "source_record_id": "https://eventkg.l3s.uni-hannover.de/resource/relation_10823606|https://eventkg.l3s.uni-hannover.de/graph/dbpedia_en",
+      "source_graph": "https://eventkg.l3s.uni-hannover.de/graph/dbpedia_en",
+      "source_reference": "relations_entities_other/part_00100.nq.gz:https://eventkg.l3s.uni-hannover.de/resource/relation_10823606",
+      "source_support": "[{\"graph\":\"https://eventkg.l3s.uni-hannover.de/graph/dbpedia_en\",\"object_qid\":\"Q4708746\",\"predicate\":\"http://dbpedia.org/ontology/occupation\",\"record_id\":\"https://eventkg.l3s.uni-hannover.de/resource/relation_10823606|https://eventkg.l3s.uni-hannover.de/graph/dbpedia_en\",\"source\":\"EventKG\",\"subject_qid\":\"Q4708746\"}]",
+      "evidence_references": "[{\"graph\":\"https://eventkg.l3s.uni-hannover.de/graph/dbpedia_en\",\"record_id\":\"https://eventkg.l3s.uni-hannover.de/resource/relation_10823606|https://eventkg.l3s.uni-hannover.de/graph/dbpedia_en\",\"reference\":\"relations_entities_other/part_00100.nq.gz:https://eventkg.l3s.uni-hannover.de/resource/relation_10823606\"}]",
+      "final_review_status": "ACCEPTED",
+      "final_mapping_class": "INDEPENDENT_EXISTING_SOURCE_ONLY",
+      "mapping_origin": "catalog",
+      "relation_map_version": "relation-map-v1.0.0"
+    },
+    {
+      "observation_id": "obs-f3d111110fd3cd635b21ce67",
+      "subject_qid": "Q2607384",
+      "object_qid": "Q2607384",
+      "level1_relation": "PARTICIPATION_ROLE",
+      "level1_assignment_status": "EXISTING_CATALOG_ASSIGNMENT",
+      "level2_relation": "http://dbpedia.org/ontology/militaryUnit",
+      "level2_label": "military Unit",
+      "selection_priority": "3",
+      "selection_status": "SELECTED",
+      "direction": "same",
+      "time_from": "",
+      "time_to": "",
+      "time_point": "",
+      "time_precision": "{\"from\":[],\"to\":[]}",
+      "time_status": "NONE",
+      "selected_source": "EventKG",
+      "selected_source_predicate": "http://dbpedia.org/ontology/militaryUnit",
+      "source_record_id": "https://eventkg.l3s.uni-hannover.de/resource/relation_34200996|https://eventkg.l3s.uni-hannover.de/graph/dbpedia_en",
+      "source_graph": "https://eventkg.l3s.uni-hannover.de/graph/dbpedia_en",
+      "source_reference": "relations_entities_other/part_00319.nq.gz:https://eventkg.l3s.uni-hannover.de/resource/relation_34200996",
+      "source_support": "[{\"graph\":\"https://eventkg.l3s.uni-hannover.de/graph/dbpedia_en\",\"object_qid\":\"Q2607384\",\"predicate\":\"http://dbpedia.org/ontology/militaryUnit\",\"record_id\":\"https://eventkg.l3s.uni-hannover.de/resource/relation_34200996|https://eventkg.l3s.uni-hannover.de/graph/dbpedia_en\",\"source\":\"EventKG\",\"subject_qid\":\"Q2607384\"}]",
+      "evidence_references": "[{\"graph\":\"https://eventkg.l3s.uni-hannover.de/graph/dbpedia_en\",\"record_id\":\"https://eventkg.l3s.uni-hannover.de/resource/relation_34200996|https://eventkg.l3s.uni-hannover.de/graph/dbpedia_en\",\"reference\":\"relations_entities_other/part_00319.nq.gz:https://eventkg.l3s.uni-hannover.de/resource/relation_34200996\"}]",
+      "final_review_status": "ACCEPTED",
+      "final_mapping_class": "INDEPENDENT_EXISTING_SOURCE_ONLY",
+      "mapping_origin": "catalog",
+      "relation_map_version": "relation-map-v1.0.0"
+    }
+  ],
+  "eventkg": [
+    {
+      "path": "relations_events_other/part_00080.nq.gz",
+      "resource": "https://eventkg.l3s.uni-hannover.de/resource/relation_39858211",
+      "assertion": {
+        "observation_id": "obs-41bc2f126c43b70147648d62",
+        "subject_qid": "Q622365",
+        "object_qid": "Q622365",
+        "level1_relation": "SPATIAL",
+        "level1_assignment_status": "EXISTING_CATALOG_ASSIGNMENT",
+        "level2_relation": "http://dbpedia.org/ontology/country",
+        "level2_label": "country",
+        "selection_priority": "3",
+        "selection_status": "SELECTED",
+        "direction": "same",
+        "time_from": "",
+        "time_to": "",
+        "time_point": "",
+        "time_precision": "{\"from\":[],\"to\":[]}",
+        "time_status": "NONE",
+        "selected_source": "EventKG",
+        "selected_source_predicate": "http://dbpedia.org/ontology/country",
+        "source_record_id": "https://eventkg.l3s.uni-hannover.de/resource/relation_39858211|https://eventkg.l3s.uni-hannover.de/graph/dbpedia_en",
+        "source_graph": "https://eventkg.l3s.uni-hannover.de/graph/dbpedia_en",
+        "source_reference": "relations_events_other/part_00080.nq.gz:https://eventkg.l3s.uni-hannover.de/resource/relation_39858211",
+        "source_support": "[{\"graph\":\"https://eventkg.l3s.uni-hannover.de/graph/dbpedia_en\",\"object_qid\":\"Q622365\",\"predicate\":\"http://dbpedia.org/ontology/country\",\"record_id\":\"https://eventkg.l3s.uni-hannover.de/resource/relation_39858211|https://eventkg.l3s.uni-hannover.de/graph/dbpedia_en\",\"source\":\"EventKG\",\"subject_qid\":\"Q622365\"}]",
+        "evidence_references": "[{\"graph\":\"https://eventkg.l3s.uni-hannover.de/graph/dbpedia_en\",\"record_id\":\"https://eventkg.l3s.uni-hannover.de/resource/relation_39858211|https://eventkg.l3s.uni-hannover.de/graph/dbpedia_en\",\"reference\":\"relations_events_other/part_00080.nq.gz:https://eventkg.l3s.uni-hannover.de/resource/relation_39858211\"}]",
+        "final_review_status": "ACCEPTED",
+        "final_mapping_class": "INDEPENDENT_EXISTING_SOURCE_ONLY",
+        "mapping_origin": "catalog",
+        "relation_map_version": "relation-map-v1.0.0"
+      },
+      "raw_lines": [
+        {
+          "line": 477,
+          "text": "<https://eventkg.l3s.uni-hannover.de/resource/relation_39858211> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <https://eventkg.l3s.uni-hannover.de/schema/Relation> <https://eventkg.l3s.uni-hannover.de/graph/dbpedia_en> ."
+        },
+        {
+          "line": 478,
+          "text": "<https://eventkg.l3s.uni-hannover.de/resource/relation_39858211> <http://www.w3.org/1999/02/22-rdf-syntax-ns#subject> <https://eventkg.l3s.uni-hannover.de/resource/event_2697940> <https://eventkg.l3s.uni-hannover.de/graph/dbpedia_en> ."
+        },
+        {
+          "line": 479,
+          "text": "<https://eventkg.l3s.uni-hannover.de/resource/relation_39858211> <http://www.w3.org/1999/02/22-rdf-syntax-ns#object> <https://eventkg.l3s.uni-hannover.de/resource/event_2697940> <https://eventkg.l3s.uni-hannover.de/graph/dbpedia_en> ."
+        },
+        {
+          "line": 480,
+          "text": "<https://eventkg.l3s.uni-hannover.de/resource/relation_39858211> <http://semanticweb.cs.vu.nl/2009/11/sem/roleType> <http://dbpedia.org/ontology/country> <https://eventkg.l3s.uni-hannover.de/graph/dbpedia_en> ."
+        }
+      ],
+      "values": {
+        "http://www.w3.org/1999/02/22-rdf-syntax-ns#type": "https://eventkg.l3s.uni-hannover.de/schema/Relation",
+        "http://www.w3.org/1999/02/22-rdf-syntax-ns#subject": "https://eventkg.l3s.uni-hannover.de/resource/event_2697940",
+        "http://www.w3.org/1999/02/22-rdf-syntax-ns#object": "https://eventkg.l3s.uni-hannover.de/resource/event_2697940",
+        "http://semanticweb.cs.vu.nl/2009/11/sem/roleType": "http://dbpedia.org/ontology/country"
+      }
+    },
+    {
+      "path": "relations_entities_other/part_00028.nq.gz",
+      "resource": "https://eventkg.l3s.uni-hannover.de/resource/relation_3057904",
+      "assertion": {
+        "observation_id": "obs-02c89b07fb16cef163a732f9",
+        "subject_qid": "Q299595",
+        "object_qid": "Q299595",
+        "level1_relation": "AWARD_RECOGNITION",
+        "level1_assignment_status": "EXISTING_CATALOG_ASSIGNMENT",
+        "level2_relation": "wd:P166",
+        "level2_label": "award received",
+        "selection_priority": "3",
+        "selection_status": "SELECTED",
+        "direction": "same",
+        "time_from": "",
+        "time_to": "",
+        "time_point": "",
+        "time_precision": "{\"from\":[],\"to\":[]}",
+        "time_status": "NONE",
+        "selected_source": "EventKG",
+        "selected_source_predicate": "http://dbpedia.org/ontology/award",
+        "source_record_id": "https://eventkg.l3s.uni-hannover.de/resource/relation_3057904|https://eventkg.l3s.uni-hannover.de/graph/dbpedia_en",
+        "source_graph": "https://eventkg.l3s.uni-hannover.de/graph/dbpedia_en",
+        "source_reference": "relations_entities_other/part_00028.nq.gz:https://eventkg.l3s.uni-hannover.de/resource/relation_3057904",
+        "source_support": "[{\"graph\":\"https://eventkg.l3s.uni-hannover.de/graph/dbpedia_en\",\"object_qid\":\"Q299595\",\"predicate\":\"http://dbpedia.org/ontology/award\",\"record_id\":\"https://eventkg.l3s.uni-hannover.de/resource/relation_3057904|https://eventkg.l3s.uni-hannover.de/graph/dbpedia_en\",\"source\":\"EventKG\",\"subject_qid\":\"Q299595\"}]",
+        "evidence_references": "[{\"graph\":\"https://eventkg.l3s.uni-hannover.de/graph/dbpedia_en\",\"record_id\":\"https://eventkg.l3s.uni-hannover.de/resource/relation_3057904|https://eventkg.l3s.uni-hannover.de/graph/dbpedia_en\",\"reference\":\"relations_entities_other/part_00028.nq.gz:https://eventkg.l3s.uni-hannover.de/resource/relation_3057904\"}]",
+        "final_review_status": "PROVISIONAL",
+        "final_mapping_class": "OBSERVATION_OVERLAP",
+        "mapping_origin": "catalog",
+        "relation_map_version": "relation-map-v1.0.0"
+      },
+      "raw_lines": [
+        {
+          "line": 2826,
+          "text": "<https://eventkg.l3s.uni-hannover.de/resource/relation_3057904> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <https://eventkg.l3s.uni-hannover.de/schema/Relation> <https://eventkg.l3s.uni-hannover.de/graph/dbpedia_en> ."
+        },
+        {
+          "line": 2827,
+          "text": "<https://eventkg.l3s.uni-hannover.de/resource/relation_3057904> <http://www.w3.org/1999/02/22-rdf-syntax-ns#subject> <https://eventkg.l3s.uni-hannover.de/resource/entity_10179409> <https://eventkg.l3s.uni-hannover.de/graph/dbpedia_en> ."
+        },
+        {
+          "line": 2828,
+          "text": "<https://eventkg.l3s.uni-hannover.de/resource/relation_3057904> <http://www.w3.org/1999/02/22-rdf-syntax-ns#object> <https://eventkg.l3s.uni-hannover.de/resource/entity_10179409> <https://eventkg.l3s.uni-hannover.de/graph/dbpedia_en> ."
+        },
+        {
+          "line": 2829,
+          "text": "<https://eventkg.l3s.uni-hannover.de/resource/relation_3057904> <http://semanticweb.cs.vu.nl/2009/11/sem/roleType> <http://dbpedia.org/ontology/award> <https://eventkg.l3s.uni-hannover.de/graph/dbpedia_en> ."
+        }
+      ],
+      "values": {
+        "http://www.w3.org/1999/02/22-rdf-syntax-ns#type": "https://eventkg.l3s.uni-hannover.de/schema/Relation",
+        "http://www.w3.org/1999/02/22-rdf-syntax-ns#subject": "https://eventkg.l3s.uni-hannover.de/resource/entity_10179409",
+        "http://www.w3.org/1999/02/22-rdf-syntax-ns#object": "https://eventkg.l3s.uni-hannover.de/resource/entity_10179409",
+        "http://semanticweb.cs.vu.nl/2009/11/sem/roleType": "http://dbpedia.org/ontology/award"
+      }
+    },
+    {
+      "path": "relations_entities_other/part_00034.nq.gz",
+      "resource": "https://eventkg.l3s.uni-hannover.de/resource/relation_3670253",
+      "assertion": {
+        "observation_id": "obs-1e6292c907fe34ec4dacde5e",
+        "subject_qid": "Q207955",
+        "object_qid": "Q207955",
+        "level1_relation": "FAMILY_PERSONAL",
+        "level1_assignment_status": "RANKED_REVIEW_REQUIRED",
+        "level2_relation": "http://dbpedia.org/ontology/honours",
+        "level2_label": "honours",
+        "selection_priority": "3",
+        "selection_status": "SELECTED",
+        "direction": "same",
+        "time_from": "",
+        "time_to": "",
+        "time_point": "",
+        "time_precision": "{\"from\":[],\"to\":[]}",
+        "time_status": "NONE",
+        "selected_source": "EventKG",
+        "selected_source_predicate": "http://dbpedia.org/ontology/honours",
+        "source_record_id": "https://eventkg.l3s.uni-hannover.de/resource/relation_3670253|https://eventkg.l3s.uni-hannover.de/graph/dbpedia_en",
+        "source_graph": "https://eventkg.l3s.uni-hannover.de/graph/dbpedia_en",
+        "source_reference": "relations_entities_other/part_00034.nq.gz:https://eventkg.l3s.uni-hannover.de/resource/relation_3670253",
+        "source_support": "[{\"graph\":\"https://eventkg.l3s.uni-hannover.de/graph/dbpedia_en\",\"object_qid\":\"Q207955\",\"predicate\":\"http://dbpedia.org/ontology/honours\",\"record_id\":\"https://eventkg.l3s.uni-hannover.de/resource/relation_3670253|https://eventkg.l3s.uni-hannover.de/graph/dbpedia_en\",\"source\":\"EventKG\",\"subject_qid\":\"Q207955\"}]",
+        "evidence_references": "[{\"graph\":\"https://eventkg.l3s.uni-hannover.de/graph/dbpedia_en\",\"record_id\":\"https://eventkg.l3s.uni-hannover.de/resource/relation_3670253|https://eventkg.l3s.uni-hannover.de/graph/dbpedia_en\",\"reference\":\"relations_entities_other/part_00034.nq.gz:https://eventkg.l3s.uni-hannover.de/resource/relation_3670253\"}]",
+        "final_review_status": "ACCEPTED",
+        "final_mapping_class": "INDEPENDENT_EXISTING_SOURCE_ONLY",
+        "mapping_origin": "catalog",
+        "relation_map_version": "relation-map-v1.0.0"
+      },
+      "raw_lines": [
+        {
+          "line": 907,
+          "text": "<https://eventkg.l3s.uni-hannover.de/resource/relation_3670253> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <https://eventkg.l3s.uni-hannover.de/schema/Relation> <https://eventkg.l3s.uni-hannover.de/graph/dbpedia_en> ."
+        },
+        {
+          "line": 908,
+          "text": "<https://eventkg.l3s.uni-hannover.de/resource/relation_3670253> <http://www.w3.org/1999/02/22-rdf-syntax-ns#subject> <https://eventkg.l3s.uni-hannover.de/resource/entity_5706258> <https://eventkg.l3s.uni-hannover.de/graph/dbpedia_en> ."
+        },
+        {
+          "line": 909,
+          "text": "<https://eventkg.l3s.uni-hannover.de/resource/relation_3670253> <http://www.w3.org/1999/02/22-rdf-syntax-ns#object> <https://eventkg.l3s.uni-hannover.de/resource/entity_5706258> <https://eventkg.l3s.uni-hannover.de/graph/dbpedia_en> ."
+        },
+        {
+          "line": 910,
+          "text": "<https://eventkg.l3s.uni-hannover.de/resource/relation_3670253> <http://semanticweb.cs.vu.nl/2009/11/sem/roleType> <http://dbpedia.org/ontology/honours> <https://eventkg.l3s.uni-hannover.de/graph/dbpedia_en> ."
+        }
+      ],
+      "values": {
+        "http://www.w3.org/1999/02/22-rdf-syntax-ns#type": "https://eventkg.l3s.uni-hannover.de/schema/Relation",
+        "http://www.w3.org/1999/02/22-rdf-syntax-ns#subject": "https://eventkg.l3s.uni-hannover.de/resource/entity_5706258",
+        "http://www.w3.org/1999/02/22-rdf-syntax-ns#object": "https://eventkg.l3s.uni-hannover.de/resource/entity_5706258",
+        "http://semanticweb.cs.vu.nl/2009/11/sem/roleType": "http://dbpedia.org/ontology/honours"
+      }
+    },
+    {
+      "path": "relations_entities_other/part_00036.nq.gz",
+      "resource": "https://eventkg.l3s.uni-hannover.de/resource/relation_3949793",
+      "assertion": {
+        "observation_id": "obs-9641d429c633e951a3c91d13",
+        "subject_qid": "Q76972",
+        "object_qid": "Q76972",
+        "level1_relation": "PART_WHOLE_HIERARCHY",
+        "level1_assignment_status": "RANKED_REVIEW_REQUIRED",
+        "level2_relation": "http://www.w3.org/2000/01/rdf-schema#seeAlso",
+        "level2_label": "see Also",
+        "selection_priority": "3",
+        "selection_status": "SELECTED",
+        "direction": "same",
+        "time_from": "",
+        "time_to": "",
+        "time_point": "",
+        "time_precision": "{\"from\":[],\"to\":[]}",
+        "time_status": "NONE",
+        "selected_source": "EventKG",
+        "selected_source_predicate": "http://www.w3.org/2000/01/rdf-schema#seeAlso",
+        "source_record_id": "https://eventkg.l3s.uni-hannover.de/resource/relation_3949793|https://eventkg.l3s.uni-hannover.de/graph/dbpedia_en",
+        "source_graph": "https://eventkg.l3s.uni-hannover.de/graph/dbpedia_en",
+        "source_reference": "relations_entities_other/part_00036.nq.gz:https://eventkg.l3s.uni-hannover.de/resource/relation_3949793",
+        "source_support": "[{\"graph\":\"https://eventkg.l3s.uni-hannover.de/graph/dbpedia_en\",\"object_qid\":\"Q76972\",\"predicate\":\"http://www.w3.org/2000/01/rdf-schema#seeAlso\",\"record_id\":\"https://eventkg.l3s.uni-hannover.de/resource/relation_3949793|https://eventkg.l3s.uni-hannover.de/graph/dbpedia_en\",\"source\":\"EventKG\",\"subject_qid\":\"Q76972\"}]",
+        "evidence_references": "[{\"graph\":\"https://eventkg.l3s.uni-hannover.de/graph/dbpedia_en\",\"record_id\":\"https://eventkg.l3s.uni-hannover.de/resource/relation_3949793|https://eventkg.l3s.uni-hannover.de/graph/dbpedia_en\",\"reference\":\"relations_entities_other/part_00036.nq.gz:https://eventkg.l3s.uni-hannover.de/resource/relation_3949793\"}]",
+        "final_review_status": "ACCEPTED",
+        "final_mapping_class": "INDEPENDENT_EXISTING_SOURCE_ONLY",
+        "mapping_origin": "catalog",
+        "relation_map_version": "relation-map-v1.0.0"
+      },
+      "raw_lines": [
+        {
+          "line": 4783,
+          "text": "<https://eventkg.l3s.uni-hannover.de/resource/relation_3949793> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <https://eventkg.l3s.uni-hannover.de/schema/Relation> <https://eventkg.l3s.uni-hannover.de/graph/dbpedia_en> ."
+        },
+        {
+          "line": 4784,
+          "text": "<https://eventkg.l3s.uni-hannover.de/resource/relation_3949793> <http://www.w3.org/1999/02/22-rdf-syntax-ns#subject> <https://eventkg.l3s.uni-hannover.de/resource/entity_1243046> <https://eventkg.l3s.uni-hannover.de/graph/dbpedia_en> ."
+        },
+        {
+          "line": 4785,
+          "text": "<https://eventkg.l3s.uni-hannover.de/resource/relation_3949793> <http://www.w3.org/1999/02/22-rdf-syntax-ns#object> <https://eventkg.l3s.uni-hannover.de/resource/entity_1243046> <https://eventkg.l3s.uni-hannover.de/graph/dbpedia_en> ."
+        },
+        {
+          "line": 4786,
+          "text": "<https://eventkg.l3s.uni-hannover.de/resource/relation_3949793> <http://semanticweb.cs.vu.nl/2009/11/sem/roleType> <http://www.w3.org/2000/01/rdf-schema#seeAlso> <https://eventkg.l3s.uni-hannover.de/graph/dbpedia_en> ."
+        }
+      ],
+      "values": {
+        "http://www.w3.org/1999/02/22-rdf-syntax-ns#type": "https://eventkg.l3s.uni-hannover.de/schema/Relation",
+        "http://www.w3.org/1999/02/22-rdf-syntax-ns#subject": "https://eventkg.l3s.uni-hannover.de/resource/entity_1243046",
+        "http://www.w3.org/1999/02/22-rdf-syntax-ns#object": "https://eventkg.l3s.uni-hannover.de/resource/entity_1243046",
+        "http://semanticweb.cs.vu.nl/2009/11/sem/roleType": "http://www.w3.org/2000/01/rdf-schema#seeAlso"
+      }
+    },
+    {
+      "path": "relations_entities_other/part_00040.nq.gz",
+      "resource": "https://eventkg.l3s.uni-hannover.de/resource/relation_4385494",
+      "assertion": {
+        "observation_id": "obs-976e99892bd2f647810f472f",
+        "subject_qid": "Q168248",
+        "object_qid": "Q168248",
+        "level1_relation": "PARTICIPATION_ROLE",
+        "level1_assignment_status": "EXISTING_CATALOG_ASSIGNMENT",
+        "level2_relation": "http://dbpedia.org/ontology/notableCommander",
+        "level2_label": "notable Commander",
+        "selection_priority": "3",
+        "selection_status": "SELECTED",
+        "direction": "same",
+        "time_from": "",
+        "time_to": "",
+        "time_point": "",
+        "time_precision": "{\"from\":[],\"to\":[]}",
+        "time_status": "NONE",
+        "selected_source": "EventKG",
+        "selected_source_predicate": "http://dbpedia.org/ontology/notableCommander",
+        "source_record_id": "https://eventkg.l3s.uni-hannover.de/resource/relation_4385494|https://eventkg.l3s.uni-hannover.de/graph/dbpedia_en",
+        "source_graph": "https://eventkg.l3s.uni-hannover.de/graph/dbpedia_en",
+        "source_reference": "relations_entities_other/part_00040.nq.gz:https://eventkg.l3s.uni-hannover.de/resource/relation_4385494",
+        "source_support": "[{\"graph\":\"https://eventkg.l3s.uni-hannover.de/graph/dbpedia_en\",\"object_qid\":\"Q168248\",\"predicate\":\"http://dbpedia.org/ontology/notableCommander\",\"record_id\":\"https://eventkg.l3s.uni-hannover.de/resource/relation_4385494|https://eventkg.l3s.uni-hannover.de/graph/dbpedia_en\",\"source\":\"EventKG\",\"subject_qid\":\"Q168248\"}]",
+        "evidence_references": "[{\"graph\":\"https://eventkg.l3s.uni-hannover.de/graph/dbpedia_en\",\"record_id\":\"https://eventkg.l3s.uni-hannover.de/resource/relation_4385494|https://eventkg.l3s.uni-hannover.de/graph/dbpedia_en\",\"reference\":\"relations_entities_other/part_00040.nq.gz:https://eventkg.l3s.uni-hannover.de/resource/relation_4385494\"}]",
+        "final_review_status": "ACCEPTED",
+        "final_mapping_class": "INDEPENDENT_EXISTING_SOURCE_ONLY",
+        "mapping_origin": "catalog",
+        "relation_map_version": "relation-map-v1.0.0"
+      },
+      "raw_lines": [
+        {
+          "line": 5244,
+          "text": "<https://eventkg.l3s.uni-hannover.de/resource/relation_4385494> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <https://eventkg.l3s.uni-hannover.de/schema/Relation> <https://eventkg.l3s.uni-hannover.de/graph/dbpedia_en> ."
+        },
+        {
+          "line": 5245,
+          "text": "<https://eventkg.l3s.uni-hannover.de/resource/relation_4385494> <http://www.w3.org/1999/02/22-rdf-syntax-ns#subject> <https://eventkg.l3s.uni-hannover.de/resource/entity_11636723> <https://eventkg.l3s.uni-hannover.de/graph/dbpedia_en> ."
+        },
+        {
+          "line": 5246,
+          "text": "<https://eventkg.l3s.uni-hannover.de/resource/relation_4385494> <http://www.w3.org/1999/02/22-rdf-syntax-ns#object> <https://eventkg.l3s.uni-hannover.de/resource/entity_11636723> <https://eventkg.l3s.uni-hannover.de/graph/dbpedia_en> ."
+        },
+        {
+          "line": 5247,
+          "text": "<https://eventkg.l3s.uni-hannover.de/resource/relation_4385494> <http://semanticweb.cs.vu.nl/2009/11/sem/roleType> <http://dbpedia.org/ontology/notableCommander> <https://eventkg.l3s.uni-hannover.de/graph/dbpedia_en> ."
+        }
+      ],
+      "values": {
+        "http://www.w3.org/1999/02/22-rdf-syntax-ns#type": "https://eventkg.l3s.uni-hannover.de/schema/Relation",
+        "http://www.w3.org/1999/02/22-rdf-syntax-ns#subject": "https://eventkg.l3s.uni-hannover.de/resource/entity_11636723",
+        "http://www.w3.org/1999/02/22-rdf-syntax-ns#object": "https://eventkg.l3s.uni-hannover.de/resource/entity_11636723",
+        "http://semanticweb.cs.vu.nl/2009/11/sem/roleType": "http://dbpedia.org/ontology/notableCommander"
+      }
+    },
+    {
+      "path": "relations_entities_other/part_00047.nq.gz",
+      "resource": "https://eventkg.l3s.uni-hannover.de/resource/relation_5116016",
+      "assertion": {
+        "observation_id": "obs-bbeb051075b48d7e472fd6d8",
+        "subject_qid": "Q474823",
+        "object_qid": "Q474823",
+        "level1_relation": "AFFILIATION_STATUS",
+        "level1_assignment_status": "RANKED_REVIEW_REQUIRED",
+        "level2_relation": "wd:P2652",
+        "level2_label": "partnership with",
+        "selection_priority": "3",
+        "selection_status": "SELECTED",
+        "direction": "same",
+        "time_from": "",
+        "time_to": "",
+        "time_point": "",
+        "time_precision": "{\"from\":[],\"to\":[]}",
+        "time_status": "NONE",
+        "selected_source": "EventKG",
+        "selected_source_predicate": "http://www.wikidata.org/prop/direct/P2652",
+        "source_record_id": "https://eventkg.l3s.uni-hannover.de/resource/relation_5116016|https://eventkg.l3s.uni-hannover.de/graph/wikidata",
+        "source_graph": "https://eventkg.l3s.uni-hannover.de/graph/wikidata",
+        "source_reference": "relations_entities_other/part_00047.nq.gz:https://eventkg.l3s.uni-hannover.de/resource/relation_5116016",
+        "source_support": "[{\"graph\":\"https://eventkg.l3s.uni-hannover.de/graph/wikidata\",\"object_qid\":\"Q474823\",\"predicate\":\"http://www.wikidata.org/prop/direct/P2652\",\"record_id\":\"https://eventkg.l3s.uni-hannover.de/resource/relation_5116016|https://eventkg.l3s.uni-hannover.de/graph/wikidata\",\"source\":\"EventKG\",\"subject_qid\":\"Q474823\"}]",
+        "evidence_references": "[{\"graph\":\"https://eventkg.l3s.uni-hannover.de/graph/wikidata\",\"record_id\":\"https://eventkg.l3s.uni-hannover.de/resource/relation_5116016|https://eventkg.l3s.uni-hannover.de/graph/wikidata\",\"reference\":\"relations_entities_other/part_00047.nq.gz:https://eventkg.l3s.uni-hannover.de/resource/relation_5116016\"}]",
+        "final_review_status": "ACCEPTED",
+        "final_mapping_class": "NATIVE_OR_REUSED_WIKIDATA_ID",
+        "mapping_origin": "catalog",
+        "relation_map_version": "relation-map-v1.0.0"
+      },
+      "raw_lines": [
+        {
+          "line": 3996,
+          "text": "<https://eventkg.l3s.uni-hannover.de/resource/relation_5116016> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <https://eventkg.l3s.uni-hannover.de/schema/Relation> <https://eventkg.l3s.uni-hannover.de/graph/wikidata> ."
+        },
+        {
+          "line": 3997,
+          "text": "<https://eventkg.l3s.uni-hannover.de/resource/relation_5116016> <http://www.w3.org/1999/02/22-rdf-syntax-ns#subject> <https://eventkg.l3s.uni-hannover.de/resource/entity_1141987> <https://eventkg.l3s.uni-hannover.de/graph/wikidata> ."
+        },
+        {
+          "line": 3998,
+          "text": "<https://eventkg.l3s.uni-hannover.de/resource/relation_5116016> <http://www.w3.org/1999/02/22-rdf-syntax-ns#object> <https://eventkg.l3s.uni-hannover.de/resource/entity_1141987> <https://eventkg.l3s.uni-hannover.de/graph/wikidata> ."
+        },
+        {
+          "line": 3999,
+          "text": "<https://eventkg.l3s.uni-hannover.de/resource/relation_5116016> <http://semanticweb.cs.vu.nl/2009/11/sem/roleType> <http://www.wikidata.org/prop/direct/P2652> <https://eventkg.l3s.uni-hannover.de/graph/wikidata> ."
+        }
+      ],
+      "values": {
+        "http://www.w3.org/1999/02/22-rdf-syntax-ns#type": "https://eventkg.l3s.uni-hannover.de/schema/Relation",
+        "http://www.w3.org/1999/02/22-rdf-syntax-ns#subject": "https://eventkg.l3s.uni-hannover.de/resource/entity_1141987",
+        "http://www.w3.org/1999/02/22-rdf-syntax-ns#object": "https://eventkg.l3s.uni-hannover.de/resource/entity_1141987",
+        "http://semanticweb.cs.vu.nl/2009/11/sem/roleType": "http://www.wikidata.org/prop/direct/P2652"
+      }
+    },
+    {
+      "path": "relations_entities_other/part_00075.nq.gz",
+      "resource": "https://eventkg.l3s.uni-hannover.de/resource/relation_8093782",
+      "assertion": {
+        "observation_id": "obs-5748df161fc78348977973dc",
+        "subject_qid": "Q155921",
+        "object_qid": "Q155921",
+        "level1_relation": "PART_WHOLE_HIERARCHY",
+        "level1_assignment_status": "RANKED_REVIEW_REQUIRED",
+        "level2_relation": "http://www.w3.org/2000/01/rdf-schema#seeAlso",
+        "level2_label": "see Also",
+        "selection_priority": "3",
+        "selection_status": "SELECTED",
+        "direction": "same",
+        "time_from": "",
+        "time_to": "",
+        "time_point": "",
+        "time_precision": "{\"from\":[],\"to\":[]}",
+        "time_status": "NONE",
+        "selected_source": "EventKG",
+        "selected_source_predicate": "http://www.w3.org/2000/01/rdf-schema#seeAlso",
+        "source_record_id": "https://eventkg.l3s.uni-hannover.de/resource/relation_8093782|https://eventkg.l3s.uni-hannover.de/graph/dbpedia_en",
+        "source_graph": "https://eventkg.l3s.uni-hannover.de/graph/dbpedia_en",
+        "source_reference": "relations_entities_other/part_00075.nq.gz:https://eventkg.l3s.uni-hannover.de/resource/relation_8093782",
+        "source_support": "[{\"graph\":\"https://eventkg.l3s.uni-hannover.de/graph/dbpedia_en\",\"object_qid\":\"Q155921\",\"predicate\":\"http://www.w3.org/2000/01/rdf-schema#seeAlso\",\"record_id\":\"https://eventkg.l3s.uni-hannover.de/resource/relation_8093782|https://eventkg.l3s.uni-hannover.de/graph/dbpedia_en\",\"source\":\"EventKG\",\"subject_qid\":\"Q155921\"}]",
+        "evidence_references": "[{\"graph\":\"https://eventkg.l3s.uni-hannover.de/graph/dbpedia_en\",\"record_id\":\"https://eventkg.l3s.uni-hannover.de/resource/relation_8093782|https://eventkg.l3s.uni-hannover.de/graph/dbpedia_en\",\"reference\":\"relations_entities_other/part_00075.nq.gz:https://eventkg.l3s.uni-hannover.de/resource/relation_8093782\"}]",
+        "final_review_status": "ACCEPTED",
+        "final_mapping_class": "INDEPENDENT_EXISTING_SOURCE_ONLY",
+        "mapping_origin": "catalog",
+        "relation_map_version": "relation-map-v1.0.0"
+      },
+      "raw_lines": [
+        {
+          "line": 2666,
+          "text": "<https://eventkg.l3s.uni-hannover.de/resource/relation_8093782> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <https://eventkg.l3s.uni-hannover.de/schema/Relation> <https://eventkg.l3s.uni-hannover.de/graph/dbpedia_en> ."
+        },
+        {
+          "line": 2667,
+          "text": "<https://eventkg.l3s.uni-hannover.de/resource/relation_8093782> <http://www.w3.org/1999/02/22-rdf-syntax-ns#subject> <https://eventkg.l3s.uni-hannover.de/resource/entity_838141> <https://eventkg.l3s.uni-hannover.de/graph/dbpedia_en> ."
+        },
+        {
+          "line": 2668,
+          "text": "<https://eventkg.l3s.uni-hannover.de/resource/relation_8093782> <http://www.w3.org/1999/02/22-rdf-syntax-ns#object> <https://eventkg.l3s.uni-hannover.de/resource/entity_838141> <https://eventkg.l3s.uni-hannover.de/graph/dbpedia_en> ."
+        },
+        {
+          "line": 2669,
+          "text": "<https://eventkg.l3s.uni-hannover.de/resource/relation_8093782> <http://semanticweb.cs.vu.nl/2009/11/sem/roleType> <http://www.w3.org/2000/01/rdf-schema#seeAlso> <https://eventkg.l3s.uni-hannover.de/graph/dbpedia_en> ."
+        }
+      ],
+      "values": {
+        "http://www.w3.org/1999/02/22-rdf-syntax-ns#type": "https://eventkg.l3s.uni-hannover.de/schema/Relation",
+        "http://www.w3.org/1999/02/22-rdf-syntax-ns#subject": "https://eventkg.l3s.uni-hannover.de/resource/entity_838141",
+        "http://www.w3.org/1999/02/22-rdf-syntax-ns#object": "https://eventkg.l3s.uni-hannover.de/resource/entity_838141",
+        "http://semanticweb.cs.vu.nl/2009/11/sem/roleType": "http://www.w3.org/2000/01/rdf-schema#seeAlso"
+      }
+    },
+    {
+      "path": "relations_entities_other/part_00083.nq.gz",
+      "resource": "https://eventkg.l3s.uni-hannover.de/resource/relation_8912972",
+      "assertion": {
+        "observation_id": "obs-93fdf8504c8984cfca83b196",
+        "subject_qid": "Q1117074",
+        "object_qid": "Q1117074",
+        "level1_relation": "CREATION_AUTHORSHIP",
+        "level1_assignment_status": "RANKED_REVIEW_REQUIRED",
+        "level2_relation": "wd:P485",
+        "level2_label": "archives at",
+        "selection_priority": "3",
+        "selection_status": "SELECTED",
+        "direction": "same",
+        "time_from": "",
+        "time_to": "",
+        "time_point": "",
+        "time_precision": "{\"from\":[],\"to\":[]}",
+        "time_status": "NONE",
+        "selected_source": "EventKG",
+        "selected_source_predicate": "http://www.wikidata.org/prop/direct/P485",
+        "source_record_id": "https://eventkg.l3s.uni-hannover.de/resource/relation_8912972|https://eventkg.l3s.uni-hannover.de/graph/wikidata",
+        "source_graph": "https://eventkg.l3s.uni-hannover.de/graph/wikidata",
+        "source_reference": "relations_entities_other/part_00083.nq.gz:https://eventkg.l3s.uni-hannover.de/resource/relation_8912972",
+        "source_support": "[{\"graph\":\"https://eventkg.l3s.uni-hannover.de/graph/wikidata\",\"object_qid\":\"Q1117074\",\"predicate\":\"http://www.wikidata.org/prop/direct/P485\",\"record_id\":\"https://eventkg.l3s.uni-hannover.de/resource/relation_8912972|https://eventkg.l3s.uni-hannover.de/graph/wikidata\",\"source\":\"EventKG\",\"subject_qid\":\"Q1117074\"}]",
+        "evidence_references": "[{\"graph\":\"https://eventkg.l3s.uni-hannover.de/graph/wikidata\",\"record_id\":\"https://eventkg.l3s.uni-hannover.de/resource/relation_8912972|https://eventkg.l3s.uni-hannover.de/graph/wikidata\",\"reference\":\"relations_entities_other/part_00083.nq.gz:https://eventkg.l3s.uni-hannover.de/resource/relation_8912972\"}]",
+        "final_review_status": "ACCEPTED",
+        "final_mapping_class": "NATIVE_OR_REUSED_WIKIDATA_ID",
+        "mapping_origin": "catalog",
+        "relation_map_version": "relation-map-v1.0.0"
+      },
+      "raw_lines": [
+        {
+          "line": 349,
+          "text": "<https://eventkg.l3s.uni-hannover.de/resource/relation_8912972> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <https://eventkg.l3s.uni-hannover.de/schema/Relation> <https://eventkg.l3s.uni-hannover.de/graph/wikidata> ."
+        },
+        {
+          "line": 350,
+          "text": "<https://eventkg.l3s.uni-hannover.de/resource/relation_8912972> <http://www.w3.org/1999/02/22-rdf-syntax-ns#subject> <https://eventkg.l3s.uni-hannover.de/resource/entity_1240786> <https://eventkg.l3s.uni-hannover.de/graph/wikidata> ."
+        },
+        {
+          "line": 351,
+          "text": "<https://eventkg.l3s.uni-hannover.de/resource/relation_8912972> <http://www.w3.org/1999/02/22-rdf-syntax-ns#object> <https://eventkg.l3s.uni-hannover.de/resource/entity_1240786> <https://eventkg.l3s.uni-hannover.de/graph/wikidata> ."
+        },
+        {
+          "line": 352,
+          "text": "<https://eventkg.l3s.uni-hannover.de/resource/relation_8912972> <http://semanticweb.cs.vu.nl/2009/11/sem/roleType> <http://www.wikidata.org/prop/direct/P485> <https://eventkg.l3s.uni-hannover.de/graph/wikidata> ."
+        }
+      ],
+      "values": {
+        "http://www.w3.org/1999/02/22-rdf-syntax-ns#type": "https://eventkg.l3s.uni-hannover.de/schema/Relation",
+        "http://www.w3.org/1999/02/22-rdf-syntax-ns#subject": "https://eventkg.l3s.uni-hannover.de/resource/entity_1240786",
+        "http://www.w3.org/1999/02/22-rdf-syntax-ns#object": "https://eventkg.l3s.uni-hannover.de/resource/entity_1240786",
+        "http://semanticweb.cs.vu.nl/2009/11/sem/roleType": "http://www.wikidata.org/prop/direct/P485"
+      }
+    },
+    {
+      "path": "relations_entities_other/part_00100.nq.gz",
+      "resource": "https://eventkg.l3s.uni-hannover.de/resource/relation_10823606",
+      "assertion": {
+        "observation_id": "obs-c1a8756daf295aee6859aeef",
+        "subject_qid": "Q4708746",
+        "object_qid": "Q4708746",
+        "level1_relation": "PARTICIPATION_ROLE",
+        "level1_assignment_status": "EXISTING_CATALOG_ASSIGNMENT",
+        "level2_relation": "http://dbpedia.org/ontology/occupation",
+        "level2_label": "occupation",
+        "selection_priority": "3",
+        "selection_status": "SELECTED",
+        "direction": "same",
+        "time_from": "",
+        "time_to": "",
+        "time_point": "",
+        "time_precision": "{\"from\":[],\"to\":[]}",
+        "time_status": "NONE",
+        "selected_source": "EventKG",
+        "selected_source_predicate": "http://dbpedia.org/ontology/occupation",
+        "source_record_id": "https://eventkg.l3s.uni-hannover.de/resource/relation_10823606|https://eventkg.l3s.uni-hannover.de/graph/dbpedia_en",
+        "source_graph": "https://eventkg.l3s.uni-hannover.de/graph/dbpedia_en",
+        "source_reference": "relations_entities_other/part_00100.nq.gz:https://eventkg.l3s.uni-hannover.de/resource/relation_10823606",
+        "source_support": "[{\"graph\":\"https://eventkg.l3s.uni-hannover.de/graph/dbpedia_en\",\"object_qid\":\"Q4708746\",\"predicate\":\"http://dbpedia.org/ontology/occupation\",\"record_id\":\"https://eventkg.l3s.uni-hannover.de/resource/relation_10823606|https://eventkg.l3s.uni-hannover.de/graph/dbpedia_en\",\"source\":\"EventKG\",\"subject_qid\":\"Q4708746\"}]",
+        "evidence_references": "[{\"graph\":\"https://eventkg.l3s.uni-hannover.de/graph/dbpedia_en\",\"record_id\":\"https://eventkg.l3s.uni-hannover.de/resource/relation_10823606|https://eventkg.l3s.uni-hannover.de/graph/dbpedia_en\",\"reference\":\"relations_entities_other/part_00100.nq.gz:https://eventkg.l3s.uni-hannover.de/resource/relation_10823606\"}]",
+        "final_review_status": "ACCEPTED",
+        "final_mapping_class": "INDEPENDENT_EXISTING_SOURCE_ONLY",
+        "mapping_origin": "catalog",
+        "relation_map_version": "relation-map-v1.0.0"
+      },
+      "raw_lines": [
+        {
+          "line": 5554,
+          "text": "<https://eventkg.l3s.uni-hannover.de/resource/relation_10823606> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <https://eventkg.l3s.uni-hannover.de/schema/Relation> <https://eventkg.l3s.uni-hannover.de/graph/dbpedia_en> ."
+        },
+        {
+          "line": 5555,
+          "text": "<https://eventkg.l3s.uni-hannover.de/resource/relation_10823606> <http://www.w3.org/1999/02/22-rdf-syntax-ns#subject> <https://eventkg.l3s.uni-hannover.de/resource/entity_6940957> <https://eventkg.l3s.uni-hannover.de/graph/dbpedia_en> ."
+        },
+        {
+          "line": 5556,
+          "text": "<https://eventkg.l3s.uni-hannover.de/resource/relation_10823606> <http://www.w3.org/1999/02/22-rdf-syntax-ns#object> <https://eventkg.l3s.uni-hannover.de/resource/entity_6940957> <https://eventkg.l3s.uni-hannover.de/graph/dbpedia_en> ."
+        },
+        {
+          "line": 5557,
+          "text": "<https://eventkg.l3s.uni-hannover.de/resource/relation_10823606> <http://semanticweb.cs.vu.nl/2009/11/sem/roleType> <http://dbpedia.org/ontology/occupation> <https://eventkg.l3s.uni-hannover.de/graph/dbpedia_en> ."
+        }
+      ],
+      "values": {
+        "http://www.w3.org/1999/02/22-rdf-syntax-ns#type": "https://eventkg.l3s.uni-hannover.de/schema/Relation",
+        "http://www.w3.org/1999/02/22-rdf-syntax-ns#subject": "https://eventkg.l3s.uni-hannover.de/resource/entity_6940957",
+        "http://www.w3.org/1999/02/22-rdf-syntax-ns#object": "https://eventkg.l3s.uni-hannover.de/resource/entity_6940957",
+        "http://semanticweb.cs.vu.nl/2009/11/sem/roleType": "http://dbpedia.org/ontology/occupation"
+      }
+    },
+    {
+      "path": "relations_entities_other/part_00145.nq.gz",
+      "resource": "https://eventkg.l3s.uni-hannover.de/resource/relation_15617189",
+      "assertion": {
+        "observation_id": "obs-6ee76d81cb62e7a46855057d",
+        "subject_qid": "Q4196949",
+        "object_qid": "Q4196949",
+        "level1_relation": "AWARD_RECOGNITION",
+        "level1_assignment_status": "EXISTING_CATALOG_ASSIGNMENT",
+        "level2_relation": "wd:P166",
+        "level2_label": "award received",
+        "selection_priority": "3",
+        "selection_status": "SELECTED",
+        "direction": "same",
+        "time_from": "",
+        "time_to": "",
+        "time_point": "",
+        "time_precision": "{\"from\":[],\"to\":[]}",
+        "time_status": "NONE",
+        "selected_source": "EventKG",
+        "selected_source_predicate": "http://dbpedia.org/ontology/award",
+        "source_record_id": "https://eventkg.l3s.uni-hannover.de/resource/relation_15617189|https://eventkg.l3s.uni-hannover.de/graph/dbpedia_en",
+        "source_graph": "https://eventkg.l3s.uni-hannover.de/graph/dbpedia_en",
+        "source_reference": "relations_entities_other/part_00145.nq.gz:https://eventkg.l3s.uni-hannover.de/resource/relation_15617189",
+        "source_support": "[{\"graph\":\"https://eventkg.l3s.uni-hannover.de/graph/dbpedia_en\",\"object_qid\":\"Q4196949\",\"predicate\":\"http://dbpedia.org/ontology/award\",\"record_id\":\"https://eventkg.l3s.uni-hannover.de/resource/relation_15617189|https://eventkg.l3s.uni-hannover.de/graph/dbpedia_en\",\"source\":\"EventKG\",\"subject_qid\":\"Q4196949\"}]",
+        "evidence_references": "[{\"graph\":\"https://eventkg.l3s.uni-hannover.de/graph/dbpedia_en\",\"record_id\":\"https://eventkg.l3s.uni-hannover.de/resource/relation_15617189|https://eventkg.l3s.uni-hannover.de/graph/dbpedia_en\",\"reference\":\"relations_entities_other/part_00145.nq.gz:https://eventkg.l3s.uni-hannover.de/resource/relation_15617189\"}]",
+        "final_review_status": "PROVISIONAL",
+        "final_mapping_class": "OBSERVATION_OVERLAP",
+        "mapping_origin": "catalog",
+        "relation_map_version": "relation-map-v1.0.0"
+      },
+      "raw_lines": [
+        {
+          "line": 5013,
+          "text": "<https://eventkg.l3s.uni-hannover.de/resource/relation_15617189> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <https://eventkg.l3s.uni-hannover.de/schema/Relation> <https://eventkg.l3s.uni-hannover.de/graph/dbpedia_en> ."
+        },
+        {
+          "line": 5014,
+          "text": "<https://eventkg.l3s.uni-hannover.de/resource/relation_15617189> <http://www.w3.org/1999/02/22-rdf-syntax-ns#subject> <https://eventkg.l3s.uni-hannover.de/resource/entity_1684854> <https://eventkg.l3s.uni-hannover.de/graph/dbpedia_en> ."
+        },
+        {
+          "line": 5015,
+          "text": "<https://eventkg.l3s.uni-hannover.de/resource/relation_15617189> <http://www.w3.org/1999/02/22-rdf-syntax-ns#object> <https://eventkg.l3s.uni-hannover.de/resource/entity_1684854> <https://eventkg.l3s.uni-hannover.de/graph/dbpedia_en> ."
+        },
+        {
+          "line": 5016,
+          "text": "<https://eventkg.l3s.uni-hannover.de/resource/relation_15617189> <http://semanticweb.cs.vu.nl/2009/11/sem/roleType> <http://dbpedia.org/ontology/award> <https://eventkg.l3s.uni-hannover.de/graph/dbpedia_en> ."
+        }
+      ],
+      "values": {
+        "http://www.w3.org/1999/02/22-rdf-syntax-ns#type": "https://eventkg.l3s.uni-hannover.de/schema/Relation",
+        "http://www.w3.org/1999/02/22-rdf-syntax-ns#subject": "https://eventkg.l3s.uni-hannover.de/resource/entity_1684854",
+        "http://www.w3.org/1999/02/22-rdf-syntax-ns#object": "https://eventkg.l3s.uni-hannover.de/resource/entity_1684854",
+        "http://semanticweb.cs.vu.nl/2009/11/sem/roleType": "http://dbpedia.org/ontology/award"
+      }
+    },
+    {
+      "path": "relations_entities_other/part_00154.nq.gz",
+      "resource": "https://eventkg.l3s.uni-hannover.de/resource/relation_16546053",
+      "assertion": {
+        "observation_id": "obs-6e4a41d37acdf328128923a3",
+        "subject_qid": "Q4032386",
+        "object_qid": "Q4032386",
+        "level1_relation": "TEMPORAL_SUCCESSION",
+        "level1_assignment_status": "RANKED_REVIEW_REQUIRED",
+        "level2_relation": "wd:P1365",
+        "level2_label": "replaces",
+        "selection_priority": "3",
+        "selection_status": "SELECTED",
+        "direction": "same",
+        "time_from": "",
+        "time_to": "",
+        "time_point": "",
+        "time_precision": "{\"from\":[],\"to\":[]}",
+        "time_status": "NONE",
+        "selected_source": "EventKG",
+        "selected_source_predicate": "http://www.wikidata.org/prop/direct/P1365",
+        "source_record_id": "https://eventkg.l3s.uni-hannover.de/resource/relation_16546053|https://eventkg.l3s.uni-hannover.de/graph/wikidata",
+        "source_graph": "https://eventkg.l3s.uni-hannover.de/graph/wikidata",
+        "source_reference": "relations_entities_other/part_00154.nq.gz:https://eventkg.l3s.uni-hannover.de/resource/relation_16546053",
+        "source_support": "[{\"graph\":\"https://eventkg.l3s.uni-hannover.de/graph/wikidata\",\"object_qid\":\"Q4032386\",\"predicate\":\"http://www.wikidata.org/prop/direct/P1365\",\"record_id\":\"https://eventkg.l3s.uni-hannover.de/resource/relation_16546053|https://eventkg.l3s.uni-hannover.de/graph/wikidata\",\"source\":\"EventKG\",\"subject_qid\":\"Q4032386\"}]",
+        "evidence_references": "[{\"graph\":\"https://eventkg.l3s.uni-hannover.de/graph/wikidata\",\"record_id\":\"https://eventkg.l3s.uni-hannover.de/resource/relation_16546053|https://eventkg.l3s.uni-hannover.de/graph/wikidata\",\"reference\":\"relations_entities_other/part_00154.nq.gz:https://eventkg.l3s.uni-hannover.de/resource/relation_16546053\"}]",
+        "final_review_status": "ACCEPTED",
+        "final_mapping_class": "NATIVE_OR_REUSED_WIKIDATA_ID",
+        "mapping_origin": "catalog",
+        "relation_map_version": "relation-map-v1.0.0"
+      },
+      "raw_lines": [
+        {
+          "line": 3561,
+          "text": "<https://eventkg.l3s.uni-hannover.de/resource/relation_16546053> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <https://eventkg.l3s.uni-hannover.de/schema/Relation> <https://eventkg.l3s.uni-hannover.de/graph/wikidata> ."
+        },
+        {
+          "line": 3562,
+          "text": "<https://eventkg.l3s.uni-hannover.de/resource/relation_16546053> <http://www.w3.org/1999/02/22-rdf-syntax-ns#subject> <https://eventkg.l3s.uni-hannover.de/resource/entity_6360560> <https://eventkg.l3s.uni-hannover.de/graph/wikidata> ."
+        },
+        {
+          "line": 3563,
+          "text": "<https://eventkg.l3s.uni-hannover.de/resource/relation_16546053> <http://www.w3.org/1999/02/22-rdf-syntax-ns#object> <https://eventkg.l3s.uni-hannover.de/resource/entity_6360560> <https://eventkg.l3s.uni-hannover.de/graph/wikidata> ."
+        },
+        {
+          "line": 3564,
+          "text": "<https://eventkg.l3s.uni-hannover.de/resource/relation_16546053> <http://semanticweb.cs.vu.nl/2009/11/sem/roleType> <http://www.wikidata.org/prop/direct/P1365> <https://eventkg.l3s.uni-hannover.de/graph/wikidata> ."
+        }
+      ],
+      "values": {
+        "http://www.w3.org/1999/02/22-rdf-syntax-ns#type": "https://eventkg.l3s.uni-hannover.de/schema/Relation",
+        "http://www.w3.org/1999/02/22-rdf-syntax-ns#subject": "https://eventkg.l3s.uni-hannover.de/resource/entity_6360560",
+        "http://www.w3.org/1999/02/22-rdf-syntax-ns#object": "https://eventkg.l3s.uni-hannover.de/resource/entity_6360560",
+        "http://semanticweb.cs.vu.nl/2009/11/sem/roleType": "http://www.wikidata.org/prop/direct/P1365"
+      }
+    },
+    {
+      "path": "relations_entities_other/part_00167.nq.gz",
+      "resource": "https://eventkg.l3s.uni-hannover.de/resource/relation_17894622",
+      "assertion": {
+        "observation_id": "obs-e42e367b62b4ae79ea98b3a4",
+        "subject_qid": "Q700897",
+        "object_qid": "Q700897",
+        "level1_relation": "AWARD_RECOGNITION",
+        "level1_assignment_status": "EXISTING_CATALOG_ASSIGNMENT",
+        "level2_relation": "wd:P166",
+        "level2_label": "award received",
+        "selection_priority": "3",
+        "selection_status": "SELECTED",
+        "direction": "same",
+        "time_from": "",
+        "time_to": "",
+        "time_point": "",
+        "time_precision": "{\"from\":[],\"to\":[]}",
+        "time_status": "NONE",
+        "selected_source": "EventKG",
+        "selected_source_predicate": "http://dbpedia.org/ontology/award",
+        "source_record_id": "https://eventkg.l3s.uni-hannover.de/resource/relation_17894622|https://eventkg.l3s.uni-hannover.de/graph/dbpedia_en",
+        "source_graph": "https://eventkg.l3s.uni-hannover.de/graph/dbpedia_en",
+        "source_reference": "relations_entities_other/part_00167.nq.gz:https://eventkg.l3s.uni-hannover.de/resource/relation_17894622",
+        "source_support": "[{\"graph\":\"https://eventkg.l3s.uni-hannover.de/graph/dbpedia_en\",\"object_qid\":\"Q700897\",\"predicate\":\"http://dbpedia.org/ontology/award\",\"record_id\":\"https://eventkg.l3s.uni-hannover.de/resource/relation_17894622|https://eventkg.l3s.uni-hannover.de/graph/dbpedia_en\",\"source\":\"EventKG\",\"subject_qid\":\"Q700897\"}]",
+        "evidence_references": "[{\"graph\":\"https://eventkg.l3s.uni-hannover.de/graph/dbpedia_en\",\"record_id\":\"https://eventkg.l3s.uni-hannover.de/resource/relation_17894622|https://eventkg.l3s.uni-hannover.de/graph/dbpedia_en\",\"reference\":\"relations_entities_other/part_00167.nq.gz:https://eventkg.l3s.uni-hannover.de/resource/relation_17894622\"}]",
+        "final_review_status": "PROVISIONAL",
+        "final_mapping_class": "OBSERVATION_OVERLAP",
+        "mapping_origin": "catalog",
+        "relation_map_version": "relation-map-v1.0.0"
+      },
+      "raw_lines": [
+        {
+          "line": 1011,
+          "text": "<https://eventkg.l3s.uni-hannover.de/resource/relation_17894622> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <https://eventkg.l3s.uni-hannover.de/schema/Relation> <https://eventkg.l3s.uni-hannover.de/graph/dbpedia_en> ."
+        },
+        {
+          "line": 1012,
+          "text": "<https://eventkg.l3s.uni-hannover.de/resource/relation_17894622> <http://www.w3.org/1999/02/22-rdf-syntax-ns#subject> <https://eventkg.l3s.uni-hannover.de/resource/entity_5879748> <https://eventkg.l3s.uni-hannover.de/graph/dbpedia_en> ."
+        },
+        {
+          "line": 1013,
+          "text": "<https://eventkg.l3s.uni-hannover.de/resource/relation_17894622> <http://www.w3.org/1999/02/22-rdf-syntax-ns#object> <https://eventkg.l3s.uni-hannover.de/resource/entity_5879748> <https://eventkg.l3s.uni-hannover.de/graph/dbpedia_en> ."
+        },
+        {
+          "line": 1014,
+          "text": "<https://eventkg.l3s.uni-hannover.de/resource/relation_17894622> <http://semanticweb.cs.vu.nl/2009/11/sem/roleType> <http://dbpedia.org/ontology/award> <https://eventkg.l3s.uni-hannover.de/graph/dbpedia_en> ."
+        }
+      ],
+      "values": {
+        "http://www.w3.org/1999/02/22-rdf-syntax-ns#type": "https://eventkg.l3s.uni-hannover.de/schema/Relation",
+        "http://www.w3.org/1999/02/22-rdf-syntax-ns#subject": "https://eventkg.l3s.uni-hannover.de/resource/entity_5879748",
+        "http://www.w3.org/1999/02/22-rdf-syntax-ns#object": "https://eventkg.l3s.uni-hannover.de/resource/entity_5879748",
+        "http://semanticweb.cs.vu.nl/2009/11/sem/roleType": "http://dbpedia.org/ontology/award"
+      }
+    },
+    {
+      "path": "relations_entities_other/part_00173.nq.gz",
+      "resource": "https://eventkg.l3s.uni-hannover.de/resource/relation_18569022",
+      "assertion": {
+        "observation_id": "obs-950e4b4c067bd058a8514e8f",
+        "subject_qid": "Q2011942",
+        "object_qid": "Q2011942",
+        "level1_relation": "AWARD_RECOGNITION",
+        "level1_assignment_status": "EXISTING_CATALOG_ASSIGNMENT",
+        "level2_relation": "wd:P166",
+        "level2_label": "award received",
+        "selection_priority": "3",
+        "selection_status": "SELECTED",
+        "direction": "same",
+        "time_from": "",
+        "time_to": "",
+        "time_point": "",
+        "time_precision": "{\"from\":[],\"to\":[]}",
+        "time_status": "NONE",
+        "selected_source": "EventKG",
+        "selected_source_predicate": "http://dbpedia.org/ontology/award",
+        "source_record_id": "https://eventkg.l3s.uni-hannover.de/resource/relation_18569022|https://eventkg.l3s.uni-hannover.de/graph/dbpedia_en",
+        "source_graph": "https://eventkg.l3s.uni-hannover.de/graph/dbpedia_en",
+        "source_reference": "relations_entities_other/part_00173.nq.gz:https://eventkg.l3s.uni-hannover.de/resource/relation_18569022",
+        "source_support": "[{\"graph\":\"https://eventkg.l3s.uni-hannover.de/graph/dbpedia_en\",\"object_qid\":\"Q2011942\",\"predicate\":\"http://dbpedia.org/ontology/award\",\"record_id\":\"https://eventkg.l3s.uni-hannover.de/resource/relation_18569022|https://eventkg.l3s.uni-hannover.de/graph/dbpedia_en\",\"source\":\"EventKG\",\"subject_qid\":\"Q2011942\"}]",
+        "evidence_references": "[{\"graph\":\"https://eventkg.l3s.uni-hannover.de/graph/dbpedia_en\",\"record_id\":\"https://eventkg.l3s.uni-hannover.de/resource/relation_18569022|https://eventkg.l3s.uni-hannover.de/graph/dbpedia_en\",\"reference\":\"relations_entities_other/part_00173.nq.gz:https://eventkg.l3s.uni-hannover.de/resource/relation_18569022\"}]",
+        "final_review_status": "PROVISIONAL",
+        "final_mapping_class": "OBSERVATION_OVERLAP",
+        "mapping_origin": "catalog",
+        "relation_map_version": "relation-map-v1.0.0"
+      },
+      "raw_lines": [
+        {
+          "line": 2903,
+          "text": "<https://eventkg.l3s.uni-hannover.de/resource/relation_18569022> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <https://eventkg.l3s.uni-hannover.de/schema/Relation> <https://eventkg.l3s.uni-hannover.de/graph/dbpedia_en> ."
+        },
+        {
+          "line": 2904,
+          "text": "<https://eventkg.l3s.uni-hannover.de/resource/relation_18569022> <http://www.w3.org/1999/02/22-rdf-syntax-ns#subject> <https://eventkg.l3s.uni-hannover.de/resource/entity_11962898> <https://eventkg.l3s.uni-hannover.de/graph/dbpedia_en> ."
+        },
+        {
+          "line": 2905,
+          "text": "<https://eventkg.l3s.uni-hannover.de/resource/relation_18569022> <http://www.w3.org/1999/02/22-rdf-syntax-ns#object> <https://eventkg.l3s.uni-hannover.de/resource/entity_11962898> <https://eventkg.l3s.uni-hannover.de/graph/dbpedia_en> ."
+        },
+        {
+          "line": 2906,
+          "text": "<https://eventkg.l3s.uni-hannover.de/resource/relation_18569022> <http://semanticweb.cs.vu.nl/2009/11/sem/roleType> <http://dbpedia.org/ontology/award> <https://eventkg.l3s.uni-hannover.de/graph/dbpedia_en> ."
+        }
+      ],
+      "values": {
+        "http://www.w3.org/1999/02/22-rdf-syntax-ns#type": "https://eventkg.l3s.uni-hannover.de/schema/Relation",
+        "http://www.w3.org/1999/02/22-rdf-syntax-ns#subject": "https://eventkg.l3s.uni-hannover.de/resource/entity_11962898",
+        "http://www.w3.org/1999/02/22-rdf-syntax-ns#object": "https://eventkg.l3s.uni-hannover.de/resource/entity_11962898",
+        "http://semanticweb.cs.vu.nl/2009/11/sem/roleType": "http://dbpedia.org/ontology/award"
+      }
+    },
+    {
+      "path": "relations_entities_other/part_00185.nq.gz",
+      "resource": "https://eventkg.l3s.uni-hannover.de/resource/relation_19888191",
+      "assertion": {
+        "observation_id": "obs-c62b62616aff68274fa62c7b",
+        "subject_qid": "Q4029071",
+        "object_qid": "Q4029071",
+        "level1_relation": "TEMPORAL_SUCCESSION",
+        "level1_assignment_status": "RANKED_REVIEW_REQUIRED",
+        "level2_relation": "wd:P1365",
+        "level2_label": "replaces",
+        "selection_priority": "3",
+        "selection_status": "SELECTED",
+        "direction": "same",
+        "time_from": "",
+        "time_to": "",
+        "time_point": "",
+        "time_precision": "{\"from\":[],\"to\":[]}",
+        "time_status": "NONE",
+        "selected_source": "EventKG",
+        "selected_source_predicate": "http://www.wikidata.org/prop/direct/P1365",
+        "source_record_id": "https://eventkg.l3s.uni-hannover.de/resource/relation_19888191|https://eventkg.l3s.uni-hannover.de/graph/wikidata",
+        "source_graph": "https://eventkg.l3s.uni-hannover.de/graph/wikidata",
+        "source_reference": "relations_entities_other/part_00185.nq.gz:https://eventkg.l3s.uni-hannover.de/resource/relation_19888191",
+        "source_support": "[{\"graph\":\"https://eventkg.l3s.uni-hannover.de/graph/wikidata\",\"object_qid\":\"Q4029071\",\"predicate\":\"http://www.wikidata.org/prop/direct/P1365\",\"record_id\":\"https://eventkg.l3s.uni-hannover.de/resource/relation_19888191|https://eventkg.l3s.uni-hannover.de/graph/wikidata\",\"source\":\"EventKG\",\"subject_qid\":\"Q4029071\"}]",
+        "evidence_references": "[{\"graph\":\"https://eventkg.l3s.uni-hannover.de/graph/wikidata\",\"record_id\":\"https://eventkg.l3s.uni-hannover.de/resource/relation_19888191|https://eventkg.l3s.uni-hannover.de/graph/wikidata\",\"reference\":\"relations_entities_other/part_00185.nq.gz:https://eventkg.l3s.uni-hannover.de/resource/relation_19888191\"}]",
+        "final_review_status": "ACCEPTED",
+        "final_mapping_class": "NATIVE_OR_REUSED_WIKIDATA_ID",
+        "mapping_origin": "catalog",
+        "relation_map_version": "relation-map-v1.0.0"
+      },
+      "raw_lines": [
+        {
+          "line": 5099,
+          "text": "<https://eventkg.l3s.uni-hannover.de/resource/relation_19888191> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <https://eventkg.l3s.uni-hannover.de/schema/Relation> <https://eventkg.l3s.uni-hannover.de/graph/wikidata> ."
+        },
+        {
+          "line": 5100,
+          "text": "<https://eventkg.l3s.uni-hannover.de/resource/relation_19888191> <http://www.w3.org/1999/02/22-rdf-syntax-ns#subject> <https://eventkg.l3s.uni-hannover.de/resource/entity_6058012> <https://eventkg.l3s.uni-hannover.de/graph/wikidata> ."
+        },
+        {
+          "line": 5101,
+          "text": "<https://eventkg.l3s.uni-hannover.de/resource/relation_19888191> <http://www.w3.org/1999/02/22-rdf-syntax-ns#object> <https://eventkg.l3s.uni-hannover.de/resource/entity_6058012> <https://eventkg.l3s.uni-hannover.de/graph/wikidata> ."
+        },
+        {
+          "line": 5102,
+          "text": "<https://eventkg.l3s.uni-hannover.de/resource/relation_19888191> <http://semanticweb.cs.vu.nl/2009/11/sem/roleType> <http://www.wikidata.org/prop/direct/P1365> <https://eventkg.l3s.uni-hannover.de/graph/wikidata> ."
+        }
+      ],
+      "values": {
+        "http://www.w3.org/1999/02/22-rdf-syntax-ns#type": "https://eventkg.l3s.uni-hannover.de/schema/Relation",
+        "http://www.w3.org/1999/02/22-rdf-syntax-ns#subject": "https://eventkg.l3s.uni-hannover.de/resource/entity_6058012",
+        "http://www.w3.org/1999/02/22-rdf-syntax-ns#object": "https://eventkg.l3s.uni-hannover.de/resource/entity_6058012",
+        "http://semanticweb.cs.vu.nl/2009/11/sem/roleType": "http://www.wikidata.org/prop/direct/P1365"
+      }
+    },
+    {
+      "path": "relations_entities_other/part_00221.nq.gz",
+      "resource": "https://eventkg.l3s.uni-hannover.de/resource/relation_23727740",
+      "assertion": {
+        "observation_id": "obs-882304e0d8e58af622d6d104",
+        "subject_qid": "Q4635052",
+        "object_qid": "Q4635052",
+        "level1_relation": "UNRESOLVED",
+        "level1_assignment_status": "RUNTIME_UNRESOLVED",
+        "level2_relation": "http://www.w3.org/2002/07/owl#differentFrom",
+        "level2_label": "owl#differentFrom",
+        "selection_priority": "3",
+        "selection_status": "SELECTED",
+        "direction": "same",
+        "time_from": "",
+        "time_to": "",
+        "time_point": "",
+        "time_precision": "{\"from\":[],\"to\":[]}",
+        "time_status": "NONE",
+        "selected_source": "EventKG",
+        "selected_source_predicate": "http://www.w3.org/2002/07/owl#differentFrom",
+        "source_record_id": "https://eventkg.l3s.uni-hannover.de/resource/relation_23727740|https://eventkg.l3s.uni-hannover.de/graph/dbpedia_en",
+        "source_graph": "https://eventkg.l3s.uni-hannover.de/graph/dbpedia_en",
+        "source_reference": "relations_entities_other/part_00221.nq.gz:https://eventkg.l3s.uni-hannover.de/resource/relation_23727740",
+        "source_support": "[{\"graph\":\"https://eventkg.l3s.uni-hannover.de/graph/dbpedia_en\",\"object_qid\":\"Q4635052\",\"predicate\":\"http://www.w3.org/2002/07/owl#differentFrom\",\"record_id\":\"https://eventkg.l3s.uni-hannover.de/resource/relation_23727740|https://eventkg.l3s.uni-hannover.de/graph/dbpedia_en\",\"source\":\"EventKG\",\"subject_qid\":\"Q4635052\"}]",
+        "evidence_references": "[{\"graph\":\"https://eventkg.l3s.uni-hannover.de/graph/dbpedia_en\",\"record_id\":\"https://eventkg.l3s.uni-hannover.de/resource/relation_23727740|https://eventkg.l3s.uni-hannover.de/graph/dbpedia_en\",\"reference\":\"relations_entities_other/part_00221.nq.gz:https://eventkg.l3s.uni-hannover.de/resource/relation_23727740\"}]",
+        "final_review_status": "PROVISIONAL",
+        "final_mapping_class": "INDEPENDENT_RUNTIME_UNRESOLVED",
+        "mapping_origin": "runtime_independent",
+        "relation_map_version": "relation-map-v1.0.0"
+      },
+      "raw_lines": [
+        {
+          "line": 5016,
+          "text": "<https://eventkg.l3s.uni-hannover.de/resource/relation_23727740> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <https://eventkg.l3s.uni-hannover.de/schema/Relation> <https://eventkg.l3s.uni-hannover.de/graph/dbpedia_en> ."
+        },
+        {
+          "line": 5017,
+          "text": "<https://eventkg.l3s.uni-hannover.de/resource/relation_23727740> <http://www.w3.org/1999/02/22-rdf-syntax-ns#subject> <https://eventkg.l3s.uni-hannover.de/resource/entity_1208567> <https://eventkg.l3s.uni-hannover.de/graph/dbpedia_en> ."
+        },
+        {
+          "line": 5018,
+          "text": "<https://eventkg.l3s.uni-hannover.de/resource/relation_23727740> <http://www.w3.org/1999/02/22-rdf-syntax-ns#object> <https://eventkg.l3s.uni-hannover.de/resource/entity_1208567> <https://eventkg.l3s.uni-hannover.de/graph/dbpedia_en> ."
+        },
+        {
+          "line": 5019,
+          "text": "<https://eventkg.l3s.uni-hannover.de/resource/relation_23727740> <http://semanticweb.cs.vu.nl/2009/11/sem/roleType> <http://www.w3.org/2002/07/owl#differentFrom> <https://eventkg.l3s.uni-hannover.de/graph/dbpedia_en> ."
+        }
+      ],
+      "values": {
+        "http://www.w3.org/1999/02/22-rdf-syntax-ns#type": "https://eventkg.l3s.uni-hannover.de/schema/Relation",
+        "http://www.w3.org/1999/02/22-rdf-syntax-ns#subject": "https://eventkg.l3s.uni-hannover.de/resource/entity_1208567",
+        "http://www.w3.org/1999/02/22-rdf-syntax-ns#object": "https://eventkg.l3s.uni-hannover.de/resource/entity_1208567",
+        "http://semanticweb.cs.vu.nl/2009/11/sem/roleType": "http://www.w3.org/2002/07/owl#differentFrom"
+      }
+    },
+    {
+      "path": "relations_entities_other/part_00241.nq.gz",
+      "resource": "https://eventkg.l3s.uni-hannover.de/resource/relation_25881415",
+      "assertion": {
+        "observation_id": "obs-6b2a2625e4921075266c80d7",
+        "subject_qid": "Q632284",
+        "object_qid": "Q632284",
+        "level1_relation": "TEMPORAL_SUCCESSION",
+        "level1_assignment_status": "RANKED_REVIEW_REQUIRED",
+        "level2_relation": "wd:P1365",
+        "level2_label": "replaces",
+        "selection_priority": "3",
+        "selection_status": "SELECTED",
+        "direction": "same",
+        "time_from": "",
+        "time_to": "",
+        "time_point": "",
+        "time_precision": "{\"from\":[],\"to\":[]}",
+        "time_status": "NONE",
+        "selected_source": "EventKG",
+        "selected_source_predicate": "http://www.wikidata.org/prop/direct/P1365",
+        "source_record_id": "https://eventkg.l3s.uni-hannover.de/resource/relation_25881415|https://eventkg.l3s.uni-hannover.de/graph/wikidata",
+        "source_graph": "https://eventkg.l3s.uni-hannover.de/graph/wikidata",
+        "source_reference": "relations_entities_other/part_00241.nq.gz:https://eventkg.l3s.uni-hannover.de/resource/relation_25881415",
+        "source_support": "[{\"graph\":\"https://eventkg.l3s.uni-hannover.de/graph/wikidata\",\"object_qid\":\"Q632284\",\"predicate\":\"http://www.wikidata.org/prop/direct/P1365\",\"record_id\":\"https://eventkg.l3s.uni-hannover.de/resource/relation_25881415|https://eventkg.l3s.uni-hannover.de/graph/wikidata\",\"source\":\"EventKG\",\"subject_qid\":\"Q632284\"}]",
+        "evidence_references": "[{\"graph\":\"https://eventkg.l3s.uni-hannover.de/graph/wikidata\",\"record_id\":\"https://eventkg.l3s.uni-hannover.de/resource/relation_25881415|https://eventkg.l3s.uni-hannover.de/graph/wikidata\",\"reference\":\"relations_entities_other/part_00241.nq.gz:https://eventkg.l3s.uni-hannover.de/resource/relation_25881415\"}]",
+        "final_review_status": "ACCEPTED",
+        "final_mapping_class": "NATIVE_OR_REUSED_WIKIDATA_ID",
+        "mapping_origin": "catalog",
+        "relation_map_version": "relation-map-v1.0.0"
+      },
+      "raw_lines": [
+        {
+          "line": 5840,
+          "text": "<https://eventkg.l3s.uni-hannover.de/resource/relation_25881415> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <https://eventkg.l3s.uni-hannover.de/schema/Relation> <https://eventkg.l3s.uni-hannover.de/graph/wikidata> ."
+        },
+        {
+          "line": 5841,
+          "text": "<https://eventkg.l3s.uni-hannover.de/resource/relation_25881415> <http://www.w3.org/1999/02/22-rdf-syntax-ns#subject> <https://eventkg.l3s.uni-hannover.de/resource/entity_7135447> <https://eventkg.l3s.uni-hannover.de/graph/wikidata> ."
+        },
+        {
+          "line": 5842,
+          "text": "<https://eventkg.l3s.uni-hannover.de/resource/relation_25881415> <http://www.w3.org/1999/02/22-rdf-syntax-ns#object> <https://eventkg.l3s.uni-hannover.de/resource/entity_7135447> <https://eventkg.l3s.uni-hannover.de/graph/wikidata> ."
+        },
+        {
+          "line": 5843,
+          "text": "<https://eventkg.l3s.uni-hannover.de/resource/relation_25881415> <http://semanticweb.cs.vu.nl/2009/11/sem/roleType> <http://www.wikidata.org/prop/direct/P1365> <https://eventkg.l3s.uni-hannover.de/graph/wikidata> ."
+        }
+      ],
+      "values": {
+        "http://www.w3.org/1999/02/22-rdf-syntax-ns#type": "https://eventkg.l3s.uni-hannover.de/schema/Relation",
+        "http://www.w3.org/1999/02/22-rdf-syntax-ns#subject": "https://eventkg.l3s.uni-hannover.de/resource/entity_7135447",
+        "http://www.w3.org/1999/02/22-rdf-syntax-ns#object": "https://eventkg.l3s.uni-hannover.de/resource/entity_7135447",
+        "http://semanticweb.cs.vu.nl/2009/11/sem/roleType": "http://www.wikidata.org/prop/direct/P1365"
+      }
+    },
+    {
+      "path": "relations_entities_other/part_00249.nq.gz",
+      "resource": "https://eventkg.l3s.uni-hannover.de/resource/relation_26708448",
+      "assertion": {
+        "observation_id": "obs-a989cf0c53df3bda7c546ea1",
+        "subject_qid": "Q7453527",
+        "object_qid": "Q7453527",
+        "level1_relation": "AWARD_RECOGNITION",
+        "level1_assignment_status": "EXISTING_CATALOG_ASSIGNMENT",
+        "level2_relation": "wd:P166",
+        "level2_label": "award received",
+        "selection_priority": "3",
+        "selection_status": "SELECTED",
+        "direction": "same",
+        "time_from": "",
+        "time_to": "",
+        "time_point": "",
+        "time_precision": "{\"from\":[],\"to\":[]}",
+        "time_status": "NONE",
+        "selected_source": "EventKG",
+        "selected_source_predicate": "http://dbpedia.org/ontology/award",
+        "source_record_id": "https://eventkg.l3s.uni-hannover.de/resource/relation_26708448|https://eventkg.l3s.uni-hannover.de/graph/dbpedia_en",
+        "source_graph": "https://eventkg.l3s.uni-hannover.de/graph/dbpedia_en",
+        "source_reference": "relations_entities_other/part_00249.nq.gz:https://eventkg.l3s.uni-hannover.de/resource/relation_26708448",
+        "source_support": "[{\"graph\":\"https://eventkg.l3s.uni-hannover.de/graph/dbpedia_en\",\"object_qid\":\"Q7453527\",\"predicate\":\"http://dbpedia.org/ontology/award\",\"record_id\":\"https://eventkg.l3s.uni-hannover.de/resource/relation_26708448|https://eventkg.l3s.uni-hannover.de/graph/dbpedia_en\",\"source\":\"EventKG\",\"subject_qid\":\"Q7453527\"}]",
+        "evidence_references": "[{\"graph\":\"https://eventkg.l3s.uni-hannover.de/graph/dbpedia_en\",\"record_id\":\"https://eventkg.l3s.uni-hannover.de/resource/relation_26708448|https://eventkg.l3s.uni-hannover.de/graph/dbpedia_en\",\"reference\":\"relations_entities_other/part_00249.nq.gz:https://eventkg.l3s.uni-hannover.de/resource/relation_26708448\"}]",
+        "final_review_status": "PROVISIONAL",
+        "final_mapping_class": "OBSERVATION_OVERLAP",
+        "mapping_origin": "catalog",
+        "relation_map_version": "relation-map-v1.0.0"
+      },
+      "raw_lines": [
+        {
+          "line": 4671,
+          "text": "<https://eventkg.l3s.uni-hannover.de/resource/relation_26708448> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <https://eventkg.l3s.uni-hannover.de/schema/Relation> <https://eventkg.l3s.uni-hannover.de/graph/dbpedia_en> ."
+        },
+        {
+          "line": 4672,
+          "text": "<https://eventkg.l3s.uni-hannover.de/resource/relation_26708448> <http://www.w3.org/1999/02/22-rdf-syntax-ns#subject> <https://eventkg.l3s.uni-hannover.de/resource/entity_8874405> <https://eventkg.l3s.uni-hannover.de/graph/dbpedia_en> ."
+        },
+        {
+          "line": 4673,
+          "text": "<https://eventkg.l3s.uni-hannover.de/resource/relation_26708448> <http://www.w3.org/1999/02/22-rdf-syntax-ns#object> <https://eventkg.l3s.uni-hannover.de/resource/entity_8874405> <https://eventkg.l3s.uni-hannover.de/graph/dbpedia_en> ."
+        },
+        {
+          "line": 4674,
+          "text": "<https://eventkg.l3s.uni-hannover.de/resource/relation_26708448> <http://semanticweb.cs.vu.nl/2009/11/sem/roleType> <http://dbpedia.org/ontology/award> <https://eventkg.l3s.uni-hannover.de/graph/dbpedia_en> ."
+        }
+      ],
+      "values": {
+        "http://www.w3.org/1999/02/22-rdf-syntax-ns#type": "https://eventkg.l3s.uni-hannover.de/schema/Relation",
+        "http://www.w3.org/1999/02/22-rdf-syntax-ns#subject": "https://eventkg.l3s.uni-hannover.de/resource/entity_8874405",
+        "http://www.w3.org/1999/02/22-rdf-syntax-ns#object": "https://eventkg.l3s.uni-hannover.de/resource/entity_8874405",
+        "http://semanticweb.cs.vu.nl/2009/11/sem/roleType": "http://dbpedia.org/ontology/award"
+      }
+    },
+    {
+      "path": "relations_entities_other/part_00319.nq.gz",
+      "resource": "https://eventkg.l3s.uni-hannover.de/resource/relation_34200996",
+      "assertion": {
+        "observation_id": "obs-f3d111110fd3cd635b21ce67",
+        "subject_qid": "Q2607384",
+        "object_qid": "Q2607384",
+        "level1_relation": "PARTICIPATION_ROLE",
+        "level1_assignment_status": "EXISTING_CATALOG_ASSIGNMENT",
+        "level2_relation": "http://dbpedia.org/ontology/militaryUnit",
+        "level2_label": "military Unit",
+        "selection_priority": "3",
+        "selection_status": "SELECTED",
+        "direction": "same",
+        "time_from": "",
+        "time_to": "",
+        "time_point": "",
+        "time_precision": "{\"from\":[],\"to\":[]}",
+        "time_status": "NONE",
+        "selected_source": "EventKG",
+        "selected_source_predicate": "http://dbpedia.org/ontology/militaryUnit",
+        "source_record_id": "https://eventkg.l3s.uni-hannover.de/resource/relation_34200996|https://eventkg.l3s.uni-hannover.de/graph/dbpedia_en",
+        "source_graph": "https://eventkg.l3s.uni-hannover.de/graph/dbpedia_en",
+        "source_reference": "relations_entities_other/part_00319.nq.gz:https://eventkg.l3s.uni-hannover.de/resource/relation_34200996",
+        "source_support": "[{\"graph\":\"https://eventkg.l3s.uni-hannover.de/graph/dbpedia_en\",\"object_qid\":\"Q2607384\",\"predicate\":\"http://dbpedia.org/ontology/militaryUnit\",\"record_id\":\"https://eventkg.l3s.uni-hannover.de/resource/relation_34200996|https://eventkg.l3s.uni-hannover.de/graph/dbpedia_en\",\"source\":\"EventKG\",\"subject_qid\":\"Q2607384\"}]",
+        "evidence_references": "[{\"graph\":\"https://eventkg.l3s.uni-hannover.de/graph/dbpedia_en\",\"record_id\":\"https://eventkg.l3s.uni-hannover.de/resource/relation_34200996|https://eventkg.l3s.uni-hannover.de/graph/dbpedia_en\",\"reference\":\"relations_entities_other/part_00319.nq.gz:https://eventkg.l3s.uni-hannover.de/resource/relation_34200996\"}]",
+        "final_review_status": "ACCEPTED",
+        "final_mapping_class": "INDEPENDENT_EXISTING_SOURCE_ONLY",
+        "mapping_origin": "catalog",
+        "relation_map_version": "relation-map-v1.0.0"
+      },
+      "raw_lines": [
+        {
+          "line": 5492,
+          "text": "<https://eventkg.l3s.uni-hannover.de/resource/relation_34200996> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <https://eventkg.l3s.uni-hannover.de/schema/Relation> <https://eventkg.l3s.uni-hannover.de/graph/dbpedia_en> ."
+        },
+        {
+          "line": 5493,
+          "text": "<https://eventkg.l3s.uni-hannover.de/resource/relation_34200996> <http://www.w3.org/1999/02/22-rdf-syntax-ns#subject> <https://eventkg.l3s.uni-hannover.de/resource/entity_13327440> <https://eventkg.l3s.uni-hannover.de/graph/dbpedia_en> ."
+        },
+        {
+          "line": 5494,
+          "text": "<https://eventkg.l3s.uni-hannover.de/resource/relation_34200996> <http://www.w3.org/1999/02/22-rdf-syntax-ns#object> <https://eventkg.l3s.uni-hannover.de/resource/entity_13327440> <https://eventkg.l3s.uni-hannover.de/graph/dbpedia_en> ."
+        },
+        {
+          "line": 5495,
+          "text": "<https://eventkg.l3s.uni-hannover.de/resource/relation_34200996> <http://semanticweb.cs.vu.nl/2009/11/sem/roleType> <http://dbpedia.org/ontology/militaryUnit> <https://eventkg.l3s.uni-hannover.de/graph/dbpedia_en> ."
+        }
+      ],
+      "values": {
+        "http://www.w3.org/1999/02/22-rdf-syntax-ns#type": "https://eventkg.l3s.uni-hannover.de/schema/Relation",
+        "http://www.w3.org/1999/02/22-rdf-syntax-ns#subject": "https://eventkg.l3s.uni-hannover.de/resource/entity_13327440",
+        "http://www.w3.org/1999/02/22-rdf-syntax-ns#object": "https://eventkg.l3s.uni-hannover.de/resource/entity_13327440",
+        "http://semanticweb.cs.vu.nl/2009/11/sem/roleType": "http://dbpedia.org/ontology/militaryUnit"
+      }
+    },
+    {
+      "path": "relations_entities_other/part_00362.nq.gz",
+      "resource": "https://eventkg.l3s.uni-hannover.de/resource/relation_38768694",
+      "assertion": {
+        "observation_id": "obs-580aff133cc1ecab24af0072",
+        "subject_qid": "Q4207562",
+        "object_qid": "Q4207562",
+        "level1_relation": "AWARD_RECOGNITION",
+        "level1_assignment_status": "EXISTING_CATALOG_ASSIGNMENT",
+        "level2_relation": "wd:P166",
+        "level2_label": "award received",
+        "selection_priority": "3",
+        "selection_status": "SELECTED",
+        "direction": "same",
+        "time_from": "",
+        "time_to": "",
+        "time_point": "",
+        "time_precision": "{\"from\":[],\"to\":[]}",
+        "time_status": "NONE",
+        "selected_source": "EventKG",
+        "selected_source_predicate": "http://dbpedia.org/ontology/award",
+        "source_record_id": "https://eventkg.l3s.uni-hannover.de/resource/relation_38768694|https://eventkg.l3s.uni-hannover.de/graph/dbpedia_en",
+        "source_graph": "https://eventkg.l3s.uni-hannover.de/graph/dbpedia_en",
+        "source_reference": "relations_entities_other/part_00362.nq.gz:https://eventkg.l3s.uni-hannover.de/resource/relation_38768694",
+        "source_support": "[{\"graph\":\"https://eventkg.l3s.uni-hannover.de/graph/dbpedia_en\",\"object_qid\":\"Q4207562\",\"predicate\":\"http://dbpedia.org/ontology/award\",\"record_id\":\"https://eventkg.l3s.uni-hannover.de/resource/relation_38768694|https://eventkg.l3s.uni-hannover.de/graph/dbpedia_en\",\"source\":\"EventKG\",\"subject_qid\":\"Q4207562\"}]",
+        "evidence_references": "[{\"graph\":\"https://eventkg.l3s.uni-hannover.de/graph/dbpedia_en\",\"record_id\":\"https://eventkg.l3s.uni-hannover.de/resource/relation_38768694|https://eventkg.l3s.uni-hannover.de/graph/dbpedia_en\",\"reference\":\"relations_entities_other/part_00362.nq.gz:https://eventkg.l3s.uni-hannover.de/resource/relation_38768694\"}]",
+        "final_review_status": "PROVISIONAL",
+        "final_mapping_class": "OBSERVATION_OVERLAP",
+        "mapping_origin": "catalog",
+        "relation_map_version": "relation-map-v1.0.0"
+      },
+      "raw_lines": [
+        {
+          "line": 4014,
+          "text": "<https://eventkg.l3s.uni-hannover.de/resource/relation_38768694> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <https://eventkg.l3s.uni-hannover.de/schema/Relation> <https://eventkg.l3s.uni-hannover.de/graph/dbpedia_en> ."
+        },
+        {
+          "line": 4015,
+          "text": "<https://eventkg.l3s.uni-hannover.de/resource/relation_38768694> <http://www.w3.org/1999/02/22-rdf-syntax-ns#subject> <https://eventkg.l3s.uni-hannover.de/resource/entity_8166771> <https://eventkg.l3s.uni-hannover.de/graph/dbpedia_en> ."
+        },
+        {
+          "line": 4016,
+          "text": "<https://eventkg.l3s.uni-hannover.de/resource/relation_38768694> <http://www.w3.org/1999/02/22-rdf-syntax-ns#object> <https://eventkg.l3s.uni-hannover.de/resource/entity_8166771> <https://eventkg.l3s.uni-hannover.de/graph/dbpedia_en> ."
+        },
+        {
+          "line": 4017,
+          "text": "<https://eventkg.l3s.uni-hannover.de/resource/relation_38768694> <http://semanticweb.cs.vu.nl/2009/11/sem/roleType> <http://dbpedia.org/ontology/award> <https://eventkg.l3s.uni-hannover.de/graph/dbpedia_en> ."
+        }
+      ],
+      "values": {
+        "http://www.w3.org/1999/02/22-rdf-syntax-ns#type": "https://eventkg.l3s.uni-hannover.de/schema/Relation",
+        "http://www.w3.org/1999/02/22-rdf-syntax-ns#subject": "https://eventkg.l3s.uni-hannover.de/resource/entity_8166771",
+        "http://www.w3.org/1999/02/22-rdf-syntax-ns#object": "https://eventkg.l3s.uni-hannover.de/resource/entity_8166771",
+        "http://semanticweb.cs.vu.nl/2009/11/sem/roleType": "http://dbpedia.org/ontology/award"
+      }
+    },
+    {
+      "path": "relations_entities_other/part_00363.nq.gz",
+      "resource": "https://eventkg.l3s.uni-hannover.de/resource/relation_38914239",
+      "assertion": {
+        "observation_id": "obs-da1f3a0601505658f2a4c592",
+        "subject_qid": "Q4497403",
+        "object_qid": "Q4497403",
+        "level1_relation": "AWARD_RECOGNITION",
+        "level1_assignment_status": "EXISTING_CATALOG_ASSIGNMENT",
+        "level2_relation": "wd:P166",
+        "level2_label": "award received",
+        "selection_priority": "3",
+        "selection_status": "SELECTED",
+        "direction": "same",
+        "time_from": "",
+        "time_to": "",
+        "time_point": "",
+        "time_precision": "{\"from\":[],\"to\":[]}",
+        "time_status": "NONE",
+        "selected_source": "EventKG",
+        "selected_source_predicate": "http://dbpedia.org/ontology/award",
+        "source_record_id": "https://eventkg.l3s.uni-hannover.de/resource/relation_38914239|https://eventkg.l3s.uni-hannover.de/graph/dbpedia_en",
+        "source_graph": "https://eventkg.l3s.uni-hannover.de/graph/dbpedia_en",
+        "source_reference": "relations_entities_other/part_00363.nq.gz:https://eventkg.l3s.uni-hannover.de/resource/relation_38914239",
+        "source_support": "[{\"graph\":\"https://eventkg.l3s.uni-hannover.de/graph/dbpedia_en\",\"object_qid\":\"Q4497403\",\"predicate\":\"http://dbpedia.org/ontology/award\",\"record_id\":\"https://eventkg.l3s.uni-hannover.de/resource/relation_38914239|https://eventkg.l3s.uni-hannover.de/graph/dbpedia_en\",\"source\":\"EventKG\",\"subject_qid\":\"Q4497403\"}]",
+        "evidence_references": "[{\"graph\":\"https://eventkg.l3s.uni-hannover.de/graph/dbpedia_en\",\"record_id\":\"https://eventkg.l3s.uni-hannover.de/resource/relation_38914239|https://eventkg.l3s.uni-hannover.de/graph/dbpedia_en\",\"reference\":\"relations_entities_other/part_00363.nq.gz:https://eventkg.l3s.uni-hannover.de/resource/relation_38914239\"}]",
+        "final_review_status": "PROVISIONAL",
+        "final_mapping_class": "OBSERVATION_OVERLAP",
+        "mapping_origin": "catalog",
+        "relation_map_version": "relation-map-v1.0.0"
+      },
+      "raw_lines": [
+        {
+          "line": 6051,
+          "text": "<https://eventkg.l3s.uni-hannover.de/resource/relation_38914239> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <https://eventkg.l3s.uni-hannover.de/schema/Relation> <https://eventkg.l3s.uni-hannover.de/graph/dbpedia_en> ."
+        },
+        {
+          "line": 6052,
+          "text": "<https://eventkg.l3s.uni-hannover.de/resource/relation_38914239> <http://www.w3.org/1999/02/22-rdf-syntax-ns#subject> <https://eventkg.l3s.uni-hannover.de/resource/entity_12678314> <https://eventkg.l3s.uni-hannover.de/graph/dbpedia_en> ."
+        },
+        {
+          "line": 6053,
+          "text": "<https://eventkg.l3s.uni-hannover.de/resource/relation_38914239> <http://www.w3.org/1999/02/22-rdf-syntax-ns#object> <https://eventkg.l3s.uni-hannover.de/resource/entity_12678314> <https://eventkg.l3s.uni-hannover.de/graph/dbpedia_en> ."
+        },
+        {
+          "line": 6054,
+          "text": "<https://eventkg.l3s.uni-hannover.de/resource/relation_38914239> <http://semanticweb.cs.vu.nl/2009/11/sem/roleType> <http://dbpedia.org/ontology/award> <https://eventkg.l3s.uni-hannover.de/graph/dbpedia_en> ."
+        }
+      ],
+      "values": {
+        "http://www.w3.org/1999/02/22-rdf-syntax-ns#type": "https://eventkg.l3s.uni-hannover.de/schema/Relation",
+        "http://www.w3.org/1999/02/22-rdf-syntax-ns#subject": "https://eventkg.l3s.uni-hannover.de/resource/entity_12678314",
+        "http://www.w3.org/1999/02/22-rdf-syntax-ns#object": "https://eventkg.l3s.uni-hannover.de/resource/entity_12678314",
+        "http://semanticweb.cs.vu.nl/2009/11/sem/roleType": "http://dbpedia.org/ontology/award"
+      }
+    },
+    {
+      "path": "relations_entities_other/part_00364.nq.gz",
+      "resource": "https://eventkg.l3s.uni-hannover.de/resource/relation_38992876",
+      "assertion": {
+        "observation_id": "obs-c86916d2583aa31c17218287",
+        "subject_qid": "Q2607384",
+        "object_qid": "Q2607384",
+        "level1_relation": "AWARD_RECOGNITION",
+        "level1_assignment_status": "EXISTING_CATALOG_ASSIGNMENT",
+        "level2_relation": "wd:P166",
+        "level2_label": "award received",
+        "selection_priority": "3",
+        "selection_status": "SELECTED",
+        "direction": "same",
+        "time_from": "",
+        "time_to": "",
+        "time_point": "",
+        "time_precision": "{\"from\":[],\"to\":[]}",
+        "time_status": "NONE",
+        "selected_source": "EventKG",
+        "selected_source_predicate": "http://dbpedia.org/ontology/award",
+        "source_record_id": "https://eventkg.l3s.uni-hannover.de/resource/relation_38992876|https://eventkg.l3s.uni-hannover.de/graph/dbpedia_en",
+        "source_graph": "https://eventkg.l3s.uni-hannover.de/graph/dbpedia_en",
+        "source_reference": "relations_entities_other/part_00364.nq.gz:https://eventkg.l3s.uni-hannover.de/resource/relation_38992876",
+        "source_support": "[{\"graph\":\"https://eventkg.l3s.uni-hannover.de/graph/dbpedia_en\",\"object_qid\":\"Q2607384\",\"predicate\":\"http://dbpedia.org/ontology/award\",\"record_id\":\"https://eventkg.l3s.uni-hannover.de/resource/relation_38992876|https://eventkg.l3s.uni-hannover.de/graph/dbpedia_en\",\"source\":\"EventKG\",\"subject_qid\":\"Q2607384\"}]",
+        "evidence_references": "[{\"graph\":\"https://eventkg.l3s.uni-hannover.de/graph/dbpedia_en\",\"record_id\":\"https://eventkg.l3s.uni-hannover.de/resource/relation_38992876|https://eventkg.l3s.uni-hannover.de/graph/dbpedia_en\",\"reference\":\"relations_entities_other/part_00364.nq.gz:https://eventkg.l3s.uni-hannover.de/resource/relation_38992876\"}]",
+        "final_review_status": "PROVISIONAL",
+        "final_mapping_class": "OBSERVATION_OVERLAP",
+        "mapping_origin": "catalog",
+        "relation_map_version": "relation-map-v1.0.0"
+      },
+      "raw_lines": [
+        {
+          "line": 4734,
+          "text": "<https://eventkg.l3s.uni-hannover.de/resource/relation_38992876> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <https://eventkg.l3s.uni-hannover.de/schema/Relation> <https://eventkg.l3s.uni-hannover.de/graph/dbpedia_en> ."
+        },
+        {
+          "line": 4735,
+          "text": "<https://eventkg.l3s.uni-hannover.de/resource/relation_38992876> <http://www.w3.org/1999/02/22-rdf-syntax-ns#subject> <https://eventkg.l3s.uni-hannover.de/resource/entity_13327440> <https://eventkg.l3s.uni-hannover.de/graph/dbpedia_en> ."
+        },
+        {
+          "line": 4736,
+          "text": "<https://eventkg.l3s.uni-hannover.de/resource/relation_38992876> <http://www.w3.org/1999/02/22-rdf-syntax-ns#object> <https://eventkg.l3s.uni-hannover.de/resource/entity_13327440> <https://eventkg.l3s.uni-hannover.de/graph/dbpedia_en> ."
+        },
+        {
+          "line": 4737,
+          "text": "<https://eventkg.l3s.uni-hannover.de/resource/relation_38992876> <http://semanticweb.cs.vu.nl/2009/11/sem/roleType> <http://dbpedia.org/ontology/award> <https://eventkg.l3s.uni-hannover.de/graph/dbpedia_en> ."
+        }
+      ],
+      "values": {
+        "http://www.w3.org/1999/02/22-rdf-syntax-ns#type": "https://eventkg.l3s.uni-hannover.de/schema/Relation",
+        "http://www.w3.org/1999/02/22-rdf-syntax-ns#subject": "https://eventkg.l3s.uni-hannover.de/resource/entity_13327440",
+        "http://www.w3.org/1999/02/22-rdf-syntax-ns#object": "https://eventkg.l3s.uni-hannover.de/resource/entity_13327440",
+        "http://semanticweb.cs.vu.nl/2009/11/sem/roleType": "http://dbpedia.org/ontology/award"
+      }
+    },
+    {
+      "path": "relations_entities_other/part_00366.nq.gz",
+      "resource": "https://eventkg.l3s.uni-hannover.de/resource/relation_39210273",
+      "assertion": {
+        "observation_id": "obs-f83843c465573e89770cfb0a",
+        "subject_qid": "Q216896",
+        "object_qid": "Q216896",
+        "level1_relation": "PART_WHOLE_HIERARCHY",
+        "level1_assignment_status": "RANKED_REVIEW_REQUIRED",
+        "level2_relation": "http://www.w3.org/2000/01/rdf-schema#seeAlso",
+        "level2_label": "see Also",
+        "selection_priority": "3",
+        "selection_status": "SELECTED",
+        "direction": "same",
+        "time_from": "",
+        "time_to": "",
+        "time_point": "",
+        "time_precision": "{\"from\":[],\"to\":[]}",
+        "time_status": "NONE",
+        "selected_source": "EventKG",
+        "selected_source_predicate": "http://www.w3.org/2000/01/rdf-schema#seeAlso",
+        "source_record_id": "https://eventkg.l3s.uni-hannover.de/resource/relation_39210273|https://eventkg.l3s.uni-hannover.de/graph/dbpedia_en",
+        "source_graph": "https://eventkg.l3s.uni-hannover.de/graph/dbpedia_en",
+        "source_reference": "relations_entities_other/part_00366.nq.gz:https://eventkg.l3s.uni-hannover.de/resource/relation_39210273",
+        "source_support": "[{\"graph\":\"https://eventkg.l3s.uni-hannover.de/graph/dbpedia_en\",\"object_qid\":\"Q216896\",\"predicate\":\"http://www.w3.org/2000/01/rdf-schema#seeAlso\",\"record_id\":\"https://eventkg.l3s.uni-hannover.de/resource/relation_39210273|https://eventkg.l3s.uni-hannover.de/graph/dbpedia_en\",\"source\":\"EventKG\",\"subject_qid\":\"Q216896\"}]",
+        "evidence_references": "[{\"graph\":\"https://eventkg.l3s.uni-hannover.de/graph/dbpedia_en\",\"record_id\":\"https://eventkg.l3s.uni-hannover.de/resource/relation_39210273|https://eventkg.l3s.uni-hannover.de/graph/dbpedia_en\",\"reference\":\"relations_entities_other/part_00366.nq.gz:https://eventkg.l3s.uni-hannover.de/resource/relation_39210273\"}]",
+        "final_review_status": "ACCEPTED",
+        "final_mapping_class": "INDEPENDENT_EXISTING_SOURCE_ONLY",
+        "mapping_origin": "catalog",
+        "relation_map_version": "relation-map-v1.0.0"
+      },
+      "raw_lines": [
+        {
+          "line": 4920,
+          "text": "<https://eventkg.l3s.uni-hannover.de/resource/relation_39210273> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <https://eventkg.l3s.uni-hannover.de/schema/Relation> <https://eventkg.l3s.uni-hannover.de/graph/dbpedia_en> ."
+        },
+        {
+          "line": 4921,
+          "text": "<https://eventkg.l3s.uni-hannover.de/resource/relation_39210273> <http://www.w3.org/1999/02/22-rdf-syntax-ns#subject> <https://eventkg.l3s.uni-hannover.de/resource/entity_6184795> <https://eventkg.l3s.uni-hannover.de/graph/dbpedia_en> ."
+        },
+        {
+          "line": 4922,
+          "text": "<https://eventkg.l3s.uni-hannover.de/resource/relation_39210273> <http://www.w3.org/1999/02/22-rdf-syntax-ns#object> <https://eventkg.l3s.uni-hannover.de/resource/entity_6184795> <https://eventkg.l3s.uni-hannover.de/graph/dbpedia_en> ."
+        },
+        {
+          "line": 4923,
+          "text": "<https://eventkg.l3s.uni-hannover.de/resource/relation_39210273> <http://semanticweb.cs.vu.nl/2009/11/sem/roleType> <http://www.w3.org/2000/01/rdf-schema#seeAlso> <https://eventkg.l3s.uni-hannover.de/graph/dbpedia_en> ."
+        }
+      ],
+      "values": {
+        "http://www.w3.org/1999/02/22-rdf-syntax-ns#type": "https://eventkg.l3s.uni-hannover.de/schema/Relation",
+        "http://www.w3.org/1999/02/22-rdf-syntax-ns#subject": "https://eventkg.l3s.uni-hannover.de/resource/entity_6184795",
+        "http://www.w3.org/1999/02/22-rdf-syntax-ns#object": "https://eventkg.l3s.uni-hannover.de/resource/entity_6184795",
+        "http://semanticweb.cs.vu.nl/2009/11/sem/roleType": "http://www.w3.org/2000/01/rdf-schema#seeAlso"
+      }
+    },
+    {
+      "path": "relations_entities_other/part_00382.nq.gz",
+      "resource": "https://eventkg.l3s.uni-hannover.de/resource/relation_40902839",
+      "assertion": {
+        "observation_id": "obs-65e7eaf0703251367ee5544d",
+        "subject_qid": "Q153448",
+        "object_qid": "Q153448",
+        "level1_relation": "AFFILIATION_STATUS",
+        "level1_assignment_status": "RANKED_REVIEW_REQUIRED",
+        "level2_relation": "wd:P1142",
+        "level2_label": "political ideology",
+        "selection_priority": "3",
+        "selection_status": "SELECTED",
+        "direction": "same",
+        "time_from": "",
+        "time_to": "",
+        "time_point": "",
+        "time_precision": "{\"from\":[],\"to\":[]}",
+        "time_status": "NONE",
+        "selected_source": "EventKG",
+        "selected_source_predicate": "http://dbpedia.org/ontology/ideology",
+        "source_record_id": "https://eventkg.l3s.uni-hannover.de/resource/relation_40902839|https://eventkg.l3s.uni-hannover.de/graph/dbpedia_en",
+        "source_graph": "https://eventkg.l3s.uni-hannover.de/graph/dbpedia_en",
+        "source_reference": "relations_entities_other/part_00382.nq.gz:https://eventkg.l3s.uni-hannover.de/resource/relation_40902839",
+        "source_support": "[{\"graph\":\"https://eventkg.l3s.uni-hannover.de/graph/dbpedia_en\",\"object_qid\":\"Q153448\",\"predicate\":\"http://dbpedia.org/ontology/ideology\",\"record_id\":\"https://eventkg.l3s.uni-hannover.de/resource/relation_40902839|https://eventkg.l3s.uni-hannover.de/graph/dbpedia_en\",\"source\":\"EventKG\",\"subject_qid\":\"Q153448\"}]",
+        "evidence_references": "[{\"graph\":\"https://eventkg.l3s.uni-hannover.de/graph/dbpedia_en\",\"record_id\":\"https://eventkg.l3s.uni-hannover.de/resource/relation_40902839|https://eventkg.l3s.uni-hannover.de/graph/dbpedia_en\",\"reference\":\"relations_entities_other/part_00382.nq.gz:https://eventkg.l3s.uni-hannover.de/resource/relation_40902839\"}]",
+        "final_review_status": "ACCEPTED",
+        "final_mapping_class": "PUBLIC_DECLARED_EXACT",
+        "mapping_origin": "catalog",
+        "relation_map_version": "relation-map-v1.0.0"
+      },
+      "raw_lines": [
+        {
+          "line": 3773,
+          "text": "<https://eventkg.l3s.uni-hannover.de/resource/relation_40902839> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <https://eventkg.l3s.uni-hannover.de/schema/Relation> <https://eventkg.l3s.uni-hannover.de/graph/dbpedia_en> ."
+        },
+        {
+          "line": 3774,
+          "text": "<https://eventkg.l3s.uni-hannover.de/resource/relation_40902839> <http://www.w3.org/1999/02/22-rdf-syntax-ns#subject> <https://eventkg.l3s.uni-hannover.de/resource/entity_8074383> <https://eventkg.l3s.uni-hannover.de/graph/dbpedia_en> ."
+        },
+        {
+          "line": 3775,
+          "text": "<https://eventkg.l3s.uni-hannover.de/resource/relation_40902839> <http://www.w3.org/1999/02/22-rdf-syntax-ns#object> <https://eventkg.l3s.uni-hannover.de/resource/entity_8074383> <https://eventkg.l3s.uni-hannover.de/graph/dbpedia_en> ."
+        },
+        {
+          "line": 3776,
+          "text": "<https://eventkg.l3s.uni-hannover.de/resource/relation_40902839> <http://semanticweb.cs.vu.nl/2009/11/sem/roleType> <http://dbpedia.org/ontology/ideology> <https://eventkg.l3s.uni-hannover.de/graph/dbpedia_en> ."
+        }
+      ],
+      "values": {
+        "http://www.w3.org/1999/02/22-rdf-syntax-ns#type": "https://eventkg.l3s.uni-hannover.de/schema/Relation",
+        "http://www.w3.org/1999/02/22-rdf-syntax-ns#subject": "https://eventkg.l3s.uni-hannover.de/resource/entity_8074383",
+        "http://www.w3.org/1999/02/22-rdf-syntax-ns#object": "https://eventkg.l3s.uni-hannover.de/resource/entity_8074383",
+        "http://semanticweb.cs.vu.nl/2009/11/sem/roleType": "http://dbpedia.org/ontology/ideology"
+      }
+    },
+    {
+      "path": "relations_entities_other/part_00391.nq.gz",
+      "resource": "https://eventkg.l3s.uni-hannover.de/resource/relation_41848297",
+      "assertion": {
+        "observation_id": "obs-84081815487e22de9c2c26a3",
+        "subject_qid": "Q4032386",
+        "object_qid": "Q4032386",
+        "level1_relation": "TEMPORAL_SUCCESSION",
+        "level1_assignment_status": "EXISTING_CATALOG_ASSIGNMENT",
+        "level2_relation": "wd:P1366",
+        "level2_label": "replaced by",
+        "selection_priority": "3",
+        "selection_status": "SELECTED",
+        "direction": "same",
+        "time_from": "",
+        "time_to": "",
+        "time_point": "",
+        "time_precision": "{\"from\":[],\"to\":[]}",
+        "time_status": "NONE",
+        "selected_source": "EventKG",
+        "selected_source_predicate": "http://www.wikidata.org/prop/direct/P1366",
+        "source_record_id": "https://eventkg.l3s.uni-hannover.de/resource/relation_41848297|https://eventkg.l3s.uni-hannover.de/graph/wikidata",
+        "source_graph": "https://eventkg.l3s.uni-hannover.de/graph/wikidata",
+        "source_reference": "relations_entities_other/part_00391.nq.gz:https://eventkg.l3s.uni-hannover.de/resource/relation_41848297",
+        "source_support": "[{\"graph\":\"https://eventkg.l3s.uni-hannover.de/graph/wikidata\",\"object_qid\":\"Q4032386\",\"predicate\":\"http://www.wikidata.org/prop/direct/P1366\",\"record_id\":\"https://eventkg.l3s.uni-hannover.de/resource/relation_41848297|https://eventkg.l3s.uni-hannover.de/graph/wikidata\",\"source\":\"EventKG\",\"subject_qid\":\"Q4032386\"}]",
+        "evidence_references": "[{\"graph\":\"https://eventkg.l3s.uni-hannover.de/graph/wikidata\",\"record_id\":\"https://eventkg.l3s.uni-hannover.de/resource/relation_41848297|https://eventkg.l3s.uni-hannover.de/graph/wikidata\",\"reference\":\"relations_entities_other/part_00391.nq.gz:https://eventkg.l3s.uni-hannover.de/resource/relation_41848297\"}]",
+        "final_review_status": "ACCEPTED",
+        "final_mapping_class": "NATIVE_OR_REUSED_WIKIDATA_ID",
+        "mapping_origin": "catalog",
+        "relation_map_version": "relation-map-v1.0.0"
+      },
+      "raw_lines": [
+        {
+          "line": 2946,
+          "text": "<https://eventkg.l3s.uni-hannover.de/resource/relation_41848297> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <https://eventkg.l3s.uni-hannover.de/schema/Relation> <https://eventkg.l3s.uni-hannover.de/graph/wikidata> ."
+        },
+        {
+          "line": 2947,
+          "text": "<https://eventkg.l3s.uni-hannover.de/resource/relation_41848297> <http://www.w3.org/1999/02/22-rdf-syntax-ns#subject> <https://eventkg.l3s.uni-hannover.de/resource/entity_6360560> <https://eventkg.l3s.uni-hannover.de/graph/wikidata> ."
+        },
+        {
+          "line": 2948,
+          "text": "<https://eventkg.l3s.uni-hannover.de/resource/relation_41848297> <http://www.w3.org/1999/02/22-rdf-syntax-ns#object> <https://eventkg.l3s.uni-hannover.de/resource/entity_6360560> <https://eventkg.l3s.uni-hannover.de/graph/wikidata> ."
+        },
+        {
+          "line": 2949,
+          "text": "<https://eventkg.l3s.uni-hannover.de/resource/relation_41848297> <http://semanticweb.cs.vu.nl/2009/11/sem/roleType> <http://www.wikidata.org/prop/direct/P1366> <https://eventkg.l3s.uni-hannover.de/graph/wikidata> ."
+        }
+      ],
+      "values": {
+        "http://www.w3.org/1999/02/22-rdf-syntax-ns#type": "https://eventkg.l3s.uni-hannover.de/schema/Relation",
+        "http://www.w3.org/1999/02/22-rdf-syntax-ns#subject": "https://eventkg.l3s.uni-hannover.de/resource/entity_6360560",
+        "http://www.w3.org/1999/02/22-rdf-syntax-ns#object": "https://eventkg.l3s.uni-hannover.de/resource/entity_6360560",
+        "http://semanticweb.cs.vu.nl/2009/11/sem/roleType": "http://www.wikidata.org/prop/direct/P1366"
+      }
+    },
+    {
+      "path": "relations_entities_other/part_00444.nq.gz",
+      "resource": "https://eventkg.l3s.uni-hannover.de/resource/relation_47531711",
+      "assertion": {
+        "observation_id": "obs-c99c959e9a2fee091f0b8893",
+        "subject_qid": "Q7318",
+        "object_qid": "Q7318",
+        "level1_relation": "PART_WHOLE_HIERARCHY",
+        "level1_assignment_status": "RANKED_REVIEW_REQUIRED",
+        "level2_relation": "http://www.w3.org/2000/01/rdf-schema#seeAlso",
+        "level2_label": "see Also",
+        "selection_priority": "3",
+        "selection_status": "SELECTED",
+        "direction": "same",
+        "time_from": "",
+        "time_to": "",
+        "time_point": "",
+        "time_precision": "{\"from\":[],\"to\":[]}",
+        "time_status": "NONE",
+        "selected_source": "EventKG",
+        "selected_source_predicate": "http://www.w3.org/2000/01/rdf-schema#seeAlso",
+        "source_record_id": "https://eventkg.l3s.uni-hannover.de/resource/relation_47531711|https://eventkg.l3s.uni-hannover.de/graph/dbpedia_en",
+        "source_graph": "https://eventkg.l3s.uni-hannover.de/graph/dbpedia_en",
+        "source_reference": "relations_entities_other/part_00444.nq.gz:https://eventkg.l3s.uni-hannover.de/resource/relation_47531711",
+        "source_support": "[{\"graph\":\"https://eventkg.l3s.uni-hannover.de/graph/dbpedia_en\",\"object_qid\":\"Q7318\",\"predicate\":\"http://www.w3.org/2000/01/rdf-schema#seeAlso\",\"record_id\":\"https://eventkg.l3s.uni-hannover.de/resource/relation_47531711|https://eventkg.l3s.uni-hannover.de/graph/dbpedia_en\",\"source\":\"EventKG\",\"subject_qid\":\"Q7318\"}]",
+        "evidence_references": "[{\"graph\":\"https://eventkg.l3s.uni-hannover.de/graph/dbpedia_en\",\"record_id\":\"https://eventkg.l3s.uni-hannover.de/resource/relation_47531711|https://eventkg.l3s.uni-hannover.de/graph/dbpedia_en\",\"reference\":\"relations_entities_other/part_00444.nq.gz:https://eventkg.l3s.uni-hannover.de/resource/relation_47531711\"}]",
+        "final_review_status": "ACCEPTED",
+        "final_mapping_class": "INDEPENDENT_EXISTING_SOURCE_ONLY",
+        "mapping_origin": "catalog",
+        "relation_map_version": "relation-map-v1.0.0"
+      },
+      "raw_lines": [
+        {
+          "line": 4100,
+          "text": "<https://eventkg.l3s.uni-hannover.de/resource/relation_47531711> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <https://eventkg.l3s.uni-hannover.de/schema/Relation> <https://eventkg.l3s.uni-hannover.de/graph/dbpedia_en> ."
+        },
+        {
+          "line": 4101,
+          "text": "<https://eventkg.l3s.uni-hannover.de/resource/relation_47531711> <http://www.w3.org/1999/02/22-rdf-syntax-ns#subject> <https://eventkg.l3s.uni-hannover.de/resource/entity_4137475> <https://eventkg.l3s.uni-hannover.de/graph/dbpedia_en> ."
+        },
+        {
+          "line": 4102,
+          "text": "<https://eventkg.l3s.uni-hannover.de/resource/relation_47531711> <http://www.w3.org/1999/02/22-rdf-syntax-ns#object> <https://eventkg.l3s.uni-hannover.de/resource/entity_4137475> <https://eventkg.l3s.uni-hannover.de/graph/dbpedia_en> ."
+        },
+        {
+          "line": 4103,
+          "text": "<https://eventkg.l3s.uni-hannover.de/resource/relation_47531711> <http://semanticweb.cs.vu.nl/2009/11/sem/roleType> <http://www.w3.org/2000/01/rdf-schema#seeAlso> <https://eventkg.l3s.uni-hannover.de/graph/dbpedia_en> ."
+        }
+      ],
+      "values": {
+        "http://www.w3.org/1999/02/22-rdf-syntax-ns#type": "https://eventkg.l3s.uni-hannover.de/schema/Relation",
+        "http://www.w3.org/1999/02/22-rdf-syntax-ns#subject": "https://eventkg.l3s.uni-hannover.de/resource/entity_4137475",
+        "http://www.w3.org/1999/02/22-rdf-syntax-ns#object": "https://eventkg.l3s.uni-hannover.de/resource/entity_4137475",
+        "http://semanticweb.cs.vu.nl/2009/11/sem/roleType": "http://www.w3.org/2000/01/rdf-schema#seeAlso"
+      }
+    },
+    {
+      "path": "relations_entities_other/part_00454.nq.gz",
+      "resource": "https://eventkg.l3s.uni-hannover.de/resource/relation_48611476",
+      "assertion": {
+        "observation_id": "obs-89c72200029dcd1454a30fb8",
+        "subject_qid": "Q3569774",
+        "object_qid": "Q3569774",
+        "level1_relation": "CREATION_AUTHORSHIP",
+        "level1_assignment_status": "RANKED_REVIEW_REQUIRED",
+        "level2_relation": "wd:P485",
+        "level2_label": "archives at",
+        "selection_priority": "3",
+        "selection_status": "SELECTED",
+        "direction": "same",
+        "time_from": "",
+        "time_to": "",
+        "time_point": "",
+        "time_precision": "{\"from\":[],\"to\":[]}",
+        "time_status": "NONE",
+        "selected_source": "EventKG",
+        "selected_source_predicate": "http://www.wikidata.org/prop/direct/P485",
+        "source_record_id": "https://eventkg.l3s.uni-hannover.de/resource/relation_48611476|https://eventkg.l3s.uni-hannover.de/graph/wikidata",
+        "source_graph": "https://eventkg.l3s.uni-hannover.de/graph/wikidata",
+        "source_reference": "relations_entities_other/part_00454.nq.gz:https://eventkg.l3s.uni-hannover.de/resource/relation_48611476",
+        "source_support": "[{\"graph\":\"https://eventkg.l3s.uni-hannover.de/graph/wikidata\",\"object_qid\":\"Q3569774\",\"predicate\":\"http://www.wikidata.org/prop/direct/P485\",\"record_id\":\"https://eventkg.l3s.uni-hannover.de/resource/relation_48611476|https://eventkg.l3s.uni-hannover.de/graph/wikidata\",\"source\":\"EventKG\",\"subject_qid\":\"Q3569774\"}]",
+        "evidence_references": "[{\"graph\":\"https://eventkg.l3s.uni-hannover.de/graph/wikidata\",\"record_id\":\"https://eventkg.l3s.uni-hannover.de/resource/relation_48611476|https://eventkg.l3s.uni-hannover.de/graph/wikidata\",\"reference\":\"relations_entities_other/part_00454.nq.gz:https://eventkg.l3s.uni-hannover.de/resource/relation_48611476\"}]",
+        "final_review_status": "ACCEPTED",
+        "final_mapping_class": "NATIVE_OR_REUSED_WIKIDATA_ID",
+        "mapping_origin": "catalog",
+        "relation_map_version": "relation-map-v1.0.0"
+      },
+      "raw_lines": [
+        {
+          "line": 4445,
+          "text": "<https://eventkg.l3s.uni-hannover.de/resource/relation_48611476> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <https://eventkg.l3s.uni-hannover.de/schema/Relation> <https://eventkg.l3s.uni-hannover.de/graph/wikidata> ."
+        },
+        {
+          "line": 4446,
+          "text": "<https://eventkg.l3s.uni-hannover.de/resource/relation_48611476> <http://www.w3.org/1999/02/22-rdf-syntax-ns#subject> <https://eventkg.l3s.uni-hannover.de/resource/entity_2787024> <https://eventkg.l3s.uni-hannover.de/graph/wikidata> ."
+        },
+        {
+          "line": 4447,
+          "text": "<https://eventkg.l3s.uni-hannover.de/resource/relation_48611476> <http://www.w3.org/1999/02/22-rdf-syntax-ns#object> <https://eventkg.l3s.uni-hannover.de/resource/entity_2787024> <https://eventkg.l3s.uni-hannover.de/graph/wikidata> ."
+        },
+        {
+          "line": 4448,
+          "text": "<https://eventkg.l3s.uni-hannover.de/resource/relation_48611476> <http://semanticweb.cs.vu.nl/2009/11/sem/roleType> <http://www.wikidata.org/prop/direct/P485> <https://eventkg.l3s.uni-hannover.de/graph/wikidata> ."
+        }
+      ],
+      "values": {
+        "http://www.w3.org/1999/02/22-rdf-syntax-ns#type": "https://eventkg.l3s.uni-hannover.de/schema/Relation",
+        "http://www.w3.org/1999/02/22-rdf-syntax-ns#subject": "https://eventkg.l3s.uni-hannover.de/resource/entity_2787024",
+        "http://www.w3.org/1999/02/22-rdf-syntax-ns#object": "https://eventkg.l3s.uni-hannover.de/resource/entity_2787024",
+        "http://semanticweb.cs.vu.nl/2009/11/sem/roleType": "http://www.wikidata.org/prop/direct/P485"
+      }
+    },
+    {
+      "path": "relations_entities_other/part_00461.nq.gz",
+      "resource": "https://eventkg.l3s.uni-hannover.de/resource/relation_49378550",
+      "assertion": {
+        "observation_id": "obs-d2a48459cd658fc374158873",
+        "subject_qid": "Q2897440",
+        "object_qid": "Q2897440",
+        "level1_relation": "AWARD_RECOGNITION",
+        "level1_assignment_status": "EXISTING_CATALOG_ASSIGNMENT",
+        "level2_relation": "wd:P166",
+        "level2_label": "award received",
+        "selection_priority": "3",
+        "selection_status": "SELECTED",
+        "direction": "same",
+        "time_from": "",
+        "time_to": "",
+        "time_point": "",
+        "time_precision": "{\"from\":[],\"to\":[]}",
+        "time_status": "NONE",
+        "selected_source": "EventKG",
+        "selected_source_predicate": "http://dbpedia.org/ontology/award",
+        "source_record_id": "https://eventkg.l3s.uni-hannover.de/resource/relation_49378550|https://eventkg.l3s.uni-hannover.de/graph/dbpedia_en",
+        "source_graph": "https://eventkg.l3s.uni-hannover.de/graph/dbpedia_en",
+        "source_reference": "relations_entities_other/part_00461.nq.gz:https://eventkg.l3s.uni-hannover.de/resource/relation_49378550",
+        "source_support": "[{\"graph\":\"https://eventkg.l3s.uni-hannover.de/graph/dbpedia_en\",\"object_qid\":\"Q2897440\",\"predicate\":\"http://dbpedia.org/ontology/award\",\"record_id\":\"https://eventkg.l3s.uni-hannover.de/resource/relation_49378550|https://eventkg.l3s.uni-hannover.de/graph/dbpedia_en\",\"source\":\"EventKG\",\"subject_qid\":\"Q2897440\"}]",
+        "evidence_references": "[{\"graph\":\"https://eventkg.l3s.uni-hannover.de/graph/dbpedia_en\",\"record_id\":\"https://eventkg.l3s.uni-hannover.de/resource/relation_49378550|https://eventkg.l3s.uni-hannover.de/graph/dbpedia_en\",\"reference\":\"relations_entities_other/part_00461.nq.gz:https://eventkg.l3s.uni-hannover.de/resource/relation_49378550\"}]",
+        "final_review_status": "PROVISIONAL",
+        "final_mapping_class": "OBSERVATION_OVERLAP",
+        "mapping_origin": "catalog",
+        "relation_map_version": "relation-map-v1.0.0"
+      },
+      "raw_lines": [
+        {
+          "line": 5810,
+          "text": "<https://eventkg.l3s.uni-hannover.de/resource/relation_49378550> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <https://eventkg.l3s.uni-hannover.de/schema/Relation> <https://eventkg.l3s.uni-hannover.de/graph/dbpedia_en> ."
+        },
+        {
+          "line": 5811,
+          "text": "<https://eventkg.l3s.uni-hannover.de/resource/relation_49378550> <http://www.w3.org/1999/02/22-rdf-syntax-ns#subject> <https://eventkg.l3s.uni-hannover.de/resource/entity_1361088> <https://eventkg.l3s.uni-hannover.de/graph/dbpedia_en> ."
+        },
+        {
+          "line": 5812,
+          "text": "<https://eventkg.l3s.uni-hannover.de/resource/relation_49378550> <http://www.w3.org/1999/02/22-rdf-syntax-ns#object> <https://eventkg.l3s.uni-hannover.de/resource/entity_1361088> <https://eventkg.l3s.uni-hannover.de/graph/dbpedia_en> ."
+        },
+        {
+          "line": 5813,
+          "text": "<https://eventkg.l3s.uni-hannover.de/resource/relation_49378550> <http://semanticweb.cs.vu.nl/2009/11/sem/roleType> <http://dbpedia.org/ontology/award> <https://eventkg.l3s.uni-hannover.de/graph/dbpedia_en> ."
+        }
+      ],
+      "values": {
+        "http://www.w3.org/1999/02/22-rdf-syntax-ns#type": "https://eventkg.l3s.uni-hannover.de/schema/Relation",
+        "http://www.w3.org/1999/02/22-rdf-syntax-ns#subject": "https://eventkg.l3s.uni-hannover.de/resource/entity_1361088",
+        "http://www.w3.org/1999/02/22-rdf-syntax-ns#object": "https://eventkg.l3s.uni-hannover.de/resource/entity_1361088",
+        "http://semanticweb.cs.vu.nl/2009/11/sem/roleType": "http://dbpedia.org/ontology/award"
+      }
+    },
+    {
+      "path": "relations_entities_other/part_00461.nq.gz",
+      "resource": "https://eventkg.l3s.uni-hannover.de/resource/relation_49383015",
+      "assertion": {
+        "observation_id": "obs-c0905c76421bd0369c7afa4f",
+        "subject_qid": "Q1977350",
+        "object_qid": "Q1977350",
+        "level1_relation": "AWARD_RECOGNITION",
+        "level1_assignment_status": "EXISTING_CATALOG_ASSIGNMENT",
+        "level2_relation": "wd:P166",
+        "level2_label": "award received",
+        "selection_priority": "3",
+        "selection_status": "SELECTED",
+        "direction": "same",
+        "time_from": "",
+        "time_to": "",
+        "time_point": "",
+        "time_precision": "{\"from\":[],\"to\":[]}",
+        "time_status": "NONE",
+        "selected_source": "EventKG",
+        "selected_source_predicate": "http://dbpedia.org/ontology/award",
+        "source_record_id": "https://eventkg.l3s.uni-hannover.de/resource/relation_49383015|https://eventkg.l3s.uni-hannover.de/graph/dbpedia_en",
+        "source_graph": "https://eventkg.l3s.uni-hannover.de/graph/dbpedia_en",
+        "source_reference": "relations_entities_other/part_00461.nq.gz:https://eventkg.l3s.uni-hannover.de/resource/relation_49383015",
+        "source_support": "[{\"graph\":\"https://eventkg.l3s.uni-hannover.de/graph/dbpedia_en\",\"object_qid\":\"Q1977350\",\"predicate\":\"http://dbpedia.org/ontology/award\",\"record_id\":\"https://eventkg.l3s.uni-hannover.de/resource/relation_49383015|https://eventkg.l3s.uni-hannover.de/graph/dbpedia_en\",\"source\":\"EventKG\",\"subject_qid\":\"Q1977350\"}]",
+        "evidence_references": "[{\"graph\":\"https://eventkg.l3s.uni-hannover.de/graph/dbpedia_en\",\"record_id\":\"https://eventkg.l3s.uni-hannover.de/resource/relation_49383015|https://eventkg.l3s.uni-hannover.de/graph/dbpedia_en\",\"reference\":\"relations_entities_other/part_00461.nq.gz:https://eventkg.l3s.uni-hannover.de/resource/relation_49383015\"}]",
+        "final_review_status": "PROVISIONAL",
+        "final_mapping_class": "OBSERVATION_OVERLAP",
+        "mapping_origin": "catalog",
+        "relation_map_version": "relation-map-v1.0.0"
+      },
+      "raw_lines": [
+        {
+          "line": 6070,
+          "text": "<https://eventkg.l3s.uni-hannover.de/resource/relation_49383015> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <https://eventkg.l3s.uni-hannover.de/schema/Relation> <https://eventkg.l3s.uni-hannover.de/graph/dbpedia_en> ."
+        },
+        {
+          "line": 6071,
+          "text": "<https://eventkg.l3s.uni-hannover.de/resource/relation_49383015> <http://www.w3.org/1999/02/22-rdf-syntax-ns#subject> <https://eventkg.l3s.uni-hannover.de/resource/entity_5123654> <https://eventkg.l3s.uni-hannover.de/graph/dbpedia_en> ."
+        },
+        {
+          "line": 6072,
+          "text": "<https://eventkg.l3s.uni-hannover.de/resource/relation_49383015> <http://www.w3.org/1999/02/22-rdf-syntax-ns#object> <https://eventkg.l3s.uni-hannover.de/resource/entity_5123654> <https://eventkg.l3s.uni-hannover.de/graph/dbpedia_en> ."
+        },
+        {
+          "line": 6073,
+          "text": "<https://eventkg.l3s.uni-hannover.de/resource/relation_49383015> <http://semanticweb.cs.vu.nl/2009/11/sem/roleType> <http://dbpedia.org/ontology/award> <https://eventkg.l3s.uni-hannover.de/graph/dbpedia_en> ."
+        }
+      ],
+      "values": {
+        "http://www.w3.org/1999/02/22-rdf-syntax-ns#type": "https://eventkg.l3s.uni-hannover.de/schema/Relation",
+        "http://www.w3.org/1999/02/22-rdf-syntax-ns#subject": "https://eventkg.l3s.uni-hannover.de/resource/entity_5123654",
+        "http://www.w3.org/1999/02/22-rdf-syntax-ns#object": "https://eventkg.l3s.uni-hannover.de/resource/entity_5123654",
+        "http://semanticweb.cs.vu.nl/2009/11/sem/roleType": "http://dbpedia.org/ontology/award"
+      }
+    },
+    {
+      "path": "relations_entities_other/part_00474.nq.gz",
+      "resource": "https://eventkg.l3s.uni-hannover.de/resource/relation_50704261",
+      "assertion": {
+        "observation_id": "obs-d2ff5fa00a5777397fddb940",
+        "subject_qid": "Q3132348",
+        "object_qid": "Q3132348",
+        "level1_relation": "AWARD_RECOGNITION",
+        "level1_assignment_status": "EXISTING_CATALOG_ASSIGNMENT",
+        "level2_relation": "wd:P166",
+        "level2_label": "award received",
+        "selection_priority": "3",
+        "selection_status": "SELECTED",
+        "direction": "same",
+        "time_from": "",
+        "time_to": "",
+        "time_point": "",
+        "time_precision": "{\"from\":[],\"to\":[]}",
+        "time_status": "NONE",
+        "selected_source": "EventKG",
+        "selected_source_predicate": "http://dbpedia.org/ontology/award",
+        "source_record_id": "https://eventkg.l3s.uni-hannover.de/resource/relation_50704261|https://eventkg.l3s.uni-hannover.de/graph/dbpedia_en",
+        "source_graph": "https://eventkg.l3s.uni-hannover.de/graph/dbpedia_en",
+        "source_reference": "relations_entities_other/part_00474.nq.gz:https://eventkg.l3s.uni-hannover.de/resource/relation_50704261",
+        "source_support": "[{\"graph\":\"https://eventkg.l3s.uni-hannover.de/graph/dbpedia_en\",\"object_qid\":\"Q3132348\",\"predicate\":\"http://dbpedia.org/ontology/award\",\"record_id\":\"https://eventkg.l3s.uni-hannover.de/resource/relation_50704261|https://eventkg.l3s.uni-hannover.de/graph/dbpedia_en\",\"source\":\"EventKG\",\"subject_qid\":\"Q3132348\"}]",
+        "evidence_references": "[{\"graph\":\"https://eventkg.l3s.uni-hannover.de/graph/dbpedia_en\",\"record_id\":\"https://eventkg.l3s.uni-hannover.de/resource/relation_50704261|https://eventkg.l3s.uni-hannover.de/graph/dbpedia_en\",\"reference\":\"relations_entities_other/part_00474.nq.gz:https://eventkg.l3s.uni-hannover.de/resource/relation_50704261\"}]",
+        "final_review_status": "PROVISIONAL",
+        "final_mapping_class": "OBSERVATION_OVERLAP",
+        "mapping_origin": "catalog",
+        "relation_map_version": "relation-map-v1.0.0"
+      },
+      "raw_lines": [
+        {
+          "line": 1977,
+          "text": "<https://eventkg.l3s.uni-hannover.de/resource/relation_50704261> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <https://eventkg.l3s.uni-hannover.de/schema/Relation> <https://eventkg.l3s.uni-hannover.de/graph/dbpedia_en> ."
+        },
+        {
+          "line": 1978,
+          "text": "<https://eventkg.l3s.uni-hannover.de/resource/relation_50704261> <http://www.w3.org/1999/02/22-rdf-syntax-ns#subject> <https://eventkg.l3s.uni-hannover.de/resource/entity_12146944> <https://eventkg.l3s.uni-hannover.de/graph/dbpedia_en> ."
+        },
+        {
+          "line": 1979,
+          "text": "<https://eventkg.l3s.uni-hannover.de/resource/relation_50704261> <http://www.w3.org/1999/02/22-rdf-syntax-ns#object> <https://eventkg.l3s.uni-hannover.de/resource/entity_12146944> <https://eventkg.l3s.uni-hannover.de/graph/dbpedia_en> ."
+        },
+        {
+          "line": 1980,
+          "text": "<https://eventkg.l3s.uni-hannover.de/resource/relation_50704261> <http://semanticweb.cs.vu.nl/2009/11/sem/roleType> <http://dbpedia.org/ontology/award> <https://eventkg.l3s.uni-hannover.de/graph/dbpedia_en> ."
+        }
+      ],
+      "values": {
+        "http://www.w3.org/1999/02/22-rdf-syntax-ns#type": "https://eventkg.l3s.uni-hannover.de/schema/Relation",
+        "http://www.w3.org/1999/02/22-rdf-syntax-ns#subject": "https://eventkg.l3s.uni-hannover.de/resource/entity_12146944",
+        "http://www.w3.org/1999/02/22-rdf-syntax-ns#object": "https://eventkg.l3s.uni-hannover.de/resource/entity_12146944",
+        "http://semanticweb.cs.vu.nl/2009/11/sem/roleType": "http://dbpedia.org/ontology/award"
+      }
+    }
+  ],
+  "wikidata": [
+    {
+      "assertion": {
+        "observation_id": "obs-ddbc2a47e9cbbdb307fb89f0",
+        "subject_qid": "Q15180",
+        "object_qid": "Q15180",
+        "level1_relation": "SPATIAL",
+        "level1_assignment_status": "EXISTING_CATALOG_ASSIGNMENT",
+        "level2_relation": "wd:P17",
+        "level2_label": "country",
+        "selection_priority": "4",
+        "selection_status": "SELECTED",
+        "direction": "same",
+        "time_from": "",
+        "time_to": "",
+        "time_point": "",
+        "time_precision": "{\"from\":[],\"point\":[],\"to\":[]}",
+        "time_status": "NONE",
+        "selected_source": "Wikidata",
+        "selected_source_predicate": "wd:P17",
+        "source_record_id": "Q15180$340e3f55-4361-f71e-972c-a092bfd555dd",
+        "source_graph": "https://www.wikidata.org",
+        "source_reference": "{\"reference_hashes\":[],\"statement_id\":\"Q15180$340e3f55-4361-f71e-972c-a092bfd555dd\"}",
+        "source_support": "[{\"graph\":\"https://www.wikidata.org\",\"object_qid\":\"Q15180\",\"predicate\":\"wd:P17\",\"record_id\":\"Q15180$340e3f55-4361-f71e-972c-a092bfd555dd\",\"source\":\"Wikidata\",\"subject_qid\":\"Q15180\"}]",
+        "evidence_references": "[{\"graph\":\"https://www.wikidata.org\",\"record_id\":\"Q15180$340e3f55-4361-f71e-972c-a092bfd555dd\",\"reference\":\"{\\\"reference_hashes\\\":[],\\\"statement_id\\\":\\\"Q15180$340e3f55-4361-f71e-972c-a092bfd555dd\\\"}\"}]",
+        "final_review_status": "ACCEPTED",
+        "final_mapping_class": "NATIVE_OR_REUSED_WIKIDATA_ID",
+        "mapping_origin": "catalog",
+        "relation_map_version": "relation-map-v1.0.0"
+      },
+      "archive_line": 8047,
+      "entity_id": "Q15180",
+      "label": "Soviet Union",
+      "description": {
+        "language": "en",
+        "value": "former country in Eurasia (1922–1991)"
+      },
+      "lastrevid": 2554741555,
+      "modified": "2026-10-07T22:23:18Z",
+      "property": "P17",
+      "statement": {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P17",
+          "hash": "07fa6eb2d1e5f1c75fc204938373173411385a84",
+          "datavalue": {
+            "value": {
+              "entity-type": "item",
+              "numeric-id": 15180,
+              "id": "Q15180"
+            },
+            "type": "wikibase-entityid"
+          },
+          "datatype": "wikibase-item"
+        },
+        "type": "statement",
+        "id": "Q15180$340e3f55-4361-f71e-972c-a092bfd555dd",
+        "rank": "normal"
+      }
+    },
+    {
+      "assertion": {
+        "observation_id": "obs-ae5256d7cbc2545097e61fdb",
+        "subject_qid": "Q153128",
+        "object_qid": "Q153128",
+        "level1_relation": "SPATIAL",
+        "level1_assignment_status": "EXISTING_CATALOG_ASSIGNMENT",
+        "level2_relation": "wd:P17",
+        "level2_label": "country",
+        "selection_priority": "4",
+        "selection_status": "SELECTED",
+        "direction": "same",
+        "time_from": "",
+        "time_to": "",
+        "time_point": "",
+        "time_precision": "{\"from\":[],\"point\":[],\"to\":[]}",
+        "time_status": "NONE",
+        "selected_source": "Wikidata",
+        "selected_source_predicate": "wd:P17",
+        "source_record_id": "Q153128$77313eb3-47db-bf6e-741f-4bc0b7a7336f",
+        "source_graph": "https://www.wikidata.org",
+        "source_reference": "{\"reference_hashes\":[],\"statement_id\":\"Q153128$77313eb3-47db-bf6e-741f-4bc0b7a7336f\"}",
+        "source_support": "[{\"graph\":\"https://www.wikidata.org\",\"object_qid\":\"Q153128\",\"predicate\":\"wd:P17\",\"record_id\":\"Q153128$77313eb3-47db-bf6e-741f-4bc0b7a7336f\",\"source\":\"Wikidata\",\"subject_qid\":\"Q153128\"}]",
+        "evidence_references": "[{\"graph\":\"https://www.wikidata.org\",\"record_id\":\"Q153128$77313eb3-47db-bf6e-741f-4bc0b7a7336f\",\"reference\":\"{\\\"reference_hashes\\\":[],\\\"statement_id\\\":\\\"Q153128$77313eb3-47db-bf6e-741f-4bc0b7a7336f\\\"}\"}]",
+        "final_review_status": "ACCEPTED",
+        "final_mapping_class": "NATIVE_OR_REUSED_WIKIDATA_ID",
+        "mapping_origin": "catalog",
+        "relation_map_version": "relation-map-v1.0.0"
+      },
+      "archive_line": 8212,
+      "entity_id": "Q153128",
+      "label": "Independent State of Croatia",
+      "description": {
+        "language": "en",
+        "value": "World War II-era puppet state of Nazi Germany and Fascist Italy (April 1941-May 1945)"
+      },
+      "lastrevid": 2551384512,
+      "modified": "2026-09-30T16:31:25Z",
+      "property": "P17",
+      "statement": {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P17",
+          "hash": "4bf4726c3d90d50d8a12004f76f9bafb3d5fbe3b",
+          "datavalue": {
+            "value": {
+              "entity-type": "item",
+              "numeric-id": 153128,
+              "id": "Q153128"
+            },
+            "type": "wikibase-entityid"
+          },
+          "datatype": "wikibase-item"
+        },
+        "type": "statement",
+        "id": "Q153128$77313eb3-47db-bf6e-741f-4bc0b7a7336f",
+        "rank": "normal"
+      }
+    },
+    {
+      "assertion": {
+        "observation_id": "obs-ee75bb87f5402e90cd1a3781",
+        "subject_qid": "Q16625079",
+        "object_qid": "Q16625079",
+        "level1_relation": "TEMPORAL_SUCCESSION",
+        "level1_assignment_status": "RANKED_REVIEW_REQUIRED",
+        "level2_relation": "wd:P1365",
+        "level2_label": "replaces",
+        "selection_priority": "4",
+        "selection_status": "SELECTED",
+        "direction": "same",
+        "time_from": "",
+        "time_to": "",
+        "time_point": "",
+        "time_precision": "{\"from\":[],\"point\":[],\"to\":[]}",
+        "time_status": "NONE",
+        "selected_source": "Wikidata",
+        "selected_source_predicate": "wd:P1365",
+        "source_record_id": "Q16625079$726dd34d-4239-f8c5-2b81-03258dedd55e",
+        "source_graph": "https://www.wikidata.org",
+        "source_reference": "{\"reference_hashes\":[\"c625981eb21317872652c5e5bf318f24802a0a23\"],\"statement_id\":\"Q16625079$726dd34d-4239-f8c5-2b81-03258dedd55e\"}",
+        "source_support": "[{\"graph\":\"https://www.wikidata.org\",\"object_qid\":\"Q16625079\",\"predicate\":\"wd:P1365\",\"record_id\":\"Q16625079$726dd34d-4239-f8c5-2b81-03258dedd55e\",\"source\":\"Wikidata\",\"subject_qid\":\"Q16625079\"}]",
+        "evidence_references": "[{\"graph\":\"https://www.wikidata.org\",\"record_id\":\"Q16625079$726dd34d-4239-f8c5-2b81-03258dedd55e\",\"reference\":\"{\\\"reference_hashes\\\":[\\\"c625981eb21317872652c5e5bf318f24802a0a23\\\"],\\\"statement_id\\\":\\\"Q16625079$726dd34d-4239-f8c5-2b81-03258dedd55e\\\"}\"}]",
+        "final_review_status": "ACCEPTED",
+        "final_mapping_class": "NATIVE_OR_REUSED_WIKIDATA_ID",
+        "mapping_origin": "catalog",
+        "relation_map_version": "relation-map-v1.0.0"
+      },
+      "archive_line": 10433,
+      "entity_id": "Q16625079",
+      "label": "50th Guards Rifle Division",
+      "description": {
+        "language": "en",
+        "value": "Soviet Army rifle division"
+      },
+      "lastrevid": 2494484743,
+      "modified": "2026-05-19T21:29:12Z",
+      "property": "P1365",
+      "statement": {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P1365",
+          "hash": "4a1e938c495d84fa7eae248cec9c5b1570ec9826",
+          "datavalue": {
+            "value": {
+              "entity-type": "item",
+              "numeric-id": 16625079,
+              "id": "Q16625079"
+            },
+            "type": "wikibase-entityid"
+          },
+          "datatype": "wikibase-item"
+        },
+        "type": "statement",
+        "id": "Q16625079$726dd34d-4239-f8c5-2b81-03258dedd55e",
+        "rank": "normal",
+        "references": [
+          {
+            "hash": "c625981eb21317872652c5e5bf318f24802a0a23",
+            "snaks": {
+              "P143": [
+                {
+                  "snaktype": "value",
+                  "property": "P143",
+                  "hash": "6a164248fc96bfa583bbb495cb63ae6401ec203c",
+                  "datavalue": {
+                    "value": {
+                      "entity-type": "item",
+                      "numeric-id": 206855,
+                      "id": "Q206855"
+                    },
+                    "type": "wikibase-entityid"
+                  },
+                  "datatype": "wikibase-item"
+                }
+              ],
+              "P4656": [
+                {
+                  "snaktype": "value",
+                  "property": "P4656",
+                  "hash": "39f5579df111a94ac508049fefc713363b1482f6",
+                  "datavalue": {
+                    "value": "https://ru.wikipedia.org/?oldid=134503510",
+                    "type": "string"
+                  },
+                  "datatype": "url"
+                }
+              ]
+            },
+            "snaks-order": [
+              "P143",
+              "P4656"
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "assertion": {
+        "observation_id": "obs-6ff315d5fd3fbdd56ea2131d",
+        "subject_qid": "Q21634743",
+        "object_qid": "Q21634743",
+        "level1_relation": "TEMPORAL_SUCCESSION",
+        "level1_assignment_status": "EXISTING_CATALOG_ASSIGNMENT",
+        "level2_relation": "wd:P1366",
+        "level2_label": "replaced by",
+        "selection_priority": "4",
+        "selection_status": "SELECTED",
+        "direction": "same",
+        "time_from": "",
+        "time_to": "",
+        "time_point": "",
+        "time_precision": "{\"from\":[],\"point\":[],\"to\":[]}",
+        "time_status": "NONE",
+        "selected_source": "Wikidata",
+        "selected_source_predicate": "wd:P1366",
+        "source_record_id": "Q21634743$049daf7c-48d3-fa02-ff7f-900896db2246",
+        "source_graph": "https://www.wikidata.org",
+        "source_reference": "{\"reference_hashes\":[\"537570cb817bb992ba681a33dee53bc168e05b94\"],\"statement_id\":\"Q21634743$049daf7c-48d3-fa02-ff7f-900896db2246\"}",
+        "source_support": "[{\"graph\":\"https://www.wikidata.org\",\"object_qid\":\"Q21634743\",\"predicate\":\"wd:P1366\",\"record_id\":\"Q21634743$049daf7c-48d3-fa02-ff7f-900896db2246\",\"source\":\"Wikidata\",\"subject_qid\":\"Q21634743\"}]",
+        "evidence_references": "[{\"graph\":\"https://www.wikidata.org\",\"record_id\":\"Q21634743$049daf7c-48d3-fa02-ff7f-900896db2246\",\"reference\":\"{\\\"reference_hashes\\\":[\\\"537570cb817bb992ba681a33dee53bc168e05b94\\\"],\\\"statement_id\\\":\\\"Q21634743$049daf7c-48d3-fa02-ff7f-900896db2246\\\"}\"}]",
+        "final_review_status": "ACCEPTED",
+        "final_mapping_class": "NATIVE_OR_REUSED_WIKIDATA_ID",
+        "mapping_origin": "catalog",
+        "relation_map_version": "relation-map-v1.0.0"
+      },
+      "archive_line": 15075,
+      "entity_id": "Q21634743",
+      "label": "162nd Fighter Aviation Regiment",
+      "description": {
+        "language": "en",
+        "value": "military unit"
+      },
+      "lastrevid": 2234719732,
+      "modified": "2024-08-23T20:25:01Z",
+      "property": "P1366",
+      "statement": {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P1366",
+          "hash": "6d15ff72e29909b62d3a0a445baad234fc4f6e24",
+          "datavalue": {
+            "value": {
+              "entity-type": "item",
+              "numeric-id": 21634743,
+              "id": "Q21634743"
+            },
+            "type": "wikibase-entityid"
+          },
+          "datatype": "wikibase-item"
+        },
+        "type": "statement",
+        "id": "Q21634743$049daf7c-48d3-fa02-ff7f-900896db2246",
+        "rank": "normal",
+        "references": [
+          {
+            "hash": "537570cb817bb992ba681a33dee53bc168e05b94",
+            "snaks": {
+              "P143": [
+                {
+                  "snaktype": "value",
+                  "property": "P143",
+                  "hash": "6a164248fc96bfa583bbb495cb63ae6401ec203c",
+                  "datavalue": {
+                    "value": {
+                      "entity-type": "item",
+                      "numeric-id": 206855,
+                      "id": "Q206855"
+                    },
+                    "type": "wikibase-entityid"
+                  },
+                  "datatype": "wikibase-item"
+                }
+              ],
+              "P4656": [
+                {
+                  "snaktype": "value",
+                  "property": "P4656",
+                  "hash": "128e9d6ca911adae1f36158387b9373b8d6e26d5",
+                  "datavalue": {
+                    "value": "https://ru.wikipedia.org/?oldid=138985762",
+                    "type": "string"
+                  },
+                  "datatype": "url"
+                }
+              ]
+            },
+            "snaks-order": [
+              "P143",
+              "P4656"
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "assertion": {
+        "observation_id": "obs-5b9bcbc91c1e03a43da02439",
+        "subject_qid": "Q3192509",
+        "object_qid": "Q3192509",
+        "level1_relation": "ORGANIZATION_HIERARCHY",
+        "level1_assignment_status": "EXISTING_CATALOG_ASSIGNMENT",
+        "level2_relation": "wd:P749",
+        "level2_label": "parent organization or unit",
+        "selection_priority": "4",
+        "selection_status": "SELECTED",
+        "direction": "same",
+        "time_from": "",
+        "time_to": "",
+        "time_point": "",
+        "time_precision": "{\"from\":[],\"point\":[],\"to\":[]}",
+        "time_status": "NONE",
+        "selected_source": "Wikidata",
+        "selected_source_predicate": "wd:P749",
+        "source_record_id": "Q3192509$9fe2ade1-43fc-f8fd-5815-3298526a06f8",
+        "source_graph": "https://www.wikidata.org",
+        "source_reference": "{\"reference_hashes\":[],\"statement_id\":\"Q3192509$9fe2ade1-43fc-f8fd-5815-3298526a06f8\"}",
+        "source_support": "[{\"graph\":\"https://www.wikidata.org\",\"object_qid\":\"Q3192509\",\"predicate\":\"wd:P749\",\"record_id\":\"Q3192509$9fe2ade1-43fc-f8fd-5815-3298526a06f8\",\"source\":\"Wikidata\",\"subject_qid\":\"Q3192509\"}]",
+        "evidence_references": "[{\"graph\":\"https://www.wikidata.org\",\"record_id\":\"Q3192509$9fe2ade1-43fc-f8fd-5815-3298526a06f8\",\"reference\":\"{\\\"reference_hashes\\\":[],\\\"statement_id\\\":\\\"Q3192509$9fe2ade1-43fc-f8fd-5815-3298526a06f8\\\"}\"}]",
+        "final_review_status": "ACCEPTED",
+        "final_mapping_class": "NATIVE_OR_REUSED_WIKIDATA_ID",
+        "mapping_origin": "catalog",
+        "relation_map_version": "relation-map-v1.0.0"
+      },
+      "archive_line": 21053,
+      "entity_id": "Q3192509",
+      "label": "Kampfgeschwader 25",
+      "description": {
+        "language": "en",
+        "value": "German bomber wing of World War II"
+      },
+      "lastrevid": 2399534884,
+      "modified": "2025-09-02T09:45:29Z",
+      "property": "P749",
+      "statement": {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P749",
+          "hash": "a898f7975ce47c42200115e588d4a7a774200d9a",
+          "datavalue": {
+            "value": {
+              "entity-type": "item",
+              "numeric-id": 3192509,
+              "id": "Q3192509"
+            },
+            "type": "wikibase-entityid"
+          },
+          "datatype": "wikibase-item"
+        },
+        "type": "statement",
+        "id": "Q3192509$9fe2ade1-43fc-f8fd-5815-3298526a06f8",
+        "rank": "normal"
+      }
+    },
+    {
+      "assertion": {
+        "observation_id": "obs-d3c047c6e760e9f52971d072",
+        "subject_qid": "Q3424805",
+        "object_qid": "Q3424805",
+        "level1_relation": "FAMILY_PERSONAL",
+        "level1_assignment_status": "EXISTING_CATALOG_ASSIGNMENT",
+        "level2_relation": "wd:P40",
+        "level2_label": "child",
+        "selection_priority": "4",
+        "selection_status": "SELECTED",
+        "direction": "same",
+        "time_from": "",
+        "time_to": "",
+        "time_point": "",
+        "time_precision": "{\"from\":[],\"point\":[],\"to\":[]}",
+        "time_status": "NONE",
+        "selected_source": "Wikidata",
+        "selected_source_predicate": "wd:P40",
+        "source_record_id": "Q3424805$73cc0f9f-44f4-b410-33d3-40c9e2e4e220",
+        "source_graph": "https://www.wikidata.org",
+        "source_reference": "{\"reference_hashes\":[],\"statement_id\":\"Q3424805$73cc0f9f-44f4-b410-33d3-40c9e2e4e220\"}",
+        "source_support": "[{\"graph\":\"https://www.wikidata.org\",\"object_qid\":\"Q3424805\",\"predicate\":\"wd:P40\",\"record_id\":\"Q3424805$73cc0f9f-44f4-b410-33d3-40c9e2e4e220\",\"source\":\"Wikidata\",\"subject_qid\":\"Q3424805\"}]",
+        "evidence_references": "[{\"graph\":\"https://www.wikidata.org\",\"record_id\":\"Q3424805$73cc0f9f-44f4-b410-33d3-40c9e2e4e220\",\"reference\":\"{\\\"reference_hashes\\\":[],\\\"statement_id\\\":\\\"Q3424805$73cc0f9f-44f4-b410-33d3-40c9e2e4e220\\\"}\"}]",
+        "final_review_status": "ACCEPTED",
+        "final_mapping_class": "NATIVE_OR_REUSED_WIKIDATA_ID",
+        "mapping_origin": "catalog",
+        "relation_map_version": "relation-map-v1.0.0"
+      },
+      "archive_line": 22112,
+      "entity_id": "Q3424805",
+      "label": "Michiaki Kamada",
+      "description": {
+        "language": "en",
+        "value": "Japanese admiral (1890–1947)"
+      },
+      "lastrevid": 2547807452,
+      "modified": "2026-09-19T22:24:01Z",
+      "property": "P40",
+      "statement": {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P40",
+          "hash": "10e50063ffc07933035b478bd9bf11d6c4d75f01",
+          "datavalue": {
+            "value": {
+              "entity-type": "item",
+              "numeric-id": 3424805,
+              "id": "Q3424805"
+            },
+            "type": "wikibase-entityid"
+          },
+          "datatype": "wikibase-item"
+        },
+        "type": "statement",
+        "id": "Q3424805$73cc0f9f-44f4-b410-33d3-40c9e2e4e220",
+        "rank": "normal"
+      }
+    },
+    {
+      "assertion": {
+        "observation_id": "obs-86e17a6a72fbab0250285ea9",
+        "subject_qid": "Q4029011",
+        "object_qid": "Q4029011",
+        "level1_relation": "TEMPORAL_SUCCESSION",
+        "level1_assignment_status": "RANKED_REVIEW_REQUIRED",
+        "level2_relation": "wd:P1365",
+        "level2_label": "replaces",
+        "selection_priority": "4",
+        "selection_status": "SELECTED",
+        "direction": "same",
+        "time_from": "",
+        "time_to": "",
+        "time_point": "",
+        "time_precision": "{\"from\":[],\"point\":[],\"to\":[]}",
+        "time_status": "NONE",
+        "selected_source": "Wikidata",
+        "selected_source_predicate": "wd:P1365",
+        "source_record_id": "Q4029011$3d4a5af5-4c2e-47e9-fbad-532ad348c83d",
+        "source_graph": "https://www.wikidata.org",
+        "source_reference": "{\"reference_hashes\":[\"b87bd30bb3815885a08bba42b6cdea783083506c\"],\"statement_id\":\"Q4029011$3d4a5af5-4c2e-47e9-fbad-532ad348c83d\"}",
+        "source_support": "[{\"graph\":\"https://www.wikidata.org\",\"object_qid\":\"Q4029011\",\"predicate\":\"wd:P1365\",\"record_id\":\"Q4029011$3d4a5af5-4c2e-47e9-fbad-532ad348c83d\",\"source\":\"Wikidata\",\"subject_qid\":\"Q4029011\"}]",
+        "evidence_references": "[{\"graph\":\"https://www.wikidata.org\",\"record_id\":\"Q4029011$3d4a5af5-4c2e-47e9-fbad-532ad348c83d\",\"reference\":\"{\\\"reference_hashes\\\":[\\\"b87bd30bb3815885a08bba42b6cdea783083506c\\\"],\\\"statement_id\\\":\\\"Q4029011$3d4a5af5-4c2e-47e9-fbad-532ad348c83d\\\"}\"}]",
+        "final_review_status": "ACCEPTED",
+        "final_mapping_class": "NATIVE_OR_REUSED_WIKIDATA_ID",
+        "mapping_origin": "catalog",
+        "relation_map_version": "relation-map-v1.0.0"
+      },
+      "archive_line": 24293,
+      "entity_id": "Q4029011",
+      "label": "16th Guards Fighter Aviation Regiment",
+      "description": {
+        "language": "en",
+        "value": "Russian Aerospace Forces fighter regiment based in Kaliningrad"
+      },
+      "lastrevid": 2350204172,
+      "modified": "2025-05-19T12:01:40Z",
+      "property": "P1365",
+      "statement": {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P1365",
+          "hash": "8aab9cc4ad3e9bcb0a1feaabb2d2061c9ea78edb",
+          "datavalue": {
+            "value": {
+              "entity-type": "item",
+              "numeric-id": 4029011,
+              "id": "Q4029011"
+            },
+            "type": "wikibase-entityid"
+          },
+          "datatype": "wikibase-item"
+        },
+        "type": "statement",
+        "id": "Q4029011$3d4a5af5-4c2e-47e9-fbad-532ad348c83d",
+        "rank": "normal",
+        "references": [
+          {
+            "hash": "b87bd30bb3815885a08bba42b6cdea783083506c",
+            "snaks": {
+              "P143": [
+                {
+                  "snaktype": "value",
+                  "property": "P143",
+                  "hash": "6a164248fc96bfa583bbb495cb63ae6401ec203c",
+                  "datavalue": {
+                    "value": {
+                      "entity-type": "item",
+                      "numeric-id": 206855,
+                      "id": "Q206855"
+                    },
+                    "type": "wikibase-entityid"
+                  },
+                  "datatype": "wikibase-item"
+                }
+              ],
+              "P4656": [
+                {
+                  "snaktype": "value",
+                  "property": "P4656",
+                  "hash": "4b1552a23f581e633673cfd0d3a4dc1e4f2fc03b",
+                  "datavalue": {
+                    "value": "https://ru.wikipedia.org/?oldid=128844657",
+                    "type": "string"
+                  },
+                  "datatype": "url"
+                }
+              ]
+            },
+            "snaks-order": [
+              "P143",
+              "P4656"
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "assertion": {
+        "observation_id": "obs-0392bcd7d87b419dd77c2328",
+        "subject_qid": "Q4029071",
+        "object_qid": "Q4029071",
+        "level1_relation": "TEMPORAL_SUCCESSION",
+        "level1_assignment_status": "RANKED_REVIEW_REQUIRED",
+        "level2_relation": "wd:P1365",
+        "level2_label": "replaces",
+        "selection_priority": "4",
+        "selection_status": "SELECTED",
+        "direction": "same",
+        "time_from": "",
+        "time_to": "",
+        "time_point": "",
+        "time_precision": "{\"from\":[],\"point\":[],\"to\":[]}",
+        "time_status": "NONE",
+        "selected_source": "Wikidata",
+        "selected_source_predicate": "wd:P1365",
+        "source_record_id": "Q4029071$1d576372-4433-3e7e-e976-818a285e47fb",
+        "source_graph": "https://www.wikidata.org",
+        "source_reference": "{\"reference_hashes\":[\"288ab581e7d2d02995a26dfa8b091d96e78457fc\"],\"statement_id\":\"Q4029071$1d576372-4433-3e7e-e976-818a285e47fb\"}",
+        "source_support": "[{\"graph\":\"https://www.wikidata.org\",\"object_qid\":\"Q4029071\",\"predicate\":\"wd:P1365\",\"record_id\":\"Q4029071$1d576372-4433-3e7e-e976-818a285e47fb\",\"source\":\"Wikidata\",\"subject_qid\":\"Q4029071\"}]",
+        "evidence_references": "[{\"graph\":\"https://www.wikidata.org\",\"record_id\":\"Q4029071$1d576372-4433-3e7e-e976-818a285e47fb\",\"reference\":\"{\\\"reference_hashes\\\":[\\\"288ab581e7d2d02995a26dfa8b091d96e78457fc\\\"],\\\"statement_id\\\":\\\"Q4029071$1d576372-4433-3e7e-e976-818a285e47fb\\\"}\"}]",
+        "final_review_status": "ACCEPTED",
+        "final_mapping_class": "NATIVE_OR_REUSED_WIKIDATA_ID",
+        "mapping_origin": "catalog",
+        "relation_map_version": "relation-map-v1.0.0"
+      },
+      "archive_line": 24300,
+      "entity_id": "Q4029071",
+      "label": "163rd Rifle Division",
+      "description": {
+        "language": "en",
+        "value": "military unit"
+      },
+      "lastrevid": 2388118776,
+      "modified": "2025-08-04T21:52:11Z",
+      "property": "P1365",
+      "statement": {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P1365",
+          "hash": "b5ae507805d3b7aafcfaf87fec5d71d1ca3f0e0f",
+          "datavalue": {
+            "value": {
+              "entity-type": "item",
+              "numeric-id": 4029071,
+              "id": "Q4029071"
+            },
+            "type": "wikibase-entityid"
+          },
+          "datatype": "wikibase-item"
+        },
+        "type": "statement",
+        "id": "Q4029071$1d576372-4433-3e7e-e976-818a285e47fb",
+        "rank": "normal",
+        "references": [
+          {
+            "hash": "288ab581e7d2d02995a26dfa8b091d96e78457fc",
+            "snaks": {
+              "P143": [
+                {
+                  "snaktype": "value",
+                  "property": "P143",
+                  "hash": "6a164248fc96bfa583bbb495cb63ae6401ec203c",
+                  "datavalue": {
+                    "value": {
+                      "entity-type": "item",
+                      "numeric-id": 206855,
+                      "id": "Q206855"
+                    },
+                    "type": "wikibase-entityid"
+                  },
+                  "datatype": "wikibase-item"
+                }
+              ]
+            },
+            "snaks-order": [
+              "P143"
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "assertion": {
+        "observation_id": "obs-b4acd84f13e7838289c27261",
+        "subject_qid": "Q4031132",
+        "object_qid": "Q4031132",
+        "level1_relation": "TEMPORAL_SUCCESSION",
+        "level1_assignment_status": "RANKED_REVIEW_REQUIRED",
+        "level2_relation": "wd:P1365",
+        "level2_label": "replaces",
+        "selection_priority": "4",
+        "selection_status": "SELECTED",
+        "direction": "same",
+        "time_from": "",
+        "time_to": "",
+        "time_point": "",
+        "time_precision": "{\"from\":[],\"point\":[],\"to\":[]}",
+        "time_status": "NONE",
+        "selected_source": "Wikidata",
+        "selected_source_predicate": "wd:P1365",
+        "source_record_id": "Q4031132$ac087f9e-4b84-cb32-ac2d-3905f033f687",
+        "source_graph": "https://www.wikidata.org",
+        "source_reference": "{\"reference_hashes\":[\"f6a014f214817b14d845eeae4b244e42dc8b0771\"],\"statement_id\":\"Q4031132$ac087f9e-4b84-cb32-ac2d-3905f033f687\"}",
+        "source_support": "[{\"graph\":\"https://www.wikidata.org\",\"object_qid\":\"Q4031132\",\"predicate\":\"wd:P1365\",\"record_id\":\"Q4031132$ac087f9e-4b84-cb32-ac2d-3905f033f687\",\"source\":\"Wikidata\",\"subject_qid\":\"Q4031132\"}]",
+        "evidence_references": "[{\"graph\":\"https://www.wikidata.org\",\"record_id\":\"Q4031132$ac087f9e-4b84-cb32-ac2d-3905f033f687\",\"reference\":\"{\\\"reference_hashes\\\":[\\\"f6a014f214817b14d845eeae4b244e42dc8b0771\\\"],\\\"statement_id\\\":\\\"Q4031132$ac087f9e-4b84-cb32-ac2d-3905f033f687\\\"}\"}]",
+        "final_review_status": "ACCEPTED",
+        "final_mapping_class": "NATIVE_OR_REUSED_WIKIDATA_ID",
+        "mapping_origin": "catalog",
+        "relation_map_version": "relation-map-v1.0.0"
+      },
+      "archive_line": 24490,
+      "entity_id": "Q4031132",
+      "label": "39th Guards Rifle Division",
+      "description": {
+        "language": "en",
+        "value": "military unit"
+      },
+      "lastrevid": 2019351197,
+      "modified": "2023-11-28T04:50:53Z",
+      "property": "P1365",
+      "statement": {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P1365",
+          "hash": "3e4952e9ab963699ba95b402d25b1e02388abded",
+          "datavalue": {
+            "value": {
+              "entity-type": "item",
+              "numeric-id": 4031132,
+              "id": "Q4031132"
+            },
+            "type": "wikibase-entityid"
+          },
+          "datatype": "wikibase-item"
+        },
+        "type": "statement",
+        "id": "Q4031132$ac087f9e-4b84-cb32-ac2d-3905f033f687",
+        "rank": "normal",
+        "references": [
+          {
+            "hash": "f6a014f214817b14d845eeae4b244e42dc8b0771",
+            "snaks": {
+              "P143": [
+                {
+                  "snaktype": "value",
+                  "property": "P143",
+                  "hash": "6a164248fc96bfa583bbb495cb63ae6401ec203c",
+                  "datavalue": {
+                    "value": {
+                      "entity-type": "item",
+                      "numeric-id": 206855,
+                      "id": "Q206855"
+                    },
+                    "type": "wikibase-entityid"
+                  },
+                  "datatype": "wikibase-item"
+                }
+              ],
+              "P4656": [
+                {
+                  "snaktype": "value",
+                  "property": "P4656",
+                  "hash": "a08d1682d800e2c82e2227bd4ae412ec2da2aa69",
+                  "datavalue": {
+                    "value": "https://ru.wikipedia.org/?oldid=134502410",
+                    "type": "string"
+                  },
+                  "datatype": "url"
+                }
+              ]
+            },
+            "snaks-order": [
+              "P143",
+              "P4656"
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "assertion": {
+        "observation_id": "obs-aa1685bc23bdd2f2811f455f",
+        "subject_qid": "Q4032386",
+        "object_qid": "Q4032386",
+        "level1_relation": "TEMPORAL_SUCCESSION",
+        "level1_assignment_status": "RANKED_REVIEW_REQUIRED",
+        "level2_relation": "wd:P1365",
+        "level2_label": "replaces",
+        "selection_priority": "4",
+        "selection_status": "SELECTED",
+        "direction": "same",
+        "time_from": "",
+        "time_to": "",
+        "time_point": "",
+        "time_precision": "{\"from\":[],\"point\":[],\"to\":[]}",
+        "time_status": "NONE",
+        "selected_source": "Wikidata",
+        "selected_source_predicate": "wd:P1365",
+        "source_record_id": "Q4032386$0ad48795-4dc5-9ec0-d9c0-c4d6774b57a3",
+        "source_graph": "https://www.wikidata.org",
+        "source_reference": "{\"reference_hashes\":[\"2b9c514efbd9f84d2342ceb08adfaf0aeedf9402\"],\"statement_id\":\"Q4032386$0ad48795-4dc5-9ec0-d9c0-c4d6774b57a3\"}",
+        "source_support": "[{\"graph\":\"https://www.wikidata.org\",\"object_qid\":\"Q4032386\",\"predicate\":\"wd:P1365\",\"record_id\":\"Q4032386$0ad48795-4dc5-9ec0-d9c0-c4d6774b57a3\",\"source\":\"Wikidata\",\"subject_qid\":\"Q4032386\"}]",
+        "evidence_references": "[{\"graph\":\"https://www.wikidata.org\",\"record_id\":\"Q4032386$0ad48795-4dc5-9ec0-d9c0-c4d6774b57a3\",\"reference\":\"{\\\"reference_hashes\\\":[\\\"2b9c514efbd9f84d2342ceb08adfaf0aeedf9402\\\"],\\\"statement_id\\\":\\\"Q4032386$0ad48795-4dc5-9ec0-d9c0-c4d6774b57a3\\\"}\"}]",
+        "final_review_status": "ACCEPTED",
+        "final_mapping_class": "NATIVE_OR_REUSED_WIKIDATA_ID",
+        "mapping_origin": "catalog",
+        "relation_map_version": "relation-map-v1.0.0"
+      },
+      "archive_line": 24579,
+      "entity_id": "Q4032386",
+      "label": "77th Guards Rifle Division",
+      "description": {
+        "language": "en",
+        "value": "military unit"
+      },
+      "lastrevid": 1893947395,
+      "modified": "2023-05-10T22:58:42Z",
+      "property": "P1365",
+      "statement": {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P1365",
+          "hash": "91e96455415a3460d4284b7d329e99f375284e14",
+          "datavalue": {
+            "value": {
+              "entity-type": "item",
+              "numeric-id": 4032386,
+              "id": "Q4032386"
+            },
+            "type": "wikibase-entityid"
+          },
+          "datatype": "wikibase-item"
+        },
+        "type": "statement",
+        "id": "Q4032386$0ad48795-4dc5-9ec0-d9c0-c4d6774b57a3",
+        "rank": "normal",
+        "references": [
+          {
+            "hash": "2b9c514efbd9f84d2342ceb08adfaf0aeedf9402",
+            "snaks": {
+              "P143": [
+                {
+                  "snaktype": "value",
+                  "property": "P143",
+                  "hash": "6a164248fc96bfa583bbb495cb63ae6401ec203c",
+                  "datavalue": {
+                    "value": {
+                      "entity-type": "item",
+                      "numeric-id": 206855,
+                      "id": "Q206855"
+                    },
+                    "type": "wikibase-entityid"
+                  },
+                  "datatype": "wikibase-item"
+                }
+              ],
+              "P4656": [
+                {
+                  "snaktype": "value",
+                  "property": "P4656",
+                  "hash": "36bb7e23ca8dfec6e340b54a38fa5b19d59f8950",
+                  "datavalue": {
+                    "value": "https://ru.wikipedia.org/?oldid=122348199",
+                    "type": "string"
+                  },
+                  "datatype": "url"
+                }
+              ]
+            },
+            "snaks-order": [
+              "P143",
+              "P4656"
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "assertion": {
+        "observation_id": "obs-f63e5e1022b87fa4c2acfc5d",
+        "subject_qid": "Q4032386",
+        "object_qid": "Q4032386",
+        "level1_relation": "TEMPORAL_SUCCESSION",
+        "level1_assignment_status": "EXISTING_CATALOG_ASSIGNMENT",
+        "level2_relation": "wd:P1366",
+        "level2_label": "replaced by",
+        "selection_priority": "4",
+        "selection_status": "SELECTED",
+        "direction": "same",
+        "time_from": "",
+        "time_to": "",
+        "time_point": "",
+        "time_precision": "{\"from\":[],\"point\":[],\"to\":[]}",
+        "time_status": "NONE",
+        "selected_source": "Wikidata",
+        "selected_source_predicate": "wd:P1366",
+        "source_record_id": "Q4032386$e8138f0e-4e73-e0ff-df3e-f23d99bada38",
+        "source_graph": "https://www.wikidata.org",
+        "source_reference": "{\"reference_hashes\":[\"2b9c514efbd9f84d2342ceb08adfaf0aeedf9402\"],\"statement_id\":\"Q4032386$e8138f0e-4e73-e0ff-df3e-f23d99bada38\"}",
+        "source_support": "[{\"graph\":\"https://www.wikidata.org\",\"object_qid\":\"Q4032386\",\"predicate\":\"wd:P1366\",\"record_id\":\"Q4032386$e8138f0e-4e73-e0ff-df3e-f23d99bada38\",\"source\":\"Wikidata\",\"subject_qid\":\"Q4032386\"}]",
+        "evidence_references": "[{\"graph\":\"https://www.wikidata.org\",\"record_id\":\"Q4032386$e8138f0e-4e73-e0ff-df3e-f23d99bada38\",\"reference\":\"{\\\"reference_hashes\\\":[\\\"2b9c514efbd9f84d2342ceb08adfaf0aeedf9402\\\"],\\\"statement_id\\\":\\\"Q4032386$e8138f0e-4e73-e0ff-df3e-f23d99bada38\\\"}\"}]",
+        "final_review_status": "ACCEPTED",
+        "final_mapping_class": "NATIVE_OR_REUSED_WIKIDATA_ID",
+        "mapping_origin": "catalog",
+        "relation_map_version": "relation-map-v1.0.0"
+      },
+      "archive_line": 24579,
+      "entity_id": "Q4032386",
+      "label": "77th Guards Rifle Division",
+      "description": {
+        "language": "en",
+        "value": "military unit"
+      },
+      "lastrevid": 1893947395,
+      "modified": "2023-05-10T22:58:42Z",
+      "property": "P1366",
+      "statement": {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P1366",
+          "hash": "b348a0b9fabbd13def4c20705e719c3b962679bd",
+          "datavalue": {
+            "value": {
+              "entity-type": "item",
+              "numeric-id": 4032386,
+              "id": "Q4032386"
+            },
+            "type": "wikibase-entityid"
+          },
+          "datatype": "wikibase-item"
+        },
+        "type": "statement",
+        "id": "Q4032386$e8138f0e-4e73-e0ff-df3e-f23d99bada38",
+        "rank": "normal",
+        "references": [
+          {
+            "hash": "2b9c514efbd9f84d2342ceb08adfaf0aeedf9402",
+            "snaks": {
+              "P143": [
+                {
+                  "snaktype": "value",
+                  "property": "P143",
+                  "hash": "6a164248fc96bfa583bbb495cb63ae6401ec203c",
+                  "datavalue": {
+                    "value": {
+                      "entity-type": "item",
+                      "numeric-id": 206855,
+                      "id": "Q206855"
+                    },
+                    "type": "wikibase-entityid"
+                  },
+                  "datatype": "wikibase-item"
+                }
+              ],
+              "P4656": [
+                {
+                  "snaktype": "value",
+                  "property": "P4656",
+                  "hash": "36bb7e23ca8dfec6e340b54a38fa5b19d59f8950",
+                  "datavalue": {
+                    "value": "https://ru.wikipedia.org/?oldid=122348199",
+                    "type": "string"
+                  },
+                  "datatype": "url"
+                }
+              ]
+            },
+            "snaks-order": [
+              "P143",
+              "P4656"
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "assertion": {
+        "observation_id": "obs-e4fc8edddf072cf09f974f63",
+        "subject_qid": "Q4096918",
+        "object_qid": "Q4096918",
+        "level1_relation": "TEMPORAL_SUCCESSION",
+        "level1_assignment_status": "RANKED_REVIEW_REQUIRED",
+        "level2_relation": "wd:P1365",
+        "level2_label": "replaces",
+        "selection_priority": "4",
+        "selection_status": "SELECTED",
+        "direction": "same",
+        "time_from": "",
+        "time_to": "",
+        "time_point": "",
+        "time_precision": "{\"from\":[],\"point\":[],\"to\":[]}",
+        "time_status": "NONE",
+        "selected_source": "Wikidata",
+        "selected_source_predicate": "wd:P1365",
+        "source_record_id": "Q4096918$c263c597-4c89-853f-e606-6d15f86db815",
+        "source_graph": "https://www.wikidata.org",
+        "source_reference": "{\"reference_hashes\":[\"524ff765eefbc236a43a00cda00535af163bc8c3\"],\"statement_id\":\"Q4096918$c263c597-4c89-853f-e606-6d15f86db815\"}",
+        "source_support": "[{\"graph\":\"https://www.wikidata.org\",\"object_qid\":\"Q4096918\",\"predicate\":\"wd:P1365\",\"record_id\":\"Q4096918$c263c597-4c89-853f-e606-6d15f86db815\",\"source\":\"Wikidata\",\"subject_qid\":\"Q4096918\"}]",
+        "evidence_references": "[{\"graph\":\"https://www.wikidata.org\",\"record_id\":\"Q4096918$c263c597-4c89-853f-e606-6d15f86db815\",\"reference\":\"{\\\"reference_hashes\\\":[\\\"524ff765eefbc236a43a00cda00535af163bc8c3\\\"],\\\"statement_id\\\":\\\"Q4096918$c263c597-4c89-853f-e606-6d15f86db815\\\"}\"}]",
+        "final_review_status": "ACCEPTED",
+        "final_mapping_class": "NATIVE_OR_REUSED_WIKIDATA_ID",
+        "mapping_origin": "catalog",
+        "relation_map_version": "relation-map-v1.0.0"
+      },
+      "archive_line": 25099,
+      "entity_id": "Q4096918",
+      "label": "Maxim Gorky Fortresses",
+      "description": {
+        "language": "en",
+        "value": "coastal batteries used by the Soviet Union in the Crimea during World War II"
+      },
+      "lastrevid": 2498880751,
+      "modified": "2026-05-28T19:34:18Z",
+      "property": "P1365",
+      "statement": {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P1365",
+          "hash": "cbd04b5e33fda09ec62b52f53e2ffa61b0e0c7d5",
+          "datavalue": {
+            "value": {
+              "entity-type": "item",
+              "numeric-id": 4096918,
+              "id": "Q4096918"
+            },
+            "type": "wikibase-entityid"
+          },
+          "datatype": "wikibase-item"
+        },
+        "type": "statement",
+        "id": "Q4096918$c263c597-4c89-853f-e606-6d15f86db815",
+        "rank": "normal",
+        "references": [
+          {
+            "hash": "524ff765eefbc236a43a00cda00535af163bc8c3",
+            "snaks": {
+              "P143": [
+                {
+                  "snaktype": "value",
+                  "property": "P143",
+                  "hash": "6a164248fc96bfa583bbb495cb63ae6401ec203c",
+                  "datavalue": {
+                    "value": {
+                      "entity-type": "item",
+                      "numeric-id": 206855,
+                      "id": "Q206855"
+                    },
+                    "type": "wikibase-entityid"
+                  },
+                  "datatype": "wikibase-item"
+                }
+              ],
+              "P4656": [
+                {
+                  "snaktype": "value",
+                  "property": "P4656",
+                  "hash": "ad90794530b75ade8c6f75a327bf8fd3f39f1c97",
+                  "datavalue": {
+                    "value": "https://ru.wikipedia.org/?oldid=138040864",
+                    "type": "string"
+                  },
+                  "datatype": "url"
+                }
+              ]
+            },
+            "snaks-order": [
+              "P143",
+              "P4656"
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "assertion": {
+        "observation_id": "obs-2182a362d333f7050ab60ec4",
+        "subject_qid": "Q55306",
+        "object_qid": "Q55306",
+        "level1_relation": "SPATIAL",
+        "level1_assignment_status": "EXISTING_CATALOG_ASSIGNMENT",
+        "level2_relation": "wd:P17",
+        "level2_label": "country",
+        "selection_priority": "4",
+        "selection_status": "SELECTED",
+        "direction": "same",
+        "time_from": "",
+        "time_to": "",
+        "time_point": "",
+        "time_precision": "{\"from\":[],\"point\":[],\"to\":[]}",
+        "time_status": "NONE",
+        "selected_source": "Wikidata",
+        "selected_source_predicate": "wd:P17",
+        "source_record_id": "Q55306$46dc6181-43dc-6706-9c55-70976465d3b6",
+        "source_graph": "https://www.wikidata.org",
+        "source_reference": "{\"reference_hashes\":[],\"statement_id\":\"Q55306$46dc6181-43dc-6706-9c55-70976465d3b6\"}",
+        "source_support": "[{\"graph\":\"https://www.wikidata.org\",\"object_qid\":\"Q55306\",\"predicate\":\"wd:P17\",\"record_id\":\"Q55306$46dc6181-43dc-6706-9c55-70976465d3b6\",\"source\":\"Wikidata\",\"subject_qid\":\"Q55306\"}]",
+        "evidence_references": "[{\"graph\":\"https://www.wikidata.org\",\"record_id\":\"Q55306$46dc6181-43dc-6706-9c55-70976465d3b6\",\"reference\":\"{\\\"reference_hashes\\\":[],\\\"statement_id\\\":\\\"Q55306$46dc6181-43dc-6706-9c55-70976465d3b6\\\"}\"}]",
+        "final_review_status": "ACCEPTED",
+        "final_mapping_class": "NATIVE_OR_REUSED_WIKIDATA_ID",
+        "mapping_origin": "catalog",
+        "relation_map_version": "relation-map-v1.0.0"
+      },
+      "archive_line": 34419,
+      "entity_id": "Q55306",
+      "label": "British occupation zone in Germany",
+      "description": {
+        "language": "en",
+        "value": "zone of British occupation in postwar Germany"
+      },
+      "lastrevid": 2516855063,
+      "modified": "2026-07-13T01:35:46Z",
+      "property": "P17",
+      "statement": {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P17",
+          "hash": "c2ebca74d6e99fa63fb9493f1b1190342a67ce52",
+          "datavalue": {
+            "value": {
+              "entity-type": "item",
+              "numeric-id": 55306,
+              "id": "Q55306"
+            },
+            "type": "wikibase-entityid"
+          },
+          "datatype": "wikibase-item"
+        },
+        "type": "statement",
+        "id": "Q55306$46dc6181-43dc-6706-9c55-70976465d3b6",
+        "rank": "normal"
+      }
+    },
+    {
+      "assertion": {
+        "observation_id": "obs-85c4a6c30a8411adb3458a86",
+        "subject_qid": "Q828307",
+        "object_qid": "Q828307",
+        "level1_relation": "CREATION_AUTHORSHIP",
+        "level1_assignment_status": "RANKED_REVIEW_REQUIRED",
+        "level2_relation": "wd:P6379",
+        "level2_label": "has works in the collection",
+        "selection_priority": "4",
+        "selection_status": "SELECTED",
+        "direction": "same",
+        "time_from": "",
+        "time_to": "",
+        "time_point": "",
+        "time_precision": "{\"from\":[],\"point\":[],\"to\":[]}",
+        "time_status": "NONE",
+        "selected_source": "Wikidata",
+        "selected_source_predicate": "wd:P6379",
+        "source_record_id": "Q828307$1E972CB6-8BAA-42A3-AEAC-D77AF2D85A26",
+        "source_graph": "https://www.wikidata.org",
+        "source_reference": "{\"reference_hashes\":[\"f35ac8e4843e019b51c634cf13fe73c985c8d5b8\"],\"statement_id\":\"Q828307$1E972CB6-8BAA-42A3-AEAC-D77AF2D85A26\"}",
+        "source_support": "[{\"graph\":\"https://www.wikidata.org\",\"object_qid\":\"Q828307\",\"predicate\":\"wd:P6379\",\"record_id\":\"Q828307$1E972CB6-8BAA-42A3-AEAC-D77AF2D85A26\",\"source\":\"Wikidata\",\"subject_qid\":\"Q828307\"}]",
+        "evidence_references": "[{\"graph\":\"https://www.wikidata.org\",\"record_id\":\"Q828307$1E972CB6-8BAA-42A3-AEAC-D77AF2D85A26\",\"reference\":\"{\\\"reference_hashes\\\":[\\\"f35ac8e4843e019b51c634cf13fe73c985c8d5b8\\\"],\\\"statement_id\\\":\\\"Q828307$1E972CB6-8BAA-42A3-AEAC-D77AF2D85A26\\\"}\"}]",
+        "final_review_status": "ACCEPTED",
+        "final_mapping_class": "NATIVE_OR_REUSED_WIKIDATA_ID",
+        "mapping_origin": "catalog",
+        "relation_map_version": "relation-map-v1.0.0"
+      },
+      "archive_line": 51071,
+      "entity_id": "Q828307",
+      "label": "Dutch Resistance Museum",
+      "description": {
+        "language": "en",
+        "value": "museum in Amsterdam, the Netherlands"
+      },
+      "lastrevid": 2555452825,
+      "modified": "2026-10-10T00:56:48Z",
+      "property": "P6379",
+      "statement": {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P6379",
+          "hash": "209ba11685060bc352c4558df547603ce1c80719",
+          "datavalue": {
+            "value": {
+              "entity-type": "item",
+              "numeric-id": 828307,
+              "id": "Q828307"
+            },
+            "type": "wikibase-entityid"
+          },
+          "datatype": "wikibase-item"
+        },
+        "type": "statement",
+        "id": "Q828307$1E972CB6-8BAA-42A3-AEAC-D77AF2D85A26",
+        "rank": "normal",
+        "references": [
+          {
+            "hash": "f35ac8e4843e019b51c634cf13fe73c985c8d5b8",
+            "snaks": {
+              "P854": [
+                {
+                  "snaktype": "value",
+                  "property": "P854",
+                  "hash": "b23903466babb40da0f41175a4df71e3c193e3a3",
+                  "datavalue": {
+                    "value": "https://collectie.verzetsmuseum.org/ais6/Details/collect/5552",
+                    "type": "string"
+                  },
+                  "datatype": "url"
+                }
+              ],
+              "P1476": [
+                {
+                  "snaktype": "value",
+                  "property": "P1476",
+                  "hash": "9345e9ca679d1142ace73985e1b219dd6ee6a417",
+                  "datavalue": {
+                    "value": {
+                      "text": "Serie van 24 foto's van anti-Duitse/oranjegezinde tekeningen en leuzen, aangetroffen bij een verbouw...",
+                      "language": "nl"
+                    },
+                    "type": "monolingualtext"
+                  },
+                  "datatype": "monolingualtext"
+                }
+              ],
+              "P813": [
+                {
+                  "snaktype": "value",
+                  "property": "P813",
+                  "hash": "ada3eb68726a05b9f07e34683e5c78b25c52f941",
+                  "datavalue": {
+                    "value": {
+                      "time": "+2024-03-22T00:00:00Z",
+                      "timezone": 0,
+                      "before": 0,
+                      "after": 0,
+                      "precision": 11,
+                      "calendarmodel": "http://www.wikidata.org/entity/Q1985727"
+                    },
+                    "type": "time"
+                  },
+                  "datatype": "time"
+                }
+              ],
+              "P1810": [
+                {
+                  "snaktype": "value",
+                  "property": "P1810",
+                  "hash": "5dfc70cc62409fc6848412282e50d70f1f7daf43",
+                  "datavalue": {
+                    "value": "Verzetsmuseum Amsterdam",
+                    "type": "string"
+                  },
+                  "datatype": "string"
+                }
+              ]
+            },
+            "snaks-order": [
+              "P854",
+              "P1476",
+              "P813",
+              "P1810"
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "assertion": {
+        "observation_id": "obs-fbb71b09edc572659784acb0",
+        "subject_qid": "Q8680",
+        "object_qid": "Q8680",
+        "level1_relation": "SPATIAL",
+        "level1_assignment_status": "EXISTING_CATALOG_ASSIGNMENT",
+        "level2_relation": "wd:P17",
+        "level2_label": "country",
+        "selection_priority": "4",
+        "selection_status": "SELECTED",
+        "direction": "same",
+        "time_from": "",
+        "time_to": "",
+        "time_point": "",
+        "time_precision": "{\"from\":[],\"point\":[],\"to\":[]}",
+        "time_status": "NONE",
+        "selected_source": "Wikidata",
+        "selected_source_predicate": "wd:P17",
+        "source_record_id": "Q8680$6dfbef9c-4683-fb70-26b5-8e1dc1d7ae5f",
+        "source_graph": "https://www.wikidata.org",
+        "source_reference": "{\"reference_hashes\":[],\"statement_id\":\"Q8680$6dfbef9c-4683-fb70-26b5-8e1dc1d7ae5f\"}",
+        "source_support": "[{\"graph\":\"https://www.wikidata.org\",\"object_qid\":\"Q8680\",\"predicate\":\"wd:P17\",\"record_id\":\"Q8680$6dfbef9c-4683-fb70-26b5-8e1dc1d7ae5f\",\"source\":\"Wikidata\",\"subject_qid\":\"Q8680\"}]",
+        "evidence_references": "[{\"graph\":\"https://www.wikidata.org\",\"record_id\":\"Q8680$6dfbef9c-4683-fb70-26b5-8e1dc1d7ae5f\",\"reference\":\"{\\\"reference_hashes\\\":[],\\\"statement_id\\\":\\\"Q8680$6dfbef9c-4683-fb70-26b5-8e1dc1d7ae5f\\\"}\"}]",
+        "final_review_status": "ACCEPTED",
+        "final_mapping_class": "NATIVE_OR_REUSED_WIKIDATA_ID",
+        "mapping_origin": "catalog",
+        "relation_map_version": "relation-map-v1.0.0"
+      },
+      "archive_line": 51837,
+      "entity_id": "Q8680",
+      "label": "British Empire",
+      "description": {
+        "language": "en",
+        "value": "overseas possessions of England and later the United Kingdom (1607–1997)"
+      },
+      "lastrevid": 2553585289,
+      "modified": "2026-10-05T19:01:01Z",
+      "property": "P17",
+      "statement": {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P17",
+          "hash": "cf74befd9dc89810e6b018659b205eaebcf69de4",
+          "datavalue": {
+            "value": {
+              "entity-type": "item",
+              "numeric-id": 8680,
+              "id": "Q8680"
+            },
+            "type": "wikibase-entityid"
+          },
+          "datatype": "wikibase-item"
+        },
+        "type": "statement",
+        "id": "Q8680$6dfbef9c-4683-fb70-26b5-8e1dc1d7ae5f",
+        "rank": "preferred"
+      }
+    },
+    {
+      "assertion": {
+        "observation_id": "obs-0d2a1e2667217c9fe081ab05",
+        "subject_qid": "Q917282",
+        "object_qid": "Q917282",
+        "level1_relation": "CREATION_AUTHORSHIP",
+        "level1_assignment_status": "EXISTING_CATALOG_ASSIGNMENT",
+        "level2_relation": "wd:P176",
+        "level2_label": "manufacturer",
+        "selection_priority": "4",
+        "selection_status": "SELECTED",
+        "direction": "same",
+        "time_from": "",
+        "time_to": "",
+        "time_point": "",
+        "time_precision": "{\"from\":[],\"point\":[],\"to\":[]}",
+        "time_status": "NONE",
+        "selected_source": "Wikidata",
+        "selected_source_predicate": "wd:P176",
+        "source_record_id": "Q917282$C49E2D2E-4ED9-4299-B5AD-B54CA8456457",
+        "source_graph": "https://www.wikidata.org",
+        "source_reference": "{\"reference_hashes\":[],\"statement_id\":\"Q917282$C49E2D2E-4ED9-4299-B5AD-B54CA8456457\"}",
+        "source_support": "[{\"graph\":\"https://www.wikidata.org\",\"object_qid\":\"Q917282\",\"predicate\":\"wd:P176\",\"record_id\":\"Q917282$C49E2D2E-4ED9-4299-B5AD-B54CA8456457\",\"source\":\"Wikidata\",\"subject_qid\":\"Q917282\"}]",
+        "evidence_references": "[{\"graph\":\"https://www.wikidata.org\",\"record_id\":\"Q917282$C49E2D2E-4ED9-4299-B5AD-B54CA8456457\",\"reference\":\"{\\\"reference_hashes\\\":[],\\\"statement_id\\\":\\\"Q917282$C49E2D2E-4ED9-4299-B5AD-B54CA8456457\\\"}\"}]",
+        "final_review_status": "ACCEPTED",
+        "final_mapping_class": "NATIVE_OR_REUSED_WIKIDATA_ID",
+        "mapping_origin": "catalog",
+        "relation_map_version": "relation-map-v1.0.0"
+      },
+      "archive_line": 52416,
+      "entity_id": "Q917282",
+      "label": "Omaha-class cruiser",
+      "description": {
+        "language": "en",
+        "value": "1920 class of American light cruisers"
+      },
+      "lastrevid": 2493969214,
+      "modified": "2026-05-18T18:49:56Z",
+      "property": "P176",
+      "statement": {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P176",
+          "hash": "387f9baf4433487b74a30b4937de8cb2bd737c15",
+          "datavalue": {
+            "value": {
+              "entity-type": "item",
+              "numeric-id": 917282,
+              "id": "Q917282"
+            },
+            "type": "wikibase-entityid"
+          },
+          "datatype": "wikibase-item"
+        },
+        "type": "statement",
+        "id": "Q917282$C49E2D2E-4ED9-4299-B5AD-B54CA8456457",
+        "rank": "normal"
+      }
+    }
+  ]
+}
