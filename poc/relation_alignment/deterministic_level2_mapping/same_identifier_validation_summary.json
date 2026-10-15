@@ -1,0 +1,45 @@
+{
+  "method": "Same normalized Wikidata property ID decides identity; labels, descriptions, and examples only validate data quality",
+  "pair_count": 403,
+  "source_pair": [
+    "EventKG",
+    "Wikidata"
+  ],
+  "identity_conclusion_counts": {
+    "VALID_SAME_IDENTIFIER": 403
+  },
+  "separate_cross_identifier_formal_mapping_statements": 0,
+  "same_identifier_symmetric_declarations": 5,
+  "description_comparison_counts": {
+    "NOT_POSSIBLE_EVENTKG_DESCRIPTION_MISSING": 403
+  },
+  "label_comparison_counts": {
+    "EXACT_LABEL_MATCH": 381,
+    "EVENTKG_LABEL_SCOPE_DRIFT": 13,
+    "WORDING_VARIANT_NO_CONTRADICTION": 9
+  },
+  "example_count": 3228,
+  "example_coverage_counts": {
+    "TEN_EXAMPLES": 274,
+    "FEWER_THAN_TEN": 129
+  },
+  "sample_semantic_review_counts": {
+    "NO_CLEAR_CONTRADICTION_FOUND_IN_SAMPLE": 379,
+    "CLEAR_CONTRADICTION_IN_AT_LEAST_ONE_SAMPLE": 24
+  },
+  "cross_source_duplicate_fact_pairs": 132,
+  "cross_source_duplicate_facts_in_sample": 425,
+  "formal_component_conflict_pairs": 14,
+  "entity_metadata": {
+    "source": "Wikidata Query Service https://query.wikidata.org/sparql",
+    "retrieved_at_utc": "2026-10-15T08:44:19.051708+00:00",
+    "entity_count": 4710,
+    "all_referenced_qids_resolved": true
+  },
+  "limits": [
+    "EventKG supplies no description for these 403 pairs, so a two-sided description comparison is impossible.",
+    "A missing duplicate assertion in the second source is not a contradiction.",
+    "No clear contradiction in ten or fewer samples is not proof that all assertions are correct.",
+    "The graph sample does not include source sentences, so assertion provenance cannot be checked here."
+  ]
+}

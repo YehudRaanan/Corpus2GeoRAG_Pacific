@@ -84,6 +84,8 @@ The 1,520 inventory rows produced 828 source-row connections. After duplicate so
 - 186 connect different identifiers through an explicit equivalent or inverse path.
 - Of the 186 cross-identifier connections, 113 use the same direction and 73 use reverse direction.
 
+The 403 same-identifier connections received a separate full validation. All are EventKG-to-Wikidata pairs with the same `wd:Pxx` property ID. They need no cross-identifier translation rule. EventKG has no description for these rows. Of their labels, 381 match exactly, 9 are wording variants, and 13 omit or change part of the current Wikidata scope. The review inspected 3,228 assertions and found at least one clear assertion contradiction for 24 relations. These are assertion-quality failures and do not invalidate the shared property identity. See `docs/SAME_IDENTIFIER_RELATION_VALIDATION_2026-10-15.md` and the four `same_identifier_*` evidence files.
+
 The semantic validation of the 186 cross-identifier connections found:
 
 | Name and description result | Unique connections |
@@ -316,8 +318,12 @@ All generated files are in `poc/relation_alignment/deterministic_level2_mapping/
 | `connection_examples.csv` | Up to ten distinct graph examples for every source-row connection |
 | `summary.json` | Counts, source versions, hashes, and method flags |
 | `wikidata_mapping_source_cache.json` | Retrieved Wikidata entities used in this run |
+| `same_identifier_pair_validation.csv` | Formal, text, and sample validation for all 403 same-identifier connections |
+| `same_identifier_example_validation.csv` | All 3,228 resolved examples used in the same-identifier review |
+| `same_identifier_entity_metadata.json` | Saved Wikidata labels and descriptions for 4,710 sampled endpoint QIDs |
+| `same_identifier_validation_summary.json` | Counts, method, and limits for the same-identifier review |
 
-The builder is `poc/relation_alignment/build_deterministic_level2_mapping.py`. It records that labels, descriptions, and observations were not used to create mappings.
+The main builder is `poc/relation_alignment/build_deterministic_level2_mapping.py`. The same-identifier validator is `poc/relation_alignment/validate_same_identifier_connections.py`. They record that labels, descriptions, and observations were not used to create mappings.
 
 ## 9. Source references
 
