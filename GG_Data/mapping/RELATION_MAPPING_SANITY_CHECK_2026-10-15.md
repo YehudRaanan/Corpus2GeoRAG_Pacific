@@ -12,28 +12,25 @@
 
 ## Conclusion
 
-The exact Level 2 mappings in the reviewed sample are generally reasonable. The
-formal reverse examples also preserve the intended direction. However, the data
-layer is not ready to apply v2.1 to the whole draft export.
+All 75 missing source keys now have explicit mappings. Replay covers all
+700,890 draft assertions (100%), with zero missing, duplicate, or conflicting
+keys. See the [completion report](RELATION_MAPPING_75_CODE_COMPLETION_2026-10-15.md)
+for the deterministic evidence and the 496-example review of the additions.
 
-There are two remaining blockers:
+Question sufficiency and source quality still limit answers. A participant
+relation does not prove who attacked. Administrative containment does not
+always prove where an event occurred. Some source values, endpoint names, and
+entity types are wrong or unresolved. Mapping coverage does not correct them.
 
-1. **Coverage:** v2.1 has a lookup row for 598,736 of 700,890 draft assertions
-   (85.43%). It has no lookup row for 102,154 assertions (14.57%) across 75
-   source-predicate keys.
-2. **Question sufficiency:** several exact relations are valid but are too broad
-   for the Agent question. A participant relation does not prove who attacked.
-   Administrative containment does not always prove where an event occurred.
-
-The direction contract itself passed: all 1,995 direction lookup rows returned
+The direction contract itself passed: all 2,097 direction lookup rows returned
 to the original relation after applying reverse twice.
 
 The WarSampo lookup collision found in the initial audit is fixed. The corrected
 build restores 15 original full source predicates. Both v2 and v2.1 now contain
-1,520 unique `source + source_predicate` keys, including 111 WarSampo keys.
-The 589 connection decisions and all Level 2 identifiers and directions remain
-the same. Two optional Level 1 candidate fields are also corrected because they
-previously came from the wrong source row.
+1,595 unique `source + source_predicate` keys, including 111 WarSampo keys.
+The original 589 connection decisions and original Level 2 mappings remain
+unchanged. The 75 additions have a separate evidence ledger. The preceding
+WarSampo correction also restored two optional Level 1 candidate fields.
 
 ## Gold or Silver question set
 
@@ -72,22 +69,23 @@ The risk strata are:
 - source relation retained without a cross-source connection;
 - mapping blocked or kept separate;
 - assertion QA required;
-- no v2.1 lookup row.
+- no v2.1 lookup row (empty after completion).
 
-This produced 130 review rows. Sampling is reproducible with seed `20261015`.
+This now produces 125 review rows; the initial run had 130, including five
+missing-mapping samples. Sampling is reproducible with seed `20261015`.
 
 ## Deterministic checks
 
 | Check | Result | Meaning |
 |---|---:|---|
-| Mapping rows | 1,520 | Rows in the v2.1 table |
+| Mapping rows | 1,595 | Rows in the v2.1 table |
 | Duplicate `source + source_predicate` keys | 0 | Initial result was 10; full predicate identity is now preserved |
 | Conflicting duplicate keys | 0 | Each source predicate now has one mapping row |
-| Direction lookup rows | 1,995 | Forward and reverse lookup rows |
+| Direction lookup rows | 2,097 | Forward and reverse lookup rows |
 | Direction contract errors | 0 | Each reverse points back to the original relation |
 | Draft assertions replayed | 700,890 | Complete draft assertion input |
-| Assertions with one v2.1 mapping | 598,736 (85.43%) | Deterministic replay was possible |
-| Assertions with no v2.1 mapping | 102,154 (14.57%) | No v2.1 row exists |
+| Assertions with one v2.1 mapping | 700,890 (100%) | Deterministic replay succeeded |
+| Assertions with no v2.1 mapping | 0 (0%) | All current draft keys have explicit rules |
 | Assertions affected by ambiguous WarSampo keys in this draft | 0 | No ambiguous mapping keys remain |
 
 ### Fixed WarSampo source-key collision
@@ -112,10 +110,13 @@ For example, all four predicates now retain their own rows:
 - `http://ldf.fi/schema/warsa/prisoners/unit`
 - `http://ldf.fi/schema/warsa/unit`
 
-The source counts are EventKG 808, Wikidata 601, and WarSampo 111. Their sum is
-1,520; that total does not describe WarSampo alone.
+After the 75 additions, source counts are EventKG 814, Wikidata 670, and
+WarSampo 111. The preceding corrected inventory had 808, 601, and 111,
+respectively. Its 1,520-row total did not describe WarSampo alone.
 
-The missing v2.1 rows are concentrated in:
+### Historical coverage gap, now closed
+
+The initially missing v2.1 rows were concentrated in:
 
 | Source predicate | Draft assertions |
 |---|---:|
@@ -127,9 +128,8 @@ The missing v2.1 rows are concentrated in:
 | `wd:P910` | 3,033 |
 | `wd:P5008` | 1,261 |
 
-These seven keys account for 99,507 of the 102,154 missing assertions. The data
-layer needs an explicit pass-through row or an explicit exclusion rule for each
-missing predicate. Silent fallback is not deterministic mapping.
+These seven keys accounted for 99,507 of the 102,154 initially missing
+assertions. All 75 keys now have explicit rules. No silent fallback is needed.
 
 An independent recount confirmed 75 distinct source-predicate keys and 75
 distinct v1 Level 2 IDs: 69 Wikidata keys and six EventKG keys. These 75 keys
@@ -251,14 +251,18 @@ Rebuild the mapping tables with the corrected entry point:
   'GG_Data\mapping\test_relation_mapping_keys.py'
 ```
 
-This command rebuilds v2 and invokes the existing v2.1 reverse builder. It reads
+This command rebuilds v2 and invokes `GG_Data/mapping/build_relation_mapping_v2_1.py`.
+It reads
 the saved deterministic audit inputs without fetching new evidence. All outputs
 are under `GG_Data/mapping`. The historical standalone v2 builder under `poc`
 still uses short names and must not be used to regenerate these tables.
 
-The regression checks failed on both original tables and passed after the fix.
-They check every original source predicate, occurrence count, time/evidence
-policy, the four WarSampo unit predicates, and reverse lookup completeness.
+The six regression checks pass. They check original source predicates,
+occurrence counts and time/evidence policies, the 75 additions, the four
+WarSampo unit predicates, blocked inverses, symmetry, reverse lookup
+completeness, and legacy endpoint restoration. The v1 notebook already
+normalized endpoint direction; replay must first restore source orientation
+before applying v2.1, to avoid reversing an assertion twice.
 
 Run the sanity check after every mapping-table build and after every graph
 export:

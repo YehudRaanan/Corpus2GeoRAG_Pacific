@@ -4,7 +4,7 @@ Level 2 changes use identifier equality or saved formal mapping evidence only.
 Level 1 remains a separate optional search view. Full predicate identifiers,
 never local names, identify inventory rows. This is the corrected entry point;
 the historical builder in poc/relation_alignment uses ambiguous local names.
-The existing v2.1 builder supplies the data-layer reverse contract afterward.
+The local v2.1 builder supplies the data-layer reverse contract afterward.
 All generated files stay in GG_Data/mapping. No graph export is rebuilt here.
 """
 
@@ -29,6 +29,7 @@ FORMAL_EVIDENCE = DETERMINISTIC / "formal_mapping_evidence.csv"
 SAME_ID_VALIDATION = DETERMINISTIC / "same_identifier_pair_validation.csv"
 V1 = ROOT / "GG_Data" / "mapping" / "RELATION_MAPPING_TABLE_v1.0.0.csv"
 OUT = ROOT / "GG_Data" / "mapping"
+ADDITIONAL_RULES = OUT / "ADDITIONAL_RELATION_RULES_2026-10-15.csv"
 
 ACCEPTED_STATUSES = {
     "READY_DETERMINISTIC_TRANSLATION",
@@ -85,7 +86,9 @@ def normalize_uri(value: str) -> str:
     if match:
         return "wd:" + match.group(1)
     value = value.replace("https://schema.org/", "http://schema.org/")
-    value = value.replace("https://dbpedia.org/ontology/", "http://dbpedia.org/ontology/")
+    value = value.replace(
+        "https://dbpedia.org/ontology/", "http://dbpedia.org/ontology/"
+    )
     value = value.replace(
         "https://d-nb.info/standards/elementset/gnd#",
         "http://d-nb.info/standards/elementset/gnd#",
@@ -93,6 +96,114 @@ def normalize_uri(value: str) -> str:
     return value.replace(
         "http://cidoc-crm.org/cidoc-crm/", "http://www.cidoc-crm.org/cidoc-crm/"
     )
+
+
+def append_coverage_rules(rows: list[dict[str, object]]) -> None:
+    """Add the reviewed source keys that the historical inventory excluded."""
+    rules = read_csv(ADDITIONAL_RULES)
+    assert len(rules) == 75
+    entities = json.loads(
+        (OUT / rules[0]["metadata_snapshot"]).read_text(encoding="utf-8")
+    )["entities"]
+    keys = {(row["source"], row["source_predicate"]) for row in rows}
+    policy_fields = (
+        "time_from_input",
+        "time_to_input",
+        "time_point_input",
+        "time_join_rule",
+        "evidence_requirements",
+        "evidence_policy",
+        "time_conflict_policy",
+    )
+    for rule in rules:
+        key = (rule["source"], rule["source_predicate"])
+        assert key not in keys, f"Additional rule collides with an existing key: {key}"
+        assert normalize_uri(rule["source_predicate"]) == rule["normalized_relation_id"]
+        assert rule["assertion_review_status"] != "PENDING_SAMPLE_REVIEW"
+        source_id, target_id = (
+            rule["normalized_relation_id"],
+            rule["level2_relation_id"],
+        )
+        if rule["level2_mapping_basis"] == "IDENTICAL_IDENTIFIER":
+            assert source_id == target_id and rule["direction_to_level2"] == "same"
+        else:
+            reverse = rule["direction_to_level2"] == "reverse"
+            evidence_entity = entities[source_id[3:] if reverse else target_id[3:]]
+            property_id = "P1696" if reverse else "P1628"
+            evidence = [
+                statement
+                for statement in evidence_entity["claims"].get(property_id, [])
+                if statement["id"] in rule["statement_ids"].split("|")
+                and statement.get("rank") != "deprecated"
+                and not statement.get("qualifiers")
+            ]
+            expected = {"id": target_id[3:]} if reverse else source_id
+            assert any(
+                (
+                    statement["mainsnak"]["datavalue"]["value"].get("id")
+                    == expected["id"]
+                    if reverse
+                    else statement["mainsnak"]["datavalue"]["value"] == expected
+                )
+                for statement in evidence
+            ), f"Additional translation lacks its saved formal value: {key}"
+        template = next(row for row in rows if row["source"] == rule["source"])
+        row = {field: "" for field in rows[0]}
+        row.update({field: template[field] for field in policy_fields})
+        for field in (
+            "source",
+            "source_predicate",
+            "source_occurrence_count",
+            "normalized_relation_id",
+            "relation_label",
+            "relation_description",
+            "level2_relation_id",
+            "direction_to_level2",
+            "level2_mapping_basis",
+        ):
+            row[field] = rule[field]
+        formal = rule["level2_mapping_basis"] == "FORMAL_EQUIVALENCE_OR_INVERSE"
+        row.update(
+            source_predicate_local=rule["source_predicate"].rsplit("/", 1)[-1],
+            connection_coverage=(
+                "SUPPLEMENTAL_FORMAL_RULE"
+                if formal
+                else "SUPPLEMENTAL_SOURCE_IDENTIFIER"
+            ),
+            connection_count=0,
+            same_code_connection_count=0,
+            formal_connection_count=0,
+            formal_mapping_sources=rule["formal_sources"],
+            formal_paths=rule["formal_paths"],
+            formal_evidence_urls=rule["formal_evidence_urls"],
+            level2_decision=(
+                "ACCEPT_FORMAL_TRANSLATION"
+                if formal
+                else "RETAIN_OR_SHARE_IDENTICAL_IDENTIFIER"
+            ),
+            formal_component_conflict="False",
+            assertion_qa_required="YES",
+            level1_family="UNRESOLVED",
+            level1_assignment_status="NOT_ASSIGNED",
+            level1_use="OPTIONAL_SEARCH_VIEW_ONLY",
+            reverse_query_policy="RESOLVED_BY_V2_1_DATA_LAYER_CONTRACT",
+            materialize_reverse_edge="NO",
+            source_data_modified="False",
+            relation_map_version="relation-map-v2.0.0",
+        )
+        # Reuse an existing optional family only for the exact effective ID.
+        anchors = [
+            item
+            for item in rows
+            if item["level2_relation_id"] == row["level2_relation_id"]
+        ]
+        families = {item["level1_family"] for item in anchors} - {"UNRESOLVED"}
+        if len(families) == 1:
+            row["level1_family"] = families.pop()
+            row["level1_assignment_status"] = "EXISTING_CATALOG_ASSIGNMENT"
+            row["level1_assignment_source"] = "Existing exact effective Level 2 ID"
+        rows.append(row)
+        keys.add(key)
 
 
 def build() -> dict[str, object]:
@@ -114,12 +225,14 @@ def build() -> dict[str, object]:
     registry_by_key = {
         (row["source"], row["normalized_relation"]): row for row in registry
     }
-    assert len(inventory_by_source_predicate) == len(inventory), "Inventory ID collision"
+    assert len(inventory_by_source_predicate) == len(
+        inventory
+    ), "Inventory ID collision"
     assert len(v1_by_uri) == len(v1_rows), "Duplicate v1 source predicate"
     assert len(registry_by_key) == 1520
-    assert inventory_by_source_predicate.keys() == registry_by_key.keys(), (
-        "Inventory and registry full identifiers differ"
-    )
+    assert (
+        inventory_by_source_predicate.keys() == registry_by_key.keys()
+    ), "Inventory and registry full identifiers differ"
 
     row_context: dict[tuple[str, str], dict[str, str]] = {}
     for row in registry:
@@ -459,15 +572,23 @@ def build() -> dict[str, object]:
             }
         )
 
-    assert len(mapping_rows) == 1520
-    assert {(row["source"], row["source_predicate"]) for row in mapping_rows} == set(
-        v1_by_uri
-    ), "Output must preserve every original source predicate exactly once"
+    append_coverage_rules(mapping_rows)
+    supplemental = read_csv(ADDITIONAL_RULES)
+    assert len(mapping_rows) == 1595
+    assert {(row["source"], row["source_predicate"]) for row in mapping_rows} == (
+        set(v1_by_uri)
+        | {(row["source"], row["source_predicate"]) for row in supplemental}
+    ), "Output must preserve original predicates and explicit additional keys"
     assert len(connection_rows) == 589
-    assert sum(coverage_counts.values()) == 1520
+    for row in mapping_rows[len(v1_rows) :]:
+        coverage_counts[str(row["connection_coverage"])] += 1
+        coverage_occurrences[str(row["connection_coverage"])] += int(
+            row["source_occurrence_count"]
+        )
+    assert sum(coverage_counts.values()) == len(mapping_rows)
     assert sum(coverage_occurrences.values()) == sum(
         int(row["occurrence_count"]) for row in registry
-    )
+    ) + sum(int(row["source_occurrence_count"]) for row in supplemental)
 
     coverage_rows = [
         {
@@ -499,6 +620,10 @@ def build() -> dict[str, object]:
     summary = {
         "relation_map_version": "relation-map-v2.0.0",
         "eligible_source_relation_rows": len(mapping_rows),
+        "historical_eligible_source_relation_rows": len(v1_rows),
+        "explicit_additional_source_relation_rows": len(supplemental),
+        "additional_rule_file": ADDITIONAL_RULES.name,
+        "connection_table_scope": "Original 589 audited candidates; additional rules have their own evidence ledger.",
         "source_occurrences": sum(
             int(row["source_occurrence_count"]) for row in mapping_rows
         ),
@@ -524,16 +649,24 @@ def build() -> dict[str, object]:
         "unconnected_source_occurrences": sum(
             int(row["source_occurrence_count"]) for row in unconnected
         ),
-        "effective_level2_relations": len(effective_groups),
+        "effective_level2_relations": len(
+            {row["level2_relation_id"] for row in mapping_rows}
+        ),
         "level1_effective_relation_status": dict(
-            Counter(item["status"] for item in level1_by_level2.values())
+            Counter(
+                level1_by_level2.get(level2, {"status": "NOT_ASSIGNED"})["status"]
+                for level2 in sorted(
+                    {row["level2_relation_id"] for row in mapping_rows}
+                )
+            )
         ),
         "accepted_reverse_source_rows": sum(
             row["direction_to_level2"] == "reverse" for row in mapping_rows
         ),
         "symmetric_level2_relations": len(symmetric_relations),
+        "symmetric_count_scope": "Historical v2 intermediate; use the v2.1 summary for the final reverse catalog.",
         "opposite_direction_policy": (
-            "Store one source assertion. Use formal inverse or symmetry for query rewriting; otherwise use inbound traversal."
+            "Final directional delivery is resolved by v2.1: explicit named, symmetric, or synthetic reverse lookup; both endpoint directions retain one source assertion identity."
         ),
         "level1_policy": (
             "Optional search view only. Ranked candidates remain unresolved until reviewed."
@@ -548,5 +681,5 @@ def build() -> dict[str, object]:
 
 if __name__ == "__main__":
     print(json.dumps(build(), ensure_ascii=False, indent=2))
-    reverse_builder = runpy.run_path(str(HERE / "build_relation_mapping_v2_1.py"))
+    reverse_builder = runpy.run_path(str(OUT / "build_relation_mapping_v2_1.py"))
     print(json.dumps(reverse_builder["build"](), ensure_ascii=False, indent=2))

@@ -127,6 +127,17 @@ def read_csv(path: Path) -> list[dict[str, str]]:
         return list(csv.DictReader(stream))
 
 
+def original_endpoints(assertion: dict[str, str]) -> tuple[str, str]:
+    """Undo the v1 export's endpoint normalization before applying v2.1.
+
+    The source notebook stores normalized endpoints plus its applied direction.
+    Reapplying a reverse rule directly to those endpoints would swap twice.
+    """
+    assert assertion["direction"] in {"same", "reverse"}
+    subject, obj = assertion["subject_qid"], assertion["object_qid"]
+    return (obj, subject) if assertion["direction"] == "reverse" else (subject, obj)
+
+
 def risk_stratum(mapping: dict[str, str]) -> str:
     decision = mapping["level2_decision"]
     if mapping["assertion_qa_required"] == "YES":
@@ -243,10 +254,10 @@ def main() -> None:
                     "level1_family": assertion["level1_relation"],
                     "reverse_relation_id": "",
                     "reverse_resolution_type": "",
-                    "original_subject_id": assertion["subject_qid"],
-                    "original_object_id": assertion["object_qid"],
-                    "canonical_subject_id": assertion["subject_qid"],
-                    "canonical_object_id": assertion["object_qid"],
+                    "original_subject_id": original_endpoints(assertion)[0],
+                    "original_object_id": original_endpoints(assertion)[1],
+                    "canonical_subject_id": original_endpoints(assertion)[0],
+                    "canonical_object_id": original_endpoints(assertion)[1],
                     "question_use_limit": "A v2.1 assignment does not exist for this source predicate.",
                 }
                 samples["risk:MISSING_MAPPING"].add(sample)
@@ -254,8 +265,7 @@ def main() -> None:
 
             counts["assertions_with_v2_mapping"] += 1
             direction = mapping["direction_to_level2"]
-            original_subject = assertion["subject_qid"]
-            original_object = assertion["object_qid"]
+            original_subject, original_object = original_endpoints(assertion)
             canonical_subject, canonical_object = original_subject, original_object
             if direction == "reverse":
                 canonical_subject, canonical_object = canonical_object, canonical_subject

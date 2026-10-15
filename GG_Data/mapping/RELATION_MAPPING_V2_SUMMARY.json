@@ -1,7 +1,11 @@
 {
   "relation_map_version": "relation-map-v2.0.0",
-  "eligible_source_relation_rows": 1520,
-  "source_occurrences": 5617651,
+  "eligible_source_relation_rows": 1595,
+  "historical_eligible_source_relation_rows": 1520,
+  "explicit_additional_source_relation_rows": 75,
+  "additional_rule_file": "ADDITIONAL_RELATION_RULES_2026-10-15.csv",
+  "connection_table_scope": "Original 589 audited candidates; additional rules have their own evidence ledger.",
+  "source_occurrences": 5724567,
   "unique_connection_rows": 589,
   "same_code_connections": 403,
   "cross_identifier_connections": 186,
@@ -36,18 +40,28 @@
     "SAME_CODE_CONNECTION_ONLY": {
       "source_relation_rows": 528,
       "source_occurrences": 342887
+    },
+    "SUPPLEMENTAL_FORMAL_RULE": {
+      "source_relation_rows": 2,
+      "source_occurrences": 673
+    },
+    "SUPPLEMENTAL_SOURCE_IDENTIFIER": {
+      "source_relation_rows": 73,
+      "source_occurrences": 106243
     }
   },
   "unconnected_source_relation_rows": 602,
   "unconnected_source_occurrences": 3219363,
-  "effective_level2_relations": 1009,
+  "effective_level2_relations": 1064,
   "level1_effective_relation_status": {
     "EXISTING_CATALOG_ASSIGNMENT": 215,
-    "RANKED_REVIEW_REQUIRED": 794
+    "RANKED_REVIEW_REQUIRED": 794,
+    "NOT_ASSIGNED": 55
   },
-  "accepted_reverse_source_rows": 71,
+  "accepted_reverse_source_rows": 72,
   "symmetric_level2_relations": 5,
-  "opposite_direction_policy": "Store one source assertion. Use formal inverse or symmetry for query rewriting; otherwise use inbound traversal.",
+  "symmetric_count_scope": "Historical v2 intermediate; use the v2.1 summary for the final reverse catalog.",
+  "opposite_direction_policy": "Final directional delivery is resolved by v2.1: explicit named, symmetric, or synthetic reverse lookup; both endpoint directions retain one source assertion identity.",
   "level1_policy": "Optional search view only. Ranked candidates remain unresolved until reviewed.",
   "source_data_modified": false
 }

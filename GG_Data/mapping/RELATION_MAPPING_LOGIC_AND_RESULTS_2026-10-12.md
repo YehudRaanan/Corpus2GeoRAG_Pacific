@@ -46,10 +46,15 @@ the original URI in the runtime table, and rejects duplicate or lost source
 keys. This fixes the short-name join in the historical standalone v2 builder
 under `poc`; that old command must not be used for table regeneration.
 The correction restores 15 WarSampo source keys and two optional Level 1
-candidate fields. Both current tables have 1,520 distinct source keys, including
-111 WarSampo keys. Level 2 mapping decisions and directions are unchanged.
+candidate fields. The subsequent 75-code completion brings both current tables
+to 1,595 distinct source keys: EventKG 814, Wikidata 670, and WarSampo 111.
+The original 1,520 Level 2 mappings and directions are unchanged. The added
+rules use identifier identity or saved formal mapping values. See the
+[75-code completion report](RELATION_MAPPING_75_CODE_COMPLETION_2026-10-15.md)
+for all rules, evidence, description checks, and 496 sampled facts. Replay
+maps all 700,890 current draft assertions with zero missing or conflicting keys.
 
-The v2.1 lookup has 1,995 rows for 1,002 direction pairs. It has two lookup rows for each of 993 non-symmetric pairs and one explicit self-mapping row for each of 9 symmetric relations. This lookup-row rule is separate from Agent-facing assertion delivery: a non-self symmetric assertion still produces two endpoint directions.
+The v2.1 catalog has 1,064 effective Level 2 relations. Its lookup has 2,097 rows for 1,055 direction pairs: two lookup rows for each of 1,042 non-symmetric pairs and one explicit self-mapping row for each of 13 symmetric relations. This lookup-row rule is separate from Agent-facing assertion delivery: a non-self symmetric assertion still produces two endpoint directions. The current graph export remains v1; these counts describe the completed catalog and deterministic replay.
 
 The sections below remain as historical evidence for v1. They must not be used as the active mapping or direction contract.
 

@@ -1,0 +1,200 @@
+{
+  "retrieved_at_utc": "2026-10-15T17:22:30.483638+00:00",
+  "source": "https://www.wikidata.org/w/api.php",
+  "purpose": "Focused endpoint metadata for apparent sample conflicts. Broader label fetch stopped on HTTP 429; no complete endpoint refresh is claimed.",
+  "entities": {
+    "Q7937780": {
+      "type": "item",
+      "id": "Q7937780",
+      "labels": {
+        "en": {
+          "language": "en",
+          "value": "Vivian Street"
+        }
+      },
+      "descriptions": {
+        "en": {
+          "language": "en",
+          "value": "British Army general (1912–1970)"
+        }
+      }
+    },
+    "Q25851": {
+      "type": "item",
+      "id": "Q25851",
+      "labels": {
+        "en": {
+          "language": "en",
+          "value": "Poponejo"
+        }
+      },
+      "descriptions": {
+        "en": {
+          "language": "en",
+          "value": "species of lagomorphs (Lagomorpha)"
+        }
+      }
+    },
+    "Q41986": {
+      "type": "item",
+      "id": "Q41986",
+      "labels": {
+        "en": {
+          "language": "en",
+          "value": "Meuse"
+        }
+      },
+      "descriptions": {
+        "en": {
+          "language": "en",
+          "value": "river in western Europe"
+        }
+      }
+    },
+    "Q2779": {
+      "type": "item",
+      "id": "Q2779",
+      "labels": {
+        "en": {
+          "language": "en",
+          "value": "August 10"
+        }
+      },
+      "descriptions": {
+        "en": {
+          "language": "en",
+          "value": "day of the year"
+        }
+      }
+    },
+    "Q2603": {
+      "type": "item",
+      "id": "Q2603",
+      "labels": {
+        "en": {
+          "language": "en",
+          "value": "December 21"
+        }
+      },
+      "descriptions": {
+        "en": {
+          "language": "en",
+          "value": "day of the year"
+        }
+      }
+    },
+    "Q21713173": {
+      "type": "item",
+      "id": "Q21713173",
+      "labels": {
+        "en": {
+          "language": "en",
+          "value": "uboat.net"
+        }
+      },
+      "descriptions": {
+        "en": {
+          "language": "en",
+          "value": "online database about WWII submarine warfare"
+        }
+      }
+    },
+    "Q119789127": {
+      "type": "item",
+      "id": "Q119789127",
+      "labels": {
+        "en": {
+          "language": "en",
+          "value": "Ship Design Drawings archive"
+        }
+      },
+      "descriptions": {
+        "en": {
+          "language": "en",
+          "value": "archive of ship design drawings hosted by the Internet Archive"
+        }
+      }
+    },
+    "Q176796": {
+      "type": "item",
+      "id": "Q176796",
+      "labels": {
+        "en": {
+          "language": "en",
+          "value": "Convoy PQ 18"
+        }
+      },
+      "descriptions": {
+        "en": {
+          "language": "en",
+          "value": "Allied WWII freighter convey to the Soviet Union"
+        }
+      }
+    },
+    "Q362": {
+      "type": "item",
+      "id": "Q362",
+      "labels": {
+        "en": {
+          "language": "en",
+          "value": "World War II"
+        }
+      },
+      "descriptions": {
+        "en": {
+          "language": "en",
+          "value": "1939–1945 global conflict"
+        }
+      }
+    },
+    "Q135116154": {
+      "type": "item",
+      "id": "Q135116154",
+      "labels": {},
+      "descriptions": {}
+    },
+    "Q103926323": {
+      "type": "item",
+      "id": "Q103926323",
+      "labels": {
+        "en": {
+          "language": "en",
+          "value": "HMS Loch Fada (possibly)"
+        }
+      },
+      "descriptions": {
+        "en": {
+          "language": "en",
+          "value": "shipwreck off the Scottish coast"
+        }
+      }
+    },
+    "Q11498830": {
+      "type": "item",
+      "id": "Q11498830",
+      "labels": {
+        "en": {
+          "language": "en",
+          "value": "China Incident"
+        }
+      },
+      "descriptions": {}
+    },
+    "Q6581097": {
+      "type": "item",
+      "id": "Q6581097",
+      "labels": {
+        "en": {
+          "language": "en",
+          "value": "male"
+        }
+      },
+      "descriptions": {
+        "en": {
+          "language": "en",
+          "value": "to be used in \"sex or gender\" (P21) to indicate that the human subject is a male or \"semantic gender\" (P10339) to indicate that a word refers to a male person"
+        }
+      }
+    }
+  }
+}

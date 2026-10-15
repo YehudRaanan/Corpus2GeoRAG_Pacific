@@ -1,0 +1,16 @@
+{
+  "rules": 75,
+  "assertions": 102154,
+  "sampled_distinct_facts": 496,
+  "keys_with_ten_examples": 38,
+  "keys_below_ten_examples": 37,
+  "keys_without_examples": 0,
+  "selection": "Lowest ten SHA256(seed 20261015, source, predicate, subject, object) per key",
+  "nodes_found": 818,
+  "sample_endpoint_ids": 818,
+  "limits": [
+    "A preserved identifier is not proof that the source assertion is true.",
+    "Names and types are from the draft graph and can be wrong or absent.",
+    "Counterpart absence is not contradictory evidence; qualifiers may constrain assertions."
+  ]
+}

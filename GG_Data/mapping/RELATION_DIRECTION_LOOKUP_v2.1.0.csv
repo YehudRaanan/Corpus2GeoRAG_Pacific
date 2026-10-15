@@ -771,9 +771,11 @@ direction-pair-a3ffc95c152a,inverse:wd:P1040,inverse of film editor,wd:P1040,fil
 direction-pair-3870147830cd,inverse:wd:P10449,inverse of trained by,wd:P10449,trained by,REVERSE_TO_FORWARD,false,SYNTHETIC_INVERSE,false,SWAP_SOURCE_TARGET,,,,NONE,relation-map-v2.1.0
 direction-pair-ab5981866cb4,inverse:wd:P105,inverse of taxon rank,wd:P105,taxon rank,REVERSE_TO_FORWARD,false,SYNTHETIC_INVERSE,false,SWAP_SOURCE_TARGET,,,,NONE,relation-map-v2.1.0
 direction-pair-1d4788d54d75,inverse:wd:P1050,inverse of medical condition,wd:P1050,medical condition,REVERSE_TO_FORWARD,false,SYNTHETIC_INVERSE,false,SWAP_SOURCE_TARGET,,,,NONE,relation-map-v2.1.0
+direction-pair-4fbd8e64acb2,inverse:wd:P10527,inverse of documentation files at,wd:P10527,documentation files at,REVERSE_TO_FORWARD,false,SYNTHETIC_INVERSE,false,SWAP_SOURCE_TARGET,,,,NONE,relation-map-v2.1.0
 direction-pair-c60b24eaa67b,inverse:wd:P106,inverse of occupation,wd:P106,occupation,REVERSE_TO_FORWARD,false,SYNTHETIC_INVERSE,false,SWAP_SOURCE_TARGET,,,,NONE,relation-map-v2.1.0
 direction-pair-4add60f4707a,inverse:wd:P10624,inverse of official observer status in organization,wd:P10624,official observer status in organization,REVERSE_TO_FORWARD,false,SYNTHETIC_INVERSE,false,SWAP_SOURCE_TARGET,,,,NONE,relation-map-v2.1.0
 direction-pair-3a22cc01766d,inverse:wd:P1064,inverse of track gauge,wd:P1064,track gauge,REVERSE_TO_FORWARD,false,SYNTHETIC_INVERSE,false,SWAP_SOURCE_TARGET,,,,NONE,relation-map-v2.1.0
+direction-pair-78d3792676e9,inverse:wd:P10642,inverse of place of disappearance,wd:P10642,place of disappearance,REVERSE_TO_FORWARD,false,SYNTHETIC_INVERSE,false,SWAP_SOURCE_TARGET,,,,NONE,relation-map-v2.1.0
 direction-pair-fe47bb03de9c,inverse:wd:P10661,inverse of exhibited creator,wd:P10661,exhibited creator,REVERSE_TO_FORWARD,false,SYNTHETIC_INVERSE,false,SWAP_SOURCE_TARGET,,,,NONE,relation-map-v2.1.0
 direction-pair-8ade07439bd8,inverse:wd:P1071,inverse of location of creation,wd:P1071,location of creation,REVERSE_TO_FORWARD,false,SYNTHETIC_INVERSE,false,SWAP_SOURCE_TARGET,,,,NONE,relation-map-v2.1.0
 direction-pair-ce3232bd1371,inverse:wd:P1074,inverse of fictional or mythical analog of,wd:P1074,fictional or mythical analog of,REVERSE_TO_FORWARD,false,SYNTHETIC_INVERSE,false,SWAP_SOURCE_TARGET,,,,NONE,relation-map-v2.1.0
@@ -784,6 +786,7 @@ direction-pair-0a127a7d571b,inverse:wd:P108,inverse of employer,wd:P108,employer
 direction-pair-1f02222e9fdd,inverse:wd:P1080,inverse of from narrative universe,wd:P1080,from narrative universe,REVERSE_TO_FORWARD,false,SYNTHETIC_INVERSE,false,SWAP_SOURCE_TARGET,,,,NONE,relation-map-v2.1.0
 direction-pair-352dd198ff61,inverse:wd:P10894,inverse of spoken by,wd:P10894,spoken by,REVERSE_TO_FORWARD,false,SYNTHETIC_INVERSE,false,SWAP_SOURCE_TARGET,,,,NONE,relation-map-v2.1.0
 direction-pair-7037591b6a6b,inverse:wd:P110,inverse of illustrator,wd:P110,illustrator,REVERSE_TO_FORWARD,false,SYNTHETIC_INVERSE,false,SWAP_SOURCE_TARGET,,,,NONE,relation-map-v2.1.0
+direction-pair-7f9bab2837e0,inverse:wd:P11108,inverse of recorded participant,wd:P11108,recorded participant,REVERSE_TO_FORWARD,false,SYNTHETIC_INVERSE,false,SWAP_SOURCE_TARGET,,,,NONE,relation-map-v2.1.0
 direction-pair-53eac017999d,inverse:wd:P11146,inverse of collection items at,wd:P11146,collection items at,REVERSE_TO_FORWARD,false,SYNTHETIC_INVERSE,false,SWAP_SOURCE_TARGET,,,,NONE,relation-map-v2.1.0
 direction-pair-a466a5ed4f83,inverse:wd:P112,inverse of founded by,wd:P112,founded by,REVERSE_TO_FORWARD,false,SYNTHETIC_INVERSE,false,SWAP_SOURCE_TARGET,,,,NONE,relation-map-v2.1.0
 direction-pair-c32777926512,inverse:wd:P113,inverse of airline hub,wd:P113,airline hub,REVERSE_TO_FORWARD,false,SYNTHETIC_INVERSE,false,SWAP_SOURCE_TARGET,,,,NONE,relation-map-v2.1.0
@@ -811,6 +814,7 @@ direction-pair-0bd879ea2cfa,inverse:wd:P12439,inverse of civil rank,wd:P12439,ci
 direction-pair-365b6d63267f,inverse:wd:P126,inverse of maintained by,wd:P126,maintained by,REVERSE_TO_FORWARD,false,SYNTHETIC_INVERSE,false,SWAP_SOURCE_TARGET,,,,NONE,relation-map-v2.1.0
 direction-pair-b9da65515b98,inverse:wd:P1264,inverse of valid in period,wd:P1264,valid in period,REVERSE_TO_FORWARD,false,SYNTHETIC_INVERSE,false,SWAP_SOURCE_TARGET,,,,NONE,relation-map-v2.1.0
 direction-pair-bc7556edcc04,inverse:wd:P1269,inverse of facet of,wd:P1269,facet of,REVERSE_TO_FORWARD,false,SYNTHETIC_INVERSE,false,SWAP_SOURCE_TARGET,Wikidata,Wikidata inverse property (P1696),https://www.wikidata.org/wiki/Property:P2184|https://www.wikidata.org/wiki/Property:P2633|https://www.wikidata.org/wiki/Property:P8744|https://www.wikidata.org/wiki/Property:P9241,NONE,relation-map-v2.1.0
+direction-pair-e83a99c88d3b,inverse:wd:P12693,inverse of source of transfer,wd:P12693,source of transfer,REVERSE_TO_FORWARD,false,SYNTHETIC_INVERSE,false,SWAP_SOURCE_TARGET,,,,NONE,relation-map-v2.1.0
 direction-pair-93ea8981bb05,inverse:wd:P12714,inverse of tartan,wd:P12714,tartan,REVERSE_TO_FORWARD,false,SYNTHETIC_INVERSE,false,SWAP_SOURCE_TARGET,,,,NONE,relation-map-v2.1.0
 direction-pair-4b6e80c0bf24,inverse:wd:P1283,inverse of filmography,wd:P1283,filmography,REVERSE_TO_FORWARD,false,SYNTHETIC_INVERSE,false,SWAP_SOURCE_TARGET,,,,NONE,relation-map-v2.1.0
 direction-pair-42e22d01cbb5,inverse:wd:P1290,inverse of godparent,wd:P1290,godparent,REVERSE_TO_FORWARD,false,SYNTHETIC_INVERSE,false,SWAP_SOURCE_TARGET,,,,NONE,relation-map-v2.1.0
@@ -827,6 +831,7 @@ direction-pair-cdbdf9aeadef,inverse:wd:P13210,inverse of organisation tax status
 direction-pair-601490e740b6,inverse:wd:P1327,inverse of partner in business or sport,wd:P1327,partner in business or sport,REVERSE_TO_FORWARD,false,SYNTHETIC_INVERSE,false,SWAP_SOURCE_TARGET,,,,NONE,relation-map-v2.1.0
 direction-pair-39de20be861b,inverse:wd:P1336,inverse of territory claimed by,wd:P1336,territory claimed by,REVERSE_TO_FORWARD,false,SYNTHETIC_INVERSE,false,SWAP_SOURCE_TARGET,,,,NONE,relation-map-v2.1.0
 direction-pair-ab840bb0f1da,inverse:wd:P1340,inverse of eye color,wd:P1340,eye color,REVERSE_TO_FORWARD,false,SYNTHETIC_INVERSE,false,SWAP_SOURCE_TARGET,,,,NONE,relation-map-v2.1.0
+direction-pair-5126a1524818,inverse:wd:P1343,inverse of described by source,wd:P1343,described by source,REVERSE_TO_FORWARD,false,SYNTHETIC_INVERSE,false,SWAP_SOURCE_TARGET,Wikidata,P1696,https://www.wikidata.org/wiki/Property:P1343|https://www.wikidata.org/wiki/Property:P921,NONE,relation-map-v2.1.0
 direction-pair-3dd4b2cad7b8,inverse:wd:P1344,inverse of participant in,wd:P1344,participant in,REVERSE_TO_FORWARD,false,SYNTHETIC_INVERSE,false,SWAP_SOURCE_TARGET,Wikidata,Wikidata inverse property (P1696),https://www.wikidata.org/wiki/Property:P1344|https://www.wikidata.org/wiki/Property:P1923|https://www.wikidata.org/wiki/Property:P710,NONE,relation-map-v2.1.0
 direction-pair-370be8187031,inverse:wd:P13459,inverse of research project that contributed to this data set,wd:P13459,research project that contributed to this data set,REVERSE_TO_FORWARD,false,SYNTHETIC_INVERSE,false,SWAP_SOURCE_TARGET,,,,NONE,relation-map-v2.1.0
 direction-pair-4933d467e372,inverse:wd:P1347,inverse of military casualty classification,wd:P1347,military casualty classification,REVERSE_TO_FORWARD,false,SYNTHETIC_INVERSE,false,SWAP_SOURCE_TARGET,,,,NONE,relation-map-v2.1.0
@@ -847,6 +852,7 @@ direction-pair-9540ef8ecdf4,inverse:wd:P1416,inverse of affiliation,wd:P1416,aff
 direction-pair-d81002a90d5f,inverse:wd:P1419,inverse of shape,wd:P1419,shape,REVERSE_TO_FORWARD,false,SYNTHETIC_INVERSE,false,SWAP_SOURCE_TARGET,,,,NONE,relation-map-v2.1.0
 direction-pair-b23d0cb944fe,inverse:wd:P1427,inverse of start point,wd:P1427,start point,REVERSE_TO_FORWARD,false,SYNTHETIC_INVERSE,false,SWAP_SOURCE_TARGET,,,,NONE,relation-map-v2.1.0
 direction-pair-a55a5ea8ba99,inverse:wd:P1429,inverse of has pet,wd:P1429,has pet,REVERSE_TO_FORWARD,false,SYNTHETIC_INVERSE,false,SWAP_SOURCE_TARGET,,,,NONE,relation-map-v2.1.0
+direction-pair-8ceeddb2b9e6,inverse:wd:P1431,inverse of executive producer,wd:P1431,executive producer,REVERSE_TO_FORWARD,false,SYNTHETIC_INVERSE,false,SWAP_SOURCE_TARGET,,,,NONE,relation-map-v2.1.0
 direction-pair-65edcd053868,inverse:wd:P1433,inverse of published in,wd:P1433,published in,REVERSE_TO_FORWARD,false,SYNTHETIC_INVERSE,false,SWAP_SOURCE_TARGET,,,,NONE,relation-map-v2.1.0
 direction-pair-1911afc3627d,inverse:wd:P1435,inverse of heritage designation,wd:P1435,heritage designation,REVERSE_TO_FORWARD,false,SYNTHETIC_INVERSE,false,SWAP_SOURCE_TARGET,,,,NONE,relation-map-v2.1.0
 direction-pair-7524c8bafad1,inverse:wd:P1444,inverse of destination point,wd:P1444,destination point,REVERSE_TO_FORWARD,false,SYNTHETIC_INVERSE,false,SWAP_SOURCE_TARGET,,,,NONE,relation-map-v2.1.0
@@ -876,6 +882,7 @@ direction-pair-04daea1ff750,inverse:wd:P1596,inverse of penalty,wd:P1596,penalty
 direction-pair-22ed785c94f8,inverse:wd:P1598,inverse of consecrator,wd:P1598,consecrator,REVERSE_TO_FORWARD,false,SYNTHETIC_INVERSE,false,SWAP_SOURCE_TARGET,,,,NONE,relation-map-v2.1.0
 direction-pair-c47157760f6a,inverse:wd:P16,inverse of transport network,wd:P16,transport network,REVERSE_TO_FORWARD,false,SYNTHETIC_INVERSE,false,SWAP_SOURCE_TARGET,,,,NONE,relation-map-v2.1.0
 direction-pair-76c37ea5e65c,inverse:wd:P161,inverse of cast member,wd:P161,cast member,REVERSE_TO_FORWARD,false,SYNTHETIC_INVERSE,false,SWAP_SOURCE_TARGET,,,,NONE,relation-map-v2.1.0
+direction-pair-a2d5b70af792,inverse:wd:P1611,inverse of NATO code for grade,wd:P1611,NATO code for grade,REVERSE_TO_FORWARD,false,SYNTHETIC_INVERSE,false,SWAP_SOURCE_TARGET,,,,NONE,relation-map-v2.1.0
 direction-pair-de7d1f2000a9,inverse:wd:P162,inverse of producer,wd:P162,producer,REVERSE_TO_FORWARD,false,SYNTHETIC_INVERSE,false,SWAP_SOURCE_TARGET,,,,NONE,relation-map-v2.1.0
 direction-pair-9064973ebc4a,inverse:wd:P1620,inverse of plaintiff,wd:P1620,plaintiff,REVERSE_TO_FORWARD,false,SYNTHETIC_INVERSE,false,SWAP_SOURCE_TARGET,,,,NONE,relation-map-v2.1.0
 direction-pair-cec2a4c40c21,inverse:wd:P1625,inverse of has melody,wd:P1625,has melody,REVERSE_TO_FORWARD,false,SYNTHETIC_INVERSE,false,SWAP_SOURCE_TARGET,,,,NONE,relation-map-v2.1.0
@@ -898,6 +905,8 @@ direction-pair-b0c3a89902bd,inverse:wd:P177,inverse of crosses,wd:P177,crosses,R
 direction-pair-741014f7445f,inverse:wd:P178,inverse of developer,wd:P178,developer,REVERSE_TO_FORWARD,false,SYNTHETIC_INVERSE,false,SWAP_SOURCE_TARGET,,,,NONE,relation-map-v2.1.0
 direction-pair-cd14527063f0,inverse:wd:P1789,inverse of chief operating officer,wd:P1789,chief operating officer,REVERSE_TO_FORWARD,false,SYNTHETIC_INVERSE,false,SWAP_SOURCE_TARGET,,,,NONE,relation-map-v2.1.0
 direction-pair-dfb7babbd092,inverse:wd:P179,inverse of part of the series,wd:P179,part of the series,REVERSE_TO_FORWARD,false,SYNTHETIC_INVERSE,false,SWAP_SOURCE_TARGET,,,,NONE,relation-map-v2.1.0
+direction-pair-536abb8cf506,inverse:wd:P1791,inverse of category for people buried here,wd:P1791,category for people buried here,REVERSE_TO_FORWARD,false,SYNTHETIC_INVERSE,false,SWAP_SOURCE_TARGET,,,,NONE,relation-map-v2.1.0
+direction-pair-af664b6ed841,inverse:wd:P1792,inverse of category of associated people,wd:P1792,category of associated people,REVERSE_TO_FORWARD,false,SYNTHETIC_INVERSE,false,SWAP_SOURCE_TARGET,,,,NONE,relation-map-v2.1.0
 direction-pair-07700038c617,inverse:wd:P1809,inverse of choreographer,wd:P1809,choreographer,REVERSE_TO_FORWARD,false,SYNTHETIC_INVERSE,false,SWAP_SOURCE_TARGET,,,,NONE,relation-map-v2.1.0
 direction-pair-7f9d3df0aadb,inverse:wd:P1811,inverse of list of episodes,wd:P1811,list of episodes,REVERSE_TO_FORWARD,false,SYNTHETIC_INVERSE,false,SWAP_SOURCE_TARGET,,,,NONE,relation-map-v2.1.0
 direction-pair-dfa959eebc4e,inverse:wd:P1817,inverse of addressee,wd:P1817,addressee,REVERSE_TO_FORWARD,false,SYNTHETIC_INVERSE,false,SWAP_SOURCE_TARGET,,,,NONE,relation-map-v2.1.0
@@ -906,6 +915,7 @@ direction-pair-762678e7cdff,inverse:wd:P1853,inverse of blood type,wd:P1853,bloo
 direction-pair-59b021afa049,inverse:wd:P186,inverse of made from material,wd:P186,made from material,REVERSE_TO_FORWARD,false,SYNTHETIC_INVERSE,false,SWAP_SOURCE_TARGET,,,,NONE,relation-map-v2.1.0
 direction-pair-dcd0a7d37687,inverse:wd:P1876,inverse of vessel,wd:P1876,vessel,REVERSE_TO_FORWARD,false,SYNTHETIC_INVERSE,false,SWAP_SOURCE_TARGET,,,,NONE,relation-map-v2.1.0
 direction-pair-1344a32c84fb,inverse:wd:P1877,inverse of after a work by,wd:P1877,after a work by,REVERSE_TO_FORWARD,false,SYNTHETIC_INVERSE,false,SWAP_SOURCE_TARGET,,,,NONE,relation-map-v2.1.0
+direction-pair-69aab155ab69,inverse:wd:P1881,inverse of list of characters,wd:P1881,list of characters,REVERSE_TO_FORWARD,false,SYNTHETIC_INVERSE,false,SWAP_SOURCE_TARGET,,,,NONE,relation-map-v2.1.0
 direction-pair-9fe90691a103,inverse:wd:P1884,inverse of hair color,wd:P1884,hair color,REVERSE_TO_FORWARD,false,SYNTHETIC_INVERSE,false,SWAP_SOURCE_TARGET,,,,NONE,relation-map-v2.1.0
 direction-pair-6430e6c502b0,inverse:wd:P1885,inverse of cathedral,wd:P1885,cathedral,REVERSE_TO_FORWARD,false,SYNTHETIC_INVERSE,false,SWAP_SOURCE_TARGET,,,,NONE,relation-map-v2.1.0
 direction-pair-8ea5b3c595b5,inverse:wd:P1891,inverse of signatory,wd:P1891,signatory,REVERSE_TO_FORWARD,false,SYNTHETIC_INVERSE,false,SWAP_SOURCE_TARGET,,,,NONE,relation-map-v2.1.0
@@ -927,10 +937,12 @@ direction-pair-2f5d1c712794,inverse:wd:P2012,inverse of cuisine,wd:P2012,cuisine
 direction-pair-c1c838565d7c,inverse:wd:P205,inverse of basin country,wd:P205,basin country,REVERSE_TO_FORWARD,false,SYNTHETIC_INVERSE,false,SWAP_SOURCE_TARGET,,,,NONE,relation-map-v2.1.0
 direction-pair-479ccfc5f347,inverse:wd:P2058,inverse of depositary,wd:P2058,depositary,REVERSE_TO_FORWARD,false,SYNTHETIC_INVERSE,false,SWAP_SOURCE_TARGET,,,,NONE,relation-map-v2.1.0
 direction-pair-fcd0b79abfdd,inverse:wd:P206,inverse of located in or next to body of water,wd:P206,located in or next to body of water,REVERSE_TO_FORWARD,false,SYNTHETIC_INVERSE,false,SWAP_SOURCE_TARGET,,,,NONE,relation-map-v2.1.0
+direction-pair-d4d0a36d1620,inverse:wd:P2061,inverse of aspect ratio (W:H),wd:P2061,aspect ratio (W:H),REVERSE_TO_FORWARD,false,SYNTHETIC_INVERSE,false,SWAP_SOURCE_TARGET,,,,NONE,relation-map-v2.1.0
 direction-pair-a7aa63234bd3,inverse:wd:P2079,inverse of fabrication method,wd:P2079,fabrication method,REVERSE_TO_FORWARD,false,SYNTHETIC_INVERSE,false,SWAP_SOURCE_TARGET,,,,NONE,relation-map-v2.1.0
 direction-pair-d9981da0303a,inverse:wd:P208,inverse of executive body,wd:P208,executive body,REVERSE_TO_FORWARD,false,SYNTHETIC_INVERSE,false,SWAP_SOURCE_TARGET,,,,NONE,relation-map-v2.1.0
 direction-pair-a334b261e2f2,inverse:wd:P2094,inverse of competition class,wd:P2094,competition class,REVERSE_TO_FORWARD,false,SYNTHETIC_INVERSE,false,SWAP_SOURCE_TARGET,,,,NONE,relation-map-v2.1.0
 direction-pair-3282ffd661da,inverse:wd:P2098,inverse of substitute/deputy/replacement of office/officeholder,wd:P2098,substitute/deputy/replacement of office/officeholder,REVERSE_TO_FORWARD,false,SYNTHETIC_INVERSE,false,SWAP_SOURCE_TARGET,,,,NONE,relation-map-v2.1.0
+direction-pair-428a72070982,inverse:wd:P21,inverse of sex or gender,wd:P21,sex or gender,REVERSE_TO_FORWARD,false,SYNTHETIC_INVERSE,false,SWAP_SOURCE_TARGET,,,,NONE,relation-map-v2.1.0
 direction-pair-3e66e7e440c0,inverse:wd:P210,inverse of party chief representative,wd:P210,party chief representative,REVERSE_TO_FORWARD,false,SYNTHETIC_INVERSE,false,SWAP_SOURCE_TARGET,,,,NONE,relation-map-v2.1.0
 direction-pair-3c1a6df645f8,inverse:wd:P2184,inverse of history of topic,wd:P2184,history of topic,REVERSE_TO_FORWARD,false,SYNTHETIC_INVERSE,false,SWAP_SOURCE_TARGET,Wikidata,Wikidata inverse property (P1696),https://www.wikidata.org/wiki/Property:P2184,NONE,relation-map-v2.1.0
 direction-pair-72a5d63fd7a5,inverse:wd:P22,inverse of father,wd:P22,father,REVERSE_TO_FORWARD,false,SYNTHETIC_INVERSE,false,SWAP_SOURCE_TARGET,,,,NONE,relation-map-v2.1.0
@@ -939,12 +951,13 @@ direction-pair-9e4a05793f2d,inverse:wd:P2308,inverse of class,wd:P2308,class,REV
 direction-pair-47e4d471c4e8,inverse:wd:P2318,inverse of debut participant,wd:P2318,debut participant,REVERSE_TO_FORWARD,false,SYNTHETIC_INVERSE,false,SWAP_SOURCE_TARGET,,,,NONE,relation-map-v2.1.0
 direction-pair-b9c27e009257,inverse:wd:P2341,inverse of indigenous to,wd:P2341,indigenous to,REVERSE_TO_FORWARD,false,SYNTHETIC_INVERSE,false,SWAP_SOURCE_TARGET,,,,NONE,relation-map-v2.1.0
 direction-pair-666b7df3a833,inverse:wd:P2348,inverse of time period,wd:P2348,time period,REVERSE_TO_FORWARD,false,SYNTHETIC_INVERSE,false,SWAP_SOURCE_TARGET,,,,NONE,relation-map-v2.1.0
-direction-pair-87fe80c7ad6b,inverse:wd:P2353,inverse of statistical unit,wd:P2353,statistical unit,REVERSE_TO_FORWARD,false,SYNTHETIC_INVERSE,false,SWAP_SOURCE_TARGET,,,,NONE,relation-map-v2.1.0
+direction-pair-87fe80c7ad6b,inverse:wd:P2353,inverse of statistical unit of the dataset,wd:P2353,statistical unit of the dataset,REVERSE_TO_FORWARD,false,SYNTHETIC_INVERSE,false,SWAP_SOURCE_TARGET,,,,NONE,relation-map-v2.1.0
 direction-pair-d3abcc36fbaf,inverse:wd:P2359,inverse of nomen gentilicium,wd:P2359,nomen gentilicium,REVERSE_TO_FORWARD,false,SYNTHETIC_INVERSE,false,SWAP_SOURCE_TARGET,,,,NONE,relation-map-v2.1.0
 direction-pair-551a6dff0961,inverse:wd:P2360,inverse of intended public,wd:P2360,intended public,REVERSE_TO_FORWARD,false,SYNTHETIC_INVERSE,false,SWAP_SOURCE_TARGET,,,,NONE,relation-map-v2.1.0
 direction-pair-b2069036ff5a,inverse:wd:P2363,inverse of NMHH film rating,wd:P2363,NMHH film rating,REVERSE_TO_FORWARD,false,SYNTHETIC_INVERSE,false,SWAP_SOURCE_TARGET,,,,NONE,relation-map-v2.1.0
 direction-pair-9f5b5399e3e7,inverse:wd:P2365,inverse of cognomen,wd:P2365,cognomen,REVERSE_TO_FORWARD,false,SYNTHETIC_INVERSE,false,SWAP_SOURCE_TARGET,,,,NONE,relation-map-v2.1.0
 direction-pair-b1aa825b90bc,inverse:wd:P237,inverse of coat of arms,wd:P237,coat of arms,REVERSE_TO_FORWARD,false,SYNTHETIC_INVERSE,false,SWAP_SOURCE_TARGET,,,,NONE,relation-map-v2.1.0
+direction-pair-2fda3e321c49,inverse:wd:P2378,inverse of issued by,wd:P2378,issued by,REVERSE_TO_FORWARD,false,SYNTHETIC_INVERSE,false,SWAP_SOURCE_TARGET,,,,NONE,relation-map-v2.1.0
 direction-pair-d0a1bf46be67,inverse:wd:P2408,inverse of set in period,wd:P2408,set in period,REVERSE_TO_FORWARD,false,SYNTHETIC_INVERSE,false,SWAP_SOURCE_TARGET,,,,NONE,relation-map-v2.1.0
 direction-pair-79171f8cbe28,inverse:wd:P241,inverse of military branch,wd:P241,military branch,REVERSE_TO_FORWARD,false,SYNTHETIC_INVERSE,false,SWAP_SOURCE_TARGET,,,,NONE,relation-map-v2.1.0
 direction-pair-77c012200d19,inverse:wd:P2416,inverse of sports discipline competed in,wd:P2416,sports discipline competed in,REVERSE_TO_FORWARD,false,SYNTHETIC_INVERSE,false,SWAP_SOURCE_TARGET,,,,NONE,relation-map-v2.1.0
@@ -953,15 +966,18 @@ direction-pair-1542f2e3c22c,inverse:wd:P248,inverse of stated in,wd:P248,stated 
 direction-pair-171f148423fb,inverse:wd:P25,inverse of mother,wd:P25,mother,REVERSE_TO_FORWARD,false,SYNTHETIC_INVERSE,false,SWAP_SOURCE_TARGET,,,,NONE,relation-map-v2.1.0
 direction-pair-b82041735766,inverse:wd:P2505,inverse of carries,wd:P2505,carries,REVERSE_TO_FORWARD,false,SYNTHETIC_INVERSE,false,SWAP_SOURCE_TARGET,,,,NONE,relation-map-v2.1.0
 direction-pair-8caa8758b372,inverse:wd:P2515,inverse of costume designer,wd:P2515,costume designer,REVERSE_TO_FORWARD,false,SYNTHETIC_INVERSE,false,SWAP_SOURCE_TARGET,,,,NONE,relation-map-v2.1.0
+direction-pair-5b32bf29d3c6,inverse:wd:P2517,inverse of category for recipients of this award,wd:P2517,category for recipients of this award,REVERSE_TO_FORWARD,false,SYNTHETIC_INVERSE,false,SWAP_SOURCE_TARGET,,,,NONE,relation-map-v2.1.0
 direction-pair-8171c629e7df,inverse:wd:P2541,inverse of operating area,wd:P2541,operating area,REVERSE_TO_FORWARD,false,SYNTHETIC_INVERSE,false,SWAP_SOURCE_TARGET,,,,NONE,relation-map-v2.1.0
 direction-pair-181c64bab2f9,inverse:wd:P2545,inverse of bowling style,wd:P2545,bowling style,REVERSE_TO_FORWARD,false,SYNTHETIC_INVERSE,false,SWAP_SOURCE_TARGET,,,,NONE,relation-map-v2.1.0
 direction-pair-4a225b0a3cb3,inverse:wd:P2554,inverse of production designer,wd:P2554,production designer,REVERSE_TO_FORWARD,false,SYNTHETIC_INVERSE,false,SWAP_SOURCE_TARGET,,,,NONE,relation-map-v2.1.0
 direction-pair-67123ba62f1d,inverse:wd:P2564,inverse of Köppen climate classification,wd:P2564,Köppen climate classification,REVERSE_TO_FORWARD,false,SYNTHETIC_INVERSE,false,SWAP_SOURCE_TARGET,,,,NONE,relation-map-v2.1.0
 direction-pair-582ef1c89888,inverse:wd:P2614,inverse of World Heritage criteria,wd:P2614,World Heritage criteria,REVERSE_TO_FORWARD,false,SYNTHETIC_INVERSE,false,SWAP_SOURCE_TARGET,,,,NONE,relation-map-v2.1.0
+direction-pair-6357908e851b,inverse:wd:P2629,inverse of BBFC rating,wd:P2629,BBFC rating,REVERSE_TO_FORWARD,false,SYNTHETIC_INVERSE,false,SWAP_SOURCE_TARGET,,,,NONE,relation-map-v2.1.0
 direction-pair-4d8b2fffe0f8,inverse:wd:P263,inverse of official residence,wd:P263,official residence,REVERSE_TO_FORWARD,false,SYNTHETIC_INVERSE,false,SWAP_SOURCE_TARGET,,,,NONE,relation-map-v2.1.0
 direction-pair-47f792694225,inverse:wd:P2632,inverse of place of detention,wd:P2632,place of detention,REVERSE_TO_FORWARD,false,SYNTHETIC_INVERSE,false,SWAP_SOURCE_TARGET,,,,NONE,relation-map-v2.1.0
 direction-pair-1e93d50245e7,inverse:wd:P2633,inverse of geography of topic,wd:P2633,geography of topic,REVERSE_TO_FORWARD,false,SYNTHETIC_INVERSE,false,SWAP_SOURCE_TARGET,Wikidata,Wikidata inverse property (P1696),https://www.wikidata.org/wiki/Property:P2633,NONE,relation-map-v2.1.0
 direction-pair-d349408006e4,inverse:wd:P2634,inverse of model,wd:P2634,model,REVERSE_TO_FORWARD,false,SYNTHETIC_INVERSE,false,SWAP_SOURCE_TARGET,,,,NONE,relation-map-v2.1.0
+direction-pair-ec6452135303,inverse:wd:P2637,inverse of RARS rating,wd:P2637,RARS rating,REVERSE_TO_FORWARD,false,SYNTHETIC_INVERSE,false,SWAP_SOURCE_TARGET,,,,NONE,relation-map-v2.1.0
 direction-pair-76766430fed3,inverse:wd:P264,inverse of record label,wd:P264,record label,REVERSE_TO_FORWARD,false,SYNTHETIC_INVERSE,false,SWAP_SOURCE_TARGET,,,,NONE,relation-map-v2.1.0
 direction-pair-a37b2f8fa44d,inverse:wd:P2650,inverse of interested in,wd:P2650,interested in,REVERSE_TO_FORWARD,false,SYNTHETIC_INVERSE,false,SWAP_SOURCE_TARGET,,,,NONE,relation-map-v2.1.0
 direction-pair-02f400b659cc,inverse:wd:P2652,inverse of partnership with,wd:P2652,partnership with,REVERSE_TO_FORWARD,false,SYNTHETIC_INVERSE,false,SWAP_SOURCE_TARGET,,,,NONE,relation-map-v2.1.0
@@ -969,15 +985,18 @@ direction-pair-48765ab21fe7,inverse:wd:P2670,inverse of has part(s) of the class
 direction-pair-d72d867b16cf,inverse:wd:P2675,inverse of reply to,wd:P2675,reply to,REVERSE_TO_FORWARD,false,SYNTHETIC_INVERSE,false,SWAP_SOURCE_TARGET,,,,NONE,relation-map-v2.1.0
 direction-pair-c60f7dba0286,inverse:wd:P2679,inverse of author of foreword,wd:P2679,author of foreword,REVERSE_TO_FORWARD,false,SYNTHETIC_INVERSE,false,SWAP_SOURCE_TARGET,,,,NONE,relation-map-v2.1.0
 direction-pair-76243c2ed515,inverse:wd:P2680,inverse of author of afterword,wd:P2680,author of afterword,REVERSE_TO_FORWARD,false,SYNTHETIC_INVERSE,false,SWAP_SOURCE_TARGET,,,,NONE,relation-map-v2.1.0
+direction-pair-6be42f2abe91,inverse:wd:P2684,inverse of Kijkwijzer rating,wd:P2684,Kijkwijzer rating,REVERSE_TO_FORWARD,false,SYNTHETIC_INVERSE,false,SWAP_SOURCE_TARGET,,,,NONE,relation-map-v2.1.0
 direction-pair-678bc26dc727,inverse:wd:P27,inverse of country of citizenship,wd:P27,country of citizenship,REVERSE_TO_FORWARD,false,SYNTHETIC_INVERSE,false,SWAP_SOURCE_TARGET,,,,NONE,relation-map-v2.1.0
 direction-pair-ed3c17b31493,inverse:wd:P272,inverse of production company,wd:P272,production company,REVERSE_TO_FORWARD,false,SYNTHETIC_INVERSE,false,SWAP_SOURCE_TARGET,,,,NONE,relation-map-v2.1.0
 direction-pair-cbbe258ff8cf,inverse:wd:P2737,inverse of union of,wd:P2737,union of,REVERSE_TO_FORWARD,false,SYNTHETIC_INVERSE,false,SWAP_SOURCE_TARGET,,,,NONE,relation-map-v2.1.0
 direction-pair-973ce4d98528,inverse:wd:P2738,inverse of disjoint union of,wd:P2738,disjoint union of,REVERSE_TO_FORWARD,false,SYNTHETIC_INVERSE,false,SWAP_SOURCE_TARGET,,,,NONE,relation-map-v2.1.0
 direction-pair-24e6a401442e,inverse:wd:P2747,inverse of Filmiroda rating,wd:P2747,Filmiroda rating,REVERSE_TO_FORWARD,false,SYNTHETIC_INVERSE,false,SWAP_SOURCE_TARGET,,,,NONE,relation-map-v2.1.0
+direction-pair-0571d0ab1f2b,inverse:wd:P275,inverse of copyright license,wd:P275,copyright license,REVERSE_TO_FORWARD,false,SYNTHETIC_INVERSE,false,SWAP_SOURCE_TARGET,,,,NONE,relation-map-v2.1.0
 direction-pair-11745c908b3e,inverse:wd:P2756,inverse of EIRIN film rating,wd:P2756,EIRIN film rating,REVERSE_TO_FORWARD,false,SYNTHETIC_INVERSE,false,SWAP_SOURCE_TARGET,,,,NONE,relation-map-v2.1.0
 direction-pair-4e79ff1745b8,inverse:wd:P2758,inverse of CNC film rating (France),wd:P2758,CNC film rating (France),REVERSE_TO_FORWARD,false,SYNTHETIC_INVERSE,false,SWAP_SOURCE_TARGET,,,,NONE,relation-map-v2.1.0
 direction-pair-98c66233c865,inverse:wd:P276,inverse of location,wd:P276,location,REVERSE_TO_FORWARD,false,SYNTHETIC_INVERSE,false,SWAP_SOURCE_TARGET,,,,NONE,relation-map-v2.1.0
 direction-pair-250d4c02d3bc,inverse:wd:P2789,inverse of connects with,wd:P2789,connects with,REVERSE_TO_FORWARD,false,SYNTHETIC_INVERSE,false,SWAP_SOURCE_TARGET,,,,NONE,relation-map-v2.1.0
+direction-pair-5b72551ed01d,inverse:wd:P279,inverse of subclass of,wd:P279,subclass of,REVERSE_TO_FORWARD,false,SYNTHETIC_INVERSE,false,SWAP_SOURCE_TARGET,,,,NONE,relation-map-v2.1.0
 direction-pair-e2dcbf47da44,inverse:wd:P2817,inverse of appears in the heritage monument list,wd:P2817,appears in the heritage monument list,REVERSE_TO_FORWARD,false,SYNTHETIC_INVERSE,false,SWAP_SOURCE_TARGET,,,,NONE,relation-map-v2.1.0
 direction-pair-f07ff170c4d7,inverse:wd:P282,inverse of writing system,wd:P282,writing system,REVERSE_TO_FORWARD,false,SYNTHETIC_INVERSE,false,SWAP_SOURCE_TARGET,,,,NONE,relation-map-v2.1.0
 direction-pair-89bd23c8732d,inverse:wd:P2825,inverse of via,wd:P2825,via,REVERSE_TO_FORWARD,false,SYNTHETIC_INVERSE,false,SWAP_SOURCE_TARGET,,,,NONE,relation-map-v2.1.0
@@ -1013,7 +1032,10 @@ direction-pair-bf0c6091e49d,inverse:wd:P3091,inverse of mount,wd:P3091,mount,REV
 direction-pair-cb85a5787390,inverse:wd:P3092,inverse of film crew member,wd:P3092,film crew member,REVERSE_TO_FORWARD,false,SYNTHETIC_INVERSE,false,SWAP_SOURCE_TARGET,,,,NONE,relation-map-v2.1.0
 direction-pair-03c660778c44,inverse:wd:P3093,inverse of recovered by,wd:P3093,recovered by,REVERSE_TO_FORWARD,false,SYNTHETIC_INVERSE,false,SWAP_SOURCE_TARGET,,,,NONE,relation-map-v2.1.0
 direction-pair-b675bbf853b1,inverse:wd:P3094,inverse of develops from,wd:P3094,develops from,REVERSE_TO_FORWARD,false,SYNTHETIC_INVERSE,false,SWAP_SOURCE_TARGET,,,,NONE,relation-map-v2.1.0
+direction-pair-7aa8e48e5fd0,inverse:wd:P3096,inverse of KML file,wd:P3096,KML file,REVERSE_TO_FORWARD,false,SYNTHETIC_INVERSE,false,SWAP_SOURCE_TARGET,,,,NONE,relation-map-v2.1.0
+direction-pair-8380c3c4937d,inverse:wd:P31,inverse of instance of,wd:P31,instance of,REVERSE_TO_FORWARD,false,SYNTHETIC_INVERSE,false,SWAP_SOURCE_TARGET,,,,NONE,relation-map-v2.1.0
 direction-pair-067aba29aab3,inverse:wd:P3137,inverse of parent peak,wd:P3137,parent peak,REVERSE_TO_FORWARD,false,SYNTHETIC_INVERSE,false,SWAP_SOURCE_TARGET,,,,NONE,relation-map-v2.1.0
+direction-pair-9d610ebfd1bd,inverse:wd:P3150,inverse of birthday,wd:P3150,birthday,REVERSE_TO_FORWARD,false,SYNTHETIC_INVERSE,false,SWAP_SOURCE_TARGET,,,,NONE,relation-map-v2.1.0
 direction-pair-c750c9a35e4d,inverse:wd:P3156,inverse of Australian Classification,wd:P3156,Australian Classification,REVERSE_TO_FORWARD,false,SYNTHETIC_INVERSE,false,SWAP_SOURCE_TARGET,,,,NONE,relation-map-v2.1.0
 direction-pair-adbe1e8293d8,inverse:wd:P3173,inverse of offers view on,wd:P3173,offers view on,REVERSE_TO_FORWARD,false,SYNTHETIC_INVERSE,false,SWAP_SOURCE_TARGET,,,,NONE,relation-map-v2.1.0
 direction-pair-d5d8872f8b7e,inverse:wd:P3174,inverse of art director,wd:P3174,art director,REVERSE_TO_FORWARD,false,SYNTHETIC_INVERSE,false,SWAP_SOURCE_TARGET,,,,NONE,relation-map-v2.1.0
@@ -1052,7 +1074,9 @@ direction-pair-beea52451d5b,inverse:wd:P38,inverse of currency,wd:P38,currency,R
 direction-pair-142e9c2788b6,inverse:wd:P3818,inverse of KMRB film rating,wd:P3818,KMRB film rating,REVERSE_TO_FORWARD,false,SYNTHETIC_INVERSE,false,SWAP_SOURCE_TARGET,,,,NONE,relation-map-v2.1.0
 direction-pair-7747195656ff,inverse:wd:P3834,inverse of RTC film rating,wd:P3834,RTC film rating,REVERSE_TO_FORWARD,false,SYNTHETIC_INVERSE,false,SWAP_SOURCE_TARGET,,,,NONE,relation-map-v2.1.0
 direction-pair-acf06df6ae0d,inverse:wd:P3842,inverse of located in the present-day administrative territorial entity,wd:P3842,located in the present-day administrative territorial entity,REVERSE_TO_FORWARD,false,SYNTHETIC_INVERSE,false,SWAP_SOURCE_TARGET,,,,NONE,relation-map-v2.1.0
+direction-pair-1f6c89c8906b,inverse:wd:P3858,inverse of route diagram template,wd:P3858,route diagram template,REVERSE_TO_FORWARD,false,SYNTHETIC_INVERSE,false,SWAP_SOURCE_TARGET,,,,NONE,relation-map-v2.1.0
 direction-pair-193e6619912b,inverse:wd:P3876,inverse of category for alumni of educational institution,wd:P3876,category for alumni of educational institution,REVERSE_TO_FORWARD,false,SYNTHETIC_INVERSE,false,SWAP_SOURCE_TARGET,,,,NONE,relation-map-v2.1.0
+direction-pair-df434b7551f3,inverse:wd:P3912,inverse of newspaper format,wd:P3912,newspaper format,REVERSE_TO_FORWARD,false,SYNTHETIC_INVERSE,false,SWAP_SOURCE_TARGET,,,,NONE,relation-map-v2.1.0
 direction-pair-865dd7c573dd,inverse:wd:P3931,inverse of copyright holder,wd:P3931,copyright holder,REVERSE_TO_FORWARD,false,SYNTHETIC_INVERSE,false,SWAP_SOURCE_TARGET,,,,NONE,relation-map-v2.1.0
 direction-pair-4e16fa54c16b,inverse:wd:P3938,inverse of named by,wd:P3938,named by,REVERSE_TO_FORWARD,false,SYNTHETIC_INVERSE,false,SWAP_SOURCE_TARGET,,,,NONE,relation-map-v2.1.0
 direction-pair-10c0a5c331e4,inverse:wd:P3975,inverse of secretary general,wd:P3975,secretary general,REVERSE_TO_FORWARD,false,SYNTHETIC_INVERSE,false,SWAP_SOURCE_TARGET,,,,NONE,relation-map-v2.1.0
@@ -1063,6 +1087,7 @@ direction-pair-5519ac7f8419,inverse:wd:P404,inverse of game mode,wd:P404,game mo
 direction-pair-4b4d7261dcd9,inverse:wd:P406,inverse of soundtrack release,wd:P406,soundtrack release,REVERSE_TO_FORWARD,false,SYNTHETIC_INVERSE,false,SWAP_SOURCE_TARGET,,,,NONE,relation-map-v2.1.0
 direction-pair-911f7c870359,inverse:wd:P407,inverse of language of work or name,wd:P407,language of work or name,REVERSE_TO_FORWARD,false,SYNTHETIC_INVERSE,false,SWAP_SOURCE_TARGET,,,,NONE,relation-map-v2.1.0
 direction-pair-863c26fbbbd6,inverse:wd:P408,inverse of software engine,wd:P408,software engine,REVERSE_TO_FORWARD,false,SYNTHETIC_INVERSE,false,SWAP_SOURCE_TARGET,,,,NONE,relation-map-v2.1.0
+direction-pair-9941312f866e,inverse:wd:P4082,inverse of captured with,wd:P4082,captured with,REVERSE_TO_FORWARD,false,SYNTHETIC_INVERSE,false,SWAP_SOURCE_TARGET,,,,NONE,relation-map-v2.1.0
 direction-pair-1c445c9a9d3e,inverse:wd:P410,"inverse of military, police or special rank",wd:P410,"military, police or special rank",REVERSE_TO_FORWARD,false,SYNTHETIC_INVERSE,false,SWAP_SOURCE_TARGET,,,,NONE,relation-map-v2.1.0
 direction-pair-3736707dad88,inverse:wd:P411,inverse of canonization status,wd:P411,canonization status,REVERSE_TO_FORWARD,false,SYNTHETIC_INVERSE,false,SWAP_SOURCE_TARGET,,,,NONE,relation-map-v2.1.0
 direction-pair-03633794723d,inverse:wd:P412,inverse of voice type,wd:P412,voice type,REVERSE_TO_FORWARD,false,SYNTHETIC_INVERSE,false,SWAP_SOURCE_TARGET,,,,NONE,relation-map-v2.1.0
@@ -1070,12 +1095,15 @@ direction-pair-078251e74853,inverse:wd:P413,inverse of position played on team /
 direction-pair-a4752a5ec0b2,inverse:wd:P414,inverse of stock exchange,wd:P414,stock exchange,REVERSE_TO_FORWARD,false,SYNTHETIC_INVERSE,false,SWAP_SOURCE_TARGET,,,,NONE,relation-map-v2.1.0
 direction-pair-b72b24557318,inverse:wd:P4151,inverse of game mechanics,wd:P4151,game mechanics,REVERSE_TO_FORWARD,false,SYNTHETIC_INVERSE,false,SWAP_SOURCE_TARGET,,,,NONE,relation-map-v2.1.0
 direction-pair-a2fd06573c78,inverse:wd:P418,"inverse of has seal, badge, or sigil",wd:P418,"has seal, badge, or sigil",REVERSE_TO_FORWARD,false,SYNTHETIC_INVERSE,false,SWAP_SOURCE_TARGET,,,,NONE,relation-map-v2.1.0
+direction-pair-c77acc32cdbc,inverse:wd:P4195,inverse of category for employees of the organization,wd:P4195,category for employees of the organization,REVERSE_TO_FORWARD,false,SYNTHETIC_INVERSE,false,SWAP_SOURCE_TARGET,,,,NONE,relation-map-v2.1.0
 direction-pair-b375b7027b82,inverse:wd:P421,inverse of located in time zone,wd:P421,located in time zone,REVERSE_TO_FORWARD,false,SYNTHETIC_INVERSE,false,SWAP_SOURCE_TARGET,,,,NONE,relation-map-v2.1.0
 direction-pair-3f7fed199cb3,inverse:wd:P4220,inverse of order of battle,wd:P4220,order of battle,REVERSE_TO_FORWARD,false,SYNTHETIC_INVERSE,false,SWAP_SOURCE_TARGET,,,,NONE,relation-map-v2.1.0
 direction-pair-abfd1c954959,inverse:wd:P423,inverse of shooting handedness,wd:P423,shooting handedness,REVERSE_TO_FORWARD,false,SYNTHETIC_INVERSE,false,SWAP_SOURCE_TARGET,,,,NONE,relation-map-v2.1.0
 direction-pair-8c1bad42b4ef,inverse:wd:P4312,inverse of camera setup,wd:P4312,camera setup,REVERSE_TO_FORWARD,false,SYNTHETIC_INVERSE,false,SWAP_SOURCE_TARGET,,,,NONE,relation-map-v2.1.0
 direction-pair-912cbbce1082,inverse:wd:P4345,inverse of director of archaeological fieldwork,wd:P4345,director of archaeological fieldwork,REVERSE_TO_FORWARD,false,SYNTHETIC_INVERSE,false,SWAP_SOURCE_TARGET,,,,NONE,relation-map-v2.1.0
+direction-pair-fe754aea2c3d,inverse:wd:P437,inverse of distribution format,wd:P437,distribution format,REVERSE_TO_FORWARD,false,SYNTHETIC_INVERSE,false,SWAP_SOURCE_TARGET,,,,NONE,relation-map-v2.1.0
 direction-pair-4e173d333fe1,inverse:wd:P4379,inverse of youth wing,wd:P4379,youth wing,REVERSE_TO_FORWARD,false,SYNTHETIC_INVERSE,false,SWAP_SOURCE_TARGET,,,,NONE,relation-map-v2.1.0
+direction-pair-de70d4863a09,inverse:wd:P4437,inverse of FPB rating,wd:P4437,FPB rating,REVERSE_TO_FORWARD,false,SYNTHETIC_INVERSE,false,SWAP_SOURCE_TARGET,,,,NONE,relation-map-v2.1.0
 direction-pair-7737790462dd,inverse:wd:P449,inverse of original broadcaster,wd:P449,original broadcaster,REVERSE_TO_FORWARD,false,SYNTHETIC_INVERSE,false,SWAP_SOURCE_TARGET,,,,NONE,relation-map-v2.1.0
 direction-pair-43f36ca19789,inverse:wd:P450,inverse of astronaut mission,wd:P450,astronaut mission,REVERSE_TO_FORWARD,false,SYNTHETIC_INVERSE,false,SWAP_SOURCE_TARGET,,,,NONE,relation-map-v2.1.0
 direction-pair-c0b90a2f5b14,inverse:wd:P452,inverse of industry,wd:P452,industry,REVERSE_TO_FORWARD,false,SYNTHETIC_INVERSE,false,SWAP_SOURCE_TARGET,,,,NONE,relation-map-v2.1.0
@@ -1106,6 +1134,7 @@ direction-pair-0d1977fa823b,inverse:wd:P495,inverse of country of origin,wd:P495
 direction-pair-ad891819c39f,inverse:wd:P4952,inverse of safety classification and labelling,wd:P4952,safety classification and labelling,REVERSE_TO_FORWARD,false,SYNTHETIC_INVERSE,false,SWAP_SOURCE_TARGET,,,,NONE,relation-map-v2.1.0
 direction-pair-e46d8306ab14,inverse:wd:P50,inverse of author,wd:P50,author,REVERSE_TO_FORWARD,false,SYNTHETIC_INVERSE,false,SWAP_SOURCE_TARGET,,,,NONE,relation-map-v2.1.0
 direction-pair-e668427d9a71,inverse:wd:P5004,inverse of in opposition to,wd:P5004,in opposition to,REVERSE_TO_FORWARD,false,SYNTHETIC_INVERSE,false,SWAP_SOURCE_TARGET,,,,NONE,relation-map-v2.1.0
+direction-pair-8e48cd632b0d,inverse:wd:P5008,inverse of on focus list of Wikimedia project,wd:P5008,on focus list of Wikimedia project,REVERSE_TO_FORWARD,false,SYNTHETIC_INVERSE,false,SWAP_SOURCE_TARGET,,,,NONE,relation-map-v2.1.0
 direction-pair-947144a5ab62,inverse:wd:P5009,inverse of complies with,wd:P5009,complies with,REVERSE_TO_FORWARD,false,SYNTHETIC_INVERSE,false,SWAP_SOURCE_TARGET,,,,NONE,relation-map-v2.1.0
 direction-pair-e0ae46c3b2ae,inverse:wd:P5012,inverse of special rank,wd:P5012,special rank,REVERSE_TO_FORWARD,false,SYNTHETIC_INVERSE,false,SWAP_SOURCE_TARGET,,,,NONE,relation-map-v2.1.0
 direction-pair-9147ea1c0d89,inverse:wd:P5021,inverse of assessment,wd:P5021,assessment,REVERSE_TO_FORWARD,false,SYNTHETIC_INVERSE,false,SWAP_SOURCE_TARGET,,,,NONE,relation-map-v2.1.0
@@ -1122,6 +1151,7 @@ direction-pair-d36a8eacf5b1,inverse:wd:P5072,inverse of presented in,wd:P5072,pr
 direction-pair-237b1753cb94,inverse:wd:P509,inverse of cause of death,wd:P509,cause of death,REVERSE_TO_FORWARD,false,SYNTHETIC_INVERSE,false,SWAP_SOURCE_TARGET,,,,NONE,relation-map-v2.1.0
 direction-pair-a03627779503,inverse:wd:P511,inverse of honorific prefix,wd:P511,honorific prefix,REVERSE_TO_FORWARD,false,SYNTHETIC_INVERSE,false,SWAP_SOURCE_TARGET,,,,NONE,relation-map-v2.1.0
 direction-pair-b6af9688eb6a,inverse:wd:P512,inverse of academic degree,wd:P512,academic degree,REVERSE_TO_FORWARD,false,SYNTHETIC_INVERSE,false,SWAP_SOURCE_TARGET,,,,NONE,relation-map-v2.1.0
+direction-pair-4b6499ead51b,inverse:wd:P5125,inverse of Wikimedia outline,wd:P5125,Wikimedia outline,REVERSE_TO_FORWARD,false,SYNTHETIC_INVERSE,false,SWAP_SOURCE_TARGET,,,,NONE,relation-map-v2.1.0
 direction-pair-839f52c25c9b,inverse:wd:P5126,inverse of assistant director,wd:P5126,assistant director,REVERSE_TO_FORWARD,false,SYNTHETIC_INVERSE,false,SWAP_SOURCE_TARGET,,,,NONE,relation-map-v2.1.0
 direction-pair-0ff1c915dff6,inverse:wd:P5150,inverse of IGAC rating,wd:P5150,IGAC rating,REVERSE_TO_FORWARD,false,SYNTHETIC_INVERSE,false,SWAP_SOURCE_TARGET,,,,NONE,relation-map-v2.1.0
 direction-pair-d880e692d149,inverse:wd:P5152,inverse of KAVI rating,wd:P5152,KAVI rating,REVERSE_TO_FORWARD,false,SYNTHETIC_INVERSE,false,SWAP_SOURCE_TARGET,,,,NONE,relation-map-v2.1.0
@@ -1142,6 +1172,7 @@ direction-pair-288b9ffa63de,inverse:wd:P547,inverse of commemorates,wd:P547,comm
 direction-pair-827fb98f58f0,inverse:wd:P551,inverse of residence,wd:P551,residence,REVERSE_TO_FORWARD,false,SYNTHETIC_INVERSE,false,SWAP_SOURCE_TARGET,,,,NONE,relation-map-v2.1.0
 direction-pair-5dce55985fcb,inverse:wd:P5514,inverse of accredited by,wd:P5514,accredited by,REVERSE_TO_FORWARD,false,SYNTHETIC_INVERSE,false,SWAP_SOURCE_TARGET,,,,NONE,relation-map-v2.1.0
 direction-pair-28ca005e9d6d,inverse:wd:P552,inverse of handedness,wd:P552,handedness,REVERSE_TO_FORWARD,false,SYNTHETIC_INVERSE,false,SWAP_SOURCE_TARGET,,,,NONE,relation-map-v2.1.0
+direction-pair-d76f45298801,inverse:wd:P553,inverse of website account on,wd:P553,website account on,REVERSE_TO_FORWARD,false,SYNTHETIC_INVERSE,false,SWAP_SOURCE_TARGET,,,,NONE,relation-map-v2.1.0
 direction-pair-b9dc7cd4c99f,inverse:wd:P559,inverse of terminus,wd:P559,terminus,REVERSE_TO_FORWARD,false,SYNTHETIC_INVERSE,false,SWAP_SOURCE_TARGET,,,,NONE,relation-map-v2.1.0
 direction-pair-fced1e658eab,inverse:wd:P562,inverse of central bank/issuer,wd:P562,central bank/issuer,REVERSE_TO_FORWARD,false,SYNTHETIC_INVERSE,false,SWAP_SOURCE_TARGET,,,,NONE,relation-map-v2.1.0
 direction-pair-9775a2fc7988,inverse:wd:P57,inverse of director,wd:P57,director,REVERSE_TO_FORWARD,false,SYNTHETIC_INVERSE,false,SWAP_SOURCE_TARGET,,,,NONE,relation-map-v2.1.0
@@ -1166,6 +1197,8 @@ direction-pair-61e0abe7feca,inverse:wd:P6104,inverse of maintained by WikiProjec
 direction-pair-f3393628bd80,inverse:wd:P611,inverse of religious order,wd:P611,religious order,REVERSE_TO_FORWARD,false,SYNTHETIC_INVERSE,false,SWAP_SOURCE_TARGET,,,,NONE,relation-map-v2.1.0
 direction-pair-e1db137f898c,inverse:wd:P6153,inverse of research site,wd:P6153,research site,REVERSE_TO_FORWARD,false,SYNTHETIC_INVERSE,false,SWAP_SOURCE_TARGET,,,,NONE,relation-map-v2.1.0
 direction-pair-bdb27f6354de,inverse:wd:P6166,inverse of quotes work,wd:P6166,quotes work,REVERSE_TO_FORWARD,false,SYNTHETIC_INVERSE,false,SWAP_SOURCE_TARGET,,,,NONE,relation-map-v2.1.0
+direction-pair-c6f9a2471906,inverse:wd:P618,inverse of source of energy,wd:P618,source of energy,REVERSE_TO_FORWARD,false,SYNTHETIC_INVERSE,false,SWAP_SOURCE_TARGET,,,,NONE,relation-map-v2.1.0
+direction-pair-17126efb2571,inverse:wd:P6186,inverse of category for eponymous categories,wd:P6186,category for eponymous categories,REVERSE_TO_FORWARD,false,SYNTHETIC_INVERSE,false,SWAP_SOURCE_TARGET,,,,NONE,relation-map-v2.1.0
 direction-pair-ac1be5c24efe,inverse:wd:P6193,inverse of ratified by,wd:P6193,ratified by,REVERSE_TO_FORWARD,false,SYNTHETIC_INVERSE,false,SWAP_SOURCE_TARGET,,,,NONE,relation-map-v2.1.0
 direction-pair-f789dd948796,inverse:wd:P6216,inverse of copyright status,wd:P6216,copyright status,REVERSE_TO_FORWARD,false,SYNTHETIC_INVERSE,false,SWAP_SOURCE_TARGET,,,,NONE,relation-map-v2.1.0
 direction-pair-72b5301b7fc1,inverse:wd:P6224,inverse of level of description,wd:P6224,level of description,REVERSE_TO_FORWARD,false,SYNTHETIC_INVERSE,false,SWAP_SOURCE_TARGET,,,,NONE,relation-map-v2.1.0
@@ -1189,6 +1222,7 @@ direction-pair-030979baba3c,inverse:wd:P6658,inverse of RCQ classification,wd:P6
 direction-pair-fe31e3af102c,inverse:wd:P669,inverse of located on street,wd:P669,located on street,REVERSE_TO_FORWARD,false,SYNTHETIC_INVERSE,false,SWAP_SOURCE_TARGET,,,,NONE,relation-map-v2.1.0
 direction-pair-08fc38d38488,inverse:wd:P6758,inverse of supported sports team,wd:P6758,supported sports team,REVERSE_TO_FORWARD,false,SYNTHETIC_INVERSE,false,SWAP_SOURCE_TARGET,,,,NONE,relation-map-v2.1.0
 direction-pair-dd5e0eef8b85,inverse:wd:P676,inverse of lyrics by,wd:P676,lyrics by,REVERSE_TO_FORWARD,false,SYNTHETIC_INVERSE,false,SWAP_SOURCE_TARGET,,,,NONE,relation-map-v2.1.0
+direction-pair-b3971da2fed1,inverse:wd:P6803,inverse of taxon found at location,wd:P6803,taxon found at location,REVERSE_TO_FORWARD,false,SYNTHETIC_INVERSE,false,SWAP_SOURCE_TARGET,Wikidata,P1696,https://www.wikidata.org/wiki/Property:P6803|https://www.wikidata.org/wiki/Property:P2974,NONE,relation-map-v2.1.0
 direction-pair-b0175d3ec12b,inverse:wd:P6872,inverse of has written for,wd:P6872,has written for,REVERSE_TO_FORWARD,false,SYNTHETIC_INVERSE,false,SWAP_SOURCE_TARGET,,,,NONE,relation-map-v2.1.0
 direction-pair-7c9504d77438,inverse:wd:P6885,inverse of historical region,wd:P6885,historical region,REVERSE_TO_FORWARD,false,SYNTHETIC_INVERSE,false,SWAP_SOURCE_TARGET,,,,NONE,relation-map-v2.1.0
 direction-pair-0ba66461e5e0,inverse:wd:P6886,inverse of writing language,wd:P6886,writing language,REVERSE_TO_FORWARD,false,SYNTHETIC_INVERSE,false,SWAP_SOURCE_TARGET,,,,NONE,relation-map-v2.1.0
@@ -1201,6 +1235,7 @@ direction-pair-e2e3fed3c465,inverse:wd:P7045,inverse of chassis,wd:P7045,chassis
 direction-pair-5d89fa1c91c2,inverse:wd:P7047,inverse of enemy,wd:P7047,enemy,REVERSE_TO_FORWARD,false,SYNTHETIC_INVERSE,false,SWAP_SOURCE_TARGET,,,,NONE,relation-map-v2.1.0
 direction-pair-bc261d4ddb69,inverse:wd:P706,inverse of located in/on physical feature,wd:P706,located in/on physical feature,REVERSE_TO_FORWARD,false,SYNTHETIC_INVERSE,false,SWAP_SOURCE_TARGET,,,,NONE,relation-map-v2.1.0
 direction-pair-9f4d17bd4d15,inverse:wd:P708,inverse of diocese,wd:P708,diocese,REVERSE_TO_FORWARD,false,SYNTHETIC_INVERSE,false,SWAP_SOURCE_TARGET,,,,NONE,relation-map-v2.1.0
+direction-pair-408d0c02bf54,inverse:wd:P7084,inverse of related category,wd:P7084,related category,REVERSE_TO_FORWARD,false,SYNTHETIC_INVERSE,false,SWAP_SOURCE_TARGET,,,,NONE,relation-map-v2.1.0
 direction-pair-ee9b19e75393,inverse:wd:P710,inverse of participant,wd:P710,participant,REVERSE_TO_FORWARD,false,SYNTHETIC_INVERSE,false,SWAP_SOURCE_TARGET,Wikidata,Wikidata inverse property (P1696),https://www.wikidata.org/wiki/Property:P1344|https://www.wikidata.org/wiki/Property:P710,NONE,relation-map-v2.1.0
 direction-pair-e056c18dc255,inverse:wd:P7108,inverse of location of the point of view,wd:P7108,location of the point of view,REVERSE_TO_FORWARD,false,SYNTHETIC_INVERSE,false,SWAP_SOURCE_TARGET,,,,NONE,relation-map-v2.1.0
 direction-pair-d88ee18acddc,inverse:wd:P7137,inverse of acknowledged,wd:P7137,acknowledged,REVERSE_TO_FORWARD,false,SYNTHETIC_INVERSE,false,SWAP_SOURCE_TARGET,,,,NONE,relation-map-v2.1.0
@@ -1209,6 +1244,7 @@ direction-pair-7ccbc2864316,inverse:wd:P7169,inverse of substitute director/mana
 direction-pair-04efe1b44a62,inverse:wd:P7228,inverse of access restriction status,wd:P7228,access restriction status,REVERSE_TO_FORWARD,false,SYNTHETIC_INVERSE,false,SWAP_SOURCE_TARGET,,,,NONE,relation-map-v2.1.0
 direction-pair-b7587d743204,inverse:wd:P725,inverse of voice actor,wd:P725,voice actor,REVERSE_TO_FORWARD,false,SYNTHETIC_INVERSE,false,SWAP_SOURCE_TARGET,,,,NONE,relation-map-v2.1.0
 direction-pair-fa8cf63f64dc,inverse:wd:P7261,inverse of use restriction status,wd:P7261,use restriction status,REVERSE_TO_FORWARD,false,SYNTHETIC_INVERSE,false,SWAP_SOURCE_TARGET,,,,NONE,relation-map-v2.1.0
+direction-pair-6ea534077c71,inverse:wd:P7327,inverse of OFLC classification,wd:P7327,OFLC classification,REVERSE_TO_FORWARD,false,SYNTHETIC_INVERSE,false,SWAP_SOURCE_TARGET,,,,NONE,relation-map-v2.1.0
 direction-pair-84125a709d63,inverse:wd:P734,inverse of family name,wd:P734,family name,REVERSE_TO_FORWARD,false,SYNTHETIC_INVERSE,false,SWAP_SOURCE_TARGET,,,,NONE,relation-map-v2.1.0
 direction-pair-f71459b44356,inverse:wd:P735,inverse of given name,wd:P735,given name,REVERSE_TO_FORWARD,false,SYNTHETIC_INVERSE,false,SWAP_SOURCE_TARGET,,,,NONE,relation-map-v2.1.0
 direction-pair-7a9bcb654f24,inverse:wd:P736,inverse of cover art by,wd:P736,cover art by,REVERSE_TO_FORWARD,false,SYNTHETIC_INVERSE,false,SWAP_SOURCE_TARGET,,,,NONE,relation-map-v2.1.0
@@ -1220,6 +1256,7 @@ direction-pair-91cde8fccff1,inverse:wd:P741,inverse of playing hand,wd:P741,play
 direction-pair-52772e0c7ca1,inverse:wd:P748,inverse of appointed by,wd:P748,appointed by,REVERSE_TO_FORWARD,false,SYNTHETIC_INVERSE,false,SWAP_SOURCE_TARGET,,,,NONE,relation-map-v2.1.0
 direction-pair-569ac0074ee1,inverse:wd:P750,inverse of distributed by,wd:P750,distributed by,REVERSE_TO_FORWARD,false,SYNTHETIC_INVERSE,false,SWAP_SOURCE_TARGET,,,,NONE,relation-map-v2.1.0
 direction-pair-f29df5a01926,inverse:wd:P7514,inverse of landscape architect,wd:P7514,landscape architect,REVERSE_TO_FORWARD,false,SYNTHETIC_INVERSE,false,SWAP_SOURCE_TARGET,,,,NONE,relation-map-v2.1.0
+direction-pair-a083f2f32c34,inverse:wd:P7561,inverse of category for the interior of the item,wd:P7561,category for the interior of the item,REVERSE_TO_FORWARD,false,SYNTHETIC_INVERSE,false,SWAP_SOURCE_TARGET,,,,NONE,relation-map-v2.1.0
 direction-pair-9f1d3697da77,inverse:wd:P7573,inverse of IFCO rating,wd:P7573,IFCO rating,REVERSE_TO_FORWARD,false,SYNTHETIC_INVERSE,false,SWAP_SOURCE_TARGET,,,,NONE,relation-map-v2.1.0
 direction-pair-30bef7fc223b,inverse:wd:P7604,inverse of supervised by,wd:P7604,supervised by,REVERSE_TO_FORWARD,false,SYNTHETIC_INVERSE,false,SWAP_SOURCE_TARGET,,,,NONE,relation-map-v2.1.0
 direction-pair-d23672817fcc,inverse:wd:P768,inverse of electoral district,wd:P768,electoral district,REVERSE_TO_FORWARD,false,SYNTHETIC_INVERSE,false,SWAP_SOURCE_TARGET,,,,NONE,relation-map-v2.1.0
@@ -1228,6 +1265,7 @@ direction-pair-8422007126d2,inverse:wd:P7779,inverse of military unit,wd:P7779,m
 direction-pair-4611b7178562,inverse:wd:P7781,inverse of exonerated of,wd:P7781,exonerated of,REVERSE_TO_FORWARD,false,SYNTHETIC_INVERSE,false,SWAP_SOURCE_TARGET,,,,NONE,relation-map-v2.1.0
 direction-pair-49d42aea3bdc,inverse:wd:P7782,inverse of category for ship name,wd:P7782,category for ship name,REVERSE_TO_FORWARD,false,SYNTHETIC_INVERSE,false,SWAP_SOURCE_TARGET,,,,NONE,relation-map-v2.1.0
 direction-pair-03e98c6b967a,inverse:wd:P78,inverse of top-level Internet domain,wd:P78,top-level Internet domain,REVERSE_TO_FORWARD,false,SYNTHETIC_INVERSE,false,SWAP_SOURCE_TARGET,,,,NONE,relation-map-v2.1.0
+direction-pair-5dd393c47cc6,inverse:wd:P7867,inverse of category for maps or plans,wd:P7867,category for maps or plans,REVERSE_TO_FORWARD,false,SYNTHETIC_INVERSE,false,SWAP_SOURCE_TARGET,,,,NONE,relation-map-v2.1.0
 direction-pair-d36b0a8cb504,inverse:wd:P7888,inverse of merged into,wd:P7888,merged into,REVERSE_TO_FORWARD,false,SYNTHETIC_INVERSE,false,SWAP_SOURCE_TARGET,,,,NONE,relation-map-v2.1.0
 direction-pair-731bd5fea256,inverse:wd:P790,inverse of approved by,wd:P790,approved by,REVERSE_TO_FORWARD,false,SYNTHETIC_INVERSE,false,SWAP_SOURCE_TARGET,,,,NONE,relation-map-v2.1.0
 direction-pair-d65ffd4a6f65,inverse:wd:P793,inverse of significant event,wd:P793,significant event,REVERSE_TO_FORWARD,false,SYNTHETIC_INVERSE,false,SWAP_SOURCE_TARGET,,,,NONE,relation-map-v2.1.0
@@ -1240,10 +1278,12 @@ direction-pair-2d4e01c33a26,inverse:wd:P800,inverse of notable work,wd:P800,nota
 direction-pair-8939a30b0c82,inverse:wd:P8001,inverse of endorsed by,wd:P8001,endorsed by,REVERSE_TO_FORWARD,false,SYNTHETIC_INVERSE,false,SWAP_SOURCE_TARGET,,,,NONE,relation-map-v2.1.0
 direction-pair-1893a48f5d1e,inverse:wd:P8004,inverse of ordered by,wd:P8004,ordered by,REVERSE_TO_FORWARD,false,SYNTHETIC_INVERSE,false,SWAP_SOURCE_TARGET,,,,NONE,relation-map-v2.1.0
 direction-pair-e169fde764e6,inverse:wd:P803,inverse of professorship,wd:P803,professorship,REVERSE_TO_FORWARD,false,SYNTHETIC_INVERSE,false,SWAP_SOURCE_TARGET,,,,NONE,relation-map-v2.1.0
+direction-pair-049738b2c891,inverse:wd:P8030,inverse of military size designation,wd:P8030,military size designation,REVERSE_TO_FORWARD,false,SYNTHETIC_INVERSE,false,SWAP_SOURCE_TARGET,,,,NONE,relation-map-v2.1.0
 direction-pair-ae989a4e5f70,inverse:wd:P8031,inverse of perpetrator,wd:P8031,perpetrator,REVERSE_TO_FORWARD,false,SYNTHETIC_INVERSE,false,SWAP_SOURCE_TARGET,,,,NONE,relation-map-v2.1.0
 direction-pair-cff9829a1304,inverse:wd:P8032,inverse of victim(s),wd:P8032,victim(s),REVERSE_TO_FORWARD,false,SYNTHETIC_INVERSE,false,SWAP_SOURCE_TARGET,,,,NONE,relation-map-v2.1.0
 direction-pair-cf64bcb65838,inverse:wd:P8047,inverse of country of registry,wd:P8047,country of registry,REVERSE_TO_FORWARD,false,SYNTHETIC_INVERSE,false,SWAP_SOURCE_TARGET,,,,NONE,relation-map-v2.1.0
 direction-pair-4bdbc780b4a3,inverse:wd:P805,inverse of statement is subject of,wd:P805,statement is subject of,REVERSE_TO_FORWARD,false,SYNTHETIC_INVERSE,false,SWAP_SOURCE_TARGET,,,,NONE,relation-map-v2.1.0
+direction-pair-cca005246d11,inverse:wd:P8058,inverse of symbol of,wd:P8058,symbol of,REVERSE_TO_FORWARD,false,SYNTHETIC_INVERSE,false,SWAP_SOURCE_TARGET,,,,NONE,relation-map-v2.1.0
 direction-pair-4f5c1e421fc9,inverse:wd:P807,inverse of separated from,wd:P807,separated from,REVERSE_TO_FORWARD,false,SYNTHETIC_INVERSE,false,SWAP_SOURCE_TARGET,,,,NONE,relation-map-v2.1.0
 direction-pair-4dec52110fc7,inverse:wd:P81,inverse of connecting line,wd:P81,connecting line,REVERSE_TO_FORWARD,false,SYNTHETIC_INVERSE,false,SWAP_SOURCE_TARGET,,,,NONE,relation-map-v2.1.0
 direction-pair-bd326254a200,inverse:wd:P812,inverse of academic major,wd:P812,academic major,REVERSE_TO_FORWARD,false,SYNTHETIC_INVERSE,false,SWAP_SOURCE_TARGET,,,,NONE,relation-map-v2.1.0
@@ -1266,6 +1306,7 @@ direction-pair-3f5f094de5cb,inverse:wd:P841,inverse of feast day,wd:P841,feast d
 direction-pair-1712d21159f7,inverse:wd:P8411,inverse of set in environment,wd:P8411,set in environment,REVERSE_TO_FORWARD,false,SYNTHETIC_INVERSE,false,SWAP_SOURCE_TARGET,,,,NONE,relation-map-v2.1.0
 direction-pair-b6f76d538335,inverse:wd:P8450,inverse of peak bagging classification,wd:P8450,peak bagging classification,REVERSE_TO_FORWARD,false,SYNTHETIC_INVERSE,false,SWAP_SOURCE_TARGET,,,,NONE,relation-map-v2.1.0
 direction-pair-5b60e129aac0,inverse:wd:P8453,inverse of public transport stop,wd:P8453,public transport stop,REVERSE_TO_FORWARD,false,SYNTHETIC_INVERSE,false,SWAP_SOURCE_TARGET,,,,NONE,relation-map-v2.1.0
+direction-pair-9cfd3b1b54c8,inverse:wd:P8464,inverse of content partnership category,wd:P8464,content partnership category,REVERSE_TO_FORWARD,false,SYNTHETIC_INVERSE,false,SWAP_SOURCE_TARGET,,,,NONE,relation-map-v2.1.0
 direction-pair-c28f3aeaa5c8,inverse:wd:P85,inverse of anthem,wd:P85,anthem,REVERSE_TO_FORWARD,false,SYNTHETIC_INVERSE,false,SWAP_SOURCE_TARGET,,,,NONE,relation-map-v2.1.0
 direction-pair-d91ec5b199a0,inverse:wd:P8500,inverse of Vietnamese middle name,wd:P8500,Vietnamese middle name,REVERSE_TO_FORWARD,false,SYNTHETIC_INVERSE,false,SWAP_SOURCE_TARGET,,,,NONE,relation-map-v2.1.0
 direction-pair-6632b00301bb,inverse:wd:P852,inverse of ESRB rating,wd:P852,ESRB rating,REVERSE_TO_FORWARD,false,SYNTHETIC_INVERSE,false,SWAP_SOURCE_TARGET,,,,NONE,relation-map-v2.1.0
@@ -1287,10 +1328,12 @@ direction-pair-6a2ce7246f8c,inverse:wd:P8786,inverse of dedicated heritage entit
 direction-pair-974ed69d6dc5,inverse:wd:P88,inverse of commissioned by,wd:P88,commissioned by,REVERSE_TO_FORWARD,false,SYNTHETIC_INVERSE,false,SWAP_SOURCE_TARGET,,,,NONE,relation-map-v2.1.0
 direction-pair-02c54de27e34,inverse:wd:P8852,inverse of facial hair,wd:P8852,facial hair,REVERSE_TO_FORWARD,false,SYNTHETIC_INVERSE,false,SWAP_SOURCE_TARGET,,,,NONE,relation-map-v2.1.0
 direction-pair-e0dce5e9cc75,inverse:wd:P8874,inverse of Hong Kong film rating,wd:P8874,Hong Kong film rating,REVERSE_TO_FORWARD,false,SYNTHETIC_INVERSE,false,SWAP_SOURCE_TARGET,,,,NONE,relation-map-v2.1.0
+direction-pair-4fdfa00adcc8,inverse:wd:P8875,inverse of indexed in bibliographic review,wd:P8875,indexed in bibliographic review,REVERSE_TO_FORWARD,false,SYNTHETIC_INVERSE,false,SWAP_SOURCE_TARGET,,,,NONE,relation-map-v2.1.0
 direction-pair-3cedc0b22921,inverse:wd:P8889,inverse of MTRCB rating,wd:P8889,MTRCB rating,REVERSE_TO_FORWARD,false,SYNTHETIC_INVERSE,false,SWAP_SOURCE_TARGET,,,,NONE,relation-map-v2.1.0
 direction-pair-fa050975ccb7,inverse:wd:P8933,inverse of category for the view from the item,wd:P8933,category for the view from the item,REVERSE_TO_FORWARD,false,SYNTHETIC_INVERSE,false,SWAP_SOURCE_TARGET,,,,NONE,relation-map-v2.1.0
 direction-pair-030aba8479b4,inverse:wd:P8989,inverse of category for the view of the item,wd:P8989,category for the view of the item,REVERSE_TO_FORWARD,false,SYNTHETIC_INVERSE,false,SWAP_SOURCE_TARGET,,,,NONE,relation-map-v2.1.0
 direction-pair-3fb7e734db04,inverse:wd:P908,inverse of PEGI rating,wd:P908,PEGI rating,REVERSE_TO_FORWARD,false,SYNTHETIC_INVERSE,false,SWAP_SOURCE_TARGET,,,,NONE,relation-map-v2.1.0
+direction-pair-f6740c3b6ed5,inverse:wd:P91,inverse of sexual orientation,wd:P91,sexual orientation,REVERSE_TO_FORWARD,false,SYNTHETIC_INVERSE,false,SWAP_SOURCE_TARGET,,,,NONE,relation-map-v2.1.0
 direction-pair-349cecf45293,inverse:wd:P912,inverse of has facility,wd:P912,has facility,REVERSE_TO_FORWARD,false,SYNTHETIC_INVERSE,false,SWAP_SOURCE_TARGET,,,,NONE,relation-map-v2.1.0
 direction-pair-e9d38ad8784f,inverse:wd:P914,inverse of USK rating,wd:P914,USK rating,REVERSE_TO_FORWARD,false,SYNTHETIC_INVERSE,false,SWAP_SOURCE_TARGET,,,,NONE,relation-map-v2.1.0
 direction-pair-a091bb460727,inverse:wd:P915,inverse of filming location,wd:P915,filming location,REVERSE_TO_FORWARD,false,SYNTHETIC_INVERSE,false,SWAP_SOURCE_TARGET,,,,NONE,relation-map-v2.1.0
@@ -1310,15 +1353,18 @@ direction-pair-7e518249537f,inverse:wd:P945,inverse of allegiance,wd:P945,allegi
 direction-pair-765a297a8dc6,inverse:wd:P9493,inverse of artist files at,wd:P9493,artist files at,REVERSE_TO_FORWARD,false,SYNTHETIC_INVERSE,false,SWAP_SOURCE_TARGET,,,,NONE,relation-map-v2.1.0
 direction-pair-05ef7833c55d,inverse:wd:P9549,inverse of official podcast,wd:P9549,official podcast,REVERSE_TO_FORWARD,false,SYNTHETIC_INVERSE,false,SWAP_SOURCE_TARGET,,,,NONE,relation-map-v2.1.0
 direction-pair-f880a557f81a,inverse:wd:P9600,inverse of oral history at,wd:P9600,oral history at,REVERSE_TO_FORWARD,false,SYNTHETIC_INVERSE,false,SWAP_SOURCE_TARGET,,,,NONE,relation-map-v2.1.0
+direction-pair-e8006b524d79,inverse:wd:P9660,inverse of not found in,wd:P9660,not found in,REVERSE_TO_FORWARD,false,SYNTHETIC_INVERSE,false,SWAP_SOURCE_TARGET,,,,NONE,relation-map-v2.1.0
 direction-pair-72de2668ee31,inverse:wd:P967,inverse of guest of honor,wd:P967,guest of honor,REVERSE_TO_FORWARD,false,SYNTHETIC_INVERSE,false,SWAP_SOURCE_TARGET,,,,NONE,relation-map-v2.1.0
 direction-pair-a5dde3d6f9b3,inverse:wd:P9681,inverse of voted on by,wd:P9681,voted on by,REVERSE_TO_FORWARD,false,SYNTHETIC_INVERSE,false,SWAP_SOURCE_TARGET,,,,NONE,relation-map-v2.1.0
 direction-pair-f008c5bfe6d8,inverse:wd:P97,inverse of noble title,wd:P97,noble title,REVERSE_TO_FORWARD,false,SYNTHETIC_INVERSE,false,SWAP_SOURCE_TARGET,,,,NONE,relation-map-v2.1.0
+direction-pair-c68c902e6b27,inverse:wd:P972,inverse of catalog,wd:P972,catalog,REVERSE_TO_FORWARD,false,SYNTHETIC_INVERSE,false,SWAP_SOURCE_TARGET,,,,NONE,relation-map-v2.1.0
 direction-pair-b5ec2c12248c,inverse:wd:P974,inverse of tributary,wd:P974,tributary,REVERSE_TO_FORWARD,false,SYNTHETIC_INVERSE,false,SWAP_SOURCE_TARGET,,,,NONE,relation-map-v2.1.0
 direction-pair-a11e0d38341c,inverse:wd:P9745,inverse of translation of,wd:P9745,translation of,REVERSE_TO_FORWARD,false,SYNTHETIC_INVERSE,false,SWAP_SOURCE_TARGET,,,,NONE,relation-map-v2.1.0
 direction-pair-8c619d863373,inverse:wd:P98,inverse of editor,wd:P98,editor,REVERSE_TO_FORWARD,false,SYNTHETIC_INVERSE,false,SWAP_SOURCE_TARGET,,,,NONE,relation-map-v2.1.0
 direction-pair-b352ee068a9e,inverse:wd:P9899,inverse of music created for,wd:P9899,music created for,REVERSE_TO_FORWARD,false,SYNTHETIC_INVERSE,false,SWAP_SOURCE_TARGET,,,,NONE,relation-map-v2.1.0
 direction-pair-7e092e22a793,inverse:wd:P991,inverse of successful candidate,wd:P991,successful candidate,REVERSE_TO_FORWARD,false,SYNTHETIC_INVERSE,false,SWAP_SOURCE_TARGET,,,,NONE,relation-map-v2.1.0
 direction-pair-fb279cfe52ca,inverse:wd:P9929,inverse of madhhab,wd:P9929,madhhab,REVERSE_TO_FORWARD,false,SYNTHETIC_INVERSE,false,SWAP_SOURCE_TARGET,,,,NONE,relation-map-v2.1.0
+direction-pair-3867e58712f0,inverse:wd:P9969,inverse of catalogue raisonné,wd:P9969,catalogue raisonné,REVERSE_TO_FORWARD,false,SYNTHETIC_INVERSE,false,SWAP_SOURCE_TARGET,,,,NONE,relation-map-v2.1.0
 direction-pair-e0d03489bc7d,wd:P1000,record held,inverse:wd:P1000,inverse of record held,FORWARD_TO_REVERSE,true,SYNTHETIC_INVERSE,false,SWAP_SOURCE_TARGET,,,,NONE,relation-map-v2.1.0
 direction-pair-16bc9c5a66bb,wd:P1001,applies to jurisdiction,inverse:wd:P1001,inverse of applies to jurisdiction,FORWARD_TO_REVERSE,true,SYNTHETIC_INVERSE,false,SWAP_SOURCE_TARGET,,,,NONE,relation-map-v2.1.0
 direction-pair-8f49327ade7d,wd:P1002,engine configuration,inverse:wd:P1002,inverse of engine configuration,FORWARD_TO_REVERSE,true,SYNTHETIC_INVERSE,false,SWAP_SOURCE_TARGET,,,,NONE,relation-map-v2.1.0
@@ -1341,10 +1387,12 @@ direction-pair-a3ffc95c152a,wd:P1040,film editor,inverse:wd:P1040,inverse of fil
 direction-pair-3870147830cd,wd:P10449,trained by,inverse:wd:P10449,inverse of trained by,FORWARD_TO_REVERSE,true,SYNTHETIC_INVERSE,false,SWAP_SOURCE_TARGET,,,,NONE,relation-map-v2.1.0
 direction-pair-ab5981866cb4,wd:P105,taxon rank,inverse:wd:P105,inverse of taxon rank,FORWARD_TO_REVERSE,true,SYNTHETIC_INVERSE,false,SWAP_SOURCE_TARGET,,,,NONE,relation-map-v2.1.0
 direction-pair-1d4788d54d75,wd:P1050,medical condition,inverse:wd:P1050,inverse of medical condition,FORWARD_TO_REVERSE,true,SYNTHETIC_INVERSE,false,SWAP_SOURCE_TARGET,,,,NONE,relation-map-v2.1.0
+direction-pair-4fbd8e64acb2,wd:P10527,documentation files at,inverse:wd:P10527,inverse of documentation files at,FORWARD_TO_REVERSE,true,SYNTHETIC_INVERSE,false,SWAP_SOURCE_TARGET,,,,NONE,relation-map-v2.1.0
 direction-pair-9cadbce41ec4,wd:P1056,product or material produced,wd:P176,manufacturer,FORWARD_TO_REVERSE,true,NAMED_INVERSE,false,SWAP_SOURCE_TARGET,Wikidata,Wikidata inverse property (P1696),https://www.wikidata.org/wiki/Property:P176,NONE,relation-map-v2.1.0
 direction-pair-c60b24eaa67b,wd:P106,occupation,inverse:wd:P106,inverse of occupation,FORWARD_TO_REVERSE,true,SYNTHETIC_INVERSE,false,SWAP_SOURCE_TARGET,,,,NONE,relation-map-v2.1.0
 direction-pair-4add60f4707a,wd:P10624,official observer status in organization,inverse:wd:P10624,inverse of official observer status in organization,FORWARD_TO_REVERSE,true,SYNTHETIC_INVERSE,false,SWAP_SOURCE_TARGET,,,,NONE,relation-map-v2.1.0
 direction-pair-3a22cc01766d,wd:P1064,track gauge,inverse:wd:P1064,inverse of track gauge,FORWARD_TO_REVERSE,true,SYNTHETIC_INVERSE,false,SWAP_SOURCE_TARGET,,,,NONE,relation-map-v2.1.0
+direction-pair-78d3792676e9,wd:P10642,place of disappearance,inverse:wd:P10642,inverse of place of disappearance,FORWARD_TO_REVERSE,true,SYNTHETIC_INVERSE,false,SWAP_SOURCE_TARGET,,,,NONE,relation-map-v2.1.0
 direction-pair-cc1b7bc4c074,wd:P1066,student of,wd:P802,student,REVERSE_TO_FORWARD,false,NAMED_INVERSE,false,SWAP_SOURCE_TARGET,Wikidata,Wikidata inverse property (P1696),https://www.wikidata.org/wiki/Property:P1066|https://www.wikidata.org/wiki/Property:P802,NONE,relation-map-v2.1.0
 direction-pair-fe47bb03de9c,wd:P10661,exhibited creator,inverse:wd:P10661,inverse of exhibited creator,FORWARD_TO_REVERSE,true,SYNTHETIC_INVERSE,false,SWAP_SOURCE_TARGET,,,,NONE,relation-map-v2.1.0
 direction-pair-8ade07439bd8,wd:P1071,location of creation,inverse:wd:P1071,inverse of location of creation,FORWARD_TO_REVERSE,true,SYNTHETIC_INVERSE,false,SWAP_SOURCE_TARGET,,,,NONE,relation-map-v2.1.0
@@ -1357,6 +1405,7 @@ direction-pair-1f02222e9fdd,wd:P1080,from narrative universe,inverse:wd:P1080,in
 direction-pair-b0673ada89d4,wd:P10888,inverse of located in the statistical territorial entity,wd:P8138,located in the statistical territorial entity,REVERSE_TO_FORWARD,false,NAMED_INVERSE,false,SWAP_SOURCE_TARGET,Wikidata,Wikidata inverse property (P1696),https://www.wikidata.org/wiki/Property:P8138,NONE,relation-map-v2.1.0
 direction-pair-352dd198ff61,wd:P10894,spoken by,inverse:wd:P10894,inverse of spoken by,FORWARD_TO_REVERSE,true,SYNTHETIC_INVERSE,false,SWAP_SOURCE_TARGET,,,,NONE,relation-map-v2.1.0
 direction-pair-7037591b6a6b,wd:P110,illustrator,inverse:wd:P110,inverse of illustrator,FORWARD_TO_REVERSE,true,SYNTHETIC_INVERSE,false,SWAP_SOURCE_TARGET,,,,NONE,relation-map-v2.1.0
+direction-pair-7f9bab2837e0,wd:P11108,recorded participant,inverse:wd:P11108,inverse of recorded participant,FORWARD_TO_REVERSE,true,SYNTHETIC_INVERSE,false,SWAP_SOURCE_TARGET,,,,NONE,relation-map-v2.1.0
 direction-pair-53eac017999d,wd:P11146,collection items at,inverse:wd:P11146,inverse of collection items at,FORWARD_TO_REVERSE,true,SYNTHETIC_INVERSE,false,SWAP_SOURCE_TARGET,,,,NONE,relation-map-v2.1.0
 direction-pair-a466a5ed4f83,wd:P112,founded by,inverse:wd:P112,inverse of founded by,FORWARD_TO_REVERSE,true,SYNTHETIC_INVERSE,false,SWAP_SOURCE_TARGET,,,,NONE,relation-map-v2.1.0
 direction-pair-c32777926512,wd:P113,airline hub,inverse:wd:P113,inverse of airline hub,FORWARD_TO_REVERSE,true,SYNTHETIC_INVERSE,false,SWAP_SOURCE_TARGET,,,,NONE,relation-map-v2.1.0
@@ -1364,6 +1413,7 @@ direction-pair-7be4cb3f6f65,wd:P1136,solved by,inverse:wd:P1136,inverse of solve
 direction-pair-825945f9bda3,wd:P114,airline alliance,inverse:wd:P114,inverse of airline alliance,FORWARD_TO_REVERSE,true,SYNTHETIC_INVERSE,false,SWAP_SOURCE_TARGET,,,,NONE,relation-map-v2.1.0
 direction-pair-8a785fc2549e,wd:P1142,political ideology,inverse:wd:P1142,inverse of political ideology,FORWARD_TO_REVERSE,true,SYNTHETIC_INVERSE,false,SWAP_SOURCE_TARGET,,,,NONE,relation-map-v2.1.0
 direction-pair-076f99de4304,wd:P115,home venue,inverse:wd:P115,inverse of home venue,FORWARD_TO_REVERSE,true,SYNTHETIC_INVERSE,false,SWAP_SOURCE_TARGET,,,,NONE,relation-map-v2.1.0
+direction-pair-55a5461f82ee,wd:P1151,topic's main Wikimedia portal,wd:P1204,Wikimedia portal's main topic,FORWARD_TO_REVERSE,true,NAMED_INVERSE,false,SWAP_SOURCE_TARGET,Wikidata,P1696,https://www.wikidata.org/wiki/Property:P1151|https://www.wikidata.org/wiki/Property:P1204,NONE,relation-map-v2.1.0
 direction-pair-89c1ae7ef50b,wd:P118,league or competition,inverse:wd:P118,inverse of league or competition,FORWARD_TO_REVERSE,true,SYNTHETIC_INVERSE,false,SWAP_SOURCE_TARGET,,,,NONE,relation-map-v2.1.0
 direction-pair-720baa557e32,wd:P11849,first performance by,inverse:wd:P11849,inverse of first performance by,FORWARD_TO_REVERSE,true,SYNTHETIC_INVERSE,false,SWAP_SOURCE_TARGET,,,,NONE,relation-map-v2.1.0
 direction-pair-756cc94ba9ce,wd:P119,place of burial,inverse:wd:P119,inverse of place of burial,FORWARD_TO_REVERSE,true,SYNTHETIC_INVERSE,false,SWAP_SOURCE_TARGET,,,,NONE,relation-map-v2.1.0
@@ -1371,6 +1421,7 @@ direction-pair-d3da6d09d23f,wd:P1196,manner of death,inverse:wd:P1196,inverse of
 direction-pair-dacc311b38fb,wd:P12011,tribe,inverse:wd:P12011,inverse of tribe,FORWARD_TO_REVERSE,true,SYNTHETIC_INVERSE,false,SWAP_SOURCE_TARGET,,,,NONE,relation-map-v2.1.0
 direction-pair-ed80b58976ab,wd:P1202,carries scientific instrument,inverse:wd:P1202,inverse of carries scientific instrument,FORWARD_TO_REVERSE,true,SYNTHETIC_INVERSE,false,SWAP_SOURCE_TARGET,,,,NONE,relation-map-v2.1.0
 direction-pair-027ef5a5c5ce,wd:P12020,state of transmission,inverse:wd:P12020,inverse of state of transmission,FORWARD_TO_REVERSE,true,SYNTHETIC_INVERSE,false,SWAP_SOURCE_TARGET,,,,NONE,relation-map-v2.1.0
+direction-pair-55a5461f82ee,wd:P1204,Wikimedia portal's main topic,wd:P1151,topic's main Wikimedia portal,REVERSE_TO_FORWARD,false,NAMED_INVERSE,false,SWAP_SOURCE_TARGET,Wikidata,P1696,https://www.wikidata.org/wiki/Property:P1151|https://www.wikidata.org/wiki/Property:P1204,NONE,relation-map-v2.1.0
 direction-pair-206ecd9add2d,wd:P12095,fonds,inverse:wd:P12095,inverse of fonds,FORWARD_TO_REVERSE,true,SYNTHETIC_INVERSE,false,SWAP_SOURCE_TARGET,,,,NONE,relation-map-v2.1.0
 direction-pair-b0e544e6bf11,wd:P121,item operated,wd:P137,operator,FORWARD_TO_REVERSE,true,NAMED_INVERSE,false,SWAP_SOURCE_TARGET,Wikidata,Wikidata inverse property (P1696),https://www.wikidata.org/wiki/Property:P121|https://www.wikidata.org/wiki/Property:P137,NONE,relation-map-v2.1.0
 direction-pair-aa879c6ee53d,wd:P1210,supercharger,inverse:wd:P1210,inverse of supercharger,FORWARD_TO_REVERSE,true,SYNTHETIC_INVERSE,false,SWAP_SOURCE_TARGET,,,,NONE,relation-map-v2.1.0
@@ -1386,6 +1437,7 @@ direction-pair-365b6d63267f,wd:P126,maintained by,inverse:wd:P126,inverse of mai
 direction-pair-b9da65515b98,wd:P1264,valid in period,inverse:wd:P1264,inverse of valid in period,FORWARD_TO_REVERSE,true,SYNTHETIC_INVERSE,false,SWAP_SOURCE_TARGET,,,,NONE,relation-map-v2.1.0
 direction-pair-f8e81ef8bb36,wd:P1268,represents,wd:P1875,represented by,FORWARD_TO_REVERSE,true,NAMED_INVERSE,false,SWAP_SOURCE_TARGET,Wikidata,Wikidata inverse property (P1696),https://www.wikidata.org/wiki/Property:P1268|https://www.wikidata.org/wiki/Property:P1875,NONE,relation-map-v2.1.0
 direction-pair-bc7556edcc04,wd:P1269,facet of,inverse:wd:P1269,inverse of facet of,FORWARD_TO_REVERSE,true,SYNTHETIC_INVERSE,false,SWAP_SOURCE_TARGET,Wikidata,Wikidata inverse property (P1696),https://www.wikidata.org/wiki/Property:P2184|https://www.wikidata.org/wiki/Property:P2633|https://www.wikidata.org/wiki/Property:P8744|https://www.wikidata.org/wiki/Property:P9241,NONE,relation-map-v2.1.0
+direction-pair-e83a99c88d3b,wd:P12693,source of transfer,inverse:wd:P12693,inverse of source of transfer,FORWARD_TO_REVERSE,true,SYNTHETIC_INVERSE,false,SWAP_SOURCE_TARGET,,,,NONE,relation-map-v2.1.0
 direction-pair-4e3b3f3ac674,wd:P127,owned by,wd:P1830,owner of,FORWARD_TO_REVERSE,true,NAMED_INVERSE,false,SWAP_SOURCE_TARGET,Wikidata,Wikidata inverse property (P1696),https://www.wikidata.org/wiki/Property:P127|https://www.wikidata.org/wiki/Property:P1830,NONE,relation-map-v2.1.0
 direction-pair-93ea8981bb05,wd:P12714,tartan,inverse:wd:P12714,inverse of tartan,FORWARD_TO_REVERSE,true,SYNTHETIC_INVERSE,false,SWAP_SOURCE_TARGET,,,,NONE,relation-map-v2.1.0
 direction-pair-983b74edbe4c,wd:P12766,inverse of has basionym,wd:P566,has basionym,REVERSE_TO_FORWARD,false,NAMED_INVERSE,false,SWAP_SOURCE_TARGET,Wikidata,Wikidata inverse property (P1696),https://www.wikidata.org/wiki/Property:P566,NONE,relation-map-v2.1.0
@@ -1408,6 +1460,7 @@ direction-pair-cdbdf9aeadef,wd:P13210,organisation tax status,inverse:wd:P13210,
 direction-pair-601490e740b6,wd:P1327,partner in business or sport,inverse:wd:P1327,inverse of partner in business or sport,FORWARD_TO_REVERSE,true,SYNTHETIC_INVERSE,false,SWAP_SOURCE_TARGET,,,,NONE,relation-map-v2.1.0
 direction-pair-39de20be861b,wd:P1336,territory claimed by,inverse:wd:P1336,inverse of territory claimed by,FORWARD_TO_REVERSE,true,SYNTHETIC_INVERSE,false,SWAP_SOURCE_TARGET,,,,NONE,relation-map-v2.1.0
 direction-pair-ab840bb0f1da,wd:P1340,eye color,inverse:wd:P1340,inverse of eye color,FORWARD_TO_REVERSE,true,SYNTHETIC_INVERSE,false,SWAP_SOURCE_TARGET,,,,NONE,relation-map-v2.1.0
+direction-pair-5126a1524818,wd:P1343,described by source,inverse:wd:P1343,inverse of described by source,FORWARD_TO_REVERSE,true,SYNTHETIC_INVERSE,false,SWAP_SOURCE_TARGET,Wikidata,P1696,https://www.wikidata.org/wiki/Property:P1343|https://www.wikidata.org/wiki/Property:P921,NONE,relation-map-v2.1.0
 direction-pair-3dd4b2cad7b8,wd:P1344,participant in,inverse:wd:P1344,inverse of participant in,FORWARD_TO_REVERSE,true,SYNTHETIC_INVERSE,false,SWAP_SOURCE_TARGET,Wikidata,Wikidata inverse property (P1696),https://www.wikidata.org/wiki/Property:P1344|https://www.wikidata.org/wiki/Property:P1923|https://www.wikidata.org/wiki/Property:P710,NONE,relation-map-v2.1.0
 direction-pair-370be8187031,wd:P13459,research project that contributed to this data set,inverse:wd:P13459,inverse of research project that contributed to this data set,FORWARD_TO_REVERSE,true,SYNTHETIC_INVERSE,false,SWAP_SOURCE_TARGET,,,,NONE,relation-map-v2.1.0
 direction-pair-2b27fc0d75b1,wd:P1346,winner,wd:P2522,competition won,FORWARD_TO_REVERSE,true,NAMED_INVERSE,false,SWAP_SOURCE_TARGET,Wikidata,Wikidata inverse property (P1696),https://www.wikidata.org/wiki/Property:P2522,NONE,relation-map-v2.1.0
@@ -1438,6 +1491,7 @@ direction-pair-c8433624786f,wd:P1423,wd:P1423,wd:P1424,topic has template,FORWAR
 direction-pair-c8433624786f,wd:P1424,topic has template,wd:P1423,wd:P1423,REVERSE_TO_FORWARD,false,NAMED_INVERSE,false,SWAP_SOURCE_TARGET,Wikidata,Wikidata inverse property (P1696),https://www.wikidata.org/wiki/Property:P1424,NONE,relation-map-v2.1.0
 direction-pair-b23d0cb944fe,wd:P1427,start point,inverse:wd:P1427,inverse of start point,FORWARD_TO_REVERSE,true,SYNTHETIC_INVERSE,false,SWAP_SOURCE_TARGET,,,,NONE,relation-map-v2.1.0
 direction-pair-a55a5ea8ba99,wd:P1429,has pet,inverse:wd:P1429,inverse of has pet,FORWARD_TO_REVERSE,true,SYNTHETIC_INVERSE,false,SWAP_SOURCE_TARGET,,,,NONE,relation-map-v2.1.0
+direction-pair-8ceeddb2b9e6,wd:P1431,executive producer,inverse:wd:P1431,inverse of executive producer,FORWARD_TO_REVERSE,true,SYNTHETIC_INVERSE,false,SWAP_SOURCE_TARGET,,,,NONE,relation-map-v2.1.0
 direction-pair-017c8edec8e9,wd:P14317,inverse of compatible with,wd:P8956,compatible with,REVERSE_TO_FORWARD,false,NAMED_INVERSE,false,SWAP_SOURCE_TARGET,Wikidata,Wikidata inverse property (P1696),https://www.wikidata.org/wiki/Property:P8956,NONE,relation-map-v2.1.0
 direction-pair-65edcd053868,wd:P1433,published in,inverse:wd:P1433,inverse of published in,FORWARD_TO_REVERSE,true,SYNTHETIC_INVERSE,false,SWAP_SOURCE_TARGET,,,,NONE,relation-map-v2.1.0
 direction-pair-37cb6e2ae453,wd:P1434,takes place in fictional universe,wd:P1445,fictional universe described in,FORWARD_TO_REVERSE,true,NAMED_INVERSE,false,SWAP_SOURCE_TARGET,Wikidata,Wikidata inverse property (P1696),https://www.wikidata.org/wiki/Property:P1434|https://www.wikidata.org/wiki/Property:P1445,NONE,relation-map-v2.1.0
@@ -1482,6 +1536,7 @@ direction-pair-04daea1ff750,wd:P1596,penalty,inverse:wd:P1596,inverse of penalty
 direction-pair-22ed785c94f8,wd:P1598,consecrator,inverse:wd:P1598,inverse of consecrator,FORWARD_TO_REVERSE,true,SYNTHETIC_INVERSE,false,SWAP_SOURCE_TARGET,,,,NONE,relation-map-v2.1.0
 direction-pair-c47157760f6a,wd:P16,transport network,inverse:wd:P16,inverse of transport network,FORWARD_TO_REVERSE,true,SYNTHETIC_INVERSE,false,SWAP_SOURCE_TARGET,,,,NONE,relation-map-v2.1.0
 direction-pair-76c37ea5e65c,wd:P161,cast member,inverse:wd:P161,inverse of cast member,FORWARD_TO_REVERSE,true,SYNTHETIC_INVERSE,false,SWAP_SOURCE_TARGET,,,,NONE,relation-map-v2.1.0
+direction-pair-a2d5b70af792,wd:P1611,NATO code for grade,inverse:wd:P1611,inverse of NATO code for grade,FORWARD_TO_REVERSE,true,SYNTHETIC_INVERSE,false,SWAP_SOURCE_TARGET,,,,NONE,relation-map-v2.1.0
 direction-pair-de7d1f2000a9,wd:P162,producer,inverse:wd:P162,inverse of producer,FORWARD_TO_REVERSE,true,SYNTHETIC_INVERSE,false,SWAP_SOURCE_TARGET,,,,NONE,relation-map-v2.1.0
 direction-pair-9064973ebc4a,wd:P1620,plaintiff,inverse:wd:P1620,inverse of plaintiff,FORWARD_TO_REVERSE,true,SYNTHETIC_INVERSE,false,SWAP_SOURCE_TARGET,,,,NONE,relation-map-v2.1.0
 direction-pair-cec2a4c40c21,wd:P1625,has melody,inverse:wd:P1625,inverse of has melody,FORWARD_TO_REVERSE,true,SYNTHETIC_INVERSE,false,SWAP_SOURCE_TARGET,,,,NONE,relation-map-v2.1.0
@@ -1502,11 +1557,15 @@ direction-pair-dbcec98cfe97,wd:P1716,brand,inverse:wd:P1716,inverse of brand,FOR
 direction-pair-723d3acc7b5b,wd:P172,ethnic group,inverse:wd:P172,inverse of ethnic group,FORWARD_TO_REVERSE,true,SYNTHETIC_INVERSE,false,SWAP_SOURCE_TARGET,,,,NONE,relation-map-v2.1.0
 direction-pair-b57c3f634581,wd:P1740,category for films shot at this location,inverse:wd:P1740,inverse of category for films shot at this location,FORWARD_TO_REVERSE,true,SYNTHETIC_INVERSE,false,SWAP_SOURCE_TARGET,,,,NONE,relation-map-v2.1.0
 direction-pair-b933108f55ad,wd:P175,performer,wd:P453,inverse of performer,FORWARD_TO_REVERSE,true,NAMED_INVERSE,false,SWAP_SOURCE_TARGET,Wikidata,Wikidata inverse property (P1696),https://www.wikidata.org/wiki/Property:P175,NONE,relation-map-v2.1.0
+direction-pair-38737308c64a,wd:P1753,list related to category,wd:P1754,category related to list,REVERSE_TO_FORWARD,false,NAMED_INVERSE,false,SWAP_SOURCE_TARGET,Wikidata,P1696,https://www.wikidata.org/wiki/Property:P1754|https://www.wikidata.org/wiki/Property:P1753,NONE,relation-map-v2.1.0
+direction-pair-38737308c64a,wd:P1754,category related to list,wd:P1753,list related to category,FORWARD_TO_REVERSE,true,NAMED_INVERSE,false,SWAP_SOURCE_TARGET,Wikidata,P1696,https://www.wikidata.org/wiki/Property:P1754|https://www.wikidata.org/wiki/Property:P1753,NONE,relation-map-v2.1.0
 direction-pair-9cadbce41ec4,wd:P176,manufacturer,wd:P1056,product or material produced,REVERSE_TO_FORWARD,true,NAMED_INVERSE,false,SWAP_SOURCE_TARGET,Wikidata,Wikidata inverse property (P1696),https://www.wikidata.org/wiki/Property:P176,NONE,relation-map-v2.1.0
 direction-pair-b0c3a89902bd,wd:P177,crosses,inverse:wd:P177,inverse of crosses,FORWARD_TO_REVERSE,true,SYNTHETIC_INVERSE,false,SWAP_SOURCE_TARGET,,,,NONE,relation-map-v2.1.0
 direction-pair-741014f7445f,wd:P178,developer,inverse:wd:P178,inverse of developer,FORWARD_TO_REVERSE,true,SYNTHETIC_INVERSE,false,SWAP_SOURCE_TARGET,,,,NONE,relation-map-v2.1.0
 direction-pair-cd14527063f0,wd:P1789,chief operating officer,inverse:wd:P1789,inverse of chief operating officer,FORWARD_TO_REVERSE,true,SYNTHETIC_INVERSE,false,SWAP_SOURCE_TARGET,,,,NONE,relation-map-v2.1.0
 direction-pair-dfb7babbd092,wd:P179,part of the series,inverse:wd:P179,inverse of part of the series,FORWARD_TO_REVERSE,true,SYNTHETIC_INVERSE,false,SWAP_SOURCE_TARGET,,,,NONE,relation-map-v2.1.0
+direction-pair-536abb8cf506,wd:P1791,category for people buried here,inverse:wd:P1791,inverse of category for people buried here,FORWARD_TO_REVERSE,true,SYNTHETIC_INVERSE,false,SWAP_SOURCE_TARGET,,,,NONE,relation-map-v2.1.0
+direction-pair-af664b6ed841,wd:P1792,category of associated people,inverse:wd:P1792,inverse of category of associated people,FORWARD_TO_REVERSE,true,SYNTHETIC_INVERSE,false,SWAP_SOURCE_TARGET,,,,NONE,relation-map-v2.1.0
 direction-pair-c428145a2369,wd:P180,depicts,wd:P1299,depicted by,FORWARD_TO_REVERSE,true,NAMED_INVERSE,false,SWAP_SOURCE_TARGET,Wikidata,Wikidata inverse property (P1696),https://www.wikidata.org/wiki/Property:P1299|https://www.wikidata.org/wiki/Property:P180,NONE,relation-map-v2.1.0
 direction-pair-07700038c617,wd:P1809,choreographer,inverse:wd:P1809,inverse of choreographer,FORWARD_TO_REVERSE,true,SYNTHETIC_INVERSE,false,SWAP_SOURCE_TARGET,,,,NONE,relation-map-v2.1.0
 direction-pair-7f9d3df0aadb,wd:P1811,list of episodes,inverse:wd:P1811,inverse of list of episodes,FORWARD_TO_REVERSE,true,SYNTHETIC_INVERSE,false,SWAP_SOURCE_TARGET,,,,NONE,relation-map-v2.1.0
@@ -1520,8 +1579,10 @@ direction-pair-59b021afa049,wd:P186,made from material,inverse:wd:P186,inverse o
 direction-pair-f8e81ef8bb36,wd:P1875,represented by,wd:P1268,represents,REVERSE_TO_FORWARD,false,NAMED_INVERSE,false,SWAP_SOURCE_TARGET,Wikidata,Wikidata inverse property (P1696),https://www.wikidata.org/wiki/Property:P1268|https://www.wikidata.org/wiki/Property:P1875,NONE,relation-map-v2.1.0
 direction-pair-dcd0a7d37687,wd:P1876,vessel,inverse:wd:P1876,inverse of vessel,FORWARD_TO_REVERSE,true,SYNTHETIC_INVERSE,false,SWAP_SOURCE_TARGET,,,,NONE,relation-map-v2.1.0
 direction-pair-1344a32c84fb,wd:P1877,after a work by,inverse:wd:P1877,inverse of after a work by,FORWARD_TO_REVERSE,true,SYNTHETIC_INVERSE,false,SWAP_SOURCE_TARGET,,,,NONE,relation-map-v2.1.0
+direction-pair-69aab155ab69,wd:P1881,list of characters,inverse:wd:P1881,inverse of list of characters,FORWARD_TO_REVERSE,true,SYNTHETIC_INVERSE,false,SWAP_SOURCE_TARGET,,,,NONE,relation-map-v2.1.0
 direction-pair-9fe90691a103,wd:P1884,hair color,inverse:wd:P1884,inverse of hair color,FORWARD_TO_REVERSE,true,SYNTHETIC_INVERSE,false,SWAP_SOURCE_TARGET,,,,NONE,relation-map-v2.1.0
 direction-pair-6430e6c502b0,wd:P1885,cathedral,inverse:wd:P1885,inverse of cathedral,FORWARD_TO_REVERSE,true,SYNTHETIC_INVERSE,false,SWAP_SOURCE_TARGET,,,,NONE,relation-map-v2.1.0
+direction-pair-517a4f93c789,wd:P1889,different from,wd:P1889,different from,SYMMETRIC,true,SYMMETRIC,true,SWAP_SOURCE_TARGET,Wikidata,P1696,https://www.wikidata.org/wiki/Property:P1889|https://www.wikidata.org/wiki/Property:P1889,NONE,relation-map-v2.1.0
 direction-pair-8ea5b3c595b5,wd:P1891,signatory,inverse:wd:P1891,inverse of signatory,FORWARD_TO_REVERSE,true,SYNTHETIC_INVERSE,false,SWAP_SOURCE_TARGET,,,,NONE,relation-map-v2.1.0
 direction-pair-dd8b9f866ed4,wd:P19,place of birth,inverse:wd:P19,inverse of place of birth,FORWARD_TO_REVERSE,true,SYNTHETIC_INVERSE,false,SWAP_SOURCE_TARGET,,,,NONE,relation-map-v2.1.0
 direction-pair-e6f8c8e1e370,wd:P190,twinned administrative body,inverse:wd:P190,inverse of twinned administrative body,FORWARD_TO_REVERSE,true,SYNTHETIC_INVERSE,false,SWAP_SOURCE_TARGET,,,,NONE,relation-map-v2.1.0
@@ -1542,10 +1603,12 @@ direction-pair-2f5d1c712794,wd:P2012,cuisine,inverse:wd:P2012,inverse of cuisine
 direction-pair-c1c838565d7c,wd:P205,basin country,inverse:wd:P205,inverse of basin country,FORWARD_TO_REVERSE,true,SYNTHETIC_INVERSE,false,SWAP_SOURCE_TARGET,,,,NONE,relation-map-v2.1.0
 direction-pair-479ccfc5f347,wd:P2058,depositary,inverse:wd:P2058,inverse of depositary,FORWARD_TO_REVERSE,true,SYNTHETIC_INVERSE,false,SWAP_SOURCE_TARGET,,,,NONE,relation-map-v2.1.0
 direction-pair-fcd0b79abfdd,wd:P206,located in or next to body of water,inverse:wd:P206,inverse of located in or next to body of water,FORWARD_TO_REVERSE,true,SYNTHETIC_INVERSE,false,SWAP_SOURCE_TARGET,,,,NONE,relation-map-v2.1.0
+direction-pair-d4d0a36d1620,wd:P2061,aspect ratio (W:H),inverse:wd:P2061,inverse of aspect ratio (W:H),FORWARD_TO_REVERSE,true,SYNTHETIC_INVERSE,false,SWAP_SOURCE_TARGET,,,,NONE,relation-map-v2.1.0
 direction-pair-a7aa63234bd3,wd:P2079,fabrication method,inverse:wd:P2079,inverse of fabrication method,FORWARD_TO_REVERSE,true,SYNTHETIC_INVERSE,false,SWAP_SOURCE_TARGET,,,,NONE,relation-map-v2.1.0
 direction-pair-d9981da0303a,wd:P208,executive body,inverse:wd:P208,inverse of executive body,FORWARD_TO_REVERSE,true,SYNTHETIC_INVERSE,false,SWAP_SOURCE_TARGET,,,,NONE,relation-map-v2.1.0
 direction-pair-a334b261e2f2,wd:P2094,competition class,inverse:wd:P2094,inverse of competition class,FORWARD_TO_REVERSE,true,SYNTHETIC_INVERSE,false,SWAP_SOURCE_TARGET,,,,NONE,relation-map-v2.1.0
 direction-pair-3282ffd661da,wd:P2098,substitute/deputy/replacement of office/officeholder,inverse:wd:P2098,inverse of substitute/deputy/replacement of office/officeholder,FORWARD_TO_REVERSE,true,SYNTHETIC_INVERSE,false,SWAP_SOURCE_TARGET,,,,NONE,relation-map-v2.1.0
+direction-pair-428a72070982,wd:P21,sex or gender,inverse:wd:P21,inverse of sex or gender,FORWARD_TO_REVERSE,true,SYNTHETIC_INVERSE,false,SWAP_SOURCE_TARGET,,,,NONE,relation-map-v2.1.0
 direction-pair-3e66e7e440c0,wd:P210,party chief representative,inverse:wd:P210,inverse of party chief representative,FORWARD_TO_REVERSE,true,SYNTHETIC_INVERSE,false,SWAP_SOURCE_TARGET,,,,NONE,relation-map-v2.1.0
 direction-pair-3c1a6df645f8,wd:P2184,history of topic,inverse:wd:P2184,inverse of history of topic,FORWARD_TO_REVERSE,true,SYNTHETIC_INVERSE,false,SWAP_SOURCE_TARGET,Wikidata,Wikidata inverse property (P1696),https://www.wikidata.org/wiki/Property:P2184,NONE,relation-map-v2.1.0
 direction-pair-72a5d63fd7a5,wd:P22,father,inverse:wd:P22,inverse of father,FORWARD_TO_REVERSE,true,SYNTHETIC_INVERSE,false,SWAP_SOURCE_TARGET,,,,NONE,relation-map-v2.1.0
@@ -1555,13 +1618,14 @@ direction-pair-9e4a05793f2d,wd:P2308,class,inverse:wd:P2308,inverse of class,FOR
 direction-pair-47e4d471c4e8,wd:P2318,debut participant,inverse:wd:P2318,inverse of debut participant,FORWARD_TO_REVERSE,true,SYNTHETIC_INVERSE,false,SWAP_SOURCE_TARGET,,,,NONE,relation-map-v2.1.0
 direction-pair-b9c27e009257,wd:P2341,indigenous to,inverse:wd:P2341,inverse of indigenous to,FORWARD_TO_REVERSE,true,SYNTHETIC_INVERSE,false,SWAP_SOURCE_TARGET,,,,NONE,relation-map-v2.1.0
 direction-pair-666b7df3a833,wd:P2348,time period,inverse:wd:P2348,inverse of time period,FORWARD_TO_REVERSE,true,SYNTHETIC_INVERSE,false,SWAP_SOURCE_TARGET,,,,NONE,relation-map-v2.1.0
-direction-pair-87fe80c7ad6b,wd:P2353,statistical unit,inverse:wd:P2353,inverse of statistical unit,FORWARD_TO_REVERSE,true,SYNTHETIC_INVERSE,false,SWAP_SOURCE_TARGET,,,,NONE,relation-map-v2.1.0
-direction-pair-c5cadd0fa6c2,wd:P2354,has list,wd:P360,is a list of,REVERSE_TO_FORWARD,false,NAMED_INVERSE,false,SWAP_SOURCE_TARGET,Wikidata,Wikidata inverse property (P1696),https://www.wikidata.org/wiki/Property:P360,NONE,relation-map-v2.1.0
+direction-pair-87fe80c7ad6b,wd:P2353,statistical unit of the dataset,inverse:wd:P2353,inverse of statistical unit of the dataset,FORWARD_TO_REVERSE,true,SYNTHETIC_INVERSE,false,SWAP_SOURCE_TARGET,,,,NONE,relation-map-v2.1.0
+direction-pair-c5cadd0fa6c2,wd:P2354,has list,wd:P360,is a list of,FORWARD_TO_REVERSE,true,NAMED_INVERSE,false,SWAP_SOURCE_TARGET,Wikidata,Wikidata inverse property (P1696),https://www.wikidata.org/wiki/Property:P360,NONE,relation-map-v2.1.0
 direction-pair-d3abcc36fbaf,wd:P2359,nomen gentilicium,inverse:wd:P2359,inverse of nomen gentilicium,FORWARD_TO_REVERSE,true,SYNTHETIC_INVERSE,false,SWAP_SOURCE_TARGET,,,,NONE,relation-map-v2.1.0
 direction-pair-551a6dff0961,wd:P2360,intended public,inverse:wd:P2360,inverse of intended public,FORWARD_TO_REVERSE,true,SYNTHETIC_INVERSE,false,SWAP_SOURCE_TARGET,,,,NONE,relation-map-v2.1.0
 direction-pair-b2069036ff5a,wd:P2363,NMHH film rating,inverse:wd:P2363,inverse of NMHH film rating,FORWARD_TO_REVERSE,true,SYNTHETIC_INVERSE,false,SWAP_SOURCE_TARGET,,,,NONE,relation-map-v2.1.0
 direction-pair-9f5b5399e3e7,wd:P2365,cognomen,inverse:wd:P2365,inverse of cognomen,FORWARD_TO_REVERSE,true,SYNTHETIC_INVERSE,false,SWAP_SOURCE_TARGET,,,,NONE,relation-map-v2.1.0
 direction-pair-b1aa825b90bc,wd:P237,coat of arms,inverse:wd:P237,inverse of coat of arms,FORWARD_TO_REVERSE,true,SYNTHETIC_INVERSE,false,SWAP_SOURCE_TARGET,,,,NONE,relation-map-v2.1.0
+direction-pair-2fda3e321c49,wd:P2378,issued by,inverse:wd:P2378,inverse of issued by,FORWARD_TO_REVERSE,true,SYNTHETIC_INVERSE,false,SWAP_SOURCE_TARGET,,,,NONE,relation-map-v2.1.0
 direction-pair-bb15ed72653f,wd:P2388,position held by head of the organization,wd:P2389,organization directed by the office or position,FORWARD_TO_REVERSE,true,NAMED_INVERSE,false,SWAP_SOURCE_TARGET,Wikidata,Wikidata inverse property (P1696),https://www.wikidata.org/wiki/Property:P2388|https://www.wikidata.org/wiki/Property:P2389,NONE,relation-map-v2.1.0
 direction-pair-bb15ed72653f,wd:P2389,organization directed by the office or position,wd:P2388,position held by head of the organization,REVERSE_TO_FORWARD,false,NAMED_INVERSE,false,SWAP_SOURCE_TARGET,Wikidata,Wikidata inverse property (P1696),https://www.wikidata.org/wiki/Property:P2388|https://www.wikidata.org/wiki/Property:P2389,NONE,relation-map-v2.1.0
 direction-pair-d0a1bf46be67,wd:P2408,set in period,inverse:wd:P2408,inverse of set in period,FORWARD_TO_REVERSE,true,SYNTHETIC_INVERSE,false,SWAP_SOURCE_TARGET,,,,NONE,relation-map-v2.1.0
@@ -1573,6 +1637,7 @@ direction-pair-1542f2e3c22c,wd:P248,stated in,inverse:wd:P248,inverse of stated 
 direction-pair-171f148423fb,wd:P25,mother,inverse:wd:P25,inverse of mother,FORWARD_TO_REVERSE,true,SYNTHETIC_INVERSE,false,SWAP_SOURCE_TARGET,,,,NONE,relation-map-v2.1.0
 direction-pair-b82041735766,wd:P2505,carries,inverse:wd:P2505,inverse of carries,FORWARD_TO_REVERSE,true,SYNTHETIC_INVERSE,false,SWAP_SOURCE_TARGET,,,,NONE,relation-map-v2.1.0
 direction-pair-8caa8758b372,wd:P2515,costume designer,inverse:wd:P2515,inverse of costume designer,FORWARD_TO_REVERSE,true,SYNTHETIC_INVERSE,false,SWAP_SOURCE_TARGET,,,,NONE,relation-map-v2.1.0
+direction-pair-5b32bf29d3c6,wd:P2517,category for recipients of this award,inverse:wd:P2517,inverse of category for recipients of this award,FORWARD_TO_REVERSE,true,SYNTHETIC_INVERSE,false,SWAP_SOURCE_TARGET,,,,NONE,relation-map-v2.1.0
 direction-pair-2b27fc0d75b1,wd:P2522,competition won,wd:P1346,winner,REVERSE_TO_FORWARD,false,NAMED_INVERSE,false,SWAP_SOURCE_TARGET,Wikidata,Wikidata inverse property (P1696),https://www.wikidata.org/wiki/Property:P2522,NONE,relation-map-v2.1.0
 direction-pair-8171c629e7df,wd:P2541,operating area,inverse:wd:P2541,inverse of operating area,FORWARD_TO_REVERSE,true,SYNTHETIC_INVERSE,false,SWAP_SOURCE_TARGET,,,,NONE,relation-map-v2.1.0
 direction-pair-181c64bab2f9,wd:P2545,bowling style,inverse:wd:P2545,inverse of bowling style,FORWARD_TO_REVERSE,true,SYNTHETIC_INVERSE,false,SWAP_SOURCE_TARGET,,,,NONE,relation-map-v2.1.0
@@ -1583,10 +1648,12 @@ direction-pair-1bc582e8c8f1,wd:P2578,is the study of,wd:P2579,studied by,FORWARD
 direction-pair-1bc582e8c8f1,wd:P2579,studied by,wd:P2578,is the study of,REVERSE_TO_FORWARD,false,NAMED_INVERSE,false,SWAP_SOURCE_TARGET,Wikidata,Wikidata inverse property (P1696),https://www.wikidata.org/wiki/Property:P2578|https://www.wikidata.org/wiki/Property:P2579,NONE,relation-map-v2.1.0
 direction-pair-4c7d53d8293a,wd:P26,spouse,wd:P26,spouse,SYMMETRIC,true,SYMMETRIC,true,SWAP_SOURCE_TARGET,Wikidata,Wikidata inverse property (P1696),https://www.wikidata.org/wiki/Property:P26,NONE,relation-map-v2.1.0
 direction-pair-582ef1c89888,wd:P2614,World Heritage criteria,inverse:wd:P2614,inverse of World Heritage criteria,FORWARD_TO_REVERSE,true,SYNTHETIC_INVERSE,false,SWAP_SOURCE_TARGET,,,,NONE,relation-map-v2.1.0
+direction-pair-6357908e851b,wd:P2629,BBFC rating,inverse:wd:P2629,inverse of BBFC rating,FORWARD_TO_REVERSE,true,SYNTHETIC_INVERSE,false,SWAP_SOURCE_TARGET,,,,NONE,relation-map-v2.1.0
 direction-pair-4d8b2fffe0f8,wd:P263,official residence,inverse:wd:P263,inverse of official residence,FORWARD_TO_REVERSE,true,SYNTHETIC_INVERSE,false,SWAP_SOURCE_TARGET,,,,NONE,relation-map-v2.1.0
 direction-pair-47f792694225,wd:P2632,place of detention,inverse:wd:P2632,inverse of place of detention,FORWARD_TO_REVERSE,true,SYNTHETIC_INVERSE,false,SWAP_SOURCE_TARGET,,,,NONE,relation-map-v2.1.0
 direction-pair-1e93d50245e7,wd:P2633,geography of topic,inverse:wd:P2633,inverse of geography of topic,FORWARD_TO_REVERSE,true,SYNTHETIC_INVERSE,false,SWAP_SOURCE_TARGET,Wikidata,Wikidata inverse property (P1696),https://www.wikidata.org/wiki/Property:P2633,NONE,relation-map-v2.1.0
 direction-pair-d349408006e4,wd:P2634,model,inverse:wd:P2634,inverse of model,FORWARD_TO_REVERSE,true,SYNTHETIC_INVERSE,false,SWAP_SOURCE_TARGET,,,,NONE,relation-map-v2.1.0
+direction-pair-ec6452135303,wd:P2637,RARS rating,inverse:wd:P2637,inverse of RARS rating,FORWARD_TO_REVERSE,true,SYNTHETIC_INVERSE,false,SWAP_SOURCE_TARGET,,,,NONE,relation-map-v2.1.0
 direction-pair-76766430fed3,wd:P264,record label,inverse:wd:P264,inverse of record label,FORWARD_TO_REVERSE,true,SYNTHETIC_INVERSE,false,SWAP_SOURCE_TARGET,,,,NONE,relation-map-v2.1.0
 direction-pair-a37b2f8fa44d,wd:P2650,interested in,inverse:wd:P2650,inverse of interested in,FORWARD_TO_REVERSE,true,SYNTHETIC_INVERSE,false,SWAP_SOURCE_TARGET,,,,NONE,relation-map-v2.1.0
 direction-pair-02f400b659cc,wd:P2652,partnership with,inverse:wd:P2652,inverse of partnership with,FORWARD_TO_REVERSE,true,SYNTHETIC_INVERSE,false,SWAP_SOURCE_TARGET,,,,NONE,relation-map-v2.1.0
@@ -1594,16 +1661,19 @@ direction-pair-48765ab21fe7,wd:P2670,has part(s) of the class,inverse:wd:P2670,i
 direction-pair-d72d867b16cf,wd:P2675,reply to,inverse:wd:P2675,inverse of reply to,FORWARD_TO_REVERSE,true,SYNTHETIC_INVERSE,false,SWAP_SOURCE_TARGET,,,,NONE,relation-map-v2.1.0
 direction-pair-c60f7dba0286,wd:P2679,author of foreword,inverse:wd:P2679,inverse of author of foreword,FORWARD_TO_REVERSE,true,SYNTHETIC_INVERSE,false,SWAP_SOURCE_TARGET,,,,NONE,relation-map-v2.1.0
 direction-pair-76243c2ed515,wd:P2680,author of afterword,inverse:wd:P2680,inverse of author of afterword,FORWARD_TO_REVERSE,true,SYNTHETIC_INVERSE,false,SWAP_SOURCE_TARGET,,,,NONE,relation-map-v2.1.0
+direction-pair-6be42f2abe91,wd:P2684,Kijkwijzer rating,inverse:wd:P2684,inverse of Kijkwijzer rating,FORWARD_TO_REVERSE,true,SYNTHETIC_INVERSE,false,SWAP_SOURCE_TARGET,,,,NONE,relation-map-v2.1.0
 direction-pair-678bc26dc727,wd:P27,country of citizenship,inverse:wd:P27,inverse of country of citizenship,FORWARD_TO_REVERSE,true,SYNTHETIC_INVERSE,false,SWAP_SOURCE_TARGET,,,,NONE,relation-map-v2.1.0
 direction-pair-ed3c17b31493,wd:P272,production company,inverse:wd:P272,inverse of production company,FORWARD_TO_REVERSE,true,SYNTHETIC_INVERSE,false,SWAP_SOURCE_TARGET,,,,NONE,relation-map-v2.1.0
 direction-pair-cbbe258ff8cf,wd:P2737,union of,inverse:wd:P2737,inverse of union of,FORWARD_TO_REVERSE,true,SYNTHETIC_INVERSE,false,SWAP_SOURCE_TARGET,,,,NONE,relation-map-v2.1.0
 direction-pair-973ce4d98528,wd:P2738,disjoint union of,inverse:wd:P2738,inverse of disjoint union of,FORWARD_TO_REVERSE,true,SYNTHETIC_INVERSE,false,SWAP_SOURCE_TARGET,,,,NONE,relation-map-v2.1.0
 direction-pair-24e6a401442e,wd:P2747,Filmiroda rating,inverse:wd:P2747,inverse of Filmiroda rating,FORWARD_TO_REVERSE,true,SYNTHETIC_INVERSE,false,SWAP_SOURCE_TARGET,,,,NONE,relation-map-v2.1.0
+direction-pair-0571d0ab1f2b,wd:P275,copyright license,inverse:wd:P275,inverse of copyright license,FORWARD_TO_REVERSE,true,SYNTHETIC_INVERSE,false,SWAP_SOURCE_TARGET,,,,NONE,relation-map-v2.1.0
 direction-pair-11745c908b3e,wd:P2756,EIRIN film rating,inverse:wd:P2756,inverse of EIRIN film rating,FORWARD_TO_REVERSE,true,SYNTHETIC_INVERSE,false,SWAP_SOURCE_TARGET,,,,NONE,relation-map-v2.1.0
 direction-pair-4e79ff1745b8,wd:P2758,CNC film rating (France),inverse:wd:P2758,inverse of CNC film rating (France),FORWARD_TO_REVERSE,true,SYNTHETIC_INVERSE,false,SWAP_SOURCE_TARGET,,,,NONE,relation-map-v2.1.0
 direction-pair-98c66233c865,wd:P276,location,inverse:wd:P276,inverse of location,FORWARD_TO_REVERSE,true,SYNTHETIC_INVERSE,false,SWAP_SOURCE_TARGET,,,,NONE,relation-map-v2.1.0
 direction-pair-250d4c02d3bc,wd:P2789,connects with,inverse:wd:P2789,inverse of connects with,FORWARD_TO_REVERSE,true,SYNTHETIC_INVERSE,false,SWAP_SOURCE_TARGET,,,,NONE,relation-map-v2.1.0
-direction-pair-1da5bc49bf9d,wd:P2813,house publication,wd:P9901,inverse of house publication,FORWARD_TO_REVERSE,true,NAMED_INVERSE,false,SWAP_SOURCE_TARGET,Wikidata,Wikidata inverse property (P1696),https://www.wikidata.org/wiki/Property:P2813,NONE,relation-map-v2.1.0
+direction-pair-5b72551ed01d,wd:P279,subclass of,inverse:wd:P279,inverse of subclass of,FORWARD_TO_REVERSE,true,SYNTHETIC_INVERSE,false,SWAP_SOURCE_TARGET,,,,NONE,relation-map-v2.1.0
+direction-pair-1da5bc49bf9d,wd:P2813,house publication,wd:P9901,issuing agent of work,FORWARD_TO_REVERSE,true,NAMED_INVERSE,false,SWAP_SOURCE_TARGET,Wikidata,Wikidata inverse property (P1696),https://www.wikidata.org/wiki/Property:P2813,NONE,relation-map-v2.1.0
 direction-pair-e2dcbf47da44,wd:P2817,appears in the heritage monument list,inverse:wd:P2817,inverse of appears in the heritage monument list,FORWARD_TO_REVERSE,true,SYNTHETIC_INVERSE,false,SWAP_SOURCE_TARGET,,,,NONE,relation-map-v2.1.0
 direction-pair-f07ff170c4d7,wd:P282,writing system,inverse:wd:P282,inverse of writing system,FORWARD_TO_REVERSE,true,SYNTHETIC_INVERSE,false,SWAP_SOURCE_TARGET,,,,NONE,relation-map-v2.1.0
 direction-pair-89bd23c8732d,wd:P2825,via,inverse:wd:P2825,inverse of via,FORWARD_TO_REVERSE,true,SYNTHETIC_INVERSE,false,SWAP_SOURCE_TARGET,,,,NONE,relation-map-v2.1.0
@@ -1625,10 +1695,12 @@ direction-pair-7d8abbca48e7,wd:P2922,month of the year,inverse:wd:P2922,inverse 
 direction-pair-e7f94419b4cd,wd:P2925,domain of saint or deity,wd:P417,patron saint,REVERSE_TO_FORWARD,false,NAMED_INVERSE,false,SWAP_SOURCE_TARGET,Wikidata,Wikidata inverse property (P1696),https://www.wikidata.org/wiki/Property:P417,NONE,relation-map-v2.1.0
 direction-pair-cabbf45d308f,wd:P2936,language used,inverse:wd:P2936,inverse of language used,FORWARD_TO_REVERSE,true,SYNTHETIC_INVERSE,false,SWAP_SOURCE_TARGET,,,,NONE,relation-map-v2.1.0
 direction-pair-59619a0f7745,wd:P2937,parliamentary term,inverse:wd:P2937,inverse of parliamentary term,FORWARD_TO_REVERSE,true,SYNTHETIC_INVERSE,false,SWAP_SOURCE_TARGET,,,,NONE,relation-map-v2.1.0
+direction-pair-889f3e47311d,wd:P2959,permanent duplicated item,wd:P2959,permanent duplicated item,SYMMETRIC,true,SYMMETRIC,true,SWAP_SOURCE_TARGET,Wikidata,P1696,https://www.wikidata.org/wiki/Property:P2959|https://www.wikidata.org/wiki/Property:P2959,NONE,relation-map-v2.1.0
 direction-pair-a19e4a616065,wd:P2962,title of chess person,inverse:wd:P2962,inverse of title of chess person,FORWARD_TO_REVERSE,true,SYNTHETIC_INVERSE,false,SWAP_SOURCE_TARGET,,,,NONE,relation-map-v2.1.0
 direction-pair-f20d302cfc39,wd:P2964,right to vote,inverse:wd:P2964,inverse of right to vote,FORWARD_TO_REVERSE,true,SYNTHETIC_INVERSE,false,SWAP_SOURCE_TARGET,,,,NONE,relation-map-v2.1.0
 direction-pair-d4602b26c7da,wd:P2978,wheel arrangement,inverse:wd:P2978,inverse of wheel arrangement,FORWARD_TO_REVERSE,true,SYNTHETIC_INVERSE,false,SWAP_SOURCE_TARGET,,,,NONE,relation-map-v2.1.0
 direction-pair-ec9810296d6d,wd:P30,continent,inverse:wd:P30,inverse of continent,FORWARD_TO_REVERSE,true,SYNTHETIC_INVERSE,false,SWAP_SOURCE_TARGET,,,,NONE,relation-map-v2.1.0
+direction-pair-a0de133bb6a2,wd:P301,category's main topic,wd:P910,topic's main category,REVERSE_TO_FORWARD,false,NAMED_INVERSE,false,SWAP_SOURCE_TARGET,Wikidata,P1696,https://www.wikidata.org/wiki/Property:P910|https://www.wikidata.org/wiki/Property:P301,NONE,relation-map-v2.1.0
 direction-pair-4060d3c6f3ca,wd:P3014,laws applied,inverse:wd:P3014,inverse of laws applied,FORWARD_TO_REVERSE,true,SYNTHETIC_INVERSE,false,SWAP_SOURCE_TARGET,,,,NONE,relation-map-v2.1.0
 direction-pair-168bb768b356,wd:P3018,located in protected area,inverse:wd:P3018,inverse of located in protected area,FORWARD_TO_REVERSE,true,SYNTHETIC_INVERSE,false,SWAP_SOURCE_TARGET,,,,NONE,relation-map-v2.1.0
 direction-pair-678f59a4e0b8,wd:P3022,flag bearer,inverse:wd:P3022,inverse of flag bearer,FORWARD_TO_REVERSE,true,SYNTHETIC_INVERSE,false,SWAP_SOURCE_TARGET,,,,NONE,relation-map-v2.1.0
@@ -1643,8 +1715,11 @@ direction-pair-cb85a5787390,wd:P3092,film crew member,inverse:wd:P3092,inverse o
 direction-pair-03c660778c44,wd:P3093,recovered by,inverse:wd:P3093,inverse of recovered by,FORWARD_TO_REVERSE,true,SYNTHETIC_INVERSE,false,SWAP_SOURCE_TARGET,,,,NONE,relation-map-v2.1.0
 direction-pair-b675bbf853b1,wd:P3094,develops from,inverse:wd:P3094,inverse of develops from,FORWARD_TO_REVERSE,true,SYNTHETIC_INVERSE,false,SWAP_SOURCE_TARGET,,,,NONE,relation-map-v2.1.0
 direction-pair-9b8528ba0cfa,wd:P3095,practiced by,wd:P425,field of this occupation,REVERSE_TO_FORWARD,false,NAMED_INVERSE,false,SWAP_SOURCE_TARGET,Wikidata,Wikidata inverse property (P1696),https://www.wikidata.org/wiki/Property:P3095|https://www.wikidata.org/wiki/Property:P425,NONE,relation-map-v2.1.0
+direction-pair-7aa8e48e5fd0,wd:P3096,KML file,inverse:wd:P3096,inverse of KML file,FORWARD_TO_REVERSE,true,SYNTHETIC_INVERSE,false,SWAP_SOURCE_TARGET,,,,NONE,relation-map-v2.1.0
+direction-pair-8380c3c4937d,wd:P31,instance of,inverse:wd:P31,inverse of instance of,FORWARD_TO_REVERSE,true,SYNTHETIC_INVERSE,false,SWAP_SOURCE_TARGET,,,,NONE,relation-map-v2.1.0
 direction-pair-067aba29aab3,wd:P3137,parent peak,inverse:wd:P3137,inverse of parent peak,FORWARD_TO_REVERSE,true,SYNTHETIC_INVERSE,false,SWAP_SOURCE_TARGET,,,,NONE,relation-map-v2.1.0
 direction-pair-76ba6cd2c428,wd:P3148,repeals,wd:P2568,repealed by,REVERSE_TO_FORWARD,false,NAMED_INVERSE,false,SWAP_SOURCE_TARGET,Wikidata,Wikidata inverse property (P1696),https://www.wikidata.org/wiki/Property:P2568|https://www.wikidata.org/wiki/Property:P3148,NONE,relation-map-v2.1.0
+direction-pair-9d610ebfd1bd,wd:P3150,birthday,inverse:wd:P3150,inverse of birthday,FORWARD_TO_REVERSE,true,SYNTHETIC_INVERSE,false,SWAP_SOURCE_TARGET,,,,NONE,relation-map-v2.1.0
 direction-pair-c750c9a35e4d,wd:P3156,Australian Classification,inverse:wd:P3156,inverse of Australian Classification,FORWARD_TO_REVERSE,true,SYNTHETIC_INVERSE,false,SWAP_SOURCE_TARGET,,,,NONE,relation-map-v2.1.0
 direction-pair-adbe1e8293d8,wd:P3173,offers view on,inverse:wd:P3173,inverse of offers view on,FORWARD_TO_REVERSE,true,SYNTHETIC_INVERSE,false,SWAP_SOURCE_TARGET,,,,NONE,relation-map-v2.1.0
 direction-pair-d5d8872f8b7e,wd:P3174,art director,inverse:wd:P3174,inverse of art director,FORWARD_TO_REVERSE,true,SYNTHETIC_INVERSE,false,SWAP_SOURCE_TARGET,,,,NONE,relation-map-v2.1.0
@@ -1673,7 +1748,7 @@ direction-pair-a86a2c711def,wd:P3501,Christian liturgical rite,inverse:wd:P3501,
 direction-pair-2b6a68051c0b,wd:P355,child organization or unit,wd:P749,parent organization or unit,FORWARD_TO_REVERSE,true,NAMED_INVERSE,false,SWAP_SOURCE_TARGET,Wikidata,Wikidata inverse property (P1696),https://www.wikidata.org/wiki/Property:P355|https://www.wikidata.org/wiki/Property:P749,NONE,relation-map-v2.1.0
 direction-pair-dcde90533a4d,wd:P358,discography,inverse:wd:P358,inverse of discography,FORWARD_TO_REVERSE,true,SYNTHETIC_INVERSE,false,SWAP_SOURCE_TARGET,,,,NONE,relation-map-v2.1.0
 direction-pair-9029094df897,wd:P36,capital,wd:P1376,capital of,FORWARD_TO_REVERSE,true,NAMED_INVERSE,false,SWAP_SOURCE_TARGET,Wikidata,Wikidata inverse property (P1696),https://www.wikidata.org/wiki/Property:P1376|https://www.wikidata.org/wiki/Property:P36,NONE,relation-map-v2.1.0
-direction-pair-c5cadd0fa6c2,wd:P360,is a list of,wd:P2354,has list,FORWARD_TO_REVERSE,true,NAMED_INVERSE,false,SWAP_SOURCE_TARGET,Wikidata,Wikidata inverse property (P1696),https://www.wikidata.org/wiki/Property:P360,NONE,relation-map-v2.1.0
+direction-pair-c5cadd0fa6c2,wd:P360,is a list of,wd:P2354,has list,REVERSE_TO_FORWARD,true,NAMED_INVERSE,false,SWAP_SOURCE_TARGET,Wikidata,Wikidata inverse property (P1696),https://www.wikidata.org/wiki/Property:P360,NONE,relation-map-v2.1.0
 direction-pair-89281502b0dc,wd:P3602,candidacy in election,wd:P726,candidate,REVERSE_TO_FORWARD,false,NAMED_INVERSE,false,SWAP_SOURCE_TARGET,Wikidata,Wikidata inverse property (P1696),https://www.wikidata.org/wiki/Property:P3602|https://www.wikidata.org/wiki/Property:P726,NONE,relation-map-v2.1.0
 direction-pair-801fb5ca5c78,wd:P361,part of,wd:P527,has part(s),FORWARD_TO_REVERSE,true,NAMED_INVERSE,false,SWAP_SOURCE_TARGET,Wikidata,Wikidata inverse property (P1696),https://www.wikidata.org/wiki/Property:P361|https://www.wikidata.org/wiki/Property:P527,NONE,relation-map-v2.1.0
 direction-pair-e423da167d2d,wd:P364,original language of film or TV show,inverse:wd:P364,inverse of original language of film or TV show,FORWARD_TO_REVERSE,true,SYNTHETIC_INVERSE,false,SWAP_SOURCE_TARGET,,,,NONE,relation-map-v2.1.0
@@ -1692,8 +1767,10 @@ direction-pair-142e9c2788b6,wd:P3818,KMRB film rating,inverse:wd:P3818,inverse o
 direction-pair-a09fd475e9a3,wd:P3828,wears,wd:P7376,worn by,FORWARD_TO_REVERSE,true,NAMED_INVERSE,false,SWAP_SOURCE_TARGET,Wikidata,Wikidata inverse property (P1696),https://www.wikidata.org/wiki/Property:P3828|https://www.wikidata.org/wiki/Property:P7376,NONE,relation-map-v2.1.0
 direction-pair-7747195656ff,wd:P3834,RTC film rating,inverse:wd:P3834,inverse of RTC film rating,FORWARD_TO_REVERSE,true,SYNTHETIC_INVERSE,false,SWAP_SOURCE_TARGET,,,,NONE,relation-map-v2.1.0
 direction-pair-acf06df6ae0d,wd:P3842,located in the present-day administrative territorial entity,inverse:wd:P3842,inverse of located in the present-day administrative territorial entity,FORWARD_TO_REVERSE,true,SYNTHETIC_INVERSE,false,SWAP_SOURCE_TARGET,,,,NONE,relation-map-v2.1.0
+direction-pair-1f6c89c8906b,wd:P3858,route diagram template,inverse:wd:P3858,inverse of route diagram template,FORWARD_TO_REVERSE,true,SYNTHETIC_INVERSE,false,SWAP_SOURCE_TARGET,,,,NONE,relation-map-v2.1.0
 direction-pair-193e6619912b,wd:P3876,category for alumni of educational institution,inverse:wd:P3876,inverse of category for alumni of educational institution,FORWARD_TO_REVERSE,true,SYNTHETIC_INVERSE,false,SWAP_SOURCE_TARGET,,,,NONE,relation-map-v2.1.0
 direction-pair-1fadaa8dd1e6,wd:P39,position held,wd:P1308,officeholder,FORWARD_TO_REVERSE,true,NAMED_INVERSE,false,SWAP_SOURCE_TARGET,Wikidata,Wikidata inverse property (P1696),https://www.wikidata.org/wiki/Property:P1308|https://www.wikidata.org/wiki/Property:P39,NONE,relation-map-v2.1.0
+direction-pair-df434b7551f3,wd:P3912,newspaper format,inverse:wd:P3912,inverse of newspaper format,FORWARD_TO_REVERSE,true,SYNTHETIC_INVERSE,false,SWAP_SOURCE_TARGET,,,,NONE,relation-map-v2.1.0
 direction-pair-4631039b38ed,wd:P3919,contributed to creative work,wd:P767,contributor to the creative work or subject,REVERSE_TO_FORWARD,false,NAMED_INVERSE,false,SWAP_SOURCE_TARGET,Wikidata,Wikidata inverse property (P1696),https://www.wikidata.org/wiki/Property:P3919|https://www.wikidata.org/wiki/Property:P767,NONE,relation-map-v2.1.0
 direction-pair-865dd7c573dd,wd:P3931,copyright holder,inverse:wd:P3931,inverse of copyright holder,FORWARD_TO_REVERSE,true,SYNTHETIC_INVERSE,false,SWAP_SOURCE_TARGET,,,,NONE,relation-map-v2.1.0
 direction-pair-4e16fa54c16b,wd:P3938,named by,inverse:wd:P3938,inverse of named by,FORWARD_TO_REVERSE,true,SYNTHETIC_INVERSE,false,SWAP_SOURCE_TARGET,,,,NONE,relation-map-v2.1.0
@@ -1706,6 +1783,7 @@ direction-pair-5519ac7f8419,wd:P404,game mode,inverse:wd:P404,inverse of game mo
 direction-pair-4b4d7261dcd9,wd:P406,soundtrack release,inverse:wd:P406,inverse of soundtrack release,FORWARD_TO_REVERSE,true,SYNTHETIC_INVERSE,false,SWAP_SOURCE_TARGET,,,,NONE,relation-map-v2.1.0
 direction-pair-911f7c870359,wd:P407,language of work or name,inverse:wd:P407,inverse of language of work or name,FORWARD_TO_REVERSE,true,SYNTHETIC_INVERSE,false,SWAP_SOURCE_TARGET,,,,NONE,relation-map-v2.1.0
 direction-pair-863c26fbbbd6,wd:P408,software engine,inverse:wd:P408,inverse of software engine,FORWARD_TO_REVERSE,true,SYNTHETIC_INVERSE,false,SWAP_SOURCE_TARGET,,,,NONE,relation-map-v2.1.0
+direction-pair-9941312f866e,wd:P4082,captured with,inverse:wd:P4082,inverse of captured with,FORWARD_TO_REVERSE,true,SYNTHETIC_INVERSE,false,SWAP_SOURCE_TARGET,,,,NONE,relation-map-v2.1.0
 direction-pair-1c445c9a9d3e,wd:P410,"military, police or special rank",inverse:wd:P410,"inverse of military, police or special rank",FORWARD_TO_REVERSE,true,SYNTHETIC_INVERSE,false,SWAP_SOURCE_TARGET,,,,NONE,relation-map-v2.1.0
 direction-pair-3736707dad88,wd:P411,canonization status,inverse:wd:P411,inverse of canonization status,FORWARD_TO_REVERSE,true,SYNTHETIC_INVERSE,false,SWAP_SOURCE_TARGET,,,,NONE,relation-map-v2.1.0
 direction-pair-03633794723d,wd:P412,voice type,inverse:wd:P412,inverse of voice type,FORWARD_TO_REVERSE,true,SYNTHETIC_INVERSE,false,SWAP_SOURCE_TARGET,,,,NONE,relation-map-v2.1.0
@@ -1714,6 +1792,7 @@ direction-pair-a4752a5ec0b2,wd:P414,stock exchange,inverse:wd:P414,inverse of st
 direction-pair-b72b24557318,wd:P4151,game mechanics,inverse:wd:P4151,inverse of game mechanics,FORWARD_TO_REVERSE,true,SYNTHETIC_INVERSE,false,SWAP_SOURCE_TARGET,,,,NONE,relation-map-v2.1.0
 direction-pair-e7f94419b4cd,wd:P417,patron saint,wd:P2925,domain of saint or deity,FORWARD_TO_REVERSE,true,NAMED_INVERSE,false,SWAP_SOURCE_TARGET,Wikidata,Wikidata inverse property (P1696),https://www.wikidata.org/wiki/Property:P417,NONE,relation-map-v2.1.0
 direction-pair-a2fd06573c78,wd:P418,"has seal, badge, or sigil",inverse:wd:P418,"inverse of has seal, badge, or sigil",FORWARD_TO_REVERSE,true,SYNTHETIC_INVERSE,false,SWAP_SOURCE_TARGET,,,,NONE,relation-map-v2.1.0
+direction-pair-c77acc32cdbc,wd:P4195,category for employees of the organization,inverse:wd:P4195,inverse of category for employees of the organization,FORWARD_TO_REVERSE,true,SYNTHETIC_INVERSE,false,SWAP_SOURCE_TARGET,,,,NONE,relation-map-v2.1.0
 direction-pair-b375b7027b82,wd:P421,located in time zone,inverse:wd:P421,inverse of located in time zone,FORWARD_TO_REVERSE,true,SYNTHETIC_INVERSE,false,SWAP_SOURCE_TARGET,,,,NONE,relation-map-v2.1.0
 direction-pair-3f7fed199cb3,wd:P4220,order of battle,inverse:wd:P4220,inverse of order of battle,FORWARD_TO_REVERSE,true,SYNTHETIC_INVERSE,false,SWAP_SOURCE_TARGET,,,,NONE,relation-map-v2.1.0
 direction-pair-abfd1c954959,wd:P423,shooting handedness,inverse:wd:P423,inverse of shooting handedness,FORWARD_TO_REVERSE,true,SYNTHETIC_INVERSE,false,SWAP_SOURCE_TARGET,,,,NONE,relation-map-v2.1.0
@@ -1721,7 +1800,9 @@ direction-pair-9b8528ba0cfa,wd:P425,field of this occupation,wd:P3095,practiced 
 direction-pair-8c1bad42b4ef,wd:P4312,camera setup,inverse:wd:P4312,inverse of camera setup,FORWARD_TO_REVERSE,true,SYNTHETIC_INVERSE,false,SWAP_SOURCE_TARGET,,,,NONE,relation-map-v2.1.0
 direction-pair-d21420bb151a,wd:P4330,contains,wd:P9813,inverse of contains,FORWARD_TO_REVERSE,true,NAMED_INVERSE,false,SWAP_SOURCE_TARGET,Wikidata,Wikidata inverse property (P1696),https://www.wikidata.org/wiki/Property:P4330,NONE,relation-map-v2.1.0
 direction-pair-912cbbce1082,wd:P4345,director of archaeological fieldwork,inverse:wd:P4345,inverse of director of archaeological fieldwork,FORWARD_TO_REVERSE,true,SYNTHETIC_INVERSE,false,SWAP_SOURCE_TARGET,,,,NONE,relation-map-v2.1.0
+direction-pair-fe754aea2c3d,wd:P437,distribution format,inverse:wd:P437,inverse of distribution format,FORWARD_TO_REVERSE,true,SYNTHETIC_INVERSE,false,SWAP_SOURCE_TARGET,,,,NONE,relation-map-v2.1.0
 direction-pair-4e173d333fe1,wd:P4379,youth wing,inverse:wd:P4379,inverse of youth wing,FORWARD_TO_REVERSE,true,SYNTHETIC_INVERSE,false,SWAP_SOURCE_TARGET,,,,NONE,relation-map-v2.1.0
+direction-pair-de70d4863a09,wd:P4437,FPB rating,inverse:wd:P4437,inverse of FPB rating,FORWARD_TO_REVERSE,true,SYNTHETIC_INVERSE,false,SWAP_SOURCE_TARGET,,,,NONE,relation-map-v2.1.0
 direction-pair-7737790462dd,wd:P449,original broadcaster,inverse:wd:P449,inverse of original broadcaster,FORWARD_TO_REVERSE,true,SYNTHETIC_INVERSE,false,SWAP_SOURCE_TARGET,,,,NONE,relation-map-v2.1.0
 direction-pair-43f36ca19789,wd:P450,astronaut mission,inverse:wd:P450,inverse of astronaut mission,FORWARD_TO_REVERSE,true,SYNTHETIC_INVERSE,false,SWAP_SOURCE_TARGET,,,,NONE,relation-map-v2.1.0
 direction-pair-b76e2da975c1,wd:P451,unmarried partner,wd:P451,unmarried partner,SYMMETRIC,true,SYMMETRIC,true,SWAP_SOURCE_TARGET,Wikidata,Wikidata inverse property (P1696),https://www.wikidata.org/wiki/Property:P451,NONE,relation-map-v2.1.0
@@ -1729,6 +1810,7 @@ direction-pair-c0b90a2f5b14,wd:P452,industry,inverse:wd:P452,inverse of industry
 direction-pair-b933108f55ad,wd:P453,inverse of performer,wd:P175,performer,REVERSE_TO_FORWARD,false,NAMED_INVERSE,false,SWAP_SOURCE_TARGET,Wikidata,Wikidata inverse property (P1696),https://www.wikidata.org/wiki/Property:P175,NONE,relation-map-v2.1.0
 direction-pair-451ccf969223,wd:P4552,mountain range,inverse:wd:P4552,inverse of mountain range,FORWARD_TO_REVERSE,true,SYNTHETIC_INVERSE,false,SWAP_SOURCE_TARGET,,,,NONE,relation-map-v2.1.0
 direction-pair-f21d8df6a6d2,wd:P457,foundational text,inverse:wd:P457,inverse of foundational text,FORWARD_TO_REVERSE,true,SYNTHETIC_INVERSE,false,SWAP_SOURCE_TARGET,,,,NONE,relation-map-v2.1.0
+direction-pair-2288dc9a9f01,wd:P460,said to be the same as,wd:P460,said to be the same as,SYMMETRIC,true,SYMMETRIC,true,SWAP_SOURCE_TARGET,Wikidata,P1696,https://www.wikidata.org/wiki/Property:P460|https://www.wikidata.org/wiki/Property:P460,NONE,relation-map-v2.1.0
 direction-pair-876067d48c46,wd:P4608,scenographer,inverse:wd:P4608,inverse of scenographer,FORWARD_TO_REVERSE,true,SYNTHETIC_INVERSE,false,SWAP_SOURCE_TARGET,,,,NONE,relation-map-v2.1.0
 direction-pair-a90784c273dc,wd:P461,opposite of,inverse:wd:P461,inverse of opposite of,FORWARD_TO_REVERSE,true,SYNTHETIC_INVERSE,false,SWAP_SOURCE_TARGET,,,,NONE,relation-map-v2.1.0
 direction-pair-3460a6a78464,wd:P4614,drainage basin,inverse:wd:P4614,inverse of drainage basin,FORWARD_TO_REVERSE,true,SYNTHETIC_INVERSE,false,SWAP_SOURCE_TARGET,,,,NONE,relation-map-v2.1.0
@@ -1759,6 +1841,7 @@ direction-pair-ad891819c39f,wd:P4952,safety classification and labelling,inverse
 direction-pair-396965af8985,wd:P4969,derivative work,wd:P144,based on,REVERSE_TO_FORWARD,false,NAMED_INVERSE,false,SWAP_SOURCE_TARGET,Wikidata,Wikidata inverse property (P1696),https://www.wikidata.org/wiki/Property:P144|https://www.wikidata.org/wiki/Property:P4969,NONE,relation-map-v2.1.0
 direction-pair-e46d8306ab14,wd:P50,author,inverse:wd:P50,inverse of author,FORWARD_TO_REVERSE,true,SYNTHETIC_INVERSE,false,SWAP_SOURCE_TARGET,,,,NONE,relation-map-v2.1.0
 direction-pair-e668427d9a71,wd:P5004,in opposition to,inverse:wd:P5004,inverse of in opposition to,FORWARD_TO_REVERSE,true,SYNTHETIC_INVERSE,false,SWAP_SOURCE_TARGET,,,,NONE,relation-map-v2.1.0
+direction-pair-8e48cd632b0d,wd:P5008,on focus list of Wikimedia project,inverse:wd:P5008,inverse of on focus list of Wikimedia project,FORWARD_TO_REVERSE,true,SYNTHETIC_INVERSE,false,SWAP_SOURCE_TARGET,,,,NONE,relation-map-v2.1.0
 direction-pair-947144a5ab62,wd:P5009,complies with,inverse:wd:P5009,inverse of complies with,FORWARD_TO_REVERSE,true,SYNTHETIC_INVERSE,false,SWAP_SOURCE_TARGET,,,,NONE,relation-map-v2.1.0
 direction-pair-e0ae46c3b2ae,wd:P5012,special rank,inverse:wd:P5012,inverse of special rank,FORWARD_TO_REVERSE,true,SYNTHETIC_INVERSE,false,SWAP_SOURCE_TARGET,,,,NONE,relation-map-v2.1.0
 direction-pair-9147ea1c0d89,wd:P5021,assessment,inverse:wd:P5021,inverse of assessment,FORWARD_TO_REVERSE,true,SYNTHETIC_INVERSE,false,SWAP_SOURCE_TARGET,,,,NONE,relation-map-v2.1.0
@@ -1776,6 +1859,7 @@ direction-pair-237b1753cb94,wd:P509,cause of death,inverse:wd:P509,inverse of ca
 direction-pair-0d4d29ff7049,wd:P5096,member of the crew of,wd:P1029,crew member(s),REVERSE_TO_FORWARD,false,NAMED_INVERSE,false,SWAP_SOURCE_TARGET,Wikidata,Wikidata inverse property (P1696),https://www.wikidata.org/wiki/Property:P1029|https://www.wikidata.org/wiki/Property:P5096,NONE,relation-map-v2.1.0
 direction-pair-a03627779503,wd:P511,honorific prefix,inverse:wd:P511,inverse of honorific prefix,FORWARD_TO_REVERSE,true,SYNTHETIC_INVERSE,false,SWAP_SOURCE_TARGET,,,,NONE,relation-map-v2.1.0
 direction-pair-b6af9688eb6a,wd:P512,academic degree,inverse:wd:P512,inverse of academic degree,FORWARD_TO_REVERSE,true,SYNTHETIC_INVERSE,false,SWAP_SOURCE_TARGET,,,,NONE,relation-map-v2.1.0
+direction-pair-4b6499ead51b,wd:P5125,Wikimedia outline,inverse:wd:P5125,inverse of Wikimedia outline,FORWARD_TO_REVERSE,true,SYNTHETIC_INVERSE,false,SWAP_SOURCE_TARGET,,,,NONE,relation-map-v2.1.0
 direction-pair-839f52c25c9b,wd:P5126,assistant director,inverse:wd:P5126,inverse of assistant director,FORWARD_TO_REVERSE,true,SYNTHETIC_INVERSE,false,SWAP_SOURCE_TARGET,,,,NONE,relation-map-v2.1.0
 direction-pair-0ff1c915dff6,wd:P5150,IGAC rating,inverse:wd:P5150,inverse of IGAC rating,FORWARD_TO_REVERSE,true,SYNTHETIC_INVERSE,false,SWAP_SOURCE_TARGET,,,,NONE,relation-map-v2.1.0
 direction-pair-d880e692d149,wd:P5152,KAVI rating,inverse:wd:P5152,inverse of KAVI rating,FORWARD_TO_REVERSE,true,SYNTHETIC_INVERSE,false,SWAP_SOURCE_TARGET,,,,NONE,relation-map-v2.1.0
@@ -1785,6 +1869,7 @@ direction-pair-aa960ac49af1,wd:P520,armament,inverse:wd:P520,inverse of armament
 direction-pair-68a313722b84,wd:P5201,IMDA rating,inverse:wd:P5201,inverse of IMDA rating,FORWARD_TO_REVERSE,true,SYNTHETIC_INVERSE,false,SWAP_SOURCE_TARGET,,,,NONE,relation-map-v2.1.0
 direction-pair-f9079520f66e,wd:P521,scheduled service destination,inverse:wd:P521,inverse of scheduled service destination,FORWARD_TO_REVERSE,true,SYNTHETIC_INVERSE,false,SWAP_SOURCE_TARGET,,,,NONE,relation-map-v2.1.0
 direction-pair-801fb5ca5c78,wd:P527,has part(s),wd:P361,part of,REVERSE_TO_FORWARD,false,NAMED_INVERSE,false,SWAP_SOURCE_TARGET,Wikidata,Wikidata inverse property (P1696),https://www.wikidata.org/wiki/Property:P361|https://www.wikidata.org/wiki/Property:P527,NONE,relation-map-v2.1.0
+direction-pair-289ce189dd4d,wd:P5278,surname for other gender,wd:P5278,surname for other gender,SYMMETRIC,true,SYMMETRIC,true,SWAP_SOURCE_TARGET,Wikidata,P1696,https://www.wikidata.org/wiki/Property:P5278|https://www.wikidata.org/wiki/Property:P5278,NONE,relation-map-v2.1.0
 direction-pair-fcaf04a14dae,wd:P53,family,inverse:wd:P53,inverse of family,FORWARD_TO_REVERSE,true,SYNTHETIC_INVERSE,false,SWAP_SOURCE_TARGET,,,,NONE,relation-map-v2.1.0
 direction-pair-3efa3fb1ab70,wd:P530,diplomatic relation,inverse:wd:P530,inverse of diplomatic relation,FORWARD_TO_REVERSE,true,SYNTHETIC_INVERSE,false,SWAP_SOURCE_TARGET,,,,NONE,relation-map-v2.1.0
 direction-pair-8526134a1417,wd:P531,diplomatic mission sent,inverse:wd:P531,inverse of diplomatic mission sent,FORWARD_TO_REVERSE,true,SYNTHETIC_INVERSE,false,SWAP_SOURCE_TARGET,,,,NONE,relation-map-v2.1.0
@@ -1798,6 +1883,7 @@ direction-pair-288b9ffa63de,wd:P547,commemorates,inverse:wd:P547,inverse of comm
 direction-pair-827fb98f58f0,wd:P551,residence,inverse:wd:P551,inverse of residence,FORWARD_TO_REVERSE,true,SYNTHETIC_INVERSE,false,SWAP_SOURCE_TARGET,,,,NONE,relation-map-v2.1.0
 direction-pair-5dce55985fcb,wd:P5514,accredited by,inverse:wd:P5514,inverse of accredited by,FORWARD_TO_REVERSE,true,SYNTHETIC_INVERSE,false,SWAP_SOURCE_TARGET,,,,NONE,relation-map-v2.1.0
 direction-pair-28ca005e9d6d,wd:P552,handedness,inverse:wd:P552,inverse of handedness,FORWARD_TO_REVERSE,true,SYNTHETIC_INVERSE,false,SWAP_SOURCE_TARGET,,,,NONE,relation-map-v2.1.0
+direction-pair-d76f45298801,wd:P553,website account on,inverse:wd:P553,inverse of website account on,FORWARD_TO_REVERSE,true,SYNTHETIC_INVERSE,false,SWAP_SOURCE_TARGET,,,,NONE,relation-map-v2.1.0
 direction-pair-b9dc7cd4c99f,wd:P559,terminus,inverse:wd:P559,inverse of terminus,FORWARD_TO_REVERSE,true,SYNTHETIC_INVERSE,false,SWAP_SOURCE_TARGET,,,,NONE,relation-map-v2.1.0
 direction-pair-fced1e658eab,wd:P562,central bank/issuer,inverse:wd:P562,inverse of central bank/issuer,FORWARD_TO_REVERSE,true,SYNTHETIC_INVERSE,false,SWAP_SOURCE_TARGET,,,,NONE,relation-map-v2.1.0
 direction-pair-983b74edbe4c,wd:P566,has basionym,wd:P12766,inverse of has basionym,FORWARD_TO_REVERSE,true,NAMED_INVERSE,false,SWAP_SOURCE_TARGET,Wikidata,Wikidata inverse property (P1696),https://www.wikidata.org/wiki/Property:P566,NONE,relation-map-v2.1.0
@@ -1825,6 +1911,8 @@ direction-pair-61e0abe7feca,wd:P6104,maintained by WikiProject,inverse:wd:P6104,
 direction-pair-f3393628bd80,wd:P611,religious order,inverse:wd:P611,inverse of religious order,FORWARD_TO_REVERSE,true,SYNTHETIC_INVERSE,false,SWAP_SOURCE_TARGET,,,,NONE,relation-map-v2.1.0
 direction-pair-e1db137f898c,wd:P6153,research site,inverse:wd:P6153,inverse of research site,FORWARD_TO_REVERSE,true,SYNTHETIC_INVERSE,false,SWAP_SOURCE_TARGET,,,,NONE,relation-map-v2.1.0
 direction-pair-bdb27f6354de,wd:P6166,quotes work,inverse:wd:P6166,inverse of quotes work,FORWARD_TO_REVERSE,true,SYNTHETIC_INVERSE,false,SWAP_SOURCE_TARGET,,,,NONE,relation-map-v2.1.0
+direction-pair-c6f9a2471906,wd:P618,source of energy,inverse:wd:P618,inverse of source of energy,FORWARD_TO_REVERSE,true,SYNTHETIC_INVERSE,false,SWAP_SOURCE_TARGET,,,,NONE,relation-map-v2.1.0
+direction-pair-17126efb2571,wd:P6186,category for eponymous categories,inverse:wd:P6186,inverse of category for eponymous categories,FORWARD_TO_REVERSE,true,SYNTHETIC_INVERSE,false,SWAP_SOURCE_TARGET,,,,NONE,relation-map-v2.1.0
 direction-pair-ac1be5c24efe,wd:P6193,ratified by,inverse:wd:P6193,inverse of ratified by,FORWARD_TO_REVERSE,true,SYNTHETIC_INVERSE,false,SWAP_SOURCE_TARGET,,,,NONE,relation-map-v2.1.0
 direction-pair-f789dd948796,wd:P6216,copyright status,inverse:wd:P6216,inverse of copyright status,FORWARD_TO_REVERSE,true,SYNTHETIC_INVERSE,false,SWAP_SOURCE_TARGET,,,,NONE,relation-map-v2.1.0
 direction-pair-72b5301b7fc1,wd:P6224,level of description,inverse:wd:P6224,inverse of level of description,FORWARD_TO_REVERSE,true,SYNTHETIC_INVERSE,false,SWAP_SOURCE_TARGET,,,,NONE,relation-map-v2.1.0
@@ -1850,6 +1938,7 @@ direction-pair-fe31e3af102c,wd:P669,located on street,inverse:wd:P669,inverse of
 direction-pair-6b0d19045550,wd:P674,characters,wd:P1441,present in work,FORWARD_TO_REVERSE,true,NAMED_INVERSE,false,SWAP_SOURCE_TARGET,Wikidata,Wikidata inverse property (P1696),https://www.wikidata.org/wiki/Property:P1441|https://www.wikidata.org/wiki/Property:P674,NONE,relation-map-v2.1.0
 direction-pair-08fc38d38488,wd:P6758,supported sports team,inverse:wd:P6758,inverse of supported sports team,FORWARD_TO_REVERSE,true,SYNTHETIC_INVERSE,false,SWAP_SOURCE_TARGET,,,,NONE,relation-map-v2.1.0
 direction-pair-dd5e0eef8b85,wd:P676,lyrics by,inverse:wd:P676,inverse of lyrics by,FORWARD_TO_REVERSE,true,SYNTHETIC_INVERSE,false,SWAP_SOURCE_TARGET,,,,NONE,relation-map-v2.1.0
+direction-pair-b3971da2fed1,wd:P6803,taxon found at location,inverse:wd:P6803,inverse of taxon found at location,FORWARD_TO_REVERSE,true,SYNTHETIC_INVERSE,false,SWAP_SOURCE_TARGET,Wikidata,P1696,https://www.wikidata.org/wiki/Property:P6803|https://www.wikidata.org/wiki/Property:P2974,NONE,relation-map-v2.1.0
 direction-pair-b0175d3ec12b,wd:P6872,has written for,inverse:wd:P6872,inverse of has written for,FORWARD_TO_REVERSE,true,SYNTHETIC_INVERSE,false,SWAP_SOURCE_TARGET,,,,NONE,relation-map-v2.1.0
 direction-pair-7c9504d77438,wd:P6885,historical region,inverse:wd:P6885,inverse of historical region,FORWARD_TO_REVERSE,true,SYNTHETIC_INVERSE,false,SWAP_SOURCE_TARGET,,,,NONE,relation-map-v2.1.0
 direction-pair-0ba66461e5e0,wd:P6886,writing language,inverse:wd:P6886,inverse of writing language,FORWARD_TO_REVERSE,true,SYNTHETIC_INVERSE,false,SWAP_SOURCE_TARGET,,,,NONE,relation-map-v2.1.0
@@ -1862,6 +1951,7 @@ direction-pair-e2e3fed3c465,wd:P7045,chassis,inverse:wd:P7045,inverse of chassis
 direction-pair-5d89fa1c91c2,wd:P7047,enemy,inverse:wd:P7047,inverse of enemy,FORWARD_TO_REVERSE,true,SYNTHETIC_INVERSE,false,SWAP_SOURCE_TARGET,,,,NONE,relation-map-v2.1.0
 direction-pair-bc261d4ddb69,wd:P706,located in/on physical feature,inverse:wd:P706,inverse of located in/on physical feature,FORWARD_TO_REVERSE,true,SYNTHETIC_INVERSE,false,SWAP_SOURCE_TARGET,,,,NONE,relation-map-v2.1.0
 direction-pair-9f4d17bd4d15,wd:P708,diocese,inverse:wd:P708,inverse of diocese,FORWARD_TO_REVERSE,true,SYNTHETIC_INVERSE,false,SWAP_SOURCE_TARGET,,,,NONE,relation-map-v2.1.0
+direction-pair-408d0c02bf54,wd:P7084,related category,inverse:wd:P7084,inverse of related category,FORWARD_TO_REVERSE,true,SYNTHETIC_INVERSE,false,SWAP_SOURCE_TARGET,,,,NONE,relation-map-v2.1.0
 direction-pair-ee9b19e75393,wd:P710,participant,inverse:wd:P710,inverse of participant,FORWARD_TO_REVERSE,true,SYNTHETIC_INVERSE,false,SWAP_SOURCE_TARGET,Wikidata,Wikidata inverse property (P1696),https://www.wikidata.org/wiki/Property:P1344|https://www.wikidata.org/wiki/Property:P710,NONE,relation-map-v2.1.0
 direction-pair-e056c18dc255,wd:P7108,location of the point of view,inverse:wd:P7108,inverse of location of the point of view,FORWARD_TO_REVERSE,true,SYNTHETIC_INVERSE,false,SWAP_SOURCE_TARGET,,,,NONE,relation-map-v2.1.0
 direction-pair-d88ee18acddc,wd:P7137,acknowledged,inverse:wd:P7137,inverse of acknowledged,FORWARD_TO_REVERSE,true,SYNTHETIC_INVERSE,false,SWAP_SOURCE_TARGET,,,,NONE,relation-map-v2.1.0
@@ -1871,6 +1961,7 @@ direction-pair-04efe1b44a62,wd:P7228,access restriction status,inverse:wd:P7228,
 direction-pair-b7587d743204,wd:P725,voice actor,inverse:wd:P725,inverse of voice actor,FORWARD_TO_REVERSE,true,SYNTHETIC_INVERSE,false,SWAP_SOURCE_TARGET,,,,NONE,relation-map-v2.1.0
 direction-pair-89281502b0dc,wd:P726,candidate,wd:P3602,candidacy in election,FORWARD_TO_REVERSE,true,NAMED_INVERSE,false,SWAP_SOURCE_TARGET,Wikidata,Wikidata inverse property (P1696),https://www.wikidata.org/wiki/Property:P3602|https://www.wikidata.org/wiki/Property:P726,NONE,relation-map-v2.1.0
 direction-pair-fa8cf63f64dc,wd:P7261,use restriction status,inverse:wd:P7261,inverse of use restriction status,FORWARD_TO_REVERSE,true,SYNTHETIC_INVERSE,false,SWAP_SOURCE_TARGET,,,,NONE,relation-map-v2.1.0
+direction-pair-6ea534077c71,wd:P7327,OFLC classification,inverse:wd:P7327,inverse of OFLC classification,FORWARD_TO_REVERSE,true,SYNTHETIC_INVERSE,false,SWAP_SOURCE_TARGET,,,,NONE,relation-map-v2.1.0
 direction-pair-84125a709d63,wd:P734,family name,inverse:wd:P734,inverse of family name,FORWARD_TO_REVERSE,true,SYNTHETIC_INVERSE,false,SWAP_SOURCE_TARGET,,,,NONE,relation-map-v2.1.0
 direction-pair-f71459b44356,wd:P735,given name,inverse:wd:P735,inverse of given name,FORWARD_TO_REVERSE,true,SYNTHETIC_INVERSE,false,SWAP_SOURCE_TARGET,,,,NONE,relation-map-v2.1.0
 direction-pair-7a9bcb654f24,wd:P736,cover art by,inverse:wd:P736,inverse of cover art by,FORWARD_TO_REVERSE,true,SYNTHETIC_INVERSE,false,SWAP_SOURCE_TARGET,,,,NONE,relation-map-v2.1.0
@@ -1885,6 +1976,7 @@ direction-pair-52772e0c7ca1,wd:P748,appointed by,inverse:wd:P748,inverse of appo
 direction-pair-2b6a68051c0b,wd:P749,parent organization or unit,wd:P355,child organization or unit,REVERSE_TO_FORWARD,false,NAMED_INVERSE,false,SWAP_SOURCE_TARGET,Wikidata,Wikidata inverse property (P1696),https://www.wikidata.org/wiki/Property:P355|https://www.wikidata.org/wiki/Property:P749,NONE,relation-map-v2.1.0
 direction-pair-569ac0074ee1,wd:P750,distributed by,inverse:wd:P750,inverse of distributed by,FORWARD_TO_REVERSE,true,SYNTHETIC_INVERSE,false,SWAP_SOURCE_TARGET,,,,NONE,relation-map-v2.1.0
 direction-pair-f29df5a01926,wd:P7514,landscape architect,inverse:wd:P7514,inverse of landscape architect,FORWARD_TO_REVERSE,true,SYNTHETIC_INVERSE,false,SWAP_SOURCE_TARGET,,,,NONE,relation-map-v2.1.0
+direction-pair-a083f2f32c34,wd:P7561,category for the interior of the item,inverse:wd:P7561,inverse of category for the interior of the item,FORWARD_TO_REVERSE,true,SYNTHETIC_INVERSE,false,SWAP_SOURCE_TARGET,,,,NONE,relation-map-v2.1.0
 direction-pair-9f1d3697da77,wd:P7573,IFCO rating,inverse:wd:P7573,inverse of IFCO rating,FORWARD_TO_REVERSE,true,SYNTHETIC_INVERSE,false,SWAP_SOURCE_TARGET,,,,NONE,relation-map-v2.1.0
 direction-pair-30bef7fc223b,wd:P7604,supervised by,inverse:wd:P7604,inverse of supervised by,FORWARD_TO_REVERSE,true,SYNTHETIC_INVERSE,false,SWAP_SOURCE_TARGET,,,,NONE,relation-map-v2.1.0
 direction-pair-4631039b38ed,wd:P767,contributor to the creative work or subject,wd:P3919,contributed to creative work,FORWARD_TO_REVERSE,true,NAMED_INVERSE,false,SWAP_SOURCE_TARGET,Wikidata,Wikidata inverse property (P1696),https://www.wikidata.org/wiki/Property:P3919|https://www.wikidata.org/wiki/Property:P767,NONE,relation-map-v2.1.0
@@ -1895,6 +1987,7 @@ direction-pair-8422007126d2,wd:P7779,military unit,inverse:wd:P7779,inverse of m
 direction-pair-4611b7178562,wd:P7781,exonerated of,inverse:wd:P7781,inverse of exonerated of,FORWARD_TO_REVERSE,true,SYNTHETIC_INVERSE,false,SWAP_SOURCE_TARGET,,,,NONE,relation-map-v2.1.0
 direction-pair-49d42aea3bdc,wd:P7782,category for ship name,inverse:wd:P7782,inverse of category for ship name,FORWARD_TO_REVERSE,true,SYNTHETIC_INVERSE,false,SWAP_SOURCE_TARGET,,,,NONE,relation-map-v2.1.0
 direction-pair-03e98c6b967a,wd:P78,top-level Internet domain,inverse:wd:P78,inverse of top-level Internet domain,FORWARD_TO_REVERSE,true,SYNTHETIC_INVERSE,false,SWAP_SOURCE_TARGET,,,,NONE,relation-map-v2.1.0
+direction-pair-5dd393c47cc6,wd:P7867,category for maps or plans,inverse:wd:P7867,inverse of category for maps or plans,FORWARD_TO_REVERSE,true,SYNTHETIC_INVERSE,false,SWAP_SOURCE_TARGET,,,,NONE,relation-map-v2.1.0
 direction-pair-d36b0a8cb504,wd:P7888,merged into,inverse:wd:P7888,inverse of merged into,FORWARD_TO_REVERSE,true,SYNTHETIC_INVERSE,false,SWAP_SOURCE_TARGET,,,,NONE,relation-map-v2.1.0
 direction-pair-731bd5fea256,wd:P790,approved by,inverse:wd:P790,inverse of approved by,FORWARD_TO_REVERSE,true,SYNTHETIC_INVERSE,false,SWAP_SOURCE_TARGET,,,,NONE,relation-map-v2.1.0
 direction-pair-d65ffd4a6f65,wd:P793,significant event,inverse:wd:P793,inverse of significant event,FORWARD_TO_REVERSE,true,SYNTHETIC_INVERSE,false,SWAP_SOURCE_TARGET,,,,NONE,relation-map-v2.1.0
@@ -1908,10 +2001,12 @@ direction-pair-8939a30b0c82,wd:P8001,endorsed by,inverse:wd:P8001,inverse of end
 direction-pair-1893a48f5d1e,wd:P8004,ordered by,inverse:wd:P8004,inverse of ordered by,FORWARD_TO_REVERSE,true,SYNTHETIC_INVERSE,false,SWAP_SOURCE_TARGET,,,,NONE,relation-map-v2.1.0
 direction-pair-cc1b7bc4c074,wd:P802,student,wd:P1066,student of,FORWARD_TO_REVERSE,true,NAMED_INVERSE,false,SWAP_SOURCE_TARGET,Wikidata,Wikidata inverse property (P1696),https://www.wikidata.org/wiki/Property:P1066|https://www.wikidata.org/wiki/Property:P802,NONE,relation-map-v2.1.0
 direction-pair-e169fde764e6,wd:P803,professorship,inverse:wd:P803,inverse of professorship,FORWARD_TO_REVERSE,true,SYNTHETIC_INVERSE,false,SWAP_SOURCE_TARGET,,,,NONE,relation-map-v2.1.0
+direction-pair-049738b2c891,wd:P8030,military size designation,inverse:wd:P8030,inverse of military size designation,FORWARD_TO_REVERSE,true,SYNTHETIC_INVERSE,false,SWAP_SOURCE_TARGET,,,,NONE,relation-map-v2.1.0
 direction-pair-ae989a4e5f70,wd:P8031,perpetrator,inverse:wd:P8031,inverse of perpetrator,FORWARD_TO_REVERSE,true,SYNTHETIC_INVERSE,false,SWAP_SOURCE_TARGET,,,,NONE,relation-map-v2.1.0
 direction-pair-cff9829a1304,wd:P8032,victim(s),inverse:wd:P8032,inverse of victim(s),FORWARD_TO_REVERSE,true,SYNTHETIC_INVERSE,false,SWAP_SOURCE_TARGET,,,,NONE,relation-map-v2.1.0
 direction-pair-cf64bcb65838,wd:P8047,country of registry,inverse:wd:P8047,inverse of country of registry,FORWARD_TO_REVERSE,true,SYNTHETIC_INVERSE,false,SWAP_SOURCE_TARGET,,,,NONE,relation-map-v2.1.0
 direction-pair-4bdbc780b4a3,wd:P805,statement is subject of,inverse:wd:P805,inverse of statement is subject of,FORWARD_TO_REVERSE,true,SYNTHETIC_INVERSE,false,SWAP_SOURCE_TARGET,,,,NONE,relation-map-v2.1.0
+direction-pair-cca005246d11,wd:P8058,symbol of,inverse:wd:P8058,inverse of symbol of,FORWARD_TO_REVERSE,true,SYNTHETIC_INVERSE,false,SWAP_SOURCE_TARGET,,,,NONE,relation-map-v2.1.0
 direction-pair-4f5c1e421fc9,wd:P807,separated from,inverse:wd:P807,inverse of separated from,FORWARD_TO_REVERSE,true,SYNTHETIC_INVERSE,false,SWAP_SOURCE_TARGET,,,,NONE,relation-map-v2.1.0
 direction-pair-4dec52110fc7,wd:P81,connecting line,inverse:wd:P81,inverse of connecting line,FORWARD_TO_REVERSE,true,SYNTHETIC_INVERSE,false,SWAP_SOURCE_TARGET,,,,NONE,relation-map-v2.1.0
 direction-pair-bd326254a200,wd:P812,academic major,inverse:wd:P812,inverse of academic major,FORWARD_TO_REVERSE,true,SYNTHETIC_INVERSE,false,SWAP_SOURCE_TARGET,,,,NONE,relation-map-v2.1.0
@@ -1936,6 +2031,7 @@ direction-pair-3f5f094de5cb,wd:P841,feast day,inverse:wd:P841,inverse of feast d
 direction-pair-1712d21159f7,wd:P8411,set in environment,inverse:wd:P8411,inverse of set in environment,FORWARD_TO_REVERSE,true,SYNTHETIC_INVERSE,false,SWAP_SOURCE_TARGET,,,,NONE,relation-map-v2.1.0
 direction-pair-b6f76d538335,wd:P8450,peak bagging classification,inverse:wd:P8450,inverse of peak bagging classification,FORWARD_TO_REVERSE,true,SYNTHETIC_INVERSE,false,SWAP_SOURCE_TARGET,,,,NONE,relation-map-v2.1.0
 direction-pair-5b60e129aac0,wd:P8453,public transport stop,inverse:wd:P8453,inverse of public transport stop,FORWARD_TO_REVERSE,true,SYNTHETIC_INVERSE,false,SWAP_SOURCE_TARGET,,,,NONE,relation-map-v2.1.0
+direction-pair-9cfd3b1b54c8,wd:P8464,content partnership category,inverse:wd:P8464,inverse of content partnership category,FORWARD_TO_REVERSE,true,SYNTHETIC_INVERSE,false,SWAP_SOURCE_TARGET,,,,NONE,relation-map-v2.1.0
 direction-pair-c28f3aeaa5c8,wd:P85,anthem,inverse:wd:P85,inverse of anthem,FORWARD_TO_REVERSE,true,SYNTHETIC_INVERSE,false,SWAP_SOURCE_TARGET,,,,NONE,relation-map-v2.1.0
 direction-pair-d91ec5b199a0,wd:P8500,Vietnamese middle name,inverse:wd:P8500,inverse of Vietnamese middle name,FORWARD_TO_REVERSE,true,SYNTHETIC_INVERSE,false,SWAP_SOURCE_TARGET,,,,NONE,relation-map-v2.1.0
 direction-pair-6632b00301bb,wd:P852,ESRB rating,inverse:wd:P852,inverse of ESRB rating,FORWARD_TO_REVERSE,true,SYNTHETIC_INVERSE,false,SWAP_SOURCE_TARGET,,,,NONE,relation-map-v2.1.0
@@ -1956,14 +2052,17 @@ direction-pair-8dec35523a36,wd:P8764,port calls,inverse:wd:P8764,inverse of port
 direction-pair-6a2ce7246f8c,wd:P8786,dedicated heritage entity,inverse:wd:P8786,inverse of dedicated heritage entity,FORWARD_TO_REVERSE,true,SYNTHETIC_INVERSE,false,SWAP_SOURCE_TARGET,,,,NONE,relation-map-v2.1.0
 direction-pair-974ed69d6dc5,wd:P88,commissioned by,inverse:wd:P88,inverse of commissioned by,FORWARD_TO_REVERSE,true,SYNTHETIC_INVERSE,false,SWAP_SOURCE_TARGET,,,,NONE,relation-map-v2.1.0
 direction-pair-9e4996c44579,wd:P8810,parent,wd:P40,child,REVERSE_TO_FORWARD,false,NAMED_INVERSE,false,SWAP_SOURCE_TARGET,Wikidata,Wikidata inverse property (P1696),https://www.wikidata.org/wiki/Property:P40|https://www.wikidata.org/wiki/Property:P8810,NONE,relation-map-v2.1.0
-direction-pair-19b97a065230,wd:P885,origin of the watercourse,wd:P201,outflows,REVERSE_TO_FORWARD,false,NAMED_INVERSE,false,SWAP_SOURCE_TARGET,Wikidata,Wikidata inverse property (P1696),https://www.wikidata.org/wiki/Property:P201,NONE,relation-map-v2.1.0
+direction-pair-19b97a065230,wd:P885,origin of the watercourse,wd:P201,outflows,REVERSE_TO_FORWARD,true,NAMED_INVERSE,false,SWAP_SOURCE_TARGET,Wikidata,Wikidata inverse property (P1696),https://www.wikidata.org/wiki/Property:P201,NONE,relation-map-v2.1.0
 direction-pair-02c54de27e34,wd:P8852,facial hair,inverse:wd:P8852,inverse of facial hair,FORWARD_TO_REVERSE,true,SYNTHETIC_INVERSE,false,SWAP_SOURCE_TARGET,,,,NONE,relation-map-v2.1.0
 direction-pair-e0dce5e9cc75,wd:P8874,Hong Kong film rating,inverse:wd:P8874,inverse of Hong Kong film rating,FORWARD_TO_REVERSE,true,SYNTHETIC_INVERSE,false,SWAP_SOURCE_TARGET,,,,NONE,relation-map-v2.1.0
+direction-pair-4fdfa00adcc8,wd:P8875,indexed in bibliographic review,inverse:wd:P8875,inverse of indexed in bibliographic review,FORWARD_TO_REVERSE,true,SYNTHETIC_INVERSE,false,SWAP_SOURCE_TARGET,,,,NONE,relation-map-v2.1.0
 direction-pair-3cedc0b22921,wd:P8889,MTRCB rating,inverse:wd:P8889,inverse of MTRCB rating,FORWARD_TO_REVERSE,true,SYNTHETIC_INVERSE,false,SWAP_SOURCE_TARGET,,,,NONE,relation-map-v2.1.0
 direction-pair-fa050975ccb7,wd:P8933,category for the view from the item,inverse:wd:P8933,inverse of category for the view from the item,FORWARD_TO_REVERSE,true,SYNTHETIC_INVERSE,false,SWAP_SOURCE_TARGET,,,,NONE,relation-map-v2.1.0
 direction-pair-017c8edec8e9,wd:P8956,compatible with,wd:P14317,inverse of compatible with,FORWARD_TO_REVERSE,true,NAMED_INVERSE,false,SWAP_SOURCE_TARGET,Wikidata,Wikidata inverse property (P1696),https://www.wikidata.org/wiki/Property:P8956,NONE,relation-map-v2.1.0
 direction-pair-030aba8479b4,wd:P8989,category for the view of the item,inverse:wd:P8989,inverse of category for the view of the item,FORWARD_TO_REVERSE,true,SYNTHETIC_INVERSE,false,SWAP_SOURCE_TARGET,,,,NONE,relation-map-v2.1.0
 direction-pair-3fb7e734db04,wd:P908,PEGI rating,inverse:wd:P908,inverse of PEGI rating,FORWARD_TO_REVERSE,true,SYNTHETIC_INVERSE,false,SWAP_SOURCE_TARGET,,,,NONE,relation-map-v2.1.0
+direction-pair-f6740c3b6ed5,wd:P91,sexual orientation,inverse:wd:P91,inverse of sexual orientation,FORWARD_TO_REVERSE,true,SYNTHETIC_INVERSE,false,SWAP_SOURCE_TARGET,,,,NONE,relation-map-v2.1.0
+direction-pair-a0de133bb6a2,wd:P910,topic's main category,wd:P301,category's main topic,FORWARD_TO_REVERSE,true,NAMED_INVERSE,false,SWAP_SOURCE_TARGET,Wikidata,P1696,https://www.wikidata.org/wiki/Property:P910|https://www.wikidata.org/wiki/Property:P301,NONE,relation-map-v2.1.0
 direction-pair-349cecf45293,wd:P912,has facility,inverse:wd:P912,inverse of has facility,FORWARD_TO_REVERSE,true,SYNTHETIC_INVERSE,false,SWAP_SOURCE_TARGET,,,,NONE,relation-map-v2.1.0
 direction-pair-e9d38ad8784f,wd:P914,USK rating,inverse:wd:P914,inverse of USK rating,FORWARD_TO_REVERSE,true,SYNTHETIC_INVERSE,false,SWAP_SOURCE_TARGET,,,,NONE,relation-map-v2.1.0
 direction-pair-a091bb460727,wd:P915,filming location,inverse:wd:P915,inverse of filming location,FORWARD_TO_REVERSE,true,SYNTHETIC_INVERSE,false,SWAP_SOURCE_TARGET,,,,NONE,relation-map-v2.1.0
@@ -1983,14 +2082,17 @@ direction-pair-7e518249537f,wd:P945,allegiance,inverse:wd:P945,inverse of allegi
 direction-pair-765a297a8dc6,wd:P9493,artist files at,inverse:wd:P9493,inverse of artist files at,FORWARD_TO_REVERSE,true,SYNTHETIC_INVERSE,false,SWAP_SOURCE_TARGET,,,,NONE,relation-map-v2.1.0
 direction-pair-05ef7833c55d,wd:P9549,official podcast,inverse:wd:P9549,inverse of official podcast,FORWARD_TO_REVERSE,true,SYNTHETIC_INVERSE,false,SWAP_SOURCE_TARGET,,,,NONE,relation-map-v2.1.0
 direction-pair-f880a557f81a,wd:P9600,oral history at,inverse:wd:P9600,inverse of oral history at,FORWARD_TO_REVERSE,true,SYNTHETIC_INVERSE,false,SWAP_SOURCE_TARGET,,,,NONE,relation-map-v2.1.0
+direction-pair-e8006b524d79,wd:P9660,not found in,inverse:wd:P9660,inverse of not found in,FORWARD_TO_REVERSE,true,SYNTHETIC_INVERSE,false,SWAP_SOURCE_TARGET,,,,NONE,relation-map-v2.1.0
 direction-pair-72de2668ee31,wd:P967,guest of honor,inverse:wd:P967,inverse of guest of honor,FORWARD_TO_REVERSE,true,SYNTHETIC_INVERSE,false,SWAP_SOURCE_TARGET,,,,NONE,relation-map-v2.1.0
 direction-pair-a5dde3d6f9b3,wd:P9681,voted on by,inverse:wd:P9681,inverse of voted on by,FORWARD_TO_REVERSE,true,SYNTHETIC_INVERSE,false,SWAP_SOURCE_TARGET,,,,NONE,relation-map-v2.1.0
 direction-pair-f008c5bfe6d8,wd:P97,noble title,inverse:wd:P97,inverse of noble title,FORWARD_TO_REVERSE,true,SYNTHETIC_INVERSE,false,SWAP_SOURCE_TARGET,,,,NONE,relation-map-v2.1.0
+direction-pair-c68c902e6b27,wd:P972,catalog,inverse:wd:P972,inverse of catalog,FORWARD_TO_REVERSE,true,SYNTHETIC_INVERSE,false,SWAP_SOURCE_TARGET,,,,NONE,relation-map-v2.1.0
 direction-pair-b5ec2c12248c,wd:P974,tributary,inverse:wd:P974,inverse of tributary,FORWARD_TO_REVERSE,true,SYNTHETIC_INVERSE,false,SWAP_SOURCE_TARGET,,,,NONE,relation-map-v2.1.0
 direction-pair-a11e0d38341c,wd:P9745,translation of,inverse:wd:P9745,inverse of translation of,FORWARD_TO_REVERSE,true,SYNTHETIC_INVERSE,false,SWAP_SOURCE_TARGET,,,,NONE,relation-map-v2.1.0
 direction-pair-8c619d863373,wd:P98,editor,inverse:wd:P98,inverse of editor,FORWARD_TO_REVERSE,true,SYNTHETIC_INVERSE,false,SWAP_SOURCE_TARGET,,,,NONE,relation-map-v2.1.0
 direction-pair-d21420bb151a,wd:P9813,inverse of contains,wd:P4330,contains,REVERSE_TO_FORWARD,false,NAMED_INVERSE,false,SWAP_SOURCE_TARGET,Wikidata,Wikidata inverse property (P1696),https://www.wikidata.org/wiki/Property:P4330,NONE,relation-map-v2.1.0
 direction-pair-b352ee068a9e,wd:P9899,music created for,inverse:wd:P9899,inverse of music created for,FORWARD_TO_REVERSE,true,SYNTHETIC_INVERSE,false,SWAP_SOURCE_TARGET,,,,NONE,relation-map-v2.1.0
-direction-pair-1da5bc49bf9d,wd:P9901,inverse of house publication,wd:P2813,house publication,REVERSE_TO_FORWARD,false,NAMED_INVERSE,false,SWAP_SOURCE_TARGET,Wikidata,Wikidata inverse property (P1696),https://www.wikidata.org/wiki/Property:P2813,NONE,relation-map-v2.1.0
+direction-pair-1da5bc49bf9d,wd:P9901,issuing agent of work,wd:P2813,house publication,REVERSE_TO_FORWARD,false,NAMED_INVERSE,false,SWAP_SOURCE_TARGET,Wikidata,Wikidata inverse property (P1696),https://www.wikidata.org/wiki/Property:P2813,NONE,relation-map-v2.1.0
 direction-pair-7e092e22a793,wd:P991,successful candidate,inverse:wd:P991,inverse of successful candidate,FORWARD_TO_REVERSE,true,SYNTHETIC_INVERSE,false,SWAP_SOURCE_TARGET,,,,NONE,relation-map-v2.1.0
 direction-pair-fb279cfe52ca,wd:P9929,madhhab,inverse:wd:P9929,inverse of madhhab,FORWARD_TO_REVERSE,true,SYNTHETIC_INVERSE,false,SWAP_SOURCE_TARGET,,,,NONE,relation-map-v2.1.0
+direction-pair-3867e58712f0,wd:P9969,catalogue raisonné,inverse:wd:P9969,inverse of catalogue raisonné,FORWARD_TO_REVERSE,true,SYNTHETIC_INVERSE,false,SWAP_SOURCE_TARGET,,,,NONE,relation-map-v2.1.0
