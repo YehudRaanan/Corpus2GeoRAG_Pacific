@@ -1,0 +1,45 @@
+{
+  "relation_map_version": "relation-map-v2.1.0",
+  "assertion_source_version": "relation-map-v1.0.0",
+  "graph_version": "wwii-agent-draft-v0.1.0",
+  "seed": 20261015,
+  "sample_size_per_stratum": 5,
+  "mapping_rows": 1520,
+  "duplicate_source_predicate_keys": 10,
+  "extra_rows_under_duplicate_keys": 15,
+  "conflicting_source_predicate_keys": 10,
+  "direction_lookup_rows": 1995,
+  "direction_contract_errors": 0,
+  "direction_contract_error_examples": [],
+  "graph_nodes_indexed": 146318,
+  "assertions_total": 700890,
+  "assertions_with_v2_mapping": 598736,
+  "assertions_with_v2_mapping_percent": 85.43,
+  "assertions_without_v2_mapping": 102154,
+  "assertions_without_v2_mapping_percent": 14.57,
+  "missing_source_predicate_keys": 75,
+  "assertions_with_ambiguous_v2_mapping_key": 0,
+  "risk_counts": {
+    "ASSERTION_QA_REQUIRED": 3326,
+    "BLOCKED_OR_KEPT_SEPARATE": 138766,
+    "FORMAL_REVERSE": 33812,
+    "FORMAL_SAME": 5490,
+    "IDENTICAL_CONNECTED": 388651,
+    "RETAINED_UNCONNECTED": 28691
+  },
+  "question_group_counts": {
+    "organization_place": 2176,
+    "part_whole": 16916,
+    "participation_or_command": 74597,
+    "person_place": 37822,
+    "where_event": 8060
+  },
+  "sample_rows": 130,
+  "limits": [
+    "The published Agent repository describes a 56-question Gold Set, but does not publish gold.jsonl.",
+    "The check uses the documented question patterns and relation roles, not the unavailable expected answers.",
+    "The assertion file and graph were built with relation-map v1.0.0; v2.1 is replayed in this check.",
+    "Node types and names come from the draft graph and can themselves be wrong or unresolved.",
+    "Random samples find obvious problems but do not prove that all assertions are correct."
+  ]
+}

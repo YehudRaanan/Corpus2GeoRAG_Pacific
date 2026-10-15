@@ -1,0 +1,20 @@
+﻿question_group,level2_relation_id,assertion_count,question_use_limit
+organization_place,http://dbpedia.org/ontology/garrison,330,Garrison relation; verify endpoint roles and source meaning.
+organization_place,wd:P159,1664,"Headquarters location; does not prove an attack, occupation, or event location."
+organization_place,wd:P466,182,Occupant relation; does not prove an attack or headquarters relation.
+part_whole,wd:P361,16916,"Part-of hierarchy; useful for expansion, not direct event or action evidence."
+participation_or_command,http://dbpedia.org/ontology/commander,4388,Commander relation; verify endpoint roles before use.
+participation_or_command,http://yago-knowledge.org/resource/participatedIn,1744,Participation only; does not prove attack.
+participation_or_command,wd:P1344,2604,"Participation in an event; does not identify attacker, defender, or commander role."
+participation_or_command,wd:P598,5464,Commander-of relation; verify that the commanded object is the entity asked about.
+participation_or_command,wd:P607,57938,"Conflict affiliation; supports conflict participation, not attacker or defender role."
+participation_or_command,wd:P710,2459,"Event participant; does not identify attacker, defender, or commander role."
+person_place,wd:P119,5209,Burial place only.
+person_place,wd:P19,15197,Birth place only.
+person_place,wd:P20,14017,Death place only.
+person_place,wd:P2632,1418,Place of detention only.
+person_place,wd:P551,793,Residence only.
+person_place,wd:P937,1188,Work location only.
+where_event,wd:P131,3968,Administrative containment; not sufficient proof that an event occurred there.
+where_event,wd:P276,3996,"Location candidate only; verify event subject, place target, and place scale."
+where_event,wd:P706,96,Physical-feature location; not sufficient proof that an event occurred there.
