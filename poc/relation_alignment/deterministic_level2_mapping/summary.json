@@ -1,0 +1,112 @@
+{
+  "retrieved_at_utc": "2026-10-15T07:22:44.060611+00:00",
+  "method": "Explicit source identifiers and formal mapping values only",
+  "inventory_relations": 1520,
+  "formal_evidence_rows": 1508,
+  "formal_evidence_by_source": {
+    "DBpedia Ontology": 435,
+    "EventKG manual configuration": 61,
+    "WarSampo schema": 17,
+    "CIDOC CRM": 34,
+    "Wikidata": 961
+  },
+  "formal_evidence_by_relation": {
+    "SUBPROPERTY_OF": 675,
+    "EQUIVALENT": 512,
+    "EVENTKG_NORMALIZES_TO": 61,
+    "INVERSE": 115,
+    "SUBPROPERTY_OF_EXTERNAL_SUPERPROPERTY": 78,
+    "SUPERPROPERTY_OF_EXTERNAL_SUBPROPERTY": 62,
+    "SYMMETRIC": 5
+  },
+  "deterministic_connections": 828,
+  "unique_relation_pair_connections": 589,
+  "unique_cross_identifier_connections": 186,
+  "connection_direction_counts": {
+    "same": 617,
+    "reverse": 211
+  },
+  "connections_with_formal_component_conflict": 101,
+  "connections_with_ten_examples": 593,
+  "connections_with_fewer_than_ten_examples": 235,
+  "example_rows": 6697,
+  "connection_name_description_review_counts": {
+    "NO_NAME_DESCRIPTION_CONTRADICTION_FOUND": 293,
+    "AGREES_SAME_IDENTIFIER": 403,
+    "PARTIAL_SCOPE_NOT_EXACT": 63,
+    "AGREES_PAIR_BUT_COMPONENT_CONFLICT": 23,
+    "CONTRADICTS_EXACT_TRANSLATION": 46
+  },
+  "connection_description_availability_counts": {
+    "NONE": 164,
+    "ONE": 610,
+    "BOTH": 54
+  },
+  "connection_example_review_counts": {
+    "NO_EXAMPLES": 43,
+    "NO_COUNTERPART_CONFIRMATION": 549,
+    "AGREEMENT_OBSERVED": 212,
+    "CONTRADICTION_IN_SAMPLED_VALUES": 24
+  },
+  "connection_activation_status_counts": {
+    "READY_DETERMINISTIC_TRANSLATION": 678,
+    "KEEP_SEPARATE_OPTIONAL_BROADER_VIEW": 40,
+    "BLOCKED_FORMAL_COMPONENT_CONFLICT": 101,
+    "TRANSLATION_VALID_ASSERTION_QA_REQUIRED": 4,
+    "BLOCKED_SEMANTIC_CONTRADICTION": 5
+  },
+  "unique_connection_activation_status_counts": {
+    "READY_DETERMINISTIC_TRANSLATION": 513,
+    "KEEP_SEPARATE_OPTIONAL_BROADER_VIEW": 21,
+    "BLOCKED_FORMAL_COMPONENT_CONFLICT": 49,
+    "TRANSLATION_VALID_ASSERTION_QA_REQUIRED": 2,
+    "BLOCKED_SEMANTIC_CONTRADICTION": 4
+  },
+  "separation_and_broader_view_evidence_rows": 1966,
+  "formal_component_conflicts": 6,
+  "current_mapping_audit_status_counts": {
+    "SUPPORTED_IDENTICAL_IDENTIFIER": 1449,
+    "SUPPORTED_FORMAL_EQUIVALENCE_OR_INVERSE": 45,
+    "FORMAL_MAPPING_CONFLICT_REVIEW": 3,
+    "FORMAL_HIERARCHY_SUPPORTS_BROADER_VIEW_KEEP_SEPARATE": 3,
+    "NO_DETERMINISTIC_MAPPING_EVIDENCE": 19,
+    "EVENTKG_BROADER_NORMALIZATION_KEEP_SEPARATE": 1
+  },
+  "source_versions": {
+    "Wikidata": {
+      "mode": "live property entities",
+      "property_count": 664,
+      "entity_revision_ids_available": 0
+    },
+    "DBpedia": "public SPARQL endpoint latest-snapshot",
+    "CIDOC_CRM": {
+      "version": "7.1.3",
+      "sha256": "8f3fd5afc773073c507586989f5b3d5a62b1b79b48fe4de435b34d90624214a9"
+    },
+    "EventKG": {
+      "commit": "0face5765ffc3e16a8746f9ed98877dc86de2bef",
+      "file_sha256": {
+        "locations": "608b84260d05276ed4cd48f120f1f8236baec8d362c6535aa5b7511a93ef7869",
+        "sublocations": "a9813c123f865f0268b567d39cc5d2b9e16ba728644246dd4750ce55ff33b210",
+        "dbpedia_part_of": "217242d63fceee461295a17757fca376a281560567a01b1af81e3f556f5bdf7a"
+      }
+    },
+    "WarSampo": {
+      "source": "https://zenodo.org/records/3611322",
+      "version": "2.1.0",
+      "archive": "warsampo.zip",
+      "archive_md5": "7bf298f712ae40675b144b86d8f50fc7",
+      "ttl_files": 71,
+      "ttl_bytes": 738699811
+    }
+  },
+  "metadata_rows": {
+    "Wikidata": 664,
+    "DBpedia": 311,
+    "CIDOC_CRM": 19,
+    "WarSampo": 1
+  },
+  "labels_descriptions_used_for_mapping": false,
+  "observations_used_for_mapping": false,
+  "source_data_modified": false
+}
