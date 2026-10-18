@@ -1,5 +1,25 @@
 # Entity matching runs
 
+## Wider-search trial
+
+**Completed:** [full-reference trial report and examples](WIDE_SEARCH_RUN_REPORT_2026-10-18.md).
+All 309,864 mentions were processed automatically: **63,922 suggestions** and
+**245,942 unresolved results**, compared with 9,555 and 300,309 in the resolved-page
+baseline. Search now covers all English names in the same saved reference
+snapshot, with the existing 0.80 name threshold and person-type check applied
+before graph ranking. The page remains context rather than a hard search limit.
+
+```powershell
+python GG_Data/entity_resolution/run_notebook_matching.py --wide-search --page-map GG_Data/entity_resolution/runs/source_pages_v0.1.0_20261018/page_map.json --output GG_Data/entity_resolution/runs/all_types_wide_search_v0.2.0_20261018
+```
+
+This is a separate trial. It adds 54,724 suggestions, removes 357, and changes
+453 suggested IDs. The report includes both repaired examples and clear wrong
+links. Accuracy is not measured; compatibility beyond explicit person types is
+still assumed, and dates have no separate parser. No output was promoted into
+the canonical graph. The default runner and original notebook rules remain
+available. All earlier run outputs are preserved.
+
 ## Rerun using resolved source pages
 
 **Completed:** [resolved-page matching report](RESOLVED_PAGES_RUN_REPORT_2026-10-18.md).
@@ -28,8 +48,8 @@ are preserved.
 
 **Completed:** [source-page lookup report](SOURCE_PAGE_LOOKUP_2026-10-18.md).
 The live Wikipedia lookup resolved 424 of Daniel's 428 source titles, compared
-with 239 in the frozen reference join. This is a separate page map; it has not
-been applied to the completed entity-matching run.
+with 239 in the frozen reference join. This separate page map was applied to
+the resolved-page matching run and the wider-search trial described above.
 
 ```powershell
 python -m pytest -q GG_Data/entity_resolution/test_resolve_source_pages.py

@@ -1,0 +1,2285 @@
+{
+  "before_run_id": "matching-bec29744c3df8b2b7680",
+  "after_run_id": "matching-fa75bfff681bfb1f7ea9",
+  "counts": {
+    "rows": 309864,
+    "CHANGED_SUGGESTION": 453,
+    "old_with_candidates": 59660,
+    "old_with_eligible_candidates": 11936,
+    "new_with_eligible_candidates": 69581,
+    "new_suggestions_outside_page_pool": 53689,
+    "new_suggestions_exact_name": 43865,
+    "new_suggestions_single_eligible_candidate": 49241,
+    "new_suggestions_zero_authority": 23183,
+    "STILL_UNRESOLVED": 245585,
+    "SAME_SUGGESTION": 8745,
+    "ADDITIONAL_SUGGESTION": 54724,
+    "SUGGESTION_REMOVED": 357,
+    "new_suggestions_with_unresolved_source_page": 75
+  },
+  "by_type": {
+    "DATE": {
+      "STILL_UNRESOLVED": 35783,
+      "ADDITIONAL_SUGGESTION": 2606,
+      "SUGGESTION_REMOVED": 6,
+      "SAME_SUGGESTION": 29,
+      "CHANGED_SUGGESTION": 8
+    },
+    "LOC": {
+      "STILL_UNRESOLVED": 68335,
+      "ADDITIONAL_SUGGESTION": 18490,
+      "SAME_SUGGESTION": 2893,
+      "CHANGED_SUGGESTION": 97,
+      "SUGGESTION_REMOVED": 31
+    },
+    "MISC": {
+      "SAME_SUGGESTION": 2829,
+      "STILL_UNRESOLVED": 68470,
+      "ADDITIONAL_SUGGESTION": 14281,
+      "CHANGED_SUGGESTION": 61,
+      "SUGGESTION_REMOVED": 35
+    },
+    "ORG": {
+      "CHANGED_SUGGESTION": 286,
+      "STILL_UNRESOLVED": 31834,
+      "ADDITIONAL_SUGGESTION": 13983,
+      "SUGGESTION_REMOVED": 283,
+      "SAME_SUGGESTION": 1294
+    },
+    "PER": {
+      "STILL_UNRESOLVED": 41163,
+      "SAME_SUGGESTION": 1700,
+      "ADDITIONAL_SUGGESTION": 5364,
+      "CHANGED_SUGGESTION": 1,
+      "SUGGESTION_REMOVED": 2
+    }
+  },
+  "unresolved_reasons": {
+    "no eligible name/type candidate in saved reference": 240283,
+    "name score or graph separation too weak": 5659
+  },
+  "diagnostic_flags_not_accuracy_labels": {
+    "ORG_suggested_numeric_tokens_differ": 2532,
+    "MISC_suggested_film_ids": 3320,
+    "MISC_suggested_numeric_tokens_differ": 445,
+    "LOC_suggested_film_ids": 513,
+    "ORG_suggested_film_ids": 713,
+    "LOC_suggested_numeric_tokens_differ": 368,
+    "DATE_suggested_numeric_tokens_differ": 15,
+    "DATE_suggested_film_ids": 197,
+    "PER_suggested_numeric_tokens_differ": 2
+  },
+  "verification": {
+    "all_rows_raw_ids_and_source_pages_identical": true,
+    "both_runs_output_hashes_verified": true,
+    "decompressed_mapped_graph_identical": true,
+    "mapped_graph_sha256": "7c341f00bdb11f64fc00034b5bef7856ea15c7a5d24a58b352c98dc17eef8a88",
+    "accuracy_measured": false
+  },
+  "examples": [
+    {
+      "mention_id": "mention-cfc891452a8bea56014a5aa0812a38d999251d405f61ffb2159ca571c959b77b",
+      "raw": {
+        "entity_group": "DATE",
+        "score": 0.8472689986228943,
+        "word": "1942–43",
+        "start": 132,
+        "end": 139,
+        "Source": "14th Indian Infantry Division",
+        "Index": 0,
+        "Text": "The 14th Indian Infantry Division was an infantry division of the Indian Army during World War II. It fought in the Arakan Campaign 1942–43, and was subsequently converted into a Training Division, providing drafts of replacements for units of the Fourteenth Army during the Burma Campaign.",
+        "subtype": "date"
+      },
+      "before": {
+        "decision": "UNRESOLVED",
+        "reason": "no candidate in page pool",
+        "suggested_qid": null,
+        "suggested_label": null,
+        "candidate_count": 0,
+        "authority_gap": null,
+        "candidates": []
+      },
+      "after": {
+        "decision": "UNRESOLVED",
+        "reason": "no eligible name/type candidate in saved reference",
+        "suggested_qid": null,
+        "suggested_label": null,
+        "candidate_count": 0,
+        "authority_gap": null,
+        "candidates": []
+      }
+    },
+    {
+      "mention_id": "mention-db43c59df652783d66e047fc3ca2096b22014a5036b6e833835b83ca6b632bb0",
+      "raw": {
+        "entity_group": "MISC",
+        "score": 0.7654985189437866,
+        "word": "Burma Campaign",
+        "start": 275,
+        "end": 289,
+        "Source": "14th Indian Infantry Division",
+        "Index": 0,
+        "Text": "The 14th Indian Infantry Division was an infantry division of the Indian Army during World War II. It fought in the Arakan Campaign 1942–43, and was subsequently converted into a Training Division, providing drafts of replacements for units of the Fourteenth Army during the Burma Campaign.",
+        "subtype": "MISC"
+      },
+      "before": {
+        "decision": "UNRESOLVED",
+        "reason": "no candidate in page pool",
+        "suggested_qid": null,
+        "suggested_label": null,
+        "candidate_count": 0,
+        "authority_gap": null,
+        "candidates": []
+      },
+      "after": {
+        "decision": "SUGGESTED",
+        "reason": "graph winner; name and gap rules passed",
+        "suggested_qid": "Q221519",
+        "suggested_label": "Burma Campaign",
+        "candidate_count": 2,
+        "authority_gap": 1.0,
+        "candidates": [
+          {
+            "entity_id": "Q221519",
+            "matched_name": "Burma Campaign",
+            "name_similarity": 1.0,
+            "authority": 0.0004525228776226168,
+            "in_page_pool": false
+          },
+          {
+            "entity_id": "Q729229",
+            "matched_name": "Burma Campaign 1944",
+            "name_similarity": 0.8275862068965517,
+            "authority": 0.0,
+            "in_page_pool": false
+          }
+        ]
+      }
+    },
+    {
+      "mention_id": "mention-6ab5718018cc2718a51098437e9166379b31692c98743a6338107849a0178064",
+      "raw": {
+        "entity_group": "PER",
+        "score": 0.6353996992111206,
+        "word": "Major General Wilfrid Lewis Lloyd",
+        "start": 293,
+        "end": 326,
+        "Source": "14th Indian Infantry Division",
+        "Index": 1,
+        "Text": "The division was raised on 1 June 1941, at Quetta in Baluchistan. Its badge was a depiction in black and white of the ranges of mountains above Quetta, surrounded by a stylised letter \"Q\" in white on a black background. The division had temporary commanders while forming. On 15 October 1941, Major General Wilfrid Lewis Lloyd, who had a distinguished record as commander of a brigade in the Western Desert, was appointed commander.",
+        "subtype": "person"
+      },
+      "before": {
+        "decision": "UNRESOLVED",
+        "reason": "name score or graph separation too weak",
+        "suggested_qid": null,
+        "suggested_label": null,
+        "candidate_count": 1,
+        "authority_gap": null,
+        "candidates": [
+          {
+            "entity_id": "Q8001965",
+            "matched_name": "Wilfrid Lewis Lloyd",
+            "name_similarity": 0.7083333333333334,
+            "authority": 0.004839524829640473,
+            "in_page_pool": null
+          }
+        ]
+      },
+      "after": {
+        "decision": "UNRESOLVED",
+        "reason": "no eligible name/type candidate in saved reference",
+        "suggested_qid": null,
+        "suggested_label": null,
+        "candidate_count": 0,
+        "authority_gap": null,
+        "candidates": []
+      }
+    },
+    {
+      "mention_id": "mention-bba8fccb7d3c74aa3a9e819a571d816651c321e30adba7a730da98ea4cf0a173",
+      "raw": {
+        "entity_group": "ORG",
+        "score": 0.84432452917099,
+        "word": "British Indian Army",
+        "start": 169,
+        "end": 188,
+        "Source": "14th Indian Infantry Division",
+        "Index": 3,
+        "Text": "In the aftermath of the Japanese conquest of Burma, the 14th Division was sent to garrison Chittagong, on the frontier with Burma. As part of the lessons learned by the British Indian Army in the retreat from Burma, the division's equipment was lightened and its establishment was reduced, to allow easier movement off roads and in difficult terrain. The divisional transport consisted of four jeep companies and six mule companies. The division was renamed 14th Indian (Light) Division to reflect these changes.",
+        "subtype": "ORG"
+      },
+      "before": {
+        "decision": "UNRESOLVED",
+        "reason": "name score or graph separation too weak",
+        "suggested_qid": null,
+        "suggested_label": null,
+        "candidate_count": 2,
+        "authority_gap": 0.925329591855499,
+        "candidates": [
+          {
+            "entity_id": "Q8680",
+            "matched_name": "British Empire",
+            "name_similarity": 0.41379310344827586,
+            "authority": 0.027251761340019633,
+            "in_page_pool": null
+          },
+          {
+            "entity_id": "Q642932",
+            "matched_name": "British Indian Army",
+            "name_similarity": 1.0,
+            "authority": 0.0020349001419157965,
+            "in_page_pool": null
+          }
+        ]
+      },
+      "after": {
+        "decision": "SUGGESTED",
+        "reason": "single candidate; name rule passed",
+        "suggested_qid": "Q642932",
+        "suggested_label": "British Indian Army",
+        "candidate_count": 1,
+        "authority_gap": null,
+        "candidates": [
+          {
+            "entity_id": "Q642932",
+            "matched_name": "British Indian Army",
+            "name_similarity": 1.0,
+            "authority": 0.000857961318954329,
+            "in_page_pool": true
+          }
+        ]
+      }
+    },
+    {
+      "mention_id": "mention-e98c7953a763b52dd0595e11852efb37df80f49e36807103739bbd994a208310",
+      "raw": {
+        "entity_group": "ORG",
+        "score": 0.9804129004478455,
+        "word": "1st Mobile Fleet",
+        "start": 4,
+        "end": 20,
+        "Source": "1st Mobile Fleet (Imperial Japanese Navy)",
+        "Index": 0,
+        "Text": "The 1st Mobile Fleet (第一機動艦隊, Dai-Ichi Kidō Kantai) was a fleet of the Imperial Japanese Navy established during World War II.",
+        "subtype": "ORG"
+      },
+      "before": {
+        "decision": "UNRESOLVED",
+        "reason": "name score or graph separation too weak",
+        "suggested_qid": null,
+        "suggested_label": null,
+        "candidate_count": 2,
+        "authority_gap": 0.03315891871064932,
+        "candidates": [
+          {
+            "entity_id": "Q4596340",
+            "matched_name": "1st Fleet",
+            "name_similarity": 0.5714285714285714,
+            "authority": 0.00010568020726143126,
+            "in_page_pool": null
+          },
+          {
+            "entity_id": "Q4596490",
+            "matched_name": "1st Mobile Fleet",
+            "name_similarity": 1.0,
+            "authority": 0.00010217596585952489,
+            "in_page_pool": null
+          }
+        ]
+      },
+      "after": {
+        "decision": "SUGGESTED",
+        "reason": "single candidate; name rule passed",
+        "suggested_qid": "Q4596490",
+        "suggested_label": "1st Mobile Fleet",
+        "candidate_count": 1,
+        "authority_gap": null,
+        "candidates": [
+          {
+            "entity_id": "Q4596490",
+            "matched_name": "1st Mobile Fleet",
+            "name_similarity": 1.0,
+            "authority": 0.0,
+            "in_page_pool": true
+          }
+        ]
+      }
+    },
+    {
+      "mention_id": "mention-efdd3f360c543275a8af9c1e5e081d1d7887677a2a64b168a5db845e4fcdd051",
+      "raw": {
+        "entity_group": "ORG",
+        "score": 0.973983883857727,
+        "word": "14th Indian Infantry Division",
+        "start": 126,
+        "end": 155,
+        "Source": "26th Indian Infantry Division",
+        "Index": 3,
+        "Text": "For the First Arakan offensive, all the division's brigades were detached one by one and committed to the offensive under the 14th Indian Infantry Division. In March, the offensive stalled and the HQ of 26th Division relieved that of the 14th Division, taking over the Arakan front too late to prevent a minor disaster. After this the British fell back almost to their starting point on the Indian frontier.",
+        "subtype": "ORG"
+      },
+      "before": {
+        "decision": "SUGGESTED",
+        "reason": "single candidate; name rule passed",
+        "suggested_qid": "Q4632442",
+        "suggested_label": "26th Indian Infantry Division",
+        "candidate_count": 1,
+        "authority_gap": null,
+        "candidates": [
+          {
+            "entity_id": "Q4632442",
+            "matched_name": "26th Indian Infantry Division",
+            "name_similarity": 0.9230769230769231,
+            "authority": 0.0,
+            "in_page_pool": null
+          }
+        ]
+      },
+      "after": {
+        "decision": "UNRESOLVED",
+        "reason": "name score or graph separation too weak",
+        "suggested_qid": null,
+        "suggested_label": null,
+        "candidate_count": 50,
+        "authority_gap": 0.05040904715802584,
+        "candidates": [
+          {
+            "entity_id": "Q231293",
+            "matched_name": "4th Infantry Division",
+            "name_similarity": 0.8444444444444444,
+            "authority": 0.0006885866704062309,
+            "in_page_pool": false
+          },
+          {
+            "entity_id": "Q261179",
+            "matched_name": "7th Infantry Division",
+            "name_similarity": 0.8,
+            "authority": 0.0006538756724653352,
+            "in_page_pool": false
+          },
+          {
+            "entity_id": "Q4646576",
+            "matched_name": "9th Indian Infantry Division",
+            "name_similarity": 0.9411764705882353,
+            "authority": 0.0003429280480846276,
+            "in_page_pool": false
+          },
+          {
+            "entity_id": "Q4644073",
+            "matched_name": "7th Infantry Division",
+            "name_similarity": 0.8,
+            "authority": 0.0003375835823544513,
+            "in_page_pool": false
+          },
+          {
+            "entity_id": "Q234339",
+            "matched_name": "44th Infantry Division",
+            "name_similarity": 0.8260869565217391,
+            "authority": 0.0003059348556773189,
+            "in_page_pool": false
+          }
+        ]
+      }
+    },
+    {
+      "mention_id": "mention-2420459041247c637f97ebcd8302f15b126c5e3d443c1782dd7780ffbdac0938",
+      "raw": {
+        "entity_group": "DATE",
+        "score": 0.9458033442497253,
+        "word": "1941",
+        "start": 841,
+        "end": 845,
+        "Source": "Attack on Pearl Harbor",
+        "Index": 10,
+        "Text": "In mid-1940, President Franklin D. Roosevelt moved the Pacific Fleet from San Diego to Hawaii. He also ordered a military buildup in the Philippines, taking both actions in the hope of discouraging Japanese aggression in the Far East. Because the Japanese high command was mistakenly certain any attack on the United Kingdom's Southeast Asian colonies, including Singapore, would bring the United States into the war, a devastating preventive strike appeared to be the only way to prevent American naval interference. An invasion of the Philippines was also considered necessary by Japanese war planners. The American War Plan Orange had envisioned defending the Philippines with an elite force of 40,000 men; this option was never implemented due to opposition from Douglas MacArthur, who felt he would need a force ten times that size. By 1941, American planners expected to have to abandon the Philippines at the outbreak of war. Late that year, Admiral Thomas C. Hart, commander of the United States Asiatic Fleet, was given orders to that effect.",
+        "subtype": "date"
+      },
+      "before": {
+        "decision": "SUGGESTED",
+        "reason": "single candidate; name rule passed",
+        "suggested_qid": "Q207482",
+        "suggested_label": "1941",
+        "candidate_count": 1,
+        "authority_gap": null,
+        "candidates": [
+          {
+            "entity_id": "Q207482",
+            "matched_name": "1941",
+            "name_similarity": 1.0,
+            "authority": 4.731267085808879e-05,
+            "in_page_pool": null
+          }
+        ]
+      },
+      "after": {
+        "decision": "UNRESOLVED",
+        "reason": "name score or graph separation too weak",
+        "suggested_qid": null,
+        "suggested_label": null,
+        "candidate_count": 2,
+        "authority_gap": 0.014949195968943903,
+        "candidates": [
+          {
+            "entity_id": "Q207482",
+            "matched_name": "1941",
+            "name_similarity": 1.0,
+            "authority": 6.762189971634906e-06,
+            "in_page_pool": true
+          },
+          {
+            "entity_id": "Q2008158",
+            "matched_name": "1941",
+            "name_similarity": 1.0,
+            "authority": 6.661100668569708e-06,
+            "in_page_pool": false
+          }
+        ]
+      }
+    },
+    {
+      "mention_id": "mention-4fbb1c62be376c3c9c9a4a79abeb7e65896c776438b958adb70221c55555856a",
+      "raw": {
+        "entity_group": "LOC",
+        "score": 0.999584436416626,
+        "word": "Pearl Harbor",
+        "start": 640,
+        "end": 652,
+        "Source": "Attack on Pearl Harbor",
+        "Index": 13,
+        "Text": "Japan's final proposal, delivered on November 20, offered to withdraw from southern Indochina and to refrain from attacks in Southeast Asia, so long as the United States, United Kingdom, and Netherlands supplied one million U.S. gallons (3.8 million liters) of aviation fuel, lifted their sanctions against Japan, and ceased aid to China. The American counter-proposal of November 26 (November 27 in Japan), the Hull note, required Japan to completely evacuate China without conditions and conclude non-aggression pacts with Pacific powers. On November 26 in Japan, the day before the note's delivery, the Japanese task force left port for Pearl Harbor.",
+        "subtype": "LOC"
+      },
+      "before": {
+        "decision": "UNRESOLVED",
+        "reason": "name score or graph separation too weak",
+        "suggested_qid": null,
+        "suggested_label": null,
+        "candidate_count": 10,
+        "authority_gap": 0.8574191796434054,
+        "candidates": [
+          {
+            "entity_id": "Q52418",
+            "matched_name": "Pearl Harbor attack",
+            "name_similarity": 0.7407407407407407,
+            "authority": 0.003318549430900931,
+            "in_page_pool": null
+          },
+          {
+            "entity_id": "Q127091",
+            "matched_name": "Pearl Harbor",
+            "name_similarity": 1.0,
+            "authority": 0.0004731615002517646,
+            "in_page_pool": null
+          },
+          {
+            "entity_id": "Q15261194",
+            "matched_name": "NS Pearl Harbor",
+            "name_similarity": 0.8695652173913043,
+            "authority": 0.0002220350215501143,
+            "in_page_pool": null
+          },
+          {
+            "entity_id": "Q5416779",
+            "matched_name": "prelude to the attack on Pearl Harbor",
+            "name_similarity": 0.4444444444444444,
+            "authority": 0.00012220921645897,
+            "in_page_pool": null
+          },
+          {
+            "entity_id": "Q7100609",
+            "matched_name": "order of battle of the Attack on Pearl Harbor",
+            "name_similarity": 0.4,
+            "authority": 0.00012220921645897,
+            "in_page_pool": null
+          }
+        ]
+      },
+      "after": {
+        "decision": "SUGGESTED",
+        "reason": "graph winner; name and gap rules passed",
+        "suggested_qid": "Q127091",
+        "suggested_label": "Pearl Harbor",
+        "candidate_count": 4,
+        "authority_gap": 0.4379977675081344,
+        "candidates": [
+          {
+            "entity_id": "Q127091",
+            "matched_name": "Pearl Harbor",
+            "name_similarity": 1.0,
+            "authority": 0.00029253836682740483,
+            "in_page_pool": true
+          },
+          {
+            "entity_id": "Q15261194",
+            "matched_name": "NS Pearl Harbor",
+            "name_similarity": 0.8695652173913043,
+            "authority": 0.00016440721524652583,
+            "in_page_pool": true
+          },
+          {
+            "entity_id": "Q194413",
+            "matched_name": "Pearl Harbor",
+            "name_similarity": 1.0,
+            "authority": 0.0,
+            "in_page_pool": true
+          },
+          {
+            "entity_id": "Q135489935",
+            "matched_name": "SS Pearl Harbor",
+            "name_similarity": 0.8695652173913043,
+            "authority": 0.0,
+            "in_page_pool": false
+          }
+        ]
+      }
+    }
+  ],
+  "change_examples": [
+    {
+      "change": "CHANGED_SUGGESTION",
+      "raw": {
+        "entity_group": "ORG",
+        "score": 0.8760290741920471,
+        "word": "14th Indian Infantry Division",
+        "start": 4,
+        "end": 33,
+        "Source": "14th Indian Infantry Division",
+        "Index": 0,
+        "Text": "The 14th Indian Infantry Division was an infantry division of the Indian Army during World War II. It fought in the Arakan Campaign 1942–43, and was subsequently converted into a Training Division, providing drafts of replacements for units of the Fourteenth Army during the Burma Campaign.",
+        "subtype": "ORG"
+      },
+      "before": {
+        "decision": "SUGGESTED",
+        "reason": "single candidate; name rule passed",
+        "suggested_qid": "Q4550030",
+        "suggested_label": "14th Indian Infantry Division",
+        "candidate_count": 1,
+        "authority_gap": null,
+        "candidates": [
+          {
+            "entity_id": "Q4550030",
+            "matched_name": "14th Indian Infantry Division",
+            "name_similarity": 1.0,
+            "authority": 0.0,
+            "in_page_pool": null
+          }
+        ]
+      },
+      "after": {
+        "decision": "SUGGESTED",
+        "reason": "graph winner; name and gap rules passed",
+        "suggested_qid": "Q261179",
+        "suggested_label": "7th Infantry Division",
+        "candidate_count": 50,
+        "authority_gap": 0.3246209220768806,
+        "candidates": [
+          {
+            "entity_id": "Q261179",
+            "matched_name": "7th Infantry Division",
+            "name_similarity": 0.8,
+            "authority": 0.00013681379754564154,
+            "in_page_pool": false
+          },
+          {
+            "entity_id": "Q231293",
+            "matched_name": "4th Infantry Division",
+            "name_similarity": 0.8444444444444444,
+            "authority": 9.240117643353572e-05,
+            "in_page_pool": false
+          },
+          {
+            "entity_id": "Q4646576",
+            "matched_name": "9th Indian Infantry Division",
+            "name_similarity": 0.9411764705882353,
+            "authority": 4.758164260792994e-05,
+            "in_page_pool": false
+          },
+          {
+            "entity_id": "Q4644073",
+            "matched_name": "7th Infantry Division",
+            "name_similarity": 0.8,
+            "authority": 4.590333061780336e-05,
+            "in_page_pool": false
+          },
+          {
+            "entity_id": "Q234339",
+            "matched_name": "44th Infantry Division",
+            "name_similarity": 0.8260869565217391,
+            "authority": 4.103572958759941e-05,
+            "in_page_pool": false
+          }
+        ]
+      }
+    },
+    {
+      "change": "ADDITIONAL_SUGGESTION",
+      "raw": {
+        "entity_group": "MISC",
+        "score": 0.7654985189437866,
+        "word": "Burma Campaign",
+        "start": 275,
+        "end": 289,
+        "Source": "14th Indian Infantry Division",
+        "Index": 0,
+        "Text": "The 14th Indian Infantry Division was an infantry division of the Indian Army during World War II. It fought in the Arakan Campaign 1942–43, and was subsequently converted into a Training Division, providing drafts of replacements for units of the Fourteenth Army during the Burma Campaign.",
+        "subtype": "MISC"
+      },
+      "before": {
+        "decision": "UNRESOLVED",
+        "reason": "no candidate in page pool",
+        "suggested_qid": null,
+        "suggested_label": null,
+        "candidate_count": 0,
+        "authority_gap": null,
+        "candidates": []
+      },
+      "after": {
+        "decision": "SUGGESTED",
+        "reason": "graph winner; name and gap rules passed",
+        "suggested_qid": "Q221519",
+        "suggested_label": "Burma Campaign",
+        "candidate_count": 2,
+        "authority_gap": 1.0,
+        "candidates": [
+          {
+            "entity_id": "Q221519",
+            "matched_name": "Burma Campaign",
+            "name_similarity": 1.0,
+            "authority": 0.0004525228776226168,
+            "in_page_pool": false
+          },
+          {
+            "entity_id": "Q729229",
+            "matched_name": "Burma Campaign 1944",
+            "name_similarity": 0.8275862068965517,
+            "authority": 0.0,
+            "in_page_pool": false
+          }
+        ]
+      }
+    },
+    {
+      "change": "ADDITIONAL_SUGGESTION",
+      "raw": {
+        "entity_group": "LOC",
+        "score": 0.9891375303268433,
+        "word": "Western Desert",
+        "start": 392,
+        "end": 406,
+        "Source": "14th Indian Infantry Division",
+        "Index": 1,
+        "Text": "The division was raised on 1 June 1941, at Quetta in Baluchistan. Its badge was a depiction in black and white of the ranges of mountains above Quetta, surrounded by a stylised letter \"Q\" in white on a black background. The division had temporary commanders while forming. On 15 October 1941, Major General Wilfrid Lewis Lloyd, who had a distinguished record as commander of a brigade in the Western Desert, was appointed commander.",
+        "subtype": "LOC"
+      },
+      "before": {
+        "decision": "UNRESOLVED",
+        "reason": "no candidate in page pool",
+        "suggested_qid": null,
+        "suggested_label": null,
+        "candidate_count": 0,
+        "authority_gap": null,
+        "candidates": []
+      },
+      "after": {
+        "decision": "SUGGESTED",
+        "reason": "single candidate; name rule passed",
+        "suggested_qid": "Q4019174",
+        "suggested_label": "Western Desert Force",
+        "candidate_count": 1,
+        "authority_gap": null,
+        "candidates": [
+          {
+            "entity_id": "Q4019174",
+            "matched_name": "Western Desert Force",
+            "name_similarity": 0.8,
+            "authority": 0.0,
+            "in_page_pool": false
+          }
+        ]
+      }
+    },
+    {
+      "change": "ADDITIONAL_SUGGESTION",
+      "raw": {
+        "entity_group": "MISC",
+        "score": 0.9981359243392944,
+        "word": "Allied",
+        "start": 87,
+        "end": 93,
+        "Source": "14th Indian Infantry Division",
+        "Index": 2,
+        "Text": "When first formed, the division was intended to operate in Iraq and Persia, then under Allied military occupation, and first trained for mountain and desert warfare. It consisted of the 23rd, 36th and 37th Indian Infantry brigades. In December, war with Imperial Japan broke out. In March, after the Japanese captured Rangoon, the capital of Burma, the division was reassigned to the eastern frontier of India, and its existing brigades were dispersed to other divisions being formed. The 47th and 49th Indian Infantry Brigades were assigned to the division in March 1942, although the 49th Brigade was removed in May. The 23rd Indian Brigade was renumbered the 123rd Indian Infantry Brigade and returned to the division in July.",
+        "subtype": "MISC"
+      },
+      "before": {
+        "decision": "UNRESOLVED",
+        "reason": "no candidate in page pool",
+        "suggested_qid": null,
+        "suggested_label": null,
+        "candidate_count": 0,
+        "authority_gap": null,
+        "candidates": []
+      },
+      "after": {
+        "decision": "SUGGESTED",
+        "reason": "single candidate; name rule passed",
+        "suggested_qid": "Q23681360",
+        "suggested_label": "Allied",
+        "candidate_count": 1,
+        "authority_gap": null,
+        "candidates": [
+          {
+            "entity_id": "Q23681360",
+            "matched_name": "Allied",
+            "name_similarity": 1.0,
+            "authority": 0.0,
+            "in_page_pool": false
+          }
+        ]
+      }
+    },
+    {
+      "change": "ADDITIONAL_SUGGESTION",
+      "raw": {
+        "entity_group": "LOC",
+        "score": 0.6591331362724304,
+        "word": "Imperial Japan",
+        "start": 254,
+        "end": 268,
+        "Source": "14th Indian Infantry Division",
+        "Index": 2,
+        "Text": "When first formed, the division was intended to operate in Iraq and Persia, then under Allied military occupation, and first trained for mountain and desert warfare. It consisted of the 23rd, 36th and 37th Indian Infantry brigades. In December, war with Imperial Japan broke out. In March, after the Japanese captured Rangoon, the capital of Burma, the division was reassigned to the eastern frontier of India, and its existing brigades were dispersed to other divisions being formed. The 47th and 49th Indian Infantry Brigades were assigned to the division in March 1942, although the 49th Brigade was removed in May. The 23rd Indian Brigade was renumbered the 123rd Indian Infantry Brigade and returned to the division in July.",
+        "subtype": "LOC"
+      },
+      "before": {
+        "decision": "UNRESOLVED",
+        "reason": "no candidate in page pool",
+        "suggested_qid": null,
+        "suggested_label": null,
+        "candidate_count": 0,
+        "authority_gap": null,
+        "candidates": []
+      },
+      "after": {
+        "decision": "SUGGESTED",
+        "reason": "single candidate; name rule passed",
+        "suggested_qid": "Q188712",
+        "suggested_label": "Empire of Japan",
+        "candidate_count": 1,
+        "authority_gap": null,
+        "candidates": [
+          {
+            "entity_id": "Q188712",
+            "matched_name": "Imperial Japan",
+            "name_similarity": 1.0,
+            "authority": 0.006066938470951916,
+            "in_page_pool": false
+          }
+        ]
+      }
+    },
+    {
+      "change": "ADDITIONAL_SUGGESTION",
+      "raw": {
+        "entity_group": "ORG",
+        "score": 0.9854384660720825,
+        "word": "14th Division",
+        "start": 56,
+        "end": 69,
+        "Source": "14th Indian Infantry Division",
+        "Index": 3,
+        "Text": "In the aftermath of the Japanese conquest of Burma, the 14th Division was sent to garrison Chittagong, on the frontier with Burma. As part of the lessons learned by the British Indian Army in the retreat from Burma, the division's equipment was lightened and its establishment was reduced, to allow easier movement off roads and in difficult terrain. The divisional transport consisted of four jeep companies and six mule companies. The division was renamed 14th Indian (Light) Division to reflect these changes.",
+        "subtype": "ORG"
+      },
+      "before": {
+        "decision": "UNRESOLVED",
+        "reason": "name score or graph separation too weak",
+        "suggested_qid": null,
+        "suggested_label": null,
+        "candidate_count": 1,
+        "authority_gap": null,
+        "candidates": [
+          {
+            "entity_id": "Q4550030",
+            "matched_name": "14th Indian Infantry Division",
+            "name_similarity": 0.5405405405405406,
+            "authority": 0.0,
+            "in_page_pool": null
+          }
+        ]
+      },
+      "after": {
+        "decision": "SUGGESTED",
+        "reason": "graph winner; name and gap rules passed",
+        "suggested_qid": "Q709183",
+        "suggested_label": "5th Division",
+        "candidate_count": 98,
+        "authority_gap": 0.24914644794899685,
+        "candidates": [
+          {
+            "entity_id": "Q709183",
+            "matched_name": "5th Division",
+            "name_similarity": 0.8571428571428571,
+            "authority": 0.0014186753665350997,
+            "in_page_pool": false
+          },
+          {
+            "entity_id": "Q712807",
+            "matched_name": "12th Division",
+            "name_similarity": 0.8181818181818182,
+            "authority": 0.0010652174381701384,
+            "in_page_pool": false
+          },
+          {
+            "entity_id": "Q187268",
+            "matched_name": "14th Division",
+            "name_similarity": 1.0,
+            "authority": 0.0,
+            "in_page_pool": false
+          },
+          {
+            "entity_id": "Q187289",
+            "matched_name": "14th Division",
+            "name_similarity": 1.0,
+            "authority": 0.0,
+            "in_page_pool": false
+          },
+          {
+            "entity_id": "Q11600544",
+            "matched_name": "214th Division",
+            "name_similarity": 0.9565217391304348,
+            "authority": 0.0,
+            "in_page_pool": false
+          }
+        ]
+      }
+    },
+    {
+      "change": "ADDITIONAL_SUGGESTION",
+      "raw": {
+        "entity_group": "ORG",
+        "score": 0.84432452917099,
+        "word": "British Indian Army",
+        "start": 169,
+        "end": 188,
+        "Source": "14th Indian Infantry Division",
+        "Index": 3,
+        "Text": "In the aftermath of the Japanese conquest of Burma, the 14th Division was sent to garrison Chittagong, on the frontier with Burma. As part of the lessons learned by the British Indian Army in the retreat from Burma, the division's equipment was lightened and its establishment was reduced, to allow easier movement off roads and in difficult terrain. The divisional transport consisted of four jeep companies and six mule companies. The division was renamed 14th Indian (Light) Division to reflect these changes.",
+        "subtype": "ORG"
+      },
+      "before": {
+        "decision": "UNRESOLVED",
+        "reason": "name score or graph separation too weak",
+        "suggested_qid": null,
+        "suggested_label": null,
+        "candidate_count": 2,
+        "authority_gap": 0.925329591855499,
+        "candidates": [
+          {
+            "entity_id": "Q8680",
+            "matched_name": "British Empire",
+            "name_similarity": 0.41379310344827586,
+            "authority": 0.027251761340019633,
+            "in_page_pool": null
+          },
+          {
+            "entity_id": "Q642932",
+            "matched_name": "British Indian Army",
+            "name_similarity": 1.0,
+            "authority": 0.0020349001419157965,
+            "in_page_pool": null
+          }
+        ]
+      },
+      "after": {
+        "decision": "SUGGESTED",
+        "reason": "single candidate; name rule passed",
+        "suggested_qid": "Q642932",
+        "suggested_label": "British Indian Army",
+        "candidate_count": 1,
+        "authority_gap": null,
+        "candidates": [
+          {
+            "entity_id": "Q642932",
+            "matched_name": "British Indian Army",
+            "name_similarity": 1.0,
+            "authority": 0.000857961318954329,
+            "in_page_pool": true
+          }
+        ]
+      }
+    },
+    {
+      "change": "ADDITIONAL_SUGGESTION",
+      "raw": {
+        "entity_group": "ORG",
+        "score": 0.46648165583610535,
+        "word": "Light",
+        "start": 471,
+        "end": 476,
+        "Source": "14th Indian Infantry Division",
+        "Index": 3,
+        "Text": "In the aftermath of the Japanese conquest of Burma, the 14th Division was sent to garrison Chittagong, on the frontier with Burma. As part of the lessons learned by the British Indian Army in the retreat from Burma, the division's equipment was lightened and its establishment was reduced, to allow easier movement off roads and in difficult terrain. The divisional transport consisted of four jeep companies and six mule companies. The division was renamed 14th Indian (Light) Division to reflect these changes.",
+        "subtype": "ORG"
+      },
+      "before": {
+        "decision": "UNRESOLVED",
+        "reason": "no candidate in page pool",
+        "suggested_qid": null,
+        "suggested_label": null,
+        "candidate_count": 0,
+        "authority_gap": null,
+        "candidates": []
+      },
+      "after": {
+        "decision": "SUGGESTED",
+        "reason": "single candidate; name rule passed",
+        "suggested_qid": "Q13583449",
+        "suggested_label": "flight",
+        "candidate_count": 1,
+        "authority_gap": null,
+        "candidates": [
+          {
+            "entity_id": "Q13583449",
+            "matched_name": "flight",
+            "name_similarity": 0.8571428571428571,
+            "authority": 2.21232110427741e-53,
+            "in_page_pool": false
+          }
+        ]
+      }
+    },
+    {
+      "change": "ADDITIONAL_SUGGESTION",
+      "raw": {
+        "entity_group": "ORG",
+        "score": 0.4843992590904236,
+        "word": "Mayforce",
+        "start": 507,
+        "end": 515,
+        "Source": "14th Indian Infantry Division",
+        "Index": 5,
+        "Text": "In late 1942, the division began an advance in the Burmese coastal province of Arakan, intending ultimately to recapture Akyab Island, vital for its airfields. When well-constructed Japanese defences were encountered on the Mayu peninsula only a few miles from the island, extra brigades were added to the division. Eventually, the division HQ commanded no less than nine brigades and a large rear communications area, making effective administration and coordination impossible. A temporary headquarters, \"Mayforce\", was created to control operations in the Mayu River valley, separated from the main body of the division by a rugged hill range.",
+        "subtype": "ORG"
+      },
+      "before": {
+        "decision": "UNRESOLVED",
+        "reason": "no candidate in page pool",
+        "suggested_qid": null,
+        "suggested_label": null,
+        "candidate_count": 0,
+        "authority_gap": null,
+        "candidates": []
+      },
+      "after": {
+        "decision": "SUGGESTED",
+        "reason": "single candidate; name rule passed",
+        "suggested_qid": "Q3219966",
+        "suggested_label": "Layforce",
+        "candidate_count": 1,
+        "authority_gap": null,
+        "candidates": [
+          {
+            "entity_id": "Q3219966",
+            "matched_name": "Layforce",
+            "name_similarity": 0.8333333333333334,
+            "authority": 0.0,
+            "in_page_pool": false
+          }
+        ]
+      }
+    },
+    {
+      "change": "SUGGESTION_REMOVED",
+      "raw": {
+        "entity_group": "ORG",
+        "score": 0.8436366319656372,
+        "word": "201st Air Fighter Squadron",
+        "start": 34,
+        "end": 60,
+        "Source": "201st Fighter Squadron (Mexico)",
+        "Index": 3,
+        "Text": "The Escuadrón Aéreo de Pelea 201 (201st Air Fighter Squadron) was composed of more than 300 volunteers; 36 pilots and 264 ground crew. The ground crewmen were electricians, mechanics, and radiomen. Its formation was prompted by the attack by German submarines against Mexican oil tankers Potrero del Llano and Faja de Oro, that were transporting crude oil to the United States. These attacks prompted President Manuel Ávila Camacho to declare war on the Axis powers on May 22, 1942, and to join Brazil as the only two Latin American countries to actually send military forces overseas.",
+        "subtype": "ORG"
+      },
+      "before": {
+        "decision": "SUGGESTED",
+        "reason": "single candidate; name rule passed",
+        "suggested_qid": "Q2299076",
+        "suggested_label": "201st Fighter Squadron",
+        "candidate_count": 1,
+        "authority_gap": null,
+        "candidates": [
+          {
+            "entity_id": "Q2299076",
+            "matched_name": "201st Fighter Squadron",
+            "name_similarity": 0.8636363636363636,
+            "authority": 0.0,
+            "in_page_pool": null
+          }
+        ]
+      },
+      "after": {
+        "decision": "UNRESOLVED",
+        "reason": "name score or graph separation too weak",
+        "suggested_qid": null,
+        "suggested_label": null,
+        "candidate_count": 4,
+        "authority_gap": 0.0,
+        "candidates": [
+          {
+            "entity_id": "Q2299076",
+            "matched_name": "201st Fighter Squadron",
+            "name_similarity": 0.8636363636363636,
+            "authority": 0.0,
+            "in_page_pool": true
+          },
+          {
+            "entity_id": "Q16156733",
+            "matched_name": "301st Fighter Squadron",
+            "name_similarity": 0.8181818181818182,
+            "authority": 0.0,
+            "in_page_pool": false
+          },
+          {
+            "entity_id": "Q16157012",
+            "matched_name": "401st Fighter Squadron",
+            "name_similarity": 0.8181818181818182,
+            "authority": 0.0,
+            "in_page_pool": false
+          },
+          {
+            "entity_id": "Q4596332",
+            "matched_name": "1st Fighter Squadron",
+            "name_similarity": 0.8095238095238095,
+            "authority": 0.0,
+            "in_page_pool": false
+          }
+        ]
+      }
+    },
+    {
+      "change": "CHANGED_SUGGESTION",
+      "raw": {
+        "entity_group": "ORG",
+        "score": 0.9966054558753967,
+        "word": "Fifth Air Force",
+        "start": 324,
+        "end": 339,
+        "Source": "201st Fighter Squadron (Mexico)",
+        "Index": 6,
+        "Text": "Before leaving for the Philippines, the men received further instructions and physical examinations in Camp Stoneman in Pittsburg, California, in March 1945. The men left for the Philippines on the troop ship S.S. Fairisle on March 27, 1945. The squadron arrived in Manila on April 30, 1945, and was assigned as part of the Fifth Air Force, attached to the U.S. 58th Fighter Group, based  at Porac, Pampanga, in the Clark Field complex on the island of Luzon.",
+        "subtype": "ORG"
+      },
+      "before": {
+        "decision": "SUGGESTED",
+        "reason": "graph winner; name and gap rules passed",
+        "suggested_qid": "Q2817902",
+        "suggested_label": "Fifth Air Force",
+        "candidate_count": 2,
+        "authority_gap": 0.6612439535157001,
+        "candidates": [
+          {
+            "entity_id": "Q2817902",
+            "matched_name": "Fifth Air Force",
+            "name_similarity": 1.0,
+            "authority": 0.015243891372529381,
+            "in_page_pool": null
+          },
+          {
+            "entity_id": "Q5507226",
+            "matched_name": "Mexican Expeditionary Air Force",
+            "name_similarity": 0.38095238095238093,
+            "authority": 0.00516396037439418,
+            "in_page_pool": null
+          }
+        ]
+      },
+      "after": {
+        "decision": "SUGGESTED",
+        "reason": "graph winner; name and gap rules passed",
+        "suggested_qid": "Q6128691",
+        "suggested_label": "Thirteenth Air Force",
+        "candidate_count": 4,
+        "authority_gap": 0.5324982624494419,
+        "candidates": [
+          {
+            "entity_id": "Q6128691",
+            "matched_name": "13th Air Force",
+            "name_similarity": 0.8,
+            "authority": 0.0062694413511761755,
+            "in_page_pool": false
+          },
+          {
+            "entity_id": "Q2817902",
+            "matched_name": "Fifth Air Force",
+            "name_similarity": 1.0,
+            "authority": 0.002930974725146181,
+            "in_page_pool": true
+          },
+          {
+            "entity_id": "Q2808401",
+            "matched_name": "15th Air Force",
+            "name_similarity": 0.8,
+            "authority": 0.002546336351032718,
+            "in_page_pool": false
+          },
+          {
+            "entity_id": "Q7889245",
+            "matched_name": "6th Air Force",
+            "name_similarity": 0.8333333333333334,
+            "authority": 0.0,
+            "in_page_pool": false
+          }
+        ]
+      }
+    },
+    {
+      "change": "SUGGESTION_REMOVED",
+      "raw": {
+        "entity_group": "ORG",
+        "score": 0.8801999092102051,
+        "word": "Fighter Squadron",
+        "start": 94,
+        "end": 110,
+        "Source": "201st Fighter Squadron (Mexico)",
+        "Index": 12,
+        "Text": "The 201st returned to Mexico City on 18 November 1945. In a military parade in the Zócalo the Fighter Squadron delivered the Mexican flag to President Manuel Ávila Camacho. The FAEM was disbanded after returning from the Philippines.  The unit was awarded the Mexican Far East Service Medal (Servicio en el Lejano Oriente) and is the only unit of the Mexican military to fight in combat outside the country's borders.  ",
+        "subtype": "ORG"
+      },
+      "before": {
+        "decision": "SUGGESTED",
+        "reason": "single candidate; name rule passed",
+        "suggested_qid": "Q2299076",
+        "suggested_label": "201st Fighter Squadron",
+        "candidate_count": 1,
+        "authority_gap": null,
+        "candidates": [
+          {
+            "entity_id": "Q2299076",
+            "matched_name": "201st Fighter Squadron",
+            "name_similarity": 0.8235294117647058,
+            "authority": 0.0,
+            "in_page_pool": null
+          }
+        ]
+      },
+      "after": {
+        "decision": "UNRESOLVED",
+        "reason": "name score or graph separation too weak",
+        "suggested_qid": null,
+        "suggested_label": null,
+        "candidate_count": 142,
+        "authority_gap": 0.0,
+        "candidates": [
+          {
+            "entity_id": "Q1028398",
+            "matched_name": "Fighter Squadron 1",
+            "name_similarity": 0.9333333333333333,
+            "authority": 0.0,
+            "in_page_pool": false
+          },
+          {
+            "entity_id": "Q23198761",
+            "matched_name": "Fighter Squadron 6",
+            "name_similarity": 0.9333333333333333,
+            "authority": 0.0,
+            "in_page_pool": false
+          },
+          {
+            "entity_id": "Q25349389",
+            "matched_name": "Fighter Squadron 7",
+            "name_similarity": 0.9333333333333333,
+            "authority": 0.0,
+            "in_page_pool": false
+          },
+          {
+            "entity_id": "Q23198737",
+            "matched_name": "Fighter Squadron 16",
+            "name_similarity": 0.9032258064516129,
+            "authority": 0.0,
+            "in_page_pool": false
+          },
+          {
+            "entity_id": "Q4356342",
+            "matched_name": "Fighter Squadron 24",
+            "name_similarity": 0.9032258064516129,
+            "authority": 0.0,
+            "in_page_pool": false
+          }
+        ]
+      }
+    },
+    {
+      "change": "SUGGESTION_REMOVED",
+      "raw": {
+        "entity_group": "ORG",
+        "score": 0.973983883857727,
+        "word": "14th Indian Infantry Division",
+        "start": 126,
+        "end": 155,
+        "Source": "26th Indian Infantry Division",
+        "Index": 3,
+        "Text": "For the First Arakan offensive, all the division's brigades were detached one by one and committed to the offensive under the 14th Indian Infantry Division. In March, the offensive stalled and the HQ of 26th Division relieved that of the 14th Division, taking over the Arakan front too late to prevent a minor disaster. After this the British fell back almost to their starting point on the Indian frontier.",
+        "subtype": "ORG"
+      },
+      "before": {
+        "decision": "SUGGESTED",
+        "reason": "single candidate; name rule passed",
+        "suggested_qid": "Q4632442",
+        "suggested_label": "26th Indian Infantry Division",
+        "candidate_count": 1,
+        "authority_gap": null,
+        "candidates": [
+          {
+            "entity_id": "Q4632442",
+            "matched_name": "26th Indian Infantry Division",
+            "name_similarity": 0.9230769230769231,
+            "authority": 0.0,
+            "in_page_pool": null
+          }
+        ]
+      },
+      "after": {
+        "decision": "UNRESOLVED",
+        "reason": "name score or graph separation too weak",
+        "suggested_qid": null,
+        "suggested_label": null,
+        "candidate_count": 50,
+        "authority_gap": 0.05040904715802584,
+        "candidates": [
+          {
+            "entity_id": "Q231293",
+            "matched_name": "4th Infantry Division",
+            "name_similarity": 0.8444444444444444,
+            "authority": 0.0006885866704062309,
+            "in_page_pool": false
+          },
+          {
+            "entity_id": "Q261179",
+            "matched_name": "7th Infantry Division",
+            "name_similarity": 0.8,
+            "authority": 0.0006538756724653352,
+            "in_page_pool": false
+          },
+          {
+            "entity_id": "Q4646576",
+            "matched_name": "9th Indian Infantry Division",
+            "name_similarity": 0.9411764705882353,
+            "authority": 0.0003429280480846276,
+            "in_page_pool": false
+          },
+          {
+            "entity_id": "Q4644073",
+            "matched_name": "7th Infantry Division",
+            "name_similarity": 0.8,
+            "authority": 0.0003375835823544513,
+            "in_page_pool": false
+          },
+          {
+            "entity_id": "Q234339",
+            "matched_name": "44th Infantry Division",
+            "name_similarity": 0.8260869565217391,
+            "authority": 0.0003059348556773189,
+            "in_page_pool": false
+          }
+        ]
+      }
+    },
+    {
+      "change": "CHANGED_SUGGESTION",
+      "raw": {
+        "entity_group": "MISC",
+        "score": 0.784236490726471,
+        "word": "26 Indian Infantry Division",
+        "start": 1,
+        "end": 28,
+        "Source": "26th Indian Infantry Division",
+        "Index": 48,
+        "Text": "\"26 Indian Infantry Division\". Orders of Battle.com.",
+        "subtype": "MISC"
+      },
+      "before": {
+        "decision": "SUGGESTED",
+        "reason": "single candidate; name rule passed",
+        "suggested_qid": "Q4632442",
+        "suggested_label": "26th Indian Infantry Division",
+        "candidate_count": 1,
+        "authority_gap": null,
+        "candidates": [
+          {
+            "entity_id": "Q4632442",
+            "matched_name": "26th Indian Infantry Division",
+            "name_similarity": 0.88,
+            "authority": 0.0,
+            "in_page_pool": null
+          }
+        ]
+      },
+      "after": {
+        "decision": "SUGGESTED",
+        "reason": "graph winner; name and gap rules passed",
+        "suggested_qid": "Q4646576",
+        "suggested_label": "9th Infantry Division",
+        "candidate_count": 5,
+        "authority_gap": 1.0,
+        "candidates": [
+          {
+            "entity_id": "Q4646576",
+            "matched_name": "9th Indian Infantry Division",
+            "name_similarity": 0.8979591836734694,
+            "authority": 0.01124758459426289,
+            "in_page_pool": false
+          },
+          {
+            "entity_id": "Q2818659",
+            "matched_name": "8th Indian Infantry Division",
+            "name_similarity": 0.8979591836734694,
+            "authority": 0.0,
+            "in_page_pool": false
+          },
+          {
+            "entity_id": "Q2806922",
+            "matched_name": "10th Indian Infantry Division",
+            "name_similarity": 0.88,
+            "authority": 0.0,
+            "in_page_pool": false
+          },
+          {
+            "entity_id": "Q4550030",
+            "matched_name": "14th Indian Infantry Division",
+            "name_similarity": 0.88,
+            "authority": 0.0,
+            "in_page_pool": false
+          },
+          {
+            "entity_id": "Q4632442",
+            "matched_name": "26th Indian Infantry Division",
+            "name_similarity": 0.88,
+            "authority": 0.0,
+            "in_page_pool": true
+          }
+        ]
+      }
+    },
+    {
+      "change": "SUGGESTION_REMOVED",
+      "raw": {
+        "entity_group": "ORG",
+        "score": 0.83656245470047,
+        "word": "58th Operations Group",
+        "start": 4,
+        "end": 25,
+        "Source": "58th Operations Group",
+        "Index": 0,
+        "Text": "The 58th Operations Group (58 OG) is the operational flying component of the United States Air Force 58th Special Operations Wing. It is stationed at Kirtland Air Force Base, New Mexico.",
+        "subtype": "ORG"
+      },
+      "before": {
+        "decision": "SUGGESTED",
+        "reason": "single candidate; name rule passed",
+        "suggested_qid": "Q4640929",
+        "suggested_label": "58th Operations Group",
+        "candidate_count": 1,
+        "authority_gap": null,
+        "candidates": [
+          {
+            "entity_id": "Q4640929",
+            "matched_name": "58th Operations Group",
+            "name_similarity": 1.0,
+            "authority": 0.0,
+            "in_page_pool": null
+          }
+        ]
+      },
+      "after": {
+        "decision": "UNRESOLVED",
+        "reason": "name score or graph separation too weak",
+        "suggested_qid": null,
+        "suggested_label": null,
+        "candidate_count": 78,
+        "authority_gap": 0.0,
+        "candidates": [
+          {
+            "entity_id": "Q4640929",
+            "matched_name": "58th Operations Group",
+            "name_similarity": 1.0,
+            "authority": 0.0,
+            "in_page_pool": true
+          },
+          {
+            "entity_id": "Q4645443",
+            "matched_name": "8th Operations Group",
+            "name_similarity": 0.972972972972973,
+            "authority": 0.0,
+            "in_page_pool": false
+          },
+          {
+            "entity_id": "Q16056926",
+            "matched_name": "18th Operations Group",
+            "name_similarity": 0.9473684210526315,
+            "authority": 0.0,
+            "in_page_pool": false
+          },
+          {
+            "entity_id": "Q16057494",
+            "matched_name": "28th Operations Group",
+            "name_similarity": 0.9473684210526315,
+            "authority": 0.0,
+            "in_page_pool": false
+          },
+          {
+            "entity_id": "Q4638698",
+            "matched_name": "48th Operations Group",
+            "name_similarity": 0.9473684210526315,
+            "authority": 0.0,
+            "in_page_pool": false
+          }
+        ]
+      }
+    },
+    {
+      "change": "SUGGESTION_REMOVED",
+      "raw": {
+        "entity_group": "ORG",
+        "score": 0.6604759097099304,
+        "word": "58th Operations Group",
+        "start": 13,
+        "end": 34,
+        "Source": "58th Operations Group",
+        "Index": 31,
+        "Text": "Redesignated 58th Operations Group, and activated, on 1 October 1991.",
+        "subtype": "ORG"
+      },
+      "before": {
+        "decision": "SUGGESTED",
+        "reason": "single candidate; name rule passed",
+        "suggested_qid": "Q4640929",
+        "suggested_label": "58th Operations Group",
+        "candidate_count": 1,
+        "authority_gap": null,
+        "candidates": [
+          {
+            "entity_id": "Q4640929",
+            "matched_name": "58th Operations Group",
+            "name_similarity": 1.0,
+            "authority": 0.0,
+            "in_page_pool": null
+          }
+        ]
+      },
+      "after": {
+        "decision": "UNRESOLVED",
+        "reason": "name score or graph separation too weak",
+        "suggested_qid": null,
+        "suggested_label": null,
+        "candidate_count": 78,
+        "authority_gap": 0.0,
+        "candidates": [
+          {
+            "entity_id": "Q4640929",
+            "matched_name": "58th Operations Group",
+            "name_similarity": 1.0,
+            "authority": 0.0,
+            "in_page_pool": true
+          },
+          {
+            "entity_id": "Q4645443",
+            "matched_name": "8th Operations Group",
+            "name_similarity": 0.972972972972973,
+            "authority": 0.0,
+            "in_page_pool": false
+          },
+          {
+            "entity_id": "Q16056926",
+            "matched_name": "18th Operations Group",
+            "name_similarity": 0.9473684210526315,
+            "authority": 0.0,
+            "in_page_pool": false
+          },
+          {
+            "entity_id": "Q16057494",
+            "matched_name": "28th Operations Group",
+            "name_similarity": 0.9473684210526315,
+            "authority": 0.0,
+            "in_page_pool": false
+          },
+          {
+            "entity_id": "Q4638698",
+            "matched_name": "48th Operations Group",
+            "name_similarity": 0.9473684210526315,
+            "authority": 0.0,
+            "in_page_pool": false
+          }
+        ]
+      }
+    },
+    {
+      "change": "SUGGESTION_REMOVED",
+      "raw": {
+        "entity_group": "ORG",
+        "score": 0.9392918348312378,
+        "word": "Operations Group",
+        "start": 5,
+        "end": 21,
+        "Source": "58th Operations Group",
+        "Index": 53,
+        "Text": "58th Operations Group Factsheet",
+        "subtype": "ORG"
+      },
+      "before": {
+        "decision": "SUGGESTED",
+        "reason": "single candidate; name rule passed",
+        "suggested_qid": "Q4640929",
+        "suggested_label": "58th Operations Group",
+        "candidate_count": 1,
+        "authority_gap": null,
+        "candidates": [
+          {
+            "entity_id": "Q4640929",
+            "matched_name": "58th Operations Group",
+            "name_similarity": 0.8484848484848485,
+            "authority": 0.0,
+            "in_page_pool": null
+          }
+        ]
+      },
+      "after": {
+        "decision": "UNRESOLVED",
+        "reason": "name score or graph separation too weak",
+        "suggested_qid": null,
+        "suggested_label": null,
+        "candidate_count": 96,
+        "authority_gap": 0.0,
+        "candidates": [
+          {
+            "entity_id": "Q4633451",
+            "matched_name": "2d Operations Group",
+            "name_similarity": 0.9032258064516129,
+            "authority": 0.0,
+            "in_page_pool": false
+          },
+          {
+            "entity_id": "Q4636595",
+            "matched_name": "3d Operations Group",
+            "name_similarity": 0.9032258064516129,
+            "authority": 0.0,
+            "in_page_pool": false
+          },
+          {
+            "entity_id": "Q16056254",
+            "matched_name": "22d Operations Group",
+            "name_similarity": 0.875,
+            "authority": 0.0,
+            "in_page_pool": false
+          },
+          {
+            "entity_id": "Q4596534",
+            "matched_name": "1st Operations Group",
+            "name_similarity": 0.875,
+            "authority": 0.0,
+            "in_page_pool": false
+          },
+          {
+            "entity_id": "Q4635228",
+            "matched_name": "33d Operations Group",
+            "name_similarity": 0.875,
+            "authority": 0.0,
+            "in_page_pool": false
+          }
+        ]
+      }
+    },
+    {
+      "change": "CHANGED_SUGGESTION",
+      "raw": {
+        "entity_group": "ORG",
+        "score": 0.9235516786575317,
+        "word": "8th Fleet",
+        "start": 4,
+        "end": 13,
+        "Source": "8th Fleet (Imperial Japanese Navy)",
+        "Index": 0,
+        "Text": "The 8th Fleet (第八艦隊, Dai-hachi Kantai) was a fleet of the Imperial Japanese Navy (IJN) established during World War II.",
+        "subtype": "ORG"
+      },
+      "before": {
+        "decision": "SUGGESTED",
+        "reason": "single candidate; name rule passed",
+        "suggested_qid": "Q4645359",
+        "suggested_label": "8th Fleet",
+        "candidate_count": 1,
+        "authority_gap": null,
+        "candidates": [
+          {
+            "entity_id": "Q4645359",
+            "matched_name": "8th Fleet",
+            "name_similarity": 1.0,
+            "authority": 0.0,
+            "in_page_pool": null
+          }
+        ]
+      },
+      "after": {
+        "decision": "SUGGESTED",
+        "reason": "graph winner; name and gap rules passed",
+        "suggested_qid": "Q4644033",
+        "suggested_label": "7th Fleet",
+        "candidate_count": 6,
+        "authority_gap": 0.6766123214105292,
+        "candidates": [
+          {
+            "entity_id": "Q4644033",
+            "matched_name": "7th Fleet",
+            "name_similarity": 0.8571428571428571,
+            "authority": 0.0003821581832265585,
+            "in_page_pool": false
+          },
+          {
+            "entity_id": "Q4639280",
+            "matched_name": "4th Fleet",
+            "name_similarity": 0.8571428571428571,
+            "authority": 0.0001235852477276064,
+            "in_page_pool": false
+          },
+          {
+            "entity_id": "Q4641306",
+            "matched_name": "5th Fleet",
+            "name_similarity": 0.8571428571428571,
+            "authority": 0.0001235852477276064,
+            "in_page_pool": false
+          },
+          {
+            "entity_id": "Q4645359",
+            "matched_name": "8th Fleet",
+            "name_similarity": 1.0,
+            "authority": 0.0,
+            "in_page_pool": true
+          },
+          {
+            "entity_id": "Q11602409",
+            "matched_name": "6th Fleet",
+            "name_similarity": 0.8571428571428571,
+            "authority": 0.0,
+            "in_page_pool": false
+          }
+        ]
+      }
+    },
+    {
+      "change": "CHANGED_SUGGESTION",
+      "raw": {
+        "entity_group": "ORG",
+        "score": 0.9865835905075073,
+        "word": "8th Fleet",
+        "start": 4,
+        "end": 13,
+        "Source": "8th Fleet (Imperial Japanese Navy)",
+        "Index": 1,
+        "Text": "The 8th Fleet was established on 14 July 1942 and was given the operational title of Outer South Seas Force, which reflected its mission of guarding conquests in the South Pacific. In this respect, it essentially replaced the 4th Fleet, which was then given the operational title of Inner South Seas Force, and was primarily tasked with defending the Mandates. Vice Admiral Gunichi Mikawa was appointed as the first commander of the 8th Fleet.",
+        "subtype": "ORG"
+      },
+      "before": {
+        "decision": "SUGGESTED",
+        "reason": "single candidate; name rule passed",
+        "suggested_qid": "Q4645359",
+        "suggested_label": "8th Fleet",
+        "candidate_count": 1,
+        "authority_gap": null,
+        "candidates": [
+          {
+            "entity_id": "Q4645359",
+            "matched_name": "8th Fleet",
+            "name_similarity": 1.0,
+            "authority": 0.0,
+            "in_page_pool": null
+          }
+        ]
+      },
+      "after": {
+        "decision": "SUGGESTED",
+        "reason": "graph winner; name and gap rules passed",
+        "suggested_qid": "Q4644033",
+        "suggested_label": "7th Fleet",
+        "candidate_count": 6,
+        "authority_gap": 1.0,
+        "candidates": [
+          {
+            "entity_id": "Q4644033",
+            "matched_name": "7th Fleet",
+            "name_similarity": 0.8571428571428571,
+            "authority": 0.005002496112926352,
+            "in_page_pool": false
+          },
+          {
+            "entity_id": "Q4645359",
+            "matched_name": "8th Fleet",
+            "name_similarity": 1.0,
+            "authority": 0.0,
+            "in_page_pool": true
+          },
+          {
+            "entity_id": "Q11602409",
+            "matched_name": "6th Fleet",
+            "name_similarity": 0.8571428571428571,
+            "authority": 0.0,
+            "in_page_pool": false
+          },
+          {
+            "entity_id": "Q4639280",
+            "matched_name": "4th Fleet",
+            "name_similarity": 0.8571428571428571,
+            "authority": 0.0,
+            "in_page_pool": false
+          },
+          {
+            "entity_id": "Q4641306",
+            "matched_name": "5th Fleet",
+            "name_similarity": 0.8571428571428571,
+            "authority": 0.0,
+            "in_page_pool": false
+          }
+        ]
+      }
+    },
+    {
+      "change": "CHANGED_SUGGESTION",
+      "raw": {
+        "entity_group": "ORG",
+        "score": 0.9782006740570068,
+        "word": "4th Fleet",
+        "start": 226,
+        "end": 235,
+        "Source": "8th Fleet (Imperial Japanese Navy)",
+        "Index": 1,
+        "Text": "The 8th Fleet was established on 14 July 1942 and was given the operational title of Outer South Seas Force, which reflected its mission of guarding conquests in the South Pacific. In this respect, it essentially replaced the 4th Fleet, which was then given the operational title of Inner South Seas Force, and was primarily tasked with defending the Mandates. Vice Admiral Gunichi Mikawa was appointed as the first commander of the 8th Fleet.",
+        "subtype": "ORG"
+      },
+      "before": {
+        "decision": "SUGGESTED",
+        "reason": "single candidate; name rule passed",
+        "suggested_qid": "Q4645359",
+        "suggested_label": "8th Fleet",
+        "candidate_count": 1,
+        "authority_gap": null,
+        "candidates": [
+          {
+            "entity_id": "Q4645359",
+            "matched_name": "8th Fleet",
+            "name_similarity": 0.8571428571428571,
+            "authority": 0.0,
+            "in_page_pool": null
+          }
+        ]
+      },
+      "after": {
+        "decision": "SUGGESTED",
+        "reason": "graph winner; name and gap rules passed",
+        "suggested_qid": "Q4644033",
+        "suggested_label": "7th Fleet",
+        "candidate_count": 6,
+        "authority_gap": 1.0,
+        "candidates": [
+          {
+            "entity_id": "Q4644033",
+            "matched_name": "7th Fleet",
+            "name_similarity": 0.8571428571428571,
+            "authority": 0.005002496112926352,
+            "in_page_pool": false
+          },
+          {
+            "entity_id": "Q4639280",
+            "matched_name": "4th Fleet",
+            "name_similarity": 1.0,
+            "authority": 0.0,
+            "in_page_pool": false
+          },
+          {
+            "entity_id": "Q11602409",
+            "matched_name": "6th Fleet",
+            "name_similarity": 0.8571428571428571,
+            "authority": 0.0,
+            "in_page_pool": false
+          },
+          {
+            "entity_id": "Q4641306",
+            "matched_name": "5th Fleet",
+            "name_similarity": 0.8571428571428571,
+            "authority": 0.0,
+            "in_page_pool": false
+          },
+          {
+            "entity_id": "Q4645359",
+            "matched_name": "8th Fleet",
+            "name_similarity": 0.8571428571428571,
+            "authority": 0.0,
+            "in_page_pool": true
+          }
+        ]
+      }
+    },
+    {
+      "change": "CHANGED_SUGGESTION",
+      "raw": {
+        "entity_group": "ORG",
+        "score": 0.9657622575759888,
+        "word": "8th Fleet",
+        "start": 433,
+        "end": 442,
+        "Source": "8th Fleet (Imperial Japanese Navy)",
+        "Index": 1,
+        "Text": "The 8th Fleet was established on 14 July 1942 and was given the operational title of Outer South Seas Force, which reflected its mission of guarding conquests in the South Pacific. In this respect, it essentially replaced the 4th Fleet, which was then given the operational title of Inner South Seas Force, and was primarily tasked with defending the Mandates. Vice Admiral Gunichi Mikawa was appointed as the first commander of the 8th Fleet.",
+        "subtype": "ORG"
+      },
+      "before": {
+        "decision": "SUGGESTED",
+        "reason": "single candidate; name rule passed",
+        "suggested_qid": "Q4645359",
+        "suggested_label": "8th Fleet",
+        "candidate_count": 1,
+        "authority_gap": null,
+        "candidates": [
+          {
+            "entity_id": "Q4645359",
+            "matched_name": "8th Fleet",
+            "name_similarity": 1.0,
+            "authority": 0.0,
+            "in_page_pool": null
+          }
+        ]
+      },
+      "after": {
+        "decision": "SUGGESTED",
+        "reason": "graph winner; name and gap rules passed",
+        "suggested_qid": "Q4644033",
+        "suggested_label": "7th Fleet",
+        "candidate_count": 6,
+        "authority_gap": 1.0,
+        "candidates": [
+          {
+            "entity_id": "Q4644033",
+            "matched_name": "7th Fleet",
+            "name_similarity": 0.8571428571428571,
+            "authority": 0.005002496112926352,
+            "in_page_pool": false
+          },
+          {
+            "entity_id": "Q4645359",
+            "matched_name": "8th Fleet",
+            "name_similarity": 1.0,
+            "authority": 0.0,
+            "in_page_pool": true
+          },
+          {
+            "entity_id": "Q11602409",
+            "matched_name": "6th Fleet",
+            "name_similarity": 0.8571428571428571,
+            "authority": 0.0,
+            "in_page_pool": false
+          },
+          {
+            "entity_id": "Q4639280",
+            "matched_name": "4th Fleet",
+            "name_similarity": 0.8571428571428571,
+            "authority": 0.0,
+            "in_page_pool": false
+          },
+          {
+            "entity_id": "Q4641306",
+            "matched_name": "5th Fleet",
+            "name_similarity": 0.8571428571428571,
+            "authority": 0.0,
+            "in_page_pool": false
+          }
+        ]
+      }
+    },
+    {
+      "change": "CHANGED_SUGGESTION",
+      "raw": {
+        "entity_group": "ORG",
+        "score": 0.9774908423423767,
+        "word": "8th Fleet",
+        "start": 15,
+        "end": 24,
+        "Source": "8th Fleet (Imperial Japanese Navy)",
+        "Index": 2,
+        "Text": "Initially, the 8th Fleet included the Takao-class heavy cruiser Chōkai as its flagship, Cruiser Division 6 (CruDiv6) under Rear Admiral Aritomo Gotō with the entire Furutaka and Aoba classes of four older and somewhat smaller heavy cruisers (Aoba, Kinugasa, Kako and Furutaka), Cruiser Division 18 (CruDiv18) under Rear Admiral Mitsuharu Matsuyama with three old light cruisers (Tenryū, Tatsuta and Yūbari), eight old destroyers, and Submarine Squadron 7 (SubDiv7) with five submarines. In addition, the minelayer Tsugaru, the seaplane tender Kiyokawa Maru, and the 2nd Air Group were initially assigned to the 8th Fleet, where the latter was soon transferred to the 25th Air Flotilla of 11th Air Fleet in August 1942.",
+        "subtype": "ORG"
+      },
+      "before": {
+        "decision": "SUGGESTED",
+        "reason": "single candidate; name rule passed",
+        "suggested_qid": "Q4645359",
+        "suggested_label": "8th Fleet",
+        "candidate_count": 1,
+        "authority_gap": null,
+        "candidates": [
+          {
+            "entity_id": "Q4645359",
+            "matched_name": "8th Fleet",
+            "name_similarity": 1.0,
+            "authority": 0.01984498578554486,
+            "in_page_pool": null
+          }
+        ]
+      },
+      "after": {
+        "decision": "SUGGESTED",
+        "reason": "graph winner; name and gap rules passed",
+        "suggested_qid": "Q4639280",
+        "suggested_label": "4th Fleet",
+        "candidate_count": 6,
+        "authority_gap": 0.2755457443140707,
+        "candidates": [
+          {
+            "entity_id": "Q4639280",
+            "matched_name": "4th Fleet",
+            "name_similarity": 0.8571428571428571,
+            "authority": 0.004899418033154645,
+            "in_page_pool": false
+          },
+          {
+            "entity_id": "Q4645359",
+            "matched_name": "8th Fleet",
+            "name_similarity": 1.0,
+            "authority": 0.003549404244503268,
+            "in_page_pool": true
+          },
+          {
+            "entity_id": "Q4641306",
+            "matched_name": "5th Fleet",
+            "name_similarity": 0.8571428571428571,
+            "authority": 0.003053269597114111,
+            "in_page_pool": false
+          },
+          {
+            "entity_id": "Q4644033",
+            "matched_name": "7th Fleet",
+            "name_similarity": 0.8571428571428571,
+            "authority": 0.0028722484157982465,
+            "in_page_pool": false
+          },
+          {
+            "entity_id": "Q11602409",
+            "matched_name": "6th Fleet",
+            "name_similarity": 0.8571428571428571,
+            "authority": 0.0,
+            "in_page_pool": false
+          }
+        ]
+      }
+    },
+    {
+      "change": "SUGGESTION_REMOVED",
+      "raw": {
+        "entity_group": "ORG",
+        "score": 0.9928131103515625,
+        "word": "2nd Air Group",
+        "start": 566,
+        "end": 579,
+        "Source": "8th Fleet (Imperial Japanese Navy)",
+        "Index": 2,
+        "Text": "Initially, the 8th Fleet included the Takao-class heavy cruiser Chōkai as its flagship, Cruiser Division 6 (CruDiv6) under Rear Admiral Aritomo Gotō with the entire Furutaka and Aoba classes of four older and somewhat smaller heavy cruisers (Aoba, Kinugasa, Kako and Furutaka), Cruiser Division 18 (CruDiv18) under Rear Admiral Mitsuharu Matsuyama with three old light cruisers (Tenryū, Tatsuta and Yūbari), eight old destroyers, and Submarine Squadron 7 (SubDiv7) with five submarines. In addition, the minelayer Tsugaru, the seaplane tender Kiyokawa Maru, and the 2nd Air Group were initially assigned to the 8th Fleet, where the latter was soon transferred to the 25th Air Flotilla of 11th Air Fleet in August 1942.",
+        "subtype": "ORG"
+      },
+      "before": {
+        "decision": "SUGGESTED",
+        "reason": "single candidate; name rule passed",
+        "suggested_qid": "Q11602331",
+        "suggested_label": "2nd Air Group",
+        "candidate_count": 1,
+        "authority_gap": null,
+        "candidates": [
+          {
+            "entity_id": "Q11602331",
+            "matched_name": "2nd Air Group",
+            "name_similarity": 1.0,
+            "authority": 0.0,
+            "in_page_pool": null
+          }
+        ]
+      },
+      "after": {
+        "decision": "UNRESOLVED",
+        "reason": "name score or graph separation too weak",
+        "suggested_qid": null,
+        "suggested_label": null,
+        "candidate_count": 2,
+        "authority_gap": 0.0,
+        "candidates": [
+          {
+            "entity_id": "Q11602331",
+            "matched_name": "2nd Air Group",
+            "name_similarity": 1.0,
+            "authority": 0.0,
+            "in_page_pool": true
+          },
+          {
+            "entity_id": "Q11602213",
+            "matched_name": "3rd Air Group",
+            "name_similarity": 0.8181818181818182,
+            "authority": 0.0,
+            "in_page_pool": false
+          }
+        ]
+      }
+    },
+    {
+      "change": "SUGGESTION_REMOVED",
+      "raw": {
+        "entity_group": "ORG",
+        "score": 0.9971286654472351,
+        "word": "8th Fleet",
+        "start": 157,
+        "end": 166,
+        "Source": "8th Fleet (Imperial Japanese Navy)",
+        "Index": 6,
+        "Text": "Since regular resupply runs by destroyers only could not deliver heavy equipment (such as artillery) to the Imperial Japanese Army (IJA) on Guadalcanal, the 8th Fleet's Reinforcement Unit started using seaplane tenders Chitose and Nisshin as high-speed transports. To cover the unloading of supplies by the convoy on 11 October, the 8th Fleet assigned CruDiv6 with heavy cruisers Aoba, Kinugasa and Furutaka and two destroyers under Rear Admiral Gotō to bombard the Allied position on Guadalcanal. On the night of 11/12 October they were ambushed by two heavy cruisers, two light cruisers and five destroyers under Rear Admiral Norman Scott, which resulted in the Battle of Cape Esperance. The battle accounted for the loss of Furutaka and one Japanese destroyer, in exchange for the loss of one US destroyer. Furthermore, Rear Admiral Gotō was also mortally wounded in the battle. Nevertheless, the convoy managed to successfully unload the supplies and equipment on Guadalcanal. Two of its destroyers, while retreating from Guadalcanal, were sunk by air attacks the following day.  Another major resupply run was conducted on the night of 14/15 October by Nisshin, while Vice Admiral Mikawa with Chōkai and Kinugasa shelled Allied position on Guadalcanal to cover the cargo unloading process.",
+        "subtype": "ORG"
+      },
+      "before": {
+        "decision": "SUGGESTED",
+        "reason": "single candidate; name rule passed",
+        "suggested_qid": "Q4645359",
+        "suggested_label": "8th Fleet",
+        "candidate_count": 1,
+        "authority_gap": null,
+        "candidates": [
+          {
+            "entity_id": "Q4645359",
+            "matched_name": "8th Fleet",
+            "name_similarity": 1.0,
+            "authority": 0.0,
+            "in_page_pool": null
+          }
+        ]
+      },
+      "after": {
+        "decision": "UNRESOLVED",
+        "reason": "name score or graph separation too weak",
+        "suggested_qid": null,
+        "suggested_label": null,
+        "candidate_count": 6,
+        "authority_gap": 0.07302029441200199,
+        "candidates": [
+          {
+            "entity_id": "Q4644033",
+            "matched_name": "7th Fleet",
+            "name_similarity": 0.8571428571428571,
+            "authority": 0.00034794132804862315,
+            "in_page_pool": false
+          },
+          {
+            "entity_id": "Q4639280",
+            "matched_name": "4th Fleet",
+            "name_similarity": 0.8571428571428571,
+            "authority": 0.0003225345498364097,
+            "in_page_pool": false
+          },
+          {
+            "entity_id": "Q4641306",
+            "matched_name": "5th Fleet",
+            "name_similarity": 0.8571428571428571,
+            "authority": 0.0003225345498364097,
+            "in_page_pool": false
+          },
+          {
+            "entity_id": "Q4645359",
+            "matched_name": "8th Fleet",
+            "name_similarity": 1.0,
+            "authority": 0.0,
+            "in_page_pool": true
+          },
+          {
+            "entity_id": "Q11602409",
+            "matched_name": "6th Fleet",
+            "name_similarity": 0.8571428571428571,
+            "authority": 0.0,
+            "in_page_pool": false
+          }
+        ]
+      }
+    }
+  ],
+  "date_risk_examples": [
+    {
+      "raw": {
+        "entity_group": "DATE",
+        "score": 0.9625943303108215,
+        "word": "1939",
+        "start": 553,
+        "end": 557,
+        "Source": "1939–1940 Winter Offensive",
+        "Index": 2,
+        "Text": "The Chinese had repulsed two Japanese offensives in the summer at the Battle of Suixian-Zaoyang and in fall at the 1st Battle of Changsha. They believed that the Japanese forces were now too dissipated to take and hold new territory and would not be able to launch large offensives unless they received more reinforcements. However, by defending interior lines and with control of the lines of communication, they could still shift forces and launch local offensives to damage Chinese forces or mop up guerrillas in the rear areas. Additionally, during 1939, the Japanese were replacing many of their large four-regiment square Divisions with the smaller three regiment triangular Divisions and weak Independent Mixed Brigades. This weakening of forces encouraged the Chinese to plan a large offensive to exploit that fact.",
+        "subtype": "date"
+      },
+      "before": {
+        "decision": "UNRESOLVED",
+        "reason": "no candidate in page pool",
+        "suggested_qid": null,
+        "suggested_label": null,
+        "candidate_count": 0,
+        "authority_gap": null,
+        "candidates": []
+      },
+      "after": {
+        "decision": "SUGGESTED",
+        "reason": "graph winner; name and gap rules passed",
+        "suggested_qid": "Q22082155",
+        "suggested_label": "Battle of the Bell Islands",
+        "candidate_count": 3,
+        "authority_gap": 1.0,
+        "candidates": [
+          {
+            "entity_id": "Q22082155",
+            "matched_name": "1939",
+            "name_similarity": 1.0,
+            "authority": 0.002740596696593061,
+            "in_page_pool": false
+          },
+          {
+            "entity_id": "Q2373703",
+            "matched_name": "M1939",
+            "name_similarity": 0.8,
+            "authority": 0.0,
+            "in_page_pool": false
+          },
+          {
+            "entity_id": "Q701703",
+            "matched_name": "M1939",
+            "name_similarity": 0.8,
+            "authority": 0.0,
+            "in_page_pool": false
+          }
+        ]
+      }
+    },
+    {
+      "raw": {
+        "entity_group": "DATE",
+        "score": 0.878855288028717,
+        "word": "1938",
+        "start": 312,
+        "end": 316,
+        "Source": "1939–1940 Winter Offensive",
+        "Index": 7,
+        "Text": "In 1937, the Chinese government picked up intelligence that the Japanese planned to install a puppet Hui Muslim regime around Suiyuan and Ningxia, and had sent agents to the region. The Middlesboro Daily News ran an article by Owen Lattimore which reported on Japan's planned offensive into the Muslim region in 1938, which predicted that the Japanese would suffer a crushing defeat at the hands of the Muslims.",
+        "subtype": "date"
+      },
+      "before": {
+        "decision": "UNRESOLVED",
+        "reason": "no candidate in page pool",
+        "suggested_qid": null,
+        "suggested_label": null,
+        "candidate_count": 0,
+        "authority_gap": null,
+        "candidates": []
+      },
+      "after": {
+        "decision": "SUGGESTED",
+        "reason": "single candidate; name rule passed",
+        "suggested_qid": "Q2629571",
+        "suggested_label": "76 mm mountain gun M1938",
+        "candidate_count": 1,
+        "authority_gap": null,
+        "candidates": [
+          {
+            "entity_id": "Q2629571",
+            "matched_name": "M1938",
+            "name_similarity": 0.8,
+            "authority": 0.0,
+            "in_page_pool": false
+          }
+        ]
+      }
+    },
+    {
+      "raw": {
+        "entity_group": "DATE",
+        "score": 0.6203768253326416,
+        "word": "1941",
+        "start": 41,
+        "end": 45,
+        "Source": "1943 Cairo Declaration",
+        "Index": 1,
+        "Text": "The declaration developed ideas from the 1941 Atlantic Charter, which was issued by the Allies of World War II to set goals for the post-war order. The Cairo Communiqué was broadcast through radio on 1 December 1943.",
+        "subtype": "date"
+      },
+      "before": {
+        "decision": "UNRESOLVED",
+        "reason": "no candidate in page pool",
+        "suggested_qid": null,
+        "suggested_label": null,
+        "candidate_count": 0,
+        "authority_gap": null,
+        "candidates": []
+      },
+      "after": {
+        "decision": "SUGGESTED",
+        "reason": "graph winner; name and gap rules passed",
+        "suggested_qid": "Q2008158",
+        "suggested_label": "Moonsund Landing Operation",
+        "candidate_count": 2,
+        "authority_gap": 0.6246824518846354,
+        "candidates": [
+          {
+            "entity_id": "Q2008158",
+            "matched_name": "1941",
+            "name_similarity": 1.0,
+            "authority": 0.00014662284790895402,
+            "in_page_pool": false
+          },
+          {
+            "entity_id": "Q207482",
+            "matched_name": "1941",
+            "name_similarity": 1.0,
+            "authority": 5.503012777488063e-05,
+            "in_page_pool": false
+          }
+        ]
+      }
+    },
+    {
+      "raw": {
+        "entity_group": "DATE",
+        "score": 0.9503827095031738,
+        "word": "2000",
+        "start": 3,
+        "end": 7,
+        "Source": "Air raids on Darwin, 19 February 1942",
+        "Index": 33,
+        "Text": "In 2000, Darwin historian Peter Forrest, who spoke to survivors and researched the attacks for an unpublished book, said (as paraphrased by a journalist), \"the first Japanese air raids on Darwin probably killed more than double the official figure of 243\", but by 2002 had lowered his estimate to \"anything up to double that 243\".",
+        "subtype": "date"
+      },
+      "before": {
+        "decision": "UNRESOLVED",
+        "reason": "no candidate in page pool",
+        "suggested_qid": null,
+        "suggested_label": null,
+        "candidate_count": 0,
+        "authority_gap": null,
+        "candidates": []
+      },
+      "after": {
+        "decision": "SUGGESTED",
+        "reason": "single candidate; name rule passed",
+        "suggested_qid": "Q663695",
+        "suggested_label": "R-2000 Twin Wasp",
+        "candidate_count": 1,
+        "authority_gap": null,
+        "candidates": [
+          {
+            "entity_id": "Q663695",
+            "matched_name": "R2000",
+            "name_similarity": 0.8,
+            "authority": 0.0,
+            "in_page_pool": false
+          }
+        ]
+      }
+    }
+  ]
+}
