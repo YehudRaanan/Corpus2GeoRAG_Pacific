@@ -1,0 +1,22 @@
+{
+  "status": "COMPLETED",
+  "method": "wikipedia-source-title-redirects-v0.1.0",
+  "completed_utc": "2026-10-18T13:05:32.168600+00:00",
+  "inputs_sha256": {
+    "Data\\external\\daniel_20261017.parquet": "dcd51dfa237b63378279ced4f9739a45d8cf8ce3991579f20848295448f83f16",
+    "GG_Data\\entity_resolution\\runs\\first_candidates_v0.1.0_20261018\\page_context.jsonl.gz": "dac74b624f2988a22795e1ae41d0080240161e6a1f150ccf9c4afb8eb15b75d8",
+    "GG_Data\\entity_resolution\\runs\\all_types_notebook_v0.1.0_20261018\\mapped_graph.jsonl.gz": "946a52d82f1355654138024a70e11c35d5cbc5a6366f0dba00e86d37e3e62045",
+    "Data\\external\\wwii_task_force\\wikidata_qids.txt": "6dcb15ab92d3e91c5dab350b361c2e7a4052cf90eaf01602dbd425af75e27e85",
+    "GG_Data\\entity_resolution\\resolve_source_pages.py": "9a43e37c4900f5ae90435650ecc7b83bbc368c98c587030dace09799c321dd3f",
+    "scripts\\fetch_wwii_task_force.py": "e5fa8b09e359134567f594aeae06f90d841529983688e3cb7ba5ba4edfa4e890"
+  },
+  "outputs_sha256": {
+    "page_map.json": "6e5ccfc908048b26801460bb749b4295e3ed7fd834229602ed9b47fb0b473441",
+    "summary.json": "eee2468ebbf9e0608c21cb91f3ee0dcd970fd4ff2b4f09552fca483d798b2af5",
+    "api_responses.jsonl": "c6f87eeb6c6793e470459dd90ac8f8671871e230d3417674b004d20f41fd9e9f"
+  },
+  "verification": {
+    "all_sources_accounted_for": true,
+    "inputs_unchanged": true
+  }
+}

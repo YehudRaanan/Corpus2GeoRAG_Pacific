@@ -1,5 +1,28 @@
 # Entity matching runs
 
+## Source-page identity lookup
+
+**Completed:** [source-page lookup report](SOURCE_PAGE_LOOKUP_2026-10-18.md).
+The live Wikipedia lookup resolved 424 of Daniel's 428 source titles, compared
+with 239 in the frozen reference join. This is a separate page map; it has not
+been applied to the completed entity-matching run.
+
+```powershell
+python -m pytest -q GG_Data/entity_resolution/test_resolve_source_pages.py
+python GG_Data/entity_resolution/resolve_source_pages.py --output GG_Data/entity_resolution/runs/source_pages_v0.1.0_20261018
+```
+
+Use a new output directory for another lookup. The saved API responses provide
+the original title normalization, redirects, page IDs, Wikidata IDs, and lookup
+times. Missing pages, disambiguation pages, and identity conflicts remain
+unresolved. These are current page identities, not proof of the page revision
+used for extraction. Graph coverage is checked separately.
+
+**Open follow-up with Daniel:** ask for the source URL, Wikipedia page ID,
+language/site, and exact revision ID (or permanent revision URL) in future
+exports. Keep `Source` and `Index` for backward compatibility. This request is
+recorded for later; no message has been sent.
+
 ## One-time automatic matching of all Daniel's rows
 
 **Completed:** [all-type run report](ALL_TYPES_RUN_REPORT_2026-10-18.md).

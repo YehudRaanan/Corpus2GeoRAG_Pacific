@@ -1,0 +1,21 @@
+{
+  "source_pages": 428,
+  "input_mentions": 309864,
+  "previously_resolved_pages": 239,
+  "statuses": {
+    "RESOLVED": 424,
+    "MISSING_OR_INVALID_PAGE": 4
+  },
+  "resolved_mentions": 309096,
+  "newly_resolved_pages": 185,
+  "newly_resolved_mentions": 116876,
+  "newly_resolved_pages_with_saved_graph_neighbours": 114,
+  "resolved_pages_without_saved_graph_neighbours": 77,
+  "unresolved_sources": [
+    "BUROGU",
+    "Conscription in Japan",
+    "Gabriel Maurício Teixeira",
+    "Two Lords Incident"
+  ],
+  "scope": "Current Wikipedia page identity only; extraction revision is unknown. No entity matching rerun or graph expansion."
+}
