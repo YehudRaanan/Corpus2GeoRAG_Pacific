@@ -1,5 +1,12 @@
 # Entity matching runs
 
+## Full run moved to BigQuery — 18 October 2026
+
+[BigQuery run status, saved data, and resume command](BIGQUERY_RUN_2026-10-18.md).
+The GCP CLI worker replaces the delayed Wikidata API worker. All Daniel rows
+and accepted matching rules remain in scope. Query results are stored locally
+for reuse. Final full-data counts are not available yet.
+
 ## Full direct-Wikidata run — 18 October 2026
 
 [Run status and files](FULL_DIRECT_RUN_2026-10-18.md).

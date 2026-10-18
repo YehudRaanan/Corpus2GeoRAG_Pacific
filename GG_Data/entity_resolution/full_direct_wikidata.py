@@ -123,7 +123,7 @@ def update_report(output: Path, summary: dict) -> None:
         report.write_text(text.replace(marker, replacement, 1), encoding="utf-8")
 
 
-def run(output: Path) -> dict:
+def run(output: Path, api: LiveData | None = None) -> dict:
     output.mkdir(parents=True, exist_ok=True)
     if (output / "manifest.json").exists():
         manifest = read(output / "manifest.json")
@@ -135,7 +135,7 @@ def run(output: Path) -> dict:
     for row in rows:
         by_page[row["raw"]["Source"]].append(row)
     sources = sorted(by_page)
-    api = LiveData(Path.home() / ".cache/geoai_bilingual_pilot_20261018")
+    api = api or LiveData(Path.home() / ".cache/geoai_bilingual_pilot_20261018")
     metadata_path = output / "entity_metadata.json.gz"
     api.entities = read(
         metadata_path
@@ -346,11 +346,17 @@ def run(output: Path) -> dict:
         if number % 10000 == 0:
             progress("ALREADY_MATCHED", completed=number, total=len(rows))
     del index, cached
-    world_path = BASE / "fresh_wwii_names.json.gz"
-    assert (
-        digest(world_path)
-        == read(BASE / "run_manifest.json")["outputs"][world_path.name]
+    reference_path = output / "reference_manifest.json"
+    reference = read(reference_path) if reference_path.exists() else None
+    world_path = (
+        output / "world.json.gz" if reference else BASE / "fresh_wwii_names.json.gz"
     )
+    expected = (
+        reference["world_sha256"]
+        if reference
+        else read(BASE / "run_manifest.json")["outputs"][world_path.name]
+    )
+    assert digest(world_path) == expected
     world = read(world_path)
     world_index = NameIndex(sorted(world), world)
     cached = {}
@@ -510,6 +516,7 @@ def run(output: Path) -> dict:
             },
             "fresh_wwii_snapshot": str(world_path),
             "fresh_wwii_sha256": digest(world_path),
+            "reference": reference,
             "outputs": {
                 p.name: digest(p)
                 for p in output.iterdir()
@@ -519,7 +526,9 @@ def run(output: Path) -> dict:
             "limits": [
                 "Counts are not accuracy measurements. Existing trigram/type/homonym errors remain.",
                 "Only direct page hyperlinks and original Daniel-name Wikidata lookups; no independent name extraction.",
-                "The fresh same-day WWII snapshot is the agreed query population, not all Wikidata.",
+                "WWII membership uses the agreed same-day query population; names/types use the recorded BigQuery snapshot."
+                if reference
+                else "The fresh same-day WWII snapshot is the agreed query population, not all Wikidata.",
             ],
         },
     )

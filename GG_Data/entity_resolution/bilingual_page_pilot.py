@@ -17,6 +17,8 @@ import math
 import random
 import re
 import sys
+import tempfile
+import threading
 import time
 from collections import Counter
 from datetime import datetime, timezone
@@ -80,6 +82,9 @@ def digest(path: Path) -> str:
 class LiveData:
     """Single-client public requests, bounded retries, persistent response cache."""
 
+    _request_lock = threading.Lock()
+    _last_request = 0.0
+
     def __init__(self, cache: Path) -> None:
         self.cache = cache
         cache.mkdir(parents=True, exist_ok=True)
@@ -102,8 +107,11 @@ class LiveData:
             saved = read(path)
         else:
             for attempt in range(6):
-                time.sleep(max(0.0, 1.1 - (time.monotonic() - self.last_request)))
-                self.last_request = time.monotonic()
+                with LiveData._request_lock:
+                    time.sleep(
+                        max(0.0, 1.1 - (time.monotonic() - LiveData._last_request))
+                    )
+                    self.last_request = LiveData._last_request = time.monotonic()
                 try:
                     response = (
                         self.session.post(url, data=params, timeout=180)
@@ -147,7 +155,19 @@ class LiveData:
                         "retrieved_at": datetime.now(timezone.utc).isoformat(),
                         "data": payload,
                     }
-                    dump(path, saved)
+                    # Concurrent page collectors must never read a partial file.
+                    with tempfile.NamedTemporaryFile(
+                        dir=self.cache,
+                        prefix=".pending-",
+                        suffix=".json.gz",
+                        delete=False,
+                    ) as temporary:
+                        temporary_path = Path(temporary.name)
+                    try:
+                        dump(temporary_path, saved)
+                        temporary_path.replace(path)
+                    finally:
+                        temporary_path.unlink(missing_ok=True)
                     break
                 except (requests.RequestException, ValueError):
                     if attempt == 5:

@@ -1,6 +1,9 @@
 # Full Daniel direct-Wikidata run — 18 October 2026
 
-Status: **RUNNING**. Final counts are not available yet.
+Status: **SUPERSEDED** by the [BigQuery run](BIGQUERY_RUN_2026-10-18.md).
+The delayed API worker was stopped on user request to use the GCP CLI.
+Its completed page and response cache are preserved. The new run is separate;
+final full-data counts are not available yet.
 
 At 21:25 Israel time, collection had completed 1/428 source pages and Wikidata
 was returning `maxlag` (temporary server replication delay). Automatic retry
