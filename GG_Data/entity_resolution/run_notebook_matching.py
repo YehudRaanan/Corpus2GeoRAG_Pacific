@@ -6,6 +6,8 @@ With --page-map, rebuilds page pools using the saved Wikipedia identities and
 the same frozen graph and Wikidata snapshot. No live data is fetched.
 With --wide-search, trial the full saved name index and apply name/type
 eligibility before constructing the paragraph graph. Default rules stay fixed.
+With --metadata-supplement, require verified coverage of every mapped graph ID
+and add the completed reference without changing matching rules.
 """
 
 from __future__ import annotations
@@ -25,6 +27,7 @@ from typing import Any
 
 import networkx as nx
 import pandas as pd
+from complete_graph_reference import ids_hash
 from generate_candidates import (
     MAP_VERSION,
     NameIndex,
@@ -206,11 +209,60 @@ def pages_from_map(rows: list[dict], graph: nx.DiGraph) -> dict[str, dict]:
     return pages
 
 
+def load_supplement(path: Path, inputs: dict[str, str]) -> tuple[dict, dict]:
+    manifest_path = path.parent / "run_manifest.json"
+    manifest = json.loads(manifest_path.read_text(encoding="utf-8"))
+    if manifest["status"] != "COMPLETED" or not manifest.get("coverage_verified"):
+        raise ValueError("Graph reference supplement is incomplete")
+    if path.name != "entity_metadata.jsonl.gz":
+        raise ValueError("Expected verified supplement entity_metadata.jsonl.gz")
+    for name, info in manifest["outputs"].items():
+        if sha256(path.parent / name) != info["sha256"]:
+            raise ValueError(f"Changed reference supplement output: {name}")
+    for name, expected in manifest["inputs_sha256"].items():
+        if sha256(ROOT / name) != expected:
+            raise ValueError(f"Changed reference supplement input: {name}")
+        inputs[name] = expected
+    for item in (path, manifest_path):
+        inputs[item.relative_to(ROOT).as_posix()] = sha256(item)
+    rows = list(read_lines(path))
+    records = {r["entity_id"]: r for r in rows}
+    if len(records) != len(rows):
+        raise ValueError("Duplicate reference supplement ID")
+    return records, manifest
+
+
+def merge_graph_reference(
+    metadata: dict, supplement: dict, graph_ids: set[str], expected_ids_hash: str
+) -> dict:
+    if ids_hash(graph_ids) != expected_ids_hash or not supplement.keys() <= graph_ids:
+        raise ValueError("Reference supplement belongs to a different graph")
+    for qid, row in supplement.items():
+        if metadata.get(qid, {}).get("label"):
+            raise ValueError(f"Supplement would replace a frozen named entity: {qid}")
+        if row.get("metadata_status") not in {
+            "AVAILABLE",
+            "NO_ENGLISH_NAME",
+            "MISSING",
+        }:
+            raise ValueError(f"Unaccounted reference status: {qid}")
+    merged = {**metadata, **supplement}
+    if not graph_ids <= merged.keys():
+        raise ValueError("Graph reference coverage is incomplete")
+    return merged
+
+
 def run(
-    output: Path, page_map: Path | None = None, *, wide_search: bool = False
+    output: Path,
+    page_map: Path | None = None,
+    *,
+    wide_search: bool = False,
+    metadata_supplement: Path | None = None,
 ) -> None:
     if wide_search and page_map is None:
         raise ValueError("Wide search requires the verified source-page map")
+    if metadata_supplement is not None and not wide_search:
+        raise ValueError("Graph reference supplement requires wide search")
     baseline_manifest = json.loads((BASELINE / "run_manifest.json").read_text())
     if baseline_manifest["status"] != "COMPLETED":
         raise ValueError("The page/name cache is incomplete")
@@ -272,6 +324,16 @@ def run(
         mapped_pages = json.loads(page_map.read_text(encoding="utf-8"))
         parameters["page_identity_source"] = page_map.relative_to(ROOT).as_posix()
         parameters["metadata_source"] = "same frozen full Wikidata snapshot"
+    supplement, supplement_manifest = {}, None
+    if metadata_supplement is not None:
+        metadata_supplement = metadata_supplement.resolve()
+        supplement, supplement_manifest = load_supplement(metadata_supplement, inputs)
+        parameters.update(
+            candidate_scope="frozen English names plus completed mapped graph reference",
+            metadata_source=metadata_supplement.relative_to(ROOT).as_posix(),
+            graph_reference_coverage_required=True,
+        )
+    compression_level = 6 if supplement_manifest is not None else 1
     run_id = (
         "matching-"
         + hashlib.sha256(
@@ -318,6 +380,14 @@ def run(
             for field in ("label", "aliases", "direct_types"):
                 if entity.get(field) != metadata.get(qid, {}).get(field):
                     raise ValueError(f"Previously cached metadata changed: {qid}")
+        if supplement_manifest is not None:
+            metadata = merge_graph_reference(
+                metadata,
+                supplement,
+                set(graph),
+                supplement_manifest["graph_entity_ids_sha256"],
+            )
+            LOG.info("Verified reference coverage for all %d graph IDs", len(graph))
         with gzip.open(
             output / "page_context.jsonl.gz", "wt", encoding="utf-8"
         ) as stream:
@@ -345,11 +415,17 @@ def run(
     seen_ids, seen_rows = set(), set()
     pair_count = paragraph_count = graph_count = 0
     page_summaries = []
-    # Low gzip level keeps this one-time run fast and within the available disk space.
+    # Compress supplemented runs more strongly to limit their extra disk use.
     with gzip.open(
-        output / "mention_matches.jsonl.gz", "wt", encoding="utf-8", compresslevel=1
+        output / "mention_matches.jsonl.gz",
+        "wt",
+        encoding="utf-8",
+        compresslevel=compression_level,
     ) as matches, gzip.open(
-        output / "graph_contexts.jsonl.gz", "wt", encoding="utf-8", compresslevel=1
+        output / "graph_contexts.jsonl.gz",
+        "wt",
+        encoding="utf-8",
+        compresslevel=compression_level,
     ) as contexts:
         for number, (title, page_frame) in enumerate(
             frame.groupby("Source", sort=True), 1
@@ -618,6 +694,22 @@ def run(
         type_compatibility_validated=False,
         manually_selected_matches=0,
         new_entities_created=0,
+        reference_coverage=dict(
+            graph_ids=len(graph),
+            graph_ids_with_metadata=sum(
+                q in metadata and metadata[q].get("metadata_status") != "MISSING"
+                for q in graph
+            ),
+            graph_ids_with_english_names=sum(
+                bool(
+                    metadata.get(q, {}).get("label")
+                    or metadata.get(q, {}).get("aliases")
+                )
+                for q in graph
+            ),
+            graph_ids_without_reference_record=sorted(set(graph) - metadata.keys()),
+            supplement_used=supplement_manifest is not None,
+        ),
     )
     write_json(output / "summary.json", summary)
     write_json(
@@ -655,6 +747,11 @@ def main() -> None:
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--output", required=True, type=Path)
     parser.add_argument(
+        "--metadata-supplement",
+        type=Path,
+        help="Verified completed graph reference entity_metadata.jsonl.gz",
+    )
+    parser.add_argument(
         "--page-map", type=Path, help="Verified source-page lookup page_map.json"
     )
     parser.add_argument(
@@ -666,7 +763,12 @@ def main() -> None:
     output = args.output.resolve()
     output.mkdir(parents=True, exist_ok=False)
     logging.basicConfig(level=logging.INFO, format="%(asctime)s %(message)s")
-    run(output, args.page_map, wide_search=args.wide_search)
+    run(
+        output,
+        args.page_map,
+        wide_search=args.wide_search,
+        metadata_supplement=args.metadata_supplement,
+    )
 
 
 if __name__ == "__main__":

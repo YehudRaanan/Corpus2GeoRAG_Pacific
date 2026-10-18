@@ -4,9 +4,16 @@ import networkx as nx
 import numpy as np
 import pandas as pd
 import pytest
+from complete_graph_reference import ids_hash
 from generate_candidates import NameIndex
 from notebook_rules import decide, hits_steps
-from run_notebook_matching import PARAMETERS, context_graph, pages_from_map, select
+from run_notebook_matching import (
+    PARAMETERS,
+    context_graph,
+    merge_graph_reference,
+    pages_from_map,
+    select,
+)
 
 
 def test_all_groups_use_the_same_name_search_including_dates() -> None:
@@ -116,3 +123,31 @@ def test_wide_search_finds_outside_names_and_filters_before_ranking() -> None:
         {"entity_id": "Q2", "name_similarity": 1.0, "authority": 0.5},
     ]
     assert select(tied, eligible_first=True)["decision"] == "UNRESOLVED"
+
+
+def test_supplement_covers_every_graph_id_and_preserves_frozen_names() -> None:
+    old = {"Q1": {"label": "Frozen name", "aliases": []}}
+    extra = {
+        "Q2": {
+            "entity_id": "Q2",
+            "label": "Japan",
+            "aliases": [],
+            "metadata_status": "AVAILABLE",
+        }
+    }
+    graph_ids = {"Q1", "Q2"}
+    merged = merge_graph_reference(old, extra, graph_ids, ids_hash(graph_ids))
+    assert merged["Q1"] == old["Q1"]
+    assert (
+        NameIndex(list(merged), merged).find("Japan", "LOC", 0.8)[0]["entity_id"]
+        == "Q2"
+    )
+    assert old == {"Q1": {"label": "Frozen name", "aliases": []}}
+    with pytest.raises(ValueError, match="incomplete"):
+        merge_graph_reference(old, {}, graph_ids, ids_hash(graph_ids))
+    with pytest.raises(ValueError, match="different graph"):
+        merge_graph_reference(old, extra, graph_ids, ids_hash({"Q1"}))
+    with pytest.raises(ValueError, match="replace"):
+        merge_graph_reference(old, {"Q1": extra["Q2"]}, graph_ids, ids_hash(graph_ids))
+    with pytest.raises(ValueError, match="status"):
+        merge_graph_reference(old, {"Q2": {}}, graph_ids, ids_hash(graph_ids))
