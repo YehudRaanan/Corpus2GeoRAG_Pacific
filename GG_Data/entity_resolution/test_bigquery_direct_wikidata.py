@@ -113,3 +113,30 @@ def test_cli_load_uses_project_colon_dataset_table(tmp_path, monkeypatch):
     previous_calls = len(calls)
     assert other.upload_values(["日本", "O'Brien"], "name") == table
     assert len(calls) == previous_calls
+
+
+def test_incomplete_page_snapshot_stops_before_any_network(tmp_path, monkeypatch):
+    import bigquery_direct_wikidata as runner
+    from bilingual_page_pilot import digest
+    from full_direct_wikidata import save
+
+    source = tmp_path / "input"
+    source.write_bytes(b"pinned input")
+    snapshot = tmp_path / "snapshot"
+    snapshot.mkdir()
+    save(
+        snapshot / "page_snapshot_manifest.json",
+        {"input_sha256": digest(source), "files": {}},
+    )
+    monkeypatch.setattr(runner, "INPUT", source)
+    monkeypatch.setattr(runner, "input_rows", lambda: [{"raw": {"Source": "Example"}}])
+    monkeypatch.setattr(
+        runner, "BigQueryData", lambda *a: pytest.fail("Unexpected network client")
+    )
+    with pytest.raises(ValueError, match="every Daniel source"):
+        runner.execute(
+            "geo-hagai-ndvi",
+            tmp_path / "store",
+            tmp_path / "output",
+            page_snapshot=snapshot,
+        )

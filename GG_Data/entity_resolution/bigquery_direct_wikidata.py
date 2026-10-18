@@ -21,7 +21,7 @@ from pathlib import Path
 
 from bilingual_page_pilot import LiveData, article, digest, read
 from direct_wikidata_pilot import BASE, clean_name
-from full_direct_wikidata import DEFAULT_OUTPUT, input_rows, run, save
+from full_direct_wikidata import DEFAULT_OUTPUT, INPUT, input_rows, run, save
 
 LOG = logging.getLogger(__name__)
 STORE = Path.home() / ".cache/geoai_bigquery_20261018"
@@ -303,12 +303,38 @@ def collect_page(source: str, output: Path) -> dict:
     return saved
 
 
-def execute(project: str, store: Path, output: Path) -> dict:
+def execute(
+    project: str,
+    store: Path,
+    output: Path,
+    page_snapshot: Path | None = None,
+    api: BigQueryData | None = None,
+) -> dict:
     output.mkdir(parents=True, exist_ok=True)
     (output / "pages").mkdir(exist_ok=True)
     rows = input_rows()
     names = defaultdict(set)
     sources = sorted({r["raw"]["Source"] for r in rows})
+    page_reference = None
+    if page_snapshot is not None:
+        page_reference = read(page_snapshot / "page_snapshot_manifest.json")
+        if page_reference["input_sha256"] != digest(INPUT):
+            raise ValueError("Page snapshot has a different Daniel input")
+        expected_files = {
+            hashlib.sha256(source.encode()).hexdigest() + ".json.gz": source
+            for source in sources
+        }
+        if set(page_reference["files"]) != set(expected_files):
+            raise ValueError("Page snapshot does not cover every Daniel source")
+        for name, source in expected_files.items():
+            path = page_snapshot / "pages" / name
+            if digest(path) != page_reference["files"][name]:
+                raise ValueError("Page snapshot checksum differs")
+            saved = read(path)
+            if saved["source"] != source:
+                raise ValueError("Page snapshot source differs")
+            if path.resolve() != (output / "pages" / name).resolve():
+                save(output / "pages" / name, saved)
 
     def progress(stage: str, **counts: object) -> None:
         save(
@@ -327,7 +353,7 @@ def execute(project: str, store: Path, output: Path) -> dict:
             for name in {raw["word"].strip(), clean_name(raw["word"])}:
                 for variant in {name, name.casefold(), name.title()} - {""}:
                     names[variant].add(raw["Source"])
-    api = BigQueryData(project, store)
+    api = api or BigQueryData(project, store)
     progress("BIGQUERY_DANIEL_NAME_LOOKUPS", distinct_name_variants=len(names))
     lookup = api.name_lookups(sorted(names))
     save(output / "daniel_name_lookups.json.gz", lookup)
@@ -393,6 +419,7 @@ def execute(project: str, store: Path, output: Path) -> dict:
             "project": project,
             "table": TABLE,
             "table_snapshot": api.snapshot,
+            "page_snapshot": page_reference,
             "scope_source": str(old_world),
             "scope_sha256": digest(old_world),
             "wwii_scope_ids": len(world_ids),
@@ -411,10 +438,13 @@ if __name__ == "__main__":
     parser.add_argument("--project", required=True)
     parser.add_argument("--store", type=Path, default=STORE)
     parser.add_argument("--output", type=Path, default=OUTPUT)
+    parser.add_argument("--page-snapshot", type=Path)
     args = parser.parse_args()
     logging.basicConfig(level=logging.INFO, format="%(asctime)s %(message)s")
     try:
-        summary = execute(args.project, args.store, args.output)
+        summary = execute(
+            args.project, args.store, args.output, page_snapshot=args.page_snapshot
+        )
     except Exception as exc:
         args.output.mkdir(parents=True, exist_ok=True)
         save(

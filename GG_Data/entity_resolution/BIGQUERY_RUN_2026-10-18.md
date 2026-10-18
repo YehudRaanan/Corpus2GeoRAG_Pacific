@@ -1,7 +1,11 @@
 # Full Daniel matching with BigQuery — 18 October 2026
 
-Launch status: **RUNNING**. This is not a completed full-data result.
-The current state is in the output directory's `progress.json`.
+Status: **SUPERSEDED** by the [English/Japanese dump import](WIKIPEDIA_DUMP_RUN_2026-10-18.md).
+The page-API worker was stopped with 69 page checkpoints saved. Its Wikidata
+reference export completed and is reused by the replacement. The progress file
+in this earlier output directory is stale. No full-data result is complete yet.
+
+The sections below describe the earlier worker and its checkpoints.
 
 At 21:55 Israel time, the large reference query had completed on BigQuery and
 its results were being downloaded and saved. It covers 461,094 candidate QIDs
@@ -64,8 +68,9 @@ English/Japanese Wikimedia snapshots: page IDs/revisions, pagelinks and
 link targets, redirects, and page-to-QID references. The dump date and link
 scope must be recorded; a database link inventory must not be represented as
 the same evidence as links parsed from a particular saved article revision.
-This import is not implemented. The current worker still uses Wikipedia for
-page evidence, with cached successful responses and server retry delays.
+At that checkpoint the import was not implemented. It is now implemented and
+running; see the replacement report above. The earlier worker used Wikipedia
+for page evidence, with cached successful responses and server retry delays.
 
 Sources: [Google sample-table documentation](https://docs.cloud.google.com/bigquery/public-data),
 [Wikimedia dump inventory](https://meta.wikimedia.org/wiki/Data_dumps/What%27s_available_for_download),
@@ -99,7 +104,9 @@ not new extracted entities.
 Current run logs are next to the output directory with `.full.stdout.log` and
 `.full.stderr.log` suffixes. Earlier attempt logs are preserved separately.
 The process ID is in `process_id.txt`. Completed pages and successful
-BigQuery results survive a stopped process. To resume:
+BigQuery results survive a stopped process. The historical command below would
+restart the superseded page-API route; use the replacement report to resume the
+current dump route instead:
 
 ```powershell
 python -u GG_Data/entity_resolution/bigquery_direct_wikidata.py --project geo-hagai-ndvi

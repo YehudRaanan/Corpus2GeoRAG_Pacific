@@ -1,9 +1,18 @@
 # Entity matching runs
 
+## Wikipedia dump import into BigQuery — 18 October 2026
+
+[Current run, evidence scope, saved data, and resume command](WIKIPEDIA_DUMP_RUN_2026-10-18.md).
+English/Japanese bulk downloads are running. Automatic continuation imports the
+needed page links into BigQuery and then matches all 309,864 Daniel mentions.
+The first real Japanese redirect table is imported. The 80% matching rule stays
+fixed. Final full-data counts are not available yet.
+
 ## Full run moved to BigQuery — 18 October 2026
 
 [BigQuery run status, saved data, and resume command](BIGQUERY_RUN_2026-10-18.md).
-The GCP CLI worker replaces the delayed Wikidata API worker. All Daniel rows
+This earlier page-API worker is superseded by the dump import above. It replaced
+the delayed Wikidata API worker. All Daniel rows
 and accepted matching rules remain in scope. Query results are stored locally
 for reuse. Final full-data counts are not available yet.
 
