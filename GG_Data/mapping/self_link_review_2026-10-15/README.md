@@ -2,6 +2,21 @@
 
 Date: 2026-10-15
 
+## Status verified on 2026-10-18
+
+A read-only replay of all 700,890 saved assertions matched each of the 14 approved
+exclusions exactly once. It retained 700,876 assertions, including 31 self-links
+and the separate 77th Division successor statement to `Q16161496`. Every input
+source/predicate key had exactly one v2.1 mapping. The three exclusion tests, six
+mapping tests, and succession field parser check passed.
+
+This verifies the existing gate and mapping coverage. It does not add exclusions,
+repeat the historical source investigation, or resolve the pending occupation-zone,
+museum, or historical-phase identity questions below. The current CSV and graph
+still contain the excluded records. The next export must apply the gate before
+v2.1 translation and reverse views, then rebuild the graph from the new assertions.
+See the [mapping status and export sequence](../RELATION_MAPPING_SANITY_CHECK_2026-10-15.md#status-verified-on-2026-10-18).
+
 ## Decisions and verified scope
 
 - **Three EventKG assertions are confirmed erroneous inputs and approved for exclusion from future assertion outputs.** The exact source-record keys and content guards are in [ASSERTION_EXCLUSIONS.csv](../ASSERTION_EXCLUSIONS.csv). Original source records remain preserved.

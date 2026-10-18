@@ -10,6 +10,37 @@
 
 **Seed:** `20261015`
 
+## Status verified on 2026-10-18
+
+The WarSampo full-predicate key correction and all 75 additional mapping rules
+are complete. A read-only replay of the saved v1 assertion CSV confirmed:
+
+| Check | Result |
+|---|---:|
+| Unique v2.1 source/predicate keys | 1,595 |
+| Input assertions checked | 700,890 |
+| Missing / ambiguous mapping keys | 0 / 0 |
+| Approved source-record exclusions matched exactly once | 14 |
+| Assertions retained by the exclusion gate | 700,876 |
+| Retained self-links | 31 |
+| Separate 77th Division successor assertion retained | 1 |
+
+The six mapping regression tests, three assertion-exclusion tests, and succession
+field parser check passed on 2026-10-18. This replay checked mapping-key coverage
+and exclusion behavior; it did not repeat the earlier source-history research or
+the stratified semantic review. The direction-contract results below remain the
+saved 2026-10-15 audit results.
+
+**Pending:** apply the source-oriented exclusion gate, then the v2.1 mapping and
+directional contract, in the assertion/export pipeline. When replaying legacy v1
+rows, restore the original source endpoints before applying a new direction rule.
+Generate a new versioned assertion export before rebuilding the graph, then check
+mapping coverage, exclusions, and forward/reverse views on the new outputs.
+
+The saved assertion CSV and `wwii-agent-draft-v0.1.0` graph remain historical v1
+outputs containing the 14 excluded records. No filtered CSV or v2.1 graph was
+generated during this verification. See the [source exclusion status](self_link_review_2026-10-15/README.md).
+
 ## Conclusion
 
 All 75 missing source keys now have explicit mappings. Replay covers all

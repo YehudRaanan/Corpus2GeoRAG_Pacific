@@ -6,6 +6,26 @@
 
 **Scope:** Deterministic reverse-direction delivery for all effective Level 2 relations
 
+## Current status: 2026-10-18
+
+The completed catalog contains 1,595 source/predicate keys, 1,064 effective Level 2
+relations, and 2,097 direction lookup rows. The results and acceptance counts below
+describe the initial 2026-10-15 snapshot before the 75-key completion. Use
+[`RELATION_MAPPING_V2_1_SUMMARY.json`](../GG_Data/mapping/RELATION_MAPPING_V2_1_SUMMARY.json)
+for the current catalog counts and
+[`GG_Data/mapping/rebuild_relation_mapping.py`](../GG_Data/mapping/rebuild_relation_mapping.py)
+as the current build entry point.
+
+On 2026-10-18, a read-only replay found exactly one mapping for every one of the
+700,890 saved assertions, with zero missing or ambiguous keys. The approved
+exclusion gate retained 700,876 assertions after removing 14 exact source records.
+The six mapping tests, three exclusion tests, and succession parser check passed.
+
+The saved assertion CSV and draft graph still use v1. Export integration remains
+pending: apply the source-oriented exclusion gate before v2.1 normalization and
+directional views, write a new assertion export, then rebuild and validate the
+graph. See the [verification scope and next steps](../GG_Data/mapping/RELATION_MAPPING_SANITY_CHECK_2026-10-15.md#status-verified-on-2026-10-18).
+
 ## Decision
 
 The Agent does not calculate an inverse relation and does not interpret a reverse formula.

@@ -6,6 +6,17 @@
 
 **Relation map:** `relation-map-v2.1.0`
 
+**Implementation status (2026-10-18):** v2.1 is the target contract. The existing
+`wwii-agent-draft-v0.1.0` graph and assertion CSV still use v1; they have not been
+rebuilt with v2.1 or the 14 approved source-record exclusions. A read-only replay
+confirmed one v2.1 mapping for each of 700,890 assertions, zero missing or ambiguous
+keys, and 700,876 assertions retained by the exclusion gate. All nine regression
+tests and the succession field parser check passed. The next data-layer step is
+to apply the source-oriented gate before v2.1 normalization and reverse views,
+write a new assertion export, and rebuild and validate the graph. The draft counts
+in section 3 describe the existing v1 graph, not a completed v2.1 delivery. See the
+[verified mapping status](../mapping/RELATION_MAPPING_SANITY_CHECK_2026-10-15.md#status-verified-on-2026-10-18).
+
 **Purpose:** Ask the Agent developer to update the graph contract so it can use the mapped WWII data without changing or losing the meanings in the source data.
 
 ## 1. Request
