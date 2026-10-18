@@ -1,5 +1,11 @@
 # Full-reference, eligible-first matching trial
 
+**Historical trial with incomplete graph reference metadata.** The saved
+snapshot searched here lacked metadata for **92,461 of the graph's 144,990 IDs**.
+"Full-reference" in this report meant the full saved name snapshot, not full
+coverage of the graph's entities. See the separate
+[reference coverage correction](REFERENCE_COVERAGE_FIX_2026-10-18.md).
+
 Completed **18 October 2026, 17:07 Asia/Jerusalem**. Run ID:
 `matching-fa75bfff681bfb1f7ea9`.
 

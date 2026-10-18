@@ -1,5 +1,15 @@
 # Entity matching runs
 
+## Reference coverage correction
+
+**Reference completed; matching rerun in progress:** [reference coverage correction](REFERENCE_COVERAGE_FIX_2026-10-18.md).
+The earlier name cache lacked metadata for **92,461 of the graph's 144,990 IDs**.
+It also lacked English labels for another 427 graph IDs. The previous unresolved
+counts do not measure Daniel's extraction quality. A separate supplement has
+been verified: all 144,990 graph IDs have metadata, and 141,776 have English
+names. The other 3,214 explicitly lack English names in Wikidata. Every mention
+is being rerun with the same matching rules. Historical outputs remain preserved.
+
 ## Wider-search trial
 
 **Completed:** [full-reference trial report and examples](WIDE_SEARCH_RUN_REPORT_2026-10-18.md).
