@@ -6,7 +6,7 @@ import pandas as pd
 import pytest
 from generate_candidates import NameIndex
 from notebook_rules import decide, hits_steps
-from run_notebook_matching import PARAMETERS, context_graph, select
+from run_notebook_matching import PARAMETERS, context_graph, pages_from_map, select
 
 
 def test_all_groups_use_the_same_name_search_including_dates() -> None:
@@ -61,3 +61,33 @@ def test_automatic_rule_rejects_ties_and_weak_graph_winners() -> None:
     result = decide(separated, 0.8, 0.2)
     assert result["suggested_qid"] == "a"
     assert result["authority_gap"] == pytest.approx(0.75)
+
+
+def test_page_map_uses_both_graph_directions_and_preserves_missing_names() -> None:
+    graph = nx.DiGraph([("Q1", "Q2"), ("Q3", "Q1"), ("Q2", "Q4")])
+    resolved = {
+        "Source": "Alias",
+        "page_qid": "Q1",
+        "wikipedia_page_id": 10,
+        "status": "RESOLVED",
+    }
+    rows = [
+        resolved,
+        {
+            "Source": "No graph",
+            "page_qid": "Q9",
+            "wikipedia_page_id": 20,
+            "status": "RESOLVED",
+        },
+        {"Source": "Missing", "page_qid": None, "status": "MISSING_OR_INVALID_PAGE"},
+    ]
+    pages = pages_from_map(rows, graph)
+    assert {e["entity_id"] for e in pages["Alias"]["pool"]} == {"Q1", "Q2", "Q3"}
+    assert [e["entity_id"] for e in pages["No graph"]["pool"]] == ["Q9"]
+    assert pages["Missing"]["pool"] == []
+    assert NameIndex(["Q9"], {}).find("Example", "MISC", 0.35) == []
+    assert pages["Alias"]["resolution_evidence"] == resolved
+    with pytest.raises(ValueError, match="Duplicate"):
+        pages_from_map([resolved, resolved], graph)
+    with pytest.raises(ValueError, match="Inconsistent"):
+        pages_from_map([{**resolved, "page_qid": None}], graph)

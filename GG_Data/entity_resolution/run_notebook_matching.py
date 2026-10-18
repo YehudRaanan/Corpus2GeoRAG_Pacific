@@ -2,6 +2,8 @@
 
 Reuses the verified first run's page pools and saved names. Rebuilds the full
 directed graph, generates candidates for every type, then ranks each paragraph.
+With --page-map, rebuilds page pools using the saved Wikipedia identities and
+the same frozen graph and Wikidata snapshot. No live data is fetched.
 """
 
 from __future__ import annotations
@@ -13,6 +15,7 @@ import hashlib
 import json
 import logging
 import platform
+import re
 from collections import Counter, defaultdict
 from datetime import datetime, timezone
 from pathlib import Path
@@ -23,6 +26,7 @@ import pandas as pd
 from generate_candidates import (
     MAP_VERSION,
     NameIndex,
+    load_metadata,
     mention_id,
     normalize,
     similarity,
@@ -159,7 +163,39 @@ def select(candidates: list[dict[str, Any]]) -> dict:
     )
 
 
-def run(output: Path) -> None:
+def pages_from_map(rows: list[dict], graph: nx.DiGraph) -> dict[str, dict]:
+    """Use confirmed page IDs with the unchanged direct-neighbour pool rule."""
+    pages = {}
+    for row in rows:
+        title, qid = row["Source"], row["page_qid"]
+        if title in pages:
+            raise ValueError(f"Duplicate source in page map: {title}")
+        if (row["status"] == "RESOLVED") != bool(qid):
+            raise ValueError(f"Inconsistent page-map status: {title}")
+        if qid and (
+            not re.fullmatch(r"Q[1-9][0-9]*", qid)
+            or not isinstance(row.get("wikipedia_page_id"), int)
+            or row["wikipedia_page_id"] <= 0
+        ):
+            raise ValueError(f"Invalid page identity: {title}")
+        pool = {qid} if qid else set()
+        if qid in graph:
+            pool.update(graph.predecessors(qid))
+            pool.update(graph.successors(qid))
+        pages[title] = {
+            "Source": title,
+            "page_qid": qid,
+            "page_status": row["status"],
+            "resolution_evidence": row,
+            "pool": [
+                {"entity_id": q, "context_id": f"{qid}|{q}", "page_identity": q == qid}
+                for q in sorted(pool)
+            ],
+        }
+    return pages
+
+
+def run(output: Path, page_map: Path | None = None) -> None:
     baseline_manifest = json.loads((BASELINE / "run_manifest.json").read_text())
     if baseline_manifest["status"] != "COMPLETED":
         raise ValueError("The page/name cache is incomplete")
@@ -189,10 +225,33 @@ def run(output: Path) -> None:
             ]
         },
     }
+    parameters = dict(PARAMETERS)
+    mapped_pages = None
+    if page_map is not None:
+        page_map = page_map.resolve()
+        manifest_path = page_map.parent / "run_manifest.json"
+        lookup_manifest = json.loads(manifest_path.read_text(encoding="utf-8"))
+        if lookup_manifest["status"] != "COMPLETED":
+            raise ValueError("Source-page lookup is incomplete")
+        if page_map.name != "page_map.json":
+            raise ValueError("Expected the verified page_map.json output")
+        for name, expected in lookup_manifest["outputs_sha256"].items():
+            path = page_map.parent / name
+            if sha256(path) != expected:
+                raise ValueError(f"Changed page-lookup output: {name}")
+            inputs[path.relative_to(ROOT).as_posix()] = expected
+        for name, expected in lookup_manifest["inputs_sha256"].items():
+            if sha256(ROOT / name) != expected:
+                raise ValueError(f"Changed page-lookup input: {name}")
+            inputs[Path(name).as_posix()] = expected
+        inputs[manifest_path.relative_to(ROOT).as_posix()] = sha256(manifest_path)
+        mapped_pages = json.loads(page_map.read_text(encoding="utf-8"))
+        parameters["page_identity_source"] = page_map.relative_to(ROOT).as_posix()
+        parameters["metadata_source"] = "same frozen full Wikidata snapshot"
     run_id = (
         "matching-"
         + hashlib.sha256(
-            json.dumps([inputs, PARAMETERS], sort_keys=True).encode()
+            json.dumps([inputs, parameters], sort_keys=True).encode()
         ).hexdigest()[:20]
     )
     frame = pd.read_parquet(ROOT / "Data/external/daniel_20261017.parquet")
@@ -213,6 +272,48 @@ def run(output: Path) -> None:
         output / "mapped_graph.jsonl.gz",
     )
     LOG.info("Graph loaded: %s", graph_counts)
+    if mapped_pages is not None:
+        rebuilt = pages_from_map(mapped_pages, graph)
+        if set(rebuilt) != set(frame.Source):
+            raise ValueError("Source-page map does not cover exactly Daniel's titles")
+        for title, old in pages.items():
+            if old["page_status"] == "RESOLVED" and (
+                rebuilt[title]["page_qid"] != old["page_qid"]
+                or {e["entity_id"] for e in rebuilt[title]["pool"]}
+                != {e["entity_id"] for e in old["pool"]}
+            ):
+                raise ValueError(
+                    f"Previously resolved page identity/pool changed: {title}"
+                )
+        pages = rebuilt
+        metadata, _ = load_metadata(
+            ROOT / "Data/external/wwii_task_force/wikidata_entities.jsonl.gz", set()
+        )
+        for entity in read_lines(BASELINE / "entity_metadata.jsonl.gz"):
+            qid = entity["entity_id"]
+            for field in ("label", "aliases", "direct_types"):
+                if entity.get(field) != metadata.get(qid, {}).get(field):
+                    raise ValueError(f"Previously cached metadata changed: {qid}")
+        with gzip.open(
+            output / "page_context.jsonl.gz", "wt", encoding="utf-8"
+        ) as stream:
+            for page in pages.values():
+                write_line(stream, {"run_id": run_id, **page})
+        pool_ids = {e["entity_id"] for p in pages.values() for e in p["pool"]}
+        with gzip.open(
+            output / "entity_metadata.jsonl.gz", "wt", encoding="utf-8"
+        ) as stream:
+            for qid in sorted(pool_ids):
+                write_line(
+                    stream,
+                    metadata.get(qid, {"entity_id": qid, "metadata_status": "MISSING"}),
+                )
+        LOG.info(
+            "Rebuilt pools for %d resolved pages; %d pool IDs; %d without metadata",
+            sum(p["page_status"] == "RESOLVED" for p in pages.values()),
+            len(pool_ids),
+            len(pool_ids - metadata.keys()),
+        )
     counters, reasons = defaultdict(Counter), defaultdict(Counter)
     seen_ids, seen_rows = set(), set()
     pair_count = paragraph_count = graph_count = 0
@@ -363,6 +464,14 @@ def run(output: Path) -> None:
                     page_status=page["page_status"],
                     page_qid=page["page_qid"],
                     input_mentions=len(page_frame),
+                    pool_entities=len(pool),
+                    pool_entities_with_names=sum(
+                        bool(
+                            metadata.get(q, {}).get("label")
+                            or metadata.get(q, {}).get("aliases")
+                        )
+                        for q in pool
+                    ),
                     decisions=dict(page_counts),
                 )
             )
@@ -467,7 +576,7 @@ def run(output: Path) -> None:
             status="COMPLETED",
             run_id=run_id,
             completed_utc=datetime.now(timezone.utc).isoformat(),
-            parameters=PARAMETERS,
+            parameters=parameters,
             inputs_sha256=inputs,
             baseline_run_id=baseline_manifest["run_id"],
             daniel_commit=COMMIT,
@@ -495,11 +604,14 @@ def run(output: Path) -> None:
 def main() -> None:
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--output", required=True, type=Path)
+    parser.add_argument(
+        "--page-map", type=Path, help="Verified source-page lookup page_map.json"
+    )
     args = parser.parse_args()
     output = args.output.resolve()
     output.mkdir(parents=True, exist_ok=False)
     logging.basicConfig(level=logging.INFO, format="%(asctime)s %(message)s")
-    run(output)
+    run(output, args.page_map)
 
 
 if __name__ == "__main__":
