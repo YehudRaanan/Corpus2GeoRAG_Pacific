@@ -101,3 +101,15 @@ def test_single_wikidata_type_override_preserves_evidence():
         )["status"]
         == "TYPE_MISMATCH"
     )
+
+
+def test_page_threshold_keeps_eighty_percent_default():
+    md = {"Q312685": {"label": "Claude Auchinleck", "direct_types": ["Q5"]}}
+    index = NameIndex(list(md), md)
+    originals = {"Q312685": {"Claude Auchinleck": "Claude Auchinleck"}}
+    assert not page_find(index, index, "General Claude Auchinleck", originals)
+    result = page_find(
+        index, index, "General Claude Auchinleck", originals, threshold=0.75
+    )
+    assert result[0]["entity_id"] == "Q312685"
+    assert 0.75 <= result[0]["name_similarity"] < 0.8

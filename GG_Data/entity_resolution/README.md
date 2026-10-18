@@ -1,5 +1,15 @@
 # Entity matching runs
 
+## Quick threshold test — 18 October 2026
+
+[Report](THRESHOLD_TEST_2026-10-18.md) · [Comparisons](runs/threshold_sensitivity_20261018/comparison.csv)
+
+Page matching only, all 324 non-date mentions from the same three-page pilot.
+75% gives 270 assignments, 80% gives 263, and 90% gives 258. Lowering adds both
+correct and wrong matches; raising loses a correct Roosevelt match and retains
+wrong exact-name homonyms. Keep 80% provisionally. Full-workflow assignments and
+the canonical graph remain unchanged; the test is not an accuracy estimate.
+
 ## Current single-type trial and page audit — 18 October 2026
 
 [Report](TYPE_AND_PAGE_LOOKUP_AUDIT_2026-10-18.md) · [Rows](runs/direct_wikidata_single_type_20261018_v2/matches.csv) · [Page audit](runs/direct_wikidata_single_type_20261018_v2/page_lookup_audit.csv)

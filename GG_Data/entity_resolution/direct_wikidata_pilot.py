@@ -72,10 +72,16 @@ def normalize_date(text: str) -> dict:
     return {"error": "INVALID_OR_UNSUPPORTED_DATE"}
 
 
-def page_find(index: NameIndex, cleaned: NameIndex, word: str, originals: dict) -> list:
+def page_find(
+    index: NameIndex,
+    cleaned: NameIndex,
+    word: str,
+    originals: dict,
+    threshold: float = 0.8,
+) -> list:
     """Original and cleaned scores are permitted only in the source-page pass."""
-    best = {c["entity_id"]: c for c in index.find(word, "MISC", 0.8)}
-    for c in cleaned.find(clean_name(word), "MISC", 0.8):
+    best = {c["entity_id"]: c for c in index.find(word, "MISC", threshold)}
+    for c in cleaned.find(clean_name(word), "MISC", threshold):
         q = c["entity_id"]
         if q not in best or c["name_similarity"] > best[q]["name_similarity"]:
             best[q] = {
