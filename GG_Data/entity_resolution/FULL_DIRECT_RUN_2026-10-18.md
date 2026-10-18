@@ -61,6 +61,32 @@ validation failures stop the run. Rerun the command to resume if necessary.
 python -u GG_Data/entity_resolution/full_direct_wikidata.py
 ```
 
+## Saved reference data and reuse
+
+Successful public responses are compressed JSON files in
+`C:\Users\User\.cache\geoai_bilingual_pilot_20261018`. The runner reads an
+existing response before making a request. The key includes the URL, exact
+parameters, and GET/POST method; there is no automatic expiry. Retain this path
+between runs. Different requests can still require network access. Service
+errors are not saved as successful data.
+
+On 18 October, **303 saved responses** were replayed with network access blocked:
+all passed, with **zero network requests**. The saved data includes English and
+Japanese page responses, Wikidata records, and SPARQL results. A SHA-256 inventory
+was saved as `saved_data_manifest_20261018.json` in that cache directory. It
+records 305 files totaling 18,491,639 compressed bytes: the 303 responses, the
+WWII ID query snapshot, and the separately stored WWII name snapshot. This is a
+point-in-time inventory; new successful responses continue to accumulate.
+
+The 103,235-QID name snapshot remains in
+`runs/bilingual_pilot_20261018_v1/fresh_wwii_names.json.gz`; its original manifest
+hash was verified. The full run also reuses completed `pages/` files and its
+`entity_metadata.json.gz` checkpoint from the run directory above. These saved
+files are reference data, not new Daniel mentions. Matching rules are unchanged.
+No new cloud query, paid retrieval, or full matching run was started for this
+storage check. Completed matching output is reusable after its manifest exists
+and its output hashes pass verification.
+
 Verification before launch: pilot-equivalence integration check and six existing
 matching/date/type checks passed; Ruff passed. Completion checks require every
 raw row to be preserved, all original mention IDs to agree, every remaining

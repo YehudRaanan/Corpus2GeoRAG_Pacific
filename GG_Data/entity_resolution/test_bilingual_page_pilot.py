@@ -1,9 +1,33 @@
 """Small checks for the agreed decision rules, independent of live services."""
 
 import random
+from unittest.mock import Mock
 
-from bilingual_page_pilot import categories, choose, synthetic_id
+import pytest
+
+from bilingual_page_pilot import LiveData, categories, choose, read, synthetic_id
 from generate_candidates import NameIndex
+
+
+@pytest.mark.parametrize("post", [False, True])
+def test_saved_responses_survive_new_client_without_network(tmp_path, post):
+    url = "https://www.wikidata.org/w/api.php"
+    params = {"action": "wbgetentities", "ids": "Q5"}
+    payload = {"entities": {"Q5": {"id": "Q5", "labels": {}}}}
+    first = LiveData(tmp_path)
+    response = Mock(status_code=200)
+    response.json.return_value = payload
+    first.session.request = Mock(return_value=response)
+    assert first.get(url, params, post=post) == payload
+    first.session.request.assert_called_once()
+    saved_path = next(tmp_path.glob("*.json.gz"))
+    assert read(saved_path)["data"] == payload
+
+    replay = LiveData(tmp_path)
+    replay.session.request = Mock(side_effect=AssertionError("Network is disabled"))
+    assert replay.get(url, dict(reversed(list(params.items()))), post=post) == payload
+    replay.session.request.assert_not_called()
+    assert replay.requests[0]["retrieved_at"] == first.requests[0]["retrieved_at"]
 
 
 def test_decision_rules():

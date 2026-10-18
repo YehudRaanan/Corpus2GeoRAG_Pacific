@@ -7,6 +7,9 @@ Started for all **309,864 mentions / 428 source titles**, with the accepted
 80% threshold and unchanged three-pass/type/date/synthetic-ID rules. The report
 is updated automatically on completion. Large run files and page evidence are on C:
 because D: is nearly full. No article-name extraction or canonical graph update.
+Reference responses are saved and reused across runs. Offline replay verified
+303 saved responses with zero network requests; see the report's saved-data
+section for paths, the hash inventory, and reuse limits.
 
 ## Quick threshold test — 18 October 2026
 
