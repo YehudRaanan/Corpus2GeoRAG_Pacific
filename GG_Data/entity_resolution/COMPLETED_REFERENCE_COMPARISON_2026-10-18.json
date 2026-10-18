@@ -1,0 +1,2592 @@
+{
+  "before_run_id": "matching-fa75bfff681bfb1f7ea9",
+  "after_run_id": "matching-495d808b6158060973a4",
+  "counts": {
+    "rows": 309864,
+    "SUGGESTION_REMOVED": 9211,
+    "old_with_candidates": 69581,
+    "old_with_eligible_candidates": 69581,
+    "new_with_eligible_candidates": 196823,
+    "ADDITIONAL_SUGGESTION": 94772,
+    "new_suggestions_outside_page_pool": 128236,
+    "new_suggestions_exact_name": 115684,
+    "new_suggestions_single_eligible_candidate": 76011,
+    "new_suggestions_zero_authority": 52492,
+    "SAME_SUGGESTION": 40592,
+    "STILL_UNRESOLVED": 151170,
+    "CHANGED_SUGGESTION": 14119,
+    "new_suggestions_with_unresolved_source_page": 208
+  },
+  "by_type": {
+    "DATE": {
+      "STILL_UNRESOLVED": 28763,
+      "ADDITIONAL_SUGGESTION": 7026,
+      "SAME_SUGGESTION": 1430,
+      "SUGGESTION_REMOVED": 990,
+      "CHANGED_SUGGESTION": 223
+    },
+    "LOC": {
+      "ADDITIONAL_SUGGESTION": 36890,
+      "STILL_UNRESOLVED": 31476,
+      "SUGGESTION_REMOVED": 4633,
+      "SAME_SUGGESTION": 9091,
+      "CHANGED_SUGGESTION": 7756
+    },
+    "MISC": {
+      "SAME_SUGGESTION": 13454,
+      "STILL_UNRESOLVED": 31056,
+      "ADDITIONAL_SUGGESTION": 37449,
+      "CHANGED_SUGGESTION": 2335,
+      "SUGGESTION_REMOVED": 1382
+    },
+    "ORG": {
+      "SUGGESTION_REMOVED": 1917,
+      "ADDITIONAL_SUGGESTION": 10284,
+      "STILL_UNRESOLVED": 21833,
+      "SAME_SUGGESTION": 10449,
+      "CHANGED_SUGGESTION": 3197
+    },
+    "PER": {
+      "STILL_UNRESOLVED": 38042,
+      "SAME_SUGGESTION": 6168,
+      "ADDITIONAL_SUGGESTION": 3123,
+      "SUGGESTION_REMOVED": 289,
+      "CHANGED_SUGGESTION": 608
+    }
+  },
+  "unresolved_reasons": {
+    "name score or graph separation too weak": 47340,
+    "no eligible name/type candidate in saved reference": 113041
+  },
+  "diagnostic_flags_not_accuracy_labels": {
+    "MISC_suggested_film_ids": 2189,
+    "ORG_suggested_numeric_tokens_differ": 2741,
+    "DATE_suggested_numeric_tokens_differ": 3424,
+    "MISC_suggested_numeric_tokens_differ": 515,
+    "LOC_suggested_film_ids": 120,
+    "LOC_suggested_numeric_tokens_differ": 17,
+    "DATE_suggested_film_ids": 8,
+    "ORG_suggested_film_ids": 26,
+    "PER_suggested_numeric_tokens_differ": 2
+  },
+  "verification": {
+    "all_rows_raw_ids_and_source_pages_identical": true,
+    "both_runs_output_hashes_verified": true,
+    "decompressed_mapped_graph_identical": true,
+    "mapped_graph_sha256": "7c341f00bdb11f64fc00034b5bef7856ea15c7a5d24a58b352c98dc17eef8a88",
+    "accuracy_measured": false
+  },
+  "most_frequent_unresolved_names": [
+    {
+      "type": "MISC",
+      "name": "japanese",
+      "count": 2502
+    },
+    {
+      "type": "LOC",
+      "name": "japan",
+      "count": 1354
+    },
+    {
+      "type": "MISC",
+      "name": "german",
+      "count": 1103
+    },
+    {
+      "type": "MISC",
+      "name": "french",
+      "count": 1019
+    },
+    {
+      "type": "MISC",
+      "name": "chinese",
+      "count": 936
+    },
+    {
+      "type": "DATE",
+      "name": "1945",
+      "count": 844
+    },
+    {
+      "type": "PER",
+      "name": "hitler",
+      "count": 837
+    },
+    {
+      "type": "LOC",
+      "name": "burma",
+      "count": 741
+    },
+    {
+      "type": "LOC",
+      "name": "china",
+      "count": 700
+    },
+    {
+      "type": "MISC",
+      "name": "dutch",
+      "count": 612
+    },
+    {
+      "type": "LOC",
+      "name": "germany",
+      "count": 558
+    },
+    {
+      "type": "DATE",
+      "name": "1943",
+      "count": 544
+    },
+    {
+      "type": "MISC",
+      "name": "battle of",
+      "count": 474
+    },
+    {
+      "type": "MISC",
+      "name": "americans",
+      "count": 392
+    },
+    {
+      "type": "MISC",
+      "name": "germans",
+      "count": 360
+    },
+    {
+      "type": "MISC",
+      "name": "western",
+      "count": 350
+    },
+    {
+      "type": "PER",
+      "name": "women",
+      "count": 350
+    },
+    {
+      "type": "PER",
+      "name": "churchill",
+      "count": 348
+    },
+    {
+      "type": "MISC",
+      "name": "indian",
+      "count": 347
+    },
+    {
+      "type": "DATE",
+      "name": "1940",
+      "count": 337
+    },
+    {
+      "type": "LOC",
+      "name": "france",
+      "count": 315
+    },
+    {
+      "type": "PER",
+      "name": "emperor",
+      "count": 274
+    },
+    {
+      "type": "ORG",
+      "name": "navy",
+      "count": 273
+    },
+    {
+      "type": "PER",
+      "name": "stalin",
+      "count": 271
+    },
+    {
+      "type": "MISC",
+      "name": "italian",
+      "count": 264
+    },
+    {
+      "type": "MISC",
+      "name": "b",
+      "count": 261
+    },
+    {
+      "type": "DATE",
+      "name": "1937",
+      "count": 257
+    },
+    {
+      "type": "LOC",
+      "name": "malaya",
+      "count": 257
+    },
+    {
+      "type": "MISC",
+      "name": "u",
+      "count": 257
+    },
+    {
+      "type": "PER",
+      "name": "children",
+      "count": 250
+    }
+  ],
+  "focus_name_counts": {
+    "MISC|japanese": {
+      "before_UNRESOLVED": 11987,
+      "after_SUGGESTED": 9485,
+      "after_id_Q5287": 9485,
+      "after_UNRESOLVED": 2502
+    },
+    "LOC|japan": {
+      "before_SUGGESTED": 4660,
+      "after_UNRESOLVED": 1354,
+      "after_SUGGESTED": 3306,
+      "after_id_Q188712": 3305,
+      "after_id_Q17": 1
+    },
+    "LOC|germany": {
+      "before_UNRESOLVED": 2067,
+      "after_SUGGESTED": 1509,
+      "after_id_Q183": 1385,
+      "after_UNRESOLVED": 558,
+      "after_id_Q1206012": 11,
+      "after_id_Q188": 107,
+      "after_id_Q41304": 6
+    },
+    "LOC|united states": {
+      "before_SUGGESTED": 1434,
+      "after_SUGGESTED": 1434,
+      "after_id_Q30": 1434
+    },
+    "LOC|united kingdom": {
+      "before_UNRESOLVED": 329,
+      "after_SUGGESTED": 308,
+      "after_id_Q145": 306,
+      "after_UNRESOLVED": 21,
+      "after_id_Q174193": 2
+    },
+    "PER|roosevelt": {
+      "before_UNRESOLVED": 1293,
+      "after_SUGGESTED": 1148,
+      "after_id_Q33866": 1148,
+      "after_UNRESOLVED": 145
+    },
+    "PER|hitler": {
+      "before_UNRESOLVED": 837,
+      "after_UNRESOLVED": 837
+    }
+  },
+  "distinct_suggested_ids": 11194,
+  "most_frequent_suggested_ids": [
+    {
+      "id": "Q5287",
+      "label": "Japanese",
+      "count": 9501
+    },
+    {
+      "id": "Q30",
+      "label": "United States",
+      "count": 4973
+    },
+    {
+      "id": "Q183",
+      "label": "Germany",
+      "count": 3579
+    },
+    {
+      "id": "Q188712",
+      "label": "Empire of Japan",
+      "count": 3513
+    },
+    {
+      "id": "Q9309",
+      "label": "Welsh",
+      "count": 3283
+    },
+    {
+      "id": "Q362",
+      "label": "World War II",
+      "count": 2734
+    },
+    {
+      "id": "Q211201",
+      "label": "soviet",
+      "count": 2207
+    },
+    {
+      "id": "Q23681360",
+      "label": "Allied",
+      "count": 2059
+    },
+    {
+      "id": "Q408",
+      "label": "Australia",
+      "count": 1981
+    },
+    {
+      "id": "Q7850",
+      "label": "Chinese",
+      "count": 1253
+    },
+    {
+      "id": "Q668",
+      "label": "India",
+      "count": 1219
+    },
+    {
+      "id": "Q4917",
+      "label": "United States dollar",
+      "count": 1219
+    },
+    {
+      "id": "Q15180",
+      "label": "Soviet Union",
+      "count": 1213
+    },
+    {
+      "id": "Q33866",
+      "label": "Theodore Roosevelt",
+      "count": 1162
+    },
+    {
+      "id": "Q29520",
+      "label": "China",
+      "count": 1076
+    }
+  ],
+  "examples": [
+    {
+      "mention_id": "mention-cfc891452a8bea56014a5aa0812a38d999251d405f61ffb2159ca571c959b77b",
+      "raw": {
+        "entity_group": "DATE",
+        "score": 0.8472689986228943,
+        "word": "1942–43",
+        "start": 132,
+        "end": 139,
+        "Source": "14th Indian Infantry Division",
+        "Index": 0,
+        "Text": "The 14th Indian Infantry Division was an infantry division of the Indian Army during World War II. It fought in the Arakan Campaign 1942–43, and was subsequently converted into a Training Division, providing drafts of replacements for units of the Fourteenth Army during the Burma Campaign.",
+        "subtype": "date"
+      },
+      "before": {
+        "decision": "UNRESOLVED",
+        "reason": "no eligible name/type candidate in saved reference",
+        "suggested_qid": null,
+        "suggested_label": null,
+        "candidate_count": 0,
+        "authority_gap": null,
+        "candidates": []
+      },
+      "after": {
+        "decision": "UNRESOLVED",
+        "reason": "no eligible name/type candidate in saved reference",
+        "suggested_qid": null,
+        "suggested_label": null,
+        "candidate_count": 0,
+        "authority_gap": null,
+        "candidates": []
+      }
+    },
+    {
+      "mention_id": "mention-db43c59df652783d66e047fc3ca2096b22014a5036b6e833835b83ca6b632bb0",
+      "raw": {
+        "entity_group": "MISC",
+        "score": 0.7654985189437866,
+        "word": "Burma Campaign",
+        "start": 275,
+        "end": 289,
+        "Source": "14th Indian Infantry Division",
+        "Index": 0,
+        "Text": "The 14th Indian Infantry Division was an infantry division of the Indian Army during World War II. It fought in the Arakan Campaign 1942–43, and was subsequently converted into a Training Division, providing drafts of replacements for units of the Fourteenth Army during the Burma Campaign.",
+        "subtype": "MISC"
+      },
+      "before": {
+        "decision": "SUGGESTED",
+        "reason": "graph winner; name and gap rules passed",
+        "suggested_qid": "Q221519",
+        "suggested_label": "Burma Campaign",
+        "candidate_count": 2,
+        "authority_gap": 1.0,
+        "candidates": [
+          {
+            "entity_id": "Q221519",
+            "matched_name": "Burma Campaign",
+            "name_similarity": 1.0,
+            "authority": 0.0004525228776226168,
+            "in_page_pool": false
+          },
+          {
+            "entity_id": "Q729229",
+            "matched_name": "Burma Campaign 1944",
+            "name_similarity": 0.8275862068965517,
+            "authority": 0.0,
+            "in_page_pool": false
+          }
+        ]
+      },
+      "after": {
+        "decision": "SUGGESTED",
+        "reason": "graph winner; name and gap rules passed",
+        "suggested_qid": "Q221519",
+        "suggested_label": "Burma Campaign",
+        "candidate_count": 3,
+        "authority_gap": 0.9721937868714012,
+        "candidates": [
+          {
+            "entity_id": "Q221519",
+            "matched_name": "Burma Campaign",
+            "name_similarity": 1.0,
+            "authority": 0.00045455686942451557,
+            "in_page_pool": false
+          },
+          {
+            "entity_id": "Q111977511",
+            "matched_name": "1942 Burma Campaign",
+            "name_similarity": 0.8275862068965517,
+            "authority": 1.2639505190286765e-05,
+            "in_page_pool": false
+          },
+          {
+            "entity_id": "Q729229",
+            "matched_name": "Burma Campaign 1944",
+            "name_similarity": 0.8275862068965517,
+            "authority": 0.0,
+            "in_page_pool": false
+          }
+        ]
+      }
+    },
+    {
+      "mention_id": "mention-6ab5718018cc2718a51098437e9166379b31692c98743a6338107849a0178064",
+      "raw": {
+        "entity_group": "PER",
+        "score": 0.6353996992111206,
+        "word": "Major General Wilfrid Lewis Lloyd",
+        "start": 293,
+        "end": 326,
+        "Source": "14th Indian Infantry Division",
+        "Index": 1,
+        "Text": "The division was raised on 1 June 1941, at Quetta in Baluchistan. Its badge was a depiction in black and white of the ranges of mountains above Quetta, surrounded by a stylised letter \"Q\" in white on a black background. The division had temporary commanders while forming. On 15 October 1941, Major General Wilfrid Lewis Lloyd, who had a distinguished record as commander of a brigade in the Western Desert, was appointed commander.",
+        "subtype": "person"
+      },
+      "before": {
+        "decision": "UNRESOLVED",
+        "reason": "no eligible name/type candidate in saved reference",
+        "suggested_qid": null,
+        "suggested_label": null,
+        "candidate_count": 0,
+        "authority_gap": null,
+        "candidates": []
+      },
+      "after": {
+        "decision": "UNRESOLVED",
+        "reason": "no eligible name/type candidate in saved reference",
+        "suggested_qid": null,
+        "suggested_label": null,
+        "candidate_count": 0,
+        "authority_gap": null,
+        "candidates": []
+      }
+    },
+    {
+      "mention_id": "mention-bba8fccb7d3c74aa3a9e819a571d816651c321e30adba7a730da98ea4cf0a173",
+      "raw": {
+        "entity_group": "ORG",
+        "score": 0.84432452917099,
+        "word": "British Indian Army",
+        "start": 169,
+        "end": 188,
+        "Source": "14th Indian Infantry Division",
+        "Index": 3,
+        "Text": "In the aftermath of the Japanese conquest of Burma, the 14th Division was sent to garrison Chittagong, on the frontier with Burma. As part of the lessons learned by the British Indian Army in the retreat from Burma, the division's equipment was lightened and its establishment was reduced, to allow easier movement off roads and in difficult terrain. The divisional transport consisted of four jeep companies and six mule companies. The division was renamed 14th Indian (Light) Division to reflect these changes.",
+        "subtype": "ORG"
+      },
+      "before": {
+        "decision": "SUGGESTED",
+        "reason": "single candidate; name rule passed",
+        "suggested_qid": "Q642932",
+        "suggested_label": "British Indian Army",
+        "candidate_count": 1,
+        "authority_gap": null,
+        "candidates": [
+          {
+            "entity_id": "Q642932",
+            "matched_name": "British Indian Army",
+            "name_similarity": 1.0,
+            "authority": 0.000857961318954329,
+            "in_page_pool": true
+          }
+        ]
+      },
+      "after": {
+        "decision": "SUGGESTED",
+        "reason": "single candidate; name rule passed",
+        "suggested_qid": "Q642932",
+        "suggested_label": "British Indian Army",
+        "candidate_count": 1,
+        "authority_gap": null,
+        "candidates": [
+          {
+            "entity_id": "Q642932",
+            "matched_name": "British Indian Army",
+            "name_similarity": 1.0,
+            "authority": 0.0008195280185211643,
+            "in_page_pool": true
+          }
+        ]
+      }
+    },
+    {
+      "mention_id": "mention-e98c7953a763b52dd0595e11852efb37df80f49e36807103739bbd994a208310",
+      "raw": {
+        "entity_group": "ORG",
+        "score": 0.9804129004478455,
+        "word": "1st Mobile Fleet",
+        "start": 4,
+        "end": 20,
+        "Source": "1st Mobile Fleet (Imperial Japanese Navy)",
+        "Index": 0,
+        "Text": "The 1st Mobile Fleet (第一機動艦隊, Dai-Ichi Kidō Kantai) was a fleet of the Imperial Japanese Navy established during World War II.",
+        "subtype": "ORG"
+      },
+      "before": {
+        "decision": "SUGGESTED",
+        "reason": "single candidate; name rule passed",
+        "suggested_qid": "Q4596490",
+        "suggested_label": "1st Mobile Fleet",
+        "candidate_count": 1,
+        "authority_gap": null,
+        "candidates": [
+          {
+            "entity_id": "Q4596490",
+            "matched_name": "1st Mobile Fleet",
+            "name_similarity": 1.0,
+            "authority": 0.0,
+            "in_page_pool": true
+          }
+        ]
+      },
+      "after": {
+        "decision": "SUGGESTED",
+        "reason": "single candidate; name rule passed",
+        "suggested_qid": "Q4596490",
+        "suggested_label": "1st Mobile Fleet",
+        "candidate_count": 1,
+        "authority_gap": null,
+        "candidates": [
+          {
+            "entity_id": "Q4596490",
+            "matched_name": "1st Mobile Fleet",
+            "name_similarity": 1.0,
+            "authority": 0.0,
+            "in_page_pool": true
+          }
+        ]
+      }
+    },
+    {
+      "mention_id": "mention-efdd3f360c543275a8af9c1e5e081d1d7887677a2a64b168a5db845e4fcdd051",
+      "raw": {
+        "entity_group": "ORG",
+        "score": 0.973983883857727,
+        "word": "14th Indian Infantry Division",
+        "start": 126,
+        "end": 155,
+        "Source": "26th Indian Infantry Division",
+        "Index": 3,
+        "Text": "For the First Arakan offensive, all the division's brigades were detached one by one and committed to the offensive under the 14th Indian Infantry Division. In March, the offensive stalled and the HQ of 26th Division relieved that of the 14th Division, taking over the Arakan front too late to prevent a minor disaster. After this the British fell back almost to their starting point on the Indian frontier.",
+        "subtype": "ORG"
+      },
+      "before": {
+        "decision": "UNRESOLVED",
+        "reason": "name score or graph separation too weak",
+        "suggested_qid": null,
+        "suggested_label": null,
+        "candidate_count": 50,
+        "authority_gap": 0.05040904715802584,
+        "candidates": [
+          {
+            "entity_id": "Q231293",
+            "matched_name": "4th Infantry Division",
+            "name_similarity": 0.8444444444444444,
+            "authority": 0.0006885866704062309,
+            "in_page_pool": false
+          },
+          {
+            "entity_id": "Q261179",
+            "matched_name": "7th Infantry Division",
+            "name_similarity": 0.8,
+            "authority": 0.0006538756724653352,
+            "in_page_pool": false
+          },
+          {
+            "entity_id": "Q4646576",
+            "matched_name": "9th Indian Infantry Division",
+            "name_similarity": 0.9411764705882353,
+            "authority": 0.0003429280480846276,
+            "in_page_pool": false
+          },
+          {
+            "entity_id": "Q4644073",
+            "matched_name": "7th Infantry Division",
+            "name_similarity": 0.8,
+            "authority": 0.0003375835823544513,
+            "in_page_pool": false
+          },
+          {
+            "entity_id": "Q234339",
+            "matched_name": "44th Infantry Division",
+            "name_similarity": 0.8260869565217391,
+            "authority": 0.0003059348556773189,
+            "in_page_pool": false
+          }
+        ]
+      },
+      "after": {
+        "decision": "UNRESOLVED",
+        "reason": "name score or graph separation too weak",
+        "suggested_qid": null,
+        "suggested_label": null,
+        "candidate_count": 63,
+        "authority_gap": 0.0058263712071419315,
+        "candidates": [
+          {
+            "entity_id": "Q18507147",
+            "matched_name": "7th Infantry Division",
+            "name_similarity": 0.8,
+            "authority": 0.0010871890226963148,
+            "in_page_pool": false
+          },
+          {
+            "entity_id": "Q9131289",
+            "matched_name": "24th Infantry Division",
+            "name_similarity": 0.8260869565217391,
+            "authority": 0.0010808546558777562,
+            "in_page_pool": false
+          },
+          {
+            "entity_id": "Q2614993",
+            "matched_name": "6th Infantry Division",
+            "name_similarity": 0.8,
+            "authority": 0.0008519329234988815,
+            "in_page_pool": false
+          },
+          {
+            "entity_id": "Q231293",
+            "matched_name": "4th Infantry Division",
+            "name_similarity": 0.8444444444444444,
+            "authority": 0.0006821151185452925,
+            "in_page_pool": false
+          },
+          {
+            "entity_id": "Q261179",
+            "matched_name": "7th Infantry Division",
+            "name_similarity": 0.8,
+            "authority": 0.0006492387658130911,
+            "in_page_pool": false
+          }
+        ]
+      }
+    },
+    {
+      "mention_id": "mention-2420459041247c637f97ebcd8302f15b126c5e3d443c1782dd7780ffbdac0938",
+      "raw": {
+        "entity_group": "DATE",
+        "score": 0.9458033442497253,
+        "word": "1941",
+        "start": 841,
+        "end": 845,
+        "Source": "Attack on Pearl Harbor",
+        "Index": 10,
+        "Text": "In mid-1940, President Franklin D. Roosevelt moved the Pacific Fleet from San Diego to Hawaii. He also ordered a military buildup in the Philippines, taking both actions in the hope of discouraging Japanese aggression in the Far East. Because the Japanese high command was mistakenly certain any attack on the United Kingdom's Southeast Asian colonies, including Singapore, would bring the United States into the war, a devastating preventive strike appeared to be the only way to prevent American naval interference. An invasion of the Philippines was also considered necessary by Japanese war planners. The American War Plan Orange had envisioned defending the Philippines with an elite force of 40,000 men; this option was never implemented due to opposition from Douglas MacArthur, who felt he would need a force ten times that size. By 1941, American planners expected to have to abandon the Philippines at the outbreak of war. Late that year, Admiral Thomas C. Hart, commander of the United States Asiatic Fleet, was given orders to that effect.",
+        "subtype": "date"
+      },
+      "before": {
+        "decision": "UNRESOLVED",
+        "reason": "name score or graph separation too weak",
+        "suggested_qid": null,
+        "suggested_label": null,
+        "candidate_count": 2,
+        "authority_gap": 0.014949195968943903,
+        "candidates": [
+          {
+            "entity_id": "Q207482",
+            "matched_name": "1941",
+            "name_similarity": 1.0,
+            "authority": 6.762189971634906e-06,
+            "in_page_pool": true
+          },
+          {
+            "entity_id": "Q2008158",
+            "matched_name": "1941",
+            "name_similarity": 1.0,
+            "authority": 6.661100668569708e-06,
+            "in_page_pool": false
+          }
+        ]
+      },
+      "after": {
+        "decision": "SUGGESTED",
+        "reason": "graph winner; name and gap rules passed",
+        "suggested_qid": "Q5231",
+        "suggested_label": "1941",
+        "candidate_count": 3,
+        "authority_gap": 0.5099909355321293,
+        "candidates": [
+          {
+            "entity_id": "Q5231",
+            "matched_name": "1941",
+            "name_similarity": 1.0,
+            "authority": 1.3764918663166296e-05,
+            "in_page_pool": false
+          },
+          {
+            "entity_id": "Q207482",
+            "matched_name": "1941",
+            "name_similarity": 1.0,
+            "authority": 6.744934916614451e-06,
+            "in_page_pool": true
+          },
+          {
+            "entity_id": "Q2008158",
+            "matched_name": "1941",
+            "name_similarity": 1.0,
+            "authority": 6.643111573695103e-06,
+            "in_page_pool": false
+          }
+        ]
+      }
+    },
+    {
+      "mention_id": "mention-4fbb1c62be376c3c9c9a4a79abeb7e65896c776438b958adb70221c55555856a",
+      "raw": {
+        "entity_group": "LOC",
+        "score": 0.999584436416626,
+        "word": "Pearl Harbor",
+        "start": 640,
+        "end": 652,
+        "Source": "Attack on Pearl Harbor",
+        "Index": 13,
+        "Text": "Japan's final proposal, delivered on November 20, offered to withdraw from southern Indochina and to refrain from attacks in Southeast Asia, so long as the United States, United Kingdom, and Netherlands supplied one million U.S. gallons (3.8 million liters) of aviation fuel, lifted their sanctions against Japan, and ceased aid to China. The American counter-proposal of November 26 (November 27 in Japan), the Hull note, required Japan to completely evacuate China without conditions and conclude non-aggression pacts with Pacific powers. On November 26 in Japan, the day before the note's delivery, the Japanese task force left port for Pearl Harbor.",
+        "subtype": "LOC"
+      },
+      "before": {
+        "decision": "SUGGESTED",
+        "reason": "graph winner; name and gap rules passed",
+        "suggested_qid": "Q127091",
+        "suggested_label": "Pearl Harbor",
+        "candidate_count": 4,
+        "authority_gap": 0.4379977675081344,
+        "candidates": [
+          {
+            "entity_id": "Q127091",
+            "matched_name": "Pearl Harbor",
+            "name_similarity": 1.0,
+            "authority": 0.00029253836682740483,
+            "in_page_pool": true
+          },
+          {
+            "entity_id": "Q15261194",
+            "matched_name": "NS Pearl Harbor",
+            "name_similarity": 0.8695652173913043,
+            "authority": 0.00016440721524652583,
+            "in_page_pool": true
+          },
+          {
+            "entity_id": "Q194413",
+            "matched_name": "Pearl Harbor",
+            "name_similarity": 1.0,
+            "authority": 0.0,
+            "in_page_pool": true
+          },
+          {
+            "entity_id": "Q135489935",
+            "matched_name": "SS Pearl Harbor",
+            "name_similarity": 0.8695652173913043,
+            "authority": 0.0,
+            "in_page_pool": false
+          }
+        ]
+      },
+      "after": {
+        "decision": "SUGGESTED",
+        "reason": "graph winner; name and gap rules passed",
+        "suggested_qid": "Q127091",
+        "suggested_label": "Pearl Harbor",
+        "candidate_count": 5,
+        "authority_gap": 0.43673215751599337,
+        "candidates": [
+          {
+            "entity_id": "Q127091",
+            "matched_name": "Pearl Harbor",
+            "name_similarity": 1.0,
+            "authority": 0.0002898512358808917,
+            "in_page_pool": true
+          },
+          {
+            "entity_id": "Q15261194",
+            "matched_name": "NS Pearl Harbor",
+            "name_similarity": 0.8695652173913043,
+            "authority": 0.00016326388027595274,
+            "in_page_pool": true
+          },
+          {
+            "entity_id": "Q227062",
+            "matched_name": "Pearl Harbor",
+            "name_similarity": 1.0,
+            "authority": 5.126899485595356e-05,
+            "in_page_pool": false
+          },
+          {
+            "entity_id": "Q194413",
+            "matched_name": "Pearl Harbor",
+            "name_similarity": 1.0,
+            "authority": 0.0,
+            "in_page_pool": true
+          },
+          {
+            "entity_id": "Q135489935",
+            "matched_name": "SS Pearl Harbor",
+            "name_similarity": 0.8695652173913043,
+            "authority": 0.0,
+            "in_page_pool": false
+          }
+        ]
+      }
+    }
+  ],
+  "change_examples": [
+    {
+      "change": "SUGGESTION_REMOVED",
+      "raw": {
+        "entity_group": "ORG",
+        "score": 0.8760290741920471,
+        "word": "14th Indian Infantry Division",
+        "start": 4,
+        "end": 33,
+        "Source": "14th Indian Infantry Division",
+        "Index": 0,
+        "Text": "The 14th Indian Infantry Division was an infantry division of the Indian Army during World War II. It fought in the Arakan Campaign 1942–43, and was subsequently converted into a Training Division, providing drafts of replacements for units of the Fourteenth Army during the Burma Campaign.",
+        "subtype": "ORG"
+      },
+      "before": {
+        "decision": "SUGGESTED",
+        "reason": "graph winner; name and gap rules passed",
+        "suggested_qid": "Q261179",
+        "suggested_label": "7th Infantry Division",
+        "candidate_count": 50,
+        "authority_gap": 0.3246209220768806,
+        "candidates": [
+          {
+            "entity_id": "Q261179",
+            "matched_name": "7th Infantry Division",
+            "name_similarity": 0.8,
+            "authority": 0.00013681379754564154,
+            "in_page_pool": false
+          },
+          {
+            "entity_id": "Q231293",
+            "matched_name": "4th Infantry Division",
+            "name_similarity": 0.8444444444444444,
+            "authority": 9.240117643353572e-05,
+            "in_page_pool": false
+          },
+          {
+            "entity_id": "Q4646576",
+            "matched_name": "9th Indian Infantry Division",
+            "name_similarity": 0.9411764705882353,
+            "authority": 4.758164260792994e-05,
+            "in_page_pool": false
+          },
+          {
+            "entity_id": "Q4644073",
+            "matched_name": "7th Infantry Division",
+            "name_similarity": 0.8,
+            "authority": 4.590333061780336e-05,
+            "in_page_pool": false
+          },
+          {
+            "entity_id": "Q234339",
+            "matched_name": "44th Infantry Division",
+            "name_similarity": 0.8260869565217391,
+            "authority": 4.103572958759941e-05,
+            "in_page_pool": false
+          }
+        ]
+      },
+      "after": {
+        "decision": "UNRESOLVED",
+        "reason": "name score or graph separation too weak",
+        "suggested_qid": null,
+        "suggested_label": null,
+        "candidate_count": 63,
+        "authority_gap": 0.08071324072095987,
+        "candidates": [
+          {
+            "entity_id": "Q9131289",
+            "matched_name": "24th Infantry Division",
+            "name_similarity": 0.8260869565217391,
+            "authority": 0.0001589529848957442,
+            "in_page_pool": false
+          },
+          {
+            "entity_id": "Q18507147",
+            "matched_name": "7th Infantry Division",
+            "name_similarity": 0.8,
+            "authority": 0.0001461233743625389,
+            "in_page_pool": false
+          },
+          {
+            "entity_id": "Q261179",
+            "matched_name": "7th Infantry Division",
+            "name_similarity": 0.8,
+            "authority": 0.00013944658216574076,
+            "in_page_pool": false
+          },
+          {
+            "entity_id": "Q2614993",
+            "matched_name": "6th Infantry Division",
+            "name_similarity": 0.8,
+            "authority": 0.00012329474476788018,
+            "in_page_pool": false
+          },
+          {
+            "entity_id": "Q231293",
+            "matched_name": "4th Infantry Division",
+            "name_similarity": 0.8444444444444444,
+            "authority": 9.417191298375434e-05,
+            "in_page_pool": false
+          }
+        ]
+      }
+    },
+    {
+      "change": "ADDITIONAL_SUGGESTION",
+      "raw": {
+        "entity_group": "ORG",
+        "score": 0.9721909761428833,
+        "word": "Indian Army",
+        "start": 66,
+        "end": 77,
+        "Source": "14th Indian Infantry Division",
+        "Index": 0,
+        "Text": "The 14th Indian Infantry Division was an infantry division of the Indian Army during World War II. It fought in the Arakan Campaign 1942–43, and was subsequently converted into a Training Division, providing drafts of replacements for units of the Fourteenth Army during the Burma Campaign.",
+        "subtype": "ORG"
+      },
+      "before": {
+        "decision": "UNRESOLVED",
+        "reason": "no eligible name/type candidate in saved reference",
+        "suggested_qid": null,
+        "suggested_label": null,
+        "candidate_count": 0,
+        "authority_gap": null,
+        "candidates": []
+      },
+      "after": {
+        "decision": "SUGGESTED",
+        "reason": "single candidate; name rule passed",
+        "suggested_qid": "Q355771",
+        "suggested_label": "Indian Army",
+        "candidate_count": 1,
+        "authority_gap": null,
+        "candidates": [
+          {
+            "entity_id": "Q355771",
+            "matched_name": "Indian Army",
+            "name_similarity": 1.0,
+            "authority": 7.164768501851712e-05,
+            "in_page_pool": false
+          }
+        ]
+      }
+    },
+    {
+      "change": "ADDITIONAL_SUGGESTION",
+      "raw": {
+        "entity_group": "ORG",
+        "score": 0.46722307801246643,
+        "word": "Training Division",
+        "start": 179,
+        "end": 196,
+        "Source": "14th Indian Infantry Division",
+        "Index": 0,
+        "Text": "The 14th Indian Infantry Division was an infantry division of the Indian Army during World War II. It fought in the Arakan Campaign 1942–43, and was subsequently converted into a Training Division, providing drafts of replacements for units of the Fourteenth Army during the Burma Campaign.",
+        "subtype": "ORG"
+      },
+      "before": {
+        "decision": "UNRESOLVED",
+        "reason": "name score or graph separation too weak",
+        "suggested_qid": null,
+        "suggested_label": null,
+        "candidate_count": 2,
+        "authority_gap": 0.0,
+        "candidates": [
+          {
+            "entity_id": "Q2818310",
+            "matched_name": "78th Training Division",
+            "name_similarity": 0.8571428571428571,
+            "authority": 0.0,
+            "in_page_pool": false
+          },
+          {
+            "entity_id": "Q4032758",
+            "matched_name": "95th Training Division",
+            "name_similarity": 0.8571428571428571,
+            "authority": 0.0,
+            "in_page_pool": false
+          }
+        ]
+      },
+      "after": {
+        "decision": "SUGGESTED",
+        "reason": "graph winner; name and gap rules passed",
+        "suggested_qid": "Q89876803",
+        "suggested_label": "training division",
+        "candidate_count": 4,
+        "authority_gap": 1.0,
+        "candidates": [
+          {
+            "entity_id": "Q89876803",
+            "matched_name": "training division",
+            "name_similarity": 1.0,
+            "authority": 5.7560139022193434e-05,
+            "in_page_pool": false
+          },
+          {
+            "entity_id": "Q2818310",
+            "matched_name": "78th Training Division",
+            "name_similarity": 0.8571428571428571,
+            "authority": 0.0,
+            "in_page_pool": false
+          },
+          {
+            "entity_id": "Q4032758",
+            "matched_name": "95th Training Division",
+            "name_similarity": 0.8571428571428571,
+            "authority": 0.0,
+            "in_page_pool": false
+          },
+          {
+            "entity_id": "Q105821191",
+            "matched_name": "Field Training Division",
+            "name_similarity": 0.8333333333333334,
+            "authority": 0.0,
+            "in_page_pool": false
+          }
+        ]
+      }
+    },
+    {
+      "change": "ADDITIONAL_SUGGESTION",
+      "raw": {
+        "entity_group": "LOC",
+        "score": 0.5001747608184814,
+        "word": "Quetta",
+        "start": 43,
+        "end": 49,
+        "Source": "14th Indian Infantry Division",
+        "Index": 1,
+        "Text": "The division was raised on 1 June 1941, at Quetta in Baluchistan. Its badge was a depiction in black and white of the ranges of mountains above Quetta, surrounded by a stylised letter \"Q\" in white on a black background. The division had temporary commanders while forming. On 15 October 1941, Major General Wilfrid Lewis Lloyd, who had a distinguished record as commander of a brigade in the Western Desert, was appointed commander.",
+        "subtype": "LOC"
+      },
+      "before": {
+        "decision": "UNRESOLVED",
+        "reason": "no eligible name/type candidate in saved reference",
+        "suggested_qid": null,
+        "suggested_label": null,
+        "candidate_count": 0,
+        "authority_gap": null,
+        "candidates": []
+      },
+      "after": {
+        "decision": "SUGGESTED",
+        "reason": "single candidate; name rule passed",
+        "suggested_qid": "Q185458",
+        "suggested_label": "Quetta",
+        "candidate_count": 1,
+        "authority_gap": null,
+        "candidates": [
+          {
+            "entity_id": "Q185458",
+            "matched_name": "Quetta",
+            "name_similarity": 1.0,
+            "authority": 0.0,
+            "in_page_pool": false
+          }
+        ]
+      }
+    },
+    {
+      "change": "ADDITIONAL_SUGGESTION",
+      "raw": {
+        "entity_group": "LOC",
+        "score": 0.49996715784072876,
+        "word": "Quetta",
+        "start": 144,
+        "end": 150,
+        "Source": "14th Indian Infantry Division",
+        "Index": 1,
+        "Text": "The division was raised on 1 June 1941, at Quetta in Baluchistan. Its badge was a depiction in black and white of the ranges of mountains above Quetta, surrounded by a stylised letter \"Q\" in white on a black background. The division had temporary commanders while forming. On 15 October 1941, Major General Wilfrid Lewis Lloyd, who had a distinguished record as commander of a brigade in the Western Desert, was appointed commander.",
+        "subtype": "LOC"
+      },
+      "before": {
+        "decision": "UNRESOLVED",
+        "reason": "no eligible name/type candidate in saved reference",
+        "suggested_qid": null,
+        "suggested_label": null,
+        "candidate_count": 0,
+        "authority_gap": null,
+        "candidates": []
+      },
+      "after": {
+        "decision": "SUGGESTED",
+        "reason": "single candidate; name rule passed",
+        "suggested_qid": "Q185458",
+        "suggested_label": "Quetta",
+        "candidate_count": 1,
+        "authority_gap": null,
+        "candidates": [
+          {
+            "entity_id": "Q185458",
+            "matched_name": "Quetta",
+            "name_similarity": 1.0,
+            "authority": 0.0,
+            "in_page_pool": false
+          }
+        ]
+      }
+    },
+    {
+      "change": "SUGGESTION_REMOVED",
+      "raw": {
+        "entity_group": "LOC",
+        "score": 0.9891375303268433,
+        "word": "Western Desert",
+        "start": 392,
+        "end": 406,
+        "Source": "14th Indian Infantry Division",
+        "Index": 1,
+        "Text": "The division was raised on 1 June 1941, at Quetta in Baluchistan. Its badge was a depiction in black and white of the ranges of mountains above Quetta, surrounded by a stylised letter \"Q\" in white on a black background. The division had temporary commanders while forming. On 15 October 1941, Major General Wilfrid Lewis Lloyd, who had a distinguished record as commander of a brigade in the Western Desert, was appointed commander.",
+        "subtype": "LOC"
+      },
+      "before": {
+        "decision": "SUGGESTED",
+        "reason": "single candidate; name rule passed",
+        "suggested_qid": "Q4019174",
+        "suggested_label": "Western Desert Force",
+        "candidate_count": 1,
+        "authority_gap": null,
+        "candidates": [
+          {
+            "entity_id": "Q4019174",
+            "matched_name": "Western Desert Force",
+            "name_similarity": 0.8,
+            "authority": 0.0,
+            "in_page_pool": false
+          }
+        ]
+      },
+      "after": {
+        "decision": "UNRESOLVED",
+        "reason": "name score or graph separation too weak",
+        "suggested_qid": null,
+        "suggested_label": null,
+        "candidate_count": 2,
+        "authority_gap": 0.0,
+        "candidates": [
+          {
+            "entity_id": "Q14314106",
+            "matched_name": "Western Desert",
+            "name_similarity": 1.0,
+            "authority": 0.0,
+            "in_page_pool": false
+          },
+          {
+            "entity_id": "Q4019174",
+            "matched_name": "Western Desert Force",
+            "name_similarity": 0.8,
+            "authority": 0.0,
+            "in_page_pool": false
+          }
+        ]
+      }
+    },
+    {
+      "change": "ADDITIONAL_SUGGESTION",
+      "raw": {
+        "entity_group": "LOC",
+        "score": 0.9998225569725037,
+        "word": "Iraq",
+        "start": 59,
+        "end": 63,
+        "Source": "14th Indian Infantry Division",
+        "Index": 2,
+        "Text": "When first formed, the division was intended to operate in Iraq and Persia, then under Allied military occupation, and first trained for mountain and desert warfare. It consisted of the 23rd, 36th and 37th Indian Infantry brigades. In December, war with Imperial Japan broke out. In March, after the Japanese captured Rangoon, the capital of Burma, the division was reassigned to the eastern frontier of India, and its existing brigades were dispersed to other divisions being formed. The 47th and 49th Indian Infantry Brigades were assigned to the division in March 1942, although the 49th Brigade was removed in May. The 23rd Indian Brigade was renumbered the 123rd Indian Infantry Brigade and returned to the division in July.",
+        "subtype": "LOC"
+      },
+      "before": {
+        "decision": "UNRESOLVED",
+        "reason": "no eligible name/type candidate in saved reference",
+        "suggested_qid": null,
+        "suggested_label": null,
+        "candidate_count": 0,
+        "authority_gap": null,
+        "candidates": []
+      },
+      "after": {
+        "decision": "SUGGESTED",
+        "reason": "single candidate; name rule passed",
+        "suggested_qid": "Q796",
+        "suggested_label": "Iraq",
+        "candidate_count": 1,
+        "authority_gap": null,
+        "candidates": [
+          {
+            "entity_id": "Q796",
+            "matched_name": "Iraq",
+            "name_similarity": 1.0,
+            "authority": 0.0,
+            "in_page_pool": false
+          }
+        ]
+      }
+    },
+    {
+      "change": "ADDITIONAL_SUGGESTION",
+      "raw": {
+        "entity_group": "LOC",
+        "score": 0.9998277425765991,
+        "word": "Persia",
+        "start": 68,
+        "end": 74,
+        "Source": "14th Indian Infantry Division",
+        "Index": 2,
+        "Text": "When first formed, the division was intended to operate in Iraq and Persia, then under Allied military occupation, and first trained for mountain and desert warfare. It consisted of the 23rd, 36th and 37th Indian Infantry brigades. In December, war with Imperial Japan broke out. In March, after the Japanese captured Rangoon, the capital of Burma, the division was reassigned to the eastern frontier of India, and its existing brigades were dispersed to other divisions being formed. The 47th and 49th Indian Infantry Brigades were assigned to the division in March 1942, although the 49th Brigade was removed in May. The 23rd Indian Brigade was renumbered the 123rd Indian Infantry Brigade and returned to the division in July.",
+        "subtype": "LOC"
+      },
+      "before": {
+        "decision": "UNRESOLVED",
+        "reason": "no eligible name/type candidate in saved reference",
+        "suggested_qid": null,
+        "suggested_label": null,
+        "candidate_count": 0,
+        "authority_gap": null,
+        "candidates": []
+      },
+      "after": {
+        "decision": "SUGGESTED",
+        "reason": "single candidate; name rule passed",
+        "suggested_qid": "Q9168",
+        "suggested_label": "Persian",
+        "candidate_count": 1,
+        "authority_gap": null,
+        "candidates": [
+          {
+            "entity_id": "Q9168",
+            "matched_name": "Persian",
+            "name_similarity": 0.8888888888888888,
+            "authority": 0.0,
+            "in_page_pool": false
+          }
+        ]
+      }
+    },
+    {
+      "change": "ADDITIONAL_SUGGESTION",
+      "raw": {
+        "entity_group": "MISC",
+        "score": 0.5732231140136719,
+        "word": "Indian",
+        "start": 206,
+        "end": 212,
+        "Source": "14th Indian Infantry Division",
+        "Index": 2,
+        "Text": "When first formed, the division was intended to operate in Iraq and Persia, then under Allied military occupation, and first trained for mountain and desert warfare. It consisted of the 23rd, 36th and 37th Indian Infantry brigades. In December, war with Imperial Japan broke out. In March, after the Japanese captured Rangoon, the capital of Burma, the division was reassigned to the eastern frontier of India, and its existing brigades were dispersed to other divisions being formed. The 47th and 49th Indian Infantry Brigades were assigned to the division in March 1942, although the 49th Brigade was removed in May. The 23rd Indian Brigade was renumbered the 123rd Indian Infantry Brigade and returned to the division in July.",
+        "subtype": "MISC"
+      },
+      "before": {
+        "decision": "UNRESOLVED",
+        "reason": "no eligible name/type candidate in saved reference",
+        "suggested_qid": null,
+        "suggested_label": null,
+        "candidate_count": 0,
+        "authority_gap": null,
+        "candidates": []
+      },
+      "after": {
+        "decision": "SUGGESTED",
+        "reason": "graph winner; name and gap rules passed",
+        "suggested_qid": "Q668",
+        "suggested_label": "India",
+        "candidate_count": 5,
+        "authority_gap": 1.0,
+        "candidates": [
+          {
+            "entity_id": "Q668",
+            "matched_name": "India",
+            "name_similarity": 0.8571428571428571,
+            "authority": 0.00010381857178651817,
+            "in_page_pool": false
+          },
+          {
+            "entity_id": "Q1079140",
+            "matched_name": "Indiana",
+            "name_similarity": 0.8888888888888888,
+            "authority": 0.0,
+            "in_page_pool": false
+          },
+          {
+            "entity_id": "Q1184769",
+            "matched_name": "Indiana",
+            "name_similarity": 0.8888888888888888,
+            "authority": 0.0,
+            "in_page_pool": false
+          },
+          {
+            "entity_id": "Q1415",
+            "matched_name": "Indiana",
+            "name_similarity": 0.8888888888888888,
+            "authority": 0.0,
+            "in_page_pool": false
+          },
+          {
+            "entity_id": "Q642553",
+            "matched_name": "Indians",
+            "name_similarity": 0.8888888888888888,
+            "authority": 0.0,
+            "in_page_pool": false
+          }
+        ]
+      }
+    },
+    {
+      "change": "ADDITIONAL_SUGGESTION",
+      "raw": {
+        "entity_group": "MISC",
+        "score": 0.9990239143371582,
+        "word": "Japanese",
+        "start": 300,
+        "end": 308,
+        "Source": "14th Indian Infantry Division",
+        "Index": 2,
+        "Text": "When first formed, the division was intended to operate in Iraq and Persia, then under Allied military occupation, and first trained for mountain and desert warfare. It consisted of the 23rd, 36th and 37th Indian Infantry brigades. In December, war with Imperial Japan broke out. In March, after the Japanese captured Rangoon, the capital of Burma, the division was reassigned to the eastern frontier of India, and its existing brigades were dispersed to other divisions being formed. The 47th and 49th Indian Infantry Brigades were assigned to the division in March 1942, although the 49th Brigade was removed in May. The 23rd Indian Brigade was renumbered the 123rd Indian Infantry Brigade and returned to the division in July.",
+        "subtype": "MISC"
+      },
+      "before": {
+        "decision": "UNRESOLVED",
+        "reason": "no eligible name/type candidate in saved reference",
+        "suggested_qid": null,
+        "suggested_label": null,
+        "candidate_count": 0,
+        "authority_gap": null,
+        "candidates": []
+      },
+      "after": {
+        "decision": "SUGGESTED",
+        "reason": "graph winner; name and gap rules passed",
+        "suggested_qid": "Q5287",
+        "suggested_label": "Japanese",
+        "candidate_count": 3,
+        "authority_gap": 1.0,
+        "candidates": [
+          {
+            "entity_id": "Q5287",
+            "matched_name": "Japanese",
+            "name_similarity": 1.0,
+            "authority": 0.0019400717069910523,
+            "in_page_pool": false
+          },
+          {
+            "entity_id": "Q161652",
+            "matched_name": "Japanese",
+            "name_similarity": 1.0,
+            "authority": 0.0,
+            "in_page_pool": false
+          },
+          {
+            "entity_id": "Q177837",
+            "matched_name": "Japanese WP",
+            "name_similarity": 0.8,
+            "authority": 0.0,
+            "in_page_pool": false
+          }
+        ]
+      }
+    },
+    {
+      "change": "SUGGESTION_REMOVED",
+      "raw": {
+        "entity_group": "ORG",
+        "score": 0.996782660484314,
+        "word": "Eastern Army",
+        "start": 137,
+        "end": 149,
+        "Source": "14th Indian Infantry Division",
+        "Index": 6,
+        "Text": "Frontal attacks on the Japanese positions failed with heavy losses. On 29 February 1943, Lieutenant General Noel Irwin, the commander of Eastern Army, dismissed Major General Lloyd and took personal command of the division. Japanese reinforcements attacked the division's exposed left flank, overrunning several units and forcing the remainder to make a disorderly withdrawal.",
+        "subtype": "ORG"
+      },
+      "before": {
+        "decision": "SUGGESTED",
+        "reason": "single candidate; name rule passed",
+        "suggested_qid": "Q4412440",
+        "suggested_label": "Northeastern Army",
+        "candidate_count": 1,
+        "authority_gap": null,
+        "candidates": [
+          {
+            "entity_id": "Q4412440",
+            "matched_name": "Northeastern Army",
+            "name_similarity": 0.8,
+            "authority": 0.0,
+            "in_page_pool": false
+          }
+        ]
+      },
+      "after": {
+        "decision": "UNRESOLVED",
+        "reason": "name score or graph separation too weak",
+        "suggested_qid": null,
+        "suggested_label": null,
+        "candidate_count": 2,
+        "authority_gap": 0.0,
+        "candidates": [
+          {
+            "entity_id": "Q2574892",
+            "matched_name": "Western Army",
+            "name_similarity": 0.8,
+            "authority": 0.0,
+            "in_page_pool": false
+          },
+          {
+            "entity_id": "Q4412440",
+            "matched_name": "Northeastern Army",
+            "name_similarity": 0.8,
+            "authority": 0.0,
+            "in_page_pool": false
+          }
+        ]
+      }
+    },
+    {
+      "change": "CHANGED_SUGGESTION",
+      "raw": {
+        "entity_group": "ORG",
+        "score": 0.8373687267303467,
+        "word": "26th Infantry Division",
+        "start": 123,
+        "end": 145,
+        "Source": "14th Indian Infantry Division",
+        "Index": 7,
+        "Text": "On 14 April 1943, the division HQ was withdrawn to Ranchi in Bihar to reform, being replaced by the headquarters of Indian 26th Infantry Division. Soon afterwards, on 8 May 1943, 88 Infantry Brigade was disbanded.",
+        "subtype": "ORG"
+      },
+      "before": {
+        "decision": "SUGGESTED",
+        "reason": "graph winner; name and gap rules passed",
+        "suggested_qid": "Q2715528",
+        "suggested_label": "29th Infantry Division",
+        "candidate_count": 223,
+        "authority_gap": 0.3075632131169632,
+        "candidates": [
+          {
+            "entity_id": "Q2715528",
+            "matched_name": "29th Infantry Division",
+            "name_similarity": 0.9,
+            "authority": 0.0008602067453207852,
+            "in_page_pool": false
+          },
+          {
+            "entity_id": "Q224245",
+            "matched_name": "31st Infantry Division",
+            "name_similarity": 0.8,
+            "authority": 0.0005956387947850392,
+            "in_page_pool": false
+          },
+          {
+            "entity_id": "Q231293",
+            "matched_name": "4th Infantry Division",
+            "name_similarity": 0.9230769230769231,
+            "authority": 0.0005118433755653915,
+            "in_page_pool": false
+          },
+          {
+            "entity_id": "Q164669",
+            "matched_name": "10th Infantry Division",
+            "name_similarity": 0.9,
+            "authority": 0.00047890525426855007,
+            "in_page_pool": false
+          },
+          {
+            "entity_id": "Q163659",
+            "matched_name": "1st Infantry Division",
+            "name_similarity": 0.8205128205128205,
+            "authority": 0.0004696025107463022,
+            "in_page_pool": false
+          }
+        ]
+      },
+      "after": {
+        "decision": "SUGGESTED",
+        "reason": "graph winner; name and gap rules passed",
+        "suggested_qid": "Q9248092",
+        "suggested_label": "infantry division",
+        "candidate_count": 270,
+        "authority_gap": 0.6540270347573972,
+        "candidates": [
+          {
+            "entity_id": "Q9248092",
+            "matched_name": "infantry division",
+            "name_similarity": 0.8571428571428571,
+            "authority": 0.007979822482619314,
+            "in_page_pool": false
+          },
+          {
+            "entity_id": "Q63044726",
+            "matched_name": "French infantry division",
+            "name_similarity": 0.8095238095238095,
+            "authority": 0.002760802846421392,
+            "in_page_pool": false
+          },
+          {
+            "entity_id": "Q105016636",
+            "matched_name": "UK Infantry Division",
+            "name_similarity": 0.8421052631578947,
+            "authority": 0.0018897380151298507,
+            "in_page_pool": false
+          },
+          {
+            "entity_id": "Q2715528",
+            "matched_name": "29th Infantry Division",
+            "name_similarity": 0.9,
+            "authority": 0.0008569296304704442,
+            "in_page_pool": false
+          },
+          {
+            "entity_id": "Q18507147",
+            "matched_name": "7th Infantry Division",
+            "name_similarity": 0.9230769230769231,
+            "authority": 0.0006790883989730315,
+            "in_page_pool": false
+          }
+        ]
+      }
+    },
+    {
+      "change": "CHANGED_SUGGESTION",
+      "raw": {
+        "entity_group": "ORG",
+        "score": 0.9743461608886719,
+        "word": "7th Rajput Regiment",
+        "start": 15,
+        "end": 34,
+        "Source": "14th Indian Infantry Division",
+        "Index": 11,
+        "Text": "1st Battalion, 7th Rajput Regiment",
+        "subtype": "ORG"
+      },
+      "before": {
+        "decision": "SUGGESTED",
+        "reason": "single candidate; name rule passed",
+        "suggested_qid": "Q3630180",
+        "suggested_label": "Rajput Regiment",
+        "candidate_count": 1,
+        "authority_gap": null,
+        "candidates": [
+          {
+            "entity_id": "Q3630180",
+            "matched_name": "Rajput Regiment",
+            "name_similarity": 0.8666666666666667,
+            "authority": 0.0,
+            "in_page_pool": false
+          }
+        ]
+      },
+      "after": {
+        "decision": "SUGGESTED",
+        "reason": "graph winner; name and gap rules passed",
+        "suggested_qid": "Q4644160",
+        "suggested_label": "7th Rajput Regiment",
+        "candidate_count": 2,
+        "authority_gap": 1.0,
+        "candidates": [
+          {
+            "entity_id": "Q4644160",
+            "matched_name": "7th Rajput Regiment",
+            "name_similarity": 1.0,
+            "authority": 8.866840727175728e-08,
+            "in_page_pool": false
+          },
+          {
+            "entity_id": "Q3630180",
+            "matched_name": "Rajput Regiment",
+            "name_similarity": 0.8666666666666667,
+            "authority": 0.0,
+            "in_page_pool": false
+          }
+        ]
+      }
+    },
+    {
+      "change": "CHANGED_SUGGESTION",
+      "raw": {
+        "entity_group": "ORG",
+        "score": 0.928938627243042,
+        "word": "10th Battalion",
+        "start": 0,
+        "end": 14,
+        "Source": "14th Indian Infantry Division",
+        "Index": 18,
+        "Text": "10th Battalion, Lancashire Fusiliers",
+        "subtype": "ORG"
+      },
+      "before": {
+        "decision": "SUGGESTED",
+        "reason": "graph winner; name and gap rules passed",
+        "suggested_qid": "Q4596993",
+        "suggested_label": "2/10th Battalion",
+        "candidate_count": 50,
+        "authority_gap": 1.0,
+        "candidates": [
+          {
+            "entity_id": "Q4596993",
+            "matched_name": "2/10th Battalion",
+            "name_similarity": 0.9230769230769231,
+            "authority": 0.0010169838236685686,
+            "in_page_pool": false
+          },
+          {
+            "entity_id": "Q28183145",
+            "matched_name": "30th Battalion",
+            "name_similarity": 0.9166666666666666,
+            "authority": 0.0,
+            "in_page_pool": false
+          },
+          {
+            "entity_id": "Q4630670",
+            "matched_name": "20th Battalion",
+            "name_similarity": 0.9166666666666666,
+            "authority": 0.0,
+            "in_page_pool": false
+          },
+          {
+            "entity_id": "Q4634580",
+            "matched_name": "30th Battalion",
+            "name_similarity": 0.9166666666666666,
+            "authority": 0.0,
+            "in_page_pool": false
+          },
+          {
+            "entity_id": "Q4639928",
+            "matched_name": "50th Battalion",
+            "name_similarity": 0.9166666666666666,
+            "authority": 0.0,
+            "in_page_pool": false
+          }
+        ]
+      },
+      "after": {
+        "decision": "SUGGESTED",
+        "reason": "graph winner; name and gap rules passed",
+        "suggested_qid": "Q4637446",
+        "suggested_label": "40th Battalion",
+        "candidate_count": 53,
+        "authority_gap": 0.3748481067732941,
+        "candidates": [
+          {
+            "entity_id": "Q4637446",
+            "matched_name": "40th Battalion",
+            "name_similarity": 0.9166666666666666,
+            "authority": 0.001626778763188946,
+            "in_page_pool": false
+          },
+          {
+            "entity_id": "Q4596993",
+            "matched_name": "2/10th Battalion",
+            "name_similarity": 0.9230769230769231,
+            "authority": 0.0010169838236685686,
+            "in_page_pool": false
+          },
+          {
+            "entity_id": "Q28183145",
+            "matched_name": "30th Battalion",
+            "name_similarity": 0.9166666666666666,
+            "authority": 0.0,
+            "in_page_pool": false
+          },
+          {
+            "entity_id": "Q4630670",
+            "matched_name": "20th Battalion",
+            "name_similarity": 0.9166666666666666,
+            "authority": 0.0,
+            "in_page_pool": false
+          },
+          {
+            "entity_id": "Q4634580",
+            "matched_name": "30th Battalion",
+            "name_similarity": 0.9166666666666666,
+            "authority": 0.0,
+            "in_page_pool": false
+          }
+        ]
+      }
+    },
+    {
+      "change": "CHANGED_SUGGESTION",
+      "raw": {
+        "entity_group": "ORG",
+        "score": 0.9983090162277222,
+        "word": "Lancashire Fusiliers",
+        "start": 16,
+        "end": 36,
+        "Source": "14th Indian Infantry Division",
+        "Index": 18,
+        "Text": "10th Battalion, Lancashire Fusiliers",
+        "subtype": "ORG"
+      },
+      "before": {
+        "decision": "SUGGESTED",
+        "reason": "single candidate; name rule passed",
+        "suggested_qid": "Q81925",
+        "suggested_label": "Lancashire Fusiliers",
+        "candidate_count": 1,
+        "authority_gap": null,
+        "candidates": [
+          {
+            "entity_id": "Q81925",
+            "matched_name": "Lancashire Fusiliers",
+            "name_similarity": 1.0,
+            "authority": 0.0,
+            "in_page_pool": false
+          }
+        ]
+      },
+      "after": {
+        "decision": "SUGGESTED",
+        "reason": "graph winner; name and gap rules passed",
+        "suggested_qid": "Q28131043",
+        "suggested_label": "Category:Lancashire Fusiliers",
+        "candidate_count": 2,
+        "authority_gap": 1.0,
+        "candidates": [
+          {
+            "entity_id": "Q28131043",
+            "matched_name": "Category:Lancashire Fusiliers",
+            "name_similarity": 0.8,
+            "authority": 0.0008527969783739528,
+            "in_page_pool": false
+          },
+          {
+            "entity_id": "Q81925",
+            "matched_name": "Lancashire Fusiliers",
+            "name_similarity": 1.0,
+            "authority": 0.0,
+            "in_page_pool": false
+          }
+        ]
+      }
+    },
+    {
+      "change": "CHANGED_SUGGESTION",
+      "raw": {
+        "entity_group": "ORG",
+        "score": 0.9029770493507385,
+        "word": "Indian Airborne Division",
+        "start": 102,
+        "end": 126,
+        "Source": "14th Indian Infantry Division",
+        "Index": 33,
+        "Text": "60th Indian Field Ambulance Indian Army Medical Corps (selected for airborne duties and moved to 44th Indian Airborne Division)",
+        "subtype": "ORG"
+      },
+      "before": {
+        "decision": "SUGGESTED",
+        "reason": "single candidate; name rule passed",
+        "suggested_qid": "Q4638056",
+        "suggested_label": "44th Airborne Division",
+        "candidate_count": 1,
+        "authority_gap": null,
+        "candidates": [
+          {
+            "entity_id": "Q4638056",
+            "matched_name": "44th Indian Airborne Division",
+            "name_similarity": 0.8979591836734694,
+            "authority": 0.0,
+            "in_page_pool": false
+          }
+        ]
+      },
+      "after": {
+        "decision": "SUGGESTED",
+        "reason": "graph winner; name and gap rules passed",
+        "suggested_qid": "Q12141301",
+        "suggested_label": "airborne division",
+        "candidate_count": 3,
+        "authority_gap": 1.0,
+        "candidates": [
+          {
+            "entity_id": "Q12141301",
+            "matched_name": "airborne division",
+            "name_similarity": 0.8108108108108109,
+            "authority": 0.0568186819101489,
+            "in_page_pool": false
+          },
+          {
+            "entity_id": "Q4638056",
+            "matched_name": "44th Indian Airborne Division",
+            "name_similarity": 0.8979591836734694,
+            "authority": 0.0,
+            "in_page_pool": false
+          },
+          {
+            "entity_id": "Q89540750",
+            "matched_name": "airborne division",
+            "name_similarity": 0.8108108108108109,
+            "authority": 0.0,
+            "in_page_pool": false
+          }
+        ]
+      }
+    },
+    {
+      "change": "CHANGED_SUGGESTION",
+      "raw": {
+        "entity_group": "ORG",
+        "score": 0.9644331932067871,
+        "word": "11th Sikh Regiment",
+        "start": 16,
+        "end": 34,
+        "Source": "14th Indian Infantry Division",
+        "Index": 39,
+        "Text": "14th Battalion, 11th Sikh Regiment",
+        "subtype": "ORG"
+      },
+      "before": {
+        "decision": "SUGGESTED",
+        "reason": "single candidate; name rule passed",
+        "suggested_qid": "Q4547977",
+        "suggested_label": "11th Sikh Regiment",
+        "candidate_count": 1,
+        "authority_gap": null,
+        "candidates": [
+          {
+            "entity_id": "Q4547977",
+            "matched_name": "11th Sikh Regiment",
+            "name_similarity": 1.0,
+            "authority": 0.0,
+            "in_page_pool": false
+          }
+        ]
+      },
+      "after": {
+        "decision": "SUGGESTED",
+        "reason": "graph winner; name and gap rules passed",
+        "suggested_qid": "Q4635781",
+        "suggested_label": "36th Sikhs",
+        "candidate_count": 3,
+        "authority_gap": 1.0,
+        "candidates": [
+          {
+            "entity_id": "Q4635781",
+            "matched_name": "36th Sikh regiment",
+            "name_similarity": 0.875,
+            "authority": 0.05452135522528052,
+            "in_page_pool": false
+          },
+          {
+            "entity_id": "Q4547977",
+            "matched_name": "11th Sikh Regiment",
+            "name_similarity": 1.0,
+            "authority": 2.249597150602079e-24,
+            "in_page_pool": false
+          },
+          {
+            "entity_id": "Q3630099",
+            "matched_name": "Sikh Regiment",
+            "name_similarity": 0.8148148148148148,
+            "authority": 0.0,
+            "in_page_pool": false
+          }
+        ]
+      }
+    },
+    {
+      "change": "CHANGED_SUGGESTION",
+      "raw": {
+        "entity_group": "ORG",
+        "score": 0.9770777821540833,
+        "word": "7th Rajput Regiment",
+        "start": 15,
+        "end": 34,
+        "Source": "14th Indian Infantry Division",
+        "Index": 46,
+        "Text": "9th Battalion, 7th Rajput Regiment",
+        "subtype": "ORG"
+      },
+      "before": {
+        "decision": "SUGGESTED",
+        "reason": "single candidate; name rule passed",
+        "suggested_qid": "Q3630180",
+        "suggested_label": "Rajput Regiment",
+        "candidate_count": 1,
+        "authority_gap": null,
+        "candidates": [
+          {
+            "entity_id": "Q3630180",
+            "matched_name": "Rajput Regiment",
+            "name_similarity": 0.8666666666666667,
+            "authority": 0.0,
+            "in_page_pool": false
+          }
+        ]
+      },
+      "after": {
+        "decision": "SUGGESTED",
+        "reason": "graph winner; name and gap rules passed",
+        "suggested_qid": "Q4644160",
+        "suggested_label": "7th Rajput Regiment",
+        "candidate_count": 2,
+        "authority_gap": 1.0,
+        "candidates": [
+          {
+            "entity_id": "Q4644160",
+            "matched_name": "7th Rajput Regiment",
+            "name_similarity": 1.0,
+            "authority": 8.866840727175728e-08,
+            "in_page_pool": false
+          },
+          {
+            "entity_id": "Q3630180",
+            "matched_name": "Rajput Regiment",
+            "name_similarity": 0.8666666666666667,
+            "authority": 0.0,
+            "in_page_pool": false
+          }
+        ]
+      }
+    },
+    {
+      "change": "CHANGED_SUGGESTION",
+      "raw": {
+        "entity_group": "LOC",
+        "score": 0.9684419631958008,
+        "word": "RIA",
+        "start": 21,
+        "end": 24,
+        "Source": "14th Indian Infantry Division",
+        "Index": 50,
+        "Text": "10th Field Regiment, RIA",
+        "subtype": "LOC"
+      },
+      "before": {
+        "decision": "SUGGESTED",
+        "reason": "single candidate; name rule passed",
+        "suggested_qid": "Q7419671",
+        "suggested_label": "Santa Maria Air Force Base",
+        "candidate_count": 1,
+        "authority_gap": null,
+        "candidates": [
+          {
+            "entity_id": "Q7419671",
+            "matched_name": "RIA",
+            "name_similarity": 1.0,
+            "authority": 0.0,
+            "in_page_pool": false
+          }
+        ]
+      },
+      "after": {
+        "decision": "SUGGESTED",
+        "reason": "graph winner; name and gap rules passed",
+        "suggested_qid": "Q7419674",
+        "suggested_label": "Santa Maria Airport",
+        "candidate_count": 2,
+        "authority_gap": 1.0,
+        "candidates": [
+          {
+            "entity_id": "Q7419674",
+            "matched_name": "RIA",
+            "name_similarity": 1.0,
+            "authority": 5.608825675647627e-26,
+            "in_page_pool": false
+          },
+          {
+            "entity_id": "Q7419671",
+            "matched_name": "RIA",
+            "name_similarity": 1.0,
+            "authority": 0.0,
+            "in_page_pool": false
+          }
+        ]
+      }
+    },
+    {
+      "change": "SUGGESTION_REMOVED",
+      "raw": {
+        "entity_group": "LOC",
+        "score": 0.9889947772026062,
+        "word": "RA",
+        "start": 35,
+        "end": 37,
+        "Source": "14th Indian Infantry Division",
+        "Index": 52,
+        "Text": "44th Light Anti-aircraft Regiment, RA",
+        "subtype": "LOC"
+      },
+      "before": {
+        "decision": "SUGGESTED",
+        "reason": "single candidate; name rule passed",
+        "suggested_qid": "Q7275537",
+        "suggested_label": "RAF Raydon",
+        "candidate_count": 1,
+        "authority_gap": null,
+        "candidates": [
+          {
+            "entity_id": "Q7275537",
+            "matched_name": "RA",
+            "name_similarity": 1.0,
+            "authority": 0.0,
+            "in_page_pool": false
+          }
+        ]
+      },
+      "after": {
+        "decision": "UNRESOLVED",
+        "reason": "name score or graph separation too weak",
+        "suggested_qid": null,
+        "suggested_label": null,
+        "candidate_count": 4,
+        "authority_gap": 0.0,
+        "candidates": [
+          {
+            "entity_id": "Q2587335",
+            "matched_name": "RA",
+            "name_similarity": 1.0,
+            "authority": 0.0,
+            "in_page_pool": false
+          },
+          {
+            "entity_id": "Q356936",
+            "matched_name": "RA",
+            "name_similarity": 1.0,
+            "authority": 0.0,
+            "in_page_pool": false
+          },
+          {
+            "entity_id": "Q717763",
+            "matched_name": "Ra",
+            "name_similarity": 1.0,
+            "authority": 0.0,
+            "in_page_pool": false
+          },
+          {
+            "entity_id": "Q7275537",
+            "matched_name": "RA",
+            "name_similarity": 1.0,
+            "authority": 0.0,
+            "in_page_pool": false
+          }
+        ]
+      }
+    },
+    {
+      "change": "SUGGESTION_REMOVED",
+      "raw": {
+        "entity_group": "LOC",
+        "score": 0.9997987151145935,
+        "word": "Japan",
+        "start": 447,
+        "end": 452,
+        "Source": "1939–1940 Winter Offensive",
+        "Index": 3,
+        "Text": "The Chinese objective in the offensive was to take the initiative by conducting multiple-front attacks to tie down Japanese forces. They intended to use their position of exterior lines to advantage to prevent the Japanese from launching new local offensives or shifting their forces to concentrate for a large offensive. The main effort was to be by the 2nd, 3rd, 5th and 9th War Areas, located on the more northeastern side of China, closest to Japan, which received all newly trained and reorganized units. Secondary efforts in support of the main efforts or as diversions were to be conducted by 1st, 4th, 8th, Shandong-Jiangsu and Hebei-Chahar War Areas, further south or west from Japan, with their existing units.",
+        "subtype": "LOC"
+      },
+      "before": {
+        "decision": "SUGGESTED",
+        "reason": "single candidate; name rule passed",
+        "suggested_qid": "Q188712",
+        "suggested_label": "Empire of Japan",
+        "candidate_count": 1,
+        "authority_gap": null,
+        "candidates": [
+          {
+            "entity_id": "Q188712",
+            "matched_name": "Japan",
+            "name_similarity": 1.0,
+            "authority": 0.005290418465040692,
+            "in_page_pool": false
+          }
+        ]
+      },
+      "after": {
+        "decision": "UNRESOLVED",
+        "reason": "name score or graph separation too weak",
+        "suggested_qid": null,
+        "suggested_label": null,
+        "candidate_count": 3,
+        "authority_gap": 0.15755725978129584,
+        "candidates": [
+          {
+            "entity_id": "Q188712",
+            "matched_name": "Japan",
+            "name_similarity": 1.0,
+            "authority": 0.0053026679809506485,
+            "in_page_pool": false
+          },
+          {
+            "entity_id": "Q17",
+            "matched_name": "Japan",
+            "name_similarity": 1.0,
+            "authority": 0.004467194144342048,
+            "in_page_pool": false
+          },
+          {
+            "entity_id": "Q205662",
+            "matched_name": "Japan",
+            "name_similarity": 1.0,
+            "authority": 0.0018997004971204531,
+            "in_page_pool": false
+          }
+        ]
+      }
+    },
+    {
+      "change": "SUGGESTION_REMOVED",
+      "raw": {
+        "entity_group": "LOC",
+        "score": 0.9997939467430115,
+        "word": "Japan",
+        "start": 687,
+        "end": 692,
+        "Source": "1939–1940 Winter Offensive",
+        "Index": 3,
+        "Text": "The Chinese objective in the offensive was to take the initiative by conducting multiple-front attacks to tie down Japanese forces. They intended to use their position of exterior lines to advantage to prevent the Japanese from launching new local offensives or shifting their forces to concentrate for a large offensive. The main effort was to be by the 2nd, 3rd, 5th and 9th War Areas, located on the more northeastern side of China, closest to Japan, which received all newly trained and reorganized units. Secondary efforts in support of the main efforts or as diversions were to be conducted by 1st, 4th, 8th, Shandong-Jiangsu and Hebei-Chahar War Areas, further south or west from Japan, with their existing units.",
+        "subtype": "LOC"
+      },
+      "before": {
+        "decision": "SUGGESTED",
+        "reason": "single candidate; name rule passed",
+        "suggested_qid": "Q188712",
+        "suggested_label": "Empire of Japan",
+        "candidate_count": 1,
+        "authority_gap": null,
+        "candidates": [
+          {
+            "entity_id": "Q188712",
+            "matched_name": "Japan",
+            "name_similarity": 1.0,
+            "authority": 0.005290418465040692,
+            "in_page_pool": false
+          }
+        ]
+      },
+      "after": {
+        "decision": "UNRESOLVED",
+        "reason": "name score or graph separation too weak",
+        "suggested_qid": null,
+        "suggested_label": null,
+        "candidate_count": 3,
+        "authority_gap": 0.15755725978129584,
+        "candidates": [
+          {
+            "entity_id": "Q188712",
+            "matched_name": "Japan",
+            "name_similarity": 1.0,
+            "authority": 0.0053026679809506485,
+            "in_page_pool": false
+          },
+          {
+            "entity_id": "Q17",
+            "matched_name": "Japan",
+            "name_similarity": 1.0,
+            "authority": 0.004467194144342048,
+            "in_page_pool": false
+          },
+          {
+            "entity_id": "Q205662",
+            "matched_name": "Japan",
+            "name_similarity": 1.0,
+            "authority": 0.0018997004971204531,
+            "in_page_pool": false
+          }
+        ]
+      }
+    },
+    {
+      "change": "SUGGESTION_REMOVED",
+      "raw": {
+        "entity_group": "LOC",
+        "score": 0.9997761845588684,
+        "word": "Japan",
+        "start": 260,
+        "end": 265,
+        "Source": "1939–1940 Winter Offensive",
+        "Index": 7,
+        "Text": "In 1937, the Chinese government picked up intelligence that the Japanese planned to install a puppet Hui Muslim regime around Suiyuan and Ningxia, and had sent agents to the region. The Middlesboro Daily News ran an article by Owen Lattimore which reported on Japan's planned offensive into the Muslim region in 1938, which predicted that the Japanese would suffer a crushing defeat at the hands of the Muslims.",
+        "subtype": "LOC"
+      },
+      "before": {
+        "decision": "SUGGESTED",
+        "reason": "single candidate; name rule passed",
+        "suggested_qid": "Q188712",
+        "suggested_label": "Empire of Japan",
+        "candidate_count": 1,
+        "authority_gap": null,
+        "candidates": [
+          {
+            "entity_id": "Q188712",
+            "matched_name": "Japan",
+            "name_similarity": 1.0,
+            "authority": 0.005297746912574144,
+            "in_page_pool": false
+          }
+        ]
+      },
+      "after": {
+        "decision": "UNRESOLVED",
+        "reason": "name score or graph separation too weak",
+        "suggested_qid": null,
+        "suggested_label": null,
+        "candidate_count": 3,
+        "authority_gap": 0.15910514963478142,
+        "candidates": [
+          {
+            "entity_id": "Q188712",
+            "matched_name": "Japan",
+            "name_similarity": 1.0,
+            "authority": 0.005309896269198421,
+            "in_page_pool": false
+          },
+          {
+            "entity_id": "Q17",
+            "matched_name": "Japan",
+            "name_similarity": 1.0,
+            "authority": 0.004465064428742439,
+            "in_page_pool": false
+          },
+          {
+            "entity_id": "Q205662",
+            "matched_name": "Japan",
+            "name_similarity": 1.0,
+            "authority": 0.0018962570616766726,
+            "in_page_pool": false
+          }
+        ]
+      }
+    },
+    {
+      "change": "SUGGESTION_REMOVED",
+      "raw": {
+        "entity_group": "MISC",
+        "score": 0.8162353038787842,
+        "word": "Battle",
+        "start": 127,
+        "end": 133,
+        "Source": "1939–1940 Winter Offensive",
+        "Index": 9,
+        "Text": "In Suiyuan, 300 Mongol collaborators serving the Japanese were fought off by a single Muslim who held the rank of major at the Battle of Wulan Obo in April.",
+        "subtype": "MISC"
+      },
+      "before": {
+        "decision": "SUGGESTED",
+        "reason": "single candidate; name rule passed",
+        "suggested_qid": "Q1330167",
+        "suggested_label": "Fairey Battle",
+        "candidate_count": 1,
+        "authority_gap": null,
+        "candidates": [
+          {
+            "entity_id": "Q1330167",
+            "matched_name": "Battle",
+            "name_similarity": 1.0,
+            "authority": 0.0,
+            "in_page_pool": false
+          }
+        ]
+      },
+      "after": {
+        "decision": "UNRESOLVED",
+        "reason": "name score or graph separation too weak",
+        "suggested_qid": null,
+        "suggested_label": null,
+        "candidate_count": 4,
+        "authority_gap": 0.0,
+        "candidates": [
+          {
+            "entity_id": "Q105826326",
+            "matched_name": "battle",
+            "name_similarity": 1.0,
+            "authority": 0.0,
+            "in_page_pool": false
+          },
+          {
+            "entity_id": "Q1330167",
+            "matched_name": "Battle",
+            "name_similarity": 1.0,
+            "authority": 0.0,
+            "in_page_pool": false
+          },
+          {
+            "entity_id": "Q178561",
+            "matched_name": "battle",
+            "name_similarity": 1.0,
+            "authority": 0.0,
+            "in_page_pool": false
+          },
+          {
+            "entity_id": "Q737593",
+            "matched_name": "Battle",
+            "name_similarity": 1.0,
+            "authority": 0.0,
+            "in_page_pool": false
+          }
+        ]
+      }
+    }
+  ],
+  "date_risk_examples": [
+    {
+      "raw": {
+        "entity_group": "DATE",
+        "score": 0.9625943303108215,
+        "word": "1939",
+        "start": 553,
+        "end": 557,
+        "Source": "1939–1940 Winter Offensive",
+        "Index": 2,
+        "Text": "The Chinese had repulsed two Japanese offensives in the summer at the Battle of Suixian-Zaoyang and in fall at the 1st Battle of Changsha. They believed that the Japanese forces were now too dissipated to take and hold new territory and would not be able to launch large offensives unless they received more reinforcements. However, by defending interior lines and with control of the lines of communication, they could still shift forces and launch local offensives to damage Chinese forces or mop up guerrillas in the rear areas. Additionally, during 1939, the Japanese were replacing many of their large four-regiment square Divisions with the smaller three regiment triangular Divisions and weak Independent Mixed Brigades. This weakening of forces encouraged the Chinese to plan a large offensive to exploit that fact.",
+        "subtype": "date"
+      },
+      "before": {
+        "decision": "SUGGESTED",
+        "reason": "graph winner; name and gap rules passed",
+        "suggested_qid": "Q22082155",
+        "suggested_label": "Battle of the Bell Islands",
+        "candidate_count": 3,
+        "authority_gap": 1.0,
+        "candidates": [
+          {
+            "entity_id": "Q22082155",
+            "matched_name": "1939",
+            "name_similarity": 1.0,
+            "authority": 0.002740596696593061,
+            "in_page_pool": false
+          },
+          {
+            "entity_id": "Q2373703",
+            "matched_name": "M1939",
+            "name_similarity": 0.8,
+            "authority": 0.0,
+            "in_page_pool": false
+          },
+          {
+            "entity_id": "Q701703",
+            "matched_name": "M1939",
+            "name_similarity": 0.8,
+            "authority": 0.0,
+            "in_page_pool": false
+          }
+        ]
+      },
+      "after": {
+        "decision": "SUGGESTED",
+        "reason": "graph winner; name and gap rules passed",
+        "suggested_qid": "Q22082155",
+        "suggested_label": "Battle of the Bell Islands",
+        "candidate_count": 4,
+        "authority_gap": 1.0,
+        "candidates": [
+          {
+            "entity_id": "Q22082155",
+            "matched_name": "1939",
+            "name_similarity": 1.0,
+            "authority": 0.0027070005356131066,
+            "in_page_pool": false
+          },
+          {
+            "entity_id": "Q18639",
+            "matched_name": "1939",
+            "name_similarity": 1.0,
+            "authority": 0.0,
+            "in_page_pool": false
+          },
+          {
+            "entity_id": "Q2373703",
+            "matched_name": "M1939",
+            "name_similarity": 0.8,
+            "authority": 0.0,
+            "in_page_pool": false
+          },
+          {
+            "entity_id": "Q701703",
+            "matched_name": "M1939",
+            "name_similarity": 0.8,
+            "authority": 0.0,
+            "in_page_pool": false
+          }
+        ]
+      }
+    },
+    {
+      "raw": {
+        "entity_group": "DATE",
+        "score": 0.878855288028717,
+        "word": "1938",
+        "start": 312,
+        "end": 316,
+        "Source": "1939–1940 Winter Offensive",
+        "Index": 7,
+        "Text": "In 1937, the Chinese government picked up intelligence that the Japanese planned to install a puppet Hui Muslim regime around Suiyuan and Ningxia, and had sent agents to the region. The Middlesboro Daily News ran an article by Owen Lattimore which reported on Japan's planned offensive into the Muslim region in 1938, which predicted that the Japanese would suffer a crushing defeat at the hands of the Muslims.",
+        "subtype": "date"
+      },
+      "before": {
+        "decision": "SUGGESTED",
+        "reason": "single candidate; name rule passed",
+        "suggested_qid": "Q2629571",
+        "suggested_label": "76 mm mountain gun M1938",
+        "candidate_count": 1,
+        "authority_gap": null,
+        "candidates": [
+          {
+            "entity_id": "Q2629571",
+            "matched_name": "M1938",
+            "name_similarity": 0.8,
+            "authority": 0.0,
+            "in_page_pool": false
+          }
+        ]
+      },
+      "after": {
+        "decision": "SUGGESTED",
+        "reason": "single candidate; name rule passed",
+        "suggested_qid": "Q2629571",
+        "suggested_label": "76 mm mountain gun M1938",
+        "candidate_count": 1,
+        "authority_gap": null,
+        "candidates": [
+          {
+            "entity_id": "Q2629571",
+            "matched_name": "M1938",
+            "name_similarity": 0.8,
+            "authority": 0.0,
+            "in_page_pool": false
+          }
+        ]
+      }
+    },
+    {
+      "raw": {
+        "entity_group": "DATE",
+        "score": 0.6203768253326416,
+        "word": "1941",
+        "start": 41,
+        "end": 45,
+        "Source": "1943 Cairo Declaration",
+        "Index": 1,
+        "Text": "The declaration developed ideas from the 1941 Atlantic Charter, which was issued by the Allies of World War II to set goals for the post-war order. The Cairo Communiqué was broadcast through radio on 1 December 1943.",
+        "subtype": "date"
+      },
+      "before": {
+        "decision": "SUGGESTED",
+        "reason": "graph winner; name and gap rules passed",
+        "suggested_qid": "Q2008158",
+        "suggested_label": "Moonsund Landing Operation",
+        "candidate_count": 2,
+        "authority_gap": 0.6246824518846354,
+        "candidates": [
+          {
+            "entity_id": "Q2008158",
+            "matched_name": "1941",
+            "name_similarity": 1.0,
+            "authority": 0.00014662284790895402,
+            "in_page_pool": false
+          },
+          {
+            "entity_id": "Q207482",
+            "matched_name": "1941",
+            "name_similarity": 1.0,
+            "authority": 5.503012777488063e-05,
+            "in_page_pool": false
+          }
+        ]
+      },
+      "after": {
+        "decision": "SUGGESTED",
+        "reason": "graph winner; name and gap rules passed",
+        "suggested_qid": "Q2008158",
+        "suggested_label": "Moonsund Landing Operation",
+        "candidate_count": 3,
+        "authority_gap": 0.5030510112283737,
+        "candidates": [
+          {
+            "entity_id": "Q2008158",
+            "matched_name": "1941",
+            "name_similarity": 1.0,
+            "authority": 0.00014653384921210747,
+            "in_page_pool": false
+          },
+          {
+            "entity_id": "Q5231",
+            "matched_name": "1941",
+            "name_similarity": 1.0,
+            "authority": 7.281984818677077e-05,
+            "in_page_pool": false
+          },
+          {
+            "entity_id": "Q207482",
+            "matched_name": "1941",
+            "name_similarity": 1.0,
+            "authority": 5.4985497306198876e-05,
+            "in_page_pool": false
+          }
+        ]
+      }
+    },
+    {
+      "raw": {
+        "entity_group": "DATE",
+        "score": 0.9503827095031738,
+        "word": "2000",
+        "start": 3,
+        "end": 7,
+        "Source": "Air raids on Darwin, 19 February 1942",
+        "Index": 33,
+        "Text": "In 2000, Darwin historian Peter Forrest, who spoke to survivors and researched the attacks for an unpublished book, said (as paraphrased by a journalist), \"the first Japanese air raids on Darwin probably killed more than double the official figure of 243\", but by 2002 had lowered his estimate to \"anything up to double that 243\".",
+        "subtype": "date"
+      },
+      "before": {
+        "decision": "SUGGESTED",
+        "reason": "single candidate; name rule passed",
+        "suggested_qid": "Q663695",
+        "suggested_label": "R-2000 Twin Wasp",
+        "candidate_count": 1,
+        "authority_gap": null,
+        "candidates": [
+          {
+            "entity_id": "Q663695",
+            "matched_name": "R2000",
+            "name_similarity": 0.8,
+            "authority": 0.0,
+            "in_page_pool": false
+          }
+        ]
+      },
+      "after": {
+        "decision": "SUGGESTED",
+        "reason": "single candidate; name rule passed",
+        "suggested_qid": "Q663695",
+        "suggested_label": "R-2000 Twin Wasp",
+        "candidate_count": 1,
+        "authority_gap": null,
+        "candidates": [
+          {
+            "entity_id": "Q663695",
+            "matched_name": "R2000",
+            "name_similarity": 0.8,
+            "authority": 0.0,
+            "in_page_pool": false
+          }
+        ]
+      }
+    }
+  ]
+}

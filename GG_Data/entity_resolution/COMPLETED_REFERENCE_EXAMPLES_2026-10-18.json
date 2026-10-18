@@ -1,0 +1,415 @@
+{
+  "examples": {
+    "nationality_as_language": {
+      "mention_id": "mention-85a02fe2d992765119c65872e0ab98fe9b1462b4b1810a1a7598df1f9c07d474",
+      "input_row_number": 23,
+      "raw": {
+        "entity_group": "MISC",
+        "score": 0.9990239143371582,
+        "word": "Japanese",
+        "start": 300,
+        "end": 308,
+        "Source": "14th Indian Infantry Division",
+        "Index": 2,
+        "Text": "When first formed, the division was intended to operate in Iraq and Persia, then under Allied military occupation, and first trained for mountain and desert warfare. It consisted of the 23rd, 36th and 37th Indian Infantry brigades. In December, war with Imperial Japan broke out. In March, after the Japanese captured Rangoon, the capital of Burma, the division was reassigned to the eastern frontier of India, and its existing brigades were dispersed to other divisions being formed. The 47th and 49th Indian Infantry Brigades were assigned to the division in March 1942, although the 49th Brigade was removed in May. The 23rd Indian Brigade was renumbered the 123rd Indian Infantry Brigade and returned to the division in July.",
+        "subtype": "MISC"
+      },
+      "decision": "SUGGESTED",
+      "reason": "graph winner; name and gap rules passed",
+      "suggested_qid": "Q5287",
+      "suggested_label": "Japanese",
+      "candidate_count": 3,
+      "authority_gap": 1.0,
+      "top_candidates": [
+        {
+          "entity_id": "Q5287",
+          "matched_name": "Japanese",
+          "matched_name_kind": "label",
+          "name_similarity": 1.0,
+          "type_check": "ASSUMED_COMPATIBLE",
+          "authority": 0.0019400717069910523,
+          "page_context_id": null,
+          "in_page_pool": false
+        },
+        {
+          "entity_id": "Q161652",
+          "matched_name": "Japanese",
+          "matched_name_kind": "alias",
+          "name_similarity": 1.0,
+          "type_check": "ASSUMED_COMPATIBLE",
+          "authority": 0.0,
+          "page_context_id": null,
+          "in_page_pool": false
+        },
+        {
+          "entity_id": "Q177837",
+          "matched_name": "Japanese WP",
+          "matched_name_kind": "alias",
+          "name_similarity": 0.8,
+          "type_check": "ASSUMED_COMPATIBLE",
+          "authority": 0.0,
+          "page_context_id": null,
+          "in_page_pool": false
+        }
+      ]
+    },
+    "restored_country": {
+      "mention_id": "mention-a9443e32f6c9fff6133299fc39dcb0976f37acea7f58998d92ae0c40e15a0b2b",
+      "input_row_number": 506,
+      "raw": {
+        "entity_group": "LOC",
+        "score": 0.9995789527893066,
+        "word": "United States",
+        "start": 263,
+        "end": 276,
+        "Source": "1943 Cairo Declaration",
+        "Index": 0,
+        "Text": "The Cairo Declaration (Chinese: 開羅宣言) was the outcome of the Cairo Conference in Cairo, Egypt, on 27 November 1943 of the 3 Allied powers engaged in the Second World war against the \"Axis\" of Germany and Japan, represented by  President Franklin Roosevelt of the United States, Prime Minister Winston Churchill of the United Kingdom, and Generalissimo Chiang Kai-shek of the Republic of China.  ",
+        "subtype": "LOC"
+      },
+      "decision": "SUGGESTED",
+      "reason": "graph winner; name and gap rules passed",
+      "suggested_qid": "Q30",
+      "suggested_label": "United States",
+      "candidate_count": 15,
+      "authority_gap": 0.9958933545244619,
+      "top_candidates": [
+        {
+          "entity_id": "Q30",
+          "matched_name": "United States",
+          "matched_name_kind": "label",
+          "name_similarity": 1.0,
+          "type_check": "ASSUMED_COMPATIBLE",
+          "authority": 0.1391604907715645,
+          "page_context_id": null,
+          "in_page_pool": false
+        },
+        {
+          "entity_id": "Q11220",
+          "matched_name": "United States Navy",
+          "matched_name_kind": "label",
+          "name_similarity": 0.8148148148148148,
+          "type_check": "ASSUMED_COMPATIBLE",
+          "authority": 0.0005714827998007024,
+          "page_context_id": null,
+          "in_page_pool": false
+        },
+        {
+          "entity_id": "Q9212",
+          "matched_name": "United States Army",
+          "matched_name_kind": "label",
+          "name_similarity": 0.8148148148148148,
+          "type_check": "ASSUMED_COMPATIBLE",
+          "authority": 0.0001687085010689078,
+          "page_context_id": null,
+          "in_page_pool": false
+        },
+        {
+          "entity_id": "Q1397",
+          "matched_name": "Ohio, United States",
+          "matched_name_kind": "alias",
+          "name_similarity": 0.8148148148148148,
+          "type_check": "ASSUMED_COMPATIBLE",
+          "authority": 6.684987679291054e-05,
+          "page_context_id": null,
+          "in_page_pool": false
+        },
+        {
+          "entity_id": "Q1546",
+          "matched_name": "Iowa, United States",
+          "matched_name_kind": "alias",
+          "name_similarity": 0.8148148148148148,
+          "type_check": "ASSUMED_COMPATIBLE",
+          "authority": 3.353903854349788e-05,
+          "page_context_id": null,
+          "in_page_pool": false
+        }
+      ]
+    },
+    "roosevelt_wrong_person": {
+      "mention_id": "mention-16c9cec2ad2072621d28bfcbc74c317117d3da65005ba3da4b4d586939d04947",
+      "input_row_number": 5098,
+      "raw": {
+        "entity_group": "PER",
+        "score": 0.9982740879058838,
+        "word": "Roosevelt",
+        "start": 462,
+        "end": 471,
+        "Source": "Air warfare of World War II",
+        "Index": 15,
+        "Text": "Before the attack on Pearl Harbor and during the period within which the predecessor U.S. Army Air Corps became the Army Air Forces in late June 1941, President Franklin D. Roosevelt gave command of the Navy to an aviator, Admiral Ernest King, with a mandate for an aviation-oriented war in the Pacific. FDR allowed King to build up land-based naval and Marine aviation, and seize control of the long-range bombers used in antisubmarine patrols in the Atlantic. Roosevelt basically agreed with Robert A. Lovett, the civilian Assistant Secretary of War for Air, who argued, \"While I don't go so far as to claim that air power alone will win the war, I do claim the war will not be won without it.\"",
+        "subtype": "PER"
+      },
+      "decision": "SUGGESTED",
+      "reason": "graph winner; name and gap rules passed",
+      "suggested_qid": "Q33866",
+      "suggested_label": "Theodore Roosevelt",
+      "candidate_count": 2,
+      "authority_gap": 1.0,
+      "top_candidates": [
+        {
+          "entity_id": "Q33866",
+          "matched_name": "T. Roosevelt",
+          "matched_name_kind": "alias",
+          "name_similarity": 0.875,
+          "type_check": "EXPLICIT_HUMAN_Q5",
+          "authority": 5.2250073519773666e-05,
+          "page_context_id": null,
+          "in_page_pool": false
+        },
+        {
+          "entity_id": "Q330431",
+          "matched_name": "K. Roosevelt",
+          "matched_name_kind": "alias",
+          "name_similarity": 0.875,
+          "type_check": "EXPLICIT_HUMAN_Q5",
+          "authority": 0.0,
+          "page_context_id": null,
+          "in_page_pool": false
+        }
+      ]
+    },
+    "country_as_language": {
+      "mention_id": "mention-e0fd7a8e6d7421463f76626e8b00cfe7a165e12128b315cb8aecdbd7fe3a3c6b",
+      "input_row_number": 11398,
+      "raw": {
+        "entity_group": "LOC",
+        "score": 0.9996472597122192,
+        "word": "Germany",
+        "start": 157,
+        "end": 164,
+        "Source": "Allied leaders of World War II",
+        "Index": 40,
+        "Text": "Winston Churchill was Prime Minister of the United Kingdom during most of the war, from 1940 to 1945. An early opponent of Hitler, he opposed appeasement of Germany. He was First Lord of the Admiralty at the outbreak of war, then came into power at the start of the Nazi invasion of France. During the Battle of Britain, Churchill's speeches boosted the British morale during the darkest moments.",
+        "subtype": "LOC"
+      },
+      "decision": "SUGGESTED",
+      "reason": "graph winner; name and gap rules passed",
+      "suggested_qid": "Q188",
+      "suggested_label": "German",
+      "candidate_count": 6,
+      "authority_gap": 0.294362772494229,
+      "top_candidates": [
+        {
+          "entity_id": "Q188",
+          "matched_name": "German",
+          "matched_name_kind": "label",
+          "name_similarity": 0.8888888888888888,
+          "type_check": "ASSUMED_COMPATIBLE",
+          "authority": 0.0014019987553881854,
+          "page_context_id": null,
+          "in_page_pool": false
+        },
+        {
+          "entity_id": "Q183",
+          "matched_name": "Germany",
+          "matched_name_kind": "label",
+          "name_similarity": 1.0,
+          "type_check": "ASSUMED_COMPATIBLE",
+          "authority": 0.0009893025147186608,
+          "page_context_id": null,
+          "in_page_pool": false
+        },
+        {
+          "entity_id": "Q41304",
+          "matched_name": "Germany",
+          "matched_name_kind": "alias",
+          "name_similarity": 1.0,
+          "type_check": "ASSUMED_COMPATIBLE",
+          "authority": 0.0005411965886019947,
+          "page_context_id": null,
+          "in_page_pool": false
+        },
+        {
+          "entity_id": "Q1206012",
+          "matched_name": "Germany",
+          "matched_name_kind": "alias",
+          "name_similarity": 1.0,
+          "type_check": "ASSUMED_COMPATIBLE",
+          "authority": 0.00015925696063999302,
+          "page_context_id": null,
+          "in_page_pool": false
+        },
+        {
+          "entity_id": "Q28914610",
+          "matched_name": "German",
+          "matched_name_kind": "label",
+          "name_similarity": 0.8888888888888888,
+          "type_check": "ASSUMED_COMPATIBLE",
+          "authority": 0.0,
+          "page_context_id": null,
+          "in_page_pool": false
+        }
+      ]
+    },
+    "restored_year": {
+      "mention_id": "mention-2420459041247c637f97ebcd8302f15b126c5e3d443c1782dd7780ffbdac0938",
+      "input_row_number": 20585,
+      "raw": {
+        "entity_group": "DATE",
+        "score": 0.9458033442497253,
+        "word": "1941",
+        "start": 841,
+        "end": 845,
+        "Source": "Attack on Pearl Harbor",
+        "Index": 10,
+        "Text": "In mid-1940, President Franklin D. Roosevelt moved the Pacific Fleet from San Diego to Hawaii. He also ordered a military buildup in the Philippines, taking both actions in the hope of discouraging Japanese aggression in the Far East. Because the Japanese high command was mistakenly certain any attack on the United Kingdom's Southeast Asian colonies, including Singapore, would bring the United States into the war, a devastating preventive strike appeared to be the only way to prevent American naval interference. An invasion of the Philippines was also considered necessary by Japanese war planners. The American War Plan Orange had envisioned defending the Philippines with an elite force of 40,000 men; this option was never implemented due to opposition from Douglas MacArthur, who felt he would need a force ten times that size. By 1941, American planners expected to have to abandon the Philippines at the outbreak of war. Late that year, Admiral Thomas C. Hart, commander of the United States Asiatic Fleet, was given orders to that effect.",
+        "subtype": "date"
+      },
+      "decision": "SUGGESTED",
+      "reason": "graph winner; name and gap rules passed",
+      "suggested_qid": "Q5231",
+      "suggested_label": "1941",
+      "candidate_count": 3,
+      "authority_gap": 0.5099909355321293,
+      "top_candidates": [
+        {
+          "entity_id": "Q5231",
+          "matched_name": "1941",
+          "matched_name_kind": "label",
+          "name_similarity": 1.0,
+          "type_check": "ASSUMED_COMPATIBLE",
+          "authority": 1.3764918663166296e-05,
+          "page_context_id": null,
+          "in_page_pool": false
+        },
+        {
+          "entity_id": "Q207482",
+          "matched_name": "1941",
+          "matched_name_kind": "label",
+          "name_similarity": 1.0,
+          "type_check": "ASSUMED_COMPATIBLE",
+          "authority": 6.744934916614451e-06,
+          "page_context_id": "Q52418|Q207482",
+          "in_page_pool": true
+        },
+        {
+          "entity_id": "Q2008158",
+          "matched_name": "1941",
+          "matched_name_kind": "alias",
+          "name_similarity": 1.0,
+          "type_check": "ASSUMED_COMPATIBLE",
+          "authority": 6.643111573695103e-06,
+          "page_context_id": null,
+          "in_page_pool": false
+        }
+      ]
+    }
+  },
+  "target_metadata": {
+    "Q188": {
+      "entity_id": "Q188",
+      "canonical_wikidata_id": "Q188",
+      "metadata_status": "AVAILABLE",
+      "label": "German",
+      "aliases": [
+        "German language"
+      ],
+      "direct_types": [
+        "Q1288568"
+      ],
+      "wikidata_revision": 2558372734,
+      "name_source": "Wikidata",
+      "name_language": "en"
+    },
+    "Q30": {
+      "entity_id": "Q30",
+      "canonical_wikidata_id": "Q30",
+      "metadata_status": "AVAILABLE",
+      "label": "United States",
+      "aliases": [
+        "Merica",
+        "Murica",
+        "U. S.",
+        "U. S. A.",
+        "U.S. of America",
+        "US of A",
+        "US of America",
+        "United States of America",
+        "the States",
+        "the U.S.",
+        "the U.S. of A",
+        "the U.S. of America",
+        "the U.S.A.",
+        "the US",
+        "the US of A",
+        "the US of America",
+        "the USA",
+        "the United States",
+        "the United States of America"
+      ],
+      "direct_types": [
+        "Q1489259",
+        "Q1520223",
+        "Q3624078",
+        "Q5035794",
+        "Q6256",
+        "Q99541706"
+      ],
+      "wikidata_revision": 2556188301,
+      "name_source": "Wikidata",
+      "name_language": "en"
+    },
+    "Q33866": {
+      "entity_id": "Q33866",
+      "canonical_wikidata_id": "Q33866",
+      "metadata_status": "AVAILABLE",
+      "label": "Theodore Roosevelt",
+      "aliases": [
+        "T. Roosevelt",
+        "T. Roosevelt, Jr.",
+        "Teddy Roosevelt",
+        "Theodore Roosevelt, Jr."
+      ],
+      "direct_types": [
+        "Q5"
+      ],
+      "wikidata_revision": 2558255215,
+      "name_source": "Wikidata",
+      "name_language": "en"
+    },
+    "Q352": {
+      "entity_id": "Q352",
+      "label": "Adolf Hitler",
+      "aliases": [],
+      "direct_types": [
+        "Q5"
+      ],
+      "wikidata_revision": 2555041597,
+      "name_source": "Wikidata",
+      "name_language": "en"
+    },
+    "Q5231": {
+      "entity_id": "Q5231",
+      "canonical_wikidata_id": "Q5231",
+      "metadata_status": "AVAILABLE",
+      "label": "1941",
+      "aliases": [],
+      "direct_types": [
+        "Q235676",
+        "Q3186692"
+      ],
+      "wikidata_revision": 2548106257,
+      "name_source": "Wikidata",
+      "name_language": "en"
+    },
+    "Q5287": {
+      "entity_id": "Q5287",
+      "canonical_wikidata_id": "Q5287",
+      "metadata_status": "AVAILABLE",
+      "label": "Japanese",
+      "aliases": [
+        "Japanese language",
+        "Japanesic"
+      ],
+      "direct_types": [
+        "Q1288568",
+        "Q1322198",
+        "Q33742"
+      ],
+      "wikidata_revision": 2556977983,
+      "name_source": "Wikidata",
+      "name_language": "en"
+    }
+  }
+}

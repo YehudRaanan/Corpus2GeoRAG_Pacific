@@ -2,13 +2,26 @@
 
 ## Reference coverage correction
 
-**Reference completed; matching rerun in progress:** [reference coverage correction](REFERENCE_COVERAGE_FIX_2026-10-18.md).
+**Completed and verified:** [reference coverage correction and full rerun](REFERENCE_COVERAGE_FIX_2026-10-18.md).
 The earlier name cache lacked metadata for **92,461 of the graph's 144,990 IDs**.
 It also lacked English labels for another 427 graph IDs. The previous unresolved
 counts do not measure Daniel's extraction quality. A separate supplement has
 been verified: all 144,990 graph IDs have metadata, and 141,776 have English
-names. The other 3,214 explicitly lack English names in Wikidata. Every mention
-is being rerun with the same matching rules. Historical outputs remain preserved.
+names. The other 3,214 explicitly lack English names in Wikidata. All **309,864
+mentions** were rerun with the same matching rules: **149,483 suggestions** and
+**160,381 unresolved**, compared with 63,922 and 245,942 in the previous wide
+trial. All input rows and graph assertions were preserved. Clear wrong links
+remain, including nationality words mapped to languages and Roosevelt mapped
+to Theodore Roosevelt in a paragraph about Franklin D. Roosevelt. Accuracy is
+not measured. Historical outputs remain preserved; no suggestions were promoted
+into the canonical graph.
+
+```powershell
+python GG_Data/entity_resolution/run_notebook_matching.py --wide-search --page-map GG_Data/entity_resolution/runs/source_pages_v0.1.0_20261018/page_map.json --metadata-supplement GG_Data/entity_resolution/runs/graph_reference_v0.1.0_20261018/entity_metadata.jsonl.gz --output GG_Data/entity_resolution/runs/all_types_completed_reference_v0.2.1_20261018
+```
+
+Use a new output directory for another run. The saved supplement must pass its
+manifest and graph-coverage checks before matching starts.
 
 ## Wider-search trial
 
