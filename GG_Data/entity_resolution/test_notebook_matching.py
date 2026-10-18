@@ -91,3 +91,28 @@ def test_page_map_uses_both_graph_directions_and_preserves_missing_names() -> No
         pages_from_map([resolved, resolved], graph)
     with pytest.raises(ValueError, match="Inconsistent"):
         pages_from_map([{**resolved, "page_qid": None}], graph)
+
+
+def test_wide_search_finds_outside_names_and_filters_before_ranking() -> None:
+    metadata = {
+        "Q1": {"label": "Example page", "aliases": [], "direct_types": []},
+        "Q2": {"label": "Burma Campaign", "aliases": [], "direct_types": []},
+        "Q3": {"label": "Wilfrid Lewis Lloyd", "aliases": [], "direct_types": ["Q5"]},
+    }
+    assert NameIndex(["Q1"], metadata).find("Burma Campaign", "MISC", 0.8) == []
+    index = NameIndex(list(metadata), metadata)
+    assert index.find("Burma Campaign", "MISC", 0.8)[0]["entity_id"] == "Q2"
+    assert index.find("Burma Campaign", "PER", 0.8) == []
+    assert index.find("Wilfrid Lewis Lloyd", "PER", 0.8)[0]["entity_id"] == "Q3"
+    options = [
+        {"entity_id": "Q1", "name_similarity": 0.41, "authority": 0.9},
+        {"entity_id": "Q2", "name_similarity": 1.0, "authority": 0.1},
+    ]
+    assert select(options)["decision"] == "UNRESOLVED"
+    assert select(options, eligible_first=True)["suggested_qid"] == "Q2"
+    assert select(options[:1], eligible_first=True)["decision"] == "UNRESOLVED"
+    tied = [
+        {"entity_id": "Q1", "name_similarity": 1.0, "authority": 0.5},
+        {"entity_id": "Q2", "name_similarity": 1.0, "authority": 0.5},
+    ]
+    assert select(tied, eligible_first=True)["decision"] == "UNRESOLVED"

@@ -4,6 +4,8 @@ Reuses the verified first run's page pools and saved names. Rebuilds the full
 directed graph, generates candidates for every type, then ranks each paragraph.
 With --page-map, rebuilds page pools using the saved Wikipedia identities and
 the same frozen graph and Wikidata snapshot. No live data is fetched.
+With --wide-search, trial the full saved name index and apply name/type
+eligibility before constructing the paragraph graph. Default rules stay fixed.
 """
 
 from __future__ import annotations
@@ -147,7 +149,13 @@ def context_graph(known: nx.DiGraph, seeds: set[str]) -> nx.DiGraph:
     return graph
 
 
-def select(candidates: list[dict[str, Any]]) -> dict:
+def select(candidates: list[dict[str, Any]], *, eligible_first: bool = False) -> dict:
+    if eligible_first:
+        candidates = [
+            c
+            for c in candidates
+            if c["name_similarity"] >= PARAMETERS["min_accept_name"]
+        ]
     options = pd.DataFrame(
         [
             {
@@ -158,9 +166,12 @@ def select(candidates: list[dict[str, Any]]) -> dict:
             for c in candidates
         ]
     )
-    return decide(
+    result = decide(
         options, PARAMETERS["min_accept_name"], PARAMETERS["min_authority_gap"]
     )
+    if eligible_first and not candidates:
+        result["reason"] = "no eligible name/type candidate in saved reference"
+    return result
 
 
 def pages_from_map(rows: list[dict], graph: nx.DiGraph) -> dict[str, dict]:
@@ -195,7 +206,11 @@ def pages_from_map(rows: list[dict], graph: nx.DiGraph) -> dict[str, dict]:
     return pages
 
 
-def run(output: Path, page_map: Path | None = None) -> None:
+def run(
+    output: Path, page_map: Path | None = None, *, wide_search: bool = False
+) -> None:
+    if wide_search and page_map is None:
+        raise ValueError("Wide search requires the verified source-page map")
     baseline_manifest = json.loads((BASELINE / "run_manifest.json").read_text())
     if baseline_manifest["status"] != "COMPLETED":
         raise ValueError("The page/name cache is incomplete")
@@ -226,6 +241,15 @@ def run(output: Path, page_map: Path | None = None) -> None:
         },
     }
     parameters = dict(PARAMETERS)
+    if wide_search:
+        parameters.update(
+            method="global-trigrams-eligible-first-hits-v0.2.0",
+            candidate_scope="all English names in the same saved Wikidata snapshot",
+            min_name_similarity=PARAMETERS["min_accept_name"],
+            eligibility_before_graph=True,
+            page_identity_required_for_matching=False,
+            ranking_scope="eligible paragraph candidates plus optional page; outgoing depth 1",
+        )
     mapped_pages = None
     if page_map is not None:
         page_map = page_map.resolve()
@@ -300,10 +324,11 @@ def run(output: Path, page_map: Path | None = None) -> None:
             for page in pages.values():
                 write_line(stream, {"run_id": run_id, **page})
         pool_ids = {e["entity_id"] for p in pages.values() for e in p["pool"]}
+        saved_ids = pool_ids | metadata.keys() if wide_search else pool_ids
         with gzip.open(
             output / "entity_metadata.jsonl.gz", "wt", encoding="utf-8"
         ) as stream:
-            for qid in sorted(pool_ids):
+            for qid in sorted(saved_ids):
                 write_line(
                     stream,
                     metadata.get(qid, {"entity_id": qid, "metadata_status": "MISSING"}),
@@ -315,6 +340,8 @@ def run(output: Path, page_map: Path | None = None) -> None:
             len(pool_ids - metadata.keys()),
         )
     counters, reasons = defaultdict(Counter), defaultdict(Counter)
+    global_index = NameIndex(list(metadata), metadata) if wide_search else None
+    global_name_cache = {}
     seen_ids, seen_rows = set(), set()
     pair_count = paragraph_count = graph_count = 0
     page_summaries = []
@@ -329,8 +356,10 @@ def run(output: Path, page_map: Path | None = None) -> None:
         ):
             page = pages[title]
             pool = [e["entity_id"] for e in page["pool"]]
-            index = NameIndex(pool, metadata)
-            name_cache, graph_cache = {}, {}
+            pool_ids = set(pool)
+            index = global_index if wide_search else NameIndex(pool, metadata)
+            name_cache = global_name_cache if wide_search else {}
+            graph_cache = {}
             page_counts = Counter()
             for paragraph_index, paragraph in page_frame.groupby("Index", sort=True):
                 paragraph_count += 1
@@ -354,7 +383,7 @@ def run(output: Path, page_map: Path | None = None) -> None:
                         found = index.find(
                             raw["word"],
                             raw["entity_group"],
-                            PARAMETERS["min_name_similarity"],
+                            parameters["min_name_similarity"],
                         )
                         name_cache[key] = [
                             {
@@ -414,7 +443,16 @@ def run(output: Path, page_map: Path | None = None) -> None:
                             {
                                 **c,
                                 "authority": authority.get(c["entity_id"], 0.0),
-                                "page_context_id": f"{page['page_qid']}|{c['entity_id']}",
+                                "page_context_id": (
+                                    f"{page['page_qid']}|{c['entity_id']}"
+                                    if c["entity_id"] in pool_ids
+                                    else None
+                                ),
+                                **(
+                                    {"in_page_pool": c["entity_id"] in pool_ids}
+                                    if wide_search
+                                    else {}
+                                ),
                             }
                             for c in found
                         ],
@@ -426,9 +464,11 @@ def run(output: Path, page_map: Path | None = None) -> None:
                     )
                     decision_key = raw["entity_group"], normalize(raw["word"])
                     if decision_key not in decisions:
-                        decisions[decision_key] = select(candidates)
+                        decisions[decision_key] = select(
+                            candidates, eligible_first=wide_search
+                        )
                     decision = dict(decisions[decision_key])
-                    if page["page_status"] != "RESOLVED":
+                    if not wide_search and page["page_status"] != "RESOLVED":
                         decision["reason"] = "page_" + page["page_status"].lower()
                     proposed = decision["suggested_qid"]
                     write_line(
@@ -514,11 +554,11 @@ def run(output: Path, page_map: Path | None = None) -> None:
         for c in found:
             entity = metadata[c["entity_id"]]
             if (
-                c["entity_id"] not in pool_ids
+                (not wide_search and c["entity_id"] not in pool_ids)
                 or c["matched_name"]
                 not in [entity.get("label", "")] + entity.get("aliases", [])
                 or c["name_similarity"] != similarity(raw["word"], c["matched_name"])
-                or c["name_similarity"] < PARAMETERS["min_name_similarity"]
+                or c["name_similarity"] < parameters["min_name_similarity"]
                 or c["authority"]
                 != context_scores[record["graph_context_id"]][c["entity_id"]]
                 or (
@@ -527,8 +567,18 @@ def run(output: Path, page_map: Path | None = None) -> None:
                 )
             ):
                 raise ValueError("Written name, type, page or graph score mismatch")
-        expected = select(found)
-        if record["page_status"] != "RESOLVED":
+            if wide_search and (
+                c["in_page_pool"] != (c["entity_id"] in pool_ids)
+                or c["page_context_id"]
+                != (
+                    f"{record['page_qid']}|{c['entity_id']}"
+                    if c["entity_id"] in pool_ids
+                    else None
+                )
+            ):
+                raise ValueError("Written page-context membership mismatch")
+        expected = select(found, eligible_first=wide_search)
+        if not wide_search and record["page_status"] != "RESOLVED":
             expected["reason"] = "page_" + record["page_status"].lower()
         if any(record[k] != v for k, v in expected.items()):
             raise ValueError("Written automatic decision differs from notebook rule")
@@ -607,11 +657,16 @@ def main() -> None:
     parser.add_argument(
         "--page-map", type=Path, help="Verified source-page lookup page_map.json"
     )
+    parser.add_argument(
+        "--wide-search",
+        action="store_true",
+        help="Separate trial: search the full saved name index; filter before HITS",
+    )
     args = parser.parse_args()
     output = args.output.resolve()
     output.mkdir(parents=True, exist_ok=False)
     logging.basicConfig(level=logging.INFO, format="%(asctime)s %(message)s")
-    run(output, args.page_map)
+    run(output, args.page_map, wide_search=args.wide_search)
 
 
 if __name__ == "__main__":
