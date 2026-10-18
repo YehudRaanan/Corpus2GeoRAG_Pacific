@@ -1,0 +1,4163 @@
+{
+  "run_id": "matching-3ea16641deda7f74ed5e",
+  "input_mentions": 309864,
+  "output_mentions": 309864,
+  "pages": 428,
+  "paragraphs": 34893,
+  "unique_hits_contexts": 5687,
+  "page_statuses": {
+    "RESOLVED": 239,
+    "NOT_IN_SNAPSHOT": 189
+  },
+  "candidate_pairs": 195118,
+  "by_entity_group": {
+    "DATE": {
+      "total_mentions": 38432,
+      "decisions": {
+        "UNRESOLVED": 38390,
+        "SUGGESTED": 42
+      },
+      "reasons": {
+        "no candidate in page pool": 22920,
+        "name score or graph separation too weak": 697,
+        "page_not_in_snapshot": 14773,
+        "single candidate; name rule passed": 39,
+        "graph winner; name and gap rules passed": 3
+      }
+    },
+    "LOC": {
+      "total_mentions": 89846,
+      "decisions": {
+        "UNRESOLVED": 87250,
+        "SUGGESTED": 2596
+      },
+      "reasons": {
+        "no candidate in page pool": 41445,
+        "name score or graph separation too weak": 9178,
+        "graph winner; name and gap rules passed": 1133,
+        "page_not_in_snapshot": 36627,
+        "single candidate; name rule passed": 1463
+      }
+    },
+    "MISC": {
+      "total_mentions": 85676,
+      "decisions": {
+        "SUGGESTED": 2475,
+        "UNRESOLVED": 83201
+      },
+      "reasons": {
+        "single candidate; name rule passed": 1308,
+        "no candidate in page pool": 35471,
+        "name score or graph separation too weak": 16047,
+        "page_not_in_snapshot": 31683,
+        "graph winner; name and gap rules passed": 1167
+      }
+    },
+    "ORG": {
+      "total_mentions": 47680,
+      "decisions": {
+        "SUGGESTED": 1448,
+        "UNRESOLVED": 46232
+      },
+      "reasons": {
+        "single candidate; name rule passed": 956,
+        "name score or graph separation too weak": 6339,
+        "no candidate in page pool": 22689,
+        "page_not_in_snapshot": 17204,
+        "graph winner; name and gap rules passed": 492
+      }
+    },
+    "PER": {
+      "total_mentions": 48230,
+      "decisions": {
+        "UNRESOLVED": 46753,
+        "SUGGESTED": 1477
+      },
+      "reasons": {
+        "name score or graph separation too weak": 4987,
+        "single candidate; name rule passed": 1332,
+        "no candidate in page pool": 24409,
+        "page_not_in_snapshot": 17357,
+        "graph winner; name and gap rules passed": 145
+      }
+    }
+  },
+  "decisions": {
+    "SUGGESTED": 8038,
+    "UNRESOLVED": 301826
+  },
+  "graph_assertions": {
+    "input_assertions": 700890,
+    "mapped_assertions": 700876,
+    "excluded_assertions": 14,
+    "directed_pairs": 590160
+  },
+  "pages_detail": [
+    {
+      "Source": "14th Indian Infantry Division",
+      "page_status": "RESOLVED",
+      "page_qid": "Q4550030",
+      "input_mentions": 193,
+      "decisions": {
+        "SUGGESTED": 6,
+        "UNRESOLVED": 187
+      }
+    },
+    {
+      "Source": "1939–1940 Winter Offensive",
+      "page_status": "RESOLVED",
+      "page_qid": "Q705319",
+      "input_mentions": 299,
+      "decisions": {
+        "UNRESOLVED": 297,
+        "SUGGESTED": 2
+      }
+    },
+    {
+      "Source": "1943 Cairo Declaration",
+      "page_status": "RESOLVED",
+      "page_qid": "Q702120",
+      "input_mentions": 155,
+      "decisions": {
+        "UNRESOLVED": 143,
+        "SUGGESTED": 12
+      }
+    },
+    {
+      "Source": "1st Mobile Fleet (Imperial Japanese Navy)",
+      "page_status": "RESOLVED",
+      "page_qid": "Q4596490",
+      "input_mentions": 14,
+      "decisions": {
+        "UNRESOLVED": 11,
+        "SUGGESTED": 3
+      }
+    },
+    {
+      "Source": "201st Fighter Squadron (Mexico)",
+      "page_status": "NOT_IN_SNAPSHOT",
+      "page_qid": null,
+      "input_mentions": 210,
+      "decisions": {
+        "UNRESOLVED": 210
+      }
+    },
+    {
+      "Source": "26th Indian Infantry Division",
+      "page_status": "RESOLVED",
+      "page_qid": "Q4632442",
+      "input_mentions": 132,
+      "decisions": {
+        "UNRESOLVED": 128,
+        "SUGGESTED": 4
+      }
+    },
+    {
+      "Source": "58th Operations Group",
+      "page_status": "RESOLVED",
+      "page_qid": "Q4640929",
+      "input_mentions": 248,
+      "decisions": {
+        "SUGGESTED": 5,
+        "UNRESOLVED": 243
+      }
+    },
+    {
+      "Source": "8th Fleet (Imperial Japanese Navy)",
+      "page_status": "RESOLVED",
+      "page_qid": "Q4645359",
+      "input_mentions": 265,
+      "decisions": {
+        "SUGGESTED": 26,
+        "UNRESOLVED": 239
+      }
+    },
+    {
+      "Source": "ABCD line",
+      "page_status": "NOT_IN_SNAPSHOT",
+      "page_qid": null,
+      "input_mentions": 100,
+      "decisions": {
+        "UNRESOLVED": 100
+      }
+    },
+    {
+      "Source": "ABDA",
+      "page_status": "NOT_IN_SNAPSHOT",
+      "page_qid": null,
+      "input_mentions": 524,
+      "decisions": {
+        "UNRESOLVED": 524
+      }
+    },
+    {
+      "Source": "Administrative structure of the Imperial Japanese Government",
+      "page_status": "NOT_IN_SNAPSHOT",
+      "page_qid": null,
+      "input_mentions": 234,
+      "decisions": {
+        "UNRESOLVED": 234
+      }
+    },
+    {
+      "Source": "Air raids on Darwin, 19 February 1942",
+      "page_status": "NOT_IN_SNAPSHOT",
+      "page_qid": null,
+      "input_mentions": 548,
+      "decisions": {
+        "UNRESOLVED": 548
+      }
+    },
+    {
+      "Source": "Air raids on Japan",
+      "page_status": "RESOLVED",
+      "page_qid": "Q590545",
+      "input_mentions": 1994,
+      "decisions": {
+        "UNRESOLVED": 1855,
+        "SUGGESTED": 139
+      }
+    },
+    {
+      "Source": "Air warfare of World War II",
+      "page_status": "RESOLVED",
+      "page_qid": "Q952209",
+      "input_mentions": 2685,
+      "decisions": {
+        "SUGGESTED": 55,
+        "UNRESOLVED": 2630
+      }
+    },
+    {
+      "Source": "Aircraft carrier",
+      "page_status": "RESOLVED",
+      "page_qid": "Q17205",
+      "input_mentions": 870,
+      "decisions": {
+        "UNRESOLVED": 842,
+        "SUGGESTED": 28
+      }
+    },
+    {
+      "Source": "Albert A. Nofi",
+      "page_status": "NOT_IN_SNAPSHOT",
+      "page_qid": null,
+      "input_mentions": 315,
+      "decisions": {
+        "UNRESOLVED": 315
+      }
+    },
+    {
+      "Source": "Aleutian Islands campaign",
+      "page_status": "RESOLVED",
+      "page_qid": "Q249708",
+      "input_mentions": 746,
+      "decisions": {
+        "UNRESOLVED": 741,
+        "SUGGESTED": 5
+      }
+    },
+    {
+      "Source": "Aleutians",
+      "page_status": "NOT_IN_SNAPSHOT",
+      "page_qid": null,
+      "input_mentions": 449,
+      "decisions": {
+        "UNRESOLVED": 449
+      }
+    },
+    {
+      "Source": "Allied invasion of Italy",
+      "page_status": "RESOLVED",
+      "page_qid": "Q714777",
+      "input_mentions": 1071,
+      "decisions": {
+        "UNRESOLVED": 981,
+        "SUGGESTED": 90
+      }
+    },
+    {
+      "Source": "Allied leaders of World War II",
+      "page_status": "RESOLVED",
+      "page_qid": "Q715682",
+      "input_mentions": 1848,
+      "decisions": {
+        "UNRESOLVED": 1823,
+        "SUGGESTED": 25
+      }
+    },
+    {
+      "Source": "Allied naval bombardments of Japan during World War II",
+      "page_status": "RESOLVED",
+      "page_qid": "Q4732616",
+      "input_mentions": 423,
+      "decisions": {
+        "SUGGESTED": 17,
+        "UNRESOLVED": 406
+      }
+    },
+    {
+      "Source": "Allied prisoners of war of Japan",
+      "page_status": "RESOLVED",
+      "page_qid": "Q97816799",
+      "input_mentions": 399,
+      "decisions": {
+        "SUGGESTED": 10,
+        "UNRESOLVED": 389
+      }
+    },
+    {
+      "Source": "Anglo–Japanese Alliance",
+      "page_status": "NOT_IN_SNAPSHOT",
+      "page_qid": null,
+      "input_mentions": 808,
+      "decisions": {
+        "UNRESOLVED": 808
+      }
+    },
+    {
+      "Source": "Antarctica during World War II",
+      "page_status": "RESOLVED",
+      "page_qid": "Q106959541",
+      "input_mentions": 269,
+      "decisions": {
+        "UNRESOLVED": 264,
+        "SUGGESTED": 5
+      }
+    },
+    {
+      "Source": "Anti-Comintern Pact",
+      "page_status": "RESOLVED",
+      "page_qid": "Q152195",
+      "input_mentions": 3432,
+      "decisions": {
+        "SUGGESTED": 303,
+        "UNRESOLVED": 3129
+      }
+    },
+    {
+      "Source": "Arakan Campaign 1942-1943",
+      "page_status": "NOT_IN_SNAPSHOT",
+      "page_qid": null,
+      "input_mentions": 394,
+      "decisions": {
+        "UNRESOLVED": 394
+      }
+    },
+    {
+      "Source": "Atomic bombings of Hiroshima and Nagasaki",
+      "page_status": "RESOLVED",
+      "page_qid": "Q488",
+      "input_mentions": 1767,
+      "decisions": {
+        "UNRESOLVED": 1544,
+        "SUGGESTED": 223
+      }
+    },
+    {
+      "Source": "Attack on Pearl Harbor",
+      "page_status": "RESOLVED",
+      "page_qid": "Q52418",
+      "input_mentions": 1246,
+      "decisions": {
+        "UNRESOLVED": 1136,
+        "SUGGESTED": 110
+      }
+    },
+    {
+      "Source": "Attack on Sydney Harbour",
+      "page_status": "RESOLVED",
+      "page_qid": "Q2659473",
+      "input_mentions": 867,
+      "decisions": {
+        "UNRESOLVED": 859,
+        "SUGGESTED": 8
+      }
+    },
+    {
+      "Source": "Attacks on Australia during World War II",
+      "page_status": "RESOLVED",
+      "page_qid": "Q4818040",
+      "input_mentions": 129,
+      "decisions": {
+        "UNRESOLVED": 129
+      }
+    },
+    {
+      "Source": "Australian Army Reserve",
+      "page_status": "NOT_IN_SNAPSHOT",
+      "page_qid": null,
+      "input_mentions": 607,
+      "decisions": {
+        "UNRESOLVED": 607
+      }
+    },
+    {
+      "Source": "Australian First Tactical Air Force",
+      "page_status": "RESOLVED",
+      "page_qid": "Q4824169",
+      "input_mentions": 257,
+      "decisions": {
+        "UNRESOLVED": 238,
+        "SUGGESTED": 19
+      }
+    },
+    {
+      "Source": "Australian home front during World War II",
+      "page_status": "RESOLVED",
+      "page_qid": "Q4825025",
+      "input_mentions": 581,
+      "decisions": {
+        "UNRESOLVED": 580,
+        "SUGGESTED": 1
+      }
+    },
+    {
+      "Source": "Axis leaders of World War II",
+      "page_status": "RESOLVED",
+      "page_qid": "Q714218",
+      "input_mentions": 1284,
+      "decisions": {
+        "UNRESOLVED": 1274,
+        "SUGGESTED": 10
+      }
+    },
+    {
+      "Source": "Axis naval activity in Australian waters",
+      "page_status": "RESOLVED",
+      "page_qid": "Q708560",
+      "input_mentions": 1548,
+      "decisions": {
+        "UNRESOLVED": 1548
+      }
+    },
+    {
+      "Source": "Axis powers",
+      "page_status": "RESOLVED",
+      "page_qid": "Q43056",
+      "input_mentions": 3292,
+      "decisions": {
+        "UNRESOLVED": 3014,
+        "SUGGESTED": 278
+      }
+    },
+    {
+      "Source": "Azad Hind",
+      "page_status": "RESOLVED",
+      "page_qid": "Q715197",
+      "input_mentions": 455,
+      "decisions": {
+        "SUGGESTED": 50,
+        "UNRESOLVED": 405
+      }
+    },
+    {
+      "Source": "B-17 Flying Fortress",
+      "page_status": "NOT_IN_SNAPSHOT",
+      "page_qid": null,
+      "input_mentions": 2323,
+      "decisions": {
+        "UNRESOLVED": 2323
+      }
+    },
+    {
+      "Source": "BT-5",
+      "page_status": "RESOLVED",
+      "page_qid": "Q15964903",
+      "input_mentions": 136,
+      "decisions": {
+        "SUGGESTED": 24,
+        "UNRESOLVED": 112
+      }
+    },
+    {
+      "Source": "BT-7",
+      "page_status": "RESOLVED",
+      "page_qid": "Q787729",
+      "input_mentions": 196,
+      "decisions": {
+        "SUGGESTED": 32,
+        "UNRESOLVED": 164
+      }
+    },
+    {
+      "Source": "BUROGU",
+      "page_status": "NOT_IN_SNAPSHOT",
+      "page_qid": null,
+      "input_mentions": 144,
+      "decisions": {
+        "UNRESOLVED": 144
+      }
+    },
+    {
+      "Source": "Bali",
+      "page_status": "NOT_IN_SNAPSHOT",
+      "page_qid": null,
+      "input_mentions": 1304,
+      "decisions": {
+        "UNRESOLVED": 1304
+      }
+    },
+    {
+      "Source": "Banzai charge",
+      "page_status": "RESOLVED",
+      "page_qid": "Q696497",
+      "input_mentions": 170,
+      "decisions": {
+        "UNRESOLVED": 167,
+        "SUGGESTED": 3
+      }
+    },
+    {
+      "Source": "Battle for Australia",
+      "page_status": "RESOLVED",
+      "page_qid": "Q2890968",
+      "input_mentions": 113,
+      "decisions": {
+        "SUGGESTED": 17,
+        "UNRESOLVED": 96
+      }
+    },
+    {
+      "Source": "Battle of Anzio",
+      "page_status": "RESOLVED",
+      "page_qid": "Q696844",
+      "input_mentions": 1205,
+      "decisions": {
+        "UNRESOLVED": 1145,
+        "SUGGESTED": 60
+      }
+    },
+    {
+      "Source": "Battle of Attu",
+      "page_status": "RESOLVED",
+      "page_qid": "Q700572",
+      "input_mentions": 405,
+      "decisions": {
+        "SUGGESTED": 30,
+        "UNRESOLVED": 375
+      }
+    },
+    {
+      "Source": "Battle of Balikpapan (1945)",
+      "page_status": "RESOLVED",
+      "page_qid": "Q4271928",
+      "input_mentions": 817,
+      "decisions": {
+        "UNRESOLVED": 799,
+        "SUGGESTED": 18
+      }
+    },
+    {
+      "Source": "Battle of Bataan",
+      "page_status": "RESOLVED",
+      "page_qid": "Q703482",
+      "input_mentions": 1215,
+      "decisions": {
+        "UNRESOLVED": 1113,
+        "SUGGESTED": 102
+      }
+    },
+    {
+      "Source": "Battle of Borneo (1941–1942)",
+      "page_status": "RESOLVED",
+      "page_qid": "Q339159",
+      "input_mentions": 134,
+      "decisions": {
+        "SUGGESTED": 2,
+        "UNRESOLVED": 132
+      }
+    },
+    {
+      "Source": "Battle of Britain",
+      "page_status": "RESOLVED",
+      "page_qid": "Q154720",
+      "input_mentions": 3474,
+      "decisions": {
+        "SUGGESTED": 212,
+        "UNRESOLVED": 3262
+      }
+    },
+    {
+      "Source": "Battle of Buna–Gona",
+      "page_status": "RESOLVED",
+      "page_qid": "Q2917077",
+      "input_mentions": 1491,
+      "decisions": {
+        "UNRESOLVED": 1397,
+        "SUGGESTED": 94
+      }
+    },
+    {
+      "Source": "Battle of Cape Esperance",
+      "page_status": "RESOLVED",
+      "page_qid": "Q1475243",
+      "input_mentions": 926,
+      "decisions": {
+        "SUGGESTED": 24,
+        "UNRESOLVED": 902
+      }
+    },
+    {
+      "Source": "Battle of Changsha (1942)",
+      "page_status": "NOT_IN_SNAPSHOT",
+      "page_qid": null,
+      "input_mentions": 374,
+      "decisions": {
+        "UNRESOLVED": 374
+      }
+    },
+    {
+      "Source": "Battle of Christmas Island",
+      "page_status": "RESOLVED",
+      "page_qid": "Q1361210",
+      "input_mentions": 157,
+      "decisions": {
+        "UNRESOLVED": 152,
+        "SUGGESTED": 5
+      }
+    },
+    {
+      "Source": "Battle of Dutch Harbor",
+      "page_status": "RESOLVED",
+      "page_qid": "Q543075",
+      "input_mentions": 287,
+      "decisions": {
+        "UNRESOLVED": 280,
+        "SUGGESTED": 7
+      }
+    },
+    {
+      "Source": "Battle of Guam (1941)",
+      "page_status": "RESOLVED",
+      "page_qid": "Q699897",
+      "input_mentions": 302,
+      "decisions": {
+        "SUGGESTED": 7,
+        "UNRESOLVED": 295
+      }
+    },
+    {
+      "Source": "Battle of Guam (1944)",
+      "page_status": "RESOLVED",
+      "page_qid": "Q696900",
+      "input_mentions": 1363,
+      "decisions": {
+        "UNRESOLVED": 1331,
+        "SUGGESTED": 32
+      }
+    },
+    {
+      "Source": "Battle of Hong Kong",
+      "page_status": "RESOLVED",
+      "page_qid": "Q697059",
+      "input_mentions": 1278,
+      "decisions": {
+        "UNRESOLVED": 1264,
+        "SUGGESTED": 14
+      }
+    },
+    {
+      "Source": "Battle of Imphal",
+      "page_status": "RESOLVED",
+      "page_qid": "Q707238",
+      "input_mentions": 955,
+      "decisions": {
+        "UNRESOLVED": 939,
+        "SUGGESTED": 16
+      }
+    },
+    {
+      "Source": "Battle of Iwo Jima",
+      "page_status": "RESOLVED",
+      "page_qid": "Q180182",
+      "input_mentions": 913,
+      "decisions": {
+        "SUGGESTED": 50,
+        "UNRESOLVED": 863
+      }
+    },
+    {
+      "Source": "Battle of Kiev (1941)",
+      "page_status": "RESOLVED",
+      "page_qid": "Q162284",
+      "input_mentions": 1851,
+      "decisions": {
+        "SUGGESTED": 64,
+        "UNRESOLVED": 1787
+      }
+    },
+    {
+      "Source": "Battle of Kohima",
+      "page_status": "RESOLVED",
+      "page_qid": "Q383614",
+      "input_mentions": 870,
+      "decisions": {
+        "UNRESOLVED": 855,
+        "SUGGESTED": 15
+      }
+    },
+    {
+      "Source": "Battle of Lake Khasan",
+      "page_status": "NOT_IN_SNAPSHOT",
+      "page_qid": null,
+      "input_mentions": 351,
+      "decisions": {
+        "UNRESOLVED": 351
+      }
+    },
+    {
+      "Source": "Battle of Leyte Gulf",
+      "page_status": "RESOLVED",
+      "page_qid": "Q308999",
+      "input_mentions": 1445,
+      "decisions": {
+        "UNRESOLVED": 1407,
+        "SUGGESTED": 38
+      }
+    },
+    {
+      "Source": "Battle of Madagascar",
+      "page_status": "RESOLVED",
+      "page_qid": "Q1052651",
+      "input_mentions": 797,
+      "decisions": {
+        "SUGGESTED": 26,
+        "UNRESOLVED": 771
+      }
+    },
+    {
+      "Source": "Battle of Makin",
+      "page_status": "RESOLVED",
+      "page_qid": "Q2670873",
+      "input_mentions": 381,
+      "decisions": {
+        "SUGGESTED": 17,
+        "UNRESOLVED": 364
+      }
+    },
+    {
+      "Source": "Battle of Malaya",
+      "page_status": "NOT_IN_SNAPSHOT",
+      "page_qid": null,
+      "input_mentions": 979,
+      "decisions": {
+        "UNRESOLVED": 979
+      }
+    },
+    {
+      "Source": "Battle of North Borneo",
+      "page_status": "RESOLVED",
+      "page_qid": "Q1934591",
+      "input_mentions": 432,
+      "decisions": {
+        "UNRESOLVED": 419,
+        "SUGGESTED": 13
+      }
+    },
+    {
+      "Source": "Battle of Northern Burma and Western Yunnan",
+      "page_status": "RESOLVED",
+      "page_qid": "Q4871917",
+      "input_mentions": 198,
+      "decisions": {
+        "UNRESOLVED": 191,
+        "SUGGESTED": 7
+      }
+    },
+    {
+      "Source": "Battle of Okinawa",
+      "page_status": "RESOLVED",
+      "page_qid": "Q192660",
+      "input_mentions": 1171,
+      "decisions": {
+        "SUGGESTED": 100,
+        "UNRESOLVED": 1071
+      }
+    },
+    {
+      "Source": "Battle of Peleliu",
+      "page_status": "RESOLVED",
+      "page_qid": "Q609030",
+      "input_mentions": 636,
+      "decisions": {
+        "SUGGESTED": 41,
+        "UNRESOLVED": 595
+      }
+    },
+    {
+      "Source": "Battle of Prachuap Khiri Khan",
+      "page_status": "RESOLVED",
+      "page_qid": "Q1280169",
+      "input_mentions": 106,
+      "decisions": {
+        "UNRESOLVED": 105,
+        "SUGGESTED": 1
+      }
+    },
+    {
+      "Source": "Battle of Rabaul (1942)",
+      "page_status": "RESOLVED",
+      "page_qid": "Q1572785",
+      "input_mentions": 367,
+      "decisions": {
+        "SUGGESTED": 16,
+        "UNRESOLVED": 351
+      }
+    },
+    {
+      "Source": "Battle of Saipan",
+      "page_status": "RESOLVED",
+      "page_qid": "Q700705",
+      "input_mentions": 884,
+      "decisions": {
+        "UNRESOLVED": 819,
+        "SUGGESTED": 65
+      }
+    },
+    {
+      "Source": "Battle of Savo Island",
+      "page_status": "RESOLVED",
+      "page_qid": "Q700032",
+      "input_mentions": 983,
+      "decisions": {
+        "UNRESOLVED": 963,
+        "SUGGESTED": 20
+      }
+    },
+    {
+      "Source": "Battle of Shanggao",
+      "page_status": "RESOLVED",
+      "page_qid": "Q709830",
+      "input_mentions": 85,
+      "decisions": {
+        "UNRESOLVED": 85
+      }
+    },
+    {
+      "Source": "Battle of Shumshu",
+      "page_status": "RESOLVED",
+      "page_qid": "Q14565619",
+      "input_mentions": 879,
+      "decisions": {
+        "UNRESOLVED": 836,
+        "SUGGESTED": 43
+      }
+    },
+    {
+      "Source": "Battle of Singapore",
+      "page_status": "NOT_IN_SNAPSHOT",
+      "page_qid": null,
+      "input_mentions": 1073,
+      "decisions": {
+        "UNRESOLVED": 1073
+      }
+    },
+    {
+      "Source": "Battle of South Henan",
+      "page_status": "RESOLVED",
+      "page_qid": "Q709364",
+      "input_mentions": 24,
+      "decisions": {
+        "UNRESOLVED": 22,
+        "SUGGESTED": 2
+      }
+    },
+    {
+      "Source": "Battle of South Shanxi",
+      "page_status": "RESOLVED",
+      "page_qid": "Q709346",
+      "input_mentions": 219,
+      "decisions": {
+        "SUGGESTED": 2,
+        "UNRESOLVED": 217
+      }
+    },
+    {
+      "Source": "Battle of Stalingrad",
+      "page_status": "RESOLVED",
+      "page_qid": "Q38789",
+      "input_mentions": 1833,
+      "decisions": {
+        "UNRESOLVED": 1739,
+        "SUGGESTED": 94
+      }
+    },
+    {
+      "Source": "Battle of Taierzhuang",
+      "page_status": "RESOLVED",
+      "page_qid": "Q626796",
+      "input_mentions": 537,
+      "decisions": {
+        "UNRESOLVED": 516,
+        "SUGGESTED": 21
+      }
+    },
+    {
+      "Source": "Battle of Tarakan (1945)",
+      "page_status": "RESOLVED",
+      "page_qid": "Q2598930",
+      "input_mentions": 680,
+      "decisions": {
+        "UNRESOLVED": 666,
+        "SUGGESTED": 14
+      }
+    },
+    {
+      "Source": "Battle of Tarawa",
+      "page_status": "RESOLVED",
+      "page_qid": "Q250309",
+      "input_mentions": 663,
+      "decisions": {
+        "UNRESOLVED": 626,
+        "SUGGESTED": 37
+      }
+    },
+    {
+      "Source": "Battle of Timor",
+      "page_status": "RESOLVED",
+      "page_qid": "Q1440764",
+      "input_mentions": 600,
+      "decisions": {
+        "UNRESOLVED": 574,
+        "SUGGESTED": 26
+      }
+    },
+    {
+      "Source": "Battle of Tinian",
+      "page_status": "RESOLVED",
+      "page_qid": "Q176915",
+      "input_mentions": 1007,
+      "decisions": {
+        "SUGGESTED": 58,
+        "UNRESOLVED": 949
+      }
+    },
+    {
+      "Source": "Battle of Tulagi and Gavutu–Tanambogo",
+      "page_status": "RESOLVED",
+      "page_qid": "Q1497996",
+      "input_mentions": 749,
+      "decisions": {
+        "UNRESOLVED": 726,
+        "SUGGESTED": 23
+      }
+    },
+    {
+      "Source": "Battle of West Henan-North Hubei",
+      "page_status": "NOT_IN_SNAPSHOT",
+      "page_qid": null,
+      "input_mentions": 79,
+      "decisions": {
+        "UNRESOLVED": 79
+      }
+    },
+    {
+      "Source": "Battle of West Hubei",
+      "page_status": "RESOLVED",
+      "page_qid": "Q717521",
+      "input_mentions": 82,
+      "decisions": {
+        "SUGGESTED": 5,
+        "UNRESOLVED": 77
+      }
+    },
+    {
+      "Source": "Battle of West Hunan",
+      "page_status": "RESOLVED",
+      "page_qid": "Q697247",
+      "input_mentions": 262,
+      "decisions": {
+        "SUGGESTED": 7,
+        "UNRESOLVED": 255
+      }
+    },
+    {
+      "Source": "Battle of Wuhan",
+      "page_status": "RESOLVED",
+      "page_qid": "Q2038907",
+      "input_mentions": 877,
+      "decisions": {
+        "UNRESOLVED": 853,
+        "SUGGESTED": 24
+      }
+    },
+    {
+      "Source": "Battle of Yenangyaung",
+      "page_status": "RESOLVED",
+      "page_qid": "Q2890419",
+      "input_mentions": 152,
+      "decisions": {
+        "UNRESOLVED": 145,
+        "SUGGESTED": 7
+      }
+    },
+    {
+      "Source": "Battle of Yunnan-Burma Road",
+      "page_status": "NOT_IN_SNAPSHOT",
+      "page_qid": null,
+      "input_mentions": 182,
+      "decisions": {
+        "UNRESOLVED": 182
+      }
+    },
+    {
+      "Source": "Battle of the Coral Sea",
+      "page_status": "RESOLVED",
+      "page_qid": "Q207165",
+      "input_mentions": 1444,
+      "decisions": {
+        "SUGGESTED": 62,
+        "UNRESOLVED": 1382
+      }
+    },
+    {
+      "Source": "Battle of the Eastern Solomons",
+      "page_status": "RESOLVED",
+      "page_qid": "Q696479",
+      "input_mentions": 493,
+      "decisions": {
+        "SUGGESTED": 12,
+        "UNRESOLVED": 481
+      }
+    },
+    {
+      "Source": "Battle of the Java Sea",
+      "page_status": "RESOLVED",
+      "page_qid": "Q263142",
+      "input_mentions": 911,
+      "decisions": {
+        "SUGGESTED": 22,
+        "UNRESOLVED": 889
+      }
+    },
+    {
+      "Source": "Battle of the Mediterranean",
+      "page_status": "RESOLVED",
+      "page_qid": "Q702176",
+      "input_mentions": 844,
+      "decisions": {
+        "SUGGESTED": 17,
+        "UNRESOLVED": 827
+      }
+    },
+    {
+      "Source": "Battle of the Philippine Sea",
+      "page_status": "RESOLVED",
+      "page_qid": "Q504347",
+      "input_mentions": 716,
+      "decisions": {
+        "SUGGESTED": 33,
+        "UNRESOLVED": 683
+      }
+    },
+    {
+      "Source": "Battle of the Santa Cruz Islands",
+      "page_status": "RESOLVED",
+      "page_qid": "Q699669",
+      "input_mentions": 1007,
+      "decisions": {
+        "UNRESOLVED": 987,
+        "SUGGESTED": 20
+      }
+    },
+    {
+      "Source": "Battle of the Sittang Bend",
+      "page_status": "RESOLVED",
+      "page_qid": "Q16207303",
+      "input_mentions": 354,
+      "decisions": {
+        "UNRESOLVED": 345,
+        "SUGGESTED": 9
+      }
+    },
+    {
+      "Source": "Battle of the Treasury Islands",
+      "page_status": "RESOLVED",
+      "page_qid": "Q3376595",
+      "input_mentions": 228,
+      "decisions": {
+        "UNRESOLVED": 223,
+        "SUGGESTED": 5
+      }
+    },
+    {
+      "Source": "Biological warfare",
+      "page_status": "NOT_IN_SNAPSHOT",
+      "page_qid": null,
+      "input_mentions": 443,
+      "decisions": {
+        "UNRESOLVED": 443
+      }
+    },
+    {
+      "Source": "Bismarck Archipelago",
+      "page_status": "NOT_IN_SNAPSHOT",
+      "page_qid": null,
+      "input_mentions": 168,
+      "decisions": {
+        "UNRESOLVED": 168
+      }
+    },
+    {
+      "Source": "Black Columns",
+      "page_status": "RESOLVED",
+      "page_qid": "Q129820255",
+      "input_mentions": 125,
+      "decisions": {
+        "SUGGESTED": 6,
+        "UNRESOLVED": 119
+      }
+    },
+    {
+      "Source": "Blockade",
+      "page_status": "NOT_IN_SNAPSHOT",
+      "page_qid": null,
+      "input_mentions": 142,
+      "decisions": {
+        "UNRESOLVED": 142
+      }
+    },
+    {
+      "Source": "Boeing B-29 Superfortress",
+      "page_status": "RESOLVED",
+      "page_qid": "Q184870",
+      "input_mentions": 1393,
+      "decisions": {
+        "UNRESOLVED": 1346,
+        "SUGGESTED": 47
+      }
+    },
+    {
+      "Source": "Bombardment of Ellwood",
+      "page_status": "RESOLVED",
+      "page_qid": "Q543077",
+      "input_mentions": 170,
+      "decisions": {
+        "UNRESOLVED": 160,
+        "SUGGESTED": 10
+      }
+    },
+    {
+      "Source": "Bombardment of Fort Stevens",
+      "page_status": "RESOLVED",
+      "page_qid": "Q4940507",
+      "input_mentions": 66,
+      "decisions": {
+        "SUGGESTED": 7,
+        "UNRESOLVED": 59
+      }
+    },
+    {
+      "Source": "Bombing of Chongqing",
+      "page_status": "RESOLVED",
+      "page_qid": "Q705165",
+      "input_mentions": 527,
+      "decisions": {
+        "UNRESOLVED": 505,
+        "SUGGESTED": 22
+      }
+    },
+    {
+      "Source": "Bombing of Darwin",
+      "page_status": "RESOLVED",
+      "page_qid": "Q696557",
+      "input_mentions": 548,
+      "decisions": {
+        "UNRESOLVED": 530,
+        "SUGGESTED": 18
+      }
+    },
+    {
+      "Source": "Bombing of Darwin (February 1942)",
+      "page_status": "NOT_IN_SNAPSHOT",
+      "page_qid": null,
+      "input_mentions": 548,
+      "decisions": {
+        "UNRESOLVED": 548
+      }
+    },
+    {
+      "Source": "Bombing of Kobe in World War II",
+      "page_status": "RESOLVED",
+      "page_qid": "Q4940711",
+      "input_mentions": 87,
+      "decisions": {
+        "UNRESOLVED": 76,
+        "SUGGESTED": 11
+      }
+    },
+    {
+      "Source": "Bombing of Nagoya in World War II",
+      "page_status": "NOT_IN_SNAPSHOT",
+      "page_qid": null,
+      "input_mentions": 73,
+      "decisions": {
+        "UNRESOLVED": 73
+      }
+    },
+    {
+      "Source": "Bombing of Osaka",
+      "page_status": "RESOLVED",
+      "page_qid": "Q2814395",
+      "input_mentions": 98,
+      "decisions": {
+        "UNRESOLVED": 92,
+        "SUGGESTED": 6
+      }
+    },
+    {
+      "Source": "Bombing of Singapore (1941)",
+      "page_status": "RESOLVED",
+      "page_qid": "Q13630094",
+      "input_mentions": 109,
+      "decisions": {
+        "UNRESOLVED": 108,
+        "SUGGESTED": 1
+      }
+    },
+    {
+      "Source": "Bombing of Tokyo",
+      "page_status": "RESOLVED",
+      "page_qid": "Q59886",
+      "input_mentions": 650,
+      "decisions": {
+        "UNRESOLVED": 619,
+        "SUGGESTED": 31
+      }
+    },
+    {
+      "Source": "Bougainville campaign",
+      "page_status": "RESOLVED",
+      "page_qid": "Q704785",
+      "input_mentions": 838,
+      "decisions": {
+        "UNRESOLVED": 801,
+        "SUGGESTED": 37
+      }
+    },
+    {
+      "Source": "Boxer Rebellion",
+      "page_status": "NOT_IN_SNAPSHOT",
+      "page_qid": null,
+      "input_mentions": 1939,
+      "decisions": {
+        "UNRESOLVED": 1939
+      }
+    },
+    {
+      "Source": "Brazil in World War II",
+      "page_status": "RESOLVED",
+      "page_qid": "Q4095707",
+      "input_mentions": 766,
+      "decisions": {
+        "UNRESOLVED": 742,
+        "SUGGESTED": 24
+      }
+    },
+    {
+      "Source": "Brisbane",
+      "page_status": "NOT_IN_SNAPSHOT",
+      "page_qid": null,
+      "input_mentions": 1697,
+      "decisions": {
+        "UNRESOLVED": 1697
+      }
+    },
+    {
+      "Source": "British Borneo",
+      "page_status": "NOT_IN_SNAPSHOT",
+      "page_qid": null,
+      "input_mentions": 152,
+      "decisions": {
+        "UNRESOLVED": 152
+      }
+    },
+    {
+      "Source": "British Empire",
+      "page_status": "RESOLVED",
+      "page_qid": "Q8680",
+      "input_mentions": 2056,
+      "decisions": {
+        "UNRESOLVED": 2036,
+        "SUGGESTED": 20
+      }
+    },
+    {
+      "Source": "British Empire in World War II",
+      "page_status": "RESOLVED",
+      "page_qid": "Q4969928",
+      "input_mentions": 1322,
+      "decisions": {
+        "UNRESOLVED": 1315,
+        "SUGGESTED": 7
+      }
+    },
+    {
+      "Source": "British Indian Army",
+      "page_status": "RESOLVED",
+      "page_qid": "Q642932",
+      "input_mentions": 1025,
+      "decisions": {
+        "UNRESOLVED": 999,
+        "SUGGESTED": 26
+      }
+    },
+    {
+      "Source": "British Raj",
+      "page_status": "NOT_IN_SNAPSHOT",
+      "page_qid": null,
+      "input_mentions": 1950,
+      "decisions": {
+        "UNRESOLVED": 1950
+      }
+    },
+    {
+      "Source": "Burma campaign (1944–1945)",
+      "page_status": "RESOLVED",
+      "page_qid": "Q15986363",
+      "input_mentions": 956,
+      "decisions": {
+        "UNRESOLVED": 940,
+        "SUGGESTED": 16
+      }
+    },
+    {
+      "Source": "Cactus Air Force",
+      "page_status": "RESOLVED",
+      "page_qid": "Q2362430",
+      "input_mentions": 822,
+      "decisions": {
+        "UNRESOLVED": 765,
+        "SUGGESTED": 57
+      }
+    },
+    {
+      "Source": "Cairo",
+      "page_status": "NOT_IN_SNAPSHOT",
+      "page_qid": null,
+      "input_mentions": 1657,
+      "decisions": {
+        "UNRESOLVED": 1657
+      }
+    },
+    {
+      "Source": "Cairo Conference (1943)",
+      "page_status": "NOT_IN_SNAPSHOT",
+      "page_qid": null,
+      "input_mentions": 1291,
+      "decisions": {
+        "UNRESOLVED": 1291
+      }
+    },
+    {
+      "Source": "Canada in World War II",
+      "page_status": "RESOLVED",
+      "page_qid": "Q106715343",
+      "input_mentions": 1401,
+      "decisions": {
+        "UNRESOLVED": 1371,
+        "SUGGESTED": 30
+      }
+    },
+    {
+      "Source": "Cape Engaño (Luzon)",
+      "page_status": "NOT_IN_SNAPSHOT",
+      "page_qid": null,
+      "input_mentions": 16,
+      "decisions": {
+        "UNRESOLVED": 16
+      }
+    },
+    {
+      "Source": "Caroline Islands",
+      "page_status": "NOT_IN_SNAPSHOT",
+      "page_qid": null,
+      "input_mentions": 427,
+      "decisions": {
+        "UNRESOLVED": 427
+      }
+    },
+    {
+      "Source": "China Burma India Theater of World War II",
+      "page_status": "NOT_IN_SNAPSHOT",
+      "page_qid": null,
+      "input_mentions": 833,
+      "decisions": {
+        "UNRESOLVED": 833
+      }
+    },
+    {
+      "Source": "China Burma India theater",
+      "page_status": "RESOLVED",
+      "page_qid": "Q715314",
+      "input_mentions": 833,
+      "decisions": {
+        "UNRESOLVED": 797,
+        "SUGGESTED": 36
+      }
+    },
+    {
+      "Source": "China Expeditionary Army",
+      "page_status": "RESOLVED",
+      "page_qid": "Q709061",
+      "input_mentions": 126,
+      "decisions": {
+        "SUGGESTED": 18,
+        "UNRESOLVED": 108
+      }
+    },
+    {
+      "Source": "Chindits",
+      "page_status": "RESOLVED",
+      "page_qid": "Q873549",
+      "input_mentions": 784,
+      "decisions": {
+        "UNRESOLVED": 757,
+        "SUGGESTED": 27
+      }
+    },
+    {
+      "Source": "Chinese Civil War",
+      "page_status": "NOT_IN_SNAPSHOT",
+      "page_qid": null,
+      "input_mentions": 2328,
+      "decisions": {
+        "UNRESOLVED": 2328
+      }
+    },
+    {
+      "Source": "Chinese Communist Party",
+      "page_status": "NOT_IN_SNAPSHOT",
+      "page_qid": null,
+      "input_mentions": 1158,
+      "decisions": {
+        "UNRESOLVED": 1158
+      }
+    },
+    {
+      "Source": "Chinese Expeditionary Force",
+      "page_status": "RESOLVED",
+      "page_qid": "Q5100448",
+      "input_mentions": 200,
+      "decisions": {
+        "SUGGESTED": 7,
+        "UNRESOLVED": 193
+      }
+    },
+    {
+      "Source": "Chinese Expeditionary Force in Burma",
+      "page_status": "NOT_IN_SNAPSHOT",
+      "page_qid": null,
+      "input_mentions": 200,
+      "decisions": {
+        "UNRESOLVED": 200
+      }
+    },
+    {
+      "Source": "Chinese famine of 1942–1943",
+      "page_status": "NOT_IN_SNAPSHOT",
+      "page_qid": null,
+      "input_mentions": 136,
+      "decisions": {
+        "UNRESOLVED": 136
+      }
+    },
+    {
+      "Source": "Combat Information Center",
+      "page_status": "NOT_IN_SNAPSHOT",
+      "page_qid": null,
+      "input_mentions": 109,
+      "decisions": {
+        "UNRESOLVED": 109
+      }
+    },
+    {
+      "Source": "Combined Chiefs of Staff",
+      "page_status": "RESOLVED",
+      "page_qid": "Q1113673",
+      "input_mentions": 337,
+      "decisions": {
+        "SUGGESTED": 9,
+        "UNRESOLVED": 328
+      }
+    },
+    {
+      "Source": "Combined Fleet",
+      "page_status": "RESOLVED",
+      "page_qid": "Q697037",
+      "input_mentions": 124,
+      "decisions": {
+        "SUGGESTED": 25,
+        "UNRESOLVED": 99
+      }
+    },
+    {
+      "Source": "Comfort women",
+      "page_status": "RESOLVED",
+      "page_qid": "Q713540",
+      "input_mentions": 2739,
+      "decisions": {
+        "UNRESOLVED": 2518,
+        "SUGGESTED": 221
+      }
+    },
+    {
+      "Source": "Commanders of World War II",
+      "page_status": "RESOLVED",
+      "page_qid": "Q715808",
+      "input_mentions": 15,
+      "decisions": {
+        "UNRESOLVED": 15
+      }
+    },
+    {
+      "Source": "Commonwealth of the Philippines",
+      "page_status": "NOT_IN_SNAPSHOT",
+      "page_qid": null,
+      "input_mentions": 554,
+      "decisions": {
+        "UNRESOLVED": 554
+      }
+    },
+    {
+      "Source": "Communist Party of China",
+      "page_status": "NOT_IN_SNAPSHOT",
+      "page_qid": null,
+      "input_mentions": 1158,
+      "decisions": {
+        "UNRESOLVED": 1158
+      }
+    },
+    {
+      "Source": "Concessions of Italy in China",
+      "page_status": "NOT_IN_SNAPSHOT",
+      "page_qid": null,
+      "input_mentions": 522,
+      "decisions": {
+        "UNRESOLVED": 522
+      }
+    },
+    {
+      "Source": "Conscription in Japan",
+      "page_status": "NOT_IN_SNAPSHOT",
+      "page_qid": null,
+      "input_mentions": 283,
+      "decisions": {
+        "UNRESOLVED": 283
+      }
+    },
+    {
+      "Source": "Convoy",
+      "page_status": "RESOLVED",
+      "page_qid": "Q370330",
+      "input_mentions": 362,
+      "decisions": {
+        "UNRESOLVED": 360,
+        "SUGGESTED": 2
+      }
+    },
+    {
+      "Source": "Corregidor",
+      "page_status": "RESOLVED",
+      "page_qid": "Q928075",
+      "input_mentions": 751,
+      "decisions": {
+        "SUGGESTED": 73,
+        "UNRESOLVED": 678
+      }
+    },
+    {
+      "Source": "Counterinsurgency in Manchuria",
+      "page_status": "RESOLVED",
+      "page_qid": "Q814242",
+      "input_mentions": 1152,
+      "decisions": {
+        "SUGGESTED": 99,
+        "UNRESOLVED": 1053
+      }
+    },
+    {
+      "Source": "Cryptanalysis",
+      "page_status": "NOT_IN_SNAPSHOT",
+      "page_qid": null,
+      "input_mentions": 288,
+      "decisions": {
+        "UNRESOLVED": 288
+      }
+    },
+    {
+      "Source": "Cuba during World War II",
+      "page_status": "RESOLVED",
+      "page_qid": "Q17055419",
+      "input_mentions": 322,
+      "decisions": {
+        "UNRESOLVED": 322
+      }
+    },
+    {
+      "Source": "Curtis LeMay",
+      "page_status": "RESOLVED",
+      "page_qid": "Q15866",
+      "input_mentions": 1155,
+      "decisions": {
+        "SUGGESTED": 56,
+        "UNRESOLVED": 1099
+      }
+    },
+    {
+      "Source": "Daijō-kan",
+      "page_status": "NOT_IN_SNAPSHOT",
+      "page_qid": null,
+      "input_mentions": 242,
+      "decisions": {
+        "UNRESOLVED": 242
+      }
+    },
+    {
+      "Source": "Death Railway",
+      "page_status": "NOT_IN_SNAPSHOT",
+      "page_qid": null,
+      "input_mentions": 820,
+      "decisions": {
+        "UNRESOLVED": 820
+      }
+    },
+    {
+      "Source": "Debate over the atomic bombings of Hiroshima and Nagasaki",
+      "page_status": "RESOLVED",
+      "page_qid": "Q4162338",
+      "input_mentions": 1773,
+      "decisions": {
+        "UNRESOLVED": 1773
+      }
+    },
+    {
+      "Source": "Declaration by United Nations",
+      "page_status": "NOT_IN_SNAPSHOT",
+      "page_qid": null,
+      "input_mentions": 197,
+      "decisions": {
+        "UNRESOLVED": 197
+      }
+    },
+    {
+      "Source": "Declarations of war during World War II",
+      "page_status": "RESOLVED",
+      "page_qid": "Q16829189",
+      "input_mentions": 38,
+      "decisions": {
+        "UNRESOLVED": 38
+      }
+    },
+    {
+      "Source": "Decolonization",
+      "page_status": "NOT_IN_SNAPSHOT",
+      "page_qid": null,
+      "input_mentions": 1447,
+      "decisions": {
+        "UNRESOLVED": 1447
+      }
+    },
+    {
+      "Source": "Demography of the Empire of Japan",
+      "page_status": "NOT_IN_SNAPSHOT",
+      "page_qid": null,
+      "input_mentions": 193,
+      "decisions": {
+        "UNRESOLVED": 193
+      }
+    },
+    {
+      "Source": "Denmark in World War II",
+      "page_status": "RESOLVED",
+      "page_qid": "Q819136",
+      "input_mentions": 1046,
+      "decisions": {
+        "SUGGESTED": 10,
+        "UNRESOLVED": 1036
+      }
+    },
+    {
+      "Source": "Dieppe Raid",
+      "page_status": "RESOLVED",
+      "page_qid": "Q270517",
+      "input_mentions": 2178,
+      "decisions": {
+        "SUGGESTED": 59,
+        "UNRESOLVED": 2119
+      }
+    },
+    {
+      "Source": "Diplomatic history of World War II",
+      "page_status": "RESOLVED",
+      "page_qid": "Q16973783",
+      "input_mentions": 3508,
+      "decisions": {
+        "SUGGESTED": 51,
+        "UNRESOLVED": 3457
+      }
+    },
+    {
+      "Source": "Division of Korea",
+      "page_status": "NOT_IN_SNAPSHOT",
+      "page_qid": null,
+      "input_mentions": 775,
+      "decisions": {
+        "UNRESOLVED": 775
+      }
+    },
+    {
+      "Source": "Doi (identifier)",
+      "page_status": "NOT_IN_SNAPSHOT",
+      "page_qid": null,
+      "input_mentions": 165,
+      "decisions": {
+        "UNRESOLVED": 165
+      }
+    },
+    {
+      "Source": "Doolittle Raid",
+      "page_status": "RESOLVED",
+      "page_qid": "Q713516",
+      "input_mentions": 891,
+      "decisions": {
+        "SUGGESTED": 78,
+        "UNRESOLVED": 813
+      }
+    },
+    {
+      "Source": "Douglas MacArthur",
+      "page_status": "RESOLVED",
+      "page_qid": "Q127417",
+      "input_mentions": 2295,
+      "decisions": {
+        "SUGGESTED": 433,
+        "UNRESOLVED": 1862
+      }
+    },
+    {
+      "Source": "Drive on Munda Point",
+      "page_status": "RESOLVED",
+      "page_qid": "Q5307936",
+      "input_mentions": 500,
+      "decisions": {
+        "UNRESOLVED": 492,
+        "SUGGESTED": 8
+      }
+    },
+    {
+      "Source": "Dutch East Indies",
+      "page_status": "NOT_IN_SNAPSHOT",
+      "page_qid": null,
+      "input_mentions": 1671,
+      "decisions": {
+        "UNRESOLVED": 1671
+      }
+    },
+    {
+      "Source": "Eighth United States Army",
+      "page_status": "NOT_IN_SNAPSHOT",
+      "page_qid": null,
+      "input_mentions": 413,
+      "decisions": {
+        "UNRESOLVED": 413
+      }
+    },
+    {
+      "Source": "Emperor Go-Yōzei",
+      "page_status": "NOT_IN_SNAPSHOT",
+      "page_qid": null,
+      "input_mentions": 433,
+      "decisions": {
+        "UNRESOLVED": 433
+      }
+    },
+    {
+      "Source": "Emperor Meiji",
+      "page_status": "NOT_IN_SNAPSHOT",
+      "page_qid": null,
+      "input_mentions": 731,
+      "decisions": {
+        "UNRESOLVED": 731
+      }
+    },
+    {
+      "Source": "Emperor Taishō",
+      "page_status": "NOT_IN_SNAPSHOT",
+      "page_qid": null,
+      "input_mentions": 334,
+      "decisions": {
+        "UNRESOLVED": 334
+      }
+    },
+    {
+      "Source": "Emperor system",
+      "page_status": "NOT_IN_SNAPSHOT",
+      "page_qid": null,
+      "input_mentions": 65,
+      "decisions": {
+        "UNRESOLVED": 65
+      }
+    },
+    {
+      "Source": "Empire of Japan",
+      "page_status": "RESOLVED",
+      "page_qid": "Q188712",
+      "input_mentions": 2368,
+      "decisions": {
+        "SUGGESTED": 352,
+        "UNRESOLVED": 2016
+      }
+    },
+    {
+      "Source": "Eugenics in Japan",
+      "page_status": "NOT_IN_SNAPSHOT",
+      "page_qid": null,
+      "input_mentions": 195,
+      "decisions": {
+        "UNRESOLVED": 195
+      }
+    },
+    {
+      "Source": "Europe first",
+      "page_status": "RESOLVED",
+      "page_qid": "Q557479",
+      "input_mentions": 351,
+      "decisions": {
+        "UNRESOLVED": 336,
+        "SUGGESTED": 15
+      }
+    },
+    {
+      "Source": "European theatre of World War II",
+      "page_status": "RESOLVED",
+      "page_qid": "Q44700",
+      "input_mentions": 2464,
+      "decisions": {
+        "UNRESOLVED": 2354,
+        "SUGGESTED": 110
+      }
+    },
+    {
+      "Source": "Events preceding World War II in Asia",
+      "page_status": "RESOLVED",
+      "page_qid": "Q864566",
+      "input_mentions": 385,
+      "decisions": {
+        "UNRESOLVED": 385
+      }
+    },
+    {
+      "Source": "Events preceding World War II in Europe",
+      "page_status": "NOT_IN_SNAPSHOT",
+      "page_qid": null,
+      "input_mentions": 326,
+      "decisions": {
+        "UNRESOLVED": 326
+      }
+    },
+    {
+      "Source": "Fall of Singapore",
+      "page_status": "RESOLVED",
+      "page_qid": "Q296754",
+      "input_mentions": 1073,
+      "decisions": {
+        "UNRESOLVED": 1040,
+        "SUGGESTED": 33
+      }
+    },
+    {
+      "Source": "Fast carrier task force",
+      "page_status": "NOT_IN_SNAPSHOT",
+      "page_qid": null,
+      "input_mentions": 230,
+      "decisions": {
+        "UNRESOLVED": 230
+      }
+    },
+    {
+      "Source": "Fat Man",
+      "page_status": "RESOLVED",
+      "page_qid": "Q188163",
+      "input_mentions": 451,
+      "decisions": {
+        "SUGGESTED": 41,
+        "UNRESOLVED": 410
+      }
+    },
+    {
+      "Source": "Fifth Air Force",
+      "page_status": "RESOLVED",
+      "page_qid": "Q2817902",
+      "input_mentions": 473,
+      "decisions": {
+        "UNRESOLVED": 466,
+        "SUGGESTED": 7
+      }
+    },
+    {
+      "Source": "Fifth Carrier Division",
+      "page_status": "NOT_IN_SNAPSHOT",
+      "page_qid": null,
+      "input_mentions": 106,
+      "decisions": {
+        "UNRESOLVED": 106
+      }
+    },
+    {
+      "Source": "Fiji",
+      "page_status": "NOT_IN_SNAPSHOT",
+      "page_qid": null,
+      "input_mentions": 1636,
+      "decisions": {
+        "UNRESOLVED": 1636
+      }
+    },
+    {
+      "Source": "Firebombing",
+      "page_status": "NOT_IN_SNAPSHOT",
+      "page_qid": null,
+      "input_mentions": 188,
+      "decisions": {
+        "UNRESOLVED": 188
+      }
+    },
+    {
+      "Source": "First Indochina War",
+      "page_status": "NOT_IN_SNAPSHOT",
+      "page_qid": null,
+      "input_mentions": 2163,
+      "decisions": {
+        "UNRESOLVED": 2163
+      }
+    },
+    {
+      "Source": "First Sino-Japanese War",
+      "page_status": "NOT_IN_SNAPSHOT",
+      "page_qid": null,
+      "input_mentions": 2010,
+      "decisions": {
+        "UNRESOLVED": 2010
+      }
+    },
+    {
+      "Source": "Flag of Japan",
+      "page_status": "NOT_IN_SNAPSHOT",
+      "page_qid": null,
+      "input_mentions": 730,
+      "decisions": {
+        "UNRESOLVED": 730
+      }
+    },
+    {
+      "Source": "Fleet Faction",
+      "page_status": "NOT_IN_SNAPSHOT",
+      "page_qid": null,
+      "input_mentions": 335,
+      "decisions": {
+        "UNRESOLVED": 335
+      }
+    },
+    {
+      "Source": "Foreign commerce and shipping of the Empire of Japan",
+      "page_status": "NOT_IN_SNAPSHOT",
+      "page_qid": null,
+      "input_mentions": 50,
+      "decisions": {
+        "UNRESOLVED": 50
+      }
+    },
+    {
+      "Source": "Foreign relations of Meiji Japan",
+      "page_status": "NOT_IN_SNAPSHOT",
+      "page_qid": null,
+      "input_mentions": 663,
+      "decisions": {
+        "UNRESOLVED": 663
+      }
+    },
+    {
+      "Source": "Fourteenth Army (United Kingdom)",
+      "page_status": "RESOLVED",
+      "page_qid": "Q2918766",
+      "input_mentions": 336,
+      "decisions": {
+        "SUGGESTED": 27,
+        "UNRESOLVED": 309
+      }
+    },
+    {
+      "Source": "France during World War II",
+      "page_status": "RESOLVED",
+      "page_qid": "Q17058684",
+      "input_mentions": 182,
+      "decisions": {
+        "UNRESOLVED": 173,
+        "SUGGESTED": 9
+      }
+    },
+    {
+      "Source": "Franco-Thai War",
+      "page_status": "RESOLVED",
+      "page_qid": "Q780845",
+      "input_mentions": 1314,
+      "decisions": {
+        "SUGGESTED": 14,
+        "UNRESOLVED": 1300
+      }
+    },
+    {
+      "Source": "Frank Jack Fletcher",
+      "page_status": "RESOLVED",
+      "page_qid": "Q314868",
+      "input_mentions": 608,
+      "decisions": {
+        "SUGGESTED": 27,
+        "UNRESOLVED": 581
+      }
+    },
+    {
+      "Source": "Franklin D. Roosevelt",
+      "page_status": "RESOLVED",
+      "page_qid": "Q8007",
+      "input_mentions": 2039,
+      "decisions": {
+        "SUGGESTED": 25,
+        "UNRESOLVED": 2014
+      }
+    },
+    {
+      "Source": "Franklin Delano Roosevelt",
+      "page_status": "NOT_IN_SNAPSHOT",
+      "page_qid": null,
+      "input_mentions": 2039,
+      "decisions": {
+        "UNRESOLVED": 2039
+      }
+    },
+    {
+      "Source": "Franklin Roosevelt",
+      "page_status": "NOT_IN_SNAPSHOT",
+      "page_qid": null,
+      "input_mentions": 2039,
+      "decisions": {
+        "UNRESOLVED": 2039
+      }
+    },
+    {
+      "Source": "Free France",
+      "page_status": "RESOLVED",
+      "page_qid": "Q152582",
+      "input_mentions": 1791,
+      "decisions": {
+        "UNRESOLVED": 1663,
+        "SUGGESTED": 128
+      }
+    },
+    {
+      "Source": "Free French Forces",
+      "page_status": "NOT_IN_SNAPSHOT",
+      "page_qid": null,
+      "input_mentions": 505,
+      "decisions": {
+        "UNRESOLVED": 505
+      }
+    },
+    {
+      "Source": "Free Thai Movement",
+      "page_status": "RESOLVED",
+      "page_qid": "Q708957",
+      "input_mentions": 181,
+      "decisions": {
+        "UNRESOLVED": 181
+      }
+    },
+    {
+      "Source": "Fremantle, Western Australia",
+      "page_status": "NOT_IN_SNAPSHOT",
+      "page_qid": null,
+      "input_mentions": 826,
+      "decisions": {
+        "UNRESOLVED": 826
+      }
+    },
+    {
+      "Source": "French Indochina",
+      "page_status": "NOT_IN_SNAPSHOT",
+      "page_qid": null,
+      "input_mentions": 2148,
+      "decisions": {
+        "UNRESOLVED": 2148
+      }
+    },
+    {
+      "Source": "French Indochina in World War II",
+      "page_status": "RESOLVED",
+      "page_qid": "Q362078",
+      "input_mentions": 1376,
+      "decisions": {
+        "UNRESOLVED": 1376
+      }
+    },
+    {
+      "Source": "French North Africa",
+      "page_status": "NOT_IN_SNAPSHOT",
+      "page_qid": null,
+      "input_mentions": 115,
+      "decisions": {
+        "UNRESOLVED": 115
+      }
+    },
+    {
+      "Source": "French battleship Richelieu",
+      "page_status": "RESOLVED",
+      "page_qid": "Q1583637",
+      "input_mentions": 1053,
+      "decisions": {
+        "UNRESOLVED": 1050,
+        "SUGGESTED": 3
+      }
+    },
+    {
+      "Source": "French destroyer Le Triomphant",
+      "page_status": "RESOLVED",
+      "page_qid": "Q2712980",
+      "input_mentions": 446,
+      "decisions": {
+        "SUGGESTED": 33,
+        "UNRESOLVED": 413
+      }
+    },
+    {
+      "Source": "French prisoners of war in World War II",
+      "page_status": "RESOLVED",
+      "page_qid": "Q5502330",
+      "input_mentions": 522,
+      "decisions": {
+        "UNRESOLVED": 522
+      }
+    },
+    {
+      "Source": "Friendly fire",
+      "page_status": "NOT_IN_SNAPSHOT",
+      "page_qid": null,
+      "input_mentions": 230,
+      "decisions": {
+        "UNRESOLVED": 230
+      }
+    },
+    {
+      "Source": "Fu-Go balloon bomb",
+      "page_status": "RESOLVED",
+      "page_qid": "Q695154",
+      "input_mentions": 444,
+      "decisions": {
+        "UNRESOLVED": 431,
+        "SUGGESTED": 13
+      }
+    },
+    {
+      "Source": "Fuerza Aérea Expedicionaria Mexicana",
+      "page_status": "NOT_IN_SNAPSHOT",
+      "page_qid": null,
+      "input_mentions": 90,
+      "decisions": {
+        "UNRESOLVED": 90
+      }
+    },
+    {
+      "Source": "Fukoku kyōhei",
+      "page_status": "NOT_IN_SNAPSHOT",
+      "page_qid": null,
+      "input_mentions": 23,
+      "decisions": {
+        "UNRESOLVED": 23
+      }
+    },
+    {
+      "Source": "Gabriel Maurício Teixeira",
+      "page_status": "NOT_IN_SNAPSHOT",
+      "page_qid": null,
+      "input_mentions": 293,
+      "decisions": {
+        "UNRESOLVED": 293
+      }
+    },
+    {
+      "Source": "Ganghwa Island incident",
+      "page_status": "NOT_IN_SNAPSHOT",
+      "page_qid": null,
+      "input_mentions": 110,
+      "decisions": {
+        "UNRESOLVED": 110
+      }
+    },
+    {
+      "Source": "Geoffry Scoones",
+      "page_status": "RESOLVED",
+      "page_qid": "Q3333906",
+      "input_mentions": 191,
+      "decisions": {
+        "SUGGESTED": 7,
+        "UNRESOLVED": 184
+      }
+    },
+    {
+      "Source": "Georgy Zhukov",
+      "page_status": "RESOLVED",
+      "page_qid": "Q124617",
+      "input_mentions": 1114,
+      "decisions": {
+        "SUGGESTED": 42,
+        "UNRESOLVED": 1072
+      }
+    },
+    {
+      "Source": "German Instrument of Surrender",
+      "page_status": "RESOLVED",
+      "page_qid": "Q700983",
+      "input_mentions": 809,
+      "decisions": {
+        "UNRESOLVED": 790,
+        "SUGGESTED": 19
+      }
+    },
+    {
+      "Source": "German prisoners of war in the United States",
+      "page_status": "NOT_IN_SNAPSHOT",
+      "page_qid": null,
+      "input_mentions": 463,
+      "decisions": {
+        "UNRESOLVED": 463
+      }
+    },
+    {
+      "Source": "German resistance to Nazism",
+      "page_status": "RESOLVED",
+      "page_qid": "Q327401",
+      "input_mentions": 3140,
+      "decisions": {
+        "UNRESOLVED": 3102,
+        "SUGGESTED": 38
+      }
+    },
+    {
+      "Source": "German war crimes",
+      "page_status": "RESOLVED",
+      "page_qid": "Q715434",
+      "input_mentions": 1635,
+      "decisions": {
+        "UNRESOLVED": 1635
+      }
+    },
+    {
+      "Source": "German–Japanese industrial co-operation before World War II",
+      "page_status": "NOT_IN_SNAPSHOT",
+      "page_qid": null,
+      "input_mentions": 359,
+      "decisions": {
+        "UNRESOLVED": 359
+      }
+    },
+    {
+      "Source": "Gilbert Islands",
+      "page_status": "NOT_IN_SNAPSHOT",
+      "page_qid": null,
+      "input_mentions": 291,
+      "decisions": {
+        "UNRESOLVED": 291
+      }
+    },
+    {
+      "Source": "Gilbert and Marshall Islands campaign",
+      "page_status": "RESOLVED",
+      "page_qid": "Q2238546",
+      "input_mentions": 349,
+      "decisions": {
+        "UNRESOLVED": 344,
+        "SUGGESTED": 5
+      }
+    },
+    {
+      "Source": "Government Seal of Japan",
+      "page_status": "NOT_IN_SNAPSHOT",
+      "page_qid": null,
+      "input_mentions": 44,
+      "decisions": {
+        "UNRESOLVED": 44
+      }
+    },
+    {
+      "Source": "HMAS Canberra (D33)",
+      "page_status": "RESOLVED",
+      "page_qid": "Q1303961",
+      "input_mentions": 487,
+      "decisions": {
+        "SUGGESTED": 38,
+        "UNRESOLVED": 449
+      }
+    },
+    {
+      "Source": "HMAS Perth (D29)",
+      "page_status": "NOT_IN_SNAPSHOT",
+      "page_qid": null,
+      "input_mentions": 853,
+      "decisions": {
+        "UNRESOLVED": 853
+      }
+    },
+    {
+      "Source": "HMAS Sydney (D48)",
+      "page_status": "RESOLVED",
+      "page_qid": "Q1031986",
+      "input_mentions": 1268,
+      "decisions": {
+        "UNRESOLVED": 1220,
+        "SUGGESTED": 48
+      }
+    },
+    {
+      "Source": "HMS Hermes (95)",
+      "page_status": "RESOLVED",
+      "page_qid": "Q596282",
+      "input_mentions": 693,
+      "decisions": {
+        "SUGGESTED": 8,
+        "UNRESOLVED": 685
+      }
+    },
+    {
+      "Source": "History of United States Naval Operations in World War II",
+      "page_status": "RESOLVED",
+      "page_qid": "Q5867005",
+      "input_mentions": 151,
+      "decisions": {
+        "UNRESOLVED": 150,
+        "SUGGESTED": 1
+      }
+    },
+    {
+      "Source": "Hokushin-ron",
+      "page_status": "NOT_IN_SNAPSHOT",
+      "page_qid": null,
+      "input_mentions": 246,
+      "decisions": {
+        "UNRESOLVED": 246
+      }
+    },
+    {
+      "Source": "Holland Smith",
+      "page_status": "RESOLVED",
+      "page_qid": "Q528235",
+      "input_mentions": 407,
+      "decisions": {
+        "SUGGESTED": 22,
+        "UNRESOLVED": 385
+      }
+    },
+    {
+      "Source": "Home Ministry",
+      "page_status": "NOT_IN_SNAPSHOT",
+      "page_qid": null,
+      "input_mentions": 179,
+      "decisions": {
+        "UNRESOLVED": 179
+      }
+    },
+    {
+      "Source": "Home front during World War II",
+      "page_status": "RESOLVED",
+      "page_qid": "Q5889055",
+      "input_mentions": 2323,
+      "decisions": {
+        "UNRESOLVED": 2300,
+        "SUGGESTED": 23
+      }
+    },
+    {
+      "Source": "Ian W. Toll",
+      "page_status": "NOT_IN_SNAPSHOT",
+      "page_qid": null,
+      "input_mentions": 130,
+      "decisions": {
+        "UNRESOLVED": 130
+      }
+    },
+    {
+      "Source": "Ichigaya",
+      "page_status": "NOT_IN_SNAPSHOT",
+      "page_qid": null,
+      "input_mentions": 48,
+      "decisions": {
+        "UNRESOLVED": 48
+      }
+    },
+    {
+      "Source": "Imjin War",
+      "page_status": "NOT_IN_SNAPSHOT",
+      "page_qid": null,
+      "input_mentions": 2436,
+      "decisions": {
+        "UNRESOLVED": 2436
+      }
+    },
+    {
+      "Source": "Imperial General Headquarters",
+      "page_status": "RESOLVED",
+      "page_qid": "Q702397",
+      "input_mentions": 272,
+      "decisions": {
+        "UNRESOLVED": 254,
+        "SUGGESTED": 18
+      }
+    },
+    {
+      "Source": "Imperial Guard (Japan)",
+      "page_status": "NOT_IN_SNAPSHOT",
+      "page_qid": null,
+      "input_mentions": 408,
+      "decisions": {
+        "UNRESOLVED": 408
+      }
+    },
+    {
+      "Source": "Imperial Japanese Airways",
+      "page_status": "RESOLVED",
+      "page_qid": "Q5158887",
+      "input_mentions": 124,
+      "decisions": {
+        "UNRESOLVED": 121,
+        "SUGGESTED": 3
+      }
+    },
+    {
+      "Source": "Imperial Japanese Armed Forces",
+      "page_status": "RESOLVED",
+      "page_qid": "Q6139796",
+      "input_mentions": 358,
+      "decisions": {
+        "UNRESOLVED": 334,
+        "SUGGESTED": 24
+      }
+    },
+    {
+      "Source": "India in World War II",
+      "page_status": "RESOLVED",
+      "page_qid": "Q6019652",
+      "input_mentions": 1094,
+      "decisions": {
+        "UNRESOLVED": 1094
+      }
+    },
+    {
+      "Source": "Indian Army during World War II",
+      "page_status": "RESOLVED",
+      "page_qid": "Q3630651",
+      "input_mentions": 1814,
+      "decisions": {
+        "UNRESOLVED": 1778,
+        "SUGGESTED": 36
+      }
+    },
+    {
+      "Source": "Indian Ocean",
+      "page_status": "NOT_IN_SNAPSHOT",
+      "page_qid": null,
+      "input_mentions": 1195,
+      "decisions": {
+        "UNRESOLVED": 1195
+      }
+    },
+    {
+      "Source": "Indian Ocean Raid",
+      "page_status": "NOT_IN_SNAPSHOT",
+      "page_qid": null,
+      "input_mentions": 1289,
+      "decisions": {
+        "UNRESOLVED": 1289
+      }
+    },
+    {
+      "Source": "Indian Ocean in World War II",
+      "page_status": "RESOLVED",
+      "page_qid": "Q11223330",
+      "input_mentions": 1813,
+      "decisions": {
+        "SUGGESTED": 8,
+        "UNRESOLVED": 1805
+      }
+    },
+    {
+      "Source": "Indonesian National Revolution",
+      "page_status": "NOT_IN_SNAPSHOT",
+      "page_qid": null,
+      "input_mentions": 1543,
+      "decisions": {
+        "UNRESOLVED": 1543
+      }
+    },
+    {
+      "Source": "Industrial production in Shōwa Japan",
+      "page_status": "NOT_IN_SNAPSHOT",
+      "page_qid": null,
+      "input_mentions": 79,
+      "decisions": {
+        "UNRESOLVED": 79
+      }
+    },
+    {
+      "Source": "International Military Tribunal for the Far East",
+      "page_status": "RESOLVED",
+      "page_qid": "Q133539310",
+      "input_mentions": 887,
+      "decisions": {
+        "SUGGESTED": 49,
+        "UNRESOLVED": 838
+      }
+    },
+    {
+      "Source": "International response to the Holocaust",
+      "page_status": "RESOLVED",
+      "page_qid": "Q6055256",
+      "input_mentions": 804,
+      "decisions": {
+        "SUGGESTED": 21,
+        "UNRESOLVED": 783
+      }
+    },
+    {
+      "Source": "Japanese Burma Area Army",
+      "page_status": "NOT_IN_SNAPSHOT",
+      "page_qid": null,
+      "input_mentions": 71,
+      "decisions": {
+        "UNRESOLVED": 71
+      }
+    },
+    {
+      "Source": "Japanese Instrument of Surrender",
+      "page_status": "RESOLVED",
+      "page_qid": "Q665554",
+      "input_mentions": 340,
+      "decisions": {
+        "UNRESOLVED": 287,
+        "SUGGESTED": 53
+      }
+    },
+    {
+      "Source": "Japanese Special Attack Units",
+      "page_status": "RESOLVED",
+      "page_qid": "Q13479950",
+      "input_mentions": 151,
+      "decisions": {
+        "SUGGESTED": 14,
+        "UNRESOLVED": 137
+      }
+    },
+    {
+      "Source": "Japanese Special Naval Landing Forces",
+      "page_status": "NOT_IN_SNAPSHOT",
+      "page_qid": null,
+      "input_mentions": 346,
+      "decisions": {
+        "UNRESOLVED": 346
+      }
+    },
+    {
+      "Source": "Japanese air attacks on Australia, 1942-43",
+      "page_status": "NOT_IN_SNAPSHOT",
+      "page_qid": null,
+      "input_mentions": 421,
+      "decisions": {
+        "UNRESOLVED": 421
+      }
+    },
+    {
+      "Source": "Japanese intervention in Siberia",
+      "page_status": "NOT_IN_SNAPSHOT",
+      "page_qid": null,
+      "input_mentions": 244,
+      "decisions": {
+        "UNRESOLVED": 244
+      }
+    },
+    {
+      "Source": "Japanese invasion of Burma",
+      "page_status": "RESOLVED",
+      "page_qid": "Q685181",
+      "input_mentions": 615,
+      "decisions": {
+        "UNRESOLVED": 612,
+        "SUGGESTED": 3
+      }
+    },
+    {
+      "Source": "Japanese invasion of French Indochina",
+      "page_status": "RESOLVED",
+      "page_qid": "Q140025",
+      "input_mentions": 362,
+      "decisions": {
+        "UNRESOLVED": 344,
+        "SUGGESTED": 18
+      }
+    },
+    {
+      "Source": "Japanese invasion of Manchuria",
+      "page_status": "RESOLVED",
+      "page_qid": "Q1551794",
+      "input_mentions": 410,
+      "decisions": {
+        "SUGGESTED": 45,
+        "UNRESOLVED": 365
+      }
+    },
+    {
+      "Source": "Japanese invasion of Taiwan (1874)",
+      "page_status": "NOT_IN_SNAPSHOT",
+      "page_qid": null,
+      "input_mentions": 332,
+      "decisions": {
+        "UNRESOLVED": 332
+      }
+    },
+    {
+      "Source": "Japanese invasion of Taiwan (1895)",
+      "page_status": "NOT_IN_SNAPSHOT",
+      "page_qid": null,
+      "input_mentions": 979,
+      "decisions": {
+        "UNRESOLVED": 979
+      }
+    },
+    {
+      "Source": "Japanese invasion of Thailand",
+      "page_status": "RESOLVED",
+      "page_qid": "Q1200928",
+      "input_mentions": 581,
+      "decisions": {
+        "UNRESOLVED": 558,
+        "SUGGESTED": 23
+      }
+    },
+    {
+      "Source": "Japanese occupation of the Solomon Islands",
+      "page_status": "RESOLVED",
+      "page_qid": "Q98355578",
+      "input_mentions": 110,
+      "decisions": {
+        "UNRESOLVED": 110
+      }
+    },
+    {
+      "Source": "Japanese prisoners of war in World War II",
+      "page_status": "RESOLVED",
+      "page_qid": "Q6158958",
+      "input_mentions": 551,
+      "decisions": {
+        "UNRESOLVED": 551
+      }
+    },
+    {
+      "Source": "Japanese prisoners of war in the Soviet Union",
+      "page_status": "RESOLVED",
+      "page_qid": "Q2664040",
+      "input_mentions": 284,
+      "decisions": {
+        "UNRESOLVED": 263,
+        "SUGGESTED": 21
+      }
+    },
+    {
+      "Source": "Japanese settlers in Manchuria",
+      "page_status": "NOT_IN_SNAPSHOT",
+      "page_qid": null,
+      "input_mentions": 156,
+      "decisions": {
+        "UNRESOLVED": 156
+      }
+    },
+    {
+      "Source": "Japanese submarine I-168",
+      "page_status": "RESOLVED",
+      "page_qid": "Q2342404",
+      "input_mentions": 524,
+      "decisions": {
+        "UNRESOLVED": 491,
+        "SUGGESTED": 33
+      }
+    },
+    {
+      "Source": "Japanese submarine I-19",
+      "page_status": "RESOLVED",
+      "page_qid": "Q3232589",
+      "input_mentions": 148,
+      "decisions": {
+        "UNRESOLVED": 135,
+        "SUGGESTED": 13
+      }
+    },
+    {
+      "Source": "Japanese war crimes",
+      "page_status": "RESOLVED",
+      "page_qid": "Q701321",
+      "input_mentions": 2602,
+      "decisions": {
+        "SUGGESTED": 196,
+        "UNRESOLVED": 2406
+      }
+    },
+    {
+      "Source": "Japanese-Italian War",
+      "page_status": "NOT_IN_SNAPSHOT",
+      "page_qid": null,
+      "input_mentions": 566,
+      "decisions": {
+        "UNRESOLVED": 566
+      }
+    },
+    {
+      "Source": "Japan–Korea Treaty of 1910",
+      "page_status": "NOT_IN_SNAPSHOT",
+      "page_qid": null,
+      "input_mentions": 216,
+      "decisions": {
+        "UNRESOLVED": 216
+      }
+    },
+    {
+      "Source": "KhT-26",
+      "page_status": "NOT_IN_SNAPSHOT",
+      "page_qid": null,
+      "input_mentions": 1192,
+      "decisions": {
+        "UNRESOLVED": 1192
+      }
+    },
+    {
+      "Source": "Kido Butai",
+      "page_status": "NOT_IN_SNAPSHOT",
+      "page_qid": null,
+      "input_mentions": 378,
+      "decisions": {
+        "UNRESOLVED": 378
+      }
+    },
+    {
+      "Source": "Korean Volunteer Army",
+      "page_status": "RESOLVED",
+      "page_qid": "Q16182787",
+      "input_mentions": 389,
+      "decisions": {
+        "UNRESOLVED": 385,
+        "SUGGESTED": 4
+      }
+    },
+    {
+      "Source": "Kriegsmarine",
+      "page_status": "RESOLVED",
+      "page_qid": "Q151701",
+      "input_mentions": 1260,
+      "decisions": {
+        "SUGGESTED": 118,
+        "UNRESOLVED": 1142
+      }
+    },
+    {
+      "Source": "Largest naval battle in history",
+      "page_status": "NOT_IN_SNAPSHOT",
+      "page_qid": null,
+      "input_mentions": 139,
+      "decisions": {
+        "UNRESOLVED": 139
+      }
+    },
+    {
+      "Source": "Ledo Road",
+      "page_status": "RESOLVED",
+      "page_qid": "Q716640",
+      "input_mentions": 663,
+      "decisions": {
+        "SUGGESTED": 41,
+        "UNRESOLVED": 622
+      }
+    },
+    {
+      "Source": "Lend-Lease",
+      "page_status": "RESOLVED",
+      "page_qid": "Q207637",
+      "input_mentions": 923,
+      "decisions": {
+        "SUGGESTED": 60,
+        "UNRESOLVED": 863
+      }
+    },
+    {
+      "Source": "List of military awards and decorations of World War II",
+      "page_status": "RESOLVED",
+      "page_qid": "Q4311727",
+      "input_mentions": 301,
+      "decisions": {
+        "UNRESOLVED": 301
+      }
+    },
+    {
+      "Source": "List of territories acquired by the Empire of Japan",
+      "page_status": "RESOLVED",
+      "page_qid": "Q278331",
+      "input_mentions": 615,
+      "decisions": {
+        "UNRESOLVED": 615
+      }
+    },
+    {
+      "Source": "List of theaters and campaigns of World War II",
+      "page_status": "RESOLVED",
+      "page_qid": "Q6643232",
+      "input_mentions": 280,
+      "decisions": {
+        "UNRESOLVED": 280
+      }
+    },
+    {
+      "Source": "Lists of World War II military equipment",
+      "page_status": "RESOLVED",
+      "page_qid": "Q717323",
+      "input_mentions": 127,
+      "decisions": {
+        "UNRESOLVED": 127
+      }
+    },
+    {
+      "Source": "Lists of World War II topics",
+      "page_status": "RESOLVED",
+      "page_qid": "Q6646877",
+      "input_mentions": 326,
+      "decisions": {
+        "UNRESOLVED": 326
+      }
+    },
+    {
+      "Source": "Little Boy",
+      "page_status": "RESOLVED",
+      "page_qid": "Q181013",
+      "input_mentions": 436,
+      "decisions": {
+        "SUGGESTED": 48,
+        "UNRESOLVED": 388
+      }
+    },
+    {
+      "Source": "London Naval Treaty",
+      "page_status": "NOT_IN_SNAPSHOT",
+      "page_qid": null,
+      "input_mentions": 128,
+      "decisions": {
+        "UNRESOLVED": 128
+      }
+    },
+    {
+      "Source": "Manchuria",
+      "page_status": "NOT_IN_SNAPSHOT",
+      "page_qid": null,
+      "input_mentions": 913,
+      "decisions": {
+        "UNRESOLVED": 913
+      }
+    },
+    {
+      "Source": "Manchuria–Mongolia problem",
+      "page_status": "NOT_IN_SNAPSHOT",
+      "page_qid": null,
+      "input_mentions": 15,
+      "decisions": {
+        "UNRESOLVED": 15
+      }
+    },
+    {
+      "Source": "Mandalay",
+      "page_status": "NOT_IN_SNAPSHOT",
+      "page_qid": null,
+      "input_mentions": 781,
+      "decisions": {
+        "UNRESOLVED": 781
+      }
+    },
+    {
+      "Source": "Mandate for Syria and the Lebanon",
+      "page_status": "NOT_IN_SNAPSHOT",
+      "page_qid": null,
+      "input_mentions": 760,
+      "decisions": {
+        "UNRESOLVED": 760
+      }
+    },
+    {
+      "Source": "Manhattan Project",
+      "page_status": "RESOLVED",
+      "page_qid": "Q127050",
+      "input_mentions": 2334,
+      "decisions": {
+        "SUGGESTED": 172,
+        "UNRESOLVED": 2162
+      }
+    },
+    {
+      "Source": "Manila",
+      "page_status": "NOT_IN_SNAPSHOT",
+      "page_qid": null,
+      "input_mentions": 2112,
+      "decisions": {
+        "UNRESOLVED": 2112
+      }
+    },
+    {
+      "Source": "Manila massacre",
+      "page_status": "RESOLVED",
+      "page_qid": "Q699787",
+      "input_mentions": 311,
+      "decisions": {
+        "UNRESOLVED": 310,
+        "SUGGESTED": 1
+      }
+    },
+    {
+      "Source": "Marco Polo Bridge Incident",
+      "page_status": "NOT_IN_SNAPSHOT",
+      "page_qid": null,
+      "input_mentions": 506,
+      "decisions": {
+        "UNRESOLVED": 506
+      }
+    },
+    {
+      "Source": "Marcus Island",
+      "page_status": "NOT_IN_SNAPSHOT",
+      "page_qid": null,
+      "input_mentions": 292,
+      "decisions": {
+        "UNRESOLVED": 292
+      }
+    },
+    {
+      "Source": "Mariana Islands",
+      "page_status": "NOT_IN_SNAPSHOT",
+      "page_qid": null,
+      "input_mentions": 467,
+      "decisions": {
+        "UNRESOLVED": 467
+      }
+    },
+    {
+      "Source": "Meiji Restoration",
+      "page_status": "NOT_IN_SNAPSHOT",
+      "page_qid": null,
+      "input_mentions": 1198,
+      "decisions": {
+        "UNRESOLVED": 1198
+      }
+    },
+    {
+      "Source": "Meiji era",
+      "page_status": "NOT_IN_SNAPSHOT",
+      "page_qid": null,
+      "input_mentions": 986,
+      "decisions": {
+        "UNRESOLVED": 986
+      }
+    },
+    {
+      "Source": "Meiktila",
+      "page_status": "NOT_IN_SNAPSHOT",
+      "page_qid": null,
+      "input_mentions": 105,
+      "decisions": {
+        "UNRESOLVED": 105
+      }
+    },
+    {
+      "Source": "Mengjiang",
+      "page_status": "RESOLVED",
+      "page_qid": "Q697837",
+      "input_mentions": 273,
+      "decisions": {
+        "SUGGESTED": 31,
+        "UNRESOLVED": 242
+      }
+    },
+    {
+      "Source": "Mexico",
+      "page_status": "NOT_IN_SNAPSHOT",
+      "page_qid": null,
+      "input_mentions": 1871,
+      "decisions": {
+        "UNRESOLVED": 1871
+      }
+    },
+    {
+      "Source": "Mexico during World War II",
+      "page_status": "RESOLVED",
+      "page_qid": "Q4289228",
+      "input_mentions": 541,
+      "decisions": {
+        "UNRESOLVED": 533,
+        "SUGGESTED": 8
+      }
+    },
+    {
+      "Source": "Midget submarine",
+      "page_status": "NOT_IN_SNAPSHOT",
+      "page_qid": null,
+      "input_mentions": 312,
+      "decisions": {
+        "UNRESOLVED": 312
+      }
+    },
+    {
+      "Source": "Ministry of Colonial Affairs (Japan)",
+      "page_status": "NOT_IN_SNAPSHOT",
+      "page_qid": null,
+      "input_mentions": 88,
+      "decisions": {
+        "UNRESOLVED": 88
+      }
+    },
+    {
+      "Source": "Ministry of Commerce and Industry (Japan)",
+      "page_status": "NOT_IN_SNAPSHOT",
+      "page_qid": null,
+      "input_mentions": 50,
+      "decisions": {
+        "UNRESOLVED": 50
+      }
+    },
+    {
+      "Source": "Ministry of Foreign Affairs (Japan)",
+      "page_status": "NOT_IN_SNAPSHOT",
+      "page_qid": null,
+      "input_mentions": 118,
+      "decisions": {
+        "UNRESOLVED": 118
+      }
+    },
+    {
+      "Source": "Ministry of Greater East Asia",
+      "page_status": "NOT_IN_SNAPSHOT",
+      "page_qid": null,
+      "input_mentions": 71,
+      "decisions": {
+        "UNRESOLVED": 71
+      }
+    },
+    {
+      "Source": "Ministry of Munitions (Japan)",
+      "page_status": "NOT_IN_SNAPSHOT",
+      "page_qid": null,
+      "input_mentions": 79,
+      "decisions": {
+        "UNRESOLVED": 79
+      }
+    },
+    {
+      "Source": "Ministry of War (pre-modern Japan)",
+      "page_status": "NOT_IN_SNAPSHOT",
+      "page_qid": null,
+      "input_mentions": 94,
+      "decisions": {
+        "UNRESOLVED": 94
+      }
+    },
+    {
+      "Source": "Ministry of the Imperial Household",
+      "page_status": "NOT_IN_SNAPSHOT",
+      "page_qid": null,
+      "input_mentions": 159,
+      "decisions": {
+        "UNRESOLVED": 159
+      }
+    },
+    {
+      "Source": "Ministry of the Navy (Japan)",
+      "page_status": "RESOLVED",
+      "page_qid": "Q713875",
+      "input_mentions": 135,
+      "decisions": {
+        "SUGGESTED": 5,
+        "UNRESOLVED": 130
+      }
+    },
+    {
+      "Source": "Musha Incident",
+      "page_status": "NOT_IN_SNAPSHOT",
+      "page_qid": null,
+      "input_mentions": 155,
+      "decisions": {
+        "UNRESOLVED": 155
+      }
+    },
+    {
+      "Source": "Music in World War II",
+      "page_status": "RESOLVED",
+      "page_qid": "Q12411681",
+      "input_mentions": 719,
+      "decisions": {
+        "UNRESOLVED": 719
+      }
+    },
+    {
+      "Source": "Myitkyina",
+      "page_status": "NOT_IN_SNAPSHOT",
+      "page_qid": null,
+      "input_mentions": 162,
+      "decisions": {
+        "UNRESOLVED": 162
+      }
+    },
+    {
+      "Source": "Nagaland",
+      "page_status": "NOT_IN_SNAPSHOT",
+      "page_qid": null,
+      "input_mentions": 754,
+      "decisions": {
+        "UNRESOLVED": 754
+      }
+    },
+    {
+      "Source": "Nagasaki",
+      "page_status": "NOT_IN_SNAPSHOT",
+      "page_qid": null,
+      "input_mentions": 582,
+      "decisions": {
+        "UNRESOLVED": 582
+      }
+    },
+    {
+      "Source": "Naichi",
+      "page_status": "NOT_IN_SNAPSHOT",
+      "page_qid": null,
+      "input_mentions": 101,
+      "decisions": {
+        "UNRESOLVED": 101
+      }
+    },
+    {
+      "Source": "Names of World War II",
+      "page_status": "RESOLVED",
+      "page_qid": "Q136870049",
+      "input_mentions": 169,
+      "decisions": {
+        "UNRESOLVED": 152,
+        "SUGGESTED": 17
+      }
+    },
+    {
+      "Source": "Nanjing Massacre",
+      "page_status": "RESOLVED",
+      "page_qid": "Q192055",
+      "input_mentions": 1638,
+      "decisions": {
+        "UNRESOLVED": 1581,
+        "SUGGESTED": 57
+      }
+    },
+    {
+      "Source": "New Britain campaign",
+      "page_status": "RESOLVED",
+      "page_qid": "Q12406742",
+      "input_mentions": 707,
+      "decisions": {
+        "UNRESOLVED": 683,
+        "SUGGESTED": 24
+      }
+    },
+    {
+      "Source": "New Caledonia",
+      "page_status": "NOT_IN_SNAPSHOT",
+      "page_qid": null,
+      "input_mentions": 1112,
+      "decisions": {
+        "UNRESOLVED": 1112
+      }
+    },
+    {
+      "Source": "New Fourth Army Incident",
+      "page_status": "NOT_IN_SNAPSHOT",
+      "page_qid": null,
+      "input_mentions": 113,
+      "decisions": {
+        "UNRESOLVED": 113
+      }
+    },
+    {
+      "Source": "New Georgia Islands",
+      "page_status": "NOT_IN_SNAPSHOT",
+      "page_qid": null,
+      "input_mentions": 30,
+      "decisions": {
+        "UNRESOLVED": 30
+      }
+    },
+    {
+      "Source": "New Georgia campaign",
+      "page_status": "RESOLVED",
+      "page_qid": "Q1970470",
+      "input_mentions": 911,
+      "decisions": {
+        "UNRESOLVED": 874,
+        "SUGGESTED": 37
+      }
+    },
+    {
+      "Source": "New Guinea",
+      "page_status": "NOT_IN_SNAPSHOT",
+      "page_qid": null,
+      "input_mentions": 738,
+      "decisions": {
+        "UNRESOLVED": 738
+      }
+    },
+    {
+      "Source": "New Guinea Campaign",
+      "page_status": "NOT_IN_SNAPSHOT",
+      "page_qid": null,
+      "input_mentions": 819,
+      "decisions": {
+        "UNRESOLVED": 819
+      }
+    },
+    {
+      "Source": "New Guinea campaign",
+      "page_status": "RESOLVED",
+      "page_qid": "Q2276692",
+      "input_mentions": 819,
+      "decisions": {
+        "UNRESOLVED": 772,
+        "SUGGESTED": 47
+      }
+    },
+    {
+      "Source": "Occupation of Czechoslovakia (1938–1945)",
+      "page_status": "RESOLVED",
+      "page_qid": "Q275618",
+      "input_mentions": 1226,
+      "decisions": {
+        "UNRESOLVED": 1226
+      }
+    },
+    {
+      "Source": "Occupation of Japan",
+      "page_status": "RESOLVED",
+      "page_qid": "Q696251",
+      "input_mentions": 1188,
+      "decisions": {
+        "UNRESOLVED": 1110,
+        "SUGGESTED": 78
+      }
+    },
+    {
+      "Source": "Oceania",
+      "page_status": "NOT_IN_SNAPSHOT",
+      "page_qid": null,
+      "input_mentions": 2626,
+      "decisions": {
+        "UNRESOLVED": 2626
+      }
+    },
+    {
+      "Source": "Operation Ke",
+      "page_status": "RESOLVED",
+      "page_qid": "Q2314453",
+      "input_mentions": 931,
+      "decisions": {
+        "UNRESOLVED": 904,
+        "SUGGESTED": 27
+      }
+    },
+    {
+      "Source": "Operation Meetinghouse",
+      "page_status": "NOT_IN_SNAPSHOT",
+      "page_qid": null,
+      "input_mentions": 1021,
+      "decisions": {
+        "UNRESOLVED": 1021
+      }
+    },
+    {
+      "Source": "Operation Mo",
+      "page_status": "RESOLVED",
+      "page_qid": "Q658309",
+      "input_mentions": 283,
+      "decisions": {
+        "SUGGESTED": 7,
+        "UNRESOLVED": 276
+      }
+    },
+    {
+      "Source": "Pacific Ocean Areas",
+      "page_status": "RESOLVED",
+      "page_qid": "Q3359773",
+      "input_mentions": 506,
+      "decisions": {
+        "UNRESOLVED": 492,
+        "SUGGESTED": 14
+      }
+    },
+    {
+      "Source": "Pacific Ocean Areas (command)",
+      "page_status": "NOT_IN_SNAPSHOT",
+      "page_qid": null,
+      "input_mentions": 506,
+      "decisions": {
+        "UNRESOLVED": 506
+      }
+    },
+    {
+      "Source": "Pacific Ocean theater of World War II",
+      "page_status": "RESOLVED",
+      "page_qid": "Q2920892",
+      "input_mentions": 151,
+      "decisions": {
+        "UNRESOLVED": 149,
+        "SUGGESTED": 2
+      }
+    },
+    {
+      "Source": "Pacific Theater aircraft carrier operations during World War II",
+      "page_status": "RESOLVED",
+      "page_qid": "Q104860048",
+      "input_mentions": 2738,
+      "decisions": {
+        "UNRESOLVED": 2738
+      }
+    },
+    {
+      "Source": "Plaek Phibunsongkhram",
+      "page_status": "RESOLVED",
+      "page_qid": "Q152777",
+      "input_mentions": 741,
+      "decisions": {
+        "SUGGESTED": 11,
+        "UNRESOLVED": 730
+      }
+    },
+    {
+      "Source": "Plague (disease)",
+      "page_status": "NOT_IN_SNAPSHOT",
+      "page_qid": null,
+      "input_mentions": 141,
+      "decisions": {
+        "UNRESOLVED": 141
+      }
+    },
+    {
+      "Source": "Political dissidence in the Empire of Japan",
+      "page_status": "RESOLVED",
+      "page_qid": "Q16849671",
+      "input_mentions": 595,
+      "decisions": {
+        "UNRESOLVED": 595
+      }
+    },
+    {
+      "Source": "Political parties of the Empire of Japan",
+      "page_status": "NOT_IN_SNAPSHOT",
+      "page_qid": null,
+      "input_mentions": 336,
+      "decisions": {
+        "UNRESOLVED": 336
+      }
+    },
+    {
+      "Source": "Politics of the Empire of Japan (1914–1944)",
+      "page_status": "NOT_IN_SNAPSHOT",
+      "page_qid": null,
+      "input_mentions": 375,
+      "decisions": {
+        "UNRESOLVED": 375
+      }
+    },
+    {
+      "Source": "Provisional Government of the Republic of China (1937–1940)",
+      "page_status": "NOT_IN_SNAPSHOT",
+      "page_qid": null,
+      "input_mentions": 238,
+      "decisions": {
+        "UNRESOLVED": 238
+      }
+    },
+    {
+      "Source": "Proximity fuze",
+      "page_status": "NOT_IN_SNAPSHOT",
+      "page_qid": null,
+      "input_mentions": 441,
+      "decisions": {
+        "UNRESOLVED": 441
+      }
+    },
+    {
+      "Source": "Puerto Princesa City",
+      "page_status": "NOT_IN_SNAPSHOT",
+      "page_qid": null,
+      "input_mentions": 397,
+      "decisions": {
+        "UNRESOLVED": 397
+      }
+    },
+    {
+      "Source": "Puerto Ricans in World War II",
+      "page_status": "RESOLVED",
+      "page_qid": "Q3943082",
+      "input_mentions": 1161,
+      "decisions": {
+        "UNRESOLVED": 1136,
+        "SUGGESTED": 25
+      }
+    },
+    {
+      "Source": "Puppet government",
+      "page_status": "NOT_IN_SNAPSHOT",
+      "page_qid": null,
+      "input_mentions": 951,
+      "decisions": {
+        "UNRESOLVED": 951
+      }
+    },
+    {
+      "Source": "Puppet state",
+      "page_status": "NOT_IN_SNAPSHOT",
+      "page_qid": null,
+      "input_mentions": 951,
+      "decisions": {
+        "UNRESOLVED": 951
+      }
+    },
+    {
+      "Source": "Regia Marina",
+      "page_status": "RESOLVED",
+      "page_qid": "Q855186",
+      "input_mentions": 1065,
+      "decisions": {
+        "SUGGESTED": 103,
+        "UNRESOLVED": 962
+      }
+    },
+    {
+      "Source": "Remilitarisation of the Rhineland",
+      "page_status": "RESOLVED",
+      "page_qid": "Q697659",
+      "input_mentions": 1579,
+      "decisions": {
+        "UNRESOLVED": 1579
+      }
+    },
+    {
+      "Source": "Renya Mutaguchi",
+      "page_status": "RESOLVED",
+      "page_qid": "Q1196716",
+      "input_mentions": 156,
+      "decisions": {
+        "UNRESOLVED": 150,
+        "SUGGESTED": 6
+      }
+    },
+    {
+      "Source": "Repatriation of Soviet citizens after World War II",
+      "page_status": "RESOLVED",
+      "page_qid": "Q86680931",
+      "input_mentions": 430,
+      "decisions": {
+        "UNRESOLVED": 430
+      }
+    },
+    {
+      "Source": "Republic of China (1912–1949)",
+      "page_status": "NOT_IN_SNAPSHOT",
+      "page_qid": null,
+      "input_mentions": 1340,
+      "decisions": {
+        "UNRESOLVED": 1340
+      }
+    },
+    {
+      "Source": "Resistance during World War II",
+      "page_status": "RESOLVED",
+      "page_qid": "Q2094191",
+      "input_mentions": 1785,
+      "decisions": {
+        "SUGGESTED": 38,
+        "UNRESOLVED": 1747
+      }
+    },
+    {
+      "Source": "Resistance in Lithuania during World War II",
+      "page_status": "RESOLVED",
+      "page_qid": "Q7315621",
+      "input_mentions": 185,
+      "decisions": {
+        "UNRESOLVED": 185
+      }
+    },
+    {
+      "Source": "Salamaua–Lae campaign",
+      "page_status": "RESOLVED",
+      "page_qid": "Q2917367",
+      "input_mentions": 460,
+      "decisions": {
+        "UNRESOLVED": 438,
+        "SUGGESTED": 22
+      }
+    },
+    {
+      "Source": "Samoa",
+      "page_status": "NOT_IN_SNAPSHOT",
+      "page_qid": null,
+      "input_mentions": 1104,
+      "decisions": {
+        "UNRESOLVED": 1104
+      }
+    },
+    {
+      "Source": "Samuel Eliot Morison",
+      "page_status": "RESOLVED",
+      "page_qid": "Q982883",
+      "input_mentions": 861,
+      "decisions": {
+        "SUGGESTED": 41,
+        "UNRESOLVED": 820
+      }
+    },
+    {
+      "Source": "San Bernardino Strait",
+      "page_status": "NOT_IN_SNAPSHOT",
+      "page_qid": null,
+      "input_mentions": 47,
+      "decisions": {
+        "UNRESOLVED": 47
+      }
+    },
+    {
+      "Source": "Sandakan",
+      "page_status": "NOT_IN_SNAPSHOT",
+      "page_qid": null,
+      "input_mentions": 685,
+      "decisions": {
+        "UNRESOLVED": 685
+      }
+    },
+    {
+      "Source": "Sankichi Takahashi",
+      "page_status": "RESOLVED",
+      "page_qid": "Q7418723",
+      "input_mentions": 189,
+      "decisions": {
+        "SUGGESTED": 13,
+        "UNRESOLVED": 176
+      }
+    },
+    {
+      "Source": "Satsuma Rebellion",
+      "page_status": "NOT_IN_SNAPSHOT",
+      "page_qid": null,
+      "input_mentions": 381,
+      "decisions": {
+        "UNRESOLVED": 381
+      }
+    },
+    {
+      "Source": "Sea lines of communication",
+      "page_status": "NOT_IN_SNAPSHOT",
+      "page_qid": null,
+      "input_mentions": 102,
+      "decisions": {
+        "UNRESOLVED": 102
+      }
+    },
+    {
+      "Source": "Second Australian Imperial Force",
+      "page_status": "RESOLVED",
+      "page_qid": "Q4742845",
+      "input_mentions": 374,
+      "decisions": {
+        "SUGGESTED": 9,
+        "UNRESOLVED": 365
+      }
+    },
+    {
+      "Source": "Shinmin no Michi",
+      "page_status": "NOT_IN_SNAPSHOT",
+      "page_qid": null,
+      "input_mentions": 95,
+      "decisions": {
+        "UNRESOLVED": 95
+      }
+    },
+    {
+      "Source": "Shuri castle",
+      "page_status": "NOT_IN_SNAPSHOT",
+      "page_qid": null,
+      "input_mentions": 564,
+      "decisions": {
+        "UNRESOLVED": 564
+      }
+    },
+    {
+      "Source": "Shōji Nishimura",
+      "page_status": "RESOLVED",
+      "page_qid": "Q935282",
+      "input_mentions": 167,
+      "decisions": {
+        "SUGGESTED": 7,
+        "UNRESOLVED": 160
+      }
+    },
+    {
+      "Source": "Shōkaku",
+      "page_status": "NOT_IN_SNAPSHOT",
+      "page_qid": null,
+      "input_mentions": 542,
+      "decisions": {
+        "UNRESOLVED": 542
+      }
+    },
+    {
+      "Source": "Shōwa Modan",
+      "page_status": "NOT_IN_SNAPSHOT",
+      "page_qid": null,
+      "input_mentions": 197,
+      "decisions": {
+        "UNRESOLVED": 197
+      }
+    },
+    {
+      "Source": "Shōwa era",
+      "page_status": "NOT_IN_SNAPSHOT",
+      "page_qid": null,
+      "input_mentions": 1129,
+      "decisions": {
+        "UNRESOLVED": 1129
+      }
+    },
+    {
+      "Source": "Shōwa financial crisis",
+      "page_status": "NOT_IN_SNAPSHOT",
+      "page_qid": null,
+      "input_mentions": 39,
+      "decisions": {
+        "UNRESOLVED": 39
+      }
+    },
+    {
+      "Source": "Sibuyan Sea",
+      "page_status": "NOT_IN_SNAPSHOT",
+      "page_qid": null,
+      "input_mentions": 28,
+      "decisions": {
+        "UNRESOLVED": 28
+      }
+    },
+    {
+      "Source": "Sichuan",
+      "page_status": "NOT_IN_SNAPSHOT",
+      "page_qid": null,
+      "input_mentions": 1176,
+      "decisions": {
+        "UNRESOLVED": 1176
+      }
+    },
+    {
+      "Source": "Solomon Islands",
+      "page_status": "NOT_IN_SNAPSHOT",
+      "page_qid": null,
+      "input_mentions": 1355,
+      "decisions": {
+        "UNRESOLVED": 1355
+      }
+    },
+    {
+      "Source": "Solomon Islands campaign",
+      "page_status": "RESOLVED",
+      "page_qid": "Q1759161",
+      "input_mentions": 443,
+      "decisions": {
+        "UNRESOLVED": 427,
+        "SUGGESTED": 16
+      }
+    },
+    {
+      "Source": "Sonnō jōi",
+      "page_status": "NOT_IN_SNAPSHOT",
+      "page_qid": null,
+      "input_mentions": 152,
+      "decisions": {
+        "UNRESOLVED": 152
+      }
+    },
+    {
+      "Source": "Sook Ching",
+      "page_status": "RESOLVED",
+      "page_qid": "Q716144",
+      "input_mentions": 713,
+      "decisions": {
+        "UNRESOLVED": 683,
+        "SUGGESTED": 30
+      }
+    },
+    {
+      "Source": "South Asia",
+      "page_status": "NOT_IN_SNAPSHOT",
+      "page_qid": null,
+      "input_mentions": 1379,
+      "decisions": {
+        "UNRESOLVED": 1379
+      }
+    },
+    {
+      "Source": "South Chahar Autonomous Government",
+      "page_status": "RESOLVED",
+      "page_qid": "Q10955123",
+      "input_mentions": 86,
+      "decisions": {
+        "SUGGESTED": 9,
+        "UNRESOLVED": 77
+      }
+    },
+    {
+      "Source": "South East Asia Command",
+      "page_status": "RESOLVED",
+      "page_qid": "Q3431442",
+      "input_mentions": 331,
+      "decisions": {
+        "SUGGESTED": 3,
+        "UNRESOLVED": 328
+      }
+    },
+    {
+      "Source": "South Pacific Mandate",
+      "page_status": "NOT_IN_SNAPSHOT",
+      "page_qid": null,
+      "input_mentions": 573,
+      "decisions": {
+        "UNRESOLVED": 573
+      }
+    },
+    {
+      "Source": "South Sakhalin",
+      "page_status": "NOT_IN_SNAPSHOT",
+      "page_qid": null,
+      "input_mentions": 413,
+      "decisions": {
+        "UNRESOLVED": 413
+      }
+    },
+    {
+      "Source": "South-East Asian theatre of World War II",
+      "page_status": "RESOLVED",
+      "page_qid": "Q524272",
+      "input_mentions": 565,
+      "decisions": {
+        "UNRESOLVED": 543,
+        "SUGGESTED": 22
+      }
+    },
+    {
+      "Source": "Soviet occupation of Bessarabia and Northern Bukovina",
+      "page_status": "RESOLVED",
+      "page_qid": "Q2266004",
+      "input_mentions": 1426,
+      "decisions": {
+        "UNRESOLVED": 1374,
+        "SUGGESTED": 52
+      }
+    },
+    {
+      "Source": "Soviet partisans",
+      "page_status": "RESOLVED",
+      "page_qid": "Q313830",
+      "input_mentions": 1152,
+      "decisions": {
+        "UNRESOLVED": 1137,
+        "SUGGESTED": 15
+      }
+    },
+    {
+      "Source": "Soviet war crimes",
+      "page_status": "NOT_IN_SNAPSHOT",
+      "page_qid": null,
+      "input_mentions": 1739,
+      "decisions": {
+        "UNRESOLVED": 1739
+      }
+    },
+    {
+      "Source": "Soviet–Japanese Neutrality Pact",
+      "page_status": "RESOLVED",
+      "page_qid": "Q696256",
+      "input_mentions": 325,
+      "decisions": {
+        "UNRESOLVED": 263,
+        "SUGGESTED": 62
+      }
+    },
+    {
+      "Source": "Sun Li-jen",
+      "page_status": "RESOLVED",
+      "page_qid": "Q711110",
+      "input_mentions": 322,
+      "decisions": {
+        "SUGGESTED": 9,
+        "UNRESOLVED": 313
+      }
+    },
+    {
+      "Source": "Supreme Commander for the Allied Powers",
+      "page_status": "RESOLVED",
+      "page_qid": "Q471889",
+      "input_mentions": 363,
+      "decisions": {
+        "UNRESOLVED": 334,
+        "SUGGESTED": 29
+      }
+    },
+    {
+      "Source": "Supreme Court of Judicature of Japan",
+      "page_status": "NOT_IN_SNAPSHOT",
+      "page_qid": null,
+      "input_mentions": 40,
+      "decisions": {
+        "UNRESOLVED": 40
+      }
+    },
+    {
+      "Source": "Supreme War Council (Japan)",
+      "page_status": "NOT_IN_SNAPSHOT",
+      "page_qid": null,
+      "input_mentions": 75,
+      "decisions": {
+        "UNRESOLVED": 75
+      }
+    },
+    {
+      "Source": "Surigao Strait",
+      "page_status": "NOT_IN_SNAPSHOT",
+      "page_qid": null,
+      "input_mentions": 55,
+      "decisions": {
+        "UNRESOLVED": 55
+      }
+    },
+    {
+      "Source": "Tapani incident",
+      "page_status": "NOT_IN_SNAPSHOT",
+      "page_qid": null,
+      "input_mentions": 152,
+      "decisions": {
+        "UNRESOLVED": 152
+      }
+    },
+    {
+      "Source": "Taungoo",
+      "page_status": "NOT_IN_SNAPSHOT",
+      "page_qid": null,
+      "input_mentions": 145,
+      "decisions": {
+        "UNRESOLVED": 145
+      }
+    },
+    {
+      "Source": "Technology during World War II",
+      "page_status": "RESOLVED",
+      "page_qid": "Q2413653",
+      "input_mentions": 766,
+      "decisions": {
+        "SUGGESTED": 48,
+        "UNRESOLVED": 718
+      }
+    },
+    {
+      "Source": "Timeline of World War II (1942)",
+      "page_status": "RESOLVED",
+      "page_qid": "Q1077340",
+      "input_mentions": 1947,
+      "decisions": {
+        "SUGGESTED": 5,
+        "UNRESOLVED": 1942
+      }
+    },
+    {
+      "Source": "Timeline of World War II (1943)",
+      "page_status": "RESOLVED",
+      "page_qid": "Q1077609",
+      "input_mentions": 1081,
+      "decisions": {
+        "SUGGESTED": 5,
+        "UNRESOLVED": 1076
+      }
+    },
+    {
+      "Source": "Timeline of World War II (1944)",
+      "page_status": "RESOLVED",
+      "page_qid": "Q1077354",
+      "input_mentions": 1537,
+      "decisions": {
+        "UNRESOLVED": 1532,
+        "SUGGESTED": 5
+      }
+    },
+    {
+      "Source": "Timeline of World War II (1945–1991)",
+      "page_status": "NOT_IN_SNAPSHOT",
+      "page_qid": null,
+      "input_mentions": 1011,
+      "decisions": {
+        "UNRESOLVED": 1011
+      }
+    },
+    {
+      "Source": "Tuva in World War II",
+      "page_status": "RESOLVED",
+      "page_qid": "Q4464837",
+      "input_mentions": 190,
+      "decisions": {
+        "UNRESOLVED": 190
+      }
+    },
+    {
+      "Source": "Twilight of the Gods: War in the Western Pacific, 1944–1945",
+      "page_status": "RESOLVED",
+      "page_qid": "Q100330147",
+      "input_mentions": 245,
+      "decisions": {
+        "UNRESOLVED": 244,
+        "SUGGESTED": 1
+      }
+    },
+    {
+      "Source": "Two Lords Incident",
+      "page_status": "NOT_IN_SNAPSHOT",
+      "page_qid": null,
+      "input_mentions": 48,
+      "decisions": {
+        "UNRESOLVED": 48
+      }
+    },
+    {
+      "Source": "Typhoid",
+      "page_status": "NOT_IN_SNAPSHOT",
+      "page_qid": null,
+      "input_mentions": 459,
+      "decisions": {
+        "UNRESOLVED": 459
+      }
+    },
+    {
+      "Source": "Tōseiha",
+      "page_status": "RESOLVED",
+      "page_qid": "Q1151414",
+      "input_mentions": 278,
+      "decisions": {
+        "SUGGESTED": 46,
+        "UNRESOLVED": 232
+      }
+    },
+    {
+      "Source": "US 7th Fleet",
+      "page_status": "NOT_IN_SNAPSHOT",
+      "page_qid": null,
+      "input_mentions": 699,
+      "decisions": {
+        "UNRESOLVED": 699
+      }
+    },
+    {
+      "Source": "US Armed Forces",
+      "page_status": "NOT_IN_SNAPSHOT",
+      "page_qid": null,
+      "input_mentions": 1733,
+      "decisions": {
+        "UNRESOLVED": 1733
+      }
+    },
+    {
+      "Source": "US Asiatic Fleet",
+      "page_status": "NOT_IN_SNAPSHOT",
+      "page_qid": null,
+      "input_mentions": 682,
+      "decisions": {
+        "UNRESOLVED": 682
+      }
+    },
+    {
+      "Source": "US Fifth Fleet",
+      "page_status": "NOT_IN_SNAPSHOT",
+      "page_qid": null,
+      "input_mentions": 526,
+      "decisions": {
+        "UNRESOLVED": 526
+      }
+    },
+    {
+      "Source": "US Naval Advance Bases",
+      "page_status": "RESOLVED",
+      "page_qid": "Q106611506",
+      "input_mentions": 1672,
+      "decisions": {
+        "UNRESOLVED": 1660,
+        "SUGGESTED": 12
+      }
+    },
+    {
+      "Source": "USS Albacore (SS-218)",
+      "page_status": "RESOLVED",
+      "page_qid": "Q1347169",
+      "input_mentions": 336,
+      "decisions": {
+        "UNRESOLVED": 264,
+        "SUGGESTED": 72
+      }
+    },
+    {
+      "Source": "Ultimatum",
+      "page_status": "NOT_IN_SNAPSHOT",
+      "page_qid": null,
+      "input_mentions": 135,
+      "decisions": {
+        "UNRESOLVED": 135
+      }
+    },
+    {
+      "Source": "V Amphibious Corps",
+      "page_status": "RESOLVED",
+      "page_qid": "Q7907712",
+      "input_mentions": 156,
+      "decisions": {
+        "SUGGESTED": 17,
+        "UNRESOLVED": 139
+      }
+    },
+    {
+      "Source": "V-J Day",
+      "page_status": "NOT_IN_SNAPSHOT",
+      "page_qid": null,
+      "input_mentions": 567,
+      "decisions": {
+        "UNRESOLVED": 567
+      }
+    },
+    {
+      "Source": "Vichy France",
+      "page_status": "NOT_IN_SNAPSHOT",
+      "page_qid": null,
+      "input_mentions": 2533,
+      "decisions": {
+        "UNRESOLVED": 2533
+      }
+    },
+    {
+      "Source": "Washington Naval Treaty",
+      "page_status": "NOT_IN_SNAPSHOT",
+      "page_qid": null,
+      "input_mentions": 459,
+      "decisions": {
+        "UNRESOLVED": 459
+      }
+    },
+    {
+      "Source": "Weather events during wars",
+      "page_status": "NOT_IN_SNAPSHOT",
+      "page_qid": null,
+      "input_mentions": 337,
+      "decisions": {
+        "UNRESOLVED": 337
+      }
+    },
+    {
+      "Source": "Western Allied invasion of Germany",
+      "page_status": "RESOLVED",
+      "page_qid": "Q666414",
+      "input_mentions": 1490,
+      "decisions": {
+        "UNRESOLVED": 1433,
+        "SUGGESTED": 57
+      }
+    },
+    {
+      "Source": "XXXIII Corps (British India)",
+      "page_status": "RESOLVED",
+      "page_qid": "Q8042618",
+      "input_mentions": 112,
+      "decisions": {
+        "UNRESOLVED": 103,
+        "SUGGESTED": 9
+      }
+    },
+    {
+      "Source": "Xishuangbanna",
+      "page_status": "NOT_IN_SNAPSHOT",
+      "page_qid": null,
+      "input_mentions": 386,
+      "decisions": {
+        "UNRESOLVED": 386
+      }
+    },
+    {
+      "Source": "Yalta Conference",
+      "page_status": "RESOLVED",
+      "page_qid": "Q161227",
+      "input_mentions": 575,
+      "decisions": {
+        "UNRESOLVED": 552,
+        "SUGGESTED": 23
+      }
+    },
+    {
+      "Source": "Yan'an Soviet",
+      "page_status": "NOT_IN_SNAPSHOT",
+      "page_qid": null,
+      "input_mentions": 501,
+      "decisions": {
+        "UNRESOLVED": 501
+      }
+    },
+    {
+      "Source": "Yangon",
+      "page_status": "NOT_IN_SNAPSHOT",
+      "page_qid": null,
+      "input_mentions": 863,
+      "decisions": {
+        "UNRESOLVED": 863
+      }
+    },
+    {
+      "Source": "Yasuji Okamura",
+      "page_status": "RESOLVED",
+      "page_qid": "Q704640",
+      "input_mentions": 236,
+      "decisions": {
+        "SUGGESTED": 15,
+        "UNRESOLVED": 221
+      }
+    },
+    {
+      "Source": "Yasukuni Shrine",
+      "page_status": "NOT_IN_SNAPSHOT",
+      "page_qid": null,
+      "input_mentions": 1335,
+      "decisions": {
+        "UNRESOLVED": 1335
+      }
+    },
+    {
+      "Source": "Yen bloc",
+      "page_status": "RESOLVED",
+      "page_qid": "Q11509671",
+      "input_mentions": 96,
+      "decisions": {
+        "UNRESOLVED": 96
+      }
+    }
+  ],
+  "accuracy_measured": false,
+  "type_compatibility_validated": false,
+  "manually_selected_matches": 0,
+  "new_entities_created": 0
+}

@@ -1,0 +1,453 @@
+{
+  "non_date_candidate_sets_unchanged": true,
+  "non_date_mentions_compared": 271432,
+  "all_rows_unique": 309864,
+  "by_group": {
+    "ORG": {
+      "input": 47680,
+      "SUGGESTED": 1448,
+      "with_candidates": 7787,
+      "UNRESOLVED": 46232
+    },
+    "MISC": {
+      "input": 85676,
+      "SUGGESTED": 2475,
+      "with_candidates": 18522,
+      "UNRESOLVED": 83201
+    },
+    "DATE": {
+      "input": 38432,
+      "UNRESOLVED": 38390,
+      "with_candidates": 739,
+      "SUGGESTED": 42
+    },
+    "LOC": {
+      "input": 89846,
+      "UNRESOLVED": 87250,
+      "with_candidates": 11774,
+      "SUGGESTED": 2596
+    },
+    "PER": {
+      "input": 48230,
+      "UNRESOLVED": 46753,
+      "with_candidates": 6464,
+      "SUGGESTED": 1477
+    }
+  },
+  "candidate_pairs": {
+    "ORG": 32013,
+    "MISC": 127273,
+    "DATE": 820,
+    "LOC": 26018,
+    "PER": 8994
+  },
+  "reasons": {
+    "ORG": {
+      "single candidate; name rule passed": 956,
+      "name score or graph separation too weak": 6339,
+      "no candidate in page pool": 22689,
+      "page_not_in_snapshot": 17204,
+      "graph winner; name and gap rules passed": 492
+    },
+    "MISC": {
+      "single candidate; name rule passed": 1308,
+      "no candidate in page pool": 35471,
+      "name score or graph separation too weak": 16047,
+      "page_not_in_snapshot": 31683,
+      "graph winner; name and gap rules passed": 1167
+    },
+    "DATE": {
+      "no candidate in page pool": 22920,
+      "name score or graph separation too weak": 697,
+      "page_not_in_snapshot": 14773,
+      "single candidate; name rule passed": 39,
+      "graph winner; name and gap rules passed": 3
+    },
+    "LOC": {
+      "no candidate in page pool": 41445,
+      "name score or graph separation too weak": 9178,
+      "graph winner; name and gap rules passed": 1133,
+      "page_not_in_snapshot": 36627,
+      "single candidate; name rule passed": 1463
+    },
+    "PER": {
+      "name score or graph separation too weak": 4987,
+      "single candidate; name rule passed": 1332,
+      "no candidate in page pool": 24409,
+      "page_not_in_snapshot": 17357,
+      "graph winner; name and gap rules passed": 145
+    }
+  },
+  "unique_suggested_ids": {
+    "ORG": 229,
+    "MISC": 205,
+    "PER": 386,
+    "LOC": 68,
+    "DATE": 5
+  },
+  "examples": {
+    "ORG": [
+      {
+        "suggested_qid": "Q4550030",
+        "suggested_label": "14th Indian Infantry Division",
+        "authority_gap": null,
+        "reason": "single candidate; name rule passed",
+        "Source": "14th Indian Infantry Division",
+        "Index": 0,
+        "word": "14th Indian Infantry Division",
+        "candidates": [
+          {
+            "entity_id": "Q4550030",
+            "matched_name": "14th Indian Infantry Division",
+            "matched_name_kind": "label",
+            "name_similarity": 1.0,
+            "type_check": "ASSUMED_COMPATIBLE",
+            "authority": 0.0,
+            "page_context_id": "Q4550030|Q4550030"
+          }
+        ]
+      },
+      {
+        "suggested_qid": "Q4632442",
+        "suggested_label": "26th Indian Infantry Division",
+        "authority_gap": null,
+        "reason": "single candidate; name rule passed",
+        "Source": "26th Indian Infantry Division",
+        "Index": 3,
+        "word": "14th Indian Infantry Division",
+        "candidates": [
+          {
+            "entity_id": "Q4632442",
+            "matched_name": "26th Indian Infantry Division",
+            "matched_name_kind": "label",
+            "name_similarity": 0.9230769230769231,
+            "type_check": "ASSUMED_COMPATIBLE",
+            "authority": 0.0,
+            "page_context_id": "Q4632442|Q4632442"
+          }
+        ]
+      },
+      {
+        "suggested_qid": "Q4640929",
+        "suggested_label": "58th Operations Group",
+        "authority_gap": null,
+        "reason": "single candidate; name rule passed",
+        "Source": "58th Operations Group",
+        "Index": 0,
+        "word": "58th Operations Group",
+        "candidates": [
+          {
+            "entity_id": "Q4640929",
+            "matched_name": "58th Operations Group",
+            "matched_name_kind": "label",
+            "name_similarity": 1.0,
+            "type_check": "ASSUMED_COMPATIBLE",
+            "authority": 0.0,
+            "page_context_id": "Q4640929|Q4640929"
+          }
+        ]
+      }
+    ],
+    "MISC": [
+      {
+        "suggested_qid": "Q362",
+        "suggested_label": "World War II",
+        "authority_gap": null,
+        "reason": "single candidate; name rule passed",
+        "Source": "14th Indian Infantry Division",
+        "Index": 0,
+        "word": "World War II",
+        "candidates": [
+          {
+            "entity_id": "Q362",
+            "matched_name": "World War II",
+            "matched_name_kind": "label",
+            "name_similarity": 1.0,
+            "type_check": "ASSUMED_COMPATIBLE",
+            "authority": 0.014526602582571796,
+            "page_context_id": "Q4550030|Q362"
+          }
+        ]
+      },
+      {
+        "suggested_qid": "Q362",
+        "suggested_label": "World War II",
+        "authority_gap": null,
+        "reason": "single candidate; name rule passed",
+        "Source": "14th Indian Infantry Division",
+        "Index": 57,
+        "word": "World War II",
+        "candidates": [
+          {
+            "entity_id": "Q362",
+            "matched_name": "World War II",
+            "matched_name_kind": "label",
+            "name_similarity": 1.0,
+            "type_check": "ASSUMED_COMPATIBLE",
+            "authority": 0.014526488527613091,
+            "page_context_id": "Q4550030|Q362"
+          }
+        ]
+      },
+      {
+        "suggested_qid": "Q170314",
+        "suggested_label": "Second Sino-Japanese War",
+        "authority_gap": null,
+        "reason": "single candidate; name rule passed",
+        "Source": "1939–1940 Winter Offensive",
+        "Index": 0,
+        "word": "Second Sino-Japanese War",
+        "candidates": [
+          {
+            "entity_id": "Q170314",
+            "matched_name": "Second Sino-Japanese War",
+            "matched_name_kind": "label",
+            "name_similarity": 1.0,
+            "type_check": "ASSUMED_COMPATIBLE",
+            "authority": 0.04304461508835832,
+            "page_context_id": "Q705319|Q170314"
+          }
+        ]
+      }
+    ],
+    "PER": [
+      {
+        "suggested_qid": "Q8001965",
+        "suggested_label": "Wilfrid Lewis Lloyd",
+        "authority_gap": null,
+        "reason": "single candidate; name rule passed",
+        "Source": "14th Indian Infantry Division",
+        "Index": 1,
+        "word": "Wilfrid Lewis Lloyd",
+        "candidates": [
+          {
+            "entity_id": "Q8001965",
+            "matched_name": "Wilfrid Lewis Lloyd",
+            "matched_name_kind": "label",
+            "name_similarity": 1.0,
+            "type_check": "EXPLICIT_HUMAN_Q5",
+            "authority": 0.004839524829640473,
+            "page_context_id": "Q4550030|Q8001965"
+          }
+        ]
+      },
+      {
+        "suggested_qid": "Q7047013",
+        "suggested_label": "Noel Irwin",
+        "authority_gap": null,
+        "reason": "single candidate; name rule passed",
+        "Source": "14th Indian Infantry Division",
+        "Index": 6,
+        "word": "Noel Irwin",
+        "candidates": [
+          {
+            "entity_id": "Q7047013",
+            "matched_name": "Noel Irwin",
+            "matched_name_kind": "label",
+            "name_similarity": 1.0,
+            "type_check": "EXPLICIT_HUMAN_Q5",
+            "authority": 0.004582301130368328,
+            "page_context_id": "Q4550030|Q7047013"
+          }
+        ]
+      },
+      {
+        "suggested_qid": "Q7047013",
+        "suggested_label": "Noel Irwin",
+        "authority_gap": null,
+        "reason": "single candidate; name rule passed",
+        "Source": "14th Indian Infantry Division",
+        "Index": 8,
+        "word": "Noel Irwin",
+        "candidates": [
+          {
+            "entity_id": "Q7047013",
+            "matched_name": "Noel Irwin",
+            "matched_name_kind": "label",
+            "name_similarity": 1.0,
+            "type_check": "EXPLICIT_HUMAN_Q5",
+            "authority": 0.004582301130368328,
+            "page_context_id": "Q4550030|Q7047013"
+          }
+        ]
+      }
+    ],
+    "LOC": [
+      {
+        "suggested_qid": "Q188712",
+        "suggested_label": "Empire of Japan",
+        "authority_gap": 0.983391323109832,
+        "reason": "graph winner; name and gap rules passed",
+        "Source": "1st Mobile Fleet (Imperial Japanese Navy)",
+        "Index": 3,
+        "word": "Japan",
+        "candidates": [
+          {
+            "entity_id": "Q188712",
+            "matched_name": "Japan",
+            "matched_name_kind": "alias",
+            "name_similarity": 1.0,
+            "type_check": "ASSUMED_COMPATIBLE",
+            "authority": 0.0553194152541478,
+            "page_context_id": "Q4596490|Q188712"
+          },
+          {
+            "entity_id": "Q219712",
+            "matched_name": "Japanese Navy",
+            "matched_name_kind": "alias",
+            "name_similarity": 0.42857142857142855,
+            "type_check": "ASSUMED_COMPATIBLE",
+            "authority": 0.0009187822937091648,
+            "page_context_id": "Q4596490|Q219712"
+          }
+        ]
+      },
+      {
+        "suggested_qid": "Q188712",
+        "suggested_label": "Empire of Japan",
+        "authority_gap": 0.9801142426794174,
+        "reason": "graph winner; name and gap rules passed",
+        "Source": "1st Mobile Fleet (Imperial Japanese Navy)",
+        "Index": 4,
+        "word": "Japan",
+        "candidates": [
+          {
+            "entity_id": "Q188712",
+            "matched_name": "Japan",
+            "matched_name_kind": "alias",
+            "name_similarity": 1.0,
+            "type_check": "ASSUMED_COMPATIBLE",
+            "authority": 0.04273156011533591,
+            "page_context_id": "Q4596490|Q188712"
+          },
+          {
+            "entity_id": "Q219712",
+            "matched_name": "Japanese Navy",
+            "matched_name_kind": "alias",
+            "name_similarity": 0.42857142857142855,
+            "type_check": "ASSUMED_COMPATIBLE",
+            "authority": 0.0008497494343834535,
+            "page_context_id": "Q4596490|Q219712"
+          }
+        ]
+      },
+      {
+        "suggested_qid": "Q188712",
+        "suggested_label": "Empire of Japan",
+        "authority_gap": 0.8498107880867786,
+        "reason": "graph winner; name and gap rules passed",
+        "Source": "Air raids on Japan",
+        "Index": 0,
+        "word": "Japan",
+        "candidates": [
+          {
+            "entity_id": "Q188712",
+            "matched_name": "Japan",
+            "matched_name_kind": "alias",
+            "name_similarity": 1.0,
+            "type_check": "ASSUMED_COMPATIBLE",
+            "authority": 0.009718677065619354,
+            "page_context_id": "Q590545|Q188712"
+          },
+          {
+            "entity_id": "Q709352",
+            "matched_name": "Japan Campaign",
+            "matched_name_kind": "label",
+            "name_similarity": 0.4,
+            "type_check": "ASSUMED_COMPATIBLE",
+            "authority": 0.0014596404493244705,
+            "page_context_id": "Q590545|Q709352"
+          },
+          {
+            "entity_id": "Q701321",
+            "matched_name": "Japan war crimes",
+            "matched_name_kind": "alias",
+            "name_similarity": 0.35294117647058826,
+            "type_check": "ASSUMED_COMPATIBLE",
+            "authority": 0.0003706733921346151,
+            "page_context_id": "Q590545|Q701321"
+          }
+        ]
+      }
+    ],
+    "DATE": [
+      {
+        "suggested_qid": "Q207482",
+        "suggested_label": "1941",
+        "authority_gap": null,
+        "reason": "single candidate; name rule passed",
+        "Source": "Attack on Pearl Harbor",
+        "Index": 10,
+        "word": "1941",
+        "candidates": [
+          {
+            "entity_id": "Q207482",
+            "matched_name": "1941",
+            "matched_name_kind": "label",
+            "name_similarity": 1.0,
+            "type_check": "ASSUMED_COMPATIBLE",
+            "authority": 4.731267085808879e-05,
+            "page_context_id": "Q52418|Q207482"
+          }
+        ]
+      },
+      {
+        "suggested_qid": "Q207482",
+        "suggested_label": "1941",
+        "authority_gap": null,
+        "reason": "single candidate; name rule passed",
+        "Source": "Attack on Pearl Harbor",
+        "Index": 12,
+        "word": "1941",
+        "candidates": [
+          {
+            "entity_id": "Q207482",
+            "matched_name": "1941",
+            "matched_name_kind": "label",
+            "name_similarity": 1.0,
+            "type_check": "ASSUMED_COMPATIBLE",
+            "authority": 3.5027468197421515e-05,
+            "page_context_id": "Q52418|Q207482"
+          }
+        ]
+      },
+      {
+        "suggested_qid": "Q207482",
+        "suggested_label": "1941",
+        "authority_gap": null,
+        "reason": "single candidate; name rule passed",
+        "Source": "Attack on Pearl Harbor",
+        "Index": 15,
+        "word": "1941",
+        "candidates": [
+          {
+            "entity_id": "Q207482",
+            "matched_name": "1941",
+            "matched_name_kind": "label",
+            "name_similarity": 1.0,
+            "type_check": "ASSUMED_COMPATIBLE",
+            "authority": 5.573644978987306e-05,
+            "page_context_id": "Q52418|Q207482"
+          }
+        ]
+      }
+    ]
+  },
+  "run_id": "matching-3ea16641deda7f74ed5e",
+  "all_manifest_output_hashes_rechecked": true,
+  "software_tests_passed": 5,
+  "original_notebook_parity": {
+    "paragraphs": 8,
+    "person_decisions": 16,
+    "passed": true
+  },
+  "executed_notebook_code_cells": 9,
+  "date_type_error_example": {
+    "word": "1941",
+    "suggested_qid": "Q207482",
+    "saved_description": "1979 film directed by Steven Spielberg",
+    "direct_type": "Q11424",
+    "mentions": 22,
+    "outputs_modified_after_inspection": false
+  }
+}

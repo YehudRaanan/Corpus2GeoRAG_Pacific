@@ -1,5 +1,12 @@
 # First candidate run — 18 October 2026
 
+## Later run
+
+The separate [all-type notebook run](ALL_TYPES_RUN_REPORT_2026-10-18.md) now
+applies name search, paragraph-level HITS, and automatic suggestion rules to all
+309,864 mentions, including DATE. This first candidate-only baseline remains
+unchanged. See the later report for complete results and observed method errors.
+
 Completed on all **309,864 mentions** across **428 source pages**.
 Every raw row and all nine original fields were preserved and verified after writing.
 

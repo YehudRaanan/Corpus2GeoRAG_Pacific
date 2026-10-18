@@ -2,6 +2,11 @@
 
 ## One-time automatic matching of all Daniel's rows
 
+**Completed:** [all-type run report](ALL_TYPES_RUN_REPORT_2026-10-18.md).
+All 309,864 mentions were processed: 8,038 automatic suggestions and 301,826
+unresolved results. The report records observed false matches; the output has
+not been corrected or promoted to verified identities.
+
 ```powershell
 python -m pytest -q GG_Data/entity_resolution/test_generate_candidates.py GG_Data/entity_resolution/test_notebook_matching.py
 python GG_Data/entity_resolution/run_notebook_matching.py --output GG_Data/entity_resolution/runs/all_types_notebook_v0.1.0_20261018

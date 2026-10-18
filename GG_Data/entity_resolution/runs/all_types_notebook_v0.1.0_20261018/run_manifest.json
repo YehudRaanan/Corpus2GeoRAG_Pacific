@@ -1,0 +1,83 @@
+{
+  "status": "COMPLETED",
+  "run_id": "matching-3ea16641deda7f74ed5e",
+  "completed_utc": "2026-10-18T12:41:37.881813+00:00",
+  "parameters": {
+    "method": "notebook-trigrams-hits-all-types-v0.1.0",
+    "entity_groups": [
+      "PER",
+      "LOC",
+      "ORG",
+      "MISC",
+      "DATE"
+    ],
+    "min_name_similarity": 0.35,
+    "graph_depth": 1,
+    "hits_steps": 20,
+    "min_accept_name": 0.8,
+    "min_authority_gap": 0.2,
+    "mapping_version": "relation-map-v2.1.0",
+    "candidate_scope": "page plus direct incoming/outgoing neighbours",
+    "ranking_scope": "all candidates in the paragraph plus page; outgoing depth 1",
+    "PER_type_policy": "explicit saved P31=Q5, unchanged from notebook",
+    "other_type_policy": "assume compatible; no type classifier",
+    "DATE_policy": "same name/graph rules; no date parser or inferred date IDs",
+    "candidate_cap": null,
+    "name_language": "en",
+    "manual_overrides": 0,
+    "training_labels": 0,
+    "model_calls": 0,
+    "live_lookups": 0,
+    "unknown_entity_creation": false,
+    "threshold_tuning": false
+  },
+  "inputs_sha256": {
+    "Data/external/daniel_20261017.parquet": "dcd51dfa237b63378279ced4f9739a45d8cf8ce3991579f20848295448f83f16",
+    "Data/external/wwii_task_force/wikidata_entities.jsonl.gz": "95c6a8aa5ab803d904a0f5e85bfc5d2dade97b5b5f18c0c33ea48a54fc217277",
+    "Data/external/wwii_task_force/article_qids.jsonl": "35bff0843678def3ac1917dc4e37748b258fe4ea2afa3c98e62bedb26e593918",
+    "GG_Data/mapping/outputs/relation-map-v1.0.0/complete_mapped_relations_v1.0.0.csv": "e1492d175577b5b4b916c9e12dbc0ff61b50a0f86e23c3471e5c033e0b85c320",
+    "GG_Data/mapping/RELATION_MAPPING_TABLE_v2.1.0.csv": "ed8aed3cbec4262f47abe648059aa1bc89c15e0a4e30de77709e4b89049ec034",
+    "GG_Data/mapping/ASSERTION_EXCLUSIONS.csv": "49338302ac4cda3bd540377a2030bc0c3c532bd6a477730f4667986046e38719",
+    "GG_Data/entity_resolution/generate_candidates.py": "d2ca1353d796f7d5f500df4bc967cd14cbc2374433a871fc54f4745f2163e2ea",
+    "GG_Data/entity_resolution/prepare_examples.py": "3035ef779dff21b98ea612d82bbdac4d707fa5dd3578913becac98c2fb20f795",
+    "GG_Data/mapping/assertion_exclusions.py": "b77d55bdc906317b08156ecbb4fc7c62005d47a6716f662df4042cc21230fcce",
+    "GG_Data/mapping/run_relation_mapping_sanity.py": "8c953c458896c388f260948d87beac5570d45c2e59d951689823bd696df293c3",
+    "GG_Data/entity_resolution/runs/first_candidates_v0.1.0_20261018/run_manifest.json": "91dd582782dc3194684241ec50d49ee81275d6b0ca1ac686b01cb9d5a75cef5c",
+    "GG_Data/entity_resolution/runs/first_candidates_v0.1.0_20261018/page_context.jsonl.gz": "dac74b624f2988a22795e1ae41d0080240161e6a1f150ccf9c4afb8eb15b75d8",
+    "GG_Data/entity_resolution/runs/first_candidates_v0.1.0_20261018/entity_metadata.jsonl.gz": "8fefe533ea5437b6b0315d9d7a3324293e4c4b0b5dd203a30a9e6488c08eac93",
+    "GG_Data/entity_resolution/run_notebook_matching.py": "35397142651984754c83ed8ff1d668fbda9f80f762e36abf6b9d3e677e10eb8f",
+    "GG_Data/entity_resolution/notebook_rules.py": "e0853651f2e0628126cb540a8364a2367c709dab6ef4504644801420d4d1c807",
+    "GG_Data/entity_resolution/ENTITY_MATCHING_STEP_BY_STEP.ipynb": "6e72c470194e46a899d9000d338ec146c4e9f383d2ad7277c7d61999a6e3ed42"
+  },
+  "baseline_run_id": "candidates-f3f085bae31799ee2a01",
+  "daniel_commit": "43e35453421b032fc67d426d7d16fe436574b0fa",
+  "outputs": {
+    "graph_contexts.jsonl.gz": {
+      "sha256": "20568cdc793c84c6ba5a0741ec9f13b5ef3dc85d6671f78408a67bd1d7108b9b",
+      "bytes": 2648707
+    },
+    "mapped_graph.jsonl.gz": {
+      "sha256": "946a52d82f1355654138024a70e11c35d5cbc5a6366f0dba00e86d37e3e62045",
+      "bytes": 46590998
+    },
+    "mention_matches.jsonl.gz": {
+      "sha256": "f7e234a79be19128771a55579934222e5ff90b60bc868ecb8e5082b140dcd222",
+      "bytes": 44268415
+    },
+    "summary.json": {
+      "sha256": "5da8688b430fec1c0e73db1808dc9367f9c2eb17f540b1e4b0954c18297a1b3f",
+      "bytes": 99037
+    }
+  },
+  "runtime": {
+    "python": "3.12.7",
+    "pandas": "2.3.3",
+    "networkx": "3.6.1"
+  },
+  "verification": {
+    "all_raw_rows_preserved": true,
+    "all_five_types_processed": true,
+    "all_candidates_and_decisions_rechecked": true,
+    "inputs_unchanged_during_run": true
+  }
+}
