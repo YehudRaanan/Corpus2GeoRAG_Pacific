@@ -1,4 +1,49 @@
-# Entity candidate generation: first full run
+# Entity matching runs
+
+## One-time automatic matching of all Daniel's rows
+
+```powershell
+python -m pytest -q GG_Data/entity_resolution/test_generate_candidates.py GG_Data/entity_resolution/test_notebook_matching.py
+python GG_Data/entity_resolution/run_notebook_matching.py --output GG_Data/entity_resolution/runs/all_types_notebook_v0.1.0_20261018
+```
+
+This command applies the notebook's fixed name, HITS, and suggestion rules to
+every raw row, including **PER, LOC, ORG, MISC, and DATE**. It uses no training
+labels, model calls, manual choices, threshold tuning, or live lookups. The
+verified first run below supplies a reusable page/name cache. All original
+input and cache hashes must still match. The existing outputs are preserved.
+
+The fixed settings are name similarity 0.35, outgoing graph depth 1, 20 HITS
+rounds, suggestion name threshold 0.80, and relative authority gap 0.20 for
+multiple candidates. Candidate sets are combined within each Source/Index
+paragraph. Graph direction and the 14 approved record exclusions are retained.
+The notebook and batch command import the same `notebook_rules.py` functions.
+
+The notebook's person check remains explicit P31=Q5. For LOC, ORG, MISC, and
+DATE, type compatibility is **assumed**, following the agreed scope. This is
+not an implementation of a new type classifier or temporal normalization.
+DATE gets the same English label/alias search and graph rules as other
+mentions; no date parser, synthetic date nodes, or broader date index is added.
+Missing pages or candidates remain unresolved. No new entity is created.
+
+New run outputs:
+
+| File | Contents |
+|---|---|
+| `mention_matches.jsonl.gz` | Every raw mention, ranked candidates, name evidence, final HITS authority, automatic suggestion or unresolved reason |
+| `graph_contexts.jsonl.gz` | Each distinct paragraph seed set, graph size/hash, and final seed authority/hub values; contexts can be shared by paragraphs |
+| `mapped_graph.jsonl.gz` | Complete replay of mapped assertions, with original endpoints and source records; rebuild any context from its seeds and outgoing depth 1 |
+| `summary.json` | Complete denominators and decisions by type and page |
+| `run_manifest.json` | Completion marker, fixed rules, frozen input/code/cache/output hashes and verification results |
+
+Use `input_row_number` to recover the original input order. `graph_context_id`
+joins mentions to graph contexts. Candidate `page_context_id` joins to the
+first run's page evidence. Entity IDs join to its saved entity metadata.
+The candidate and suggestion scores are not probabilities. Suggestions are
+unvalidated automatic outputs, not verified identity truth. Unknown-entity
+handling remains open, and the canonical graph is not changed.
+
+## First full candidate-only run
 
 This stage keeps Daniel's raw mentions and proposes existing entity IDs. It does
 not select identities, run HITS, create unknown entities, extract relations, or
