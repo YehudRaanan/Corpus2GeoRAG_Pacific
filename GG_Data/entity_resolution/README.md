@@ -1,5 +1,13 @@
 # Entity matching runs
 
+## Full direct-Wikidata run — 18 October 2026
+
+[Run status and files](FULL_DIRECT_RUN_2026-10-18.md).
+Started for all **309,864 mentions / 428 source titles**, with the accepted
+80% threshold and unchanged three-pass/type/date/synthetic-ID rules. The report
+is updated automatically on completion. Large run files and page evidence are on C:
+because D: is nearly full. No article-name extraction or canonical graph update.
+
 ## Quick threshold test — 18 October 2026
 
 [Report](THRESHOLD_TEST_2026-10-18.md) · [Comparisons](runs/threshold_sensitivity_20261018/comparison.csv)
