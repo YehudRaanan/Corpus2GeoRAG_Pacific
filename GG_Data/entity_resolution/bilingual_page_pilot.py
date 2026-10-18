@@ -167,7 +167,12 @@ class LiveData:
         )
 
     def entities_for(self, qids: set[str]) -> None:
-        todo = sorted(qids - self.entities.keys())
+        todo = sorted(
+            q
+            for q in qids
+            if q not in self.entities
+            or self.entities[q].get("projection") == "CLASS_EDGES_ONLY"
+        )
         for offset in range(0, len(todo), 50):
             batch = todo[offset : offset + 50]
             data = self.get(
@@ -228,7 +233,39 @@ class LiveData:
         frontier = {t for q in ids for t in self.entities[q]["direct_types"]}
         visited = set()
         while frontier:
-            self.entities_for(frontier)
+            # Fetch only the class edges needed for types, instead of downloading
+            # every unrelated claim of every ancestor class through the item API.
+            missing = sorted(frontier - self.entities.keys())
+            for offset in range(0, len(missing), 500):
+                batch = missing[offset : offset + 500]
+                query = (
+                    "SELECT DISTINCT ?item ?parent WHERE { VALUES ?item { "
+                    + " ".join("wd:" + q for q in batch)
+                    + " } OPTIONAL { ?item p:P279 ?statement . ?statement ps:P279 ?parent . "
+                    "FILTER NOT EXISTS { ?statement wikibase:rank wikibase:DeprecatedRank } } }"
+                )
+                result = self.get(
+                    "https://query.wikidata.org/sparql",
+                    {"query": query, "format": "json"},
+                    post=True,
+                )
+                for qid in batch:
+                    self.entities[qid] = {
+                        "id": qid,
+                        "label": "",
+                        "labels": {},
+                        "aliases": [],
+                        "parents": [],
+                        "direct_types": [],
+                        "revision": None,
+                        "projection": "CLASS_EDGES_ONLY",
+                    }
+                for row in result["results"]["bindings"]:
+                    if "parent" in row:
+                        qid = row["item"]["value"].rsplit("/", 1)[-1]
+                        self.entities[qid]["parents"].append(
+                            row["parent"]["value"].rsplit("/", 1)[-1]
+                        )
             visited.update(frontier)
             frontier = {
                 p for q in frontier for p in self.entities[q]["parents"]
@@ -437,11 +474,16 @@ def extract_unlinked(articles: list[dict], cache: Path) -> None:
 def page_inventory(
     api: LiveData, articles: list[dict], rng: random.Random
 ) -> dict[str, set[str]]:
+    """Direct article links plus batched, exact bilingual label/alias lookups.
+
+    Keep all exact-name QID candidates. Their identity remains provisional until
+    Daniel's compatible-type and trigram rule selects one; no manual choices.
+    """
     ids = {link["qid"] for source in articles for link in source["links"]} | {
         a["qid"] for a in articles
     }
     api.entities_for(ids)
-    searches = []
+    phrases = {}
     for source in articles:
         linked = {x["qid"] for x in source["links"]} | {source["qid"]}
         linked_names = {
@@ -452,28 +494,46 @@ def page_inventory(
         for item in source["extracted_names"]:
             if normalize(item["name"]) in linked_names:
                 continue
-            result = api.get(
-                "https://www.wikidata.org/w/api.php",
-                {
-                    "action": "wbsearchentities",
-                    "format": "json",
-                    "search": item["name"],
-                    "language": source["language"],
-                    "uselang": source["language"],
-                    "type": "item",
-                    "limit": 5,
-                },
-            )
-            record = {**item, "hits": result.get("search", [])}
+            name = item["name"]
+            variants = {
+                name,
+                name.casefold(),
+                name[:1].upper() + name[1:].lower(),
+                name.title(),
+            }
+            record = {**item, "variants": sorted(variants), "hits": []}
             source["searches"].append(record)
-            searches.append(record)
-        LOG.info(
-            "%s: %d linked QIDs, %d independent name searches",
-            source["title"],
-            len(linked),
-            len(source["searches"]),
+            for variant in variants:
+                phrases.setdefault(variant, []).append(record)
+    names = sorted(phrases)
+    for offset in range(0, len(names), 80):
+        literals = " ".join(
+            json.dumps(name, ensure_ascii=False) + "@" + lang
+            for name in names[offset : offset + 80]
+            for lang in ("en", "ja")
         )
-    candidates = {hit["id"] for s in searches for hit in s["hits"]}
+        query = (
+            "SELECT DISTINCT ?term ?item WHERE { VALUES ?term { "
+            + literals
+            + " } { { ?item rdfs:label ?term } UNION { ?item skos:altLabel ?term } } }"
+        )
+        result = api.get(
+            "https://query.wikidata.org/sparql",
+            {"query": query, "format": "json"},
+            post=True,
+        )
+        for hit in result["results"]["bindings"]:
+            term, qid = hit["term"]["value"], hit["item"]["value"].rsplit("/", 1)[-1]
+            for record in phrases[term]:
+                record["hits"].append(
+                    {"id": qid, "name": term, "language": hit["term"].get("xml:lang")}
+                )
+        LOG.info(
+            "Independent phrase lookups: %d/%d variants",
+            min(offset + 80, len(names)),
+            len(names),
+        )
+    candidates = {h["id"] for a in articles for r in a["searches"] for h in r["hits"]}
     api.hierarchy(
         ids | candidates | set().union(*TYPE_ROOTS.values()) | EXCLUDE_CLASSES
     )
@@ -481,17 +541,13 @@ def page_inventory(
     for source in articles:
         pool = set(source["pool"])
         for record in source["searches"]:
-            candidates = [hit["id"] for hit in record["hits"]]
-            index = NameIndex(candidates, api.entities)
-            decision = choose(
-                index.find(record["name"], "MISC", 0.8),
-                record["type"],
-                api.entities,
-                rng,
+            found = sorted({h["id"] for h in record["hits"]})
+            eligible = NameIndex(found, api.entities).find(record["name"], "MISC", 0.8)
+            record["candidate_ids"] = [c["entity_id"] for c in eligible]
+            record["status"] = (
+                "EXACT_NAME_CANDIDATES" if eligible else "NO_EXACT_LABEL_OR_ALIAS"
             )
-            record["decision"] = decision
-            if decision["status"] == "MATCHED":
-                pool.add(decision["entity_id"])
+            pool.update(record["candidate_ids"])
         pool = {
             q
             for q in pool
@@ -500,6 +556,12 @@ def page_inventory(
         }
         source["pool"] = sorted(pool)
         pools.setdefault(source["daniel_source"], set()).update(pool)
+        LOG.info(
+            "%s: %d linked QIDs, %d total provisional QIDs",
+            source["title"],
+            len(source["links"]),
+            len(pool),
+        )
     return pools
 
 
@@ -698,7 +760,7 @@ def execute(output: Path, cache: Path, seed: int) -> None:
     world_index = NameIndex(sorted(world), world)
     needed = {
         c["entity_id"]
-        for row in unresolved
+        for row in rows  # Also support offline notebook replay at higher thresholds.
         for c in world_index.find(row["raw"]["word"], "MISC", 0.8)
     }
     api.hierarchy(needed)
@@ -828,7 +890,7 @@ def execute(output: Path, cache: Path, seed: int) -> None:
             p.name: digest(p) for p in output.iterdir() if p.name != "run_manifest.json"
         },
         "limitations": [
-            "Article links plus lexical phrase extraction are not guaranteed exhaustive; no trained NER model or matching model is used.",
+            "Article links plus lexical phrase extraction and exact bilingual label/alias lookup are not guaranteed exhaustive; no trained NER or matching model is used. Homonymous unlinked phrases can add unrelated provisional QIDs.",
             "Fresh WWII population is defined by the saved explicit-statement query, not every semantically WWII-related entity.",
             "Trigram scores are similarities, not correctness probabilities; equal-highest QID ties use saved-seed random selection.",
             "Type categories use the saved broad root policy; MISC is a residual known category.",
@@ -939,7 +1001,7 @@ def report(
     <h1>Bilingual matching pilot — all selected mentions</h1>
     <p>1. English + Japanese article entities → 2. Frozen already-matched IDs → 3. Fresh WWII Wikidata → 4. One synthetic ID per unresolved mention.</p>
     <p>Highest compatible name similarity ≥ 0.80. Random ties use a saved seed. Scores are not correctness probabilities.</p>
-    <p>Full body, tables and bibliography are processed. Automatic extraction can miss entities. The Indian division has no Japanese counterpart in the retrieved Wikidata record.</p>
+    <p>Full body, tables and bibliography are processed. Automatic extraction and exact label/alias lookup can miss entities. Ambiguous phrases can add unrelated provisional candidates. The Indian division has no Japanese counterpart in the retrieved Wikidata record.</p>
     <input id='search' placeholder='Filter page, mention, ID, type or stage'>
     """
         + "<pre>"

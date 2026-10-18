@@ -1,0 +1,363 @@
+﻿input_row_number,Source,word,entity_group,assigned_id,matched_stage,matched_name,score,unresolved_reason
+0,14th Indian Infantry Division,14th Indian Infantry Division,ORG,Q4550030,PAGE_EN_JA,14th Indian Infantry Division,1.0,
+1,14th Indian Infantry Division,Indian Army,ORG,Q355771,PAGE_EN_JA,Indian Army,1.0,
+2,14th Indian Infantry Division,World War II,MISC,Q15053456,PAGE_EN_JA,World War II,1.0,
+3,14th Indian Infantry Division,Arakan Campaign,MISC,SYN_ebf5d5910c704821aadc1ff7,SYNTHETIC,,0.7468788624,NO_NAME_ABOVE_THRESHOLD
+4,14th Indian Infantry Division,1942–43,DATE,SYN_914f621228b5d3f6077808a7,SYNTHETIC,,0.8472689986,NO_NAME_ABOVE_THRESHOLD
+5,14th Indian Infantry Division,Training Division,ORG,Q11695545,PAGE_EN_JA,Training Division,1.0,
+6,14th Indian Infantry Division,Fourteenth Army,ORG,Q2918766,PAGE_EN_JA,Fourteenth Army,1.0,
+7,14th Indian Infantry Division,Burma Campaign,MISC,SYN_TYPE_d767f09f29c1b4e8808140f6,SYNTHETIC,,0.7654985189,TYPE_MISMATCH
+8,14th Indian Infantry Division,1 June 1941,DATE,SYN_74f26459b87063dd16dd0aee,SYNTHETIC,,0.9549703002,NO_NAME_ABOVE_THRESHOLD
+9,14th Indian Infantry Division,Quetta,LOC,Q185458,PAGE_EN_JA,Quetta,1.0,
+10,14th Indian Infantry Division,Baluchistan,LOC,Q2336399,PAGE_EN_JA,Baluchistan,1.0,
+11,14th Indian Infantry Division,Quetta,LOC,Q185458,PAGE_EN_JA,Quetta,1.0,
+12,14th Indian Infantry Division,15 October 1941,DATE,SYN_db220e41be8bbf99a9d0c0cd,SYNTHETIC,,0.9547178149,NO_NAME_ABOVE_THRESHOLD
+13,14th Indian Infantry Division,Major General Wilfrid Lewis Lloyd,PER,SYN_fb449af7ed1a82b7a19d56a4,SYNTHETIC,,0.6353996992,NO_NAME_ABOVE_THRESHOLD
+14,14th Indian Infantry Division,Wilfrid Lewis Lloyd,PER,Q8001965,PAGE_EN_JA,Wilfrid Lewis Lloyd,1.0,
+15,14th Indian Infantry Division,Western Desert,LOC,Q1791634,PAGE_EN_JA,Western Desert,1.0,
+16,14th Indian Infantry Division,Iraq,LOC,Q796,PAGE_EN_JA,Iraq,1.0,
+17,14th Indian Infantry Division,Persia,LOC,SYN_8904e0848ec73a17b44da1de,SYNTHETIC,,0.9998277426,NO_NAME_ABOVE_THRESHOLD
+18,14th Indian Infantry Division,Allied,MISC,Q120142794,PAGE_EN_JA,Allied,1.0,
+19,14th Indian Infantry Division,Indian,MISC,Q96382073,PAGE_EN_JA,Indian,1.0,
+20,14th Indian Infantry Division,December,DATE,SYN_5540f285188a491f4f6a520d,SYNTHETIC,,0.9404836297,NO_NAME_ABOVE_THRESHOLD
+21,14th Indian Infantry Division,Imperial Japan,LOC,Q188712,PAGE_EN_JA,Imperial Japan,1.0,
+22,14th Indian Infantry Division,March,DATE,SYN_TYPE_cbab9243f7a86e7d73a1eff8,SYNTHETIC,,0.9077039957,TYPE_MISMATCH
+23,14th Indian Infantry Division,Japanese,MISC,Q115861446,PAGE_EN_JA,Japanese,1.0,
+24,14th Indian Infantry Division,Rangoon,LOC,Q111387186,PAGE_EN_JA,Rangoon,1.0,
+25,14th Indian Infantry Division,Burma,LOC,Q12862869,PAGE_EN_JA,Burma,1.0,
+26,14th Indian Infantry Division,India,LOC,Q17055962,PAGE_EN_JA,India,1.0,
+27,14th Indian Infantry Division,Indian Infantry,ORG,SYN_a49a972ee935462c2d5670db,SYNTHETIC,,0.7000411153,NO_NAME_ABOVE_THRESHOLD
+28,14th Indian Infantry Division,March,DATE,SYN_TYPE_7f5e11aa04c0eb4ef3d72779,SYNTHETIC,,0.922299087,TYPE_MISMATCH
+29,14th Indian Infantry Division,March 1942,DATE,SYN_3c05aff39464e5cfe1996d57,SYNTHETIC,,0.7053925395,NO_NAME_ABOVE_THRESHOLD
+30,14th Indian Infantry Division,May,DATE,SYN_TYPE_f5d75ea40cb96e57d2d40036,SYNTHETIC,,0.9285262823,TYPE_MISMATCH
+31,14th Indian Infantry Division,23rd Indian Brigade,ORG,SYN_7111c1f60aacf80d0196cfb0,SYNTHETIC,,0.9432666898,NO_NAME_ABOVE_THRESHOLD
+32,14th Indian Infantry Division,Indian Infantry Brigade,ORG,Q4639300,PAGE_EN_JA,4th Indian Infantry Brigade,0.9333333333333333,
+33,14th Indian Infantry Division,July,DATE,SYN_TYPE_21a6ddf30a9bd80831aa0a9e,SYNTHETIC,,0.9362006783,TYPE_MISMATCH
+34,14th Indian Infantry Division,Japanese,MISC,Q5287,PAGE_EN_JA,Japanese,1.0,
+35,14th Indian Infantry Division,Burma,LOC,Q136538127,PAGE_EN_JA,Burma,1.0,
+36,14th Indian Infantry Division,14th Division,ORG,Q3868547,FRESH_WWII,14th Division,1.0,
+37,14th Indian Infantry Division,Chittagong,LOC,Q376749,PAGE_EN_JA,Chittagong,1.0,
+38,14th Indian Infantry Division,Burma,LOC,Q31535127,PAGE_EN_JA,Burma,1.0,
+39,14th Indian Infantry Division,British Indian Army,ORG,Q642932,PAGE_EN_JA,British Indian Army,1.0,
+40,14th Indian Infantry Division,Burma,LOC,Q16274671,PAGE_EN_JA,Burma,1.0,
+41,14th Indian Infantry Division,14th Indian,ORG,SYN_30788cb95aaa6e6d41108543,SYNTHETIC,,0.937227726,NO_NAME_ABOVE_THRESHOLD
+42,14th Indian Infantry Division,Light,ORG,SYN_a24b8fc6f9db2b85a3c05452,SYNTHETIC,,0.4664816558,NO_NAME_ABOVE_THRESHOLD
+43,14th Indian Infantry Division,Division,ORG,SYN_TYPE_9430eacaf59c222de7370c0e,SYNTHETIC,,0.465542376,TYPE_MISMATCH
+44,14th Indian Infantry Division,July 1942,DATE,SYN_a7ec89f497eb71589f5d70b4,SYNTHETIC,,0.9872210622,NO_NAME_ABOVE_THRESHOLD
+45,14th Indian Infantry Division,55th Indian Infantry Brigade,ORG,Q4640643,PAGE_EN_JA,55th Indian Infantry Brigade,1.0,
+46,14th Indian Infantry Division,88th Indian Infantry Brigade,ORG,Q4645082,PAGE_EN_JA,88th Indian Infantry Brigade,1.0,
+47,14th Indian Infantry Division,Chittagong,LOC,Q376749,PAGE_EN_JA,Chittagong,1.0,
+48,14th Indian Infantry Division,Cox's Bazar,LOC,Q949746,PAGE_EN_JA,Cox's Bazar,1.0,
+49,14th Indian Infantry Division,Burma,LOC,Q27124573,PAGE_EN_JA,Burma,1.0,
+50,14th Indian Infantry Division,late 1942,DATE,SYN_41af7fcfbf3a33ed4ea77e0e,SYNTHETIC,,0.7090164423,NO_NAME_ABOVE_THRESHOLD
+51,14th Indian Infantry Division,1942,DATE,Q18625,PAGE_EN_JA,1942,1.0,
+52,14th Indian Infantry Division,Burmese,MISC,Q9228,PAGE_EN_JA,Burmese,1.0,
+53,14th Indian Infantry Division,Arakan,LOC,Q233838,PAGE_EN_JA,Arakan,1.0,
+54,14th Indian Infantry Division,Akyab Island,LOC,SYN_53b08fb8932700741dbb4d23,SYNTHETIC,,0.8025403023,NO_NAME_ABOVE_THRESHOLD
+55,14th Indian Infantry Division,Japanese,MISC,Q16725243,PAGE_EN_JA,Japanese,1.0,
+56,14th Indian Infantry Division,Mayu,LOC,Q24878106,PAGE_EN_JA,Mayu,1.0,
+57,14th Indian Infantry Division,Mayforce,ORG,Q3219966,FRESH_WWII,Layforce,0.8333333333333334,
+58,14th Indian Infantry Division,Mayu River,LOC,Q6798045,PAGE_EN_JA,Mayu River,1.0,
+59,14th Indian Infantry Division,Japanese,MISC,Q123516727,PAGE_EN_JA,Japanese,1.0,
+60,14th Indian Infantry Division,29 February 1943,DATE,SYN_e01dbaea1139e2f9eaac2dcc,SYNTHETIC,,0.9635406733,NO_NAME_ABOVE_THRESHOLD
+61,14th Indian Infantry Division,Lieutenant General Noel Irwin,PER,SYN_7de5e7161907bcf96ec1c3e3,SYNTHETIC,,0.9309701324,NO_NAME_ABOVE_THRESHOLD
+62,14th Indian Infantry Division,Noel Irwin,PER,Q7047013,PAGE_EN_JA,Noel Irwin,1.0,
+63,14th Indian Infantry Division,Eastern Army,ORG,Q5329987,PAGE_EN_JA,Eastern Army,1.0,
+64,14th Indian Infantry Division,Major General Lloyd,PER,SYN_536efc976ef84c84dce42c2c,SYNTHETIC,,0.9106404781,NO_NAME_ABOVE_THRESHOLD
+65,14th Indian Infantry Division,Japanese,MISC,Q110593728,PAGE_EN_JA,Japanese,1.0,
+66,14th Indian Infantry Division,14 April 1943,DATE,SYN_a4f66209041fbb75cd398bee,SYNTHETIC,,0.969656527,NO_NAME_ABOVE_THRESHOLD
+67,14th Indian Infantry Division,Ranchi,LOC,Q174461,PAGE_EN_JA,Ranchi,1.0,
+68,14th Indian Infantry Division,Bihar,LOC,Q1165,PAGE_EN_JA,Bihar,1.0,
+69,14th Indian Infantry Division,Indian,MISC,Q119354610,PAGE_EN_JA,Indian,1.0,
+70,14th Indian Infantry Division,26th Infantry Division,ORG,Q4632442,PAGE_EN_JA,26th Indian Infantry Division,0.8695652173913043,
+71,14th Indian Infantry Division,8 May 1943,DATE,SYN_c70db140aba49bcbbbf88a8a,SYNTHETIC,,0.9607412815,NO_NAME_ABOVE_THRESHOLD
+72,14th Indian Infantry Division,88 Infantry Brigade,ORG,Q47452570,PAGE_EN_JA,infantry brigade,0.9032258064516129,
+73,14th Indian Infantry Division,General Noel Irwin,PER,SYN_24957e73b703744cf86e9d0f,SYNTHETIC,,0.6347830892,NO_NAME_ABOVE_THRESHOLD
+74,14th Indian Infantry Division,Noel Irwin,PER,Q7047013,PAGE_EN_JA,Noel Irwin,1.0,
+75,14th Indian Infantry Division,Indian Infantry Brigade,ORG,Q4639300,PAGE_EN_JA,4th Indian Infantry Brigade,0.9333333333333333,
+76,14th Indian Infantry Division,1st,ORG,SYN_a5909d4d0edbe5b24501d1b0,SYNTHETIC,,0.5538404584,NO_NAME_ABOVE_THRESHOLD
+77,14th Indian Infantry Division,Royal Inniskilling Fusiliers,ORG,Q7374326,PAGE_EN_JA,Royal Inniskilling Fusiliers,1.0,
+78,14th Indian Infantry Division,7th Rajput Regiment,ORG,Q3630180,PAGE_EN_JA,Rajput Regiment,0.8666666666666667,
+79,14th Indian Infantry Division,8th Punjab Regiment,ORG,Q4645452,PAGE_EN_JA,8th Punjab Regiment,1.0,
+80,14th Indian Infantry Division,55th Indian Infantry Brigade,ORG,Q4640643,PAGE_EN_JA,55th Indian Infantry Brigade,1.0,
+81,14th Indian Infantry Division,1st Punjab Regiment,ORG,Q4596544,PAGE_EN_JA,1st Punjab Regiment,1.0,
+82,14th Indian Infantry Division,6th Rajputana Rifles,ORG,Q4642773,PAGE_EN_JA,6th Rajputana Rifles,1.0,
+83,14th Indian Infantry Division,15th Punjab Regiment,ORG,Q4551027,PAGE_EN_JA,15th Punjab Regiment,1.0,
+84,14th Indian Infantry Division,Indian Infantry Brigade,ORG,Q4639300,PAGE_EN_JA,4th Indian Infantry Brigade,0.9333333333333333,
+85,14th Indian Infantry Division,10th Battalion,ORG,Q4596993,FRESH_WWII,2/10th Battalion,0.9230769230769231,
+86,14th Indian Infantry Division,Lancashire Fusiliers,ORG,Q81925,PAGE_EN_JA,Lancashire Fusiliers,1.0,
+87,14th Indian Infantry Division,10th Baluch Regiment,ORG,Q4547001,PAGE_EN_JA,10th Baluch Regiment,1.0,
+88,14th Indian Infantry Division,88th Indian Infantry Brigade,ORG,Q4645082,PAGE_EN_JA,88th Indian Infantry Brigade,1.0,
+89,14th Indian Infantry Division,Chittagong,LOC,Q376749,PAGE_EN_JA,Chittagong,1.0,
+90,14th Indian Infantry Division,9th Jat Regiment,ORG,Q4646587,PAGE_EN_JA,9th Jat Regiment,1.0,
+91,14th Indian Infantry Division,16th Punjab Regiment,ORG,Q4552217,PAGE_EN_JA,16th Punjab Regiment,1.0,
+92,14th Indian Infantry Division,12th Frontier Force Regiment,ORG,Q4548820,PAGE_EN_JA,12th Frontier Force Regiment,1.0,
+93,14th Indian Infantry Division,British,MISC,Q9309,ALREADY_MATCHED,British,1.0,
+94,14th Indian Infantry Division,6th Brigade,ORG,Q4645308,FRESH_WWII,8th Brigade,0.8888888888888888,
+95,14th Indian Infantry Division,4th Indian Infantry Brigade,ORG,Q4639300,PAGE_EN_JA,4th Indian Infantry Brigade,1.0,
+96,14th Indian Infantry Division,71st Indian Infantry Brigade,ORG,Q4643114,PAGE_EN_JA,71st Indian Infantry Brigade,1.0,
+97,14th Indian Infantry Division,British,MISC,Q9309,ALREADY_MATCHED,British,1.0,
+98,14th Indian Infantry Division,29th Brigade,ORG,Q4645308,FRESH_WWII,8th Brigade,0.8421052631578947,
+99,14th Indian Infantry Division,British,MISC,Q9309,ALREADY_MATCHED,British,1.0,
+100,14th Indian Infantry Division,Brigade,ORG,Q14920619,PAGE_EN_JA,brigade,1.0,
+101,14th Indian Infantry Division,MG Battalion,ORG,Q810906,PAGE_EN_JA,Battalion,0.8235294117647058,
+102,14th Indian Infantry Division,9th Jat Regiment,ORG,Q4646587,PAGE_EN_JA,9th Jat Regiment,1.0,
+103,14th Indian Infantry Division,Lowland,LOC,SYN_a99ead8b96437e17a7cc280e,SYNTHETIC,,0.4603753388,NO_NAME_ABOVE_THRESHOLD
+104,14th Indian Infantry Division,Regiment,ORG,SYN_bdf0bf33f84849c9d37ccbc9,SYNTHETIC,,0.4824483395,NO_NAME_ABOVE_THRESHOLD
+105,14th Indian Infantry Division,Royal Artillery,ORG,Q2587335,PAGE_EN_JA,Royal Artillery,1.0,
+106,14th Indian Infantry Division,44th Light Anti-Aircraft Regiment,ORG,SYN_07ff8d9c515c04032585ddf7,SYNTHETIC,,0.8636824489,NO_NAME_ABOVE_THRESHOLD
+107,14th Indian Infantry Division,Royal Artillery,ORG,Q2587335,PAGE_EN_JA,Royal Artillery,1.0,
+108,14th Indian Infantry Division,23rd Mountain Regiment,ORG,Q10428565,PAGE_EN_JA,Mountain Regiment,0.8571428571428571,
+109,14th Indian Infantry Division,Royal Indian Artillery,ORG,SYN_TYPE_UNKNOWN_6e5e472472e9d511076ab95e,SYNTHETIC,,0.9949656129,TYPE_UNKNOWN
+110,14th Indian Infantry Division,14th,ORG,SYN_bc409d2d2f1a0017785e5907,SYNTHETIC,,0.640024364,NO_NAME_ABOVE_THRESHOLD
+111,14th Indian Infantry Division,Indian Infantry Divisional Signals,ORG,SYN_4d66ef37e26f21b085e9c164,SYNTHETIC,,0.823168993,NO_NAME_ABOVE_THRESHOLD
+112,14th Indian Infantry Division,Indian Signal Corps,ORG,SYN_08788bd6c99bad10fac98ca2,SYNTHETIC,,0.9982147813,NO_NAME_ABOVE_THRESHOLD
+113,14th Indian Infantry Division,Companies,ORG,SYN_719e20e637fd7a2e141a813d,SYNTHETIC,,0.545691371,NO_NAME_ABOVE_THRESHOLD
+114,14th Indian Infantry Division,Indian Engineers,ORG,SYN_ccdaeebba5bb2f0c29c9c209,SYNTHETIC,,0.9944466352,NO_NAME_ABOVE_THRESHOLD
+115,14th Indian Infantry Division,IE,ORG,SYN_4ff21243c23cb82f873538b1,SYNTHETIC,,0.5041255355,NO_NAME_ABOVE_THRESHOLD
+116,14th Indian Infantry Division,306th Field Park Company IE,ORG,SYN_7375b8e7255ab3aa31918b2b,SYNTHETIC,,0.8484128714,NO_NAME_ABOVE_THRESHOLD
+117,14th Indian Infantry Division,60th Indian Field Ambulance,ORG,SYN_c7b961edd7f8d0944c4e9c16,SYNTHETIC,,0.9880467057,NO_NAME_ABOVE_THRESHOLD
+118,14th Indian Infantry Division,Indian Army Medical Corps,ORG,Q6019843,PAGE_EN_JA,Indian Army Medical Corps,1.0,
+119,14th Indian Infantry Division,Indian Airborne Division,ORG,Q4638056,FRESH_WWII,44th Indian Airborne Division,0.8979591836734694,
+120,14th Indian Infantry Division,Allied,MISC,Q19882988,PAGE_EN_JA,Allied,1.0,
+121,14th Indian Infantry Division,Burma,LOC,Q26487577,PAGE_EN_JA,Burma,1.0,
+122,14th Indian Infantry Division,British,MISC,Q1248800,ALREADY_MATCHED,British,1.0,
+123,14th Indian Infantry Division,Indian,MISC,Q862086,PAGE_EN_JA,Indian,1.0,
+124,14th Indian Infantry Division,14 June 1943,DATE,SYN_08e94b2dae722979e837a1ef,SYNTHETIC,,0.9725912213,NO_NAME_ABOVE_THRESHOLD
+125,14th Indian Infantry Division,14th Division,ORG,Q187289,FRESH_WWII,14th Division,1.0,
+126,14th Indian Infantry Division,Training Division,ORG,Q11695545,PAGE_EN_JA,Training Division,1.0,
+127,14th Indian Infantry Division,Chhindwara,LOC,Q986135,PAGE_EN_JA,Chhindwara,1.0,
+128,14th Indian Infantry Division,Madhya Pradesh,LOC,Q1188,PAGE_EN_JA,Madhya Pradesh,1.0,
+129,14th Indian Infantry Division,Burma,LOC,Q27124573,PAGE_EN_JA,Burma,1.0,
+130,14th Indian Infantry Division,Major General Alfred Curtis,PER,SYN_d230f5e8e02651f03d33afaa,SYNTHETIC,,0.7888509631,NO_NAME_ABOVE_THRESHOLD
+131,14th Indian Infantry Division,General Alfred Curtis,PER,SYN_96f2eae695473c7c2e1575f5,SYNTHETIC,,0.7881987691,NO_NAME_ABOVE_THRESHOLD
+132,14th Indian Infantry Division,Alfred Curtis,PER,Q8001772,FRESH_WWII,Wilfred Curtis,0.8695652173913043,
+133,14th Indian Infantry Division,Fourteenth Army,ORG,Q2918766,PAGE_EN_JA,Fourteenth Army,1.0,
+134,14th Indian Infantry Division,India,LOC,Q124425125,PAGE_EN_JA,India,1.0,
+135,14th Indian Infantry Division,Burma,LOC,Q31535127,PAGE_EN_JA,Burma,1.0,
+136,14th Indian Infantry Division,General Claude Auchinleck,PER,SYN_e0d2f686e147529b99bfbd18,SYNTHETIC,,0.9713020325,NO_NAME_ABOVE_THRESHOLD
+137,14th Indian Infantry Division,India,LOC,Q11157534,PAGE_EN_JA,India,1.0,
+138,14th Indian Infantry Division,GHQ India,ORG,SYN_TYPE_UNKNOWN_546cebea682246d857e11c97,SYNTHETIC,,0.7100907564,TYPE_UNKNOWN
+139,14th Indian Infantry Division,Recruits,PER,SYN_9eda369735628fbcec07cd94,SYNTHETIC,,0.9589615464,NO_NAME_ABOVE_THRESHOLD
+140,14th Indian Infantry Division,14th Division,ORG,Q3868547,FRESH_WWII,14th Division,1.0,
+141,14th Indian Infantry Division,officers,PER,SYN_90296488032aebd7fa66dc14,SYNTHETIC,,0.8978856206,NO_NAME_ABOVE_THRESHOLD
+142,14th Indian Infantry Division,Alfred Curtis,PER,Q8001772,FRESH_WWII,Wilfred Curtis,0.8695652173913043,
+143,14th Indian Infantry Division,Indian Infantry Brigade,ORG,Q4639300,PAGE_EN_JA,4th Indian Infantry Brigade,0.9333333333333333,
+144,14th Indian Infantry Division,13th Frontier Force Rifles,ORG,Q4549448,PAGE_EN_JA,13th Frontier Force Rifles,1.0,
+145,14th Indian Infantry Division,11th Sikh Regiment,ORG,Q4547977,PAGE_EN_JA,11th Sikh Regiment,1.0,
+146,14th Indian Infantry Division,10th Baluch Regiment,ORG,Q4547001,PAGE_EN_JA,10th Baluch Regiment,1.0,
+147,14th Indian Infantry Division,55th Indian Infantry Brigade,ORG,Q4640643,PAGE_EN_JA,55th Indian Infantry Brigade,1.0,
+148,14th Indian Infantry Division,6th Rajputana Rifles,ORG,Q4642773,PAGE_EN_JA,6th Rajputana Rifles,1.0,
+149,14th Indian Infantry Division,5th Mahratta Light Infantry,ORG,Q4641357,PAGE_EN_JA,5th Mahratta Light Infantry,1.0,
+150,14th Indian Infantry Division,1st Punjab Regiment,ORG,Q4596544,PAGE_EN_JA,1st Punjab Regiment,1.0,
+151,14th Indian Infantry Division,109th Indian Infantry Brigade,ORG,Q4546819,PAGE_EN_JA,109th Indian Infantry Brigade,1.0,
+152,14th Indian Infantry Division,7th Rajput Regiment,ORG,Q3630180,PAGE_EN_JA,Rajput Regiment,0.8666666666666667,
+153,14th Indian Infantry Division,8th Punjab Regiment,ORG,Q4645452,PAGE_EN_JA,8th Punjab Regiment,1.0,
+154,14th Indian Infantry Division,2nd Punjab Regiment,ORG,Q12857634,PAGE_EN_JA,2nd Punjab Regiment,1.0,
+155,14th Indian Infantry Division,10th Field Regiment,ORG,Q111168464,PAGE_EN_JA,23 Field Regiment,0.8125,
+156,14th Indian Infantry Division,RIA,LOC,SYN_1bb865a06ffea0e3c452f266,SYNTHETIC,,0.9684419632,NO_NAME_ABOVE_THRESHOLD
+157,14th Indian Infantry Division,16th Anti-tank,ORG,SYN_05eec83621ab2a40b0433155,SYNTHETIC,,0.9400302768,NO_NAME_ABOVE_THRESHOLD
+158,14th Indian Infantry Division,RIA,LOC,SYN_eaa0f6c9a0cba6636f68e84e,SYNTHETIC,,0.9395917654,NO_NAME_ABOVE_THRESHOLD
+159,14th Indian Infantry Division,Light Anti-aircraft,ORG,SYN_cae31aedfbd28303714126de,SYNTHETIC,,0.8572711349,NO_NAME_ABOVE_THRESHOLD
+160,14th Indian Infantry Division,RA,LOC,SYN_TYPE_0b1f12f20b25aeef6a9e05d0,SYNTHETIC,,0.9889947772,TYPE_MISMATCH
+161,14th Indian Infantry Division,14th Light Anti-aircraft,ORG,SYN_4fe52c8d0f911a4dedc1e7d2,SYNTHETIC,,0.8958209157,NO_NAME_ABOVE_THRESHOLD
+162,14th Indian Infantry Division,RIA,LOC,SYN_25430f880e6217216f1a2bb0,SYNTHETIC,,0.7631020546,NO_NAME_ABOVE_THRESHOLD
+163,14th Indian Infantry Division,Companies,ORG,SYN_f20a33362c0efce52ea7dd51,SYNTHETIC,,0.7648172379,NO_NAME_ABOVE_THRESHOLD
+164,14th Indian Infantry Division,IE,ORG,SYN_cf5a5ed6bde01ac6d55f3a85,SYNTHETIC,,0.4946507812,NO_NAME_ABOVE_THRESHOLD
+165,14th Indian Infantry Division,306th Field Park Company,ORG,SYN_c7aaa0240830e3acd9a2f493,SYNTHETIC,,0.9310846925,NO_NAME_ABOVE_THRESHOLD
+166,14th Indian Infantry Division,IE,ORG,SYN_ce154ba2cc752c07ed73c968,SYNTHETIC,,0.4986061752,NO_NAME_ABOVE_THRESHOLD
+167,14th Indian Infantry Division,31 August 1945,DATE,SYN_e8173a19ac1aba635eeb8b8f,SYNTHETIC,,0.9782904983,NO_NAME_ABOVE_THRESHOLD
+168,14th Indian Infantry Division,World War II,MISC,Q362,PAGE_EN_JA,World War II,1.0,
+169,14th Indian Infantry Division,23rd Indian Infantry Brigade,ORG,Q4631637,PAGE_EN_JA,23rd Indian Infantry Brigade,1.0,
+170,14th Indian Infantry Division,36th Indian Infantry Brigade,ORG,Q4635749,PAGE_EN_JA,36th Indian Infantry Brigade,1.0,
+171,14th Indian Infantry Division,37th Indian Infantry Brigade,ORG,Q4635891,PAGE_EN_JA,37th Indian Infantry Brigade,1.0,
+172,14th Indian Infantry Division,Indian Infantry Brigade,ORG,Q4639300,PAGE_EN_JA,4th Indian Infantry Brigade,0.9333333333333333,
+173,14th Indian Infantry Division,Indian Infantry Brigade,ORG,Q4639300,PAGE_EN_JA,4th Indian Infantry Brigade,0.9333333333333333,
+174,14th Indian Infantry Division,Indian Infantry Brigade,ORG,Q4639300,PAGE_EN_JA,4th Indian Infantry Brigade,0.9333333333333333,
+175,14th Indian Infantry Division,4th Indian Infantry Brigade,ORG,Q4639300,PAGE_EN_JA,4th Indian Infantry Brigade,1.0,
+176,14th Indian Infantry Division,Indian Infantry Brigade,ORG,Q4639300,PAGE_EN_JA,4th Indian Infantry Brigade,0.9333333333333333,
+177,14th Indian Infantry Division,6th British Infantry Brigade,ORG,Q4642687,PAGE_EN_JA,British 6th Infantry Brigade,0.9387755102040817,
+178,14th Indian Infantry Division,Jeffreys,PER,SYN_7792cdb8723553702821d980,SYNTHETIC,,0.9483997226,NO_NAME_ABOVE_THRESHOLD
+179,14th Indian Infantry Division,Alan,PER,SYN_b8f375d38e0541fcd1544fa6,SYNTHETIC,,0.7163065076,NO_NAME_ABOVE_THRESHOLD
+180,14th Indian Infantry Division,Duncan Anderson,PER,Q75474469,PAGE_EN_JA,Duncan Anderson,1.0,
+181,14th Indian Infantry Division,2005,DATE,Q13143104,PAGE_EN_JA,2005,1.0,
+182,14th Indian Infantry Division,British Army,ORG,Q2918766,PAGE_EN_JA,British 14th Army,0.8,
+183,14th Indian Infantry Division,Far East,LOC,Q42225,PAGE_EN_JA,Far East,1.0,
+184,14th Indian Infantry Division,1941-45,DATE,SYN_19c348917084126015dc73cf,SYNTHETIC,,0.6661168337,NO_NAME_ABOVE_THRESHOLD
+185,14th Indian Infantry Division,Osprey,ORG,SYN_47cc7d13bcbc5dfee2eb38a0,SYNTHETIC,,0.5779185891,NO_NAME_ABOVE_THRESHOLD
+186,14th Indian Infantry Division,14 Infantry Division,MISC,Q9248092,PAGE_EN_JA,infantry division,0.9090909090909091,
+187,14th Indian Infantry Division,Orders,ORG,SYN_065bfc1f5c92f177fba1f43c,SYNTHETIC,,0.9397387505,NO_NAME_ABOVE_THRESHOLD
+188,14th Indian Infantry Division,of Battle,MISC,SYN_1adee3c97335cc7a3fbc4b09,SYNTHETIC,,0.6706060767,NO_NAME_ABOVE_THRESHOLD
+189,14th Indian Infantry Division,Burma Star,ORG,SYN_TYPE_db9b86300c7594263391a3ff,SYNTHETIC,,0.9981120825,TYPE_MISMATCH
+190,14th Indian Infantry Division,Indian Division,MISC,SYN_TYPE_3707e222b39df1674a66d895,SYNTHETIC,,0.8110978603,TYPE_MISMATCH
+191,14th Indian Infantry Division,1944,DATE,Q44017610,PAGE_EN_JA,1944,1.0,
+192,14th Indian Infantry Division,BritishMilitaryHistory,LOC,SYN_f3c93a928808029fa6be5a25,SYNTHETIC,,0.4503415525,NO_NAME_ABOVE_THRESHOLD
+492,1943 Cairo Declaration,Cairo,LOC,Q575306,PAGE_EN_JA,Cairo,1.0,
+493,1943 Cairo Declaration,Declaration,MISC,SYN_de4ee90670f7e92fe5eab675,SYNTHETIC,,0.9809821844,NO_NAME_ABOVE_THRESHOLD
+494,1943 Cairo Declaration,Chinese,MISC,Q7850,PAGE_EN_JA,Chinese,1.0,
+495,1943 Cairo Declaration,Cairo Conference,MISC,Q5017751,PAGE_EN_JA,Cairo Conference,1.0,
+496,1943 Cairo Declaration,Cairo,LOC,Q4699596,PAGE_EN_JA,Cairo,1.0,
+497,1943 Cairo Declaration,Egypt,LOC,Q79,PAGE_EN_JA,Egypt,1.0,
+498,1943 Cairo Declaration,27 November 1943,DATE,SYN_f5ba57926c77b95c94e3324e,SYNTHETIC,,0.9615699053,NO_NAME_ABOVE_THRESHOLD
+499,1943 Cairo Declaration,Allied,MISC,Q120142794,PAGE_EN_JA,Allied,1.0,
+500,1943 Cairo Declaration,Second World,MISC,Q233472,PAGE_EN_JA,Second World,1.0,
+501,1943 Cairo Declaration,Axis,MISC,SYN_4eed7d1dc48832f6f1f62d00,SYNTHETIC,,0.9801151752,NO_NAME_ABOVE_THRESHOLD
+502,1943 Cairo Declaration,Germany,LOC,Q112470874,PAGE_EN_JA,Germany,1.0,
+503,1943 Cairo Declaration,Japan,LOC,Q17,PAGE_EN_JA,Japan,1.0,
+504,1943 Cairo Declaration,President Franklin Roosevelt,PER,SYN_769a36dbcb0847032f07240a,SYNTHETIC,,0.8850620389,NO_NAME_ABOVE_THRESHOLD
+505,1943 Cairo Declaration,Franklin Roosevelt,PER,Q8007,PAGE_EN_JA,Franklin D. Roosevelt,0.8823529411764706,
+506,1943 Cairo Declaration,United States,LOC,Q30,PAGE_EN_JA,United States,1.0,
+507,1943 Cairo Declaration,Prime Minister Winston Churchill,PER,SYN_f58a95779f52bbdc5e25c68b,SYNTHETIC,,0.8538349271,NO_NAME_ABOVE_THRESHOLD
+508,1943 Cairo Declaration,Winston Churchill,PER,Q8016,PAGE_EN_JA,Winston Churchill,1.0,
+509,1943 Cairo Declaration,United Kingdom,LOC,Q174193,PAGE_EN_JA,United Kingdom,1.0,
+510,1943 Cairo Declaration,Generalissimo Chiang Kai-shek,PER,SYN_fbf7f1e0b34ffbbfc8b613fa,SYNTHETIC,,0.8687176704,NO_NAME_ABOVE_THRESHOLD
+511,1943 Cairo Declaration,Chiang Kai-shek,PER,Q16574,PAGE_EN_JA,Chiang Kai-shek,1.0,
+512,1943 Cairo Declaration,Republic of China,LOC,Q13426199,PAGE_EN_JA,Republic of China,1.0,
+513,1943 Cairo Declaration,1941,DATE,Q5231,PAGE_EN_JA,1941,1.0,
+514,1943 Cairo Declaration,Atlantic Charter,MISC,Q181978,PAGE_EN_JA,Atlantic Charter,1.0,
+515,1943 Cairo Declaration,Allies,MISC,SYN_TYPE_51ac45ee3cd46c465e856c88,SYNTHETIC,,0.9772991538,TYPE_MISMATCH
+516,1943 Cairo Declaration,World War II,MISC,Q15053456,PAGE_EN_JA,World War II,1.0,
+517,1943 Cairo Declaration,Cairo Communiqué,MISC,SYN_618778359a23913b88c3b3f2,SYNTHETIC,,0.8053472042,NO_NAME_ABOVE_THRESHOLD
+518,1943 Cairo Declaration,1 December 1943,DATE,SYN_5c3326293690eb7223d28455,SYNTHETIC,,0.6493467689,NO_NAME_ABOVE_THRESHOLD
+519,1943 Cairo Declaration,Japan,LOC,Q11014269,PAGE_EN_JA,Japan,1.0,
+520,1943 Cairo Declaration,Three Great Allies,MISC,SYN_558996d594c45e7b0457564e,SYNTHETIC,,0.9141082168,NO_NAME_ABOVE_THRESHOLD
+521,1943 Cairo Declaration,Three Great Allies,MISC,SYN_f68b475ce09a59e6697323f2,SYNTHETIC,,0.9802290797,NO_NAME_ABOVE_THRESHOLD
+522,1943 Cairo Declaration,Japan,LOC,Q20657875,PAGE_EN_JA,Japan,1.0,
+523,1943 Cairo Declaration,Japan,LOC,Q3476248,PAGE_EN_JA,Japan,1.0,
+524,1943 Cairo Declaration,Pacific,LOC,Q122964164,PAGE_EN_JA,Pacific,1.0,
+525,1943 Cairo Declaration,World War,MISC,Q130540063,PAGE_EN_JA,World War,1.0,
+526,1943 Cairo Declaration,1914,DATE,Q2083,PAGE_EN_JA,1914,1.0,
+527,1943 Cairo Declaration,Japan,LOC,Q205662,PAGE_EN_JA,Japan,1.0,
+528,1943 Cairo Declaration,Chinese,MISC,Q92410155,PAGE_EN_JA,Chinese,1.0,
+529,1943 Cairo Declaration,Manchuria,LOC,Q30623,PAGE_EN_JA,Manchuria,1.0,
+530,1943 Cairo Declaration,Formosa,LOC,Q103918781,PAGE_EN_JA,Formosa,1.0,
+531,1943 Cairo Declaration,The Pescadores,LOC,Q918799,PAGE_EN_JA,Pescadores,0.8,
+532,1943 Cairo Declaration,Republic of China,LOC,Q13426199,PAGE_EN_JA,Republic of China,1.0,
+533,1943 Cairo Declaration,Japan,LOC,Q188712,PAGE_EN_JA,Japan,1.0,
+534,1943 Cairo Declaration,Korea,LOC,Q15117826,PAGE_EN_JA,Korea,1.0,
+535,1943 Cairo Declaration,Korea,LOC,Q19986697,PAGE_EN_JA,Korea,1.0,
+536,1943 Cairo Declaration,Allies,MISC,SYN_TYPE_04ef49143af3127f8f841de4,SYNTHETIC,,0.9936589599,TYPE_MISMATCH
+537,1943 Cairo Declaration,United Nations,ORG,Q7888317,PAGE_EN_JA,United Nations,1.0,
+538,1943 Cairo Declaration,Japan,LOC,Q65068041,PAGE_EN_JA,Japan,1.0,
+539,1943 Cairo Declaration,Japan,LOC,Q188712,PAGE_EN_JA,Japan,1.0,
+540,1943 Cairo Declaration,Cairo Declaration,MISC,Q702120,PAGE_EN_JA,Cairo Declaration,1.0,
+541,1943 Cairo Declaration,Eight,MISC,SYN_20105a88ce748fbf23690697,SYNTHETIC,,0.9788655043,NO_NAME_ABOVE_THRESHOLD
+542,1943 Cairo Declaration,Potsdam Declaration,MISC,Q163244,PAGE_EN_JA,Potsdam Declaration,1.0,
+543,1943 Cairo Declaration,Japanese,MISC,Q123516727,PAGE_EN_JA,Japanese,1.0,
+544,1943 Cairo Declaration,of Surrender,MISC,SYN_b0ab35bc464e2211f49e2d70,SYNTHETIC,,0.7602138519,NO_NAME_ABOVE_THRESHOLD
+545,1943 Cairo Declaration,People's Republic of China,LOC,Q148,PAGE_EN_JA,People's Republic of China,1.0,
+546,1943 Cairo Declaration,Republic of China,LOC,Q865,PAGE_EN_JA,Republic of China,1.0,
+547,1943 Cairo Declaration,Cairo Declaration,MISC,Q702120,PAGE_EN_JA,Cairo Declaration,1.0,
+548,1943 Cairo Declaration,One China,MISC,Q608889,PAGE_EN_JA,One China,1.0,
+549,1943 Cairo Declaration,Taiwan,LOC,Q865,PAGE_EN_JA,Taiwan,1.0,
+550,1943 Cairo Declaration,Penghu,LOC,Q918799,PAGE_EN_JA,Penghu,1.0,
+551,1943 Cairo Declaration,Republic of China,LOC,Q13426199,PAGE_EN_JA,Republic of China,1.0,
+552,1943 Cairo Declaration,Taiwan,LOC,Q22502,PAGE_EN_JA,Taiwan,1.0,
+553,1943 Cairo Declaration,Cairo Declaration,MISC,Q702120,PAGE_EN_JA,Cairo Declaration,1.0,
+554,1943 Cairo Declaration,Taiwan,LOC,Q22502,PAGE_EN_JA,Taiwan,1.0,
+555,1943 Cairo Declaration,China,LOC,Q148,PAGE_EN_JA,China,1.0,
+556,1943 Cairo Declaration,Germany,LOC,Q112470874,PAGE_EN_JA,Germany,1.0,
+557,1943 Cairo Declaration,Vietnam,LOC,Q1886032,PAGE_EN_JA,Vietnam,1.0,
+558,1943 Cairo Declaration,Chinese Civil War,MISC,Q179975,PAGE_EN_JA,Chinese Civil War,1.0,
+559,1943 Cairo Declaration,WWII,MISC,Q7957296,PAGE_EN_JA,WWII,1.0,
+560,1943 Cairo Declaration,Chinese,MISC,Q110594137,PAGE_EN_JA,Chinese,1.0,
+561,1943 Cairo Declaration,Taiwan,LOC,Q22502,PAGE_EN_JA,Taiwan,1.0,
+562,1943 Cairo Declaration,United States,LOC,Q30,PAGE_EN_JA,United States,1.0,
+563,1943 Cairo Declaration,November 1950,DATE,SYN_ef38c35cba104ff333cc6d59,SYNTHETIC,,0.9418255091,NO_NAME_ABOVE_THRESHOLD
+564,1943 Cairo Declaration,United States Department of State,ORG,Q789915,PAGE_EN_JA,United States Department of State,1.0,
+565,1943 Cairo Declaration,Formosa,LOC,Q115714164,PAGE_EN_JA,Formosa,1.0,
+566,1943 Cairo Declaration,Pescadores,ORG,SYN_TYPE_7a2aaf3b8e9b717beff7b32e,SYNTHETIC,,0.702784121,TYPE_MISMATCH
+567,1943 Cairo Declaration,China,LOC,Q148,PAGE_EN_JA,China,1.0,
+568,1943 Cairo Declaration,February 1955,DATE,SYN_TYPE_44f7fa56d93efbfed86263a1,SYNTHETIC,,0.9466168284,TYPE_MISMATCH
+569,1943 Cairo Declaration,Winston Churchill,PER,Q8016,PAGE_EN_JA,Winston Churchill,1.0,
+570,1943 Cairo Declaration,Cairo Declaration,MISC,Q702120,PAGE_EN_JA,Cairo Declaration,1.0,
+571,1943 Cairo Declaration,Taiwan,LOC,Q137816,PAGE_EN_JA,Taiwan,1.0,
+572,1943 Cairo Declaration,Japanese,MISC,Q110593728,PAGE_EN_JA,Japanese,1.0,
+573,1943 Cairo Declaration,British,MISC,Q9309,PAGE_EN_JA,British,1.0,
+574,1943 Cairo Declaration,May 1955,DATE,SYN_f0b6e895a99a9edee84d84fd,SYNTHETIC,,0.9400440454,NO_NAME_ABOVE_THRESHOLD
+575,1943 Cairo Declaration,March 1961,DATE,SYN_650acd1021d25ac18e93d0db,SYNTHETIC,,0.9880059361,NO_NAME_ABOVE_THRESHOLD
+576,1943 Cairo Declaration,Japanese,MISC,Q5287,PAGE_EN_JA,Japanese,1.0,
+577,1943 Cairo Declaration,Potsdam Proclamation,MISC,Q163244,PAGE_EN_JA,Potsdam Proclamation,1.0,
+578,1943 Cairo Declaration,Cairo Declaration,MISC,Q20859781,PAGE_EN_JA,Cairo Declaration,1.0,
+579,1943 Cairo Declaration,Japanese,MISC,Q27075666,PAGE_EN_JA,Japanese,1.0,
+580,1943 Cairo Declaration,of Surrender,MISC,SYN_dc8a917f6ba9438ab3bb5c62,SYNTHETIC,,0.8419467211,NO_NAME_ABOVE_THRESHOLD
+581,1943 Cairo Declaration,Potsdam Proclamation,MISC,Q163244,PAGE_EN_JA,Potsdam Proclamation,1.0,
+582,1943 Cairo Declaration,Japanese,MISC,Q110593728,PAGE_EN_JA,Japanese,1.0,
+583,1943 Cairo Declaration,of Surrender,MISC,SYN_2a5efc22e73c2e8634e7b68f,SYNTHETIC,,0.7628881931,NO_NAME_ABOVE_THRESHOLD
+584,1943 Cairo Declaration,ROC,ORG,Q13426199,PAGE_EN_JA,ROC,1.0,
+585,1943 Cairo Declaration,Ma Ying-jeou,PER,Q19216,PAGE_EN_JA,Ma Ying-jeou,1.0,
+586,1943 Cairo Declaration,Cairo Declaration,MISC,Q20859781,PAGE_EN_JA,Cairo Declaration,1.0,
+587,1943 Cairo Declaration,2014,DATE,Q1999,PAGE_EN_JA,2014,1.0,
+588,1943 Cairo Declaration,Taiwan,LOC,Q137816,PAGE_EN_JA,Taiwan,1.0,
+589,1943 Cairo Declaration,Diaoyutai Islands,LOC,SYN_e8c971dff7056694df63eb9c,SYNTHETIC,,0.8665831089,NO_NAME_ABOVE_THRESHOLD
+590,1943 Cairo Declaration,ROC,ORG,Q13426199,PAGE_EN_JA,ROC,1.0,
+591,1943 Cairo Declaration,Cairo Declaration,MISC,Q20859781,PAGE_EN_JA,Cairo Declaration,1.0,
+592,1943 Cairo Declaration,Potsdam Proclamation,MISC,Q163244,PAGE_EN_JA,Potsdam Proclamation,1.0,
+593,1943 Cairo Declaration,Japanese Instrument of Surrender,MISC,Q665554,PAGE_EN_JA,Japanese Instrument of Surrender,1.0,
+594,1943 Cairo Declaration,San Francisco Peace Treaty,MISC,Q392541,PAGE_EN_JA,San Francisco Peace Treaty,1.0,
+595,1943 Cairo Declaration,Treaty of Peace,MISC,SYN_0cf5a05a6846d3f0ec104890,SYNTHETIC,,0.9962413311,NO_NAME_ABOVE_THRESHOLD
+596,1943 Cairo Declaration,Republic of China,LOC,Q13426199,PAGE_EN_JA,Republic of China,1.0,
+597,1943 Cairo Declaration,Japan,LOC,Q11014269,PAGE_EN_JA,Japan,1.0,
+598,1943 Cairo Declaration,Cairo Declaration,MISC,Q20859781,PAGE_EN_JA,Cairo Declaration,1.0,
+599,1943 Cairo Declaration,Koreans,MISC,Q484464,PAGE_EN_JA,Koreans,1.0,
+600,1943 Cairo Declaration,Korean,MISC,Q711797,PAGE_EN_JA,Korean,1.0,
+601,1943 Cairo Declaration,Kim Ku,PER,Q215737,PAGE_EN_JA,Kim Ku,1.0,
+602,1943 Cairo Declaration,Syngman Rhee,PER,Q171684,PAGE_EN_JA,Syngman Rhee,1.0,
+603,1943 Cairo Declaration,Allied,MISC,Q19882988,PAGE_EN_JA,Allied,1.0,
+604,1943 Cairo Declaration,Korea,LOC,Q483134,PAGE_EN_JA,Korea,1.0,
+605,1943 Cairo Declaration,Korea,LOC,Q6431582,PAGE_EN_JA,Korea,1.0,
+606,1943 Cairo Declaration,Japan,LOC,Q3476248,PAGE_EN_JA,Japan,1.0,
+607,1943 Cairo Declaration,US,LOC,SYN_944cdd04495f8fd3ee45870c,SYNTHETIC,,0.9993713498,NO_NAME_ABOVE_THRESHOLD
+608,1943 Cairo Declaration,British,MISC,Q1248800,PAGE_EN_JA,British,1.0,
+609,1943 Cairo Declaration,Cairo,ORG,Q575306,PAGE_EN_JA,Cairo,1.0,
+610,1943 Cairo Declaration,Conference,MISC,Q109263400,FRESH_WWII,The Conference,0.8,
+611,1943 Cairo Declaration,1943,DATE,Q18623,PAGE_EN_JA,1943,1.0,
+612,1943 Cairo Declaration,Potsdam Declaration,MISC,Q163244,PAGE_EN_JA,Potsdam Declaration,1.0,
+613,1943 Cairo Declaration,July 1945,DATE,SYN_79fb75f14c4ce6c96f054899,SYNTHETIC,,0.9703177214,NO_NAME_ABOVE_THRESHOLD
+614,1943 Cairo Declaration,General Order No. 1,MISC,Q5532082,PAGE_EN_JA,General Order No. 1,1.0,
+615,1943 Cairo Declaration,August 1945,DATE,SYN_9e9e5061c32ef824267682b8,SYNTHETIC,,0.9825452566,NO_NAME_ABOVE_THRESHOLD
+616,1943 Cairo Declaration,Japanese,MISC,Q110593728,PAGE_EN_JA,Japanese,1.0,
+617,1943 Cairo Declaration,September 1945,DATE,SYN_a4e97e8feade7ded1d1bf416,SYNTHETIC,,0.9819154739,NO_NAME_ABOVE_THRESHOLD
+618,1943 Cairo Declaration,Korea,LOC,Q6431582,PAGE_EN_JA,Korea,1.0,
+619,1943 Cairo Declaration,August 1945,DATE,SYN_a53d014be1504ade2aec5592,SYNTHETIC,,0.9568622112,NO_NAME_ABOVE_THRESHOLD
+620,1943 Cairo Declaration,Taiwan,LOC,Q865,PAGE_EN_JA,Taiwan,1.0,
+621,1943 Cairo Declaration,Retrocession,MISC,Q697228,PAGE_EN_JA,Retrocession Day,0.8333333333333334,
+622,1943 Cairo Declaration,October 1945,DATE,SYN_506e3389ffa14a80346d91e2,SYNTHETIC,,0.9530848861,NO_NAME_ABOVE_THRESHOLD
+623,1943 Cairo Declaration,Treaty of,MISC,SYN_363ce61bc85a8035827cbcbe,SYNTHETIC,,0.9362056851,NO_NAME_ABOVE_THRESHOLD
+624,1943 Cairo Declaration,San Francisco,LOC,SYN_TYPE_9fcbb1d68b613a4bf9971a4f,SYNTHETIC,,0.6611692309,TYPE_MISMATCH
+625,1943 Cairo Declaration,1951,DATE,Q117467512,PAGE_EN_JA,1951,1.0,
+626,1943 Cairo Declaration,Cairo Declaration,MISC,Q20859781,PAGE_EN_JA,Cairo Declaration,1.0,
+627,1943 Cairo Declaration,Cairo Communiqué,MISC,SYN_246016c14153da22ba081c81,SYNTHETIC,,0.8594734073,NO_NAME_ABOVE_THRESHOLD
+628,1943 Cairo Declaration,Japanese,MISC,Q161652,PAGE_EN_JA,Japanese,1.0,
+629,1943 Cairo Declaration,National Diet Library,ORG,Q477675,PAGE_EN_JA,National Diet Library,1.0,
+630,1943 Cairo Declaration,Cairo Conference,MISC,Q5017751,PAGE_EN_JA,Cairo Conference,1.0,
+631,1943 Cairo Declaration,University of Wisconsin Digital Collection,ORG,SYN_7a344736fa673df7947253ec,SYNTHETIC,,0.8513240814,NO_NAME_ABOVE_THRESHOLD
+632,1943 Cairo Declaration,Cairo Declaration Department of State,ORG,SYN_488f21729cb18eb9c6dc68c7,SYNTHETIC,,0.8572949171,NO_NAME_ABOVE_THRESHOLD
+633,1943 Cairo Declaration,Cairo Declaration,MISC,Q20859781,PAGE_EN_JA,Cairo Declaration,1.0,
+634,1943 Cairo Declaration,Yale University,ORG,SYN_de399e1ab8b70c717fc29100,SYNTHETIC,,0.9987409115,NO_NAME_ABOVE_THRESHOLD
+635,1943 Cairo Declaration,Drew Middleton,PER,Q52157278,PAGE_EN_JA,Drew Middleton,1.0,
+636,1943 Cairo Declaration,"Feb 2, 1955",DATE,SYN_192e3a22e6dac3dc151558c4,SYNTHETIC,,0.9659338593,NO_NAME_ABOVE_THRESHOLD
+637,1943 Cairo Declaration,Cairo Formosa Declaration,MISC,SYN_18ca428442572d3067c4fdbe,SYNTHETIC,,0.9296963811,NO_NAME_ABOVE_THRESHOLD
+638,1943 Cairo Declaration,Churchill,PER,SYN_TYPE_559afac928e267adc7d28e86,SYNTHETIC,,0.9292360544,TYPE_MISMATCH
+639,1943 Cairo Declaration,CHURCHILL,PER,SYN_TYPE_aa822bb4a98b388569d1b502,SYNTHETIC,,0.9459415674,TYPE_MISMATCH
+640,1943 Cairo Declaration,The New York Times,ORG,SYN_TYPE_154eb23aa773682b551de8bf,SYNTHETIC,,0.9964838028,TYPE_MISMATCH
+641,1943 Cairo Declaration,Drew Middleton,PER,Q52157278,PAGE_EN_JA,Drew Middleton,1.0,
+642,1943 Cairo Declaration,"Feb 2, 1955",DATE,SYN_4e39dd1e57242146e7f082bc,SYNTHETIC,,0.982642889,NO_NAME_ABOVE_THRESHOLD
+643,1943 Cairo Declaration,Cairo Formosa Declaration,MISC,SYN_3d61d8bf1a5f6d0bc72b07a4,SYNTHETIC,,0.9228613973,NO_NAME_ABOVE_THRESHOLD
+644,1943 Cairo Declaration,Churchill,PER,SYN_TYPE_939ae427c00392c94acd606c,SYNTHETIC,,0.9177300334,TYPE_MISMATCH
+645,1943 Cairo Declaration,CHURCHILL,PER,SYN_TYPE_0ec290e9347dc7f75191b362,SYNTHETIC,,0.9440146089,TYPE_MISMATCH
+646,1943 Cairo Declaration,The New York Times,ORG,SYN_TYPE_50ba5cc096ba9ca1b71598dd,SYNTHETIC,,0.9961698651,TYPE_MISMATCH
+647,1st Mobile Fleet (Imperial Japanese Navy),1st Mobile Fleet,ORG,Q4596490,PAGE_EN_JA,1st Mobile Fleet,1.0,
+648,1st Mobile Fleet (Imperial Japanese Navy),Dai,ORG,SYN_e8b98c44e909d8664ab23fc1,SYNTHETIC,,0.5264951587,NO_NAME_ABOVE_THRESHOLD
+649,1st Mobile Fleet (Imperial Japanese Navy),Ichi,MISC,SYN_cf230a83965fe54419641bec,SYNTHETIC,,0.4521014094,NO_NAME_ABOVE_THRESHOLD
+650,1st Mobile Fleet (Imperial Japanese Navy),Kidō,ORG,SYN_c81b1fb4004de4fc623eaf59,SYNTHETIC,,0.6283833981,NO_NAME_ABOVE_THRESHOLD
+651,1st Mobile Fleet (Imperial Japanese Navy),Imperial Japanese Navy,ORG,Q219712,PAGE_EN_JA,Imperial Japanese Navy,1.0,
+652,1st Mobile Fleet (Imperial Japanese Navy),World War II,MISC,Q362,PAGE_EN_JA,World War II,1.0,
+653,1st Mobile Fleet (Imperial Japanese Navy),Commander in chief,PER,SYN_TYPE_c96c0c9edb3a5ab6d23fa210,SYNTHETIC,,0.9778251052,TYPE_MISMATCH
+654,1st Mobile Fleet (Imperial Japanese Navy),Chief of staff,PER,SYN_3b097bed8fac618532f454be,SYNTHETIC,,0.8603997231,NO_NAME_ABOVE_THRESHOLD
+655,1st Mobile Fleet (Imperial Japanese Navy),Maru Special,MISC,SYN_a73fed3805993a18af6e9df6,SYNTHETIC,,0.7498692274,NO_NAME_ABOVE_THRESHOLD
+656,1st Mobile Fleet (Imperial Japanese Navy),Ushio Shobō,MISC,SYN_af0b7514f28ed8ad65a2617f,SYNTHETIC,,0.8179570436,NO_NAME_ABOVE_THRESHOLD
+657,1st Mobile Fleet (Imperial Japanese Navy),Japan,LOC,Q188712,PAGE_EN_JA,Japan,1.0,
+658,1st Mobile Fleet (Imperial Japanese Navy),Ships of the World,MISC,SYN_a56a0deddc4c4a455dfc173e,SYNTHETIC,,0.9897914529,NO_NAME_ABOVE_THRESHOLD
+659,1st Mobile Fleet (Imperial Japanese Navy),Kaijinsha,MISC,SYN_d2bbb44e02d4f0de7d2ed3e8,SYNTHETIC,,0.6592299342,NO_NAME_ABOVE_THRESHOLD
+660,1st Mobile Fleet (Imperial Japanese Navy),Japan,LOC,Q188712,PAGE_EN_JA,Japan,1.0,

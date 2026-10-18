@@ -46,6 +46,12 @@ def test_decision_rules():
         if c["entity_id"] in {"Q1", "Q3"}
     ]
     assert choose(reduced, "PER", metadata, random.Random(1))["entity_id"] == "Q1"
+    two_people = [
+        {**c, "name_similarity": 0.81 if c["entity_id"] == "Q1" else 0.99}
+        for c in candidates
+        if c["entity_id"] in {"Q1", "Q2"}
+    ]
+    assert choose(two_people, "PER", metadata, random.Random(1))["entity_id"] == "Q2"
     assert (
         choose([], "PER", metadata, random.Random(1))["status"]
         == "NO_NAME_ABOVE_THRESHOLD"
@@ -57,3 +63,18 @@ def test_decision_rules():
     assert synthetic_id(
         {"mention_id": "mention-" + "a" * 64}, "NO_NAME_ABOVE_THRESHOLD"
     ) != synthetic_id({"mention_id": "mention-" + "b" * 64}, "NO_NAME_ABOVE_THRESHOLD")
+
+
+def test_type_inheritance_and_exclusions():
+    metadata = {
+        "unit_class": {"parents": ["Q176799", "cycle"]},
+        "cycle": {"parents": ["unit_class"]},
+        "year_class": {"parents": ["Q577"]},
+        "place_class": {"parents": ["Q618123"]},
+        "role_class": {"parents": []},
+    }
+    assert categories({"direct_types": ["unit_class"]}, metadata) == {"ORG"}
+    assert categories({"direct_types": ["year_class"]}, metadata) == {"DATE"}
+    assert categories({"direct_types": ["place_class"]}, metadata) == {"LOC"}
+    assert categories({"direct_types": ["role_class"]}, metadata) == {"MISC"}
+    assert categories({"direct_types": ["Q4167410"]}, metadata) == set()
