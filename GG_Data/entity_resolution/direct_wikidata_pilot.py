@@ -88,15 +88,18 @@ def page_find(index: NameIndex, cleaned: NameIndex, word: str, originals: dict) 
     return list(best.values())
 
 
-def run(output: Path) -> dict:
+def run(output: Path, snapshot: Path | None = None) -> dict:
     output.mkdir(parents=True, exist_ok=False)
     manifest = read(BASE / "run_manifest.json")
     for filename, expected in manifest["outputs"].items():
         assert digest(BASE / filename) == expected, filename
+    if snapshot:
+        for filename, expected in read(snapshot / "manifest.json")["outputs"].items():
+            assert digest(snapshot / filename) == expected, filename
     rows = read(BASE / "matches.json.gz")
     articles = read(BASE / "articles_and_page_inventory.json.gz")
     api = LiveData(Path.home() / ".cache/geoai_bilingual_pilot_20261018")
-    api.entities = read(BASE / "entity_metadata.json.gz")
+    api.entities = read((snapshot or BASE) / "entity_metadata.json.gz")
     pools: dict[str, set[str]] = {}
     for a in articles:
         # Only saved page references and direct hyperlinks; never extracted_names,
@@ -117,7 +120,11 @@ def run(output: Path) -> dict:
                 for variant in {name, name.casefold(), name.title()} - {""}:
                     names.setdefault(variant, set()).add(raw["Source"])
     lookup = []
-    for offset in range(0, len(names), 100):
+    if snapshot:
+        evidence = read(snapshot / "candidate_evidence.json.gz")
+        pools = {page: set(ids) for page, ids in evidence["page_pools"].items()}
+        lookup = evidence["daniel_name_lookups"]
+    for offset in [] if snapshot else range(0, len(names), 100):
         terms = list(sorted(names))[offset : offset + 100]
         literals = " ".join(
             json.dumps(n, ensure_ascii=False) + "@" + lang
@@ -147,7 +154,8 @@ def run(output: Path) -> dict:
             min(offset + 100, len(names)),
             len(names),
         )
-    api.hierarchy(set().union(*pools.values()))
+    if not snapshot:
+        api.hierarchy(set().union(*pools.values()))
     world = read(BASE / "fresh_wwii_names.json.gz")
     original_maps, indexes = {}, {}
     for page, pool in pools.items():
@@ -182,6 +190,7 @@ def run(output: Path) -> dict:
                 raw["entity_group"],
                 api.entities,
                 random.Random(f"{SEED}:{stage}:{row['mention_id']}"),
+                prefer_single_wikidata_type=True,
             )
             row["attempts"].append({"stage": stage, **decision})
             if decision["status"] == "MATCHED":
@@ -190,6 +199,7 @@ def run(output: Path) -> dict:
                     matched_stage=stage,
                     matched_name=decision["matched_name"],
                     score=decision["name_similarity"],
+                    type_metadata=decision["type_metadata"],
                 )
 
     for row in rows:
@@ -222,9 +232,25 @@ def run(output: Path) -> dict:
         if "assigned_id" not in row
         for c in world_index.find(row["raw"]["word"], "MISC", 0.8)
     }
-    api.hierarchy(needed)
+    if snapshot:
+        assert needed <= api.entities.keys(), "Snapshot lacks candidate metadata"
+    else:
+        api.hierarchy(needed)
     assign("FRESH_WWII", world_index)
     for row in rows:
+        row.setdefault(
+            "type_metadata",
+            {
+                "original_type": row["raw"]["entity_group"],
+                "resolved_type": "DATE"
+                if row.get("matched_stage") == "DATE_NORMALIZED"
+                else None,
+                "type_changed": False,
+                "type_source": "CALENDAR_VALIDATION"
+                if row.get("matched_stage") == "DATE_NORMALIZED"
+                else "UNRESOLVED",
+            },
+        )
         if "assigned_id" not in row:
             statuses = {a["status"] for a in row["attempts"]}
             reason = next(
@@ -255,6 +281,7 @@ def run(output: Path) -> dict:
         ),
         "page_pool_sizes": {p: len(q) for p, q in pools.items()},
         "article_name_extraction": False,
+        "type_changes": sum(r["type_metadata"]["type_changed"] for r in rows),
     }
     dump(output / "matches.json.gz", rows)
     dump(output / "summary.json", summary)
@@ -279,6 +306,10 @@ def run(output: Path) -> dict:
         "unresolved_reason",
         "date_value",
         "date_precision",
+        "resolved_type",
+        "type_changed",
+        "type_source",
+        "wikidata_direct_types",
     ]
     with (output / "matches.csv").open("w", encoding="utf-8", newline="") as f:
         writer = csv.DictWriter(f, fields)
@@ -289,6 +320,13 @@ def run(output: Path) -> dict:
                 | {
                     "date_value": r.get("date", {}).get("value", ""),
                     "date_precision": r.get("date", {}).get("precision", ""),
+                    **{
+                        key: r["type_metadata"].get(key, "")
+                        for key in ("resolved_type", "type_changed", "type_source")
+                    },
+                    "wikidata_direct_types": "|".join(
+                        r["type_metadata"].get("wikidata_direct_types", [])
+                    ),
                 }
             )
     dump(
@@ -298,6 +336,11 @@ def run(output: Path) -> dict:
             "source": str(BASE),
             "source_manifest_sha256": digest(BASE / "run_manifest.json"),
             "code_sha256": digest(Path(__file__)),
+            "decision_code_sha256": digest(
+                Path(__file__).with_name("bilingual_page_pilot.py")
+            ),
+            "replayed_snapshot": str(snapshot) if snapshot else None,
+            "type_policy": "Compatible candidates first. If none, use a single mapped type shared by all highest-scoring candidates; preserve original Daniel type and Wikidata evidence.",
             "input_sha256": manifest["input_sha256"],
             "threshold": 0.8,
             "seed": SEED,
@@ -319,6 +362,7 @@ def run(output: Path) -> dict:
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--output", type=Path, required=True)
+    parser.add_argument("--snapshot", type=Path, help="Replay saved candidates offline")
     args = parser.parse_args()
     logging.basicConfig(level=logging.INFO, format="%(asctime)s %(message)s")
-    print(run(args.output))
+    print(run(args.output, args.snapshot))

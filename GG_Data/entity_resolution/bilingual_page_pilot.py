@@ -288,8 +288,13 @@ def ancestry(types: list[str], metadata: dict[str, dict]) -> set[str]:
 
 
 def categories(entity: dict, metadata: dict[str, dict]) -> set[str]:
-    parents = ancestry(entity.get("direct_types", []), metadata)
-    if parents & EXCLUDE_CLASSES or not parents:
+    direct = entity.get("direct_types", [])
+    if set(direct) & EXCLUDE_CLASSES:
+        return set()
+    # One excluded inheritance branch must not erase other valid type evidence.
+    branches = [ancestry([kind], metadata) for kind in direct]
+    parents = set().union(*(b for b in branches if not b & EXCLUDE_CLASSES))
+    if not parents:
         return set()
     found = {group for group, roots in TYPE_ROOTS.items() if parents & roots}
     # MISC is the residual known type class, not a wildcard for unknown types.
@@ -297,13 +302,28 @@ def categories(entity: dict, metadata: dict[str, dict]) -> set[str]:
 
 
 def choose(
-    candidates: list[dict], group: str, metadata: dict[str, dict], rng: random.Random
+    candidates: list[dict],
+    group: str,
+    metadata: dict[str, dict],
+    rng: random.Random,
+    *,
+    prefer_single_wikidata_type: bool = False,
 ) -> dict:
     eligible = [
         c
         for c in candidates
         if group == "ANY" or group in categories(metadata[c["entity_id"]], metadata)
     ]
+    if not eligible and candidates and prefer_single_wikidata_type:
+        highest = max(c["name_similarity"] for c in candidates)
+        best = [
+            c
+            for c in candidates
+            if math.isclose(c["name_similarity"], highest, abs_tol=1e-12)
+        ]
+        types = [categories(metadata[c["entity_id"]], metadata) for c in best]
+        if all(len(t) == 1 for t in types) and len(set().union(*types)) == 1:
+            eligible = best
     if eligible:
         highest = max(c["name_similarity"] for c in eligible)
         tied = sorted(
@@ -314,14 +334,33 @@ def choose(
             ],
             key=lambda c: c["entity_id"],
         )
-        return {
+        selected = rng.choice(tied)
+        types = sorted(categories(metadata[selected["entity_id"]], metadata))
+        result = {
             "status": "MATCHED",
-            **rng.choice(tied),
+            **selected,
             "type_check": "NOT_APPLIED_TO_ARTICLE_PHRASE"
             if group == "ANY"
             else "COMPATIBLE_P31_P279",
             "tied_ids": [c["entity_id"] for c in tied],
         }
+        if prefer_single_wikidata_type:
+            resolved = types[0] if len(types) == 1 else group
+            if resolved != group:
+                result["type_check"] = "SINGLE_WIKIDATA_TYPE_OVERRIDES_DANIEL"
+            result["type_metadata"] = {
+                "original_type": group,
+                "resolved_type": resolved,
+                "type_changed": resolved != group,
+                "type_source": "WIKIDATA_SINGLE_MAPPED_TYPE"
+                if len(types) == 1
+                else "DANIEL_COMPATIBLE_WITH_WIKIDATA",
+                "wikidata_mapped_types": types,
+                "wikidata_direct_types": metadata[selected["entity_id"]].get(
+                    "direct_types", []
+                ),
+            }
+        return result
     if candidates:
         known = [
             c for c in candidates if categories(metadata[c["entity_id"]], metadata)

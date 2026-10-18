@@ -1,6 +1,17 @@
 # Entity matching runs
 
-## Current direct Daniel-to-Wikidata small run — 18 October 2026
+## Current single-type trial and page audit — 18 October 2026
+
+[Report](TYPE_AND_PAGE_LOOKUP_AUDIT_2026-10-18.md) · [Rows](runs/direct_wikidata_single_type_20261018_v2/matches.csv) · [Page audit](runs/direct_wikidata_single_type_20261018_v2/page_lookup_audit.csv)
+
+Offline replay of the same 362 mentions: 269 QID assignments, 37 calendar dates,
+56 unresolved. When no compatible candidate exists, one clear mapped Wikidata
+type can replace Daniel's type, with both types and P31 evidence recorded in row
+metadata. Yale's excluded-branch bug is fixed. Some new assignments are wrong;
+counts are not accuracy. The report explains missing page links and unused
+anchor names. No canonical graph update.
+
+## Earlier direct Daniel-to-Wikidata small run — 18 October 2026
 
 [Report](DIRECT_WIKIDATA_SMALL_RUN_2026-10-18.md) · [All result rows](runs/direct_wikidata_small_20261018/matches.csv)
 
