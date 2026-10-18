@@ -2,6 +2,11 @@
 
 Status: **RUNNING**. Final counts are not available yet.
 
+At 21:25 Israel time, collection had completed 1/428 source pages and Wikidata
+was returning `maxlag` (temporary server replication delay). Automatic retry
+from the saved checkpoint was verified. This is a running job, not a completed
+full-data result; check `progress.json` for the current stage.
+
 The user retained the 80% threshold and requested all Daniel data. The pinned
 Parquet contains **309,864 mentions across 428 distinct source titles**:
 89,846 LOC, 85,676 MISC, 48,230 PER, 47,680 ORG, and 38,432 DATE.
@@ -43,7 +48,9 @@ had only approximately 40 MiB free at startup. This folder contains:
   evidence, request evidence, and a hash manifest.
 
 Process ID is saved in `process_id.txt`. Logs are alongside the run directory:
-`C:\Users\User\.cache\geoai_full_daniel_20261018.stderr.log` and `.stdout.log`.
+`C:\Users\User\.cache\geoai_full_daniel_20261018.resume.stderr.log` and
+`C:\Users\User\.cache\geoai_full_daniel_20261018.resume.stdout.log`.
+The initial attempt's logs without `.resume` are preserved separately.
 The hidden process continues independently of the chat. Public request retries
 and saved page checkpoints prevent a transient failure from discarding completed
 collection. Temporary public-service failures trigger up to 20 automatic resume
