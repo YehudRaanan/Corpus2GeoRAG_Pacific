@@ -1,5 +1,8 @@
 # One-time automatic matching: all Daniel extraction types
 
+**Later run:** [matching with the verified source-page map](RESOLVED_PAGES_RUN_REPORT_2026-10-18.md).
+The results below remain the preserved original run.
+
 Completed **18 October 2026, 15:41 Asia/Jerusalem**. Run ID:
 `matching-3ea16641deda7f74ed5e`.
 

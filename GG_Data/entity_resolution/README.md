@@ -1,5 +1,29 @@
 # Entity matching runs
 
+## Rerun using resolved source pages
+
+**Completed:** [resolved-page matching report](RESOLVED_PAGES_RUN_REPORT_2026-10-18.md).
+All 309,864 mentions were processed: **9,555 automatic suggestions** and
+**300,309 unresolved results**, adding 1,517 suggestions. Results for all
+192,220 mentions from the original 239 resolved pages are identical.
+
+```powershell
+python GG_Data/entity_resolution/run_notebook_matching.py --page-map GG_Data/entity_resolution/runs/source_pages_v0.1.0_20261018/page_map.json --output GG_Data/entity_resolution/runs/all_types_resolved_pages_v0.1.0_20261018
+```
+
+This separate run applies the same fixed matching rules to all five extraction
+types. It uses the verified page map and rebuilds direct incoming/outgoing page
+pools from the same frozen mapped graph. Names and person types come from the
+same saved Wikidata snapshot. No new reference data is fetched. Previously
+resolved page identities, pools, and cached names/types must agree before
+matching starts.
+
+The new run saves its own `page_context.jsonl.gz` and `entity_metadata.jsonl.gz`.
+Use these files for its candidate evidence joins; its `mapped_graph.jsonl.gz`
+contains the supporting assertion records. A resolved page ID does not imply
+that names, types, or usable graph context are available. Earlier run outputs
+are preserved.
+
 ## Source-page identity lookup
 
 **Completed:** [source-page lookup report](SOURCE_PAGE_LOOKUP_2026-10-18.md).

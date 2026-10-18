@@ -1,0 +1,101 @@
+{
+  "status": "COMPLETED",
+  "run_id": "matching-bec29744c3df8b2b7680",
+  "completed_utc": "2026-10-18T13:25:27.840581+00:00",
+  "parameters": {
+    "method": "notebook-trigrams-hits-all-types-v0.1.0",
+    "entity_groups": [
+      "PER",
+      "LOC",
+      "ORG",
+      "MISC",
+      "DATE"
+    ],
+    "min_name_similarity": 0.35,
+    "graph_depth": 1,
+    "hits_steps": 20,
+    "min_accept_name": 0.8,
+    "min_authority_gap": 0.2,
+    "mapping_version": "relation-map-v2.1.0",
+    "candidate_scope": "page plus direct incoming/outgoing neighbours",
+    "ranking_scope": "all candidates in the paragraph plus page; outgoing depth 1",
+    "PER_type_policy": "explicit saved P31=Q5, unchanged from notebook",
+    "other_type_policy": "assume compatible; no type classifier",
+    "DATE_policy": "same name/graph rules; no date parser or inferred date IDs",
+    "candidate_cap": null,
+    "name_language": "en",
+    "manual_overrides": 0,
+    "training_labels": 0,
+    "model_calls": 0,
+    "live_lookups": 0,
+    "unknown_entity_creation": false,
+    "threshold_tuning": false,
+    "page_identity_source": "GG_Data/entity_resolution/runs/source_pages_v0.1.0_20261018/page_map.json",
+    "metadata_source": "same frozen full Wikidata snapshot"
+  },
+  "inputs_sha256": {
+    "Data/external/daniel_20261017.parquet": "dcd51dfa237b63378279ced4f9739a45d8cf8ce3991579f20848295448f83f16",
+    "Data/external/wwii_task_force/wikidata_entities.jsonl.gz": "95c6a8aa5ab803d904a0f5e85bfc5d2dade97b5b5f18c0c33ea48a54fc217277",
+    "Data/external/wwii_task_force/article_qids.jsonl": "35bff0843678def3ac1917dc4e37748b258fe4ea2afa3c98e62bedb26e593918",
+    "GG_Data/mapping/outputs/relation-map-v1.0.0/complete_mapped_relations_v1.0.0.csv": "e1492d175577b5b4b916c9e12dbc0ff61b50a0f86e23c3471e5c033e0b85c320",
+    "GG_Data/mapping/RELATION_MAPPING_TABLE_v2.1.0.csv": "ed8aed3cbec4262f47abe648059aa1bc89c15e0a4e30de77709e4b89049ec034",
+    "GG_Data/mapping/ASSERTION_EXCLUSIONS.csv": "49338302ac4cda3bd540377a2030bc0c3c532bd6a477730f4667986046e38719",
+    "GG_Data/entity_resolution/generate_candidates.py": "d2ca1353d796f7d5f500df4bc967cd14cbc2374433a871fc54f4745f2163e2ea",
+    "GG_Data/entity_resolution/prepare_examples.py": "3035ef779dff21b98ea612d82bbdac4d707fa5dd3578913becac98c2fb20f795",
+    "GG_Data/mapping/assertion_exclusions.py": "b77d55bdc906317b08156ecbb4fc7c62005d47a6716f662df4042cc21230fcce",
+    "GG_Data/mapping/run_relation_mapping_sanity.py": "8c953c458896c388f260948d87beac5570d45c2e59d951689823bd696df293c3",
+    "GG_Data/entity_resolution/runs/first_candidates_v0.1.0_20261018/run_manifest.json": "91dd582782dc3194684241ec50d49ee81275d6b0ca1ac686b01cb9d5a75cef5c",
+    "GG_Data/entity_resolution/runs/first_candidates_v0.1.0_20261018/page_context.jsonl.gz": "dac74b624f2988a22795e1ae41d0080240161e6a1f150ccf9c4afb8eb15b75d8",
+    "GG_Data/entity_resolution/runs/first_candidates_v0.1.0_20261018/entity_metadata.jsonl.gz": "8fefe533ea5437b6b0315d9d7a3324293e4c4b0b5dd203a30a9e6488c08eac93",
+    "GG_Data/entity_resolution/run_notebook_matching.py": "e1b4e331e940bc140fe7681ea0bed5c76756358e5168bb87255ccd6aed990c50",
+    "GG_Data/entity_resolution/notebook_rules.py": "e0853651f2e0628126cb540a8364a2367c709dab6ef4504644801420d4d1c807",
+    "GG_Data/entity_resolution/ENTITY_MATCHING_STEP_BY_STEP.ipynb": "6e72c470194e46a899d9000d338ec146c4e9f383d2ad7277c7d61999a6e3ed42",
+    "GG_Data/entity_resolution/runs/source_pages_v0.1.0_20261018/page_map.json": "6e5ccfc908048b26801460bb749b4295e3ed7fd834229602ed9b47fb0b473441",
+    "GG_Data/entity_resolution/runs/source_pages_v0.1.0_20261018/summary.json": "eee2468ebbf9e0608c21cb91f3ee0dcd970fd4ff2b4f09552fca483d798b2af5",
+    "GG_Data/entity_resolution/runs/source_pages_v0.1.0_20261018/api_responses.jsonl": "c6f87eeb6c6793e470459dd90ac8f8671871e230d3417674b004d20f41fd9e9f",
+    "GG_Data/entity_resolution/runs/all_types_notebook_v0.1.0_20261018/mapped_graph.jsonl.gz": "946a52d82f1355654138024a70e11c35d5cbc5a6366f0dba00e86d37e3e62045",
+    "Data/external/wwii_task_force/wikidata_qids.txt": "6dcb15ab92d3e91c5dab350b361c2e7a4052cf90eaf01602dbd425af75e27e85",
+    "GG_Data/entity_resolution/resolve_source_pages.py": "9a43e37c4900f5ae90435650ecc7b83bbc368c98c587030dace09799c321dd3f",
+    "scripts/fetch_wwii_task_force.py": "e5fa8b09e359134567f594aeae06f90d841529983688e3cb7ba5ba4edfa4e890",
+    "GG_Data/entity_resolution/runs/source_pages_v0.1.0_20261018/run_manifest.json": "a19ba5d212da2df45578409cd5f6d2a53cb78fffe71e03bab09f311c4d6cc002"
+  },
+  "baseline_run_id": "candidates-f3f085bae31799ee2a01",
+  "daniel_commit": "43e35453421b032fc67d426d7d16fe436574b0fa",
+  "outputs": {
+    "entity_metadata.jsonl.gz": {
+      "sha256": "e008b70481e2321eb5fb03c01b04c0b22cb3b3cb39f91485cc8c12f2ec44e6f1",
+      "bytes": 243551
+    },
+    "graph_contexts.jsonl.gz": {
+      "sha256": "7eec72600f68c054515936b8dac718176e4715bcea1c8709cfeb3e28b207e9c4",
+      "bytes": 2937179
+    },
+    "mapped_graph.jsonl.gz": {
+      "sha256": "2e01fd0ec248896e4e85520d6225ff0a6477b0117d95f94b08d4b98fd9a64a98",
+      "bytes": 46590998
+    },
+    "mention_matches.jsonl.gz": {
+      "sha256": "e996f8d599b6d9b5c2ae914edf7a9cb4895d4be97a20407a2e062c546fb0aa8e",
+      "bytes": 45377008
+    },
+    "page_context.jsonl.gz": {
+      "sha256": "bff3b9830b45ef5f395c33667b4ae876874a872228e19ab8a964b0ced3c4a1b2",
+      "bytes": 136518
+    },
+    "summary.json": {
+      "sha256": "2f54129f8c9a061981440bd51fec30524347450798c0bc93959d3217b0c687d5",
+      "bytes": 128980
+    }
+  },
+  "runtime": {
+    "python": "3.12.7",
+    "pandas": "2.3.3",
+    "networkx": "3.6.1"
+  },
+  "verification": {
+    "all_raw_rows_preserved": true,
+    "all_five_types_processed": true,
+    "all_candidates_and_decisions_rechecked": true,
+    "inputs_unchanged_during_run": true
+  }
+}

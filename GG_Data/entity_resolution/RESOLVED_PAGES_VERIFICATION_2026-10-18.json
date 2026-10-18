@@ -1,0 +1,99 @@
+{
+  "run_id": "matching-bec29744c3df8b2b7680",
+  "raw_rows_and_mention_ids_unchanged": 309864,
+  "previously_resolved_source_mentions_with_identical_candidates_scores_and_decisions": 192220,
+  "same_mapped_graph_content_sha256": "7c341f00bdb11f64fc00034b5bef7856ea15c7a5d24a58b352c98dc17eef8a88",
+  "all_frozen_inputs_and_output_hashes_verified": true,
+  "all_prior_run_outputs_unchanged": true,
+  "decision_transitions": {
+    "SUGGESTED -> SUGGESTED": 8038,
+    "UNRESOLVED -> UNRESOLVED": 300309,
+    "UNRESOLVED -> SUGGESTED": 1517
+  },
+  "new_suggestions": 1517,
+  "by_type": {
+    "DATE": {
+      "total": 38432,
+      "UNRESOLVED": 38389,
+      "with_candidates": 841,
+      "candidate_pairs": 922,
+      "SUGGESTED": 43
+    },
+    "LOC": {
+      "total": 89846,
+      "UNRESOLVED": 86825,
+      "with_candidates": 17336,
+      "candidate_pairs": 35261,
+      "SUGGESTED": 3021
+    },
+    "MISC": {
+      "total": 85676,
+      "SUGGESTED": 2925,
+      "with_candidates": 23006,
+      "candidate_pairs": 136118,
+      "UNRESOLVED": 82751
+    },
+    "ORG": {
+      "total": 47680,
+      "SUGGESTED": 1863,
+      "with_candidates": 9855,
+      "candidate_pairs": 35284,
+      "UNRESOLVED": 45817
+    },
+    "PER": {
+      "total": 48230,
+      "UNRESOLVED": 46527,
+      "with_candidates": 8622,
+      "candidate_pairs": 13053,
+      "SUGGESTED": 1703
+    }
+  },
+  "automatic_examples_not_accuracy_labels": [
+    {
+      "Source": "201st Fighter Squadron (Mexico)",
+      "Index": 0,
+      "word": "World War II",
+      "type": "MISC",
+      "suggested_qid": "Q362",
+      "suggested_label": "World War II",
+      "reason": "single candidate; name rule passed"
+    },
+    {
+      "Source": "201st Fighter Squadron (Mexico)",
+      "Index": 3,
+      "word": "201st Air Fighter Squadron",
+      "type": "ORG",
+      "suggested_qid": "Q2299076",
+      "suggested_label": "201st Fighter Squadron",
+      "reason": "single candidate; name rule passed"
+    },
+    {
+      "Source": "201st Fighter Squadron (Mexico)",
+      "Index": 6,
+      "word": "Fifth Air Force",
+      "type": "ORG",
+      "suggested_qid": "Q2817902",
+      "suggested_label": "Fifth Air Force",
+      "reason": "graph winner; name and gap rules passed"
+    },
+    {
+      "Source": "201st Fighter Squadron (Mexico)",
+      "Index": 12,
+      "word": "Fighter Squadron",
+      "type": "ORG",
+      "suggested_qid": "Q2299076",
+      "suggested_label": "201st Fighter Squadron",
+      "reason": "single candidate; name rule passed"
+    },
+    {
+      "Source": "ABCD line",
+      "Index": 0,
+      "word": "Japan",
+      "type": "LOC",
+      "suggested_qid": "Q188712",
+      "suggested_label": "Empire of Japan",
+      "reason": "single candidate; name rule passed"
+    }
+  ],
+  "accuracy_measured": false
+}

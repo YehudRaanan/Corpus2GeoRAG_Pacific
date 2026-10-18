@@ -1,5 +1,8 @@
 # Daniel source-page lookup — 2026-10-18
 
+**Subsequent matching run:** [completed rerun and comparison](RESOLVED_PAGES_RUN_REPORT_2026-10-18.md).
+The counts below describe the page lookup itself.
+
 ## Result
 
 Wikipedia's official title lookup resolved **424 of 428 source titles** to a
