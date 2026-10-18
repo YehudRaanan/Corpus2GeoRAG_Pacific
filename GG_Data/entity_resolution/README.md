@@ -1,6 +1,19 @@
 # Entity matching runs
 
-## Current bilingual pilot — 18 October 2026
+## Current direct Daniel-to-Wikidata small run — 18 October 2026
+
+[Report](DIRECT_WIKIDATA_SMALL_RUN_2026-10-18.md) · [All result rows](runs/direct_wikidata_small_20261018/matches.csv)
+
+Same three pages, all **362 mentions**: **258 Wikidata matches**, **37 normalized
+dates**, **67 separate unresolved mention IDs**. No notebook or independent
+article-name extraction. Candidate lookups use Daniel's names directly; source
+page IDs and direct English/Japanese hyperlinks provide page references.
+Page-only space/symbol cleanup is applied. All DATE mentions use calendar
+normalization/validation. Original input and older runs remain unchanged.
+The existing type filter still rejects Yale despite retrieving its correct QID;
+known wrong trigram matches also remain. See the report before interpreting counts.
+
+## Earlier bilingual pilot — 18 October 2026
 
 [New pilot report](BILINGUAL_PILOT_REPORT_2026-10-18.md) · [Executed notebook](BILINGUAL_PILOT_STEP_BY_STEP.ipynb) · [Results](runs/bilingual_pilot_20261018_v1/report.html)
 

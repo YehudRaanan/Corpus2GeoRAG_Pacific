@@ -1,0 +1,33 @@
+import random
+
+from bilingual_page_pilot import choose
+from direct_wikidata_pilot import clean_name, normalize_date, page_find
+from generate_candidates import NameIndex
+
+
+def test_date_precision_and_validation():
+    assert normalize_date("March 1942") == {"value": "1942-03", "precision": "month"}
+    assert normalize_date("Feb 2, 1955")["value"] == "1955-02-02"
+    assert normalize_date("1942–43")["value"] == "1942/1943"
+    assert normalize_date("late 1942")["qualifier"] == "late"
+    assert normalize_date("December")["value"] == "--12"
+    assert "error" in normalize_date("29 February 1943")
+    assert "error" in normalize_date("yesterday")
+
+
+def test_cleanup_is_page_only_and_keeps_raw_names():
+    assert clean_name("  U. S. ★ ") == "US"
+    assert clean_name("U.S.") == "US"
+    md = {"Q1": {"label": "U.S.", "direct_types": ["Q618123"]}}
+    normal = {"Q1": {**md["Q1"], "label": "US"}}
+    original, cleaned = NameIndex(["Q1"], md), NameIndex(["Q1"], normal)
+    assert not original.find("US", "MISC", 0.8)
+    result = choose(
+        page_find(original, cleaned, "US", {"Q1": {"US": "U.S."}}),
+        "LOC",
+        md,
+        random.Random(1),
+    )
+    assert result["entity_id"] == "Q1"
+    assert result["matched_name"] == "U.S."
+    assert result["normalization"] == "PAGE_ONLY_SPACE_SYMBOL_CLEANUP"
