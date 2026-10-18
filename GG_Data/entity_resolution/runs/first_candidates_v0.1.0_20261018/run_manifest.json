@@ -1,0 +1,61 @@
+{
+  "status": "COMPLETED",
+  "run_id": "candidates-f3f085bae31799ee2a01",
+  "completed_utc": "2026-10-18T12:17:24.558782+00:00",
+  "parameters": {
+    "method": "page-trigram-candidates-v0.1.0",
+    "min_name_similarity": 0.35,
+    "mapping_version": "relation-map-v2.1.0",
+    "page_scope": "page identity plus direct incoming/outgoing graph neighbours",
+    "PER_type_policy": "explicit P31=Q5",
+    "other_type_policy": "PENDING",
+    "DATE_policy": "DEFERRED",
+    "candidate_cap": null,
+    "name_language": "en",
+    "identity_selection": false
+  },
+  "inputs_sha256": {
+    "Data/external/daniel_20261017.parquet": "dcd51dfa237b63378279ced4f9739a45d8cf8ce3991579f20848295448f83f16",
+    "Data/external/wwii_task_force/wikidata_entities.jsonl.gz": "95c6a8aa5ab803d904a0f5e85bfc5d2dade97b5b5f18c0c33ea48a54fc217277",
+    "Data/external/wwii_task_force/article_qids.jsonl": "35bff0843678def3ac1917dc4e37748b258fe4ea2afa3c98e62bedb26e593918",
+    "GG_Data/mapping/outputs/relation-map-v1.0.0/complete_mapped_relations_v1.0.0.csv": "e1492d175577b5b4b916c9e12dbc0ff61b50a0f86e23c3471e5c033e0b85c320",
+    "GG_Data/mapping/RELATION_MAPPING_TABLE_v2.1.0.csv": "ed8aed3cbec4262f47abe648059aa1bc89c15e0a4e30de77709e4b89049ec034",
+    "GG_Data/mapping/ASSERTION_EXCLUSIONS.csv": "49338302ac4cda3bd540377a2030bc0c3c532bd6a477730f4667986046e38719",
+    "GG_Data/entity_resolution/generate_candidates.py": "d2ca1353d796f7d5f500df4bc967cd14cbc2374433a871fc54f4745f2163e2ea",
+    "GG_Data/entity_resolution/prepare_examples.py": "3035ef779dff21b98ea612d82bbdac4d707fa5dd3578913becac98c2fb20f795",
+    "GG_Data/mapping/assertion_exclusions.py": "b77d55bdc906317b08156ecbb4fc7c62005d47a6716f662df4042cc21230fcce",
+    "GG_Data/mapping/run_relation_mapping_sanity.py": "8c953c458896c388f260948d87beac5570d45c2e59d951689823bd696df293c3"
+  },
+  "daniel_commit": "43e35453421b032fc67d426d7d16fe436574b0fa",
+  "daniel_git_blob": "dcf304ad0dd38ca9874f3172609eb0597aa4f285",
+  "daniel_url": "https://raw.githubusercontent.com/EtzionR/Corpus2GeoRAG_Pacific/43e35453421b032fc67d426d7d16fe436574b0fa/Data/georag_selected_v2_full_n36335_r482092353_20261016.parquet",
+  "runtime": {
+    "python": "3.12.7",
+    "pandas": "2.3.3",
+    "pyarrow": "24.0.0"
+  },
+  "outputs": {
+    "entity_metadata.jsonl.gz": {
+      "sha256": "8fefe533ea5437b6b0315d9d7a3324293e4c4b0b5dd203a30a9e6488c08eac93",
+      "bytes": 219041
+    },
+    "mention_candidates.jsonl.gz": {
+      "sha256": "10727bf8c114ba539b09e270bc0e2b252cfce2b1a42541463665e2066876f192",
+      "bytes": 32582279
+    },
+    "page_context.jsonl.gz": {
+      "sha256": "dac74b624f2988a22795e1ae41d0080240161e6a1f150ccf9c4afb8eb15b75d8",
+      "bytes": 929251
+    },
+    "summary.json": {
+      "sha256": "f27458fbdc078c7aa08f5aef60211ceb3d5048a2b30847357f423d96a661d8d5",
+      "bytes": 222218
+    }
+  },
+  "verification": {
+    "all_raw_rows_preserved": true,
+    "stable_ids_unique": true,
+    "all_candidate_names_scores_types_and_page_membership_verified": true,
+    "inputs_unchanged_during_run": true
+  }
+}
