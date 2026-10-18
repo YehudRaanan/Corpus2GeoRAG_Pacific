@@ -44,7 +44,7 @@ TYPE_ROOTS = {
     "PER": {"Q5"},
     "ORG": {"Q43229", "Q176799"},
     "LOC": {"Q618123", "Q2221906", "Q56061"},
-    "DATE": {"Q577", "Q205892", "Q3186692"},
+    "DATE": {"Q577", "Q205892", "Q3186692", "Q47018901"},
 }
 EXCLUDE_CLASSES = {"Q4167410", "Q13406463"}  # disambiguation and Wikimedia lists
 POPULATION = (
@@ -524,6 +524,8 @@ def page_inventory(
         )
         for hit in result["results"]["bindings"]:
             term, qid = hit["term"]["value"], hit["item"]["value"].rsplit("/", 1)[-1]
+            if not re.fullmatch(r"Q[1-9]\d*", qid):
+                continue  # Properties and lexemes are not entity items.
             for record in phrases[term]:
                 record["hits"].append(
                     {"id": qid, "name": term, "language": hit["term"].get("xml:lang")}
@@ -632,7 +634,9 @@ def fresh_wwii(cache: Path) -> tuple[dict[str, dict], list[dict]]:
     return metadata, evidence
 
 
-def execute(output: Path, cache: Path, seed: int) -> None:
+def execute(
+    output: Path, cache: Path, seed: int, metadata_snapshot: Path | None = None
+) -> None:
     execution_code_sha256 = digest(Path(__file__))
     if output.exists():
         previous = read(output / "run_manifest.json")
@@ -651,6 +655,28 @@ def execute(output: Path, cache: Path, seed: int) -> None:
         {"status": "IN_PROGRESS", "seed": seed, "pages": PAGES},
     )
     api = LiveData(cache)
+    if metadata_snapshot is not None:
+        prior = read(metadata_snapshot.parent / "run_manifest.json")
+        if prior["status"] != "COMPLETED" or digest(metadata_snapshot) != prior[
+            "outputs"
+        ].get(metadata_snapshot.name):
+            raise ValueError(
+                "Metadata snapshot must belong to a verified completed run"
+            )
+        api.entities = {
+            q: e
+            for q, e in read(metadata_snapshot).items()
+            if re.fullmatch(r"Q[1-9]\d*", q)
+        }
+        api.requests.append(
+            {
+                "metadata_snapshot": str(metadata_snapshot),
+                "sha256": digest(metadata_snapshot),
+                "source_manifest_sha256": digest(
+                    metadata_snapshot.parent / "run_manifest.json"
+                ),
+            }
+        )
     rng = random.Random(seed)
     raw_path = ROOT / "Data/external/daniel_20261017.parquet"
     if (
@@ -785,6 +811,7 @@ def execute(output: Path, cache: Path, seed: int) -> None:
     # Re-read selected raw rows, and prove exact identity/scope/threshold/type rules.
     assert len(rows) == len(selected)
     assert len({r["mention_id"] for r in rows}) == len(rows)
+    assert all(re.fullmatch(r"Q[1-9]\d*", q) for pool in pools.values() for q in pool)
     synthetic = [r["assigned_id"] for r in rows if r["matched_stage"] == "SYNTHETIC"]
     assert len(set(synthetic)) == len(synthetic)
     for row in rows:
@@ -1026,8 +1053,13 @@ if __name__ == "__main__":
         default=Path.home() / ".cache/geoai_bilingual_pilot_20261018",
     )
     parser.add_argument("--seed", type=int, default=20261018)
+    parser.add_argument(
+        "--metadata-snapshot",
+        type=Path,
+        help="Reuse verified item/type records from a completed run",
+    )
     args = parser.parse_args()
     logging.basicConfig(
         level=logging.INFO, format="%(asctime)s %(levelname)s %(message)s"
     )
-    execute(args.output, args.cache, args.seed)
+    execute(args.output, args.cache, args.seed, args.metadata_snapshot)

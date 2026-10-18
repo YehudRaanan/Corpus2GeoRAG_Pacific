@@ -1,5 +1,26 @@
 # Entity matching runs
 
+## Current bilingual pilot — 18 October 2026
+
+[New pilot report](BILINGUAL_PILOT_REPORT_2026-10-18.md) · [Executed notebook](BILINGUAL_PILOT_STEP_BY_STEP.ipynb) · [Results](runs/bilingual_pilot_20261018_v1/report.html)
+
+Three pages, all **362 mentions** and all five types: **244 automatic matches**,
+**118 distinct synthetic mention IDs**. English and Japanese articles were read
+when a Japanese counterpart exists. Matching uses compatible types, the highest
+trigram Dice score at least 0.80, and seeded random ties. The final pass uses a
+fresh 103,235-ID Wikidata query, not the old graph. No manual match overrides.
+
+The notebook reproduces every saved assigned ID. **Some automatic matches are
+clearly wrong**, including Mayforce → Layforce and Alfred Curtis → Wilfred Curtis.
+Article candidate collection and the broad type map remain incomplete. Read the
+report's limits before interpreting match counts as identity quality.
+
+The current run fixes calendar-month typing and excludes properties from QID
+candidates. The initial pilot is preserved separately. Previous full-run sections
+below describe earlier methods; their unknown-entity deferral is superseded only
+for this new pilot by the user's approved three-pass and synthetic-ID rules.
+
+
 ## Reference coverage correction
 
 **Completed and verified:** [reference coverage correction and full rerun](REFERENCE_COVERAGE_FIX_2026-10-18.md).

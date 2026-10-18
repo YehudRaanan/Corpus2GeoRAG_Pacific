@@ -75,6 +75,7 @@ def test_type_inheritance_and_exclusions():
     }
     assert categories({"direct_types": ["unit_class"]}, metadata) == {"ORG"}
     assert categories({"direct_types": ["year_class"]}, metadata) == {"DATE"}
+    assert categories({"direct_types": ["Q47018901"]}, metadata) == {"DATE"}
     assert categories({"direct_types": ["place_class"]}, metadata) == {"LOC"}
     assert categories({"direct_types": ["role_class"]}, metadata) == {"MISC"}
     assert categories({"direct_types": ["Q4167410"]}, metadata) == set()
