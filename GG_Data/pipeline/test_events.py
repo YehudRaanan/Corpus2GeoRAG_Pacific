@@ -343,3 +343,31 @@ def test_retry_after_deadline_is_respected_across_cache_resume(value):
     evidence["response_headers"]["Retry-After"] = "invalid"
     with pytest.raises(SourceException, match="Invalid Retry-After"):
         events.retry_delay(evidence, 1, received)
+
+
+def test_rank_diagnostic_removes_deprecated_paths_without_mutating_source():
+    from GG_Data.pipeline.event_hierarchy_rank_test import compare
+
+    def edge(parent, rank="normal"):
+        return {"parent": parent, "rank": rank, "statement": "native"}
+
+    root = events.EVENT_ROOT
+    edges = {
+        "P31": {
+            "Q1": [edge("Q2")],
+            "Q3": [edge("Q4")],
+            "Q5": [edge(root, "deprecated")],
+            "Q6": [edge("Q7")],
+        },
+        "P279": {
+            "Q2": [edge(root)],
+            "Q4": [edge(root, "http://wikiba.se/ontology#DeprecatedRank")],
+            "Q7": [edge(root, "deprecated"), edge("Q8")],
+            "Q8": [edge(root)],
+        },
+    }
+    original = json.dumps(edges)
+    rows = compare(edges)
+    assert sum(row["all_ranks_match"] for row in rows) == 4
+    assert {row["qid"] for row in rows if row["non_deprecated_match"]} == {"Q1", "Q6"}
+    assert json.dumps(edges) == original

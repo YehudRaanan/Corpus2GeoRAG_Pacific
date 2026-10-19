@@ -157,6 +157,15 @@ Missing query-graph records can be checked through the approved current native
 JSON source; preserve that source evidence rather than treating a missing graph
 record as proof of no Event ancestry.
 
+**Current data exception:** the complete five-QID source probe found Event
+ancestry for countries through a deprecated native P279 statement. Population
+stopped before writing Events. The user approved a diagnostic-only comparison
+without deprecated P31/P279: 117 positives became 7 across 165 candidates.
+Adopting this as the Event rule requires a separate decision. Relations and
+complete raw acquisition still retain all ranks. Evidence is saved under
+`GG_Data/pipeline/outputs/poc_10k_current_event_rate_limit_retry_20261020` and
+`GG_Data/pipeline/outputs/poc_10k_event_rank_test_20261020`.
+
 The approved root is Wikidata's broad [event, Q140451665](https://www.wikidata.org/wiki/Q140451665), including all classes below it through native [P279 subclass-of](https://www.wikidata.org/wiki/Property:P279) statements. Identify event instances through [P31 instance-of](https://www.wikidata.org/wiki/Property:P31) and those subclass paths. Record root QID, snapshot, native class IDs and path evidence. Do not replace it with the narrower organized-event root, add a local event-type whitelist, or invent war/campaign/battle levels.
 
 For each discovered event QID, use its direct mapped Wikidata assertions to/from **D**. Include it only if at least two distinct Daniel QIDs qualify. Repeated mentions, several predicates for one entity, duplicate retrievals and generated reverse views do not increase this count. Classification hierarchy paths identify an event; they do not count as indirect participant paths. Do not count mere shared class ancestry or article co-mentions as an event/entity connection.

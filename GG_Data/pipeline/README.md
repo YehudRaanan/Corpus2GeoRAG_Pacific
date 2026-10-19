@@ -1,5 +1,32 @@
 # Daniel pipeline POC
 
+## Source probe complete; Event rank rule awaits approval
+
+The 429 retry succeeded on attempt 2. The complete five-QID source traversal
+saved 165 candidate P31 checks and 904 P279 class checks, with 120 successful
+hierarchy-stage requests (27 added after the 429 stop). Verification checked
+132 source-body hashes and unchanged upstream files/old failed attempts.
+No request is running. This is not full 10K Event discovery.
+
+The all-rank hierarchy returned 117 positive candidates and 48 negative ones.
+Countries Q30 (United States), Q668 (India), and Q41 (Greece) reach the Event
+root through a deprecated P279 statement on Q123349660 pointing to Q1190554.
+Full paths and statement/rank evidence are saved in `source_surprise.json` in
+`outputs/poc_10k_current_event_rate_limit_retry_20261020`.
+Population stopped before writing Event rows; no country was accepted.
+
+The user approved a diagnostic-only test without deprecated P31/P279 links.
+`event_hierarchy_rank_test.py` reuses saved data with no network calls or source
+mutations. `outputs/poc_10k_event_rank_test_20261020/report.json` records
+117 all-rank positives versus 7 non-deprecated positives, removing 110 flags
+including all three country examples. Remaining candidates: Q362, Q1144693,
+Q16743064, Q20981909, Q21830247, Q106336167, Q132129067.
+
+Applying this filter as a population rule awaits approval. The seven candidates
+still need the two-distinct-Daniel-QID gate and full native evidence. Relations
+retains all ranks. Original sources/classifications, matching, Entities and Wiki
+Pages remain unchanged. Zero Event rows or final graph were written.
+
 ## Approved service-error handling — 20 October 2026
 
 The user approved the general cache-first retrieval policy and the previously

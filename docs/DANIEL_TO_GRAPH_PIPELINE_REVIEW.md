@@ -1,5 +1,25 @@
 # Daniel input to final graph JSON review
 
+## Current result: source probe complete, Event rank decision pending
+
+The approved 429 handling resumed successfully. The five-QID source probe
+finished with 165 candidate P31 checks, 904 P279 class checks, 120 successful
+hierarchy-stage requests and 132 verified source-body hashes. Upstream outputs
+and old failed attempts are unchanged. No request is running.
+
+The all-rank traversal marked 117 of 165 candidates as having Event ancestry.
+This includes countries Q30, Q668 and Q41 through a deprecated P279 statement
+on Q123349660 pointing to Q1190554. Event population stopped immediately.
+Evidence: `outputs/poc_10k_current_event_rate_limit_retry_20261020/source_surprise.json`.
+
+The user approved a diagnostic-only saved-data test excluding deprecated
+P31/P279 links. The result is 7 positive candidates instead of 117, removing
+110 flags including those three country examples. Evidence:
+`outputs/poc_10k_event_rank_test_20261020/report.json`.
+Adopting this as the Event rule awaits approval. Raw evidence and Relations
+retain all ranks. No Event rows, new Daniel entities or final graph were created.
+The two-Daniel-QID inclusion gate and full 10K discovery remain pending.
+
 ## Approved service-error handling — 20 October 2026
 
 The user approved the general cache-first retrieval policy and the previously
