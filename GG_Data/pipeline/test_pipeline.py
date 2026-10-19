@@ -10,7 +10,7 @@ import geopandas as gpd
 import pytest
 from shapely.geometry import Point
 
-from GG_Data.pipeline import graph_contract, poc
+from GG_Data.pipeline import entities, graph_contract, poc
 
 
 def saved_row(stage="PAGE_DIRECT_WIKIDATA", assigned="Q1", entity_type="LOC"):
@@ -227,3 +227,76 @@ def test_geometry_duplicate_rows_are_not_silently_selected(monkeypatch):
             {"file": "geography.parquet", "place_id": "Q1", "sha256": "a" * 64},
             Path.cwd(),
         )
+
+
+def test_entity_name_uses_newer_revision_without_changing_language_order():
+    full = {"lastrevid": 20, "labels": {"en": {"value": "rōmusha"}}}
+    matching = {"revision": 10, "labels": {"en": "Romusha"}}
+    assert entities.choose_name("Q1", full, matching, [])["value"] == "rōmusha"
+    matching["revision"] = 30
+    assert (
+        entities.choose_name("Q1", full, matching, [])["source"] == "matching_reference"
+    )
+    matching["revision"] = 20
+    with pytest.raises(ValueError, match="Cannot order"):
+        entities.choose_name("Q1", full, matching, [])
+    assert (
+        entities.choose_name("Q1", {}, {"labels": {"ja": "日本"}}, [])["value"]
+        == "日本"
+    )
+    with pytest.raises(ValueError, match="fallback names"):
+        entities.choose_name("Q1", {}, {}, [{"raw": {"word": w}} for w in ("a", "b")])
+
+
+def test_missing_english_in_newer_record_stops_before_choosing_older_english():
+    full = {"lastrevid": 20, "labels": {"ja": {"value": "日本"}}}
+    matching = {"revision": 10, "labels": {"en": "older English"}}
+    with pytest.raises(ValueError, match="discuss language/version priority"):
+        entities.choose_name("Q1", full, matching, [])
+
+
+def test_entities_keep_typed_pairs_synthetic_ids_and_full_native_evidence():
+    mentions = [
+        {"entity_id": qid, "entity_type": typ, "mention_id": mid, "raw": {"word": word}}
+        for qid, typ, mid, word in [
+            ("Q1", "LOC", "m1", "original place"),
+            ("Q1", "ORG", "m2", "original organization"),
+            ("SYN_one", "MISC", "m3", "original unresolved"),
+            (None, None, "m4", "1942"),
+        ]
+    ]
+    envelope = {
+        "requested_qid": "Q1",
+        "entity": {
+            "id": "Q1",
+            "lastrevid": 20,
+            "labels": {"en": {"value": "native name"}},
+            "claims": {"P879": [{"unknown": "retained"}]},
+            "unknown": {"nested": True},
+        },
+    }
+    metadata = {
+        "Q1": {"labels": {"en": "older name"}, "revision": 10, "direct_types": ["Q9"]}
+    }
+    original = copy.deepcopy(mentions)
+    rows = entities.populate(
+        mentions, {"Q1": envelope}, metadata, {"Q1": {"provider": "WIKIDATA"}}
+    )
+    assert mentions == original
+    assert {(r["entity_id"], r["type"]) for r in rows} == {
+        ("Q1", "LOC"),
+        ("Q1", "ORG"),
+        ("SYN_one", "MISC"),
+    }
+    qid_rows = [r for r in rows if r["entity_id"] == "Q1"]
+    assert all(r["raw_reference"]["full"] == envelope for r in qid_rows)
+    assert all(
+        r["direct_types"] == ["Q9"] and r["name"] == "native name" for r in qid_rows
+    )
+    synthetic = next(r for r in rows if r["entity_id"] == "SYN_one")
+    assert synthetic["name"] == "original unresolved" and synthetic["missing"] is None
+    assert synthetic["identity_status"] == "SYNTHETIC_UNRESOLVED"
+    bad = copy.deepcopy(envelope)
+    bad["entity"]["id"] = "Q2"
+    with pytest.raises(ValueError, match="ID differs"):
+        entities.native_record(bad, "Q1")

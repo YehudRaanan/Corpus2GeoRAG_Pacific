@@ -101,6 +101,15 @@ Do not reopen P01/P02/P09/P11. Typed entity IDs, QID endpoints and geometry poin
 
 ## Source documents
 
+20 October 2026 Entities checkpoint: full references for all 4,712 sample QIDs
+are available (506 reused, 4,206 acquired and cached). The 6,077-row Entities
+attempt is **draft, not accepted**. Final validation found that Q132537 and
+Q1771928 have older English labels but only Japanese labels in their newer full
+records. The attempt selected older English; the user must decide whether that
+priority is allowed. Processing stopped and a validation guard was added.
+Current manifest status is `BLOCKED_NAME_LANGUAGE_VERSION_RULE`; the first-step
+files are unchanged. See population S2T section 6 and the pipeline README.
+
 - [Sources to model S2T](SOURCES_TO_ENTITY_DATA_MODEL_S2T.md), especially Entities, Events, Relations, Geography and explicit exceptions.
 - [Six-table ERD](ENTITY_DATA_MODEL_ERD.md), including exact retained field inventories.
 - [Model to final graph S2T](ENTITY_MODEL_TO_AGENT_GRAPH_S2T.md), including node/edge/catalog mapping and visible exceptions.

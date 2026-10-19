@@ -68,6 +68,68 @@ Resolution-manifest SHA-256:
 `86e60c17a99d1aaecbd87dbda7c7d69a0dee8c41cd15d30c3393b13d164d2db4`.
 Outputs are ignored data artifacts on D:, not protected by a code commit.
 
+## Entities step
+
+`entities.py` consumes the completed first step, without changing its files.
+It populates one row per existing `(entity_id, entity_type)` pair and connects
+Wiki Pages subjects only where an entity already exists. Normalized dates stay
+in Mentions. There is no new extraction, rematching or type inference.
+
+The user approved **newer saved Wikidata names** on 20 October 2026. English
+still precedes Japanese, then Daniel's name. When saved labels differ, revision
+IDs determine the newer supplied label; both source versions remain in
+`raw_reference`. This rule changes display names only. Equal-revision conflicts,
+missing revision evidence needed for a choice, and ambiguous Daniel fallbacks
+stop the run before model output.
+
+Complete native envelopes are reused from the verified saved archive. Missing
+full records are retrieved as the complete BigQuery `item` field through the
+existing GCP CLI wrapper and pinned matching snapshot. SQL, dry-run evidence,
+job statistics and untouched results are cached in `outputs/wikidata_full_cache`.
+The compact matching metadata remains separate evidence; it is not a complete
+claims source. Labels, descriptions, native claims and unknown fields are
+retained. Compact search names have unknown original kind/language and are
+marked `matching_reference_name`, rather than presented as native aliases.
+
+```powershell
+C:\Users\User\anaconda3\python.exe -B -m GG_Data.pipeline.entities --output D:\Projects\GeoAI\GG_Data\pipeline\outputs\poc_10k_entities
+```
+
+The destination must be new. `ENTITIES_STEP_ONLY` is written last, after source
+and population checks; it does not mark Events, Relations, Geography, graph
+export or Agent integration complete. Failed runs can retain acquisition cache
+files for reuse, but do not produce a completed Entities manifest.
+
+### First Entities attempt — stopped in final validation
+
+The attempt created 6,077 candidate rows: 4,721 QID/type pairs (4,712 distinct
+QIDs) and the unchanged 1,356 synthetic identities. All full Wikidata records
+are available: 506 reused envelopes and 4,206 complete `item` records acquired
+from the pinned BigQuery snapshot. The CLI verified 4,206 returned rows; query
+job `geoai_1c8841ce530789458d059e9f8b92254f` billed 1,561,930,498,048 bytes.
+Its result is cached; correcting names does not require another query.
+
+Output hashes, exact ID/type membership, raw reference IDs and source hashes,
+mention foreign keys, synthetic names/types, and unchanged first-step files
+passed checks. The copied Wiki Pages view has 197 existing entity subjects;
+its other values are unchanged. This structural validation does not establish
+identity accuracy or approval of every display-name choice.
+
+Final inspection found two cases not covered by the approved version rule:
+Q132537 (`Robert Oppenheimer`) and Q1771928 (`Why We Fight`) have older English
+labels, but their newer full records have Japanese labels and no English label.
+The attempt used older English. Work stopped for a user decision between older
+English priority and newer-record Japanese fallback. The code now raises on
+this condition instead of choosing. See population S2T section 6 for values and
+revisions.
+
+`outputs/poc_10k_entities/manifest.json` is now
+`BLOCKED_NAME_LANGUAGE_VERSION_RULE`, with `entity_output_state=DRAFT_NOT_ACCEPTED`.
+The original attempt marker is retained as `attempt_manifest.json` for audit;
+it is superseded by the current manifest and is not a release marker. No later
+stage has run. The first-step output remains valid and unchanged. On approval,
+use a new Entities destination and reuse the full-record cache.
+
 ## Approved graph interfaces
 
 `graph_contract.py` provides small interface helpers:
