@@ -1,6 +1,21 @@
 # Daniel input to final graph JSON review
 
-## Current result: seven native records checked; incoming source response incomplete
+## Current result: bounded incoming request timed out
+
+After discussion, the user agreed to 250-subject batches over the frozen
+4,712 Daniel QIDs and all seven candidate targets. Both official query graphs
+remain required (19 batches each; 38 requests total). The new run is
+`outputs/poc_10k_event_seven_bounded_20261020`. Its final report/verification
+establish completion; the earlier incomplete response and stop stay immutable.
+The first bounded main-graph request timed out after 45 seconds, before any
+incoming result completed. The pipeline stopped without retry or fallback.
+All seven native records were reused; the earlier outgoing counts remain lower
+bounds. No source, Event root, rank policy, type/date filter, or inclusion rule
+changed. A batched native-record API approach was proposed for consultation:
+up to 50 explicit Daniel QIDs per request, about 95 requests before cache reuse,
+then direct statement checks locally. It has not been implemented or executed.
+
+### Previous result: seven native records checked; incoming response incomplete
 
 The user approved finishing the seven candidates under the current rules.
 All seven native records and their saved P31 ancestry were checked. Outgoing

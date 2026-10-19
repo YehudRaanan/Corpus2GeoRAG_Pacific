@@ -500,3 +500,123 @@ def test_incoming_event_links_validate_direct_statement_identity():
     row["subject"]["value"] = "http://www.wikidata.org/entity/Q3"
     with pytest.raises(SourceException, match="Unexpected incoming Event assertion"):
         incoming_links(data, "Q2")
+
+
+def test_bounded_query_preserves_direct_all_rank_scope_and_validates_populations():
+    query = events.incoming_candidates_query(["Q1", "Q2"], ["Q3"])
+    assert "VALUES ?subject { wd:Q1 wd:Q2 }" in query
+    assert "VALUES ?event { wd:Q3 }" in query
+    assert "?statement ?statementProperty ?event ; wikibase:rank ?rank" in query
+    assert all(
+        word not in query for word in ("wdt:", "LIMIT", "DeprecatedRank", "P279")
+    )
+    for subjects, targets in (
+        ([], ["Q3"]),
+        (["Q1"] * 251, ["Q3"]),
+        (["Q1"], ["Q2"] * 8),
+        (["Q1"], ["SYN_bad"]),
+    ):
+        with pytest.raises(ValueError):
+            events.incoming_candidates_query(subjects, targets)
+
+
+def test_bounded_link_check_covers_both_graphs_and_frozen_raw_non_date_population(
+    tmp_path, monkeypatch
+):
+    from GG_Data.mapping.build_relation_mapping_v2_1 import write_csv
+    from GG_Data.pipeline.event_candidate_check import check_links
+
+    mentions = tmp_path / "mentions.json.gz"
+    import gzip
+
+    with gzip.open(mentions, "wt", encoding="utf-8") as stream:
+        json.dump(
+            [
+                dict(entity_id=qid, raw=dict(entity_group=kind))
+                for qid, kind in (
+                    ("Q2", "ORG"),
+                    ("Q2", "ORG"),
+                    ("Q3", "MISC"),
+                    ("Q4", "DATE"),
+                    ("SYN_a", "ORG"),
+                )
+            ],
+            stream,
+        )
+    (tmp_path / "manifest.json").write_text(
+        json.dumps(dict(outputs={mentions.name: events.digest(mentions)}))
+    )
+    relations = tmp_path / "relations"
+    (relations / "mapping").mkdir(parents=True)
+    mapping = relations / "mapping/RELATION_MAPPING_TABLE_v2.1.2.csv"
+    write_csv(
+        mapping,
+        [
+            dict(
+                source="Wikidata",
+                source_predicate="wd:P17",
+                direction_to_level2="same",
+                formal_component_conflict="False",
+                level2_relation_id="wd:P17",
+                relation_map_version="test",
+            )
+        ],
+    )
+    (relations / "manifest.json").write_text(
+        json.dumps(dict(mapping_artifacts={str(mapping): events.digest(mapping)}))
+    )
+    output = tmp_path / "output"
+    output.mkdir()
+    (output / "Q1.json").write_text(
+        json.dumps(
+            dict(
+                id="Q1",
+                claims={
+                    "P17": [
+                        dict(
+                            id="Q1$AA",
+                            rank="normal",
+                            mainsnak=dict(
+                                property="P17",
+                                datatype="wikibase-item",
+                                datavalue=dict(
+                                    value={"entity-type": "item", "id": "Q2"}
+                                ),
+                            ),
+                        )
+                    ]
+                },
+            )
+        )
+    )
+    report = dict(records=[dict(qid="Q1", name="event")])
+    calls = []
+
+    def source(store, endpoint, params):
+        calls.append(endpoint)
+        assert "wd:Q2 wd:Q3" in params["query"] and "wd:Q4" not in params["query"]
+        return {
+            "results": {
+                "bindings": [
+                    {
+                        k: dict(value=v)
+                        for k, v in dict(
+                            subject="http://www.wikidata.org/entity/Q3",
+                            event="http://www.wikidata.org/entity/Q1",
+                            property="http://www.wikidata.org/entity/P17",
+                            statement="http://www.wikidata.org/entity/statement/Q3-BB",
+                            rank="http://wikiba.se/ontology#DeprecatedRank",
+                        ).items()
+                    }
+                ]
+            }
+        }, {"status": "OK"}
+
+    monkeypatch.setattr(events, "cached_json", source)
+    check_links(report, output, tmp_path / "cache", mentions, relations, lambda: None)
+    assert calls == [events.QUERY_URL, events.SCHOLARLY_QUERY_URL]
+    assert report["daniel_distinct_qids"] == 2
+    assert report["eligibility"][0]["distinct_daniel_count"] == 2
+    assert report["eligibility"][0]["qualifying_statements"] == 2
+    assert report["eligibility"][0]["passes_two_entity_gate"] is True
+    assert report["status"] == "SEVEN_CANDIDATE_ELIGIBILITY_CHECK_ONLY"

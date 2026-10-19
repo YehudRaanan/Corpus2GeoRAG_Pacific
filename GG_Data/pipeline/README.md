@@ -1,5 +1,26 @@
 # Daniel pipeline POC
 
+## Bounded incoming check stopped at query-service timeout
+
+The user subsequently agreed to the smaller-query design. The same seven
+native candidates are checked against all 4,712 distinct Daniel QIDs, with
+19 subject batches of at most 250 and both official query graphs: 38 requests.
+All source ranks, assertion exclusions, catalog mappings, and the two-distinct-
+Daniel-QID minimum stay unchanged. The incomplete old response stays immutable.
+The run `outputs/poc_10k_event_seven_bounded_20261020` stopped on its first main-
+graph request after a 45-second read timeout. Seven native records were reused;
+zero incoming requests completed. No automatic timeout retry or source change
+was made. The failed request metadata and exact bounded query are preserved;
+no response body was received. The previous outgoing lower bounds still apply.
+This is still seven-candidate eligibility, not full discovery or populated Events.
+
+The next proposal is to retrieve Daniel's current native Wikidata records by
+explicit QIDs through `wbgetentities`, at most 50 IDs per request (about 95
+requests before cache reuse), then inspect complete direct statements locally.
+This avoids query-service search and retains the same source, all ranks and
+endpoint/inclusion rules. The user was asked before implementing this method.
+Official limit: <https://www.wikidata.org/w/api.php?action=help&modules=wbgetentities>.
+
 ## Seven native candidates checked; incoming query stopped
 
 The user approved finishing all seven checks under the current rules, including

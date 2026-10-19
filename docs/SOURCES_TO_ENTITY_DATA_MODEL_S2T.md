@@ -195,6 +195,22 @@ for consultation; the user selected "Discuss first". No new request design
 has been executed. Full incoming
 statement materialization and Event/Relations population remain pending.
 
+**Bounded incoming retrieval subsequently approved:** use up to 250 frozen
+Daniel subject QIDs and all seven candidate targets per request, covering both
+official query graphs. For the 4,712-QID sample this is 19 batches per graph,
+38 requests total. Retrieve full p/ps statement identities and all ranks;
+do not add LIMIT, truthy-only filtering, hierarchy joins, or extra endpoints.
+Validate every returned subject/target against the requested batch. Deduplicate
+by native statement identity across the graphs and native outgoing evidence,
+never by endpoint/predicate alone. The older malformed response is retained.
+
+The first approved bounded request then reached a 45-second read timeout.
+`outputs/poc_10k_event_seven_bounded_20261020/report.json` records the stop;
+zero incoming requests completed, and no automatic timeout retry was allowed.
+The proposal for consultation is current native-record API acquisition for the
+fixed Daniel QIDs, followed by local direct-statement inspection. No API batch
+run, source substitution, additional filter, or Event population has occurred.
+
 The approved root is Wikidata's broad [event, Q140451665](https://www.wikidata.org/wiki/Q140451665), including all classes below it through native [P279 subclass-of](https://www.wikidata.org/wiki/Property:P279) statements. Identify event instances through [P31 instance-of](https://www.wikidata.org/wiki/Property:P31) and those subclass paths. Record root QID, snapshot, native class IDs and path evidence. Do not replace it with the narrower organized-event root, add a local event-type whitelist, or invent war/campaign/battle levels.
 
 For each discovered event QID, use its direct mapped Wikidata assertions to/from **D**. Include it only if at least two distinct Daniel QIDs qualify. Repeated mentions, several predicates for one entity, duplicate retrievals and generated reverse views do not increase this count. Classification hierarchy paths identify an event; they do not count as indirect participant paths. Do not count mere shared class ancestry or article co-mentions as an event/entity connection.

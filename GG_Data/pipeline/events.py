@@ -199,6 +199,36 @@ def current_record(store: Path, qid: str) -> tuple[dict, dict]:
     return record, evidence
 
 
+def incoming_candidates_query(subjects: list[str], candidates: list[str]) -> str:
+    """S2T 7: approved bounded retrieval after the incomplete World War II reply.
+
+    Restrict to the frozen Daniel population before downloading. Every direct
+    statement/rank between these subjects and candidate targets remains eligible;
+    this changes acquisition size, not Event inclusion or mapping.
+    """
+    if (
+        not 1 <= len(subjects) <= 250
+        or not 1 <= len(candidates) <= 7
+        or len(subjects) != len(set(subjects))
+        or len(candidates) != len(set(candidates))
+        or any(not re.fullmatch(r"Q[1-9]\d*", qid) for qid in subjects + candidates)
+    ):
+        raise ValueError("Expected up to 250 distinct Daniel QIDs and seven candidates")
+    source_values = " ".join(f"wd:{qid}" for qid in subjects)
+    target_values = " ".join(f"wd:{qid}" for qid in candidates)
+    return f"""PREFIX wd: <http://www.wikidata.org/entity/>
+PREFIX wikibase: <http://wikiba.se/ontology#>
+SELECT DISTINCT ?subject ?event ?statement ?property ?rank WHERE {{
+  VALUES ?subject {{ {source_values} }}
+  VALUES ?event {{ {target_values} }}
+  ?subject ?claim ?statement .
+  ?property wikibase:claim ?claim ;
+            wikibase:statementProperty ?statementProperty .
+  ?statement ?statementProperty ?event ; wikibase:rank ?rank .
+}}
+"""
+
+
 def item_links(record: dict) -> list[dict]:
     """S2T 7/8: native item-valued main statements only, preserving all ranks.
 

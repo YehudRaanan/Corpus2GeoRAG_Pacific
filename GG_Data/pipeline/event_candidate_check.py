@@ -165,25 +165,62 @@ def check_links(
         eligibility=[],
     )
     save()
-    for record_info in report["records"]:
-        qid = record_info["qid"]
-        links = events.item_links(read_json(output / f"{qid}.json"))
-        query = events.incoming_query(qid)
-        (output / f"{qid}_incoming.sparql").write_text(query, encoding="utf-8")
+    candidates = [r["qid"] for r in report["records"]]
+    by_candidate = {
+        qid: events.item_links(read_json(output / f"{qid}.json")) for qid in candidates
+    }
+    ordered = sorted(daniel, key=lambda q: int(q[1:]))
+    report["incoming_request_policy"] = dict(
+        subject_batch_size=250,
+        candidate_targets=candidates,
+        expected_requests=2 * ((len(ordered) + 249) // 250),
+        approval="User agreed after discussing incomplete HTTP-200 response",
+    )
+    save()
+    for offset in range(0, len(ordered), 250):
+        batch = ordered[offset : offset + 250]
+        query = events.incoming_candidates_query(batch, candidates)
+        (output / f"incoming_{offset//250:03d}.sparql").write_text(
+            query, encoding="utf-8"
+        )
         for endpoint in (events.QUERY_URL, events.SCHOLARLY_QUERY_URL):
             data, evidence = events.cached_json(
                 store, endpoint, {"query": query, "format": "json"}
             )
             report["queries"].append(
                 dict(
-                    qid=qid,
+                    batch_offset=offset,
                     endpoint=endpoint,
                     source=evidence,
                     rows=len(data["results"]["bindings"]),
                 )
             )
             save()
-            links.extend(incoming_links(data, qid))
+            groups = {qid: [] for qid in candidates}
+            for row in data["results"]["bindings"]:
+                uri = row["event"]["value"]
+                qid = uri.rsplit("/", 1)[-1]
+                if (
+                    uri != f"http://www.wikidata.org/entity/{qid}"
+                    or qid not in groups
+                    or row["subject"]["value"]
+                    not in {f"http://www.wikidata.org/entity/{s}" for s in batch}
+                ):
+                    raise SourceException("Incoming batch population differs", row=row)
+                groups[qid].append(row)
+            for qid, bindings in groups.items():
+                by_candidate[qid].extend(
+                    incoming_links({"results": {"bindings": bindings}}, qid)
+                )
+            LOG.info(
+                "Saved incoming request %s/%s: %s rows",
+                len(report["queries"]),
+                report["incoming_request_policy"]["expected_requests"],
+                len(data["results"]["bindings"]),
+            )
+    for record_info in report["records"]:
+        qid = record_info["qid"]
+        links = by_candidate[qid]
         retained, excluded = qualifying_links(links, qid, daniel, mapping)
         distinct = sorted({r["daniel_qid"] for r in retained}, key=lambda q: int(q[1:]))
         (output / f"{qid}_links.json").write_text(
