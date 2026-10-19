@@ -8,7 +8,7 @@ Export decisions confirmed on 19 October 2026 are defined in [the Agent graph S2
 
 Six business tables: **Entities, Mentions, Wiki Pages, Geography, Events, Relations**. Versioned mapping catalogs and immutable evidence files remain supporting artifacts. JSON fields below are structured, retained data, not discarded columns.
 
-Type decision, 19 October 2026: Entities keeps distinct `(entity_id, type)` combinations. Multiple types for the same Wikidata QID coexist; no canonical winner is selected. Relations remains at QID level, as confirmed by the user. Graph serialization must preserve these types without overwriting a node; its exact Agent representation is a downstream contract change, not permission to change QIDs.
+Type decision, 19 October 2026: distinct `(entity_id, type)` combinations are entirely separate entities. No canonical entity or winner is selected. Relations remains at QID level. Approved graph IDs are `QID::type`, with the original QID retained in `wikidata_id`; the Agent resolves QID endpoints to the separate typed entities without copying assertions. Synthetic IDs remain unchanged. Agent integration is pending.
 
 ## ERD
 
@@ -166,7 +166,7 @@ Exactly one row per original Daniel input row, in the original order. No row is 
 |---|---|---|
 | `mention_id` | string, PK | Existing stable output ID; do not regenerate it for this model. |
 | `input_row_number` | integer | Original row position. Unique within the pinned input dataset. |
-| `entity_id`, `entity_type` | strings, nullable composite FK | Assigned QID/SYN ID and saved resolved type. Both null for successfully normalized DATE values. Keep original Daniel type separately. |
+| `entity_id`, `entity_type` | strings, nullable composite FK | Assigned QID/SYN ID and saved resolved type. For synthetic rows with null saved resolved type, use original Daniel `entity_group` under the approved 19 October fallback; retain null in saved metadata. Both null for successfully normalized DATE values. |
 | `wiki_site`, `wiki_page_id` | string / integer, nullable composite FK | Source page identity. New input fields; resolved lookup is the current fallback. Both null or both present. |
 | `page_id_source` | string | INPUT or LOOKUP; avoid claiming lookup evidence came from Daniel. |
 | `page_resolution` | JSON | Requested source, normalized title, resolution status, redirects, lookup evidence, failure reason, and lookup version. |
@@ -230,14 +230,14 @@ At most one selected geometry per confirmed place entity. It is optional until s
 | `source_dataset`, `source_object_id`, `source_url` | string | Selected OHM/OSM or approved fallback object. |
 | `match_method`, `selection_policy_version` | string | Identity/selection method and policy, currently geo-object-selection-v0.5.0. |
 | `retrieved_at`, `review_status`, `decision_reason` | datetime / string / string | Retrieval and acceptance evidence. Geometry rows require accepted status. |
-| `geometry` | Shapely object; WKB binary in GeoParquet, required | Geocoding produces the selected Shapely object. WKB is its persisted representation, restored as Shapely when loaded. Final graph JSON contains a pointer to the stored object; an Agent function loads and uses it as Shapely. No inline GeoJSON export. Pointer and function interfaces remain to be agreed. Geometry type comes from the object. |
+| `geometry` | Shapely object; WKB binary in GeoParquet, required | Selected Shapely object, persisted as WKB in GeoParquet. Approved graph `geometry_ref={file,place_id,sha256}` identifies the artifact and place; the loader restores Shapely. No accepted object -> null pointer; broken reference -> explicit error. No inline GeoJSON. Geometry type comes from the object. |
 | `audit` | JSON or immutable artifact reference | Complete candidate/rejection/validation evidence and selection date, as described below. |
 
 Existing Parquet columns are preserved in a compatibility export: `place_id`, `name`, `place_type`, `selection_date`, `source_dataset`, `source_object_id`, `source_url`, `match_method`, `selection_policy_version`, `retrieved_at`, `review_status`, `decision_reason`, `geometry`. `selection_date` comes from `audit.selection_date`, not a validity interval on the entity-geometry link.
 
 Audit retention includes the entire `{policy_version, generated_at, input, summary, results}` document, with each result's `input_rank`, `qid`, `name`, `description`, `p31`, `place_type`, `related_dates`, `selection_date`, `exact_qid_count`, `source_attempts`, `whg`, selected candidates, validation and decisions. Keep nested source object dates/tags and WHG evidence without truncation. Unaccepted results remain in this audit artifact even though Geography has no selected row for them.
 
-CRS is table metadata. Graph export supplies a pointer, not transformed coordinates. The pointer schema, Agent loading function and final spatial-function CRS interface remain open. No `valid_from`, `valid_to`, or redundant `geometry_type` column is added. Wikidata coordinates/shapes remain identity context and cannot supply the selected geometry under the current source policy. Older OSM snapshot age is accepted; record the snapshot and assess historical suitability separately. Agent support for direct geometry on other node types does not authorize a new source policy.
+CRS is table metadata. Graph export supplies the approved file/place/checksum pointer, not transformed coordinates. `GG_Data/pipeline/graph_contract.py` implements `load_geometry(pointer, artifact_root)`; Agent integration and spatial CRS compatibility remain pending. No `valid_from`, `valid_to`, or redundant `geometry_type` column is added. Wikidata coordinates/shapes remain identity context, not selected geometry. Older OSM snapshot age is accepted; retain the snapshot and historical suitability evidence. No new non-place geometry policy is authorized.
 
 ## 5. Events
 

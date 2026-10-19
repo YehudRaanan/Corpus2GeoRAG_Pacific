@@ -69,7 +69,7 @@ Join original rows to saved matching rows by the existing `input_row_number` and
 | `raw` | Entire original row, including all nine original columns and any future supplied page fields, under their original names. |
 | `assigned_id` | Saved matching decision, including QID, existing `SYN_...`, or `DATE:...`. |
 | `entity_id` | QID/SYN assignment; null for successful `DATE_NORMALIZED`. An unresolved DATE retains its existing SYN placeholder. |
-| `entity_type` | Saved `type_metadata.resolved_type`, paired with `entity_id` as the Entities foreign key. Null when `entity_id` is null. No new type inference. |
+| `entity_type` | Saved `type_metadata.resolved_type`, paired with `entity_id` as the Entities foreign key. For synthetic rows whose saved resolved type is null, use Daniel's original `entity_group` (explicitly approved 19 October 2026); retain the original null in saved metadata. Null when `entity_id` is null. No new type inference. |
 | `matched_stage`, `matched_name`, `match_score` | Saved matching fields; `match_score` is output `score`. |
 | `type_metadata` | Complete saved `original_type`, `resolved_type`, `type_changed`, `type_source`, `wikidata_mapped_types`, `wikidata_direct_types` and extra fields. |
 | `attempts`, `unresolved_reason`, `date` | Full nested attempts/rejections/ties, exact reason, and structured date `{value, precision, qualifier, error}`. Retain explicit nulls and unknown fields. |
@@ -101,7 +101,7 @@ Retain retrieved Japanese pages even without Daniel mentions. A missing source p
 |---|---|
 | `entity_id` | Saved QID/SYN assignment or included event QID, unchanged. Entities is unique on `(entity_id, type)`, not QID alone. Candidate/hierarchy QIDs used only as reference evidence do not become entity rows. |
 | `name` | First available Wikidata English label, then Japanese label, then Daniel's original name. A synthetic row uses its own mention's original name. Record the chosen source/language and fallback evidence in `attributes`/raw provenance. |
-| `type` | Reuse saved matching `resolved_type`. Keep every distinct `(entity_id, type)` combination, including LOC and ORG for the same QID; do not select a canonical winner. Preserve original Daniel type and Wikidata override evidence. Included event role comes from Events membership, never Daniel MISC, and does not erase other types. |
+| `type` | Reuse saved matching `resolved_type`; for synthetic identities with null resolved type, retain Daniel's original `entity_group` under the approved fallback. Each distinct `(entity_id, type)` is a separate entity, including LOC and ORG for the same QID. No canonical entity/winner. Preserve original type and override evidence. Included event role comes from Events membership, never Daniel MISC. |
 | `labels`, `descriptions`, `sitelinks` | All available original language-keyed Wikidata values, including English/Japanese; do not translate or synthesize. |
 | `aliases`, `alias_details` | Supplied labels/aliases and original mention forms with their actual provider, record ID, kind and known language. No generated nicknames, romanization or combined names. |
 | `identity_status`, `review_status` | Distinguish saved QID assignment from synthetic unresolved identity and actual review evidence. An automatic match is not a manual verification. |
@@ -211,7 +211,11 @@ Different resolved types for one QID are not an unresolved conflict: keep distin
 
 The following cases must be brought back with exact IDs, values and counts before adding logic: differing Daniel fallback names when both Wikidata labels are missing; unlabeled events without Daniel names; unknown/ambiguous predicate mappings; incompatible multivalued event dates/classifications; source-page input/lookup conflicts; partial-date interpretation required for geometry selection; or a concrete specialist geometry source. Preserve raw evidence while the required decision is pending, and report the affected population explicitly.
 
-Downstream interfaces include preserving coexisting QID types in the Agent without node overwrites, the geometry pointer schema/storage binding/loading function/CRS behavior, and recognition of reverse views as shared evidence. Type coexistence and QID-level relations are settled; their exact Agent encoding must be aligned without changing QIDs or multiplying assertions. These interfaces do not authorize changes to source population or matching. Final graph sources remain omitted for now; full provenance stays in this model and its supporting artifacts.
+Downstream interfaces approved on 19 October 2026: separate graph entities use `QID::type` with original `wikidata_id`; relations keep QID endpoints, resolved to the separate typed entities without copying assertions. `geometry_ref` is null or `{file,place_id,sha256}` identifying GeoParquet/file/place/checksum; the loader returns Shapely and errors on broken references. Agent integration, spatial CRS compatibility and reverse-view evidence checks remain implementation work. These interfaces do not change source population or matching. Final graph sources remain omitted; provenance stays in this model and supporting artifacts.
+
+### First implementation checkpoint
+
+`GG_Data/pipeline/poc.py` implements the initial 10,000-row sample, input/matching hash checks, Mentions and resolved Wiki Pages copying. Complete request payloads are stored once in supporting `page_evidence.json.gz`; mention/page references include a record locator and the output manifest binds the file hash. No text extraction or rematching occurs. `graph_contract.py` implements the approved graph interface helpers; it is not yet integrated into the Agent. In-memory fixture checks have run, but the 10K Daniel POC and all POC data output remain on hold pending explicit user approval for output on D:. Later population stages and the final graph remain pending.
 
 ## 11. Contract references and precedence
 

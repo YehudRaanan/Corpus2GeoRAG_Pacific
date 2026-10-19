@@ -2,7 +2,7 @@
 
 Specification date: 19 October 2026. Status: agreed scope documented; identified compatibility and field-selection gaps remain explicit. This is a design specification, not an executed export or a production acceptance claim.
 
-Geometry decision corrected on 19 October 2026: graph JSON contains a pointer to the stored geometry object. The Agent uses a function to load and use it as a Shapely object. Inline GeoJSON export is superseded. The exact pointer field/schema and loader interface are not yet agreed; no replacement schema or function is invented here.
+Geometry interface approved on 19 October 2026: `geometry_ref` is null or `{file, place_id, sha256}`, identifying the GeoParquet file, place QID and file checksum. The Agent loads the selected object as Shapely. A broken reference is an explicit error. Inline GeoJSON export is superseded. Preserve stored CRS; spatial-function compatibility still requires verification.
 
 **Source:** [Entities, Mentions, Wiki Pages, Geography, Events, Relations](ENTITY_DATA_MODEL_ERD.md), with the existing versioned relation catalogs and release manifest.
 
@@ -23,7 +23,7 @@ The separate [sources-to-model population S2T](SOURCES_TO_ENTITY_DATA_MODEL_S2T.
 
 The [full pipeline review](DANIEL_TO_GRAPH_PIPELINE_REVIEW.md) collects all remaining decisions and checks across both S2T phases without changing the agreed export rules.
 
-Type decision, 19 October 2026: the source Entities key is `(entity_id, type)`. Different types for the same QID coexist; no canonical type is selected, and MISC is not an open classification question. Relations remains at QID level. The inspected Agent indexes nodes by `id` and has a scalar `type`; repeating a QID would overwrite a node. Its contract must preserve all types and QID-level links before export. No type-suffixed IDs, chosen winner, repeated-QID overwrite, or assertion expansion is approved here.
+Type interface approved on 19 October 2026: the source Entities key is `(entity_id, type)`. Different types are entirely separate entities. A QID row exports as `QID::type` using the exact stored type, with its original QID in `wikidata_id`. Synthetic IDs remain unchanged. Relations keeps QID endpoints. The Agent must resolve each endpoint to its separate typed entities without copying assertions or selecting a canonical entity. No merged node/types array is used. The current Agent still requires integration; approval of the interface is not proof that its queries support it.
 
 ## 1. Confirmed scope
 
@@ -42,14 +42,14 @@ The following names describe sets/views used for this export; they are not new s
 
 | Set / join | Definition | Result and validation |
 |---|---|---|
-| Daniel entity IDs | Distinct non-null `Mentions.entity_id` from original non-DATE mentions, joined to `Entities.entity_id`. Include existing QIDs and unresolved synthetic IDs. | One graph node per assigned ID, even if it has many mentions. No normalized DATE node is produced. |
+| Daniel entity IDs | Distinct non-null `Mentions.entity_id` from original non-DATE mentions, joined to Entities on `(entity_id, entity_type)`. Include existing QIDs and unresolved synthetic IDs. | One separate node per QID/type combination; existing per-mention synthetic IDs remain separate. No normalized DATE node is produced. |
 | Matched Daniel QIDs | Daniel entity IDs that are existing accepted QID assignments, rather than synthetic IDs. | The only IDs that can satisfy the event threshold. A match is an existing decision, not a new accuracy certification. |
 | Event candidates | `Events.event_id`, with its corresponding `Entities.entity_id`. Events is the authoritative Wikidata-only event population supplied to this S2T. | Do not classify new events by name, MISC or a new P31 hierarchy in this phase. |
 | Event connections | Direct retained Wikidata source assertions, after approved exclusions and relation mapping, with event QID at one endpoint and a matched Daniel QID at the other. Use original provider evidence in Relations, not the omitted target `sources`. | Both directions and any mapped predicate qualify. Candidate completeness depends on the supplied Wikidata event/assertion population; do not claim complete Wikidata coverage without acquisition evidence. |
 | Included events | Event candidates with at least two distinct connected matched Daniel QIDs. | Keep their original event QIDs. Record the distinct entity list and count in the supporting event-selection report. |
-| Included nodes | Union of Daniel entity QIDs/SYN IDs and included event QIDs, with every associated Entities type. | Preserve all distinct `(entity_id, type)` combinations in the agreed Agent representation. Exact multi-type encoding requires contract alignment; do not overwrite duplicate QIDs, choose a type or invent new IDs. Do not add unrelated cached candidate QIDs. |
+| Included nodes | Union of Daniel entity QIDs/SYN IDs and included event QIDs, with every associated Entities type. | Use separate `QID::type` nodes and original `wikidata_id`; preserve synthetic IDs. No canonical node, type winner or unrelated cached candidate QID. |
 | Included base relations | Retained Wikidata Relations rows between matched Daniel QIDs, or between an included event and a matched Daniel QID, with both item endpoints in included nodes. | Keep each `observation_id`. Arbitrary event/event assertions do not enter merely because both nodes exist. No transitive relation creation or synthetic endpoint claims. |
-| Node geography | Left join included nodes to `Geography.place_id = Entities.entity_id`. | At most one accepted stored geometry object. Export a pointer to that object, not its coordinates. Count missing geometries visibly; their JSON representation awaits the pointer contract. No geometry retrieval or selection is performed by the S2T. |
+| Node geography | Left join included nodes to `Geography.place_id = Entities.entity_id`. | At most one accepted stored geometry object per place QID. Export `geometry_ref={file,place_id,sha256}`, or null if absent. Count missing geometries visibly. No retrieval or geometry selection in this S2T. |
 | Wiki Pages / Mentions | Mentions links to Wiki Pages by `(wiki_site, wiki_page_id)` for source-model traceability. | No independent target collection or page/paragraph traversal. Missing page IDs remain visible in source quality results. |
 
 Event membership can be expressed without any ranking:
@@ -74,7 +74,7 @@ Successfully normalized DATE mentions stay in the source temporal data. Existing
 | `metadata.release_status` | Approved release manifest | Copy the actual release state. Structural validation alone cannot assign production status. |
 | `metadata.scope` | Approved release scope | State the actual Daniel entity population and included Wikidata event scope. No automatic Pacific-only claim. Retain the >=2 rule and input/reference versions in the supporting manifest; do not invent a new scope schema here. |
 | `relation_catalog` | Current versioned mapping and direction catalog | Use the Agent-compatible catalog structure and field rules below. |
-| `nodes` | Included nodes, Events extension and Geography join | Preserve original assigned IDs and all coexisting types. Final encoding requires the Agent multi-type contract. |
+| `nodes` | Included nodes, Events extension and Geography join | Separate `QID::type` nodes, original QID in `wikidata_id`, existing synthetic IDs unchanged. |
 | `edges` | Included base relations plus exact reverse delivery | One base view per assertion, plus its reverse for non-self assertions. |
 
 Release metadata is a supporting input artifact already defined in the model. No new business table is needed. Exact release values are supplied at release time, not guessed in this specification.
@@ -85,12 +85,13 @@ Paths refer to `nodes[]`.
 
 | Target field | Source column(s) | Rule |
 |---|---|---|
-| `id` | `Entities.entity_id` | Copy unchanged. An included event uses `Events.event_id`, equal to the Entities QID. Preserve existing synthetic IDs; never mint replacements here. |
+| `id` | `Entities.entity_id`, `Entities.type` | QID rows use `QID::type` with the exact stored type token, e.g. `Q188712::LOC` and `Q188712::ORG`. Included event rows follow the same rule; their native QID is unchanged in the source model and `wikidata_id`. Existing synthetic IDs are copied unchanged. |
+| `wikidata_id` | `Entities.entity_id` | Original QID for QID-backed nodes; null for synthetic identities. QID relation endpoints resolve through this field to all separate typed entities. |
 | `name` | `Entities.name` | Copy the existing display name. No new English/Japanese precedence rule or name synthesis. Missing/empty values are reported because the Agent requires a name. |
-| Type representation — Daniel entity | Every `Entities.type` for the QID/SYN ID; saved `Mentions.type_metadata` as evidence | Preserve every distinct saved type. Approved mechanical spellings remain PER -> person, ORG -> org, LOC -> location. Do not rerun inference, select a winner or reopen MISC classification. The exact multi-type Agent field/encoding requires contract alignment. |
+| `type` — Daniel entity | This separate row's `Entities.type`; saved `Mentions.type_metadata` as evidence | Scalar type per separate node. Approved mechanical spellings remain PER -> person, ORG -> org, LOC -> location. The ID suffix uses the stored type, before these display spellings. No inference, winner or merged types list; MISC is not reopened. |
 | Type representation — included Wikidata event | Membership in authoritative Events table | Preserve `event` alongside any other existing types for the same QID. This labels an existing event input; it is not a classifier over Daniel entities. |
 | `aliases` | `Entities.aliases` | Copy existing supplied strings. No generated nicknames, romanizations or combined names. Missing aliases may remain an empty array. |
-| Geometry pointer — exact JSON field/schema pending agreement | Accepted Geography row and its stored object | Export only a reference to the existing object. The Agent loads it through a function that returns a Shapely geometry. Do not export inline GeoJSON, WKB bytes or an in-memory address. Missing-object representation and exact reference fields need agreement before implementation. |
+| `geometry_ref` | Accepted Geography row and its stored object | `{file, place_id, sha256}`; file is the GeoParquet artifact, place_id the original place QID, sha256 the whole artifact checksum. No accepted geometry -> null. Broken reference, duplicate/missing place, invalid/empty geometry or missing CRS -> explicit error. No inline geometry. |
 | `attributes.start_date` | `Events.start_date` | Copy the supplied single target-compatible Wikidata value; preserve precision. Null/absent source -> omit. Multiple or incompatible values -> highlight before export, without selecting one. |
 | `attributes.end_date` | `Events.end_date` | Same rule as start_date. |
 | `attributes.point_date` | `Events.point_date` | Same rule as start_date; do not manufacture an interval or infer a point from another value. |
@@ -104,12 +105,12 @@ Omitted node fields: `sources`, `text`, `embedding`, `alias_details`, raw labels
 
 - The geocoding contract produces a validated Shapely geometry object. Geography persists it as WKB in GeoParquet and restores it as Shapely when loaded.
 - Graph JSON contains only a pointer to the stored object. The Agent resolves that pointer through a function and uses the returned Shapely object. The graph exporter does not convert the object to GeoJSON.
-- The pointer must identify the selected stored object reliably. Its JSON field name, value structure, storage location/version binding, and loader inputs/outputs are open interface details. Do not invent a URI convention, function name, or missing-object behavior without agreement.
+- The approved pointer is `geometry_ref={file,place_id,sha256}` or null. `load_geometry(pointer, artifact_root)` in `GG_Data/pipeline/graph_contract.py` checks the artifact hash and unique place record, then returns its Shapely object. Paths resolve within the release artifact directory. Broken references fail explicitly; no fallback geometry is created.
 - Preserve source CRS in Geography metadata. The Agent's object-loading/spatial-function CRS and antimeridian requirements need interface confirmation; the earlier inline-GeoJSON representation does not establish this new interface. Do not infer or transform coordinates in the exporter.
 - The loader must retrieve the accepted geometry for the referenced place. Do not replace a polygon with its centroid or copy a related place geometry onto an event.
 - Use only geometries accepted under the existing geography policy. No Wikidata coordinate/shape promotion, inferred event geometry or new non-place geometry policy.
 
-The previously inspected Agent README/loader describes inline GeoJSON. This differs from the newly confirmed pointer contract. Agent integration must be updated and verified before export acceptance; generic extra-field acceptance does not establish pointer resolution or Shapely use. This documentation change does not implement that integration.
+The previously inspected Agent README/loader describes inline GeoJSON. Agent integration must be updated and verified before export acceptance. The new interface helper is implemented and tested with in-memory fixtures; it is not yet wired into the Agent query engine. Generic extra-field acceptance does not establish pointer resolution or Shapely use.
 
 ## 5. Base edge S2T
 
@@ -120,8 +121,8 @@ Relations and graph edges remain at QID level. Do not join a source assertion to
 | Target field | Source column(s) | Rule |
 |---|---|---|
 | `id` | `Relations.observation_id` | Copy unchanged; require uniqueness for base assertions. |
-| `source` | `Relations.subject_entity_id` | Copy the already normalized endpoint. This is an endpoint ID, not provenance. |
-| `target` | `Relations.object_entity_id` | Copy the normalized item endpoint. Require both endpoints in nodes. Literal/somevalue/novalue records remain source data, not fake graph nodes. |
+| `source` | `Relations.subject_entity_id` | Copy the already normalized QID endpoint. Resolve through nodes' `wikidata_id`; do not rewrite it to a chosen typed node. This is an endpoint ID, not provenance. |
+| `target` | `Relations.object_entity_id` | Copy the normalized item QID endpoint; require at least one separate typed node with this `wikidata_id`. No assertion fan-out. Literal/somevalue/novalue records remain source data. |
 | `type` | `Relations.level2_relation` | Exact case-preserving mapped ID. No uppercasing or semantic replacement. |
 | `relation_family` | `Relations.level1_relation` and mapping catalog | Copy the applied version's agreed family. Highlight a row/catalog conflict rather than selecting an alternative family. |
 | `count` | `Relations.count` | One per current source assertion. Never use repeated Daniel mentions or the reverse copy to increase this count. |
@@ -182,12 +183,12 @@ An export report is a supporting release artifact, not a seventh business table.
 | A QID has multiple saved types | Preserve every distinct QID/type pair. Verify Agent loading and type filters retain all types, with QID-level edges. This is an integration check, not a canonical-type decision. MISC is not an open classification question. |
 | Wikidata event classification or dates cannot fit target scalar fields | Show the event QID, exact claims/values and target fields. No ranking, precision invention, label translation or conflict selection. |
 | Missing names, endpoints, mapping definitions or direction keys | Show exact records and counts. Do not invent required values or rely on Agent endpoint dropping. |
-| Missing geometry vs invalid geometry/unknown CRS | Report these separately. No missing or rejected object gets a fabricated pointer. Missing-object JSON behavior requires agreement; invalid supplied geometry/CRS must be highlighted before use. |
-| Geometry pointer and Agent loader | Agree the exact pointer schema, object location/version binding, function interface, CRS handling and missing-object behavior before implementation. Verify each pointer resolves to the selected valid Shapely object; no inline GeoJSON geometry enters graph JSON. |
+| Missing geometry vs invalid geometry/unknown CRS | Report separately. No accepted geometry -> null. Broken reference or invalid object/unknown CRS -> explicit error. No fabricated pointer or geometry. |
+| Geometry pointer and Agent loader | Verify the approved file/place/checksum pointer resolves to the selected valid Shapely object. Verify Agent integration and spatial CRS compatibility. No inline GeoJSON enters graph JSON. |
 | Event inclusion evidence | Report candidate events, included/excluded event counts and each event's distinct qualifying Daniel QIDs. Check count >=2 independently of mentions, duplicate assertions and reverse views. |
 | Reverse compatibility | Verify both-direction queries, exact inverse IDs, and one evidence identity/support count. Agent format acceptance alone is insufficient. |
 | Intentional omissions | Confirm no node/edge `sources`, node `text`, paragraph objects, mention/page nodes or extraction audit payloads entered the graph. Supporting provenance remains recoverable separately. |
-| Final graph integrity | Unique node/view IDs, every edge endpoint exists, correct event QIDs, full base-assertion accounting, exact mapping version and no unintended node expansion. |
+| Final graph integrity | Unique typed node/view IDs; each QID edge endpoint resolves via `wikidata_id`; correct native event QIDs, full base-assertion accounting, exact mapping version and no unintended population expansion. |
 
 Do not publish a final accepted graph while an unresolved required-field or semantic conflict is hidden. This specification records already identified gaps; it does not claim that those conditions have occurred in a newly executed export. No graph build or data-quality run was performed for this document.
 
@@ -196,7 +197,7 @@ Do not publish a final accepted graph while an unresolved required-field or sema
 - [Agent README input contract](https://github.com/EtzionR/Corpus2GeoRAG_Pacific/blob/main/Agent/README.md#input-schema-for-the-knowledge-graph-builder), verified on 19 October 2026; Git blob `d6929c7e276c564cb7ef1cf219cb1b9414ce0f26`. The target is the graph input, not the Agent's answer JSON or UI result schema.
 - [Agent loader and text search](https://github.com/EtzionR/Corpus2GeoRAG_Pacific/blob/main/Agent/geo_agent/graph_store.py), inspected Git blob `3d67affe310e0336c579adcf8dcc0362702100ba`. Remote Agent implementation is newer than the local checkout.
 - [Relation-map-v2.1.0 delivery rules](RELATION_MAPPING_V2_1_DATA_LAYER_REVERSE_2026-10-15.md), [mapping table](../GG_Data/mapping/RELATION_MAPPING_TABLE_v2.1.0.csv), [direction lookup](../GG_Data/mapping/RELATION_DIRECTION_LOOKUP_v2.1.0.csv) and [direction catalog](../GG_Data/mapping/RELATION_DIRECTION_CATALOG_v2.1.0.csv).
-- [Geography policy](GEOCODING_HIGH_LEVEL_PROCESS.md). Shapely is the geometry output; graph JSON holds an object pointer. The user's latest decision supersedes the inspected Agent inline-GeoJSON format for this interface. Source CRS metadata remains required; pointer loading and spatial-function compatibility remain open.
+- [Geography policy](GEOCODING_HIGH_LEVEL_PROCESS.md). Shapely is the geometry output; graph JSON holds the approved file/place/checksum pointer. This supersedes the inspected Agent inline-GeoJSON format. The loader helper has fixture checks; Agent integration and spatial CRS compatibility remain pending.
 - [Existing matching type decisions](../GG_Data/entity_resolution/bilingual_page_pilot.py): `categories` / `choose` and saved `type_metadata` remain unchanged. The later population decision preserves distinct QID/type pairs and QID-level relations; no canonical type selector or new event classifier is introduced.
 
-The source model is an agreed logical design with explicit implementation exceptions. Existing matching artifacts are saved outputs; the six physical tables and this exporter are not implemented by this S2T document. Remaining checks include Agent support for coexisting types with QID-level relations, source values that cannot fit the target, final release metadata, geometry pointer/function interface and recognition of explicit reverse views. New cases must be brought back to the user before adding logic.
+The source model is an agreed logical design with explicit implementation exceptions. Existing matching artifacts are saved outputs. `GG_Data/pipeline` implements the first population step and the approved graph interface helpers, with in-memory checks only. No new 10K POC data outputs or final graph exist from this implementation. Remaining work includes later model stages, Agent integration for separate typed entities/QID relations and geometry pointers, actual source/target compatibility, release metadata and reverse-view evidence checks. New cases must be brought back before adding logic.
