@@ -157,14 +157,29 @@ Missing query-graph records can be checked through the approved current native
 JSON source; preserve that source evidence rather than treating a missing graph
 record as proof of no Event ancestry.
 
-**Current data exception:** the complete five-QID source probe found Event
+**Rank rule approved, 20 October 2026:** Event classification excludes
+deprecated P31 and P279 statements. Filter a separate view of complete saved
+evidence and traverse it again, preserving alternative valid paths and explicit
+empty parent lists. This filter does not apply to Relations or raw acquisition.
+
+The complete five-QID source probe previously found Event
 ancestry for countries through a deprecated native P279 statement. Population
 stopped before writing Events. The user approved a diagnostic-only comparison
 without deprecated P31/P279: 117 positives became 7 across 165 candidates.
-Adopting this as the Event rule requires a separate decision. Relations and
-complete raw acquisition still retain all ranks. Evidence is saved under
+The user subsequently approved this as the Event classification rule. Relations
+and complete raw acquisition still retain all ranks. Evidence is saved under
 `GG_Data/pipeline/outputs/poc_10k_current_event_rate_limit_retry_20261020` and
 `GG_Data/pipeline/outputs/poc_10k_event_rank_test_20261020`.
+
+**Current exception after approval:** the native inspection stopped after four
+of seven candidate records were saved. Q16743064 is labelled "Call of Duty:
+Advanced Warfare" and described by Wikidata as a 2014 first-person shooter video
+game. Its supplied P31/P279 path to the approved root has normal ranks throughout,
+so the approved filter retains it. No ad hoc exclusion, replacement event root,
+or new type rule was introduced. See
+`outputs/poc_10k_event_seven_native_check_20261020/report.json` and
+`source_surprise.json`. Completing the seven-candidate link gate or narrowing
+scope awaits consultation. No Event row or Event relation has been written.
 
 The approved root is Wikidata's broad [event, Q140451665](https://www.wikidata.org/wiki/Q140451665), including all classes below it through native [P279 subclass-of](https://www.wikidata.org/wiki/Property:P279) statements. Identify event instances through [P31 instance-of](https://www.wikidata.org/wiki/Property:P31) and those subclass paths. Record root QID, snapshot, native class IDs and path evidence. Do not replace it with the narrower organized-event root, add a local event-type whitelist, or invent war/campaign/battle levels.
 

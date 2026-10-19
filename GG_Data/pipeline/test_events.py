@@ -371,3 +371,64 @@ def test_rank_diagnostic_removes_deprecated_paths_without_mutating_source():
     assert sum(row["all_ranks_match"] for row in rows) == 4
     assert {row["qid"] for row in rows if row["non_deprecated_match"]} == {"Q1", "Q6"}
     assert json.dumps(edges) == original
+
+
+def test_approved_classifier_rejects_unknown_source_rank():
+    edges = {
+        "P31": {"Q1": [{"parent": events.EVENT_ROOT, "rank": "unknown"}]},
+        "P279": {},
+    }
+    with pytest.raises(SourceException, match="Unknown Event hierarchy rank"):
+        events.classify_events(edges)
+
+
+@pytest.mark.parametrize("changed", [False, True])
+def test_candidate_check_keeps_source_and_stops_on_native_classification_change(
+    tmp_path, monkeypatch, changed
+):
+    from GG_Data.pipeline.event_candidate_check import run
+
+    source = tmp_path / "source"
+    source.mkdir()
+    edges = {
+        "P31": {
+            "Q1": [
+                {"parent": events.EVENT_ROOT, "rank": "normal", "statement": "Q1-guid"}
+            ]
+        },
+        "P279": {},
+    }
+    path = source / "hierarchy_edges.json"
+    path.write_text(json.dumps(edges))
+    before = path.read_bytes()
+    (source / "verification.json").write_text(
+        json.dumps({"outputs": {path.name: events.digest(path)}})
+    )
+    claim = {
+        "id": "Q1$guid",
+        "rank": "deprecated" if changed else "normal",
+        "mainsnak": {
+            "property": "P31",
+            "datatype": "wikibase-item",
+            "datavalue": {"value": {"entity-type": "item", "id": events.EVENT_ROOT}},
+        },
+    }
+    record = {
+        "id": "Q1",
+        "labels": {"en": {"value": "native name"}},
+        "claims": {"P31": [claim]},
+        "lastrevid": 1,
+    }
+    monkeypatch.setattr(events, "current_record", lambda *a: (record, {"status": "OK"}))
+    output = tmp_path / "output"
+    result = run(source, output, tmp_path / "cache")
+    assert path.read_bytes() == before
+    assert result["event_rows_written"] == 0
+    assert result["event_population_complete"] is False
+    assert not (output / "events.json").exists()
+    if changed:
+        assert result["status"] == "BLOCKED_CANDIDATE_CHECK"
+        assert len(result["records"]) == 0
+    else:
+        assert result["status"] == "NATIVE_CANDIDATES_CHECKED_LINK_GATE_PENDING"
+        assert result["records"][0]["name"] == "native name"

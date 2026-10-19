@@ -1,6 +1,28 @@
 # Daniel pipeline POC
 
-## Source probe complete; Event rank rule awaits approval
+## Event rank rule approved; seven-candidate check stopped
+
+The user approved ignoring deprecated P31/P279 statements for Event
+classification only. `events.classify_events` filters a separate view and
+re-traverses it, so alternative normal/preferred paths remain available. Raw
+acquisition and all Relations ranks are unchanged. Unknown hierarchy ranks
+remain explicit source exceptions.
+
+`outputs/poc_10k_event_seven_native_check_20261020` contains the new approved
+classifications and four complete cached native records: Q362 (World War II),
+Q1144693 (Minoan eruption), Q16743064 (Call of Duty: Advanced Warfare), and
+Q20981909 (Raid on Santorini). The video game reaches the approved Event root
+through normal-rank statements. Inspection therefore stopped for consultation;
+the fourth response had already been saved. No special exclusion was applied.
+Three native candidates and all seven two-distinct-Daniel-QID gates remain
+pending. No Event rows, Event relations, or graph were created.
+
+The user was asked whether to finish these checks under the approved rules or
+discuss narrower scope first. Historical probes/diagnostics remain immutable.
+Code/docs receive local checkpoints only; ignored outputs/cache are not backed
+up by Git.
+
+### Historical completed source probe and diagnostic
 
 The 429 retry succeeded on attempt 2. The complete five-QID source traversal
 saved 165 candidate P31 checks and 904 P279 class checks, with 120 successful
@@ -22,7 +44,7 @@ mutations. `outputs/poc_10k_event_rank_test_20261020/report.json` records
 including all three country examples. Remaining candidates: Q362, Q1144693,
 Q16743064, Q20981909, Q21830247, Q106336167, Q132129067.
 
-Applying this filter as a population rule awaits approval. The seven candidates
+The user subsequently approved this Event classification filter. The seven candidates
 still need the two-distinct-Daniel-QID gate and full native evidence. Relations
 retains all ranks. Original sources/classifications, matching, Entities and Wiki
 Pages remain unchanged. Zero Event rows or final graph were written.

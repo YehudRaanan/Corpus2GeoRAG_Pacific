@@ -1,6 +1,26 @@
 # Daniel input to final graph JSON review
 
-## Current result: source probe complete, Event rank decision pending
+## Current result: rank rule approved; seven-candidate check stopped
+
+On 20 October the user approved excluding deprecated P31/P279 statements for
+Event classification only. The shared classifier applies this rule without
+changing raw evidence, Relations ranks, or Daniel matching. Reclassification of
+the saved 165 candidates retains the same seven diagnostic positives.
+
+Native records were saved for World War II (Q362), Minoan eruption (Q1144693),
+Call of Duty: Advanced Warfare (Q16743064), and Raid on Santorini (Q20981909).
+The video game is an unexpected Event candidate: its native path uses normal
+ranks throughout. Acquisition stopped when this was inspected. The fourth
+record had already been saved by the running process. Three native candidate
+records and the two-distinct-Daniel-QID checks remain pending. Evidence:
+`outputs/poc_10k_event_seven_native_check_20261020`.
+
+The user was asked whether to complete the seven link checks under the approved
+rules or first discuss narrower scope. No extra type/date filter was applied.
+No Event rows, Event relations, or final graph were produced. Accepted upstream
+artifacts and the historical diagnostic outputs remain unchanged.
+
+### Historical source probe and rank diagnostic
 
 The approved 429 handling resumed successfully. The five-QID source probe
 finished with 165 candidate P31 checks, 904 P279 class checks, 120 successful
@@ -16,7 +36,7 @@ The user approved a diagnostic-only saved-data test excluding deprecated
 P31/P279 links. The result is 7 positive candidates instead of 117, removing
 110 flags including those three country examples. Evidence:
 `outputs/poc_10k_event_rank_test_20261020/report.json`.
-Adopting this as the Event rule awaits approval. Raw evidence and Relations
+The rank rule was subsequently approved, as recorded above. Raw evidence and Relations
 retain all ranks. No Event rows, new Daniel entities or final graph were created.
 The two-Daniel-QID inclusion gate and full 10K discovery remain pending.
 

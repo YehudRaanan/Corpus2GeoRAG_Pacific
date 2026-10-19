@@ -141,16 +141,7 @@ def resume(prior: Path, output: Path, store: Path) -> dict:
                 break
             for offset in range(0, len(pending), 10):
                 fetch(pending[offset : offset + 10], "P279")
-        classifications = []
-        for qid, rows in edges["P31"].items():
-            paths = []
-            for row in rows:
-                path = events.hierarchy_path(row["parent"], edges["P279"])
-                if path is not None:
-                    paths.append(dict(P31=row, P279=path))
-            classifications.append(
-                dict(qid=qid, event_hierarchy_match=bool(paths), paths=paths)
-            )
+        classifications = events.classify_events(edges)
         (output / "candidate_classifications.json").write_text(
             json.dumps(classifications, indent=2), encoding="utf-8"
         )

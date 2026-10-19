@@ -240,8 +240,8 @@ def class_edges_query(qids: list[str], prop: str) -> str:
     """Retrieve one hierarchy hop for at most ten reference QIDs (S2T 7).
 
     The approved split avoids server-side recursive joins. Local traversal uses
-    these direct P31/P279 statements, including deprecated rank, without a depth
-    cutoff or added classification rule. Empty parent lists remain explicit.
+    all direct P31/P279 statements without a depth cutoff. Acquisition retains
+    deprecated rank; Event classification alone excludes it. S2T 7.
     """
     if (
         not 1 <= len(qids) <= 10
@@ -286,3 +286,41 @@ def hierarchy_path(qid: str, parents: dict[str, list[dict]]) -> list[dict] | Non
             raise SourceException("Incomplete Event hierarchy", qid=current)
         pending.extend((edge["parent"], path + [edge]) for edge in parents[current])
     return None
+
+
+def classify_events(edges: dict) -> list[dict]:
+    """S2T 7: approved non-deprecated P31/P279 Event ancestry, 20 October.
+
+    Filter a separate view, preserving every fetched node and all raw evidence.
+    Traverse again so an alternative valid path can survive a deprecated path.
+    This establishes ancestry only, not the two-distinct-Daniel-QID gate.
+    Relations and their ranks do not use this filter.
+    """
+    deprecated = {"deprecated", "http://wikiba.se/ontology#DeprecatedRank"}
+    allowed = deprecated | {
+        "normal",
+        "preferred",
+        "http://wikiba.se/ontology#NormalRank",
+        "http://wikiba.se/ontology#PreferredRank",
+    }
+    for prop, nodes in edges.items():
+        for qid, rows in nodes.items():
+            if any(edge.get("rank") not in allowed for edge in rows):
+                raise SourceException(
+                    "Unknown Event hierarchy rank", qid=qid, prop=prop
+                )
+    parents = {
+        qid: [edge for edge in rows if edge["rank"] not in deprecated]
+        for qid, rows in edges["P279"].items()
+    }
+    result = []
+    for qid, rows in edges["P31"].items():
+        paths = []
+        for row in rows:
+            if row["rank"] in deprecated:
+                continue
+            path = hierarchy_path(row["parent"], parents)
+            if path is not None:
+                paths.append(dict(P31=row, P279=path))
+        result.append(dict(qid=qid, event_hierarchy_match=bool(paths), paths=paths))
+    return result
