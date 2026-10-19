@@ -70,3 +70,36 @@ def test_foreign_redirects_and_invalid_qids_are_not_accepted():
             "page_props",
             {"pp_propname": "wikibase_item", "pp_page": "1", "pp_value": "not-QID"},
         )
+
+
+@pytest.mark.parametrize("invalid_qid", [False, True])
+def test_binary_properties_are_skipped_but_qids_must_be_utf8(tmp_path, invalid_qid):
+    path = tmp_path / "page_props.sql.gz"
+    header = b"""CREATE TABLE `page_props` (
+  `pp_page` int NOT NULL,
+  `pp_propname` varbinary(60) NOT NULL,
+  `pp_value` blob NOT NULL,
+  `pp_sortkey` float DEFAULT NULL
+) ENGINE=InnoDB;
+INSERT INTO `page_props` VALUES
+"""
+    qid = b"Q\x8b" if invalid_qid else b"Q49112"
+    with gzip.open(path, "wb") as stream:
+        stream.write(
+            header
+            + b"(1,'templatedata','\x1f\x8b',NULL),\n"
+            + b"(2,'wikibase_item','"
+            + qid
+            + b"',NULL),\n"
+            + b"(3,'templatedata','\x1f\x8b',NULL);\n"
+            + b"-- Dump completed on 2026-10-01\n"
+        )
+    if invalid_qid:
+        with pytest.raises(UnicodeDecodeError):
+            convert(path, "page_props")
+        assert not list(tmp_path.glob("*.json"))
+    else:
+        parquet, count = convert(path, "page_props")
+        assert count == 1
+        assert pq.read_table(parquet).to_pylist() == [{"pageid": 2, "qid": "Q49112"}]
+        assert json.loads(parquet.with_suffix(".json").read_text())["scanned_rows"] == 3

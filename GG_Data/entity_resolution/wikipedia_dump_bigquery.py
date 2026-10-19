@@ -205,8 +205,21 @@ def convert(
     fields, batch, count, scanned = [], [], 0, 0
     in_create = in_insert = completed = False
     with pq.ParquetWriter(partial, SCHEMAS[table], compression="zstd") as writer:
-        with gzip.open(path, "rt", encoding="utf-8", errors="strict") as stream:
-            for line in stream:
+        with gzip.open(path, "rb") as stream:
+            for raw_line in stream:
+                # Unused page properties can contain compressed binary blobs.
+                # Filter them before decoding; retained QID rows remain strict UTF-8.
+                if (
+                    table == "page_props"
+                    and in_insert
+                    and raw_line.startswith(b"(")
+                    and not re.match(rb"^\(\d+,'wikibase_item',", raw_line)
+                ):
+                    scanned += 1
+                    if raw_line.rstrip().endswith(b");"):
+                        in_insert = False
+                    continue
+                line = raw_line.decode("utf-8", errors="strict")
                 if line.startswith(f"CREATE TABLE `{table}` ("):
                     in_create = True
                 elif in_create and line.startswith("  `"):
@@ -230,8 +243,6 @@ def convert(
                         if int(line[1 : line.index(",")]) not in selected:
                             continue
                     if table in {"page", "redirect"} and line.split(",", 2)[1] != "0":
-                        continue
-                    if table == "page_props" and ",'wikibase_item'," not in line:
                         continue
                     values = parse_tuple(line)
                     if len(values) != len(fields):

@@ -5,6 +5,30 @@ and its waiting continuation were verified active at this checkpoint. The
 continuation imports the dumps and then runs all **309,864 original Daniel
 mentions / 428 source titles** without another confirmation.
 
+## Recovery checkpoint — 19 October 2026
+
+All ten downloads completed and passed checksum verification. Three tables are
+imported: English pages (19,315,587 rows), English redirects (12,457,004 rows),
+and Japanese redirects (954,569 rows). Full matching has not started.
+
+The first continuation stopped while converting English `page_props`: an unused
+`templatedata` property contains a compressed binary value. The reader incorrectly
+decoded all properties as UTF-8 before filtering them. It now filters unused
+binary properties before decoding and still rejects invalid UTF-8 in retained
+QID records. No replacement characters or dropped QID records are permitted.
+Seventeen targeted tests and Ruff passed, including binary-property exclusion
+and strict QID decoding.
+The fix also passed a replay using the actual binary template record and an
+actual QID record from the failed dump.
+
+The run resumed as PID 29380. Completed downloads and the three imported tables
+are reused; matching rules and Daniel's input are unchanged. Current logs are
+`C:\Users\User\.cache\geoai_wikipedia_dump_20261018.resume_20261019.stdout.log`
+and `.resume_20261019.stderr.log`. The earlier error is retained in
+`failure_20261019_before_binary_property_fix.json` inside the dump cache.
+Use `process_id.txt` and current progress rather than the historical launch PIDs
+below. A later `failure.json` indicates a new stopped attempt.
+
 ## Data and evidence
 
 The official **20261001** English and Japanese `page`, `redirect`, `page_props`,
