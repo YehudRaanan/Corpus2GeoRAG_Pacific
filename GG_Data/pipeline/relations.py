@@ -26,6 +26,7 @@ ACCEPTED_ENTITIES_SHA = (
     "a4b967188c7247996309e53dba9851208d8d8e1e69c21d79f7afb1cc35c252e4"
 )
 BASE_MAPPING_SHA = "8ecdc0095d10ec1fc24dfb82510473faef42b896c126b76cb0daeb233b301821"
+TIME_POLICY = "relation-date-selection-v1.0.0"
 
 
 class SourceException(ValueError):
@@ -37,12 +38,22 @@ class SourceException(ValueError):
 
 
 def statement_time(statement: dict) -> dict:
-    """Reuse notebook Process 3/4: unique qualifier value, never date ranking.
+    """Population S2T 8: approved start/end selection, 20 October 2026.
 
-    Preserve every original snak in input_assertion. MULTIPLE/CONFLICT values
-    stop this strict POC for consultation, rather than silently selecting one.
+    Start: earliest supplied value from 1900; all earlier -> derived year 1900.
+    End: latest supplied value. Preserve original snaks, precision and calendars.
+    No point-date selection or reversed-interval repair has been approved.
     """
-    selected, raw, precisions = {}, {}, {}
+    selected, raw, precisions, decisions = {}, {}, {}, {}
+
+    def date_parts(value: str) -> tuple[int, ...]:
+        match = re.fullmatch(
+            r"([+-]\d+)-(\d{2})-(\d{2})T(\d{2}):(\d{2}):(\d{2})Z", value
+        )
+        if not match:
+            raise SourceException("Unsupported native date format", value=value)
+        return tuple(map(int, match.groups()))
+
     for name, prop in (("from", "P580"), ("to", "P582"), ("point", "P585")):
         snaks = statement.get("qualifiers", {}).get(prop, [])
         values, precision = [], []
@@ -55,13 +66,51 @@ def statement_time(statement: dict) -> dict:
         raw[name] = sorted(set(values))
         selected[name] = raw[name][0] if len(raw[name]) == 1 else ""
         precisions[name] = sorted(set(precision))
+        if raw[name] and name in {"from", "to"}:
+            calendars = {
+                s["datavalue"]["value"].get("calendarmodel")
+                for s in snaks
+                if isinstance(s.get("datavalue", {}).get("value"), dict)
+                and s["datavalue"]["value"].get("time")
+            }
+            if len(calendars) > 1:
+                raise SourceException(
+                    "Different calendars require consultation",
+                    property=prop,
+                    calendars=sorted(str(c) for c in calendars),
+                )
+            candidates = raw[name]
+            if name == "from":
+                candidates = [v for v in candidates if date_parts(v)[0] >= 1900]
+                selected[name] = (
+                    min(candidates, key=date_parts)
+                    if candidates
+                    else "+1900-00-00T00:00:00Z"
+                )
+            else:
+                selected[name] = max(candidates, key=date_parts)
+            decisions[name] = dict(
+                value=selected[name],
+                rule="EARLIEST_FROM_1900"
+                if name == "from" and candidates
+                else "YEAR_1900_FLOOR"
+                if name == "from"
+                else "LATEST_END",
+                derived=name == "from" and not candidates,
+                selected_precision=[9]
+                if name == "from" and not candidates
+                else sorted(
+                    {
+                        s["datavalue"]["value"]["precision"]
+                        for s in snaks
+                        if isinstance(s.get("datavalue", {}).get("value"), dict)
+                        and s["datavalue"]["value"].get("time") == selected[name]
+                        and s["datavalue"]["value"].get("precision") is not None
+                    }
+                ),
+            )
     start, end, point = (selected[k] for k in ("from", "to", "point"))
-
-    def date_parts(value: str) -> tuple[int, ...] | None:
-        match = re.match(r"^\+?(\d{4})-(\d{2})-(\d{2})", value)
-        return tuple(map(int, match.groups())) if match else None
-
-    first, last = date_parts(start), date_parts(end)
+    first, last = date_parts(start) if start else None, date_parts(end) if end else None
     status = (
         "CONFLICT"
         if first and last and first > last
@@ -80,6 +129,7 @@ def statement_time(statement: dict) -> dict:
         time_precision=precisions,
         raw_time_values=raw,
         time_status=status,
+        time_selection=dict(policy_version=TIME_POLICY, decisions=decisions),
     )
 
 
@@ -162,17 +212,44 @@ def scan(
                     excluded.append(dict(**case, reason=reason))
                     counts["excluded_statements"] += 1
                     continue
-                time = statement_time(statement)
-                if time["time_status"] in {"MULTIPLE", "CONFLICT"}:
+                try:
+                    time = statement_time(statement)
+                except SourceException as error:
+                    raise SourceException(
+                        error.case["reason"], **case, temporal_exception=error.case
+                    ) from error
+                # User approval, 20 October: a relation ending before 1900 is
+                # excluded before the selected-start floor can reverse it.
+                if time["time_to"] and int(
+                    re.match(r"[+-]\d+", time["time_to"])[0]
+                ) < 1900:
+                    excluded.append(dict(**case, **time, reason="ENDED_BEFORE_1900"))
+                    counts["excluded_ended_before_1900"] += 1
+                    continue
+                if (
+                    time["time_status"] == "CONFLICT"
+                    or len(time["raw_time_values"]["point"]) > 1
+                ):
                     raise SourceException(
                         "Temporal values require consultation",
                         **case,
                         temporal_evidence=time,
                     )
                 rule = mapping.get(("Wikidata", case["source_predicate"]))
+                # Existing catalog decisions can block formal translation while
+                # explicitly retaining the native ID. That is a settled mapping,
+                # not an unresolved source-key conflict (S2T 8: existing first).
                 if rule and (
                     rule["direction_to_level2"] not in {"same", "reverse"}
-                    or rule["formal_component_conflict"] != "False"
+                    or (
+                        rule["formal_component_conflict"] != "False"
+                        and not (
+                            rule["level2_relation_id"] == case["source_predicate"]
+                            and rule["direction_to_level2"] == "same"
+                            and rule["level2_decision"]
+                            == "RETAIN_SOURCE_ID_BLOCK_FORMAL_TRANSLATION"
+                        )
+                    )
                 ):
                     raise SourceException("Conflicting mapping", **case, mapping=rule)
                 retained.append(dict(**case, **time))
@@ -258,6 +335,21 @@ def run(entities_dir: Path, output: Path) -> None:
         )
         raise
     LOG.info("Source checks passed: %s", dict(counts))
+    (output / "source_check.json").write_text(
+        json.dumps(
+            dict(
+                status="DANIEL_RELATIONS_SOURCE_CHECK_ONLY",
+                counts=dict(counts),
+                time_policy_version=TIME_POLICY,
+                entities_manifest=dict(
+                    file=str(manifest_path), sha256=digest(manifest_path)
+                ),
+                mapping=dict(file=str(mapping_path), sha256=digest(mapping_path)),
+            ),
+            indent=2,
+        ),
+        encoding="utf-8",
+    )
     # Implementation resumes here after the strict real-data source gate.
 
 

@@ -271,7 +271,7 @@ Existing mappings take priority. If a native Wikidata source key is missing, ret
 | `level2_relation`, `level2_label` | string | Precise case-preserving predicate and label; Agent `type`, `relation_label`. |
 | `level1_relation`, `level1_assignment_status` | string | Family and assignment status; Agent `relation_family`. |
 | `selection_priority`, `selection_status`, `direction` | existing scalar types | Mapping decision and direction evidence. |
-| `time_from`, `time_to`, `time_point` | string, nullable | Agent `start_date`, `end_date`, `point_date`. Keep original precision. |
+| `time_from`, `time_to`, `time_point` | string, nullable | Agent `start_date`, `end_date`, `point_date`. Apply the approved Relations date policy in population S2T section 8; keep original values/precision and explicit selected precision in audit metadata. |
 | `time_precision`, `time_status` | string / JSON as supplied | Temporal precision and decision status, not a fabricated exact date. |
 | `selected_source`, `selected_source_predicate`, `source_record_id`, `source_graph`, `source_reference` | string / JSON as supplied | Original provenance fields. |
 | `source_support`, `evidence_references` | JSON / original serialized value | Preserve all supporting records, original endpoints, references and graphs. |

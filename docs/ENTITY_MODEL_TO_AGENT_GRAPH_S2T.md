@@ -126,7 +126,7 @@ Relations and graph edges remain at QID level. Do not join a source assertion to
 | `type` | `Relations.level2_relation` | Exact case-preserving mapped ID. No uppercasing or semantic replacement. |
 | `relation_family` | `Relations.level1_relation` and mapping catalog | Copy the applied version's agreed family. Native fallback mappings keep Level 1 unassigned (`UNRESOLVED`), with no inferred family. Highlight a row/catalog conflict rather than selecting an alternative family. |
 | `count` | `Relations.count` | One per current source assertion. Never use repeated Daniel mentions or the reverse copy to increase this count. |
-| `start_date` | `Relations.time_from` | Copy the existing target-compatible mapped value or null; no new temporal inference. |
+| `start_date` | `Relations.time_from` | Copy the value selected by population S2T section 8, or null. No additional date selection in the exporter; preserve partial precision. |
 | `end_date` | `Relations.time_to` | Same rule as start_date. |
 | `point_date` | `Relations.time_point` | Same rule as start_date. Preserve the point field; Agent date-filter behavior is its existing responsibility. |
 

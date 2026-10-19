@@ -29,7 +29,7 @@ P01 and P02 are closed business questions. P03-P08 are settled rules with implem
 | P02 | Closed: different types for one QID coexist. | Preserve distinct `(entity_id, type)` rows, including LOC and ORG. The saved audit found 692 such QIDs across 15,882 mentions. No canonical winner. Relations remains at QID level; no assertion expansion across type combinations. Event membership does not erase another type. | User annotations and QID-level Relations confirmation; ERD and both S2Ts. |
 | P03 | Settled naming rule; only actual missing fallback cases need review. | English -> Japanese -> Daniel. The saved matched population has 21 QIDs without English/Japanese labels, each with one distinct Daniel name; no fallback-name choice is needed there. An unlabeled added event or genuinely differing fallback names is conditional, not an observed current blocker. | Read-only matching CSV/metadata audit; population S2T Entities. |
 | P04 | Technical check: native event classification representation. | Use Wikidata values as supplied. No internal categories or levels. Show an actual target incompatibility before changing representation or requesting a new rule. | Population S2T Events; graph S2T attributes.kind. |
-| P05 | Technical check: native date representation. | Preserve supplied values, precision, calendars and claims. No ranking or invented dates. Show exact source/target incompatibilities if found. | ERD Events/Relations; graph S2T temporal fields. |
+| P05 | Technical check: native date representation. | Preserve supplied values, precision, calendars and claims. Event dates unchanged; Relations use the approved population S2T section 8 date policy. Show exact source/target incompatibilities if found. | ERD Events/Relations; graph S2T temporal fields. |
 | P06 | Settled native fallback rule; conflicting mappings remain conditional. | Use existing exact mappings first. An actual direct Wikidata statement with a missing native source key can add its original property/direction at Level 2, leaving Level 1 unassigned. Reuse any existing identical definition/reverse contract. No native statement means no relation. Ambiguous/conflicting mappings still stop. | User approval 20 October; population S2T section 8; current catalog v2.1.1. |
 | P07 | Conditional future page-ID conflict, not a current blocker. | Current lookup/null-on-failure rules stand. Show an actual future input/lookup conflict before choosing an override. | Population S2T Mentions. |
 | P08 | Conditional geometry-date exception. | Earliest supported related date inside 1941-12-07..1945-09-02, else 1941-12-07. Do not invent a day; show actual values only if the existing policy cannot handle them. | Population S2T Geography; selection-date policy. |
@@ -123,17 +123,9 @@ facts. Checks passed: 27 tests and 2 subtests; historical v2.1.0 CSVs rebuild
 byte-for-byte. The general rule is now settled; other data surprises still
 require consultation.
 
-The next source gate stopped on a temporal case before relation population:
-Joachim von Ribbentrop (`Q101886`) -> member of political party (`wd:P102`) ->
-Nazi Party (`Q7320`), statement `Q101886$6AB5CB76-32AE-412D-A84C-F3B49B990BB6`.
-Wikidata supplies two P580 start qualifiers: 1930 (year precision) and 1 May
-1932 (day precision). The user was asked about retaining the relation and both
-dates, leaving the selected start empty, and publishing a visible conflict
-report. Work remains stopped pending the answer. The exception is saved in
-`outputs/poc_10k_relations_20261020/first_exception.json`. No new query, parameter
-extension or completed Relations/Events/graph output was produced. The source
-gate and regression checks passed 25 tests; these tests do not resolve the
-real-data date conflict or complete the automatic fallback integration.
+The Ribbentrop multiple-start case is resolved by the approved Relations date policy: earliest start from 1900; all starts earlier -> derived year 1900; latest end; exclude relations whose latest end precedes 1900. Preserve all source values and precision. Events do not inherit this selection rule. The Prague 1804-1867 statement is therefore excluded. Historical stop artifacts remain evidence. An overstrict P53 formal-conflict guard was corrected to respect the catalog's existing native-retention decision; no mapping decision changed.
+
+The cache-only replay source gate passed: 4,712 QIDs, 213,277 raw claims, 10,501 in-scope statements, 34 pre-1900-end exclusions and 10,467 retained statements. Artifact: `outputs/poc_10k_relations_date_scope_check_20261020/source_check.json`. This check alone does not populate Relations or finish the automatic fallback, Events or graph.
 
 - [Sources to model S2T](SOURCES_TO_ENTITY_DATA_MODEL_S2T.md), especially Entities, Events, Relations, Geography and explicit exceptions.
 - [Six-table ERD](ENTITY_DATA_MODEL_ERD.md), including exact retained field inventories.

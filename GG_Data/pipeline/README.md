@@ -191,7 +191,7 @@ v2.1.0 CSVs. No new query was made. The broader relation check and population
 have not rerun; discovery and parameter updates must be connected to the
 Relations stage before this is an automatic pipeline fallback.
 
-### Next source check — stopped on multiple relation dates
+### Relations source gate — historical stops resolved
 
 `relations.py` implements the strict source gate for the next stage. It verifies
 the accepted Entities manifest, output hashes, original sample lineage and
@@ -216,12 +216,13 @@ their calendars/precision and provenance are retained in the exception and
 unchanged Entities. No relation table, new mapping parameters or completed
 Relations manifest was written, and no query was made.
 
-Consultation is pending on keeping the relation with all native dates, an empty
-selected start value and `MULTIPLE`, plus a visible conflict report. No temporal
-resolution or continuation is approved by the earlier native-property rule.
+The user approved `relation-date-selection-v1.0.0`: earliest supplied start from 1900; if all starts precede 1900, derived year 1900 (precision 9); latest end. Exclude a relation whose latest end precedes 1900, preserving the raw record and reason. Missing dates stay missing. Point-date conflicts and remaining reversed intervals still require consultation. This policy does not select Event dates. See population S2T section 8.
 
-The focused in-memory source-gate test checks unchanged input, one statement
-across typed rows, deprecated-rank retention and stopping on multiple dates.
+The next Prague source case (1804-1867) is resolved by the pre-1900 end exclusion. An overstrict P53 mapping guard was also corrected to honor the existing native-retention decision; no catalog rule changed. Historical exception directories remain unchanged.
+
+Replay `outputs/poc_10k_relations_date_scope_check_20261020` passed the source gate: 4,712 QIDs; 213,277 raw claims; 10,501 in-scope statements; 34 pre-1900-end exclusions; 10,467 retained statements (10,053 normal, 363 preferred, 51 deprecated). Retained time statuses: 9,349 NONE, 662 PARTIAL, 451 DIRECT, 5 MULTIPLE. Status is `DANIEL_RELATIONS_SOURCE_CHECK_ONLY`. No populated Relations, event acquisition or graph exists from this check. No new query occurred.
+
+Focused tests cover preserved raw statements, typed-row deduplication, all ranks, native-retention mapping guards, date selection/floor/precision, pre-1900-end exclusion (including negative years), latest-end and missing-end behavior.
 
 ## Approved graph interfaces
 

@@ -167,7 +167,7 @@ The first applied entry is `(Wikidata, wd:P2341)` in `ADDITIONAL_NATIVE_RELATION
 | `level2_relation`, `level2_label` | Catalog `level2_relation_id` and exact label, preserving case. |
 | `level1_relation`, `level1_assignment_status` | Exact versioned family and assignment status; no family inference. |
 | `selection_priority`, `selection_status`, `direction` | Existing catalog/producer outputs, with original values retained. Do not claim a review for newly retrieved statements. |
-| `time_from`, `time_to`, `time_point`, `time_precision`, `time_status` | Existing producer and catalog `time_*_input`, `time_join_rule`, `time_conflict_policy` behavior. Preserve original qualifier P580/P582/P585 evidence and all conflicts. No new temporal ranking. |
+| `time_from`, `time_to`, `time_point`, `time_precision`, `time_status` | Use the approved Relations date policy below. Preserve all original P580/P582/P585 qualifiers, precision and calendars; record the selected values and policy separately from raw evidence. |
 | `selected_source`, `selected_source_predicate` | Wikidata provider key and original Wikidata property, not a generated reverse predicate. |
 | `source_record_id`, `source_graph`, `source_reference` | Native statement ID and actual saved source graph/reference. Absent optional provenance stays absent; do not invent a source graph. |
 | `source_support`, `evidence_references`, `sources` | All supporting statements, original endpoints, references, qualifiers, ranks and retrieval evidence. Only verified page citations are used; no paragraph citations are generated. |
@@ -176,6 +176,15 @@ The first applied entry is `(Wikidata, wd:P2341)` in `ADDITIONAL_NATIVE_RELATION
 | `input_assertion` | Preserve all 26 legacy assertion columns and complete raw statement/envelope, or an immutable artifact reference. New-source fields absent from a legacy producer remain explicit, not fabricated. |
 | `count` | 1 per retained base source assertion, not mention frequency. |
 | `attributes`, `embedding` | Supplied qualifier/side/extra payload and existing embedding only. Do not invent participant roles or compute embeddings. |
+
+### Relations date policy — approved 20 October 2026
+
+`relation-date-selection-v1.0.0` applies to Relations only; it does not select Event dates.
+
+- Start: select the earliest supplied P580 value whose year is at least 1900. If all supplied start values precede 1900, use the derived year 1900 with year precision (9); do not invent a month or day. A missing start stays missing.
+- End: select the latest supplied P582 value. If that latest end year is before 1900, exclude the statement, preserving its full record and reason `ENDED_BEFORE_1900` in the audit output. A missing end does not trigger exclusion. Apply the 14 exact assertion exclusions first.
+- Keep every original value, snak, precision and calendar. Store selection rules, selected precision and the derived flag in `attributes.time_selection`; preserve the same evidence in `input_assertion`. Multiple supplied start/end values remain visible as `MULTIPLE`, even when this approved rule selects a value.
+- Different calendars within a date field, multiple distinct point dates, unsupported date formats, or a remaining start-after-end interval require consultation. No silent repair or point-date selection is approved.
 
 One source assertion produces one base row. Bidirectional graph navigation is supplied by the separate exporter using the [direction lookup](../GG_Data/mapping/RELATION_DIRECTION_LOOKUP_v2.1.1.csv) and `source_edge_id`. A generated reverse view is not a second independent assertion. Two genuinely separate Wikidata statements in opposite directions retain their own identities. No fixed assumption of exactly two assertions per entity pair is valid.
 
@@ -256,16 +265,9 @@ P2341 is now present in `relation-map-v2.1.1`; the original exception report
 remains historical evidence. The broader sample relation scan/population has
 not been rerun. See the pipeline README for verification and current limits.
 
-A subsequent strict source check on 20 October stopped at the first temporal
-exception: Joachim von Ribbentrop (`Q101886`) -> member of political party
-(`wd:P102`) -> Nazi Party (`Q7320`), statement
-`Q101886$6AB5CB76-32AE-412D-A84C-F3B49B990BB6`. Its P580 qualifiers supply
-1930 (year precision) and 1 May 1932 (day precision). The native-property rule
-does not resolve dates. The user was asked whether to retain the relation and
-both dates, leave the selected start empty, mark `MULTIPLE` and publish a visible
-date-conflict report. The run remains stopped pending that decision; no completed
-Relations table or new mapping extension was produced. Exact saved evidence is
-`GG_Data/pipeline/outputs/poc_10k_relations_20261020/first_exception.json`.
+The earlier Ribbentrop multiple-start stop is resolved by the approved date policy: select 1930 and retain both original qualifiers. The later Prague statement `Q1085$0697567f-4a18-22cf-3118-7f7622ccf2f5` has source dates 1804-08-11 through 1867-03-29; it is excluded under the approved pre-1900 end rule. Historical exception files remain unchanged.
+
+The cache-only source gate then passed at `GG_Data/pipeline/outputs/poc_10k_relations_date_scope_check_20261020/source_check.json`: 4,712 source QIDs, 213,277 claims, 10,501 in-scope statements, 34 pre-1900-end exclusions and 10,467 retained statements. This is `DANIEL_RELATIONS_SOURCE_CHECK_ONLY`, not a populated Relations table or completed POC. No query or entity change occurred.
 
 ## 11. Contract references and precedence
 
