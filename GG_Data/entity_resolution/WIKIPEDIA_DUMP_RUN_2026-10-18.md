@@ -1,9 +1,33 @@
 # English/Japanese Wikipedia dump import — 18 October 2026
 
-Launch status: **RUNNING**, not a completed matching result. The bulk downloader
-and its waiting continuation were verified active at this checkpoint. The
-continuation imports the dumps and then runs all **309,864 original Daniel
-mentions / 428 source titles** without another confirmation.
+Current checkpoint: restarted on **19 October 2026, 08:59 Israel time** after
+fixing a source-page selection error. All six metadata tables are imported.
+Matching has not started; no final matching results exist. The continuation
+prepares page links and then runs all **309,864 original Daniel mentions /
+428 source titles** without another confirmation.
+
+## Source-page selection fix — 19 October 2026
+
+The source query returned **424 resolved source titles and four missing titles**.
+These correspond to **413 distinct Wikidata QIDs**; multiple titles can resolve
+to the same page. The coordinator then stopped with `No source-page identities
+found`: the BigQuery CLI returned `is_redirect` as the string `"false"`, which
+Python incorrectly treated as true. All three page-selection sites now share
+an explicit check accepting native false or CLI `"false"`, while excluding
+redirects and missing pages. Daniel's input and matching rules are unchanged.
+
+The fix passed **23 targeted tests**, Ruff, and replay of the actual 428-row
+cached query, retaining all 424 canonical-page records. Imported row counts:
+English pages 19,315,587; redirects 12,457,004; page properties 10,355,689;
+Japanese pages 2,477,261; redirects 954,569; page properties 1,877,400.
+
+The restarted coordinator is PID **29560**. Logs use the dump cache path plus
+`.boolean_fix_20261019.stdout.log` / `.boolean_fix_20261019.stderr.log`.
+The stopped attempt is preserved in
+`failure_20261019_before_cli_boolean_fix.json`. Saved downloads, converted files,
+imports and query results are reused. Check live progress before treating this
+launch checkpoint as current. Code backup: **Local checkpoint only**; large
+local cache files remain unprotected off-device.
 
 ## Parallel preparation — 19 October 2026
 

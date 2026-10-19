@@ -10,12 +10,27 @@ import pytest
 
 from wikipedia_dump_bigquery import (
     DATE,
+    canonical_page,
     convert,
     parse_tuple,
     prepare_links,
     prepare_metadata,
     project_row,
 )
+
+
+@pytest.mark.parametrize(
+    "pageid,is_redirect,expected",
+    [
+        ("16554732", "false", True),
+        ("16554732", False, True),
+        ("1", "true", False),
+        ("1", True, False),
+        (None, None, False),
+    ],
+)
+def test_canonical_page_handles_cli_boolean_strings(pageid, is_redirect, expected):
+    assert canonical_page({"pageid": pageid, "is_redirect": is_redirect}) is expected
 
 
 def test_mysql_strings_preserve_japanese_quotes_symbols_and_null():

@@ -5,9 +5,11 @@
 [Current run, evidence scope, saved data, and resume command](WIKIPEDIA_DUMP_RUN_2026-10-18.md).
 The English/Japanese import is running. Automatic continuation imports the
 needed page links into BigQuery and then matches all 309,864 Daniel mentions.
-All ten dumps are downloaded and verified; four tables are imported. On
-19 October, a binary-property decoding error was fixed. English and Japanese
-preparation now uses two processes, with one coordinator for BigQuery jobs.
+All ten dumps are downloaded and verified; six metadata tables are imported.
+On 19 October, a CLI boolean handling error was fixed after the query found
+424 of 428 source titles. The run restarted at 08:59 Israel time. Matching has
+not started. English and Japanese preparation uses two processes, with one
+coordinator for BigQuery jobs. The fix passed 23 targeted tests and Ruff.
 Completed data is reused. The 80% rule and matching pass order stay fixed.
 Final full-data counts are not available yet.
 

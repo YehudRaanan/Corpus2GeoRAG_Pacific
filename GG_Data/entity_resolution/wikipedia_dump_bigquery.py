@@ -415,6 +415,11 @@ def resolve_sql(api: BigQueryData, lang: str, seed: str) -> str:
  QUALIFY ROW_NUMBER() OVER(PARTITION BY seed_id ORDER BY depth DESC)=1"""
 
 
+def canonical_page(row: dict) -> bool:
+    """bq JSON renders BOOL fields as strings; never test their truthiness."""
+    return row["pageid"] is not None and row["is_redirect"] in (False, "false")
+
+
 def build_pages(
     api: BigQueryData, cache: Path, output: Path, workers: ProcessPoolExecutor
 ) -> dict:
@@ -445,7 +450,7 @@ def build_pages(
     if {r["source"] for r in english} != set(sources) or len(english) != len(sources):
         raise ValueError("Source page query did not preserve all source titles")
     save(cache / "english_sources.json.gz", english)
-    qids = sorted({r["qid"] for r in english if r.get("qid") and not r["is_redirect"]})
+    qids = sorted({r["qid"] for r in english if r.get("qid") and canonical_page(r)})
     if not qids:
         raise ValueError("No source-page identities found")
     ids = api.upload_values(qids, "id")
@@ -456,7 +461,7 @@ def build_pages(
         raise ValueError("Multiple Japanese canonical pages for a source QID")
     save(cache / "japanese_sources.json.gz", japanese)
     language_rows = {
-        "en": [r for r in english if r["pageid"] is not None and not r["is_redirect"]],
+        "en": [r for r in english if canonical_page(r)],
         "ja": japanese,
     }
     link_rows = {}
@@ -523,7 +528,7 @@ def build_pages(
     statuses = defaultdict(int)
     for r in english:
         articles = []
-        if r["pageid"] is not None and not r["is_redirect"]:
+        if canonical_page(r):
             a = article("en", r)
             ja = japanese_by_qid.get(r.get("qid"))
             a["japanese_counterpart"] = ja["title"].replace("_", " ") if ja else None
