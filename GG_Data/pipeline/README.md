@@ -187,9 +187,7 @@ count. Reusing the historical EventKG definition does not import EventKG facts.
 accepts these supplemental parameters. Native additions require a new version;
 use a separate output destination when rebuilding for review. All 27 tests and
 2 subtests passed, including byte-for-byte reproduction of the historical
-v2.1.0 CSVs. No new query was made. The broader relation check and population
-have not rerun; discovery and parameter updates must be connected to the
-Relations stage before this is an automatic pipeline fallback.
+v2.1.0 CSVs. No new query was made. The later source gate and population replay are recorded below; v2.1.1 remains immutable.
 
 ### Relations source gate — historical stops resolved
 
@@ -197,8 +195,7 @@ Relations stage before this is an automatic pipeline fallback.
 the accepted Entities manifest, output hashes, original sample lineage and
 pinned mapping; it reads full records from Entities without retrieval. Typed
 rows are checked once per QID. The 14 guarded exclusions precede mapping;
-deprecated ranks remain eligible. The source gate does not yet populate
-Relations or connect automatic native-parameter additions.
+deprecated ranks remain eligible. After a successful gate, the stage discovers missing native source keys, writes cumulative parameters, builds a separate pinned catalog and populates Daniel/Daniel Relations.
 
 The first real-data check stopped in
 `outputs/poc_10k_relations_20261020/first_exception.json`:
@@ -223,6 +220,30 @@ The next Prague source case (1804-1867) is resolved by the pre-1900 end exclusio
 Replay `outputs/poc_10k_relations_date_scope_check_20261020` passed the source gate: 4,712 QIDs; 213,277 raw claims; 10,501 in-scope statements; 34 pre-1900-end exclusions; 10,467 retained statements (10,053 normal, 363 preferred, 51 deprecated). Retained time statuses: 9,349 NONE, 662 PARTIAL, 451 DIRECT, 5 MULTIPLE. Status is `DANIEL_RELATIONS_SOURCE_CHECK_ONLY`. No populated Relations, event acquisition or graph exists from this check. No new query occurred.
 
 Focused tests cover preserved raw statements, typed-row deduplication, all ranks, native-retention mapping guards, date selection/floor/precision, pre-1900-end exclusion (including negative years), latest-end and missing-end behavior.
+
+### Daniel/Daniel Relations checkpoint — 20 October 2026
+
+`outputs/poc_10k_relations_labels_preserved_20261020/manifest.json` passed with status `DANIEL_RELATIONS_ONLY`:
+
+- 10,467 unique base statements between the 4,712 matched Daniel QIDs. All endpoints are existing QIDs; typed rows do not multiply statements. No mention, matching decision or entity ID changes.
+- 34 statements excluded because their latest supplied end precedes 1900. Complete statements and reasons are saved in `excluded_relations.json.gz`. None of this sample's statements matched the 14 exact guarded exclusions.
+- 86 visible temporal-decision audit rows: multiple supplied values and/or derived year-1900 starts. Every raw snak, precision/calendar and selected-value rule is retained.
+- Nine missing native source keys: P500, P1533, P3113, P4777, P4913, P5236, P6271, P6875 and P10888. Native IDs/direction are kept; Level 1 remains unassigned. Cumulative parameters and mapping/direction CSVs are in the run's `mapping` directory.
+- POC catalog `relation-map-v2.1.2`: 1,605 source mapping rows, 1,073 Level 2 definitions, 2,113 direction lookup rows. Historical v2.1.0/v2.1.1 catalogs stay unchanged. This POC version belongs to the pinned sample, not a full-data catalog promotion.
+- Nine property records were retrieved and cached from the agreed BigQuery snapshot after explicit approval. Job `geoai_adeea068751b49a1e703140f545621af` billed 1,112,539,136 bytes. Cache: `outputs/wikidata_property_cache`; SQL, dry run, job statistics and full native records persist there. The successful replay reused this query cache.
+- The builder initially proposed replacing P8138's reverse label with the newly available P10888 name. The user chose to keep the existing label. Catalog extensions now reuse the prior labels and label-source definitions. The native name remains evidence. Historical blocked outputs have no completed Relations manifest and are not releases.
+
+`relations.json.gz` keeps all ERD Relations fields, 26 legacy compatibility fields, raw native statements, complete applied mapping and retrieval evidence. Unavailable legacy review/classification values are null; no truth review is claimed. Source graph is absent rather than invented from a provider URL. Stable assertion IDs reuse notebook Process 3 with original endpoints, statement ID and raw dates. Forward/reverse copies belong to graph export; this table has one base assertion row.
+
+Verification includes original sample/Entities hashes, scope accounting, raw preservation, unique IDs, single direction normalization, reverse involution and JSON readback. Focused fixture checks cover native-label preservation and assertion identity across mapping changes. A final replay with current code/contracts uses a new directory `outputs/poc_10k_relations_final_20261020`; its manifest, when present, is the current checkpoint. No manifest means no completed replay.
+
+This is the Daniel/Daniel part only. Event discovery, included-event links in Relations, Geography, final graph and Agent integration remain pending. No new entity is extracted, split, combined or inferred. Code/docs have local checkpoints only; ignored data and caches are not protected by Git.
+
+Reproduce with the existing saved sources and property cache:
+
+```powershell
+C:\Users\User\anaconda3\python.exe -B -m GG_Data.pipeline.relations --output D:\Projects\GeoAI\GG_Data\pipeline\outputs\new_relations_replay
+```
 
 ## Approved graph interfaces
 

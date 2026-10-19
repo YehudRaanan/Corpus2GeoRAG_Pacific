@@ -121,7 +121,9 @@ def full_records(qids: set[str], archive: Path) -> tuple[dict, dict]:
     return records, provenance
 
 
-def acquire_missing(qids: set[str], store: Path, reference: dict) -> tuple[dict, dict]:
+def acquire_missing(
+    qids: set[str], store: Path, reference: dict, *, prefix: str = "Q"
+) -> tuple[dict, dict]:
     """S2T 1/T02: full `item`, not the legacy P31/P279-only projection.
 
     Reuse the existing CLI, query cache, pinned snapshot, dry run, billing cap
@@ -130,8 +132,12 @@ def acquire_missing(qids: set[str], store: Path, reference: dict) -> tuple[dict,
     """
     if not qids:
         return {}, {}
-    if any(not re.fullmatch(r"Q[1-9]\d*", q) for q in qids):
-        raise ValueError("Invalid requested QID")
+    # Relations S2T 8, 20 October approval: P records are catalog metadata,
+    # never new Entities. Reuse the same pinned query/cache path for them.
+    if prefix not in {"Q", "P"} or any(
+        not re.fullmatch(prefix + r"[1-9]\d*", q) for q in qids
+    ):
+        raise ValueError("Invalid requested Wikidata identifier")
     store.mkdir(parents=True, exist_ok=True)
     snapshot_path = store / "table_snapshot.json"
     snapshot = reference["table_snapshot"]
@@ -147,7 +153,7 @@ def acquire_missing(qids: set[str], store: Path, reference: dict) -> tuple[dict,
         sys.path.pop(0)
     client = BigQueryData(reference["project"], store)
     numbers = ",".join(q[1:] for q in sorted(qids))
-    sql = f"SELECT id, item FROM {client.source} WHERE numeric_id IN ({numbers}) AND STARTS_WITH(id,'Q')"
+    sql = f"SELECT id, item FROM {client.source} WHERE numeric_id IN ({numbers}) AND STARTS_WITH(id,'{prefix}')"
     rows = client.query(sql)  # No retry, alternative provider or snapshot fallback.
     query_file = store / (digest_sql(sql) + ".json.gz")
     source = dict(

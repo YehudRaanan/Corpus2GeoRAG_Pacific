@@ -4,6 +4,7 @@ from pathlib import Path
 
 import pytest
 
+from GG_Data.mapping import build_relation_mapping_v2_1 as catalog
 from GG_Data.mapping.build_relation_mapping_v2_1 import OUT, build, read_csv
 
 RULES = OUT / "ADDITIONAL_NATIVE_RELATION_RULES_2026-10-20.csv"
@@ -67,3 +68,50 @@ def test_native_additions_cannot_overwrite_historical_version(tmp_path: Path):
     with pytest.raises(ValueError, match="new mapping version"):
         build(native_rules=RULES, output=tmp_path)
     assert not list(tmp_path.iterdir())
+
+
+def test_new_native_name_keeps_approved_existing_reverse_label(tmp_path, monkeypatch):
+    # Reproduce the real P10888 display-name issue with fixture statements.
+    # No source assertions are retrieved or written by this unit test.
+    original_read = catalog.read_csv
+
+    def fixture_read(path):
+        rows = original_read(path)
+        if path == RULES:
+            extra = {**rows[0]}
+            extra.update(
+                rule_id="fixture-P10888",
+                source_predicate="wd:P10888",
+                normalized_relation_id="wd:P10888",
+                level2_relation_id="wd:P10888",
+                relation_label="contains the statistical territorial entity",
+                statement_ids="Q1$fixture",
+            )
+            rows.append(extra)
+        return rows
+
+    monkeypatch.setattr(catalog, "read_csv", fixture_read)
+    build(
+        native_rules=RULES,
+        version="relation-map-v2.1.2",
+        output=tmp_path,
+        prior_directions=OUT / "RELATION_DIRECTION_CATALOG_v2.1.1.csv",
+    )
+    rows = original_read(tmp_path / "RELATION_MAPPING_TABLE_v2.1.2.csv")
+    p8138 = next(
+        r
+        for r in rows
+        if r["source"] == "Wikidata" and r["source_predicate"] == "wd:P8138"
+    )
+    assert (
+        p8138["reverse_relation_label"]
+        == "inverse of located in the statistical territorial entity"
+    )
+    assert p8138["reverse_label_source"] == "DERIVED_FROM_LEVEL2_LABEL"
+    p10888 = next(
+        r
+        for r in rows
+        if r["source"] == "Wikidata" and r["source_predicate"] == "wd:P10888"
+    )
+    assert p10888["level2_relation_label"] == p8138["reverse_relation_label"]
+    assert p10888["relation_label"] == "contains the statistical territorial entity"

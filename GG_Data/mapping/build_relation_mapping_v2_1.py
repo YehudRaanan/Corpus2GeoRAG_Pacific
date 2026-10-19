@@ -64,7 +64,11 @@ def local_label(relation_id: str) -> str:
 
 
 def build(
-    *, native_rules: Path | None = None, version: str = VERSION, output: Path = OUT
+    *,
+    native_rules: Path | None = None,
+    version: str = VERSION,
+    output: Path = OUT,
+    prior_directions: Path | None = None,
 ) -> dict[str, Any]:
     """Keep v2.1.0 reproducible; native extensions receive a separate version."""
     if not re.fullmatch(r"relation-map-v\d+\.\d+\.\d+", version):
@@ -72,6 +76,19 @@ def build(
     if native_rules is not None and version == VERSION:
         raise ValueError("Native additions require a new mapping version")
     suffix = version.removeprefix("relation-map-v")
+    # Population S2T 8: extensions reuse settled reverse definitions. On
+    # 20 October the user explicitly kept P8138's older reverse display label
+    # after retrieving P10888 metadata. Raw new labels remain in evidence.
+    prior_rows = read_csv(prior_directions) if prior_directions else []
+    prior_by_relation = {r["level2_relation_id"]: r for r in prior_rows}
+    pinned_labels = {}
+    for row in prior_rows:
+        for key, label in (
+            (row["level2_relation_id"], row["level2_relation_label"]),
+            (row["reverse_relation_id"], row["reverse_relation_label"]),
+        ):
+            assert key not in pinned_labels or pinned_labels[key] == label
+            pinned_labels[key] = label
     mapping = read_csv(MAPPING_V2)
     if native_rules is not None:
         from GG_Data.mapping.rebuild_relation_mapping import append_coverage_rules
@@ -125,6 +142,8 @@ def build(
             )
 
     def known_label(relation_id: str) -> str:
+        if relation_id in pinned_labels:
+            return pinned_labels[relation_id]
         if labels[relation_id]:
             return sorted(
                 labels[relation_id],
@@ -204,6 +223,13 @@ def build(
                 if contract
                 else "ADD_SYNTHETIC_REVERSE"
             )
+
+        if relation_id in prior_by_relation:
+            prior = prior_by_relation[relation_id]
+            assert reverse_id == prior["reverse_relation_id"]
+            assert resolution_type == prior["reverse_resolution_type"]
+            reverse_label = prior["reverse_relation_label"]
+            label_source = prior["reverse_label_source"]
 
         formal_sources = split_values(contract["formal_sources"]) if contract else []
         formal_bases = split_values(contract["formal_bases"]) if contract else []
@@ -460,6 +486,8 @@ def build(
     }
     if native_rules is not None:
         summary["inputs"]["native_rules"] = str(native_rules.relative_to(ROOT))
+    if prior_directions is not None:
+        summary["inputs"]["prior_directions"] = str(prior_directions.relative_to(ROOT))
     summary_name = (
         "RELATION_MAPPING_V2_1_SUMMARY.json"
         if version == VERSION

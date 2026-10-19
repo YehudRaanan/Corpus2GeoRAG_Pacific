@@ -157,6 +157,10 @@ The added entry must retain native statement IDs, original endpoints, property l
 
 Persist native additions in a supplemental parameters CSV and build a new versioned mapping/direction catalog. Pin its checksums in the run lineage; do not modify a historical version in place. Missing native source keys covered by this rule no longer require individual business approval. Unknown non-native semantics, conflicts and incompatible source values still require consultation.
 
+**Existing reverse labels, confirmed 20 October:** preserve the prior direction catalog's exact labels and label source when adding native keys. In particular, keep P8138's reverse label `inverse of located in the statistical territorial entity`; store the retrieved P10888 name `contains the statistical territorial entity` in property evidence/parameters without replacing that display definition. Keep relation IDs, endpoint direction and family decisions unchanged. A new source key may extend source-policy provenance/counts, not alter settled semantics.
+
+**Property-name cache, approved after the P10888 stop on 20 October:** reuse existing native property labels first. Missing names may be retrieved as property (`P...`) records from the agreed Wikidata BigQuery table at the pinned snapshot, using the existing GCP CLI, dry run, billing cap and query cache. Preserve raw records, query/job evidence and checksums under `GG_Data/pipeline/outputs/wikidata_property_cache`. These records populate mapping parameters only; they do not create Entities. A missing/invalid property record or absent English label remains an explicit stop, with no provider or label substitution.
+
 The first applied entry is `(Wikidata, wd:P2341)` in `ADDITIONAL_NATIVE_RELATION_RULES_2026-10-20.csv`, with evidence in `NATIVE_RELATION_EVIDENCE_2026-10-20.json`. P2341 already had an EventKG source entry and a Level 2/reverse definition; only the native Wikidata source key was missing. `relation-map-v2.1.1` adds that key and reuses the existing definition. This imports no EventKG assertion. The recorded count of one is the observed first-exception statement, not a full-sample P2341 total.
 
 | Target column(s) | Source and population rule |
@@ -262,12 +266,13 @@ a full-population missing-mapping count. Raw evidence and catalog checksums are
 in `GG_Data/pipeline/outputs/poc_10k_relations_preflight/first_exception.json`.
 The user subsequently approved the general native-preservation rule above.
 P2341 is now present in `relation-map-v2.1.1`; the original exception report
-remains historical evidence. The broader sample relation scan/population has
-not been rerun. See the pipeline README for verification and current limits.
+remains historical evidence. The later source scan passed; population replay status is recorded below and in the pipeline README.
 
 The earlier Ribbentrop multiple-start stop is resolved by the approved date policy: select 1930 and retain both original qualifiers. The later Prague statement `Q1085$0697567f-4a18-22cf-3118-7f7622ccf2f5` has source dates 1804-08-11 through 1867-03-29; it is excluded under the approved pre-1900 end rule. Historical exception files remain unchanged.
 
 The cache-only source gate then passed at `GG_Data/pipeline/outputs/poc_10k_relations_date_scope_check_20261020/source_check.json`: 4,712 source QIDs, 213,277 claims, 10,501 in-scope statements, 34 pre-1900-end exclusions and 10,467 retained statements. This is `DANIEL_RELATIONS_SOURCE_CHECK_ONLY`, not a populated Relations table or completed POC. No query or entity change occurred.
+
+The subsequent Daniel/Daniel Relations population passed in `outputs/poc_10k_relations_labels_preserved_20261020`: 10,467 base statements, 34 pre-1900-end exclusions and 86 visible temporal-decision audit rows. Nine native keys were added to cumulative parameters and POC catalog v2.1.2 (1,605 source mapping rows, 1,073 Level 2 definitions, 2,113 direction lookup rows), without changing existing mapping semantics or approved labels. The nine missing property records are cached from the pinned BigQuery source; no entities were created. Status is `DANIEL_RELATIONS_ONLY`; event links, Events, Geography, graph and Agent integration remain pending. The final replay directory `outputs/poc_10k_relations_final_20261020` is accepted only if its manifest and checks pass. See the pipeline README for full lineage, historical stops and limits.
 
 ## 11. Contract references and precedence
 
