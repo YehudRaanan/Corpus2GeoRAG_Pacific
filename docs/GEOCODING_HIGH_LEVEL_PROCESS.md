@@ -14,6 +14,7 @@ the place-selection rules remain unchanged.
 - The Wikidata QID is the canonical place identifier.
 - Each place entity has one selected geographic object.
 - The geographic object is stored as a Shapely geometry.
+- Geocoding returns a validated Shapely object, not GeoJSON. GeoParquet persists it as WKB and restores it as Shapely when loaded. Conversion to GeoJSON belongs only to the final graph JSON exporter, as defined in the [S2T](ENTITY_MODEL_TO_AGENT_GRAPH_S2T.md#geometry-serialization).
 - The geometry can represent a point, line, polygon, or multipolygon. Its type comes from the Shapely object, so a separate geometry-type field is not required.
 - The place-to-geometry connection has no `valid_from` or `valid_to` fields.
 - Wikidata coordinates and shapes are not used as geometry sources.

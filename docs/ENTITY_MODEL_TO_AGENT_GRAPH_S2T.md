@@ -94,6 +94,7 @@ Omitted node fields: `sources`, `text`, `embedding`, `alias_details`, raw labels
 
 ### Geometry serialization
 
+- The geocoding contract produces a validated Shapely geometry object, not GeoJSON. Geography persists that object as WKB in GeoParquet and restores it as Shapely when loaded. GeoJSON is only the final graph JSON representation, created by the S2T exporter after geocoding; it does not replace the geocoding output contract.
 - The current Agent contract explicitly requires WGS84 GeoJSON in `[longitude, latitude]` order. Read the stored source CRS from Geography table metadata; no CRS guessing.
 - If conversion is needed, transform coordinates explicitly. Unknown CRS or an unsupported/invalid geometry is a highlighted export exception, not a guessed point.
 - Follow the target contract's antimeridian requirement for shapes crossing 180 degrees. Validate this during export; this specification does not choose a new clipping/repair algorithm.

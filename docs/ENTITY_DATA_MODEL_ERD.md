@@ -222,7 +222,7 @@ At most one selected geometry per confirmed place entity. It is optional until s
 | `source_dataset`, `source_object_id`, `source_url` | string | Selected OHM/OSM or approved fallback object. |
 | `match_method`, `selection_policy_version` | string | Identity/selection method and policy, currently geo-object-selection-v0.5.0. |
 | `retrieved_at`, `review_status`, `decision_reason` | datetime / string / string | Retrieval and acceptance evidence. Geometry rows require accepted status. |
-| `geometry` | WKB binary, required | Restores the selected Shapely object; Agent export converts to GeoJSON. Geometry type comes from the object. |
+| `geometry` | Shapely object; WKB binary in GeoParquet, required | Geocoding produces the selected Shapely object. WKB is its persisted representation, restored as Shapely when loaded. Only the final graph JSON exporter serializes it to GeoJSON. Geometry type comes from the object. |
 | `audit` | JSON or immutable artifact reference | Complete candidate/rejection/validation evidence and selection date, as described below. |
 
 Existing Parquet columns are preserved in a compatibility export: `place_id`, `name`, `place_type`, `selection_date`, `source_dataset`, `source_object_id`, `source_url`, `match_method`, `selection_policy_version`, `retrieved_at`, `review_status`, `decision_reason`, `geometry`. `selection_date` comes from `audit.selection_date`, not a validity interval on the entity-geometry link.
