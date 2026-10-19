@@ -233,6 +233,17 @@ This changes acquisition size only, without reducing full native evidence.
 Continuation: `outputs/poc_10k_event_seven_native_split_20261020`; its final
 report/verification determines coverage and seven-candidate eligibility.
 
+**Current source exception after the size split:** acquisition stopped at
+3,406/4,712 checked Daniel QIDs because the current API marks Q31545924 missing.
+The rejected 50-ID batch is fully cached. The frozen sample's Clark Airbase LOC
+mention on Manila retains this QID; the accepted saved native record is revision
+1021165461, modified 2019-09-27T16:40:15Z. No rematching, replacement ID, partial
+batch acceptance or Event population is authorized by this exception. Current
+missing does not establish a reason. The proposed saved-native-record fallback
+for missing current IDs requires consultation; stop if no saved record exists.
+Coverage and final eligibility remain pending. See `source_exception.json` and
+`verification.json` in the split run; accepted upstream hashes are unchanged.
+
 The approved root is Wikidata's broad [event, Q140451665](https://www.wikidata.org/wiki/Q140451665), including all classes below it through native [P279 subclass-of](https://www.wikidata.org/wiki/Property:P279) statements. Identify event instances through [P31 instance-of](https://www.wikidata.org/wiki/Property:P31) and those subclass paths. Record root QID, snapshot, native class IDs and path evidence. Do not replace it with the narrower organized-event root, add a local event-type whitelist, or invent war/campaign/battle levels.
 
 For each discovered event QID, use its direct mapped Wikidata assertions to/from **D**. Include it only if at least two distinct Daniel QIDs qualify. Repeated mentions, several predicates for one entity, duplicate retrievals and generated reverse views do not increase this count. Classification hierarchy paths identify an event; they do not count as indirect participant paths. Do not count mere shared class ancestry or article co-mentions as an event/entity connection.

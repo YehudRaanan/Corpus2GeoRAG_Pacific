@@ -1,6 +1,29 @@
 # Daniel pipeline POC
 
-## Current: approved response-size splitting
+## Current: missing native QID stopped the split run
+
+`outputs/poc_10k_event_seven_native_split_20261020` stopped after checking
+**3,406 of 4,712 Daniel QIDs**. The next complete 50-ID response contains
+`{"id":"Q31545924","missing":""}`. The current-record validation stopped the
+batch; its other records were not accepted. This is not a size or retry error.
+No further acquisition, rematching, ID replacement or Event population followed.
+
+The frozen sample has one mention for this QID: **Clark Airbase**, LOC, source
+page **Manila**. The accepted Entities output contains its older native Wikidata
+record, revision **1021165461**, modified **2019-09-27T16:40:15Z**. Its supplied
+claim properties are P2044, P1566, P625, P17, P31 and P131. The current API's
+missing marker alone does not establish deletion, redirect or extraction error.
+
+All seven candidate records remain checked, but complete incoming coverage and
+final seven-candidate eligibility remain pending. Zero Event rows were written.
+All accepted upstream output hashes remain unchanged. See `source_exception.json`
+and `verification.json`. Proposed for discussion: when the current API marks an
+ID missing, use its already accepted saved native record, retain its original
+QID and record the old revision/date and missing-current evidence explicitly;
+stop if no saved native record exists. This fallback is not yet approved or
+implemented. No replacement entity is proposed.
+
+## Approved response-size splitting
 
 The user approved splitting only oversized responses into halves until each
 batch returns every requested record. `events._current_batch` recognizes the
@@ -12,7 +35,9 @@ All source, rank, mapping and inclusion rules remain unchanged.
 
 Run: `outputs/poc_10k_event_seven_native_split_20261020`. Its `report.json`
 records progress; completion requires `verification.json` and the final status.
-Tests: 47 passed before launch. This checks the same seven candidates against
+The split recovered the first 50-ID batch through two complete 25-ID responses;
+the following batches were complete until the missing-QID stop above. Tests:
+47 passed before launch. This checks the same seven candidates against
 4,712 distinct Daniel QIDs, not full candidate discovery or Event population.
 
 ## Previous: approved native batch stopped at response-size limit

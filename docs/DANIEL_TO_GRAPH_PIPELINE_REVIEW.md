@@ -1,6 +1,23 @@
 # Daniel input to final graph JSON review
 
-## Current: approved split of oversized native responses
+## Current: missing current Wikidata record
+
+The approved size split worked. The continuation stopped after **3,406/4,712**
+Daniel native records when the next 50-ID response marked **Q31545924** missing.
+The batch was rejected; no further requests, automatic ID change, rematching or
+Event population followed. All seven candidate records remain checked; the
+complete link gate is still pending, and zero Event rows were written.
+
+The frozen input has one **Clark Airbase** LOC mention from **Manila** assigned
+this QID. The accepted saved native record exists: revision **1021165461**,
+modified **2019-09-27T16:40:15Z**. Current missing does not establish the cause.
+All accepted upstream hashes passed. Evidence:
+`outputs/poc_10k_event_seven_native_split_20261020/source_exception.json` and
+`verification.json`. Proposed for consultation only: reuse saved native records
+for current missing IDs with explicit older-revision/missing-current lineage;
+preserve QIDs and stop if the saved record is absent. No fallback is approved.
+
+## Approved split of oversized native responses
 
 The user approved halving only explicitly oversized API batches, repeating until
 the complete requested population is present. A one-ID truncation still stops.
