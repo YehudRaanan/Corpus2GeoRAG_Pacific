@@ -9,9 +9,11 @@ from __future__ import annotations
 import hashlib
 import json
 import logging
+import math
 import re
 import time
 from datetime import datetime, timezone
+from email.utils import parsedate_to_datetime
 from pathlib import Path
 
 import requests
@@ -23,16 +25,18 @@ EVENT_ROOT = "Q140451665"
 QUERY_URL = "https://query.wikidata.org/sparql"
 SCHOLARLY_QUERY_URL = "https://query-scholarly.wikidata.org/sparql"
 LOG = logging.getLogger(__name__)
-RETRY_HTTP_STATUS = {502, 503, 504}
+RETRY_HTTP_STATUS = {429, 502, 503, 504}
 RETRY_WAITS = (10, 30)
+REQUEST_PAUSE = 5
 USER_AGENT = "GeoAI-Daniel-POC/1.0 (https://github.com/EtzionR/Corpus2GeoRAG_Pacific)"
 
 
 def cached_json(store: Path, url: str, params: dict) -> tuple[dict, dict]:
     """Cache untouched responses and request evidence before interpreting them.
 
-    S2T 7: the user approved three total attempts for HTTP 502/503/504,
-    with waits of 10/30 seconds. Existing failures count toward that budget.
+    S2T 7: the user approved three total attempts for HTTP 429/502/503/504,
+    with waits of at least 10/30 seconds and the server's Retry-After deadline.
+    Existing failures count toward that budget. New requests pause five seconds.
     Attempts are append-only; all other failures still stop immediately.
     """
     request = {"url": url, "params": params}
@@ -66,15 +70,46 @@ def cached_json(store: Path, url: str, params: dict) -> tuple[dict, dict]:
             )
         # A saved later attempt is reused without another wait or network call.
         if not (root / f"attempt_{attempt + 1}").exists():
-            delay = RETRY_WAITS[attempt - 1]
+            delay = retry_delay(evidence, attempt, datetime.now(timezone.utc))
             LOG.warning(
                 "Wikidata HTTP %s; attempt %s/3 after %ss",
                 evidence["http_status"],
                 attempt + 1,
                 delay,
             )
-            time.sleep(delay)
+            # Short sleeps keep a long server cooldown observable/interruption-safe.
+            while delay > 0:
+                step = min(delay, 30)
+                time.sleep(step)
+                delay -= step
+                if delay:
+                    LOG.info("Wikidata retry wait: %ss remaining", delay)
     raise AssertionError("Unreachable retry state")
+
+
+def retry_delay(evidence: dict, attempt: int, now: datetime) -> int:
+    """Respect both forms of Retry-After, including when resuming saved failures.
+
+    A seconds value runs from response receipt; an HTTP date is an absolute
+    deadline. Reopening the cache never resets the attempt count or cooldown.
+    """
+    headers = {k.lower(): v for k, v in evidence.get("response_headers", {}).items()}
+    value = headers.get("retry-after")
+    delay = RETRY_WAITS[attempt - 1]
+    if value is None:
+        return delay
+    try:
+        if re.fullmatch(r"\d+", value.strip()):
+            received = datetime.fromisoformat(evidence["retrieved_at"])
+            remaining = int(value) - (now - received).total_seconds()
+        else:
+            deadline = parsedate_to_datetime(value)
+            remaining = (deadline - now).total_seconds()
+        return max(delay, math.ceil(remaining))
+    except (KeyError, TypeError, ValueError, OverflowError) as exc:
+        raise SourceException(
+            "Invalid Retry-After evidence", cache=evidence["cache"]
+        ) from exc
 
 
 def _request_json(directory: Path, request: dict) -> tuple[dict, dict]:
@@ -90,7 +125,7 @@ def _request_json(directory: Path, request: dict) -> tuple[dict, dict]:
     }
     try:
         # Single polite reader; this helper makes exactly one request.
-        time.sleep(1.1)
+        time.sleep(REQUEST_PAUSE)
         response = requests.get(
             request["url"],
             params=request["params"],

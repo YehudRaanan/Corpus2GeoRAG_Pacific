@@ -134,11 +134,14 @@ atomic snapshot. Query-service discovery must report its graph coverage; full
 native records supply ranks, qualifiers and references. A small probe or one
 incomplete endpoint cannot establish a complete Event population. Failed
 requests stop without source substitution. The user approved three total
-attempts for HTTP 502/503/504 only, with waits of 10 and 30 seconds. Preserve
-every attempt; previous failures count toward the same persistent budget.
-Reuse checksum-verified successful responses. All other failures, including
-timeouts, 429, API errors, malformed data and data/business exceptions, still
-stop immediately. No automatic source or business-rule change is allowed.
+attempts per exact request for HTTP 429/502/503/504, shared across failure
+codes and restarts. Wait at least 10/30 seconds before attempts 2/3 and respect
+a later `Retry-After` deadline (seconds from response receipt or absolute HTTP
+date). New network requests pause five seconds. Preserve every attempt;
+previous failures count toward the same persistent budget. Reuse checksum-
+verified successful responses without network calls. Exhausted retries and all
+other failures, including timeouts, other HTTP/API errors, malformed data and
+data/business exceptions, still stop with visible evidence. No automatic source or business-rule change is allowed.
 
 After the five-QID combined-query timeout, the user approved smaller requests:
 retrieve direct links first, then check the same hierarchy separately. Outgoing

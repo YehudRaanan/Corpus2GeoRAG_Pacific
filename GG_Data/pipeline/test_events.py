@@ -87,7 +87,7 @@ def test_cache_preserves_raw_response_reuses_success_and_rejects_tampering(
         events.cached_json(tmp_path, events.QUERY_URL, {"query": "ASK{}"})
 
 
-@pytest.mark.parametrize("http_status", [200, 429])
+@pytest.mark.parametrize("http_status", [200, 400])
 def test_failed_request_is_saved_and_never_automatically_retried(
     tmp_path, monkeypatch, http_status
 ):
@@ -163,7 +163,9 @@ def test_direct_hierarchy_edges_and_cycle_safe_path_have_no_truthy_or_depth_filt
         events.hierarchy_path("Q1", {"Q1": [{"parent": "Q2"}]})
 
 
-@pytest.mark.parametrize("statuses", [(502, 503, 200), (504, 502, 503)])
+@pytest.mark.parametrize(
+    "statuses", [(502, 503, 200), (504, 502, 503), (429, 429, 429)]
+)
 def test_http_retry_budget_is_persistent_and_attempts_are_immutable(
     tmp_path, monkeypatch, statuses
 ):
@@ -200,7 +202,7 @@ def test_http_retry_budget_is_persistent_and_attempts_are_immutable(
             with pytest.raises(SourceException):
                 events.cached_json(tmp_path, events.QUERY_URL, params)
     assert calls == list(statuses)
-    assert sleeps == [1.1, 10, 1.1, 30, 1.1]
+    assert sleeps == [5, 10, 5, 30, 5]
     root = next(tmp_path.iterdir())
     assert (root / "response.json").read_bytes() == b"upstream failure"
     assert (root / "attempt_2/response.json").read_bytes() == b"upstream failure"
@@ -248,7 +250,7 @@ def test_resume_old_cached_502_counts_as_attempt_one(tmp_path, monkeypatch):
     )
     _, evidence = events.cached_json(tmp_path, request["url"], request["params"])
     assert evidence["cache"].endswith("attempt_2")
-    assert calls == [1] and sleeps == [10, 1.1]
+    assert calls == [1] and sleeps == [10, 5]
     assert (root / "request.json").read_bytes() == original
     assert (root / "response.json").read_bytes() == b"old 502"
 
@@ -323,3 +325,21 @@ def test_resume_hierarchy_reuses_prior_edges_and_writes_no_model_rows(
     else:
         assert result["status"] == "HIERARCHY_PROBE_ONLY"
         assert result["event_hierarchy_matches"] == ["Q1"]
+
+
+@pytest.mark.parametrize("value", ["120", "Tue, 20 Oct 2026 00:02:00 GMT"])
+def test_retry_after_deadline_is_respected_across_cache_resume(value):
+    from datetime import datetime, timezone
+
+    received = datetime(2026, 10, 20, tzinfo=timezone.utc)
+    evidence = {
+        "response_headers": {"Retry-After": value},
+        "retrieved_at": received.isoformat(),
+        "cache": "saved",
+    }
+    assert events.retry_delay(evidence, 1, received) == 120
+    assert events.retry_delay(evidence, 2, received.replace(minute=1)) == 60
+    assert events.retry_delay(evidence, 1, received.replace(minute=3)) == 10
+    evidence["response_headers"]["Retry-After"] = "invalid"
+    with pytest.raises(SourceException, match="Invalid Retry-After"):
+        events.retry_delay(evidence, 1, received)

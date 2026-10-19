@@ -1,7 +1,32 @@
 # Daniel input to final graph JSON review
 
+## Approved service-error handling — 20 October 2026
 
-### Retry result and new operational stop — 20 October 2026
+The user approved the general cache-first retrieval policy and the previously
+proposed HTTP 429 handling. This supersedes the pending 429 decision in the
+historical checkpoint below. Reuse verified saved data first; use agreed
+BigQuery data where it supports the required scope, and approved current
+Wikidata for Event data absent from that copy. No automatic source or business
+rule substitution is introduced.
+
+`events.cached_json` permits **three total attempts per exact request**, shared
+across HTTP 429/502/503/504 and across restarts. Minimum backoff is 10 seconds
+before attempt 2 and 30 seconds before attempt 3. Respect `Retry-After` seconds
+from response receipt or an absolute HTTP date if later. A saved cooldown keeps
+its original deadline. New network requests pause five seconds; retry waits
+use short observable intervals. Original response bytes/metadata stay immutable;
+new attempts append under the same request cache. Successful cache hits make
+no network request. Exhaustion, timeouts, other HTTP/API errors, malformed data,
+and data/business conflicts still stop with visible evidence.
+
+The saved 429 response requested 120 seconds; that deadline had elapsed when
+resuming. `event_hierarchy_probe.py` therefore reuses its original attempt 1 and
+resumes attempt 2 under the approved policy. Current output:
+`outputs/poc_10k_current_event_rate_limit_retry_20261020`. This remains the
+five-QID source check, not a complete 10K Event population or final graph.
+
+
+### Historical retry stop — superseded by 429 approval above
 
 `outputs/poc_10k_current_event_hierarchy_retry_20261020/probe.json` reuses the
 saved 58 successful hierarchy-stage requests and the original failed response.
@@ -11,8 +36,9 @@ successful requests, reaching 165 P31 candidate checks and 686 P279 class checks
 
 The next request returned HTTP 429 with `Retry-After: 120`. It was not retried:
 the user approved only 502/503/504 retries. Status is `BLOCKED_HIERARCHY_PROBE`.
-The suggested 429 wait/slower-request policy is **not approved**; the user's
-reply asked why BigQuery was not used. No further acquisition is running.
+At that checkpoint the 429 wait/slower-request policy was not yet approved;
+the user asked why BigQuery was not used. Acquisition stopped at that point.
+The later approval and resumed run are recorded above.
 
 The existing BigQuery snapshot returned zero rows for Q140451665 (saved job
 `geoai_6d050ce4cff5a35c6380e995468a4bfe`); current table metadata was unchanged

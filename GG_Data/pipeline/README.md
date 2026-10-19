@@ -1,7 +1,32 @@
 # Daniel pipeline POC
 
+## Approved service-error handling — 20 October 2026
 
-### Retry result and new operational stop — 20 October 2026
+The user approved the general cache-first retrieval policy and the previously
+proposed HTTP 429 handling. This supersedes the pending 429 decision in the
+historical checkpoint below. Reuse verified saved data first; use agreed
+BigQuery data where it supports the required scope, and approved current
+Wikidata for Event data absent from that copy. No automatic source or business
+rule substitution is introduced.
+
+`events.cached_json` permits **three total attempts per exact request**, shared
+across HTTP 429/502/503/504 and across restarts. Minimum backoff is 10 seconds
+before attempt 2 and 30 seconds before attempt 3. Respect `Retry-After` seconds
+from response receipt or an absolute HTTP date if later. A saved cooldown keeps
+its original deadline. New network requests pause five seconds; retry waits
+use short observable intervals. Original response bytes/metadata stay immutable;
+new attempts append under the same request cache. Successful cache hits make
+no network request. Exhaustion, timeouts, other HTTP/API errors, malformed data,
+and data/business conflicts still stop with visible evidence.
+
+The saved 429 response requested 120 seconds; that deadline had elapsed when
+resuming. `event_hierarchy_probe.py` therefore reuses its original attempt 1 and
+resumes attempt 2 under the approved policy. Current output:
+`outputs/poc_10k_current_event_rate_limit_retry_20261020`. This remains the
+five-QID source check, not a complete 10K Event population or final graph.
+
+
+### Historical retry stop — superseded by 429 approval above
 
 `outputs/poc_10k_current_event_hierarchy_retry_20261020/probe.json` reuses the
 saved 58 successful hierarchy-stage requests and the original failed response.
@@ -11,8 +36,9 @@ successful requests, reaching 165 P31 candidate checks and 686 P279 class checks
 
 The next request returned HTTP 429 with `Retry-After: 120`. It was not retried:
 the user approved only 502/503/504 retries. Status is `BLOCKED_HIERARCHY_PROBE`.
-The suggested 429 wait/slower-request policy is **not approved**; the user's
-reply asked why BigQuery was not used. No further acquisition is running.
+At that checkpoint the 429 wait/slower-request policy was not yet approved;
+the user asked why BigQuery was not used. Acquisition stopped at that point.
+The later approval and resumed run are recorded above.
 
 The existing BigQuery snapshot returned zero rows for Q140451665 (saved job
 `geoai_6d050ce4cff5a35c6380e995468a4bfe`); current table metadata was unchanged
@@ -38,8 +64,9 @@ Live Q140451665 evidence and unchanged current BigQuery table metadata are in
 
 `events.py` provides a checksum-checked raw-response cache and a direct-link
 discovery query. It preserves full-statement ranks in discovery (p:/ps:, not
-truthy wdt:), both directions and the approved native hierarchy. Only HTTP 502/503/504 permit three total attempts, with waits of 10 and 30
-seconds. Saved failures count toward the budget; all other failures stop. This adapter does not select/populate Events, replace
+truthy wdt:), both directions and the approved native hierarchy. HTTP 429/502/503/504 permit three total attempts under the cooldown and
+five-second request policy above. Saved failures count toward the same budget;
+other failures stop. This adapter does not select/populate Events, replace
 upstream sources, or rematch Daniel mentions. Query-service graph scope and
 full native-record evidence still need verification before Event completion.
 
@@ -82,7 +109,7 @@ partial hierarchy, query files and counts persist for reuse. No negative Event
 classification, inclusion count or Event-model completion follows from this
 partial traversal. No Event rows or final graph were written.
 
-The user approved limited retries on 20 October 2026: exactly three total
+Initially the user approved limited retries on 20 October 2026: exactly three total
 attempts for HTTP 502/503/504, with waits of 10 and 30 seconds. `events.py`
 implements this policy. Existing failed responses count as attempts; retries
 append `attempt_2`/`attempt_3` without overwriting the original evidence.
@@ -112,7 +139,7 @@ when the saved resolved type is null. Saved type metadata stays unchanged.
 Any unexpected count, field, source hash, ID, score, page conflict or missing
 artifact raises an error. Stop and discuss the exact case with the user before
 changing a rule. No automatic data repair is implemented. Only the approved
-HTTP 502/503/504 retry policy above is an operational exception.
+HTTP 429/502/503/504 retry policy above is an operational exception.
 
 **Output on D: was approved on 20 October 2026.** Step 1 ran successfully in
 `outputs/poc_10k`. Do not rerun into that directory; existing output is protected.

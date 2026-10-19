@@ -43,9 +43,11 @@ def resume(prior: Path, output: Path, store: Path) -> dict:
         resumed_from=str(prior),
         resumed_probe_sha256=digest(prior / "probe.json"),
         retry_policy={
-            "http_statuses": [502, 503, 504],
+            "http_statuses": [429, 502, 503, 504],
             "attempts": 3,
             "waits": [10, 30],
+            "respect_retry_after": True,
+            "request_pause_seconds": 5,
         },
     )
 
