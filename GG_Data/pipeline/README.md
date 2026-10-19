@@ -239,6 +239,14 @@ Verification includes original sample/Entities hashes, scope accounting, raw pre
 
 This is the Daniel/Daniel part only. Event discovery, included-event links in Relations, Geography, final graph and Agent integration remain pending. No new entity is extracted, split, combined or inferred. Code/docs have local checkpoints only; ignored data and caches are not protected by Git.
 
+Final replay verification passed on 20 October: `outputs/poc_10k_relations_final_20261020/manifest.json` has status `DANIEL_RELATIONS_ONLY`. All input, mapping and output hashes passed; the 10,467 Relations, 34 exclusions and 86 temporal audit rows have identical semantic content to the previous successful run. The property cache still contains one query; the replay made no property retrieval.
+
+### Events stopped: approved root absent from the pinned source
+
+Before event discovery, the approved root `Q140451665` was requested through the existing full-record adapter at the same BigQuery snapshot (`2026-10-18T18:45:19.304197+00:00`). Job `geoai_6d050ce4cff5a35c6380e995468a4bfe` returned zero rows and billed zero bytes. This establishes root absence from that snapshot, not absence of events or absence of the item from current Wikidata. No hierarchy traversal, event inclusion, source substitution or root substitution was performed.
+
+The SQL, dry run, empty result and job statistics are cached in `outputs/wikidata_event_cache`. The explicit stop is `outputs/poc_10k_event_root_check_20261020/root_check.json`, status `BLOCKED_EVENT_ROOT_CHECK`. The user was asked whether to check a newer Wikidata snapshot for the same root/hierarchy. That decision remains pending; completed Relations and upstream outputs remain unchanged. No Events or final graph output exists from this check.
+
 Reproduce with the existing saved sources and property cache:
 
 ```powershell
