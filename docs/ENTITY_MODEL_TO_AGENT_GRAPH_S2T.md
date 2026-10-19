@@ -21,6 +21,8 @@ This S2T starts at the data model. It does not redo Daniel extraction, entity ma
 
 The separate [sources-to-model population S2T](SOURCES_TO_ENTITY_DATA_MODEL_S2T.md) defines the preceding phase, including the approved Wikidata event root Q140451665, name priority, and Wikidata-only assertion scope. WarSampo and EventKG facts are not added by that phase.
 
+The [full pipeline review](DANIEL_TO_GRAPH_PIPELINE_REVIEW.md) collects all remaining decisions and checks across both S2T phases without changing the agreed export rules.
+
 ## 1. Confirmed scope
 
 - Daniel's input supplies entity mentions only. Reuse existing entity assignments, original QIDs and separate unresolved synthetic IDs. Do not derive events from Daniel's mentions or from MISC.
