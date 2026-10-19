@@ -14,7 +14,7 @@ the place-selection rules remain unchanged.
 - The Wikidata QID is the canonical place identifier.
 - Each place entity has one selected geographic object.
 - The geographic object is stored as a Shapely geometry.
-- Geocoding returns a validated Shapely object, not GeoJSON. GeoParquet persists it as WKB and restores it as Shapely when loaded. Conversion to GeoJSON belongs only to the final graph JSON exporter, as defined in the [S2T](ENTITY_MODEL_TO_AGENT_GRAPH_S2T.md#geometry-serialization).
+- Geocoding returns a validated Shapely object, not GeoJSON. GeoParquet persists it as WKB and restores it as Shapely when loaded. Final graph JSON contains a pointer to the stored object. The Agent uses a function to load and use the Shapely geometry, as defined in the [S2T](ENTITY_MODEL_TO_AGENT_GRAPH_S2T.md#geometry-object-reference-and-loading). No inline GeoJSON export is required. The pointer format and function interface still need agreement.
 - The geometry can represent a point, line, polygon, or multipolygon. Its type comes from the Shapely object, so a separate geometry-type field is not required.
 - The place-to-geometry connection has no `valid_from` or `valid_to` fields.
 - Wikidata coordinates and shapes are not used as geometry sources.
@@ -196,6 +196,6 @@ The four GeoNames results are points. They are usable starting geometries and ca
 
 ## Production limits
 
-- The Agent contract still needs to define the required coordinate reference system and the method used to load the Shapely geometry table.
+- The Agent integration still needs an agreed JSON pointer schema, geometry loading function, storage/version binding, required coordinate reference system and missing-object behavior. The graph pointer-to-Shapely interface supersedes the earlier inline-GeoJSON plan; it has not been implemented or verified by this document.
 - Bulk exports and saved snapshots are the planned main retrieval route. Public query services used for gaps can time out or limit requests; use controlled retries, persistent caches, and resumable checkpoints.
 - Source coverage does not prove geographic truth. Candidate evidence and provenance must remain available for quality review.

@@ -222,14 +222,14 @@ At most one selected geometry per confirmed place entity. It is optional until s
 | `source_dataset`, `source_object_id`, `source_url` | string | Selected OHM/OSM or approved fallback object. |
 | `match_method`, `selection_policy_version` | string | Identity/selection method and policy, currently geo-object-selection-v0.5.0. |
 | `retrieved_at`, `review_status`, `decision_reason` | datetime / string / string | Retrieval and acceptance evidence. Geometry rows require accepted status. |
-| `geometry` | Shapely object; WKB binary in GeoParquet, required | Geocoding produces the selected Shapely object. WKB is its persisted representation, restored as Shapely when loaded. Only the final graph JSON exporter serializes it to GeoJSON. Geometry type comes from the object. |
+| `geometry` | Shapely object; WKB binary in GeoParquet, required | Geocoding produces the selected Shapely object. WKB is its persisted representation, restored as Shapely when loaded. Final graph JSON contains a pointer to the stored object; an Agent function loads and uses it as Shapely. No inline GeoJSON export. Pointer and function interfaces remain to be agreed. Geometry type comes from the object. |
 | `audit` | JSON or immutable artifact reference | Complete candidate/rejection/validation evidence and selection date, as described below. |
 
 Existing Parquet columns are preserved in a compatibility export: `place_id`, `name`, `place_type`, `selection_date`, `source_dataset`, `source_object_id`, `source_url`, `match_method`, `selection_policy_version`, `retrieved_at`, `review_status`, `decision_reason`, `geometry`. `selection_date` comes from `audit.selection_date`, not a validity interval on the entity-geometry link.
 
 Audit retention includes the entire `{policy_version, generated_at, input, summary, results}` document, with each result's `input_rank`, `qid`, `name`, `description`, `p31`, `place_type`, `related_dates`, `selection_date`, `exact_qid_count`, `source_attempts`, `whg`, selected candidates, validation and decisions. Keep nested source object dates/tags and WHG evidence without truncation. Unaccepted results remain in this audit artifact even though Geography has no selected row for them.
 
-CRS is table metadata; Agent export must explicitly transform to its agreed coordinate system. The final CRS interface is still open. No `valid_from`, `valid_to`, or redundant `geometry_type` column is added. Wikidata coordinates/shapes remain identity context and cannot supply the selected geometry under the current source policy. Older OSM snapshot age is accepted; record the snapshot and assess historical suitability separately. Agent support for direct geometry on other node types does not authorize a new source policy.
+CRS is table metadata. Graph export supplies a pointer, not transformed coordinates. The pointer schema, Agent loading function and final spatial-function CRS interface remain open. No `valid_from`, `valid_to`, or redundant `geometry_type` column is added. Wikidata coordinates/shapes remain identity context and cannot supply the selected geometry under the current source policy. Older OSM snapshot age is accepted; record the snapshot and assess historical suitability separately. Agent support for direct geometry on other node types does not authorize a new source policy.
 
 ## 5. Events
 
@@ -309,7 +309,7 @@ Before any later implementation/release:
 3. Reproduce matching JSON/CSV fields and all 26 input assertion fields without loss; retain full nested evidence and immutable manifests.
 4. Check dates remain precision-aware and synthetic/date IDs cannot enter the event QID population. Distinguish resolution decision from review/accuracy.
 5. Resolve mapping by exact version/source key; validate inverse views against the lookup and count evidence by the base assertion ID.
-6. Preserve geometry provenance and all unsuccessful attempts. Validate geometry/CRS before Agent GeoJSON export.
+6. Preserve geometry provenance and all unsuccessful attempts. Validate geometry/CRS and the graph pointer-to-Shapely loading interface before Agent integration acceptance. Do not export inline GeoJSON.
 
 The contract inventory below records actual file headers. It is a coverage check for this design, not an implementation test of the future tables.
 

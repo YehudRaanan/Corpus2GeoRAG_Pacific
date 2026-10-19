@@ -2,6 +2,8 @@
 
 Specification date: 19 October 2026. Status: agreed scope documented; identified compatibility and field-selection gaps remain explicit. This is a design specification, not an executed export or a production acceptance claim.
 
+Geometry decision corrected on 19 October 2026: graph JSON contains a pointer to the stored geometry object. The Agent uses a function to load and use it as a Shapely object. Inline GeoJSON export is superseded. The exact pointer field/schema and loader interface are not yet agreed; no replacement schema or function is invented here.
+
 **Source:** [Entities, Mentions, Wiki Pages, Geography, Events, Relations](ENTITY_DATA_MODEL_ERD.md), with the existing versioned relation catalogs and release manifest.
 
 **Target:** one final graph JSON file, read by the Agent through `GRAPH_PATH`:
@@ -41,7 +43,7 @@ The following names describe sets/views used for this export; they are not new s
 | Included events | Event candidates with at least two distinct connected matched Daniel QIDs. | Keep their original event QIDs. Record the distinct entity list and count in the supporting event-selection report. |
 | Included nodes | Union of Daniel entity IDs and included event QIDs, joined to Entities. | Exactly one node per ID. Highlight any unexpected event/entity role or type conflict rather than overwriting it. Do not add unrelated cached candidate QIDs. |
 | Included base relations | Retained Relations rows with item-valued endpoints both present in included nodes. | Keep each `observation_id`. Include entity/entity, event/entity and event/event assertions when both endpoints are included. No transitive relation creation. |
-| Node geography | Left join included nodes to `Geography.place_id = Entities.entity_id`. | At most one accepted geometry. Absence remains null and is counted visibly. No geometry retrieval or selection is performed by the S2T. |
+| Node geography | Left join included nodes to `Geography.place_id = Entities.entity_id`. | At most one accepted stored geometry object. Export a pointer to that object, not its coordinates. Count missing geometries visibly; their JSON representation awaits the pointer contract. No geometry retrieval or selection is performed by the S2T. |
 | Wiki Pages / Mentions | Mentions links to Wiki Pages by `(wiki_site, wiki_page_id)` for source-model traceability. | No independent target collection or page/paragraph traversal. Missing page IDs remain visible in source quality results. |
 
 Event membership can be expressed without any ranking:
@@ -82,7 +84,7 @@ Paths refer to `nodes[]`.
 | `type` — Daniel entity | `Entities.type`, existing `Mentions.type_metadata` as supporting evidence | Reuse the existing selected classification. Approved mechanical spellings: PER -> person, ORG -> org, LOC -> location; copy an already valid Agent type unchanged. Do not rerun type inference or choose between conflicting mention classifications. A remaining MISC-only value, incompatible value or multi-type conflict is an explicit open mapping case; do not silently convert it to event or choose a new fallback. |
 | `type` — included Wikidata event | Membership in authoritative Events table | `event`. This labels an existing event input; it is not a classifier over Daniel entities. |
 | `aliases` | `Entities.aliases` | Copy existing supplied strings. No generated nicknames, romanizations or combined names. Missing aliases may remain an empty array. |
-| `geometry` | Accepted `Geography.geometry` | Restore the stored WKB/Shapely object and serialize as GeoJSON under the geometry rules below. No accepted geometry -> null, with visible missing-geometry counts. |
+| Geometry pointer — exact JSON field/schema pending agreement | Accepted Geography row and its stored object | Export only a reference to the existing object. The Agent loads it through a function that returns a Shapely geometry. Do not export inline GeoJSON, WKB bytes or an in-memory address. Missing-object representation and exact reference fields need agreement before implementation. |
 | `attributes.start_date` | `Events.start_date` | Copy the supplied single target-compatible Wikidata value; preserve precision. Null/absent source -> omit. Multiple or incompatible values -> highlight before export, without selecting one. |
 | `attributes.end_date` | `Events.end_date` | Same rule as start_date. |
 | `attributes.point_date` | `Events.point_date` | Same rule as start_date; do not manufacture an interval or infer a point from another value. |
@@ -92,14 +94,16 @@ Event values can be kept as full raw statements in the source model even when th
 
 Omitted node fields: `sources`, `text`, `embedding`, `alias_details`, raw labels/descriptions/claims, mention lists, page references, spans, matching scores/attempts and geometry audit payloads. They remain source/supporting information where supplied. Their absence limits the Agent's citation, text search and some enrichment features; no paragraph work is added to compensate.
 
-### Geometry serialization
+### Geometry object reference and loading
 
-- The geocoding contract produces a validated Shapely geometry object, not GeoJSON. Geography persists that object as WKB in GeoParquet and restores it as Shapely when loaded. GeoJSON is only the final graph JSON representation, created by the S2T exporter after geocoding; it does not replace the geocoding output contract.
-- The current Agent contract explicitly requires WGS84 GeoJSON in `[longitude, latitude]` order. Read the stored source CRS from Geography table metadata; no CRS guessing.
-- If conversion is needed, transform coordinates explicitly. Unknown CRS or an unsupported/invalid geometry is a highlighted export exception, not a guessed point.
-- Follow the target contract's antimeridian requirement for shapes crossing 180 degrees. Validate this during export; this specification does not choose a new clipping/repair algorithm.
-- Serialize the supported selected source geometry; do not replace a polygon with its centroid or copy a related place geometry onto an event.
+- The geocoding contract produces a validated Shapely geometry object. Geography persists it as WKB in GeoParquet and restores it as Shapely when loaded.
+- Graph JSON contains only a pointer to the stored object. The Agent resolves that pointer through a function and uses the returned Shapely object. The graph exporter does not convert the object to GeoJSON.
+- The pointer must identify the selected stored object reliably. Its JSON field name, value structure, storage location/version binding, and loader inputs/outputs are open interface details. Do not invent a URI convention, function name, or missing-object behavior without agreement.
+- Preserve source CRS in Geography metadata. The Agent's object-loading/spatial-function CRS and antimeridian requirements need interface confirmation; the earlier inline-GeoJSON representation does not establish this new interface. Do not infer or transform coordinates in the exporter.
+- The loader must retrieve the accepted geometry for the referenced place. Do not replace a polygon with its centroid or copy a related place geometry onto an event.
 - Use only geometries accepted under the existing geography policy. No Wikidata coordinate/shape promotion, inferred event geometry or new non-place geometry policy.
+
+The previously inspected Agent README/loader describes inline GeoJSON. This differs from the newly confirmed pointer contract. Agent integration must be updated and verified before export acceptance; generic extra-field acceptance does not establish pointer resolution or Shapely use. This documentation change does not implement that integration.
 
 ## 5. Base edge S2T
 
@@ -170,7 +174,8 @@ An export report is a supporting release artifact, not a seventh business table.
 | A QID has conflicting selected types; MISC does not have an agreed Agent type | Highlight the QID, all saved type values and affected mentions. Ask before selecting a type or adding a fallback. |
 | Wikidata event classification or dates cannot fit target scalar fields | Show the event QID, exact claims/values and target fields. No ranking, precision invention, label translation or conflict selection. |
 | Missing names, endpoints, mapping definitions or direction keys | Show exact records and counts. Do not invent required values or rely on Agent endpoint dropping. |
-| Missing geometry vs invalid geometry/unknown CRS | Report these separately. No accepted geometry stays null; invalid supplied geometry/CRS needs resolution before serialization. |
+| Missing geometry vs invalid geometry/unknown CRS | Report these separately. No missing or rejected object gets a fabricated pointer. Missing-object JSON behavior requires agreement; invalid supplied geometry/CRS must be highlighted before use. |
+| Geometry pointer and Agent loader | Agree the exact pointer schema, object location/version binding, function interface, CRS handling and missing-object behavior before implementation. Verify each pointer resolves to the selected valid Shapely object; no inline GeoJSON geometry enters graph JSON. |
 | Event inclusion evidence | Report candidate events, included/excluded event counts and each event's distinct qualifying Daniel QIDs. Check count >=2 independently of mentions, duplicate assertions and reverse views. |
 | Reverse compatibility | Verify both-direction queries, exact inverse IDs, and one evidence identity/support count. Agent format acceptance alone is insufficient. |
 | Intentional omissions | Confirm no node/edge `sources`, node `text`, paragraph objects, mention/page nodes or extraction audit payloads entered the graph. Supporting provenance remains recoverable separately. |
@@ -183,7 +188,7 @@ Do not publish a final accepted graph while an unresolved required-field or sema
 - [Agent README input contract](https://github.com/EtzionR/Corpus2GeoRAG_Pacific/blob/main/Agent/README.md#input-schema-for-the-knowledge-graph-builder), verified on 19 October 2026; Git blob `d6929c7e276c564cb7ef1cf219cb1b9414ce0f26`. The target is the graph input, not the Agent's answer JSON or UI result schema.
 - [Agent loader and text search](https://github.com/EtzionR/Corpus2GeoRAG_Pacific/blob/main/Agent/geo_agent/graph_store.py), inspected Git blob `3d67affe310e0336c579adcf8dcc0362702100ba`. Remote Agent implementation is newer than the local checkout.
 - [Relation-map-v2.1.0 delivery rules](RELATION_MAPPING_V2_1_DATA_LAYER_REVERSE_2026-10-15.md), [mapping table](../GG_Data/mapping/RELATION_MAPPING_TABLE_v2.1.0.csv), [direction lookup](../GG_Data/mapping/RELATION_DIRECTION_LOOKUP_v2.1.0.csv) and [direction catalog](../GG_Data/mapping/RELATION_DIRECTION_CATALOG_v2.1.0.csv).
-- [Geography policy](GEOCODING_HIGH_LEVEL_PROCESS.md). Its older note that the Agent CRS is undefined is superseded for the JSON target by the verified WGS84 requirement; source CRS metadata and serialization validation are still required.
+- [Geography policy](GEOCODING_HIGH_LEVEL_PROCESS.md). Shapely is the geometry output; graph JSON holds an object pointer. The user's latest decision supersedes the inspected Agent inline-GeoJSON format for this interface. Source CRS metadata remains required; pointer loading and spatial-function compatibility remain open.
 - [Existing matching type decisions](../GG_Data/entity_resolution/bilingual_page_pilot.py): `categories` / `choose` and saved `type_metadata` are prior matching evidence, not approval for a new event classifier or a new canonical conflict rule.
 
-The source model is a proposed logical schema. Existing matching artifacts are saved outputs; the six physical tables and this exporter are not implemented by this S2T document. Remaining known checks are canonical type exceptions, source values that cannot fit the target, final release metadata, geometry serialization compatibility and Agent recognition of explicit reverse views. New cases must be brought back to the user before adding logic.
+The source model is a proposed logical schema. Existing matching artifacts are saved outputs; the six physical tables and this exporter are not implemented by this S2T document. Remaining known checks are canonical type exceptions, source values that cannot fit the target, final release metadata, geometry pointer/function interface and Agent recognition of explicit reverse views. New cases must be brought back to the user before adding logic.
