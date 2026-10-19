@@ -1,6 +1,47 @@
 # Daniel pipeline POC
 
-## Event rank rule approved; seven-candidate check stopped
+## Seven native candidates checked; incoming query stopped
+
+The user approved finishing all seven checks under the current rules, including
+the video-game candidate. No new type, date, or Event-root filter is authorized.
+All seven native records and their supplied P31 paths were checked in
+`outputs/poc_10k_event_seven_eligibility_resumed_20261020`. The direct-link
+population is the frozen sample's **4,712 distinct matched Daniel QIDs**, based
+on original non-DATE mentions; resolved type does not remove a matched QID.
+
+Outgoing full-native statements passed exact exclusions and catalog v2.1.2.
+These are lower bounds until incoming acquisition finishes:
+
+| Candidate | QID | Distinct Daniel QIDs in outgoing statements |
+|---|---|---:|
+| World War II | Q362 | 37 |
+| Minoan eruption | Q1144693 | 1 |
+| Call of Duty: Advanced Warfare | Q16743064 | 7 |
+| Raid on Santorini | Q20981909 | 2 |
+| WikiProject Kerala | Q21830247 | 0 |
+| DTIS 2014 conference, Santorini | Q106336167 | 1 |
+| 2025 Santorini earthquakes | Q132129067 | 1 |
+
+Three candidates already prove the minimum of two through outgoing assertions;
+the other four are **pending**, not rejected. The World War II incoming request
+returned HTTP 200 with **34,406,400 bytes of incomplete JSON**. The complete
+received bytes, checksum, request and parse exception are cached; no partial
+JSON rows were accepted. No automatic retry applies to malformed HTTP-200 data.
+Acquisition stopped under the user's stop rule. Zero incoming queries completed
+and zero complete two-direction link checks are claimed. Both query-service
+graphs still require coverage. Full incoming native statements, Event model
+rows, Event Relations, and final graph remain unpopulated.
+
+Supporting files: `outgoing_check.json`, `report.json`, and `verification.json`.
+All accepted upstream output hashes passed. The earlier local stop left one
+verified empty cache directory; only that empty directory was removed, with
+evidence in the first `poc_10k_event_seven_eligibility_20261020` run. No saved
+response was deleted or overwritten. The user was asked to approve smaller
+incoming queries with up to 250 Daniel subjects and all seven Event targets:
+38 requests across the two graphs, without changing source or counting rules.
+The user selected "Discuss first"; no bounded incoming query has been executed.
+
+### Previous rank approval and native inspection stop
 
 The user approved ignoring deprecated P31/P279 statements for Event
 classification only. `events.classify_events` filters a separate view and

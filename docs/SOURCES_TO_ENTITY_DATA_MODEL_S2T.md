@@ -171,7 +171,7 @@ and complete raw acquisition still retain all ranks. Evidence is saved under
 `GG_Data/pipeline/outputs/poc_10k_current_event_rate_limit_retry_20261020` and
 `GG_Data/pipeline/outputs/poc_10k_event_rank_test_20261020`.
 
-**Current exception after approval:** the native inspection stopped after four
+**Historical exception after approval:** the native inspection stopped after four
 of seven candidate records were saved. Q16743064 is labelled "Call of Duty:
 Advanced Warfare" and described by Wikidata as a 2014 first-person shooter video
 game. Its supplied P31/P279 path to the approved root has normal ranks throughout,
@@ -179,7 +179,21 @@ so the approved filter retains it. No ad hoc exclusion, replacement event root,
 or new type rule was introduced. See
 `outputs/poc_10k_event_seven_native_check_20261020/report.json` and
 `source_surprise.json`. Completing the seven-candidate link gate or narrowing
-scope awaits consultation. No Event row or Event relation has been written.
+scope was referred for consultation. No Event row or Event relation was written.
+
+**Continuation approved:** finish all seven checks under the same rules; do not
+add a video-game/type/date exclusion. Seven native records were subsequently
+checked. Outgoing assertions are counted against all 4,712 distinct matched
+Daniel QIDs in the frozen sample, after the 14 exact exclusions and catalog
+v2.1.2. Three candidates already prove at least two distinct direct Daniel QIDs.
+The remaining four are pending incoming coverage, not negative classifications.
+The incoming World War II request returned HTTP 200 with 34,406,400 bytes of
+incomplete JSON. The pipeline stopped without accepting partial rows or retrying
+malformed data. Evidence: `outputs/poc_10k_event_seven_eligibility_resumed_20261020`.
+Smaller incoming queries restricted to the approved populations were proposed
+for consultation; the user selected "Discuss first". No new request design
+has been executed. Full incoming
+statement materialization and Event/Relations population remain pending.
 
 The approved root is Wikidata's broad [event, Q140451665](https://www.wikidata.org/wiki/Q140451665), including all classes below it through native [P279 subclass-of](https://www.wikidata.org/wiki/Property:P279) statements. Identify event instances through [P31 instance-of](https://www.wikidata.org/wiki/Property:P31) and those subclass paths. Record root QID, snapshot, native class IDs and path evidence. Do not replace it with the narrower organized-event root, add a local event-type whitelist, or invent war/campaign/battle levels.
 

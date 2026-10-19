@@ -432,3 +432,71 @@ def test_candidate_check_keeps_source_and_stops_on_native_classification_change(
     else:
         assert result["status"] == "NATIVE_CANDIDATES_CHECKED_LINK_GATE_PENDING"
         assert result["records"][0]["name"] == "native name"
+
+
+def test_event_link_gate_keeps_all_ranks_deduplicates_statements_and_checks_exclusions(
+    monkeypatch,
+):
+    from GG_Data.pipeline import event_candidate_check as check
+
+    def link(sid, target, rank="normal"):
+        return dict(
+            subject_qid="Q1",
+            object_qid=target,
+            source_predicate="wd:P17",
+            source_record_id=sid,
+            rank=rank,
+        )
+
+    rule = dict(
+        direction_to_level2="same",
+        formal_component_conflict="False",
+        level2_relation_id="wd:P17",
+        relation_map_version="test",
+    )
+    approved_exclusion = dict(
+        source_predicate="wd:P17",
+        subject_qid="Q1",
+        object_qid="Q4",
+        reason="exact approved case",
+    )
+    monkeypatch.setattr(
+        check, "load_exclusions", lambda: {("Wikidata", "Q1$CC"): approved_exclusion}
+    )
+    rows = [
+        link("Q1$AA", "Q2"),
+        link("http://www.wikidata.org/entity/statement/Q1-AA", "Q2"),
+        link("Q1$BB", "Q3", "deprecated"),
+        link("Q1$CC", "Q4"),
+        link("Q1$DD", "Q5"),
+    ]
+    kept, excluded = check.qualifying_links(
+        rows, "Q1", {"Q2", "Q3", "Q4"}, {("Wikidata", "wd:P17"): rule}
+    )
+    assert len(kept) == 2 and {r["daniel_qid"] for r in kept} == {"Q2", "Q3"}
+    assert len(excluded) == 1 and excluded[0]["reason"] == "exact approved case"
+    rows[1]["object_qid"] = "Q3"
+    with pytest.raises(SourceException, match="Conflicting Event assertion retrievals"):
+        check.qualifying_links(
+            rows, "Q1", {"Q2", "Q3", "Q4"}, {("Wikidata", "wd:P17"): rule}
+        )
+
+
+def test_incoming_event_links_validate_direct_statement_identity():
+    from GG_Data.pipeline.event_candidate_check import incoming_links
+
+    row = {
+        k: dict(value=v)
+        for k, v in dict(
+            subject="http://www.wikidata.org/entity/Q1",
+            property="http://www.wikidata.org/entity/P17",
+            statement="http://www.wikidata.org/entity/statement/Q1-AB-CD",
+            rank="http://wikiba.se/ontology#DeprecatedRank",
+        ).items()
+    }
+    data = {"results": {"bindings": [row]}}
+    parsed = incoming_links(data, "Q2")
+    assert parsed[0]["object_qid"] == "Q2" and parsed[0]["rank"] == "deprecated"
+    row["subject"]["value"] = "http://www.wikidata.org/entity/Q3"
+    with pytest.raises(SourceException, match="Unexpected incoming Event assertion"):
+        incoming_links(data, "Q2")

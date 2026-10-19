@@ -1,6 +1,31 @@
 # Daniel input to final graph JSON review
 
-## Current result: rank rule approved; seven-candidate check stopped
+## Current result: seven native records checked; incoming source response incomplete
+
+The user approved finishing the seven candidates under the current rules.
+All seven native records and their saved P31 ancestry were checked. Outgoing
+mapped statements connect World War II to 37 distinct Daniel QIDs, Minoan
+eruption to 1, Call of Duty: Advanced Warfare to 7, Raid on Santorini to 2,
+WikiProject Kerala to 0, DTIS 2014 to 1, and the 2025 Santorini earthquakes to 1.
+These counts are lower bounds from outgoing statements only. Three already
+prove the minimum; the other four remain pending rather than rejected.
+
+The incoming World War II query returned HTTP 200 but incomplete JSON
+(34,406,400 received bytes). The malformed-data guard stopped acquisition;
+no partial query rows or automatic retry were accepted. No incoming query or
+complete two-direction candidate check finished. Both main/scholarly graphs
+remain required. The proposed recovery is 38 bounded requests, using batches of
+up to 250 frozen Daniel QIDs and the seven candidate targets together, with
+unchanged sources, rank handling and inclusion rules. The user selected
+"Discuss first"; no bounded incoming query has been executed.
+
+Evidence: `outputs/poc_10k_event_seven_eligibility_resumed_20261020`, especially
+`outgoing_check.json`, `report.json`, and `verification.json`. All accepted
+upstream output hashes passed. No Event rows, Event links in Relations, or
+final graph were produced. This remains a seven-candidate check, not full 10K
+discovery. See the pipeline README for exact candidate QIDs and cache recovery.
+
+### Previous rank-rule approval and native inspection stop
 
 On 20 October the user approved excluding deprecated P31/P279 statements for
 Event classification only. The shared classifier applies this rule without
