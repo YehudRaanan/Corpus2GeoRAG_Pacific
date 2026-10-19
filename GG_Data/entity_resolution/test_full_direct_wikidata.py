@@ -2,6 +2,8 @@
 
 import copy
 import hashlib
+import os
+from collections import defaultdict
 
 import pytest
 
@@ -110,7 +112,7 @@ def test_metadata_batches_reuse_cache_and_keep_unresolved_workflow(
             )
 
     api = CachedData()
-    summary = runner.run(tmp_path, api=api)
+    summary = runner.run(tmp_path, api=api, page_workers=1)
     assert api.calls == ([] if preloaded else [{"Q1"}, {"Q2"}])
     assert read(metadata_path) == entities
     result = read(tmp_path / "matches.json.gz")[0]
@@ -123,3 +125,41 @@ def test_metadata_batches_reuse_cache_and_keep_unresolved_workflow(
     ]
     assert summary["mentions"] == 1
     assert summary["article_name_extraction"] is False
+
+
+def test_parallel_page_matching_equals_serial_and_accepted_pilot():
+    pilot = HERE / "runs/direct_wikidata_single_type_20261018_v2"
+    original = read(pilot / "matches.json.gz")
+    metadata = read(pilot / "entity_metadata.json.gz")
+    pools = {
+        s: set(ids)
+        for s, ids in read(pilot / "candidate_evidence.json.gz")["page_pools"].items()
+    }
+    by_page = defaultdict(list)
+    for row in original:
+        if row["raw"]["entity_group"] != "DATE":
+            by_page[row["raw"]["Source"]].append(
+                {
+                    "input_row_number": row["input_row_number"],
+                    "mention_id": row["mention_id"],
+                    "raw": row["raw"],
+                    "attempts": [],
+                }
+            )
+
+    def collect(workers):
+        results = list(
+            runner.match_pages(copy.deepcopy(by_page), pools, metadata, workers)
+        )
+        return {r["mention_id"]: r for _, _, rows in results for r in rows}, {
+            pid for _, pid, _ in results
+        }
+
+    serial, serial_pids = collect(1)
+    parallel, parallel_pids = collect(2)
+    assert parallel == serial
+    assert serial_pids == {os.getpid()}
+    assert parallel_pids and os.getpid() not in parallel_pids
+    for row in original:
+        if row["mention_id"] in parallel:
+            assert parallel[row["mention_id"]]["attempts"][0] == row["attempts"][0]

@@ -12,9 +12,12 @@ import gzip
 import hashlib
 import json
 import logging
+import os
 import random
 import time
 from collections import Counter, defaultdict
+from collections.abc import Iterator
+from concurrent.futures import ProcessPoolExecutor, as_completed
 from datetime import datetime, timezone
 from pathlib import Path
 
@@ -23,6 +26,7 @@ import requests
 
 from bilingual_page_pilot import (
     LiveData,
+    ancestry,
     article,
     choose,
     digest,
@@ -102,6 +106,49 @@ def assign(row: dict, candidates: list, metadata: dict, stage: str) -> None:
         )
 
 
+def match_page(source: str, rows: list[dict], pool: set[str], metadata: dict) -> tuple:
+    """Match original mentions only; workers perform no retrieval or file writes."""
+    original, cleaned, maps = page_indexes(pool, metadata)
+    cached = {}
+    for row in rows:
+        if "assigned_id" not in row:
+            word = row["raw"]["word"]
+            if word not in cached:
+                cached[word] = page_find(original, cleaned, word, maps)
+            assign(row, cached[word], metadata, "PAGE_DIRECT_WIKIDATA")
+    return source, os.getpid(), rows
+
+
+def match_pages(
+    by_page: dict[str, list[dict]],
+    pools: dict[str, set[str]],
+    metadata: dict,
+    workers: int,
+) -> Iterator[tuple[str, int, list[dict]]]:
+    """Keep the same page decisions, including type ancestry and seeded ties."""
+    if workers < 1:
+        raise ValueError("Page worker count must be positive")
+    if workers == 1:
+        for source in sorted(by_page):
+            yield match_page(source, by_page[source], pools[source], metadata)
+        return
+    with ProcessPoolExecutor(max_workers=workers) as executor:
+        pending = []
+        for source in sorted(by_page):
+            pool = pools[source]
+            types = ancestry(
+                [t for q in pool for t in metadata[q].get("direct_types", [])],
+                metadata,
+            )
+            # Send this page's candidates and full type closure, not the whole cache.
+            subset = {q: metadata[q] for q in pool | types if q in metadata}
+            pending.append(
+                executor.submit(match_page, source, by_page[source], pool, subset)
+            )
+        for future in as_completed(pending):
+            yield future.result()
+
+
 def update_report(output: Path, summary: dict) -> None:
     """Fill the run report when the unattended job finishes."""
     report = HERE / "FULL_DIRECT_RUN_2026-10-18.md"
@@ -123,7 +170,9 @@ def update_report(output: Path, summary: dict) -> None:
         report.write_text(text.replace(marker, replacement, 1), encoding="utf-8")
 
 
-def run(output: Path, api: LiveData | None = None) -> dict:
+def run(output: Path, api: LiveData | None = None, page_workers: int = 2) -> dict:
+    if page_workers < 1:
+        raise ValueError("Page worker count must be positive")
     output.mkdir(parents=True, exist_ok=True)
     if (output / "manifest.json").exists():
         manifest = read(output / "manifest.json")
@@ -318,17 +367,23 @@ def run(output: Path, api: LiveData | None = None) -> dict:
                         matched_stage="SYNTHETIC",
                         unresolved_reason=date["error"],
                     )
-        for number, source in enumerate(sources):
-            original, cleaned, maps = page_indexes(pools[source], api.entities)
-            cached = {}
-            for row in by_page[source]:
-                if "assigned_id" not in row:
-                    word = row["raw"]["word"]
-                    if word not in cached:
-                        cached[word] = page_find(original, cleaned, word, maps)
-                    assign(row, cached[word], api.entities, "PAGE_DIRECT_WIKIDATA")
-            progress("PAGE_MATCHING", completed=number + 1, total=len(sources))
+        worker_pids = set()
+        for number, (source, worker_pid, matched) in enumerate(
+            match_pages(by_page, pools, api.entities, page_workers)
+        ):
+            for row in matched:
+                rows[row["input_row_number"]] = row
+            worker_pids.add(worker_pid)
+            progress(
+                "PAGE_MATCHING",
+                completed=number + 1,
+                total=len(sources),
+                workers=page_workers,
+                worker_pids=sorted(worker_pids),
+                last_source=source,
+            )
         save(page_checkpoint, rows)
+    # Freeze only after every page result has been collected, regardless of order.
     frozen = sorted(
         {
             r["assigned_id"]
@@ -506,6 +561,7 @@ def run(output: Path, api: LiveData | None = None) -> dict:
             "input_sha256": INPUT_SHA256,
             "threshold": 0.8,
             "seed": SEED,
+            "execution": {"page_workers": page_workers},
             "code_sha256": {
                 p.name: digest(p)
                 for p in [
@@ -540,11 +596,12 @@ def run(output: Path, api: LiveData | None = None) -> dict:
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--output", type=Path, default=DEFAULT_OUTPUT)
+    parser.add_argument("--page-workers", type=int, default=2)
     args = parser.parse_args()
     logging.basicConfig(level=logging.INFO, format="%(asctime)s %(message)s")
     for retry in range(20):
         try:
-            result = run(args.output)
+            result = run(args.output, page_workers=args.page_workers)
             update_report(args.output, result)
             print(json.dumps(result, indent=2))
             break

@@ -5,13 +5,15 @@
 [Current run, evidence scope, saved data, and resume command](WIKIPEDIA_DUMP_RUN_2026-10-18.md).
 The English/Japanese preparation is complete: all ten dumps and imported tables,
 428 source checkpoints, 424 resolved titles, and 296 Japanese counterparts.
-All 428,884 candidate QIDs already have cached metadata. On 19 October at
-11:56 Israel time, the existing BigQuery adapter resumed from these checkpoints
-after a fix that skips repeated full-cache writes for already cached IDs.
-Twenty-five targeted tests and Ruff passed. The earlier language preparation
-used two processes; no extra matching workers were added. All 309,864 original
-Daniel mentions continue automatically with the same 80% rule and matching
-pass order. Final full-data counts are not available yet.
+All 428,884 candidate QIDs already have cached metadata. After removing duplicate
+cache writes, a two-worker page matching coordinator started on 19 October at
+12:03 Israel time. Workers use saved candidates and complete type ancestry;
+the coordinator preserves original row order and writes all results. The
+already-matched pass waits for every page to finish. Twenty-six targeted tests
+and Ruff passed, including identical serial/parallel pilot decisions.
+Current output: `C:\Users\User\.cache\geoai_full_daniel_dump_bigquery_parallel_20261019`.
+All 309,864 original Daniel mentions continue automatically with the same 80%
+rule and matching pass order. Final full-data counts are not available yet.
 
 ## Full run moved to BigQuery — 18 October 2026
 

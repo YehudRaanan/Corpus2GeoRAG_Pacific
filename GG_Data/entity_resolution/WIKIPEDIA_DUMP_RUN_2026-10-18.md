@@ -1,11 +1,51 @@
 # English/Japanese Wikipedia dump import — 18 October 2026
 
-Current checkpoint: resumed on **19 October 2026, 11:56 Israel time** after
-removing redundant metadata checkpoint writes. All ten reference tables and
-all 428 source-page checkpoints are ready: 424 resolved titles, four missing
-titles, and 296 Japanese counterpart pages. Final matching results do not yet
-exist. The continuation runs all **309,864 original Daniel mentions** without
-another confirmation.
+Current checkpoint: the parallel matching coordinator started on **19 October
+2026, 12:03 Israel time**, using two page workers and the complete saved
+reference data. All ten reference tables and all 428 source-page checkpoints
+are ready: 424 resolved titles, four missing titles, and 296 Japanese
+counterpart pages. Final matching results do not yet exist. All **309,864
+original Daniel mentions** remain in scope.
+
+## Parallel page matching — 19 October 2026
+
+Two process workers run the existing page matching function. Each receives
+only that page's original Daniel rows, its existing candidate QIDs, and the
+complete type ancestry for those candidates. Workers perform no data retrieval
+or file writes. The coordinator restores results to their original input-row
+positions and alone writes checkpoints. Dates retain the existing parent-side
+calendar handling. Mention-seeded random tie handling is independent of worker
+completion order. No input entities are created, split, or combined.
+
+The matched-QID pool is frozen only after **all 428 pages** return. The
+already-matched and fresh-WWII passes then run in their existing order. The
+80% threshold, type correction rules, and separate synthetic IDs for remaining
+unresolved mentions are unchanged. Twenty-six targeted tests and Ruff passed.
+A real process-pool test reproduces every saved pilot page decision and gives
+identical serial/parallel results.
+
+Coordinator PID: **26648**. Parallel output:
+`C:\Users\User\.cache\geoai_full_daniel_dump_bigquery_parallel_20261019`.
+Logs use the dump cache path plus `.parallel_matching_20261019.stdout.log` /
+`.parallel_matching_20261019.stderr.log`. The coordinator reuses the saved
+BigQuery metadata and validates all 428 source-page checksums from the earlier
+output before copying their snapshots. Large files remain on C:.
+
+At 12:06 Israel time, both workers (**28784** and **33740**) had returned page
+results. The older serial coordinator (PID 2244) was then stopped with no active
+BigQuery child. Its progress was preserved inside a `SUPERSEDED_BY_PARALLEL_RUN`
+record pointing to the new output. It had processed 247 pages in memory but had
+not yet written the all-pages match checkpoint, so the parallel run restarts
+the page matching pass. Saved page snapshots, metadata, and original input
+remain intact. The parallel run had completed 34 pages at handoff.
+
+The earlier serial output is retained at
+`C:\Users\User\.cache\geoai_full_daniel_dump_bigquery_20261018`.
+Use the parallel output's `progress.json`, `summary.json`, and `manifest.json`
+for current matching status and final verification. The old dump coordinator's
+`PAGE_SNAPSHOT_READY` progress describes completed preparation only.
+Code backup: **Local checkpoint only**; large caches remain unprotected
+off-device.
 
 ## Metadata cache reuse fix — 19 October 2026
 
@@ -34,12 +74,10 @@ Logs use the dump cache path plus `.metadata_reuse_20261019.stdout.log` /
 Use the matching output's `progress.json`; the old dump coordinator's progress
 remains `PAGE_SNAPSHOT_READY` because its preparation has finished.
 
-The earlier English/Japanese preparation used two processes. No additional
-matching workers were added: the immediate bottleneck was duplicate cache
-serialization. Page matching can be partitioned, but the frozen matched-ID
-pool must be built only after every page finishes. The three passes retain
-that barrier. Code backup: **Local checkpoint only**; large local caches remain
-unprotected off-device.
+At this earlier checkpoint, no additional matching workers had been added:
+the immediate bottleneck was duplicate cache serialization. The later
+parallel matching change is described above. Code backup: **Local checkpoint
+only**; large local caches remain unprotected off-device.
 
 ## Source-page selection fix — 19 October 2026
 
@@ -154,9 +192,9 @@ no Daniel mention is split or merged. The canonical graph is unchanged.
 The matcher checks the input hash, all 428 checkpoint filenames, each file hash,
 and each original source title before it uses the dump snapshot. This route
 does not fall back to Wikipedia article requests if the snapshot is incomplete.
-The existing saved Wikidata name lookup and 461,094-QID reference export are
-reused; only additional page candidates and required type ancestors need more
-reference retrieval.
+The existing saved Wikidata name lookup and reference exports are reused.
+Page candidates and their type ancestry were collected during preparation;
+all page-candidate metadata is now cached for the parallel continuation.
 
 ## Active jobs, saved data, and resume
 
@@ -166,30 +204,31 @@ All large files are on C: because D: has little free space.
   `C:\Users\User\.cache\geoai_wikipedia_dump_20261018\progress.json`.
 - Download logs: the cache-directory path plus `.download.stdout.log` and
   `.download.stderr.log`.
-- Full continuation logs: the cache-directory path plus `.full.stdout.log` and
-  `.full.stderr.log`.
+- Current matching logs: the cache-directory path plus
+  `.parallel_matching_20261019.stdout.log` and
+  `.parallel_matching_20261019.stderr.log`.
 - New matching output:
-  `C:\Users\User\.cache\geoai_full_daniel_dump_bigquery_20261018`.
+  `C:\Users\User\.cache\geoai_full_daniel_dump_bigquery_parallel_20261019`.
   Its `progress.json` starts when matching starts; final results require
   `summary.json` and the validated output manifest.
 - Reused Wikidata reference store:
   `C:\Users\User\.cache\geoai_bigquery_20261018`.
 
-At launch, downloader PID 5544 runs two bulk download connections. Hidden
-continuation PID 29628 waits for it and then runs the full importer and matcher.
-The waiting process ID is saved in the dump cache's `process_id.txt`.
-Process IDs are launch evidence, not permanent status indicators.
+The dump cache's `process_id.txt` identifies the current coordinator;
+`active_output.txt` identifies its output directory. Current launch evidence:
+coordinator 26648 and page workers 28784/33740. Check live process state and
+output progress before treating these IDs or the checkpoint counts as current.
 
 The former Wikipedia API worker was stopped. Its **69 saved page checkpoints**
 remain in `C:\Users\User\.cache\geoai_full_daniel_bigquery_20261018`; its
 `superseded.json` points to this replacement. Do not use that directory's stale
 progress file as the current run status.
 
-After confirming no current downloader or continuation remains active, resume
-from `D:\Projects\GeoAI` with:
+After confirming no current continuation remains active, resume an incomplete
+matching run from `D:\Projects\GeoAI` with:
 
 ```powershell
-python -u GG_Data/entity_resolution/wikipedia_dump_bigquery.py --project geo-hagai-ndvi
+python -u GG_Data/entity_resolution/bigquery_direct_wikidata.py --project geo-hagai-ndvi --output C:\Users\User\.cache\geoai_full_daniel_dump_bigquery_parallel_20261019 --page-snapshot C:\Users\User\.cache\geoai_full_daniel_dump_bigquery_20261018
 ```
 
 Do not launch a duplicate while the current jobs are active. Successful dump,
