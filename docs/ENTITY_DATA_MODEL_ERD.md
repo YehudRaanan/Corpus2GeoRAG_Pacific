@@ -1,6 +1,8 @@
 # Entity data model and ERD
 
-Status: proposed model for review, 19 October 2026. This document does not change matching assignments, build tables, or rebuild the graph.
+Status: agreed six-table design with explicit implementation exceptions, 19 October 2026. This document does not change matching assignments, build tables, or rebuild the graph.
+
+The separate [sources-to-model population S2T](SOURCES_TO_ENTITY_DATA_MODEL_S2T.md) defines approved inputs and population rules. It uses Wikidata assertions and events, including native event hierarchy root Q140451665 and the two-distinct-Daniel-entity inclusion rule. WarSampo and EventKG facts are outside this population scope.
 
 Export decisions confirmed on 19 October 2026 are defined in [the Agent graph S2T](ENTITY_MODEL_TO_AGENT_GRAPH_S2T.md). Sources and paragraph text are omitted from this export. No paragraph object or paragraph-level text processing is added. Legacy `Text` and `Index` input fields below describe the original input contract; this documentation change does not delete or rewrite that input.
 
@@ -148,7 +150,7 @@ One row per distinct assigned QID or existing unresolved synthetic identity. All
 | `reference_source` | string | Such as BIGQUERY. |
 | `raw_reference` | JSON or immutable artifact reference | Retain full original reference, including unknown fields, claims, qualifiers, rank, references, sitelinks, and requested ID. Reference form includes URI, SHA-256 and record locator. |
 
-The saved metadata `id` maps to `entity_id`, and `label` to `name`. Preserve its `labels`, `aliases`, `sitelinks`, `direct_types`, `parents`, `revision`, `modified`, `missing`, and `reference_source`. The raw Wikidata envelope `{requested_qid, entity}` is retained through `raw_reference`; this includes `pageid`, `ns`, `title`, `lastrevid`, `modified`, `type`, `id`, `labels`, `descriptions`, `aliases`, `claims`, and `sitelinks` without reducing statements to QID pairs.
+The saved metadata `id` maps to `entity_id`. The approved display-name order is Wikidata English label, Japanese label, then Daniel's original name; synthetic IDs use their own mention's original name. Preserve the selected name's provenance and report conflicting/missing fallbacks before choosing. Preserve `labels`, `aliases`, `sitelinks`, `direct_types`, `parents`, `revision`, `modified`, `missing`, and `reference_source`. The raw Wikidata envelope `{requested_qid, entity}` is retained through `raw_reference`; this includes `pageid`, `ns`, `title`, `lastrevid`, `modified`, `type`, `id`, `labels`, `descriptions`, `aliases`, `claims`, and `sitelinks` without reducing statements to QID pairs.
 
 ## 2. Mentions
 
@@ -245,7 +247,7 @@ One event-specific extension per Wikidata event entity. Names, aliases, source r
 | `importance` | number, nullable | Optional Agent ranking input only when supplied with its basis. |
 | `attributes` | JSON | Existing event enrichment, including kind/importance aliases required by Agent, with evidence. |
 
-Event participants, location, membership and event-to-event connections use Relations. Roles such as attacker/defender belong in the sourced relation's `attributes.side`, not an extra participant table or an inferred relationship.
+Event links to Daniel's matched QIDs use Relations. Current acquisition includes Wikidata assertions between Daniel's matched QIDs and included-event/Daniel links; it does not expand to arbitrary event/event assertions. Roles such as attacker/defender belong in the sourced relation's `attributes.side`, not an extra participant table or an inferred relationship. Event discovery uses the approved native P31/P279 hierarchy rooted at Q140451665, without internal event categories or levels.
 
 ## 6. Relations
 
