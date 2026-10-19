@@ -2,6 +2,8 @@
 
 Status: proposed model for review, 19 October 2026. This document does not change matching assignments, build tables, or rebuild the graph.
 
+Export decisions confirmed on 19 October 2026 are defined in [the Agent graph S2T](ENTITY_MODEL_TO_AGENT_GRAPH_S2T.md). Sources and paragraph text are omitted from this export. No paragraph object or paragraph-level text processing is added. Legacy `Text` and `Index` input fields below describe the original input contract; this documentation change does not delete or rewrite that input.
+
 Six business tables: **Entities, Mentions, Wiki Pages, Geography, Events, Relations**. Versioned mapping catalogs and immutable evidence files remain supporting artifacts. JSON fields below are structured, retained data, not discarded columns.
 
 ## ERD
@@ -117,7 +119,7 @@ Diagram fields are a short overview; the dictionaries and contract coverage belo
 
 1. A matched entity uses its Wikidata QID. Each unresolved mention keeps its existing separate `SYN_...` ID. A synthetic ID records an unresolved identity; it does not establish a newly discovered entity. Do not extract, split, combine, or invent Daniel mentions.
 2. English and Japanese names of one Wikidata item share one entity ID. Distinct names are aliases with evidence, not separate identities. Candidate-cache QIDs are not automatically promoted into Entities.
-3. Events contains only Wikidata events. Its `event_id` is the same QID as its Entities row. Synthetic identities cannot enter Events. Event participation is a Relations row with an event QID at an endpoint; there is no Event Participants table.
+3. Events contains only Wikidata events, obtained separately from Daniel's entity mentions. Its `event_id` is the same QID as its Entities row. Include an event in the graph only when it has direct Wikidata connections, in either direction through any mapped relation, to at least **two distinct matched Daniel entity QIDs** across the input. Repeated mentions, duplicate assertions and reverse views do not increase this count; indirect paths do not count. Synthetic identities cannot enter Events or qualify an event. Event participation is a Relations row with an event QID at an endpoint; there is no Event Participants table.
 4. A normalized date has its original `assigned_id = DATE:...`, a structured `date` value, and a null `entity_id`. It is not a Wikidata identity or a new event. Unresolved DATE mentions can retain their existing synthetic placeholder and reason.
 5. Mentions references Wiki Pages using the composite `(wiki_site, wiki_page_id)`. Page IDs are numeric within one wiki; language/site is required to avoid collisions. Add `wiki_page_id` and `wiki_site` to Daniel's input contract. Until supplied, use the saved page lookup and record that origin. `Index` remains the paragraph index.
 6. If no page ID can be resolved, keep both page-key fields null and preserve `Source`, the lookup result, and the failure reason in `page_resolution`. Never invent a Wikipedia page ID. Missing-page requests remain in the resolution evidence, not as fake Wiki Pages rows.
@@ -137,7 +139,7 @@ One row per distinct assigned QID or existing unresolved synthetic identity. All
 | `alias_details` | JSON array | Each supplied `{label, kind, provider, record_id}` plus `language` where known; kind can be alias, nickname, hull_number, codename. Unknown language stays null. |
 | `identity_status`, `review_status` | string | QID_MATCHED / SYNTHETIC_UNRESOLVED; separate review state such as NOT_REVIEWED. A score does not imply manual verification. |
 | `sources` | JSON array | Provenance objects described below. |
-| `text` | string | Source-preserving text for Agent search. Include only real available text and retain paragraph evidence in Mentions. |
+| `text` | string, legacy optional field | Not exported in the current S2T. No paragraph object, passage assembly or paragraph-level text processing is in scope. |
 | `attributes` | JSON | Open Agent fields, including `kind`, `country`, `scale`, hull numbers (P879), commissioning/decommissioning dates (P729/P730), and their evidence when supplied. Do not infer unsupported values. |
 | `embedding` | numeric array, nullable | Existing optional Agent field. No embedding-generation run is implied. |
 | `direct_types`, `parents` | string arrays | Retrieved Wikidata type and parent evidence. |
@@ -165,8 +167,8 @@ Exactly one row per original Daniel input row, in the original order. No row is 
 | `ner_score` | float | Original input `score`; NER confidence, not matching similarity. |
 | `start`, `end` | integer | Original zero-based character offsets; end exclusive. Preserve `Text[start:end] == word`. |
 | `Source` | string | Original source title/link, unchanged. |
-| `Index` | integer | Original paragraph index, unchanged. |
-| `Text` | string | Original paragraph, unchanged. |
+| `Index` | integer, legacy raw input | Original extraction index; not a Wikipedia page ID. No paragraph-level join or export. |
+| `Text` | string, legacy raw input | Original input field only; no text entity or paragraph export. |
 | `raw` | JSON | Original row, with exact original names: `entity_group`, `score`, `word`, `start`, `end`, `Source`, `Index`, `Text`, `subtype`; retain new page fields when provided. |
 | `assigned_id` | string | Exact saved matching output, including QID, SYN ID or DATE value. |
 | `matched_stage`, `matched_name` | string / nullable string | Saved decision stage and selected reference name. |
@@ -236,10 +238,10 @@ One event-specific extension per Wikidata event entity. Names, aliases, source r
 | Column | Type / requirement | Meaning |
 |---|---|---|
 | `event_id` | string, PK and FK | Original Wikidata event QID; no new event IDs. |
-| `kind` | string, nullable | Source-supported classification such as battle, campaign, raid, operation, landing or bombing. |
-| `start_date`, `end_date`, `point_date` | string, nullable | Selected partial-ISO dates or point date, without inventing missing precision. |
+| `kind` | source value, nullable | Retain the supplied Wikidata classification as is. No internal event classification or inferred level. Report a target-format mismatch rather than inventing a conversion. |
+| `start_date`, `end_date`, `point_date` | source temporal values, nullable | Use supplied Wikidata values. No new ranking, date selection or conflict-resolution logic is authorized. Highlight multiple values or incompatible formats before export. |
 | `temporal_evidence` | JSON | All date claims, precision, calendar, qualifiers, references, selection status and conflicts. Raw claims stay accessible. |
-| `event_map_version` | string, nullable | Mapping artifact version when an event mapping catalog is agreed. No separate approved event-type mapping catalog was located; do not invent a version. |
+| `event_map_version` | string, nullable, reserved | No internal event mapping is authorized for the current S2T. Do not create or populate a mapping version. |
 | `importance` | number, nullable | Optional Agent ranking input only when supplied with its basis. |
 | `attributes` | JSON | Existing event enrichment, including kind/importance aliases required by Agent, with evidence. |
 
