@@ -139,3 +139,7 @@ The final Relations replay manifest and all recorded hashes subsequently passed;
 - [Historical Agent contract update request](../GG_Data/agent_export/AGENT_CONTRACT_UPDATE_REQUEST.md); current user decisions and S2Ts take precedence.
 
 Closing an item requires a recorded decision or verification result, its affected records where applicable, and a corresponding update to the governing S2T/contract. Listing a proposal here does not change the agreed pipeline.
+
+Latest user correction: retain the 34 pre-1900-end statements with original dates. Policy v1.1.0 removes that date-only exclusion and bypasses the start-year floor for these historical relations. Earlier 10,467-row/34-exclusion outputs remain immutable history and are superseded for current use. New replay: `outputs/poc_10k_relations_original_historical_dates_20261020` (require its manifest). Events remain blocked; no alternate root or source is approved.
+
+That corrected replay is verified: `DANIEL_RELATIONS_ONLY`, 10,501 base statements, all 34 historical statements restored with exact original date values and raw qualifiers, zero exclusions in this sample and 120 temporal audit rows. Original eligible population accounting and all manifest hashes passed; the previous 10,467 statements are unchanged except policy metadata. The 28 focused tests and Ruff passed. This corrects Relations only; the event-root source question remains pending.

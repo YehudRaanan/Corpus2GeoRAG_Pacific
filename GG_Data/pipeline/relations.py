@@ -29,7 +29,7 @@ ACCEPTED_ENTITIES_SHA = (
     "a4b967188c7247996309e53dba9851208d8d8e1e69c21d79f7afb1cc35c252e4"
 )
 BASE_MAPPING_SHA = "8ecdc0095d10ec1fc24dfb82510473faef42b896c126b76cb0daeb233b301821"
-TIME_POLICY = "relation-date-selection-v1.0.0"
+TIME_POLICY = "relation-date-selection-v1.1.0"
 NATIVE_RULES = OUT / "ADDITIONAL_NATIVE_RELATION_RULES_2026-10-20.csv"
 PROPERTY_METADATA = (
     ROOT / "poc/relation_alignment/relation_catalog_eda/wikidata_property_metadata.json"
@@ -49,6 +49,8 @@ def statement_time(statement: dict) -> dict:
 
     Start: earliest supplied value from 1900; all earlier -> derived year 1900.
     End: latest supplied value. Preserve original snaks, precision and calendars.
+    User correction: when the latest end precedes 1900, keep the original
+    supplied dates without the start floor; never exclude on this date alone.
     No point-date selection or reversed-interval repair has been approved.
     """
     selected, raw, precisions, decisions = {}, {}, {}, {}
@@ -61,7 +63,8 @@ def statement_time(statement: dict) -> dict:
             raise SourceException("Unsupported native date format", value=value)
         return tuple(map(int, match.groups()))
 
-    for name, prop in (("from", "P580"), ("to", "P582"), ("point", "P585")):
+    # Inspect the end first so a historical relation keeps its original start.
+    for name, prop in (("to", "P582"), ("from", "P580"), ("point", "P585")):
         snaks = statement.get("qualifiers", {}).get(prop, [])
         values, precision = [], []
         for snak in snaks:
@@ -87,8 +90,14 @@ def statement_time(statement: dict) -> dict:
                     calendars=sorted(str(c) for c in calendars),
                 )
             candidates = raw[name]
+            historical = (
+                name == "from"
+                and bool(selected.get("to"))
+                and date_parts(selected["to"])[0] < 1900
+            )
             if name == "from":
-                candidates = [v for v in candidates if date_parts(v)[0] >= 1900]
+                if not historical:
+                    candidates = [v for v in candidates if date_parts(v)[0] >= 1900]
                 selected[name] = (
                     min(candidates, key=date_parts)
                     if candidates
@@ -98,22 +107,28 @@ def statement_time(statement: dict) -> dict:
                 selected[name] = max(candidates, key=date_parts)
             decisions[name] = dict(
                 value=selected[name],
-                rule="EARLIEST_FROM_1900"
-                if name == "from" and candidates
-                else "YEAR_1900_FLOOR"
-                if name == "from"
-                else "LATEST_END",
+                rule=(
+                    "ORIGINAL_PRE_1900_END"
+                    if historical
+                    else (
+                        "EARLIEST_FROM_1900"
+                        if name == "from" and candidates
+                        else "YEAR_1900_FLOOR" if name == "from" else "LATEST_END"
+                    )
+                ),
                 derived=name == "from" and not candidates,
-                selected_precision=[9]
-                if name == "from" and not candidates
-                else sorted(
-                    {
-                        s["datavalue"]["value"]["precision"]
-                        for s in snaks
-                        if isinstance(s.get("datavalue", {}).get("value"), dict)
-                        and s["datavalue"]["value"].get("time") == selected[name]
-                        and s["datavalue"]["value"].get("precision") is not None
-                    }
+                selected_precision=(
+                    [9]
+                    if name == "from" and not candidates
+                    else sorted(
+                        {
+                            s["datavalue"]["value"]["precision"]
+                            for s in snaks
+                            if isinstance(s.get("datavalue", {}).get("value"), dict)
+                            and s["datavalue"]["value"].get("time") == selected[name]
+                            and s["datavalue"]["value"].get("precision") is not None
+                        }
+                    )
                 ),
             )
     start, end, point = (selected[k] for k in ("from", "to", "point"))
@@ -121,13 +136,15 @@ def statement_time(statement: dict) -> dict:
     status = (
         "CONFLICT"
         if first and last and first > last
-        else "MULTIPLE"
-        if any(len(v) > 1 for v in raw.values())
-        else "DIRECT"
-        if point or (start and end)
-        else "PARTIAL"
-        if start or end
-        else "NONE"
+        else (
+            "MULTIPLE"
+            if any(len(v) > 1 for v in raw.values())
+            else (
+                "DIRECT"
+                if point or (start and end)
+                else "PARTIAL" if start or end else "NONE"
+            )
+        )
     )
     return dict(
         time_from=start,
@@ -136,7 +153,11 @@ def statement_time(statement: dict) -> dict:
         time_precision=precisions,
         raw_time_values=raw,
         time_status=status,
-        time_selection=dict(policy_version=TIME_POLICY, decisions=decisions),
+        time_selection=dict(
+            policy_version=TIME_POLICY,
+            original_pre_1900_end=bool(last and last[0] < 1900),
+            decisions=decisions,
+        ),
     )
 
 
@@ -225,15 +246,6 @@ def scan(
                     raise SourceException(
                         error.case["reason"], **case, temporal_exception=error.case
                     ) from error
-                # User approval, 20 October: a relation ending before 1900 is
-                # excluded before the selected-start floor can reverse it.
-                if (
-                    time["time_to"]
-                    and int(re.match(r"[+-]\d+", time["time_to"])[0]) < 1900
-                ):
-                    excluded.append(dict(**case, **time, reason="ENDED_BEFORE_1900"))
-                    counts["excluded_ended_before_1900"] += 1
-                    continue
                 if (
                     time["time_status"] == "CONFLICT"
                     or len(time["raw_time_values"]["point"]) > 1
@@ -261,6 +273,8 @@ def scan(
                 ):
                     raise SourceException("Conflicting mapping", **case, mapping=rule)
                 retained.append(dict(**case, **time))
+                if time["time_selection"]["original_pre_1900_end"]:
+                    counts["retained_original_pre_1900_end"] += 1
                 counts[f"rank.{statement['rank']}"] += 1
                 counts[f"time.{time['time_status']}"] += 1
     if seen_entities.keys() != qids:
@@ -570,6 +584,7 @@ def finish_relations(
         )
         for c in retained
         if c["time_status"] == "MULTIPLE"
+        or c["time_selection"]["original_pre_1900_end"]
         or any(d["derived"] for d in c["time_selection"]["decisions"].values())
     ]
     for name, rows in (

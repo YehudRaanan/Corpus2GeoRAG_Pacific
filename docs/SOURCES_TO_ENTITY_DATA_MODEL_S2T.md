@@ -183,10 +183,10 @@ The first applied entry is `(Wikidata, wd:P2341)` in `ADDITIONAL_NATIVE_RELATION
 
 ### Relations date policy — approved 20 October 2026
 
-`relation-date-selection-v1.0.0` applies to Relations only; it does not select Event dates.
+`relation-date-selection-v1.1.0` applies to Relations only; it does not select Event dates. The user correction supersedes the earlier pre-1900-end exclusion: these statements remain in Relations with their original dates.
 
-- Start: select the earliest supplied P580 value whose year is at least 1900. If all supplied start values precede 1900, use the derived year 1900 with year precision (9); do not invent a month or day. A missing start stays missing.
-- End: select the latest supplied P582 value. If that latest end year is before 1900, exclude the statement, preserving its full record and reason `ENDED_BEFORE_1900` in the audit output. A missing end does not trigger exclusion. Apply the 14 exact assertion exclusions first.
+- Historical exception first: if the latest supplied P582 end year is before 1900, retain the relation with its supplied start and end dates, precision and calendar. Do not apply a 1900 floor or exclude it on this basis. A missing start remains missing. If multiple dates are supplied, preserve every value; select the earliest original start and latest end under the existing conflict rule. Mark `attributes.time_selection.original_pre_1900_end=true`.
+- Other relations: select the earliest supplied P580 value whose year is at least 1900. If all supplied starts precede 1900, use derived year 1900 with year precision (9), without inventing a month/day. Select the latest supplied P582 end. Missing dates stay missing. The 14 exact assertion exclusions still apply before date selection; no date-only exclusion is authorized.
 - Keep every original value, snak, precision and calendar. Store selection rules, selected precision and the derived flag in `attributes.time_selection`; preserve the same evidence in `input_assertion`. Multiple supplied start/end values remain visible as `MULTIPLE`, even when this approved rule selects a value.
 - Different calendars within a date field, multiple distinct point dates, unsupported date formats, or a remaining start-after-end interval require consultation. No silent repair or point-date selection is approved.
 
@@ -268,7 +268,7 @@ The user subsequently approved the general native-preservation rule above.
 P2341 is now present in `relation-map-v2.1.1`; the original exception report
 remains historical evidence. The later source scan passed; population replay status is recorded below and in the pipeline README.
 
-The earlier Ribbentrop multiple-start stop is resolved by the approved date policy: select 1930 and retain both original qualifiers. The later Prague statement `Q1085$0697567f-4a18-22cf-3118-7f7622ccf2f5` has source dates 1804-08-11 through 1867-03-29; it is excluded under the approved pre-1900 end rule. Historical exception files remain unchanged.
+The earlier Ribbentrop multiple-start stop is resolved by the approved date policy: select 1930 and retain both original qualifiers. The later Prague statement `Q1085$0697567f-4a18-22cf-3118-7f7622ccf2f5` has source dates 1804-08-11 through 1867-03-29; it was excluded under the earlier rule. The latest user correction restores this relation with those original dates. Historical exception files remain unchanged; their exclusion rule is superseded.
 
 The cache-only source gate then passed at `GG_Data/pipeline/outputs/poc_10k_relations_date_scope_check_20261020/source_check.json`: 4,712 source QIDs, 213,277 claims, 10,501 in-scope statements, 34 pre-1900-end exclusions and 10,467 retained statements. This is `DANIEL_RELATIONS_SOURCE_CHECK_ONLY`, not a populated Relations table or completed POC. No query or entity change occurred.
 
@@ -283,3 +283,7 @@ The subsequent Daniel/Daniel Relations population passed in `outputs/poc_10k_rel
 - [Geometry source and selection policy](GEOCODING_HIGH_LEVEL_PROCESS.md) and [extraction method](../GG_Data/geocoding/GEO_OBJECT_EXTRACTION_METHOD.md).
 
 Latest user decisions govern name priority, Wikidata-only assertions, included event links in Relations, all event types under Q140451665, two-entity event minimum, per-mention synthetic IDs, no new Daniel entities, and Shapely objects with downstream JSON pointers. No physical model tables or new production outputs are created by this specification.
+
+### Correction: retain historical relations
+
+The user withdrew the pre-1900-end exclusion after reviewing the 34 excluded statements. Current policy v1.1.0 retains these statements with original dates and no 1900 start floor. Earlier run directories and their manifests remain immutable historical records, not the corrected current population. The new replay is `GG_Data/pipeline/outputs/poc_10k_relations_original_historical_dates_20261020`; require its successful manifest before use. No event-root/source decision is changed by this correction.

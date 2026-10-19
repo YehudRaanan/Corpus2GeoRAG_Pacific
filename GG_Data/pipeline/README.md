@@ -213,7 +213,7 @@ their calendars/precision and provenance are retained in the exception and
 unchanged Entities. No relation table, new mapping parameters or completed
 Relations manifest was written, and no query was made.
 
-The user approved `relation-date-selection-v1.0.0`: earliest supplied start from 1900; if all starts precede 1900, derived year 1900 (precision 9); latest end. Exclude a relation whose latest end precedes 1900, preserving the raw record and reason. Missing dates stay missing. Point-date conflicts and remaining reversed intervals still require consultation. This policy does not select Event dates. See population S2T section 8.
+Historical policy (superseded for pre-1900-end relations by v1.1.0 below): the user approved `relation-date-selection-v1.0.0`: earliest supplied start from 1900; if all starts precede 1900, derived year 1900 (precision 9); latest end. Exclude a relation whose latest end precedes 1900, preserving the raw record and reason. Missing dates stay missing. Point-date conflicts and remaining reversed intervals still require consultation. This policy does not select Event dates. See population S2T section 8.
 
 The next Prague source case (1804-1867) is resolved by the pre-1900 end exclusion. An overstrict P53 mapping guard was also corrected to honor the existing native-retention decision; no catalog rule changed. Historical exception directories remain unchanged.
 
@@ -274,3 +274,9 @@ Run the in-memory checks (no Daniel data output):
 ```powershell
 C:\Users\User\anaconda3\python.exe -B -m pytest -q -p no:cacheprovider GG_Data/pipeline/test_pipeline.py
 ```
+
+## Current correction: retain original historical dates
+
+The user correction supersedes the pre-1900-end exclusion. Policy `relation-date-selection-v1.1.0` retains relations whose latest end precedes 1900, with original supplied dates, precision/calendar and no start-year floor. Missing starts stay missing. Other Relations date rules and the 14 exact assertion exclusions remain unchanged; see population S2T section 8. The 34 earlier exclusions are historical output, not the current rule. A new immutable replay uses `outputs/poc_10k_relations_original_historical_dates_20261020`; only a successful manifest establishes completion. Events remain blocked at the previously recorded root check.
+
+The corrected replay passed with status `DANIEL_RELATIONS_ONLY`: 10,501 base Relations, 34 historical statements retained with original dates, zero excluded statements in this sample, and 120 temporal audit rows. All 34 restored statement IDs, raw qualifiers, exact start/end values, precision and missing dates match their source evidence; none received a derived 1900 start. The earlier 10,467 rows are unchanged except explicit policy metadata. All recorded input/mapping/output hashes passed, as did 28 focused tests and Ruff. The property query cache remains one query; no new query or matching run was needed. Example: Prague statement `Q1085$0697567f-4a18-22cf-3118-7f7622ccf2f5` is retained with `+1804-08-11T00:00:00Z` through `+1867-03-29T00:00:00Z`.

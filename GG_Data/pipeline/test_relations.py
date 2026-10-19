@@ -73,15 +73,27 @@ def test_relation_scope_ranks_typed_rows_and_approved_multiple_start_dates():
     assert kept[0]["time_status"] == "MULTIPLE"
     assert kept[0]["time_from"] == "+1942-01-01T00:00:00Z"
 
-    # Approved scope: exclude only when the latest supplied end precedes 1900.
+    # User correction/S2T 8: historical relations keep their original dates.
     def end(value):
         return {"datavalue": {"value": {"time": value, "precision": 9}}}
 
-    statement["qualifiers"]["P582"] = [end("-0044-00-00T00:00:00Z")]
+    statement["qualifiers"]["P580"] = [end("+1804-08-11T00:00:00Z")]
+    statement["qualifiers"]["P582"] = [end("+1867-03-29T00:00:00Z")]
     kept, excluded, counts = scan([entity, target], {"Q1", "Q2"}, {})
-    assert not kept and counts["excluded_ended_before_1900"] == 1
-    assert excluded[0]["raw_statement"] == statement
-    assert excluded[0]["reason"] == "ENDED_BEFORE_1900"
+    assert len(kept) == 1 and not excluded
+    assert counts["retained_original_pre_1900_end"] == 1
+    assert kept[0]["time_from"] == "+1804-08-11T00:00:00Z"
+    assert kept[0]["time_to"] == "+1867-03-29T00:00:00Z"
+    assert kept[0]["raw_statement"] == statement
+    assert kept[0]["time_selection"]["decisions"]["from"]["derived"] is False
+    statement["qualifiers"]["P580"] = [end("-0050-00-00T00:00:00Z")]
+    statement["qualifiers"]["P582"] = [end("-0044-00-00T00:00:00Z")]
+    assert (
+        scan([entity, target], {"Q1", "Q2"}, {})[0][0]["time_from"]
+        == "-0050-00-00T00:00:00Z"
+    )
+    del statement["qualifiers"]["P580"]
+    assert scan([entity, target], {"Q1", "Q2"}, {})[0][0]["time_from"] == ""
     statement["qualifiers"]["P582"].append(end("+1945-00-00T00:00:00Z"))
     assert len(scan([entity, target], {"Q1", "Q2"}, {})[0]) == 1
     del statement["qualifiers"]["P582"]
