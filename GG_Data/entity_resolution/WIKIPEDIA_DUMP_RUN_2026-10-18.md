@@ -5,6 +5,31 @@ and its waiting continuation were verified active at this checkpoint. The
 continuation imports the dumps and then runs all **309,864 original Daniel
 mentions / 428 source titles** without another confirmation.
 
+## Parallel preparation — 19 October 2026
+
+The user approved two preparation workers. English and Japanese metadata
+conversion now runs in separate processes. Once source page IDs are resolved,
+their link conversion also runs in two processes. Within each language,
+pagelinks finish before linktarget selection starts. The coordinator alone
+submits BigQuery jobs and writes shared evidence. Matching waits for the full
+page snapshot, then keeps the agreed three-pass order and the 80% rule.
+
+Before switching, English page properties completed: **10,355,689 QID rows /
+46,114,565 scanned property rows**. Four tables are imported. The earlier worker
+was stopped during local Japanese page conversion, with no active BigQuery
+child job. Its unfinished conversion restarts; completed files and imports are
+reused. No new downloads or changes to candidate rules are required.
+
+Current coordinator PID and logs are in `process_id.txt` and
+`C:\Users\User\.cache\geoai_wikipedia_dump_20261018.parallel_20261019.stdout.log`
+and `.parallel_20261019.stderr.log`. Each language writes its own
+`progress_en.json` / `progress_ja.json` in the dump cache, including worker PID,
+stage, and table. The coordinator's `progress.json` remains separate.
+
+Eighteen targeted tests and Ruff passed. The added real-process check verifies
+both languages, selected source-page links, target namespaces, missing targets,
+and separate worker progress files. No final matching counts are available.
+
 ## Recovery checkpoint — 19 October 2026
 
 All ten downloads completed and passed checksum verification. Three tables are

@@ -12,12 +12,13 @@ import gzip
 import hashlib
 import json
 import logging
+import os
 import re
 import shutil
 import subprocess
 import threading
 from collections import Counter, defaultdict
-from concurrent.futures import ThreadPoolExecutor
+from concurrent.futures import ProcessPoolExecutor, ThreadPoolExecutor, as_completed
 from datetime import datetime, timezone
 from pathlib import Path
 
@@ -68,13 +69,16 @@ SCHEMAS = {
 }
 
 
-def progress(cache: Path, stage: str, **values: object) -> None:
+def progress(
+    cache: Path, stage: str, *, worker: str | None = None, **values: object
+) -> None:
     with LOCK:
         save(
-            cache / "progress.json",
+            cache / (f"progress_{worker}.json" if worker else "progress.json"),
             {
                 "stage": stage,
                 "updated_at": datetime.now(timezone.utc).isoformat(),
+                "pid": os.getpid(),
                 **values,
             },
         )
@@ -305,6 +309,42 @@ def project_row(table: str, r: dict) -> dict | None:
     return None
 
 
+def prepare_metadata(cache: Path, lang: str) -> str:
+    """One process owns all conversion files for this language."""
+    for table in ("page", "redirect", "page_props"):
+        progress(cache, "CONVERT", worker=lang, language=lang, table=table)
+        convert(cache / f"{lang}wiki-{DATE}-{table}.sql.gz", table)
+    progress(cache, "METADATA_FILES_READY", worker=lang, language=lang)
+    return lang
+
+
+def prepare_links(cache: Path, lang: str, selected: set[int]) -> tuple:
+    progress(cache, "CONVERT_LINKS", worker=lang, language=lang, table="pagelinks")
+    parquet, _ = convert(
+        cache / f"{lang}wiki-{DATE}-pagelinks.sql.gz", "pagelinks", selected
+    )
+    target_ids = set(
+        pq.read_table(parquet, columns=["target_id"])["target_id"].to_pylist()
+    )
+    progress(cache, "CONVERT_LINKS", worker=lang, language=lang, table="linktarget")
+    target_parquet, _ = convert(
+        cache / f"{lang}wiki-{DATE}-linktarget.sql.gz", "linktarget", target_ids
+    )
+    target_rows = pq.read_table(target_parquet).to_pylist()
+    inventory = {
+        "source_pages": len(selected),
+        "distinct_link_targets": len(target_ids),
+        "target_namespace_counts": dict(
+            Counter(r["target_namespace"] for r in target_rows)
+        ),
+        "missing_target_ids": sorted(
+            target_ids - {r["target_id"] for r in target_rows}
+        ),
+    }
+    progress(cache, "LINK_FILES_READY", worker=lang, language=lang)
+    return lang, target_ids, inventory
+
+
 def table_id(api: BigQueryData, lang: str, table: str) -> str:
     return f"{api.project}.{DATASET}.{lang}_{table}_{DATE}"
 
@@ -375,7 +415,9 @@ def resolve_sql(api: BigQueryData, lang: str, seed: str) -> str:
  QUALIFY ROW_NUMBER() OVER(PARTITION BY seed_id ORDER BY depth DESC)=1"""
 
 
-def build_pages(api: BigQueryData, cache: Path, output: Path) -> dict:
+def build_pages(
+    api: BigQueryData, cache: Path, output: Path, workers: ProcessPoolExecutor
+) -> dict:
     rows = input_rows()
     sources = sorted({r["raw"]["Source"] for r in rows})
     inputs = api.upload_values(sources, "source")
@@ -384,7 +426,10 @@ def build_pages(api: BigQueryData, cache: Path, output: Path) -> dict:
         api.cli(["show", f"{api.project}:{DATASET}"])
     except RuntimeError:
         api.cli(["mk", "--dataset", f"{api.project}:{DATASET}"])
-    for lang in ("en", "ja"):
+    progress(cache, "PREPARE_METADATA", workers=2)
+    prepared = [workers.submit(prepare_metadata, cache, lang) for lang in ("en", "ja")]
+    for future in as_completed(prepared):
+        lang = future.result()
         for table in ("page", "redirect", "page_props"):
             receipts.append(load_table(api, cache, lang, table))
     progress(cache, "RESOLVE_SOURCE_PAGES", sources=len(sources))
@@ -416,30 +461,19 @@ def build_pages(api: BigQueryData, cache: Path, output: Path) -> dict:
     }
     link_rows = {}
     link_inventory = {}
-    for lang in ("en", "ja"):
+    progress(cache, "PREPARE_LINKS", workers=2)
+    prepared = [
+        workers.submit(
+            prepare_links, cache, lang, {int(r["pageid"]) for r in language_rows[lang]}
+        )
+        for lang in ("en", "ja")
+    ]
+    for future in as_completed(prepared):
+        lang, target_ids, inventory = future.result()
+        link_inventory[lang] = inventory
         selected = {int(r["pageid"]) for r in language_rows[lang]}
         receipts.append(load_table(api, cache, lang, "pagelinks", selected))
-        parquet, _ = convert(
-            cache / f"{lang}wiki-{DATE}-pagelinks.sql.gz", "pagelinks", selected
-        )
-        target_ids = set(
-            pq.read_table(parquet, columns=["target_id"])["target_id"].to_pylist()
-        )
         receipts.append(load_table(api, cache, lang, "linktarget", target_ids))
-        target_parquet, _ = convert(
-            cache / f"{lang}wiki-{DATE}-linktarget.sql.gz", "linktarget", target_ids
-        )
-        target_rows = pq.read_table(target_parquet).to_pylist()
-        link_inventory[lang] = {
-            "source_pages": len(selected),
-            "distinct_link_targets": len(target_ids),
-            "target_namespace_counts": dict(
-                Counter(r["target_namespace"] for r in target_rows)
-            ),
-            "missing_target_ids": sorted(
-                target_ids - {r["target_id"] for r in target_rows}
-            ),
-        }
         progress(cache, "RESOLVE_LINKS", language=lang, source_pages=len(selected))
         seed = f"""SELECT FORMAT('%d:%d',l.pageid,l.target_id) AS seed_id,
  CAST(l.pageid AS STRING) AS source,t.title AS requested_title
@@ -558,7 +592,10 @@ def main() -> None:
         if args.download_only:
             return
         api = BigQueryData(args.project, STORE)
-        build_pages(api, args.cache, args.output)
+        # Separate processes allow both CPU-bound languages to make progress.
+        # Only the parent submits BigQuery jobs or writes the shared manifest.
+        with ProcessPoolExecutor(max_workers=2) as workers:
+            build_pages(api, args.cache, args.output, workers)
         execute(args.project, STORE, args.output, page_snapshot=args.output, api=api)
         progress(args.cache, "COMPLETE", output=str(args.output))
     except Exception as exc:

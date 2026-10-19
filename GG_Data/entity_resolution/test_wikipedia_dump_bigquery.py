@@ -2,11 +2,20 @@
 
 import gzip
 import json
+import os
+from concurrent.futures import ProcessPoolExecutor
 
 import pyarrow.parquet as pq
 import pytest
 
-from wikipedia_dump_bigquery import convert, parse_tuple, project_row
+from wikipedia_dump_bigquery import (
+    DATE,
+    convert,
+    parse_tuple,
+    prepare_links,
+    prepare_metadata,
+    project_row,
+)
 
 
 def test_mysql_strings_preserve_japanese_quotes_symbols_and_null():
@@ -103,3 +112,65 @@ INSERT INTO `page_props` VALUES
         assert count == 1
         assert pq.read_table(parquet).to_pylist() == [{"pageid": 2, "qid": "Q49112"}]
         assert json.loads(parquet.with_suffix(".json").read_text())["scanned_rows"] == 3
+
+
+def test_process_workers_preserve_both_languages_and_selected_link_scope(tmp_path):
+    for lang, title in [("en", "Example"), ("ja", "日本")]:
+        tables = {
+            "page": (
+                "page_id page_namespace page_title page_is_redirect page_latest page_links_updated",
+                f"(10,0,'{title}',0,100,NULL);",
+            ),
+            "redirect": (
+                "rd_from rd_namespace rd_title rd_interwiki",
+                f"(11,0,'{title}','');",
+            ),
+            "page_props": (
+                "pp_page pp_propname pp_value pp_sortkey",
+                "(10,'wikibase_item','Q17',NULL);",
+            ),
+            "pagelinks": (
+                "pl_from pl_from_namespace pl_target_id",
+                "(10,0,100),\n(10,0,101),\n(10,0,102),\n(99,0,103);",
+            ),
+            "linktarget": (
+                "lt_id lt_namespace lt_title",
+                f"(100,0,'{title}'),\n(101,1,'Talk');",
+            ),
+        }
+        for table, (columns, values) in tables.items():
+            fields = ",\n".join(f"  `{name}` text" for name in columns.split())
+            with gzip.open(
+                tmp_path / f"{lang}wiki-{DATE}-{table}.sql.gz", "wt", encoding="utf-8"
+            ) as stream:
+                stream.write(
+                    f"CREATE TABLE `{table}` (\n{fields}\n) ENGINE=InnoDB;\n"
+                    f"INSERT INTO `{table}` VALUES\n{values}\n"
+                    "-- Dump completed on 2026-10-01\n"
+                )
+    with ProcessPoolExecutor(max_workers=2) as workers:
+        jobs = [
+            workers.submit(prepare_metadata, tmp_path, lang) for lang in ("en", "ja")
+        ]
+        assert [job.result(timeout=30) for job in jobs] == ["en", "ja"]
+        for lang in ("en", "ja"):
+            saved = json.loads((tmp_path / f"progress_{lang}.json").read_text())
+            assert saved["stage"] == "METADATA_FILES_READY"
+            assert saved["pid"] != os.getpid()
+        jobs = [
+            workers.submit(prepare_links, tmp_path, lang, {10}) for lang in ("en", "ja")
+        ]
+        for job in jobs:
+            lang, targets, inventory = job.result(timeout=30)
+            assert targets == {100, 101, 102}
+            assert inventory == {
+                "source_pages": 1,
+                "distinct_link_targets": 3,
+                "target_namespace_counts": {0: 1, 1: 1},
+                "missing_target_ids": [102],
+            }
+            path, count = convert(tmp_path / f"{lang}wiki-{DATE}-page.sql.gz", "page")
+            assert count == 1
+            assert pq.read_table(path)["title"].to_pylist() == [
+                "Example" if lang == "en" else "日本"
+            ]

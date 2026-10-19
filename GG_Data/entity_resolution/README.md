@@ -5,10 +5,11 @@
 [Current run, evidence scope, saved data, and resume command](WIKIPEDIA_DUMP_RUN_2026-10-18.md).
 The English/Japanese import is running. Automatic continuation imports the
 needed page links into BigQuery and then matches all 309,864 Daniel mentions.
-All ten dumps are downloaded and verified; three tables are imported. On
-19 October, an unused binary template-property decoding error was fixed and the
-import resumed from saved data. The 80% matching rule stays fixed. Final
-full-data counts are not available yet.
+All ten dumps are downloaded and verified; four tables are imported. On
+19 October, a binary-property decoding error was fixed. English and Japanese
+preparation now uses two processes, with one coordinator for BigQuery jobs.
+Completed data is reused. The 80% rule and matching pass order stay fixed.
+Final full-data counts are not available yet.
 
 ## Full run moved to BigQuery — 18 October 2026
 
