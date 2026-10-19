@@ -97,7 +97,7 @@ C02 is the one storage-contract clarification in this section. The other entries
 
 ## Discussion order
 
-Do not reopen P01/P02/P09/P11. Typed entity IDs, QID endpoints and geometry pointers are approved. Implement Agent integration under T06 and verify spatial CRS requirements under P10. The first population step and interface helpers are in `GG_Data/pipeline`; only in-memory checks have run. No 10K Daniel POC data output is authorized yet. Perform the remaining T01-T08 work after the applicable output approval. Bring actual exceptions back before changing logic; retain D01-D05 as deferred work.
+Do not reopen P01/P02/P09/P11. Typed entity IDs, QID endpoints and geometry pointers are approved. Implement Agent integration under T06 and verify spatial CRS requirements under P10. D: output was approved on 20 October 2026. The first population step completed for 10,000 original mentions and 691 resolved Wiki Pages; exact source rows, saved decisions, output hashes and keys passed verification. Counts and the known missing-page outcomes are in `GG_Data/pipeline/README.md`. Status is `STEP_1_ONLY`; Entities, Events, Relations, Geography, graph export and Agent integration remain pending. Continue T01-T08 under the agreed rules. Bring actual exceptions back before changing logic; retain D01-D05 as deferred work.
 
 ## Source documents
 

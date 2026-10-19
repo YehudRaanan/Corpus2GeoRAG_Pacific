@@ -18,8 +18,9 @@ Any unexpected count, field, source hash, ID, score, page conflict or missing
 artifact raises an error. Stop and discuss the exact case with the user before
 changing a rule. No automatic repair or retry is implemented.
 
-**Execution is on hold until the user approves POC data output on D:.** More
-free space is not approval. The command below is for use only after approval:
+**Output on D: was approved on 20 October 2026.** Step 1 ran successfully in
+`outputs/poc_10k`. Do not rerun into that directory; existing output is protected.
+The original invocation was:
 
 ```powershell
 C:\Users\User\anaconda3\python.exe -B -m GG_Data.pipeline.poc --output D:\Projects\GeoAI\GG_Data\pipeline\outputs\poc_10k --output-approved
@@ -31,6 +32,41 @@ a completed step. Entities, Events, Relations, Geography, final graph export
 and Agent integration remain pending. Wiki Pages `about_entity_id` is populated
 only after the later Entities stage establishes membership. This is not a
 six-table release, a fresh matching run or a completed 10K POC.
+
+### Verified first-run results — 20 October 2026
+
+The run reused the completed matching decisions; these are sample counts, not
+new matches or an accuracy estimate. The 10,000 sampled source positions are
+recorded in `outputs/poc_10k/manifest.json`.
+
+| Saved outcome | Mentions |
+|---|---:|
+| Page/direct Wikidata match | 7,429 |
+| Already-matched pool | 215 |
+| Fresh WWII pool | 48 |
+| Normalized date | 952 |
+| Existing unresolved synthetic ID | 1,356 |
+| **Total** | **10,000** |
+
+There are 7,692 QID-assigned mentions covering 4,712 distinct QIDs. The 1,356
+synthetic mentions comprise 813 name-threshold failures, 175 type mismatches,
+78 unknown types and 290 invalid/unsupported date values. These are preserved
+baseline outcomes, not new failures introduced by table population.
+
+The sample covers 419 source requests: 415 resolved and the four already-known
+missing requests. Those four account for 29 mentions with null page keys.
+Resolved requests deduplicate to 691 Wiki Pages rows: 404 English and 287
+Japanese. Request counts and distinct page counts have different denominators.
+
+Verification passed: every output hash, exact original raw rows and sampled
+positions, unique mention/page keys, page foreign keys, distinct per-mention
+synthetic IDs and separate NER/match scores. Output size is 23,087,187 bytes.
+No new input or matching exception was raised. The completion marker remains
+`STEP_1_ONLY`; later stages above have not run.
+
+Resolution-manifest SHA-256:
+`86e60c17a99d1aaecbd87dbda7c7d69a0dee8c41cd15d30c3393b13d164d2db4`.
+Outputs are ignored data artifacts on D:, not protected by a code commit.
 
 ## Approved graph interfaces
 

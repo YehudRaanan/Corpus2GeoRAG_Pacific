@@ -215,7 +215,9 @@ Downstream interfaces approved on 19 October 2026: separate graph entities use `
 
 ### First implementation checkpoint
 
-`GG_Data/pipeline/poc.py` implements the initial 10,000-row sample, input/matching hash checks, Mentions and resolved Wiki Pages copying. Complete request payloads are stored once in supporting `page_evidence.json.gz`; mention/page references include a record locator and the output manifest binds the file hash. No text extraction or rematching occurs. `graph_contract.py` implements the approved graph interface helpers; it is not yet integrated into the Agent. In-memory fixture checks have run, but the 10K Daniel POC and all POC data output remain on hold pending explicit user approval for output on D:. Later population stages and the final graph remain pending.
+`GG_Data/pipeline/poc.py` implements the initial 10,000-row sample, input/matching hash checks, Mentions and resolved Wiki Pages copying. Complete request payloads are stored once in supporting `page_evidence.json.gz`; mention/page references include a record locator and the output manifest binds the file hash. No text extraction or rematching occurs. `graph_contract.py` implements the approved graph interface helpers; it is not yet integrated into the Agent.
+
+On 20 October 2026 the user approved D: data output. Step 1 completed at `GG_Data/pipeline/outputs/poc_10k`: 10,000 unchanged original mentions, comprising 7,692 saved QID assignments, 952 normalized dates and 1,356 existing synthetic IDs. There are 691 distinct resolved EN/JA pages. The sample includes the four already-known missing requests, affecting 29 mentions. Output hashes, original rows, sampling positions, mention/page keys, page links and per-mention synthetic identities passed verification. See [detailed counts](../GG_Data/pipeline/README.md#verified-first-run-results--20-october-2026). Status is `STEP_1_ONLY`; later population stages and the final graph remain pending. This does not certify matching accuracy or a complete six-table POC.
 
 ## 11. Contract references and precedence
 
