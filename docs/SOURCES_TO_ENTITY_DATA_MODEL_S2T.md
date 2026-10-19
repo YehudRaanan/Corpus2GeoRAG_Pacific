@@ -13,6 +13,7 @@ The [full pipeline review](DANIEL_TO_GRAPH_PIPELINE_REVIEW.md) collects open dec
 | Daniel input, `Data/external/daniel_20261017.parquet` | Original mention population and unchanged extraction fields. | No new mentions, splitting, combining, or independent text extraction. |
 | Completed matching run, `C:\Users\User\.cache\geoai_full_daniel_dump_bigquery_parallel_20261019` | Reuse assignments, attempts, dates, type decisions, page lookups, reference evidence and manifests. | Population does not rerun or revise matching. |
 | Saved Wikidata references; approved BigQuery table `bigquery-public-data.wikipedia.wikidata` | Labels, aliases, native types/hierarchy, full statements, events and provenance for relevant QIDs. Reuse saved results before retrieving missing data. | Compact matching metadata is not a complete assertion/date store. Full `item` JSON or full saved entity records are needed for claims, ranks, qualifiers and references. |
+| Current Wikidata native JSON and official query services, approved 20 October 2026 | Events and direct Event/Daniel links under section 7. Cache raw responses and per-request revision/time evidence. | Separate from accepted upstream snapshots. Query-service main/scholarly graphs must both be covered for incoming links. No automatic ID redirects or source substitution. |
 | Official English/Japanese Wikimedia dumps and saved page resolution | Article page IDs, redirects, subject QIDs, sitelinks and page/link evidence. | Dump links may include templates/navigation. They are not proof of a particular Daniel extraction revision or all entities in prose. |
 | Versioned relation catalogs and exact assertion exclusions | Current catalog: relation-map-v2.1.1; preserve v2.1 direction/time rules and the 14 exclusions. | Missing native Wikidata source keys follow the approved rule in section 8. No other fact source or semantic translation is authorized. |
 | OHM, OSM, WHG and GeoNames under `geo-object-selection-v0.5.0` | Geometry acquisition and identity evidence under the existing source/selection policy. | Wikidata is identity/context only, not a selected geometry source. WHG has a restricted reconciliation role. |
@@ -133,6 +134,20 @@ atomic snapshot. Query-service discovery must report its graph coverage; full
 native records supply ranks, qualifiers and references. A small probe or one
 incomplete endpoint cannot establish a complete Event population. Failed
 requests stop without automatic retries or source substitution.
+
+After the five-QID combined-query timeout, the user approved smaller requests:
+retrieve direct links first, then check the same hierarchy separately. Outgoing
+links use full native records; incoming queries use one Daniel QID per request.
+Both directions and all ranks remain required. Intermediate neighboring QIDs
+are reference candidates only, never additional Daniel entities or included
+Events until the agreed hierarchy and two-distinct-Daniel-QID gates pass.
+
+Direct hierarchy acquisition uses batches of at most ten reference QIDs per
+P31/P279 query, followed by cycle-safe local traversal of supplied statements.
+There is no depth cutoff, truthy-rank restriction or local class mapping.
+Missing query-graph records can be checked through the approved current native
+JSON source; preserve that source evidence rather than treating a missing graph
+record as proof of no Event ancestry.
 
 The approved root is Wikidata's broad [event, Q140451665](https://www.wikidata.org/wiki/Q140451665), including all classes below it through native [P279 subclass-of](https://www.wikidata.org/wiki/Property:P279) statements. Identify event instances through [P31 instance-of](https://www.wikidata.org/wiki/Property:P31) and those subclass paths. Record root QID, snapshot, native class IDs and path evidence. Do not replace it with the narrower organized-event root, add a local event-type whitelist, or invent war/campaign/battle levels.
 

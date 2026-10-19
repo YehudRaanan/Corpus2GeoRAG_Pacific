@@ -16,6 +16,13 @@ next step for discussion: retrieve direct links in smaller requests, then check
 the same hierarchy separately using cached native records. No rule/source change
 has been applied and no Events release exists.
 
+The user then approved the smaller requests. Implementation reads full native
+outgoing records, incoming links one QID per request from both official query
+graphs, and direct P31/P279 reference edges in batches of up to ten. Cycle-safe
+local hierarchy traversal keeps all ranks and has no depth cutoff. No new
+classifier, Event type, endpoint population or inclusion rule is introduced.
+The five-QID source probe is separate from completion of the full 10K POC.
+
 Review date: 19 October 2026. This is the consolidated discussion list for the full pipeline. It records agreed rules, decisions still needed, implementation checks, and deferred improvements. It does not approve new rules or start a data run.
 
 The earlier list overstated the open business decisions. Settled rules, conditional exceptions and technical interfaces are separated below. The user confirmed that distinct `(Wikidata QID, type)` combinations coexist and Relations remains at QID level. MISC is not an open issue. Before adding a data-dependent rule, show actual IDs, source values and affected counts.

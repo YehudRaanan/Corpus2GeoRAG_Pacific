@@ -30,6 +30,13 @@ link retrieval from cached hierarchy checks, retaining exactly the same rules;
 discussion is required before another acquisition attempt under the user's
 stop-on-problem instruction.
 
+The user subsequently approved the smaller-request approach. The next probe
+reads complete native records for outgoing links and requests incoming links
+one Daniel QID at a time, before the separate unchanged hierarchy check.
+`events.incoming_query` replaces the earlier combined-query builder; the failed
+historical query file stays immutable. Candidate neighbors remain supporting
+reference data, not new Daniel entities or accepted Event rows.
+
 Contract order: [population S2T](../../docs/SOURCES_TO_ENTITY_DATA_MODEL_S2T.md),
 [ERD](../../docs/ENTITY_DATA_MODEL_ERD.md), then
 [model-to-graph S2T](../../docs/ENTITY_MODEL_TO_AGENT_GRAPH_S2T.md).

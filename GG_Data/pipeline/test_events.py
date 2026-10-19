@@ -8,15 +8,45 @@ from GG_Data.pipeline import events
 from GG_Data.pipeline.relations import SourceException
 
 
-def test_discovery_preserves_ranks_directions_and_scope():
-    query = events.discovery_query(["Q17", "Q30"])
-    assert "VALUES ?entity { wd:Q17 wd:Q30 }" in query
-    assert "D_TO_E" in query and "E_TO_D" in query
-    assert "p:P31/ps:P31/(p:P279/ps:P279)* wd:Q140451665" in query
-    assert "wdt:" not in query and "LIMIT" not in query
-    for invalid in ([], ["Q17", "Q17"], ["Q17 } UNION { ?s ?p ?o"]):
-        with pytest.raises(ValueError):
-            events.discovery_query(invalid)
+def test_small_incoming_query_preserves_all_ranks_without_hierarchy_join():
+    query = events.incoming_query("Q17")
+    assert "?statement ?statementProperty wd:Q17" in query
+    assert "wikibase:statementProperty ?statementProperty" in query
+    assert "?subject ?claim ?statement" in query
+    assert "wikibase:rank ?rank" in query
+    assert all(word not in query for word in ("wdt:", "LIMIT", "P279"))
+    assert '"http://www.wikidata.org/entity/Q"' in query
+    with pytest.raises(ValueError):
+        events.incoming_query("Q17 } UNION { ?s ?p ?o")
+
+
+def test_native_outgoing_links_keep_all_ranks_and_only_main_item_values():
+    claims = [
+        {
+            "id": f"Q17${rank}",
+            "rank": rank,
+            "mainsnak": {
+                "property": "P17",
+                "datatype": "wikibase-item",
+                "datavalue": {"value": {"entity-type": "item", "id": "Q30"}},
+            },
+        }
+        for rank in ("normal", "preferred", "deprecated")
+    ]
+    record = {
+        "id": "Q17",
+        "claims": {"P17": claims + [{"mainsnak": {"snaktype": "novalue"}}]},
+    }
+    links = events.item_links(record)
+    assert {r["raw_statement"]["rank"] for r in links} == {
+        "normal",
+        "preferred",
+        "deprecated",
+    }
+    assert len(links) == 3 and all(r["object_qid"] == "Q30" for r in links)
+    claims[0]["mainsnak"]["datavalue"]["value"]["id"] = "SYN_new"
+    with pytest.raises(SourceException):
+        events.item_links(record)
 
 
 def test_cache_preserves_raw_response_reuses_success_and_rejects_tampering(
@@ -100,3 +130,22 @@ def test_timeout_is_recorded_without_retry_or_partial_success(tmp_path, monkeypa
     with pytest.raises(SourceException, match="Incomplete current Wikidata cache"):
         events.cached_json(tmp_path, events.QUERY_URL, {"query": "ASK{}"})
     assert calls == [1]
+
+
+def test_direct_hierarchy_edges_and_cycle_safe_path_have_no_truthy_or_depth_filter():
+    query = events.class_edges_query(["Q1", "Q2"], "P279")
+    assert "p:P279 ?statement" in query and "ps:P279 ?parent" in query
+    assert "?present" in query and "OPTIONAL" in query
+    assert all(word not in query for word in ("DeprecatedRank", "wdt:", "LIMIT"))
+    for qids, prop in (([], "P279"), (["Q1"], "P17"), (["Q1"] * 11, "P31")):
+        with pytest.raises(ValueError):
+            events.class_edges_query(qids, prop)
+    cycle = {"parent": "Q1", "statement": "cycle", "rank": "deprecated"}
+    root = {"parent": events.EVENT_ROOT, "statement": "root", "rank": "normal"}
+    parents = {"Q1": [{"parent": "Q2", "statement": "a"}], "Q2": [cycle, root]}
+    path = events.hierarchy_path("Q1", parents)
+    assert [edge["statement"] for edge in path] == ["a", "root"]
+    assert events.hierarchy_path("Q1", {"Q1": [cycle]}) is None
+    assert events.hierarchy_path(events.EVENT_ROOT, {}) == []
+    with pytest.raises(SourceException, match="Incomplete Event hierarchy"):
+        events.hierarchy_path("Q1", {"Q1": [{"parent": "Q2"}]})
