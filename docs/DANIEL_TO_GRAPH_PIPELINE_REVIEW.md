@@ -120,9 +120,20 @@ add missing native source keys, retain Level 2/direction and leave Level 1
 unassigned. The new v2.1.1 table adds P2341's Wikidata key, reusing its existing
 Level 2/reverse definition from the older catalog without importing EventKG
 facts. Checks passed: 27 tests and 2 subtests; historical v2.1.0 CSVs rebuild
-byte-for-byte. No broader sample scan, Relations/Events population or graph
-export has run since that first exception. The general rule is now settled;
-other data surprises still require consultation.
+byte-for-byte. The general rule is now settled; other data surprises still
+require consultation.
+
+The next source gate stopped on a temporal case before relation population:
+Joachim von Ribbentrop (`Q101886`) -> member of political party (`wd:P102`) ->
+Nazi Party (`Q7320`), statement `Q101886$6AB5CB76-32AE-412D-A84C-F3B49B990BB6`.
+Wikidata supplies two P580 start qualifiers: 1930 (year precision) and 1 May
+1932 (day precision). The user was asked about retaining the relation and both
+dates, leaving the selected start empty, and publishing a visible conflict
+report. Work remains stopped pending the answer. The exception is saved in
+`outputs/poc_10k_relations_20261020/first_exception.json`. No new query, parameter
+extension or completed Relations/Events/graph output was produced. The source
+gate and regression checks passed 25 tests; these tests do not resolve the
+real-data date conflict or complete the automatic fallback integration.
 
 - [Sources to model S2T](SOURCES_TO_ENTITY_DATA_MODEL_S2T.md), especially Entities, Events, Relations, Geography and explicit exceptions.
 - [Six-table ERD](ENTITY_DATA_MODEL_ERD.md), including exact retained field inventories.

@@ -256,6 +256,17 @@ P2341 is now present in `relation-map-v2.1.1`; the original exception report
 remains historical evidence. The broader sample relation scan/population has
 not been rerun. See the pipeline README for verification and current limits.
 
+A subsequent strict source check on 20 October stopped at the first temporal
+exception: Joachim von Ribbentrop (`Q101886`) -> member of political party
+(`wd:P102`) -> Nazi Party (`Q7320`), statement
+`Q101886$6AB5CB76-32AE-412D-A84C-F3B49B990BB6`. Its P580 qualifiers supply
+1930 (year precision) and 1 May 1932 (day precision). The native-property rule
+does not resolve dates. The user was asked whether to retain the relation and
+both dates, leave the selected start empty, mark `MULTIPLE` and publish a visible
+date-conflict report. The run remains stopped pending that decision; no completed
+Relations table or new mapping extension was produced. Exact saved evidence is
+`GG_Data/pipeline/outputs/poc_10k_relations_20261020/first_exception.json`.
+
 ## 11. Contract references and precedence
 
 - [Six-table ERD and exact column inventories](ENTITY_DATA_MODEL_ERD.md).

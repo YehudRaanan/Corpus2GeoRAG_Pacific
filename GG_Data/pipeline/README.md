@@ -191,6 +191,38 @@ v2.1.0 CSVs. No new query was made. The broader relation check and population
 have not rerun; discovery and parameter updates must be connected to the
 Relations stage before this is an automatic pipeline fallback.
 
+### Next source check — stopped on multiple relation dates
+
+`relations.py` implements the strict source gate for the next stage. It verifies
+the accepted Entities manifest, output hashes, original sample lineage and
+pinned mapping; it reads full records from Entities without retrieval. Typed
+rows are checked once per QID. The 14 guarded exclusions precede mapping;
+deprecated ranks remain eligible. The source gate does not yet populate
+Relations or connect automatic native-parameter additions.
+
+The first real-data check stopped in
+`outputs/poc_10k_relations_20261020/first_exception.json`:
+
+- Subject: Joachim von Ribbentrop (`Q101886`).
+- Relation: member of political party (`wd:P102`).
+- Object: Nazi Party (`Q7320`).
+- Statement: `Q101886$6AB5CB76-32AE-412D-A84C-F3B49B990BB6`, normal rank.
+- Two P580 start qualifiers: `+1930-00-00T00:00:00Z` (year precision 9)
+  and `+1932-05-01T00:00:00Z` (day precision 11).
+
+This source cannot supply one selected start date without a choice. The gate
+stopped at this case; it is not an all-sample conflict count. Both native snaks,
+their calendars/precision and provenance are retained in the exception and
+unchanged Entities. No relation table, new mapping parameters or completed
+Relations manifest was written, and no query was made.
+
+Consultation is pending on keeping the relation with all native dates, an empty
+selected start value and `MULTIPLE`, plus a visible conflict report. No temporal
+resolution or continuation is approved by the earlier native-property rule.
+
+The focused in-memory source-gate test checks unchanged input, one statement
+across typed rows, deprecated-rank retention and stopping on multiple dates.
+
 ## Approved graph interfaces
 
 `graph_contract.py` provides small interface helpers:
