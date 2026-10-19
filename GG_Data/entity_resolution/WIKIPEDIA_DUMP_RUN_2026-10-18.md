@@ -1,10 +1,45 @@
 # English/Japanese Wikipedia dump import — 18 October 2026
 
-Current checkpoint: restarted on **19 October 2026, 08:59 Israel time** after
-fixing a source-page selection error. All six metadata tables are imported.
-Matching has not started; no final matching results exist. The continuation
-prepares page links and then runs all **309,864 original Daniel mentions /
-428 source titles** without another confirmation.
+Current checkpoint: resumed on **19 October 2026, 11:56 Israel time** after
+removing redundant metadata checkpoint writes. All ten reference tables and
+all 428 source-page checkpoints are ready: 424 resolved titles, four missing
+titles, and 296 Japanese counterpart pages. Final matching results do not yet
+exist. The continuation runs all **309,864 original Daniel mentions** without
+another confirmation.
+
+## Metadata cache reuse fix — 19 October 2026
+
+The old metadata loop processed 500 IDs at a time and rewrote the entire
+large compressed metadata cache after every batch, even when all those IDs
+were already cached. Its progress count measured this preparation loop, not
+newly retrieved entities or completed matches. A saved-copy verification found
+**544,375 metadata records**, covering **all 428,884 page-candidate QIDs** with
+zero uncached IDs. No additional retrieval is needed for these candidates.
+
+Both page-candidate and fresh-WWII metadata loops now batch only IDs absent
+from the cache. Newly retrieved batches and the final type hierarchy still
+receive atomic checkpoints. Twenty-five targeted tests and Ruff passed,
+including cached and uncached runs through all three matching passes and
+reproduction of the accepted pilot decisions. The threshold, entity types,
+tie handling, original mentions, and pass order are unchanged.
+
+The old coordinator (PID 29560) was stopped with no active BigQuery child.
+Its complete metadata checkpoint and prior progress were copied to
+`C:\Users\User\.cache\geoai_metadata_reuse_recovery_20261019` and verified.
+The existing BigQuery adapter resumed as PID **2244**, with the complete
+dump-backed page snapshot supplied explicitly; it validates all page checksums
+before using saved data. It does not rerun dump conversion or download data.
+Logs use the dump cache path plus `.metadata_reuse_20261019.stdout.log` /
+`.metadata_reuse_20261019.stderr.log`. The active PID remains in `process_id.txt`.
+Use the matching output's `progress.json`; the old dump coordinator's progress
+remains `PAGE_SNAPSHOT_READY` because its preparation has finished.
+
+The earlier English/Japanese preparation used two processes. No additional
+matching workers were added: the immediate bottleneck was duplicate cache
+serialization. Page matching can be partitioned, but the frozen matched-ID
+pool must be built only after every page finishes. The three passes retain
+that barrier. Code backup: **Local checkpoint only**; large local caches remain
+unprotected off-device.
 
 ## Source-page selection fix — 19 October 2026
 

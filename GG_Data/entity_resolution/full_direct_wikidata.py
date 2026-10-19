@@ -286,8 +286,9 @@ def run(output: Path, api: LiveData | None = None) -> dict:
         )
     all_page_ids = set().union(*pools.values())
     progress("PAGE_CANDIDATE_METADATA", candidate_qids=len(all_page_ids))
-    # Bound memory and preserve completed metadata if a later public request fails.
-    for offset in range(0, len(ids := sorted(all_page_ids)), 500):
+    # Fetch only missing IDs: BigQuery has already populated the saved metadata.
+    # Preserve each newly fetched batch if a later public request fails.
+    for offset in range(0, len(ids := sorted(all_page_ids - api.entities.keys())), 500):
         api.entities_for(set(ids[offset : offset + 500]))
         save(metadata_path, api.entities)
         progress(
@@ -366,7 +367,7 @@ def run(output: Path, api: LiveData | None = None) -> dict:
         if number % 10000 == 0:
             progress("FRESH_WWII_CANDIDATES", completed=number, total=len(rows))
     needed = {c["entity_id"] for candidates in cached.values() for c in candidates}
-    for offset in range(0, len(ids := sorted(needed)), 500):
+    for offset in range(0, len(ids := sorted(needed - api.entities.keys())), 500):
         api.entities_for(set(ids[offset : offset + 500]))
         save(metadata_path, api.entities)
         progress(

@@ -1,5 +1,11 @@
 """The full runner must reproduce the accepted page-pass decisions."""
 
+import copy
+import hashlib
+
+import pytest
+
+import full_direct_wikidata as runner
 from bilingual_page_pilot import read
 from direct_wikidata_pilot import page_find
 from full_direct_wikidata import HERE, assign, input_rows, page_indexes
@@ -33,3 +39,87 @@ def test_full_runner_reproduces_pilot_page_decisions():
         assert row["attempts"][0] == old["attempts"][0]
         matched += "assigned_id" in row
     assert matched == 263
+
+
+@pytest.mark.parametrize("preloaded", [False, True])
+def test_metadata_batches_reuse_cache_and_keep_unresolved_workflow(
+    tmp_path, monkeypatch, preloaded
+):
+    """Cached metadata skips batch writes; missing page/WWII IDs still load."""
+    entities = {
+        qid: {
+            "id": qid,
+            "label": label,
+            "aliases": [],
+            "direct_types": types,
+            "parents": [],
+        }
+        for qid, label, types in [
+            ("Q1", "Completely different", ["Q5"]),
+            ("Q2", "Target", ["Q5"]),
+            ("Q5", "human", []),
+        ]
+    }
+    rows = [
+        {
+            "input_row_number": 0,
+            "mention_id": "mention-example",
+            "raw": {"Source": "Example", "word": "Target", "entity_group": "PER"},
+            "attempts": [],
+        }
+    ]
+    monkeypatch.setattr(runner, "input_rows", lambda: copy.deepcopy(rows))
+    (tmp_path / "pages").mkdir()
+    page = hashlib.sha256(b"Example").hexdigest() + ".json.gz"
+    runner.save(
+        tmp_path / "pages" / page,
+        {
+            "source": "Example",
+            "status": "RESOLVED",
+            "articles": [{"language": "en", "qid": "Q1", "links": []}],
+        },
+    )
+    runner.save(
+        tmp_path / "candidate_evidence.json.gz",
+        {"page_pools": {"Example": ["Q1"]}, "daniel_name_lookups": []},
+    )
+    metadata_path = tmp_path / "entity_metadata.json.gz"
+    runner.save(metadata_path, entities if preloaded else {"Q5": entities["Q5"]})
+    runner.save(tmp_path / "world.json.gz", {"Q2": entities["Q2"]})
+    runner.save(
+        tmp_path / "reference_manifest.json",
+        {"world_sha256": runner.digest(tmp_path / "world.json.gz")},
+    )
+
+    class CachedData:
+        requests = []
+
+        def __init__(self):
+            self.calls = []
+
+        def entities_for(self, qids):
+            self.calls.append(qids)
+            self.entities.update({q: entities[q] for q in qids})
+
+        def hierarchy(self, qids):
+            assert qids <= self.entities.keys()
+            assert all(
+                t in self.entities
+                for q in qids
+                for t in self.entities[q]["direct_types"]
+            )
+
+    api = CachedData()
+    summary = runner.run(tmp_path, api=api)
+    assert api.calls == ([] if preloaded else [{"Q1"}, {"Q2"}])
+    assert read(metadata_path) == entities
+    result = read(tmp_path / "matches.json.gz")[0]
+    assert result["raw"] == rows[0]["raw"]
+    assert result["assigned_id"] == "Q2"
+    assert [a["stage"] for a in result["attempts"]] == [
+        "PAGE_DIRECT_WIKIDATA",
+        "ALREADY_MATCHED",
+        "FRESH_WWII",
+    ]
+    assert summary["mentions"] == 1
+    assert summary["article_name_extraction"] is False

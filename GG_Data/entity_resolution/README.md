@@ -3,15 +3,15 @@
 ## Wikipedia dump import into BigQuery — 18 October 2026
 
 [Current run, evidence scope, saved data, and resume command](WIKIPEDIA_DUMP_RUN_2026-10-18.md).
-The English/Japanese import is running. Automatic continuation imports the
-needed page links into BigQuery and then matches all 309,864 Daniel mentions.
-All ten dumps are downloaded and verified; six metadata tables are imported.
-On 19 October, a CLI boolean handling error was fixed after the query found
-424 of 428 source titles. The run restarted at 08:59 Israel time. Matching has
-not started. English and Japanese preparation uses two processes, with one
-coordinator for BigQuery jobs. The fix passed 23 targeted tests and Ruff.
-Completed data is reused. The 80% rule and matching pass order stay fixed.
-Final full-data counts are not available yet.
+The English/Japanese preparation is complete: all ten dumps and imported tables,
+428 source checkpoints, 424 resolved titles, and 296 Japanese counterparts.
+All 428,884 candidate QIDs already have cached metadata. On 19 October at
+11:56 Israel time, the existing BigQuery adapter resumed from these checkpoints
+after a fix that skips repeated full-cache writes for already cached IDs.
+Twenty-five targeted tests and Ruff passed. The earlier language preparation
+used two processes; no extra matching workers were added. All 309,864 original
+Daniel mentions continue automatically with the same 80% rule and matching
+pass order. Final full-data counts are not available yet.
 
 ## Full run moved to BigQuery — 18 October 2026
 
