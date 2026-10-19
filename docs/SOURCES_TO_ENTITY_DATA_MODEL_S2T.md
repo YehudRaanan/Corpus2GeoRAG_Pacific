@@ -36,7 +36,7 @@ Relevant matching artifacts are `matches.json.gz`, `matches.csv.gz`, `entity_met
 
 1. Verify the pinned input and completed matching manifest/output hashes. Preserve original rows and saved decisions.
 2. Populate Mentions and resolved Wiki Pages from those artifacts. Missing lookups remain explicit; no fabricated page rows.
-3. Populate Entities for existing mention QIDs and existing per-mention synthetic IDs. Successfully normalized dates stay structured in Mentions, with null entity FK.
+3. Populate Entities for distinct `(assigned QID/SYN ID, resolved type)` combinations. Multiple types for one QID coexist. Successfully normalized dates stay structured in Mentions, with null entity FK.
 4. Reuse or acquire complete Wikidata statements and metadata. Collect both outgoing and incoming item-valued assertions relevant to Daniel's matched QIDs; outgoing-only retrieval cannot establish event coverage. Save snapshots, query scope, results and misses for reuse.
 5. Discover event items through Wikidata's approved native hierarchy, then retain events with direct mapped links to at least two distinct matched Daniel QIDs. Add their original QIDs to Entities and Events.
 6. Populate Relations with Wikidata assertions between matched Daniel QIDs and the included-event/Daniel links. Apply approved exclusions and versioned mappings. Keep every eligible source statement, rather than one predicate per entity pair.
@@ -69,6 +69,7 @@ Join original rows to saved matching rows by the existing `input_row_number` and
 | `raw` | Entire original row, including all nine original columns and any future supplied page fields, under their original names. |
 | `assigned_id` | Saved matching decision, including QID, existing `SYN_...`, or `DATE:...`. |
 | `entity_id` | QID/SYN assignment; null for successful `DATE_NORMALIZED`. An unresolved DATE retains its existing SYN placeholder. |
+| `entity_type` | Saved `type_metadata.resolved_type`, paired with `entity_id` as the Entities foreign key. Null when `entity_id` is null. No new type inference. |
 | `matched_stage`, `matched_name`, `match_score` | Saved matching fields; `match_score` is output `score`. |
 | `type_metadata` | Complete saved `original_type`, `resolved_type`, `type_changed`, `type_source`, `wikidata_mapped_types`, `wikidata_direct_types` and extra fields. |
 | `attempts`, `unresolved_reason`, `date` | Full nested attempts/rejections/ties, exact reason, and structured date `{value, precision, qualifier, error}`. Retain explicit nulls and unknown fields. |
@@ -98,9 +99,9 @@ Retain retrieved Japanese pages even without Daniel mentions. A missing source p
 
 | Target column(s) | Source and population rule |
 |---|---|
-| `entity_id` | Distinct saved QID/SYN assignments plus included event QIDs. Reuse original IDs. Candidate/hierarchy QIDs used only as reference evidence do not become entity rows. |
+| `entity_id` | Saved QID/SYN assignment or included event QID, unchanged. Entities is unique on `(entity_id, type)`, not QID alone. Candidate/hierarchy QIDs used only as reference evidence do not become entity rows. |
 | `name` | First available Wikidata English label, then Japanese label, then Daniel's original name. A synthetic row uses its own mention's original name. Record the chosen source/language and fallback evidence in `attributes`/raw provenance. |
-| `type` | Reuse the saved matching `resolved_type` when consistent for the QID. Preserve original Daniel type and Wikidata override evidence. Included event role comes from Events membership, never Daniel MISC. Conflicting canonical types require a visible exception before selection. |
+| `type` | Reuse saved matching `resolved_type`. Keep every distinct `(entity_id, type)` combination, including LOC and ORG for the same QID; do not select a canonical winner. Preserve original Daniel type and Wikidata override evidence. Included event role comes from Events membership, never Daniel MISC, and does not erase other types. |
 | `labels`, `descriptions`, `sitelinks` | All available original language-keyed Wikidata values, including English/Japanese; do not translate or synthesize. |
 | `aliases`, `alias_details` | Supplied labels/aliases and original mention forms with their actual provider, record ID, kind and known language. No generated nicknames, romanization or combined names. |
 | `identity_status`, `review_status` | Distinguish saved QID assignment from synthetic unresolved identity and actual review evidence. An automatic match is not a manual verification. |
@@ -149,7 +150,7 @@ Resolve the mapping by exact source/predicate key and version in [RELATION_MAPPI
 | Target column(s) | Source and population rule |
 |---|---|
 | `observation_id` | Existing assertion ID where present. Fresh assertions reuse the established relation producer's stable source-statement identity recipe; do not derive identity from endpoints/predicate alone. Repeated retrieval of the same statement is not new evidence. |
-| `subject_entity_id`, `object_entity_id` | Source item IDs normalized once by the versioned direction mapping, after scope/exclusion checks. Require existing Entities endpoints. |
+| `subject_entity_id`, `object_entity_id` | Source QIDs normalized once by the versioned direction mapping, after scope/exclusion checks. Require at least one existing Entities row per endpoint QID. Relations remains at QID level; do not choose a type or expand an assertion across typed entity combinations. |
 | `object_value` | Original non-item/somevalue/novalue payload when retained as supporting assertion evidence, never a fabricated QID. |
 | `level2_relation`, `level2_label` | Catalog `level2_relation_id` and exact label, preserving case. |
 | `level1_relation`, `level1_assignment_status` | Exact versioned family and assignment status; no family inference. |
@@ -199,16 +200,18 @@ Before an implementation can claim completion:
 | Check | Required result |
 |---|---|
 | Input and decision accounting | Exactly 309,864 Mentions for the pinned input, unchanged original fields/order/IDs, complete stage/reason accounting and separate NER/matching scores. |
-| Identity and page keys | Unique keys; every non-null FK exists; page-key pairs complete; no talk IDs, Index-as-page-ID, cache-only entity expansion or extra Daniel mentions. |
+| Identity and page keys | Unique `(entity_id, type)` pairs and valid composite mention FKs; QID-level references exist without multiplying assertions; page-key pairs complete; no talk IDs, Index-as-page-ID, cache-only entity expansion or extra Daniel mentions. |
 | Events | Native root/snapshot/path evidence; original QIDs; all approved event types; at least two distinct direct Daniel QIDs; incoming/outgoing acquisition coverage reported. |
 | Assertions | Reconcile retrieved eligible statements = retained mapped base rows + exact exclusions + explicitly reported unmapped/ambiguous/blocked cases, deduplicated by source statement. Report all categories and ranks. No silent loss through join/mapping/rank filters. |
 | Geometry | At most one accepted object per place; failed attempts retained; source and CRS known; valid nonempty Shapely/WKB round trip before delivery. |
 | Contract coverage | All ERD fields, nine Daniel fields, 16 matching CSV fields, 26 legacy assertion fields, full nested reference/attempt payloads, geometry compatibility fields and versioned catalog columns retained or explicitly unavailable. |
 | Reuse and release | Pinned hashes and request scope; existing verified artifacts reused; missing references/counts visible. No cloud/data/Agent completion claim based only on this document. |
 
-The following cases must be brought back with exact IDs, values and counts before adding logic: conflicting per-QID canonical types; differing Daniel fallback names when both Wikidata labels are missing; unlabeled events without Daniel names; event/entity role conflicts; unknown/ambiguous predicate mappings; incompatible multivalued event dates/classifications; source-page input/lookup conflicts; partial-date interpretation required for geometry selection; or a concrete specialist geometry source. Preserve raw evidence while the required decision is pending, and report the affected population explicitly.
+Different resolved types for one QID are not an unresolved conflict: keep distinct `(entity_id, type)` combinations. Event membership coexists with other types. MISC classification is not an open decision. Relations stays at QID level, with one base row per source assertion.
 
-Downstream open interfaces remain the geometry pointer schema/storage binding/loading function/CRS behavior and Agent recognition of reverse views as shared evidence. They do not authorize changes to source population or matching. Final graph sources remain omitted for now; full provenance stays in this model and its supporting artifacts.
+The following cases must be brought back with exact IDs, values and counts before adding logic: differing Daniel fallback names when both Wikidata labels are missing; unlabeled events without Daniel names; unknown/ambiguous predicate mappings; incompatible multivalued event dates/classifications; source-page input/lookup conflicts; partial-date interpretation required for geometry selection; or a concrete specialist geometry source. Preserve raw evidence while the required decision is pending, and report the affected population explicitly.
+
+Downstream interfaces include preserving coexisting QID types in the Agent without node overwrites, the geometry pointer schema/storage binding/loading function/CRS behavior, and recognition of reverse views as shared evidence. Type coexistence and QID-level relations are settled; their exact Agent encoding must be aligned without changing QIDs or multiplying assertions. These interfaces do not authorize changes to source population or matching. Final graph sources remain omitted for now; full provenance stays in this model and its supporting artifacts.
 
 ## 11. Contract references and precedence
 

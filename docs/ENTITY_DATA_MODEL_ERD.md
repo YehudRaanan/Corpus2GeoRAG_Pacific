@@ -8,23 +8,25 @@ Export decisions confirmed on 19 October 2026 are defined in [the Agent graph S2
 
 Six business tables: **Entities, Mentions, Wiki Pages, Geography, Events, Relations**. Versioned mapping catalogs and immutable evidence files remain supporting artifacts. JSON fields below are structured, retained data, not discarded columns.
 
+Type decision, 19 October 2026: Entities keeps distinct `(entity_id, type)` combinations. Multiple types for the same Wikidata QID coexist; no canonical winner is selected. Relations remains at QID level, as confirmed by the user. Graph serialization must preserve these types without overwriting a node; its exact Agent representation is a downstream contract change, not permission to change QIDs.
+
 ## ERD
 
 ```mermaid
 erDiagram
     ENTITIES o|--o{ MENTIONS : identifies
     WIKI_PAGES o|--o{ MENTIONS : source_page
-    ENTITIES o|--o{ WIKI_PAGES : page_subject
+    ENTITIES o{--o{ WIKI_PAGES : page_subject_qid
     WIKI_PAGES o|--o| WIKI_PAGES : language_counterpart
-    ENTITIES ||--o| GEOGRAPHY : selected_geometry
+    ENTITIES }|--o| GEOGRAPHY : selected_geometry_qid
     ENTITIES ||--o| EVENTS : event_details
-    ENTITIES ||--o{ RELATIONS : subject
-    ENTITIES o|--o{ RELATIONS : object
+    ENTITIES }|--o{ RELATIONS : subject_qid
+    ENTITIES }o--o{ RELATIONS : object_qid
 
     ENTITIES {
         string entity_id PK "QID or existing per-mention SYN ID"
         string name
-        string type
+        string type PK "with entity_id"
         json labels
         json aliases
         json alias_details
@@ -36,7 +38,8 @@ erDiagram
     MENTIONS {
         string mention_id PK
         int input_row_number
-        string entity_id FK "nullable for normalized dates"
+        string entity_id FK "with entity_type; nullable for normalized dates"
+        string entity_type FK "saved resolved type; with entity_id"
         string wiki_site FK "with wiki_page_id"
         bigint wiki_page_id FK "with wiki_site"
         string word
@@ -63,7 +66,7 @@ erDiagram
         string title
         string url
         string wikidata_qid
-        string about_entity_id FK "optional materialized entity"
+        string about_entity_id "optional materialized QID reference"
         bigint revision_id
         datetime revision_timestamp
         date dump_date
@@ -73,7 +76,7 @@ erDiagram
         json reference_payload
     }
     GEOGRAPHY {
-        string place_id PK,FK
+        string place_id PK "QID-level reference"
         string name
         string place_type
         string source_dataset
@@ -88,7 +91,7 @@ erDiagram
         json audit
     }
     EVENTS {
-        string event_id PK,FK "original Wikidata event QID"
+        string event_id PK "original QID; joins event-typed Entities row"
         string kind
         string start_date
         string end_date
@@ -100,8 +103,8 @@ erDiagram
     }
     RELATIONS {
         string observation_id PK
-        string subject_entity_id FK
-        string object_entity_id FK "nullable for non-item values"
+        string subject_entity_id "QID-level reference"
+        string object_entity_id "QID-level reference; nullable for non-item values"
         json object_value
         string level2_relation
         string level1_relation
@@ -117,10 +120,12 @@ erDiagram
 
 Diagram fields are a short overview; the dictionaries and contract coverage below complete the schema. `PK` means primary key; `FK` means foreign key. Each foreign key must refer to an existing row, except when explicitly nullable.
 
+Entities has a composite primary key. Mentions uses the corresponding composite foreign key. QID-only references in Relations, Geography and Wiki Pages are checked against the distinct existing entity IDs; they are not single-column physical foreign keys to the composite key. A QID-level assertion is stored once, regardless of how many types its endpoints have. Events joins its event-typed Entities row. No additional business table or typed relation expansion is introduced.
+
 ## Identity and connection rules
 
 1. A matched entity uses its Wikidata QID. Each unresolved mention keeps its existing separate `SYN_...` ID. A synthetic ID records an unresolved identity; it does not establish a newly discovered entity. Do not extract, split, combine, or invent Daniel mentions.
-2. English and Japanese names of one Wikidata item share one entity ID. Distinct names are aliases with evidence, not separate identities. Candidate-cache QIDs are not automatically promoted into Entities.
+2. English and Japanese names of one Wikidata item share one entity ID. Distinct names are aliases with evidence, not separate identities. Distinct saved types coexist as separate `(entity_id, type)` rows. They do not create a new Wikidata identity. Candidate-cache QIDs are not automatically promoted into Entities.
 3. Events contains only Wikidata events, obtained separately from Daniel's entity mentions. Its `event_id` is the same QID as its Entities row. Include an event in the graph only when it has direct Wikidata connections, in either direction through any mapped relation, to at least **two distinct matched Daniel entity QIDs** across the input. Repeated mentions, duplicate assertions and reverse views do not increase this count; indirect paths do not count. Synthetic identities cannot enter Events or qualify an event. Event participation is a Relations row with an event QID at an endpoint; there is no Event Participants table.
 4. A normalized date has its original `assigned_id = DATE:...`, a structured `date` value, and a null `entity_id`. It is not a Wikidata identity or a new event. Unresolved DATE mentions can retain their existing synthetic placeholder and reason.
 5. Mentions references Wiki Pages using the composite `(wiki_site, wiki_page_id)`. Page IDs are numeric within one wiki; language/site is required to avoid collisions. Add `wiki_page_id` and `wiki_site` to Daniel's input contract. Until supplied, use the saved page lookup and record that origin. `Index` remains the paragraph index.
@@ -130,12 +135,13 @@ Diagram fields are a short overview; the dictionaries and contract coverage belo
 
 ## 1. Entities
 
-One row per distinct assigned QID or existing unresolved synthetic identity. All required relation endpoints and Wikidata event IDs must have an identity row supported by input evidence.
+One row per distinct `(entity_id, type)` combination, using the assigned QID or existing unresolved synthetic identity. All required relation endpoint QIDs and Wikidata event IDs must exist in Entities. A QID with LOC and ORG has two rows; neither replaces the other. Existing unresolved synthetic IDs remain separate per mention.
 
 | Column | Type / requirement | Meaning and input |
 |---|---|---|
-| `entity_id` | string, PK | Original QID or existing per-mention synthetic ID. Agent node `id`. |
-| `name`, `type` | string, required | Display name and selected type. A name fallback must be marked in metadata. Preserve exact type spelling. |
+| `entity_id` | string, composite PK with `type` | Original QID or existing per-mention synthetic ID. Do not append a type suffix or mint another ID. Final Agent serialization must preserve the QID and coexisting types. |
+| `type` | string, composite PK with `entity_id` | Existing resolved type. Preserve exact spelling and every distinct combination; no voting or canonical-type selection. |
+| `name` | string, required | Display name under the approved fallback order. A name fallback must be marked in metadata. |
 | `labels`, `descriptions` | JSON, language-keyed | All supplied Wikidata language values; retain English and Japanese. |
 | `aliases` | string array | Agent-compatible search aliases, without deleting original names. |
 | `alias_details` | JSON array | Each supplied `{label, kind, provider, record_id}` plus `language` where known; kind can be alias, nickname, hull_number, codename. Unknown language stays null. |
@@ -160,7 +166,7 @@ Exactly one row per original Daniel input row, in the original order. No row is 
 |---|---|---|
 | `mention_id` | string, PK | Existing stable output ID; do not regenerate it for this model. |
 | `input_row_number` | integer | Original row position. Unique within the pinned input dataset. |
-| `entity_id` | string, nullable FK | Assigned QID or existing SYN ID. Null for successfully normalized DATE values. |
+| `entity_id`, `entity_type` | strings, nullable composite FK | Assigned QID/SYN ID and saved resolved type. Both null for successfully normalized DATE values. Keep original Daniel type separately. |
 | `wiki_site`, `wiki_page_id` | string / integer, nullable composite FK | Source page identity. New input fields; resolved lookup is the current fallback. Both null or both present. |
 | `page_id_source` | string | INPUT or LOOKUP; avoid claiming lookup evidence came from Daniel. |
 | `page_resolution` | JSON | Requested source, normalized title, resolution status, redirects, lookup evidence, failure reason, and lookup version. |
@@ -203,7 +209,7 @@ One row per resolved `(wiki_site, wiki_page_id)`. A page is independent of any o
 | `language`, `title`, `url` | string | Language, resolved title, source URL. |
 | `requested_titles` | JSON array | Preserve source spellings and requested titles; multiple requests can resolve to the same page. |
 | `wikidata_qid` | string, nullable | Subject item from saved page resolution/sitelinks. It is not the Wikipedia page ID. |
-| `about_entity_id` | string, nullable FK | Same QID when an Entities row exists. Otherwise null; retain `wikidata_qid`. |
+| `about_entity_id` | string, nullable QID-level reference | Same QID when at least one Entities row exists. Otherwise null; retain `wikidata_qid`. Does not select a type. |
 | `revision_id`, `revision_timestamp` | integer / datetime, nullable | Saved `revision.revid` and `revision.timestamp`. A null dump timestamp stays null. |
 | `revision_url` | string, nullable | Revision-specific URL only when revision identity is known. |
 | `counterpart_site`, `counterpart_page_id` | nullable composite self-FK | Retrieved English/Japanese counterpart; set only after its page ID is known. |
@@ -219,7 +225,7 @@ At most one selected geometry per confirmed place entity. It is optional until s
 
 | Column | Type / requirement | Meaning and existing output |
 |---|---|---|
-| `place_id` | string, PK and FK | Entity QID; synthetic identities are not confirmed geocoding targets. |
+| `place_id` | string, PK, QID-level reference | Existing entity QID, independent of how many typed Entities rows it has. Synthetic identities are not confirmed geocoding targets. |
 | `name`, `place_type` | string | Existing selection-output context. |
 | `source_dataset`, `source_object_id`, `source_url` | string | Selected OHM/OSM or approved fallback object. |
 | `match_method`, `selection_policy_version` | string | Identity/selection method and policy, currently geo-object-selection-v0.5.0. |
@@ -239,7 +245,7 @@ One event-specific extension per Wikidata event entity. Names, aliases, source r
 
 | Column | Type / requirement | Meaning |
 |---|---|---|
-| `event_id` | string, PK and FK | Original Wikidata event QID; no new event IDs. |
+| `event_id` | string, PK | Original Wikidata event QID; joins the event-typed Entities row without replacing any other type. No new event IDs. |
 | `kind` | source value, nullable | Retain the supplied Wikidata classification as is. No internal event classification or inferred level. Report a target-format mismatch rather than inventing a conversion. |
 | `start_date`, `end_date`, `point_date` | source temporal values, nullable | Use supplied Wikidata values. No new ranking, date selection or conflict-resolution logic is authorized. Highlight multiple values or incompatible formats before export. |
 | `temporal_evidence` | JSON | All date claims, precision, calendar, qualifiers, references, selection status and conflicts. Raw claims stay accessible. |
@@ -256,7 +262,7 @@ One retained base row per source assertion, with its original input preserved. C
 | Column | Type / requirement | Meaning and contract mapping |
 |---|---|---|
 | `observation_id` | string, PK | Existing assertion identity; Agent edge `id`. |
-| `subject_entity_id`, `object_entity_id` | string / nullable string, FK | Normalized endpoints; Agent `source`, `target`. Do not apply a new direction swap to previously transformed v1 endpoints without reconstructing source orientation. |
+| `subject_entity_id`, `object_entity_id` | string / nullable string, QID-level references | Normalized QID endpoints; Agent `source`, `target`. No endpoint type selection or expansion across type combinations. Do not apply a new direction swap to previously transformed v1 endpoints without reconstructing source orientation. |
 | `object_value` | JSON, nullable | Preserve literal, somevalue or novalue data without manufacturing entity IDs; do not export these as ordinary item-to-item edges. |
 | `level2_relation`, `level2_label` | string | Precise case-preserving predicate and label; Agent `type`, `relation_label`. |
 | `level1_relation`, `level1_assignment_status` | string | Family and assignment status; Agent `relation_family`. |
@@ -307,7 +313,7 @@ Latest user decisions govern the six-table layout, page-ID linkage, original eve
 Before any later implementation/release:
 
 1. Preserve every Daniel row, original field value, offset, mention ID and order. Check raw NER confidence separately from matching similarity.
-2. Check every non-null foreign key; enforce page composite-key completeness and uniqueness, one Geography row per entity and Wikidata-only Events IDs.
+2. Check composite `(entity_id, type)` uniqueness and mention foreign keys; verify QID-level reference existence without multiplying relations. Enforce page composite-key completeness and uniqueness, one Geography row per QID and Wikidata-only Events IDs.
 3. Reproduce matching JSON/CSV fields and all 26 input assertion fields without loss; retain full nested evidence and immutable manifests.
 4. Check dates remain precision-aware and synthetic/date IDs cannot enter the event QID population. Distinguish resolution decision from review/accuracy.
 5. Resolve mapping by exact version/source key; validate inverse views against the lookup and count evidence by the base assertion ID.
