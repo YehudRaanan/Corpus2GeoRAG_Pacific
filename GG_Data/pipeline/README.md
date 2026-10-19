@@ -1,6 +1,21 @@
 # Daniel pipeline POC
 
-## Current: approved native batch stopped at response-size limit
+## Current: approved response-size splitting
+
+The user approved splitting only oversized responses into halves until each
+batch returns every requested record. `events._current_batch` recognizes the
+explicit API size-truncation warning; all original responses remain cached.
+Partial parents contribute no records. Successful children record their parent
+cache keys/checksums. A one-ID truncation, any different warning, omitted ID,
+redirect, malformed response or unapproved service failure still stops.
+All source, rank, mapping and inclusion rules remain unchanged.
+
+Run: `outputs/poc_10k_event_seven_native_split_20261020`. Its `report.json`
+records progress; completion requires `verification.json` and the final status.
+Tests: 47 passed before launch. This checks the same seven candidates against
+4,712 distinct Daniel QIDs, not full candidate discovery or Event population.
+
+## Previous: approved native batch stopped at response-size limit
 
 The user approved current Wikidata `wbgetentities` records in batches of up to
 50 Daniel QIDs, followed by local direct-statement checks. The adapter reuses
@@ -23,7 +38,7 @@ upstream outputs remain unchanged. See `acquisition_stop.json` and
 `verification.json`. Proposed for consultation: split only truncated batches
 into halves until each response is complete; stop if a one-QID request is still
 truncated. Keep full records and the same source, ranks and inclusion rules.
-This response-size handling is **not yet approved or implemented**.
+This response-size handling was subsequently approved and implemented; see above.
 
 ## Previous: bounded incoming check stopped at query-service timeout
 

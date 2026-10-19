@@ -200,6 +200,7 @@ def native_records(data: dict, qids: list[str], evidence: dict) -> dict[str, dic
         not isinstance(records, dict)
         or set(records) != set(qids)
         or "redirects" in data
+        or data.get("warnings")
     ):
         raise SourceException(
             "Unexpected native record population",
@@ -247,18 +248,59 @@ def current_records(
         else:
             pending.append(qid)
     for offset in range(0, len(pending), 50):
-        batch = pending[offset : offset + 50]
-        data, evidence = cached_json(
-            store,
-            "https://www.wikidata.org/w/api.php",
-            {
-                "action": "wbgetentities",
-                "ids": "|".join(batch),
-                "redirects": "no",
-                "format": "json",
-            },
+        yield from _current_batch(store, pending[offset : offset + 50])
+
+
+def _current_batch(
+    store: Path, batch: list[str], oversized: tuple[dict, ...] = ()
+) -> Iterator[tuple[dict[str, dict], dict]]:
+    """S2T 7: split only explicit response-size truncations, approved 20 October.
+
+    Preserve the parent response; never accept its partial records. Each child
+    must return all requested IDs. A one-ID truncation or any other warning,
+    malformed response, ID change or unapproved service error still stops.
+    """
+    data, evidence = cached_json(
+        store,
+        "https://www.wikidata.org/w/api.php",
+        {
+            "action": "wbgetentities",
+            "ids": "|".join(batch),
+            "redirects": "no",
+            "format": "json",
+        },
+    )
+    warning = data.get("warnings", {}).get("result", {}).get("*", "")
+    if re.fullmatch(
+        r"This result was truncated because it would otherwise be larger than the limit of [\d,]+ bytes\.",
+        warning,
+    ):
+        if len(batch) == 1:
+            raise SourceException(
+                "Single native record exceeds API size limit",
+                qid=batch[0],
+                source=evidence,
+            )
+        middle = len(batch) // 2
+        LOG.warning(
+            "Splitting oversized native batch: %s into %s + %s",
+            len(batch),
+            middle,
+            len(batch) - middle,
         )
-        yield native_records(data, batch, evidence), evidence
+        parents = oversized + (
+            dict(
+                cache=evidence["cache"],
+                sha256=evidence["sha256"],
+                qids=batch,
+                warning=warning,
+            ),
+        )
+        yield from _current_batch(store, batch[:middle], parents)
+        yield from _current_batch(store, batch[middle:], parents)
+    else:
+        records = native_records(data, batch, evidence)
+        yield records, dict(evidence, oversized_ancestors=list(oversized))
 
 
 def incoming_candidates_query(subjects: list[str], candidates: list[str]) -> str:

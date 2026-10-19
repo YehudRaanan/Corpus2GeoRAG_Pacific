@@ -221,8 +221,17 @@ The original HTTP-200 body and metadata were cached, but the partial batch was
 not accepted. Acquisition stopped immediately. Incoming coverage, complete
 eligibility results and Event/Relations population remain pending. A proposal
 to halve truncated batches, stopping if one ID still fails, requires discussion;
-no such fallback is approved or implemented. See `acquisition_stop.json` and
+no such fallback was approved at that stop. See `acquisition_stop.json` and
 `verification.json`; all accepted upstream output hashes remain unchanged.
+
+**Response-size split subsequently approved:** halve only batches with the
+explicit API result-size truncation warning; repeat until each child response
+is complete. Do not accept partial parents. Preserve all responses and record
+parent cache/checksum lineage on successful children. Stop if one ID still
+truncates, or on another warning, changed/missing ID or unapproved failure.
+This changes acquisition size only, without reducing full native evidence.
+Continuation: `outputs/poc_10k_event_seven_native_split_20261020`; its final
+report/verification determines coverage and seven-candidate eligibility.
 
 The approved root is Wikidata's broad [event, Q140451665](https://www.wikidata.org/wiki/Q140451665), including all classes below it through native [P279 subclass-of](https://www.wikidata.org/wiki/Property:P279) statements. Identify event instances through [P31 instance-of](https://www.wikidata.org/wiki/Property:P31) and those subclass paths. Record root QID, snapshot, native class IDs and path evidence. Do not replace it with the narrower organized-event root, add a local event-type whitelist, or invent war/campaign/battle levels.
 

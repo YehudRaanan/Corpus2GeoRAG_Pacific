@@ -177,6 +177,7 @@ def check_links(
         method="wbgetentities full native records; verified single-record cache reused",
         maximum_batch_requests_before_cache_reuse=(len(ordered) + 49) // 50,
         approval="User approved batched Wikidata records after bounded query timeout",
+        oversized_response_policy="User approved halving explicitly truncated batches; single-ID truncation stops",
     )
     save()
     checked = set()

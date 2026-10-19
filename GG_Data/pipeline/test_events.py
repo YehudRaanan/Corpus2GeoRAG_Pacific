@@ -676,6 +676,56 @@ def test_native_batches_reuse_saved_records_and_require_exact_full_population(
         {"entities": {"Q1": dict(valid, missing="")}},
         {"entities": {"Q1": dict(valid, claims=None)}},
         {"entities": {"Q1": valid}, "redirects": []},
+        {
+            "entities": {"Q1": valid},
+            "warnings": {"result": {"*": "unexpected warning"}},
+        },
     ):
         with pytest.raises(SourceException):
             events.native_records(data, ["Q1"], {})
+
+
+def test_only_explicit_oversized_batches_split_without_accepting_partial_records(
+    tmp_path, monkeypatch
+):
+    calls = []
+    truncation = {
+        "result": {
+            "*": "This result was truncated because it would otherwise be larger than the limit of 12,582,912 bytes."
+        }
+    }
+
+    def source(store, url, params):
+        qids = params["ids"].split("|")
+        calls.append(qids)
+        records = {
+            qid: dict(
+                id=qid,
+                type="item",
+                claims={},
+                lastrevid=1,
+                modified="2026-10-20T00:00:00Z",
+            )
+            for qid in qids
+        }
+        return (
+            dict(entities={}, warnings=truncation)
+            if len(qids) > 1
+            else dict(entities=records)
+        ), dict(cache="test_cache", sha256="test_sha")
+
+    monkeypatch.setattr(events, "cached_json", source)
+    result = list(events.current_records(tmp_path, ["Q3", "Q1", "Q2"]))
+    assert calls == [["Q1", "Q2", "Q3"], ["Q1"], ["Q2", "Q3"], ["Q2"], ["Q3"]]
+    assert [list(records) for records, _ in result] == [["Q1"], ["Q2"], ["Q3"]]
+    assert [len(e["oversized_ancestors"]) for _, e in result] == [1, 2, 2]
+    monkeypatch.setattr(
+        events, "cached_json", lambda *a: (dict(entities={}, warnings=truncation), {})
+    )
+    with pytest.raises(
+        SourceException, match="Single native record exceeds API size limit"
+    ):
+        list(events.current_records(tmp_path, ["Q1"]))
+    monkeypatch.setattr(events, "cached_json", lambda *a: (dict(entities={}), {}))
+    with pytest.raises(SourceException, match="Unexpected native record population"):
+        list(events.current_records(tmp_path, ["Q1", "Q2"]))

@@ -1,6 +1,19 @@
 # Daniel input to final graph JSON review
 
-## Current result: native batch stopped at API response-size limit
+## Current: approved split of oversized native responses
+
+The user approved halving only explicitly oversized API batches, repeating until
+the complete requested population is present. A one-ID truncation still stops.
+Original partial responses are preserved and never used as complete evidence;
+successful children retain parent cache/checksum lineage. All other data/service
+exceptions still stop under the agreed rule. Sources and data rules are unchanged.
+
+The continuation is `outputs/poc_10k_event_seven_native_split_20261020`.
+Read its report for progress and verification for final completion. The code
+passed 47 tests before launch. Scope remains the same seven candidates against
+all 4,712 frozen Daniel QIDs; full Event discovery/population is not claimed.
+
+## Previous result: native batch stopped at API response-size limit
 
 The user approved batched current Wikidata records instead of query-service
 search. The implementation reuses successful native caches and requests up to
@@ -18,7 +31,8 @@ Accepted upstream hashes remain unchanged. Evidence: `report.json`,
 `acquisition_stop.json`, `verification.json`. Proposed for consultation only:
 split a truncated batch into halves, retaining complete native records and
 stopping if a single-ID request still exceeds the limit. No response-size
-fallback is approved or implemented yet. Earlier query failures stay immutable.
+fallback was authorized at that stop. It was subsequently approved and implemented
+as recorded above. Earlier query failures stay immutable.
 
 ## Previous result: bounded incoming request timed out
 
