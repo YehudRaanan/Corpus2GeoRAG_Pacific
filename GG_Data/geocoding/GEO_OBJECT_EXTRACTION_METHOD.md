@@ -11,6 +11,15 @@ The method is a project policy. It does not change the source datasets.
 
 **Delivery boundary:** Geometry is deferred from the current relation and identity handoff. The results in this document are proof of concept and audit evidence. They are not approved production geometry, and they must not be included in an Agent release until the separate geometry gate approves the source, representation, CRS, and export conversion.
 
+**Retrieval plan update — 19 October 2026:** Use bulk downloads, BigQuery
+exports, and saved references for distinct confirmed place QIDs, with API calls
+for remaining gaps and required WHG reconciliation. The user accepts the older
+OSM BigQuery snapshot; snapshot age does not require rejection or refresh.
+Identity, place meaning, selection-date checks, and source priority remain
+unchanged. This retrieval plan is documented in
+[Bulk downloads and reuse](../../docs/GEOCODING_HIGH_LEVEL_PROCESS.md#bulk-downloads-and-reuse)
+and has not yet been implemented as a full geocoding run.
+
 ## Output rule
 
 - A place is identified by its Wikidata QID.

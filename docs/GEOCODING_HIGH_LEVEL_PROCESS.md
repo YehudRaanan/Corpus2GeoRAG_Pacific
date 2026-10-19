@@ -6,6 +6,9 @@ This process assigns one geographic object to each confirmed place entity in the
 
 Policy version: `geo-object-selection-v0.5.0`
 
+Bulk acquisition plan added: `2026-10-19`. This is a planned retrieval method;
+the place-selection rules remain unchanged.
+
 ## Final data model
 
 - The Wikidata QID is the canonical place identifier.
@@ -64,6 +67,47 @@ A dated source geometry is eligible when its source interval contains the select
 | 5 | Specialist source or documented manual construction | Use a suitable public dataset or digitize a documented historical map. | Some historical places have no supported object in the general sources. |
 
 WHG requests are batched, with up to 50 place queries in one API request. The WHG key stays in the local `.env` file and must not appear in outputs or logs.
+
+## Bulk downloads and reuse
+
+Use saved snapshots and bulk exports as the main retrieval method. Search them
+for all distinct confirmed place QIDs after entity matching, rather than making
+the same request for every mention. Retain all candidate objects for the
+existing identity, date, type, and geometry checks. Source priority remains
+OHM, then OSM, with WHG used under the exact-QID count rule above.
+
+| Data | Bulk retrieval plan |
+|---|---|
+| Wikidata identity evidence | Reuse the saved BigQuery reference results first. Retrieve missing QIDs together from BigQuery, or use an [official Wikidata dump](https://www.wikidata.org/wiki/Wikidata:Database_download). Wikidata remains an identity source only. |
+| OHM geometries and tags | Download a pinned [OHM snapshot](https://wiki.openstreetmap.org/wiki/OpenHistoricalMap/Reuse) and search locally for QIDs and supported fallback evidence. |
+| OSM geometries and tags | Export candidates for the place-QID list from the [OSM BigQuery dataset](https://wiki.openstreetmap.org/wiki/BigQuery_dataset). [Geofabrik regional files](https://www.geofabrik.de/en/data/download.html) are an alternative when required objects or complete geometry are unavailable in that dataset. |
+| GeoNames fallback records | Reuse or download the needed [country files](https://download.geonames.org/export/dump/readme.txt) and search them locally using the existing identity-evidence rules. |
+
+**OSM snapshot decision — 19 October 2026:** The user accepts the older OSM
+BigQuery snapshot for this historical-period project. Snapshot age is not a
+rejection criterion, and updating it to the latest OSM data is not required.
+Still record the snapshot date. Historical suitability is assessed separately:
+each candidate must pass the existing place-identity, geographic-meaning, and
+selection-date rules. The snapshot's publication date does not establish that
+its shapes represent the WWII period.
+
+The planned sequence is:
+
+1. Produce a distinct list of confirmed place QIDs, retaining links to all
+   original mentions. Synthetic IDs remain unresolved identity cases.
+2. Reuse saved references and retrieve missing candidates in bulk. For BigQuery,
+   estimate bytes processed before execution and save the query and result.
+3. Apply the existing selection policy to each place; preserve rejected
+   candidates and unresolved reasons.
+4. Save one selected Shapely geometry per accepted place, with reusable
+   GeoParquet output and provenance.
+5. Use controlled, cached API calls only for remaining gaps or necessary WHG
+   reconciliation. Keep resumable checkpoints and respect each service's limits.
+
+For each input snapshot or bulk export, save the source URL or table ID,
+available source date/version, retrieval time, query or filter scope, row count,
+and file checksum. Reuse verified saved files on restart. This plan does not
+start a new download, geocoding run, or Agent release.
 
 ## Automatic candidate logic
 
@@ -152,5 +196,5 @@ The four GeoNames results are points. They are usable starting geometries and ca
 ## Production limits
 
 - The Agent contract still needs to define the required coordinate reference system and the method used to load the Shapely geometry table.
-- Public query services can time out or limit requests. A complete run should use stable endpoints, controlled retries, persistent caches, and resumable checkpoints.
+- Bulk exports and saved snapshots are the planned main retrieval route. Public query services used for gaps can time out or limit requests; use controlled retries, persistent caches, and resumable checkpoints.
 - Source coverage does not prove geographic truth. Candidate evidence and provenance must remain available for quality review.
