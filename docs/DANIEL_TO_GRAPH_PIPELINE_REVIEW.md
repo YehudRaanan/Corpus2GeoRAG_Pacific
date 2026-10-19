@@ -23,6 +23,16 @@ local hierarchy traversal keeps all ranks and has no depth cutoff. No new
 classifier, Event type, endpoint population or inclusion rule is introduced.
 The five-QID source probe is separate from completion of the full 10K POC.
 
+The smaller-request probe saved 53 outgoing and 146 main-graph incoming links,
+with no additional scholarly incoming links, for 165 distinct reference
+candidates. It then saved all 165 P31 checks and 344 P279 class checks before
+Wikidata returned HTTP 502. Acquisition stopped without retries, status
+`BLOCKED_HIERARCHY_PROBE`; raw requests/responses and partial hierarchy remain
+cached in `outputs/poc_10k_current_event_hierarchy_probe_20261020` and the current
+Event cache. This is a source-service failure, not a zero-Event result. No Event
+model rows were added. A bounded temporary-error retry policy is proposed for
+discussion; it has not been implemented or applied.
+
 Review date: 19 October 2026. This is the consolidated discussion list for the full pipeline. It records agreed rules, decisions still needed, implementation checks, and deferred improvements. It does not approve new rules or start a data run.
 
 The earlier list overstated the open business decisions. Settled rules, conditional exceptions and technical interfaces are separated below. The user confirmed that distinct `(Wikidata QID, type)` combinations coexist and Relations remains at QID level. MISC is not an open issue. Before adding a data-dependent rule, show actual IDs, source values and affected counts.

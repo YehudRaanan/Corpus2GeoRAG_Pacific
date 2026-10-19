@@ -87,17 +87,25 @@ def test_cache_preserves_raw_response_reuses_success_and_rejects_tampering(
         events.cached_json(tmp_path, events.QUERY_URL, {"query": "ASK{}"})
 
 
-def test_failed_request_is_saved_and_never_automatically_retried(tmp_path, monkeypatch):
+@pytest.mark.parametrize("http_status", [200, 502])
+def test_failed_request_is_saved_and_never_automatically_retried(
+    tmp_path, monkeypatch, http_status
+):
     calls = []
 
     class Response:
-        content = b'{"error": {"code": "maxlag"}}'
-        status_code = 200
+        content = (
+            b'{"error": {"code": "maxlag"}}'
+            if http_status == 200
+            else b"<html>502 Bad Gateway</html>"
+        )
+        status_code = http_status
         headers = {}
         is_redirect = False
 
         def raise_for_status(self):
-            pass
+            if self.status_code == 502:
+                raise events.requests.exceptions.HTTPError("502 Bad Gateway")
 
         def json(self):
             return json.loads(self.content)
@@ -110,6 +118,10 @@ def test_failed_request_is_saved_and_never_automatically_retried(tmp_path, monke
         with pytest.raises(SourceException):
             events.cached_json(tmp_path, events.QUERY_URL, {"query": "ASK{}"})
     assert calls == [1]
+    directory = next(tmp_path.iterdir())
+    assert (directory / "response.json").read_bytes() == Response.content
+    evidence = json.loads((directory / "request.json").read_text())
+    assert evidence["http_status"] == http_status and evidence["status"] == "FAILED"
 
 
 def test_timeout_is_recorded_without_retry_or_partial_success(tmp_path, monkeypatch):

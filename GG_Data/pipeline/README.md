@@ -37,6 +37,28 @@ one Daniel QID at a time, before the separate unchanged hierarchy check.
 historical query file stays immutable. Candidate neighbors remain supporting
 reference data, not new Daniel entities or accepted Event rows.
 
+### Smaller-request probe: saved progress, then HTTP 502
+
+`outputs/poc_10k_current_event_small_requests_20261020/probe.json` completed
+the five-QID direct-link check: 53 outgoing and 146 incoming statements across
+165 distinct candidate neighbors. The separate scholarly graph added no incoming
+links for those five QIDs. Full current native records are cached for all five.
+These are reference candidates only; no additional Daniel entities were created.
+
+`outputs/poc_10k_current_event_hierarchy_probe_20261020/probe.json` then saved
+P31 checks for all 165 candidates and P279 checks for 344 distinct classes.
+The next ten-class request returned HTTP 502; status is
+`BLOCKED_HIERARCHY_PROBE`. The run stopped without retry. Both successful JSON
+responses and the failed HTML response/request metadata remain cached. The
+partial hierarchy, query files and counts persist for reuse. No negative Event
+classification, inclusion count or Event-model completion follows from this
+partial traversal. No Event rows or final graph were written.
+
+Next operational proposal, pending discussion: permit up to three total attempts
+for temporary server failures, with waits of 10 and 30 seconds; reuse successful
+cache entries. Data/business-rule exceptions would still stop immediately.
+No such retry policy is implemented or active at this checkpoint.
+
 Contract order: [population S2T](../../docs/SOURCES_TO_ENTITY_DATA_MODEL_S2T.md),
 [ERD](../../docs/ENTITY_DATA_MODEL_ERD.md), then
 [model-to-graph S2T](../../docs/ENTITY_MODEL_TO_AGENT_GRAPH_S2T.md).
