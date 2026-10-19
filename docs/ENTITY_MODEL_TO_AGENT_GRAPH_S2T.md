@@ -30,7 +30,7 @@ Type interface approved on 19 October 2026: the source Entities key is `(entity_
 - Daniel's input supplies entity mentions only. Reuse existing entity assignments, original QIDs and separate unresolved synthetic IDs. Do not derive events from Daniel's mentions or from MISC.
 - Events come separately from Wikidata, use their original QIDs and supplied values, and enter the graph only if directly connected to **at least two distinct matched Daniel entity QIDs**.
 - For this event test, any mapped Wikidata relation can connect the event and the Daniel entity, in either direction. Repeated mentions count once. Multiple assertions and forward/reverse copies count once per connected entity. Indirect paths do not count. The test uses the whole input dataset, not one Wikipedia page at a time.
-- Include retained mapped Wikidata assertions between Daniel's matched QIDs and included-event/Daniel links. Require both endpoints in included nodes; do not expand to arbitrary event/event assertions. Deliver both directions through relation-map-v2.1.0. Preserve different predicates and different source assertions rather than reducing an entity pair to a single relation.
+- Include retained mapped Wikidata assertions between Daniel's matched QIDs and included-event/Daniel links. Require both endpoints in included nodes; do not expand to arbitrary event/event assertions. Deliver both directions through the pinned mapping version (currently v2.1.1, preserving the v2.1 direction contract). Preserve different predicates and different source assertions rather than reducing an entity pair to a single relation.
 - Omit node/edge `sources` from this export for now. Supporting provenance remains in the source model and audit artifacts. This omission does not remove edge endpoint `source` or the required reverse-view link `source_edge_id`.
 - Do not create page nodes, mention nodes, paragraph objects or paragraph relations. Omit node `text`; do not assemble or process paragraph text. Do not export paragraph indexes, extraction spans or raw matching attempts.
 - No internal event classification, inferred event level, date ranking or conflict resolution is authorized. Use Wikidata values as supplied. Highlight incompatible/multiple values before changing or choosing them.
@@ -70,7 +70,7 @@ Successfully normalized DATE mentions stay in the source temporal data. Existing
 | Target JSON path | Source | Transformation / condition |
 |---|---|---|
 | `metadata.schema_version` | Approved graph release manifest | Copy the graph schema version. Do not substitute the S2T document date/version. Highlight a missing release value before publication. |
-| `metadata.relation_map_version` | Applied mapping version | `relation-map-v2.1.0`; validate against every exported assertion and catalog artifact. Existing v1 exports must not be relabeled as v2.1. |
+| `metadata.relation_map_version` | Applied mapping version | `relation-map-v2.1.1` for the current native extension; validate the actual applied version and checksums against every exported assertion/catalog. Later native additions require a new pinned version. Existing v1 exports must not be relabeled as v2.1. |
 | `metadata.release_status` | Approved release manifest | Copy the actual release state. Structural validation alone cannot assign production status. |
 | `metadata.scope` | Approved release scope | State the actual Daniel entity population and included Wikidata event scope. No automatic Pacific-only claim. Retain the >=2 rule and input/reference versions in the supporting manifest; do not invent a new scope schema here. |
 | `relation_catalog` | Current versioned mapping and direction catalog | Use the Agent-compatible catalog structure and field rules below. |
@@ -124,7 +124,7 @@ Relations and graph edges remain at QID level. Do not join a source assertion to
 | `source` | `Relations.subject_entity_id` | Copy the already normalized QID endpoint. Resolve through nodes' `wikidata_id`; do not rewrite it to a chosen typed node. This is an endpoint ID, not provenance. |
 | `target` | `Relations.object_entity_id` | Copy the normalized item QID endpoint; require at least one separate typed node with this `wikidata_id`. No assertion fan-out. Literal/somevalue/novalue records remain source data. |
 | `type` | `Relations.level2_relation` | Exact case-preserving mapped ID. No uppercasing or semantic replacement. |
-| `relation_family` | `Relations.level1_relation` and mapping catalog | Copy the applied version's agreed family. Highlight a row/catalog conflict rather than selecting an alternative family. |
+| `relation_family` | `Relations.level1_relation` and mapping catalog | Copy the applied version's agreed family. Native fallback mappings keep Level 1 unassigned (`UNRESOLVED`), with no inferred family. Highlight a row/catalog conflict rather than selecting an alternative family. |
 | `count` | `Relations.count` | One per current source assertion. Never use repeated Daniel mentions or the reverse copy to increase this count. |
 | `start_date` | `Relations.time_from` | Copy the existing target-compatible mapped value or null; no new temporal inference. |
 | `end_date` | `Relations.time_to` | Same rule as start_date. |
@@ -136,7 +136,7 @@ Before normalization, apply the existing 14 exact exclusions using original sour
 
 ## 6. Reverse edge S2T
 
-Join the base `type` plus mapping version to `RELATION_DIRECTION_LOOKUP_v2.1.0.csv`. The existing direction mapping supplies the meaning; neither exporter nor Agent invents an inverse.
+Join the base `type` plus the actual mapping version to its matching direction lookup (currently `RELATION_DIRECTION_LOOKUP_v2.1.1.csv`). The existing direction mapping supplies the meaning; neither exporter nor Agent invents an inverse.
 
 | Reverse target field | Source / rule |
 |---|---|
@@ -165,14 +165,14 @@ The Agent reads a relation definition's label, family, source predicate, directi
 |---|---|
 | `id` | Exact exported base or reverse predicate ID; also the catalog dictionary key. |
 | `labels` | Existing label strings from applied `level2_relation_label`, or the lookup's exact reverse label. Highlight conflicting meanings rather than relying on the loader's first-label selection. |
-| `level1_families` | Existing applied `level1_family` values; consistency with relation rows must be checked. Conflicting families need a decision before export. |
+| `level1_families` | Existing applied `level1_family` values; native fallback entries remain unassigned (`UNRESOLVED`), with no family inference. Consistency with relation rows must be checked. Conflicting families need a decision before export. |
 | `source_predicates[].source` | Existing mapping `source`. Retain supplied source mappings. |
 | `source_predicates[].predicate` | Existing mapping `source_predicate`. |
 | `source_predicates[].direction` | Existing `direction_to_level2` for the base predicate. A reverse predicate needs an explicit catalog definition; do not copy a base direction or invent a conversion. |
 | `review_statuses` | Existing catalog review/status values, if supplied; otherwise omit this optional field. No new review decision is made by export. |
 | Direction-pair audit fields | Retain `direction_pair_id`, `reverse_resolution_type` and endpoint action in supporting direction artifacts. The current Agent catalog adapter does not consume them; reverse edges carry their defined view fields. |
 
-Every exported base or reverse predicate must be present in the exported catalog. If several source mapping rows disagree on one relation's family/meaning, highlight the exact rows. Do not solve that disagreement through a new aggregation or a label guess. Catalog inclusion does not create entity nodes or source assertions.
+The population S2T section 8 now permits adding exact native Wikidata properties to a new mapping version when a source key is missing. This exporter consumes that pinned result; it does not discover or invent relations. Every exported base or reverse predicate must be present in the exported catalog. If several source mapping rows disagree on one relation's family/meaning, highlight the exact rows. Do not solve that disagreement through a new aggregation or a label guess. Catalog inclusion does not create entity nodes or source assertions.
 
 ## 8. Visible exceptions and release checks
 
@@ -196,8 +196,8 @@ Do not publish a final accepted graph while an unresolved required-field or sema
 
 - [Agent README input contract](https://github.com/EtzionR/Corpus2GeoRAG_Pacific/blob/main/Agent/README.md#input-schema-for-the-knowledge-graph-builder), verified on 19 October 2026; Git blob `d6929c7e276c564cb7ef1cf219cb1b9414ce0f26`. The target is the graph input, not the Agent's answer JSON or UI result schema.
 - [Agent loader and text search](https://github.com/EtzionR/Corpus2GeoRAG_Pacific/blob/main/Agent/geo_agent/graph_store.py), inspected Git blob `3d67affe310e0336c579adcf8dcc0362702100ba`. Remote Agent implementation is newer than the local checkout.
-- [Relation-map-v2.1.0 delivery rules](RELATION_MAPPING_V2_1_DATA_LAYER_REVERSE_2026-10-15.md), [mapping table](../GG_Data/mapping/RELATION_MAPPING_TABLE_v2.1.0.csv), [direction lookup](../GG_Data/mapping/RELATION_DIRECTION_LOOKUP_v2.1.0.csv) and [direction catalog](../GG_Data/mapping/RELATION_DIRECTION_CATALOG_v2.1.0.csv).
+- [Relation-map-v2.1.0 delivery rules](RELATION_MAPPING_V2_1_DATA_LAYER_REVERSE_2026-10-15.md), [current mapping table](../GG_Data/mapping/RELATION_MAPPING_TABLE_v2.1.1.csv), [direction lookup](../GG_Data/mapping/RELATION_DIRECTION_LOOKUP_v2.1.1.csv) and [direction catalog](../GG_Data/mapping/RELATION_DIRECTION_CATALOG_v2.1.1.csv).
 - [Geography policy](GEOCODING_HIGH_LEVEL_PROCESS.md). Shapely is the geometry output; graph JSON holds the approved file/place/checksum pointer. This supersedes the inspected Agent inline-GeoJSON format. The loader helper has fixture checks; Agent integration and spatial CRS compatibility remain pending.
 - [Existing matching type decisions](../GG_Data/entity_resolution/bilingual_page_pilot.py): `categories` / `choose` and saved `type_metadata` remain unchanged. The later population decision preserves distinct QID/type pairs and QID-level relations; no canonical type selector or new event classifier is introduced.
 
-The source model is an agreed logical design with explicit implementation exceptions. Following D: output approval on 20 October 2026, `GG_Data/pipeline` completed the first population step for 10,000 original mentions and 691 resolved Wiki Pages, with output/source/key verification. See its README and `outputs/poc_10k/manifest.json`; status is `STEP_1_ONLY`. The graph interface helpers have in-memory checks, but later model stages, final graph and Agent integration remain pending. Remaining work includes source/target compatibility, release metadata, spatial CRS compatibility and reverse-view evidence checks. New cases must be brought back before adding logic.
+The source model is an agreed logical design with explicit implementation exceptions. Following D: output approval on 20 October 2026, `GG_Data/pipeline` completed the first population step for 10,000 original mentions and 691 resolved Wiki Pages, with output/source/key verification. Its original manifest remains `STEP_1_ONLY`. The separate approved Entities step subsequently passed with 6,077 rows in `outputs/poc_10k_entities_approved`, status `ENTITIES_STEP_ONLY`; see the pipeline README. The P2341 source-key gap is covered by the approved native-property rule and mapping v2.1.1, but broader Relations population has not rerun. The graph interface helpers have in-memory checks; Events, Relations, Geography, final graph and Agent integration remain pending. Remaining work includes source/target compatibility, release metadata, spatial CRS compatibility and reverse-view evidence checks. New cases outside approved logic must be brought back before adding logic.

@@ -14,7 +14,7 @@ The [full pipeline review](DANIEL_TO_GRAPH_PIPELINE_REVIEW.md) collects open dec
 | Completed matching run, `C:\Users\User\.cache\geoai_full_daniel_dump_bigquery_parallel_20261019` | Reuse assignments, attempts, dates, type decisions, page lookups, reference evidence and manifests. | Population does not rerun or revise matching. |
 | Saved Wikidata references; approved BigQuery table `bigquery-public-data.wikipedia.wikidata` | Labels, aliases, native types/hierarchy, full statements, events and provenance for relevant QIDs. Reuse saved results before retrieving missing data. | Compact matching metadata is not a complete assertion/date store. Full `item` JSON or full saved entity records are needed for claims, ranks, qualifiers and references. |
 | Official English/Japanese Wikimedia dumps and saved page resolution | Article page IDs, redirects, subject QIDs, sitelinks and page/link evidence. | Dump links may include templates/navigation. They are not proof of a particular Daniel extraction revision or all entities in prose. |
-| Versioned relation catalogs and exact assertion exclusions | Reuse relation-map-v2.1.0 semantics, direction and temporal mappings. | Catalog coverage does not authorize new fact sources or resolve unknown predicates. |
+| Versioned relation catalogs and exact assertion exclusions | Current catalog: relation-map-v2.1.1; preserve v2.1 direction/time rules and the 14 exclusions. | Missing native Wikidata source keys follow the approved rule in section 8. No other fact source or semantic translation is authorized. |
 | OHM, OSM, WHG and GeoNames under `geo-object-selection-v0.5.0` | Geometry acquisition and identity evidence under the existing source/selection policy. | Wikidata is identity/context only, not a selected geometry source. WHG has a restricted reconciliation role. |
 
 WarSampo is excluded from this workflow by the user's latest instruction. EventKG is not an approved event/assertion acquisition source for this population phase. Catalog rows mentioning either provider remain mapping definitions; they do not authorize importing their facts. Do not import all nodes/events from an older graph merely because they are cached.
@@ -143,13 +143,21 @@ Native multivalued classifications/dates must fit a lossless model representatio
 ### Eligible assertions
 
 - Current fact provider is **Wikidata**. Retain item-to-item source assertions where both endpoints belong to D, plus direct included-event/D links in either source direction. Both event/entity and entity/event source statements are covered.
-- Include every available predicate, subject to the existing exact exclusions and versioned mapping. Do not restrict to the earlier saved assertion file. Unknown mappings are reported, not silently dropped or assigned a guessed predicate.
+- Include every available predicate, subject to the existing exact exclusions and versioned mapping. Do not restrict to the earlier saved assertion file. An actual native Wikidata property without a source mapping follows the approved native-preservation rule below; ambiguous or conflicting mappings still require discussion.
 - All retrieved ranks, qualifiers, references, literals, somevalue and novalue remain raw evidence. The latest "any assertion" scope does not authorize the legacy producer's silent deprecated-rank skip. Do not select only a preferred statement as a substitute for preserving all eligible assertions.
 - Non-item values cannot satisfy the two-entity relation filter or event threshold; keep them in raw claims/audit without manufacturing entity rows. The nullable object fields remain available in the model contract.
 - Event/event assertions are not added merely because both events were included. They qualify only if they independently meet the approved D/D or E/D endpoint rule. No other endpoint expansion, transitive relation, or synthetic participation is allowed.
 - Apply the 14 approved exact source-record/predicate/original-endpoint exclusions before mapping; retain excluded records and reasons. Do not blanket-remove self-links.
 
-Resolve the mapping by exact source/predicate key and version in [RELATION_MAPPING_TABLE_v2.1.0.csv](../GG_Data/mapping/RELATION_MAPPING_TABLE_v2.1.0.csv). `direction_to_level2` supplies same/reverse endpoint normalization, once. For a legacy v1 row, reconstruct source orientation before v2.1 normalization. Do not transform an already transformed pair twice. Unknown or ambiguous keys require a visible case report and discussion before a new mapping.
+Resolve the mapping by exact source/predicate key and version in [RELATION_MAPPING_TABLE_v2.1.1.csv](../GG_Data/mapping/RELATION_MAPPING_TABLE_v2.1.1.csv). `direction_to_level2` supplies same/reverse endpoint normalization, once. For a legacy v1 row, reconstruct source orientation before v2.1 normalization. Do not transform an already transformed pair twice. Ambiguous keys, unsupported sources and proposed semantic translations require a visible case report and discussion. Missing exact native Wikidata keys follow the approved rule below.
+
+**Native Wikidata mapping rule, approved 20 October 2026:** if no usable relation/mapping exists for the two in-scope endpoints, look for an actual direct Wikidata item-to-item statement between those same IDs. Use existing eligible mappings first. If its exact `(Wikidata, wd:P...)` key is absent, add a source-specific parameter row that preserves the native property as Level 2 and keeps its original direction. Reuse any existing identical Level 2 definition and reverse contract. Leave Level 1 `UNRESOLVED` with `level1_assignment_status=NOT_ASSIGNED`; do not infer a family. If the exact source key already exists but conflicts or is ambiguous, stop rather than override it.
+
+The added entry must retain native statement IDs, original endpoints, property label/source evidence and the observed count scope. Keep ranks/qualifiers/references unchanged; apply the existing exclusions first. If no Wikidata statement exists, create no relation. Do not infer links from names, co-occurrence, similarity, indirect paths or a shared class. Add no endpoint entities. A reverse view follows the existing v2.1 contract and shares the same assertion identity; it is not a newly discovered Wikidata statement.
+
+Persist native additions in a supplemental parameters CSV and build a new versioned mapping/direction catalog. Pin its checksums in the run lineage; do not modify a historical version in place. Missing native source keys covered by this rule no longer require individual business approval. Unknown non-native semantics, conflicts and incompatible source values still require consultation.
+
+The first applied entry is `(Wikidata, wd:P2341)` in `ADDITIONAL_NATIVE_RELATION_RULES_2026-10-20.csv`, with evidence in `NATIVE_RELATION_EVIDENCE_2026-10-20.json`. P2341 already had an EventKG source entry and a Level 2/reverse definition; only the native Wikidata source key was missing. `relation-map-v2.1.1` adds that key and reuses the existing definition. This imports no EventKG assertion. The recorded count of one is the observed first-exception statement, not a full-sample P2341 total.
 
 | Target column(s) | Source and population rule |
 |---|---|
@@ -164,12 +172,12 @@ Resolve the mapping by exact source/predicate key and version in [RELATION_MAPPI
 | `source_record_id`, `source_graph`, `source_reference` | Native statement ID and actual saved source graph/reference. Absent optional provenance stays absent; do not invent a source graph. |
 | `source_support`, `evidence_references`, `sources` | All supporting statements, original endpoints, references, qualifiers, ranks and retrieval evidence. Only verified page citations are used; no paragraph citations are generated. |
 | `final_review_status`, `final_mapping_class`, `mapping_origin` | Actual existing mapping/review evidence. Prior catalog review is not review of a new statement or its historical truth. |
-| `relation_map_version` | Applied `relation-map-v2.1.0`, tied to catalog hashes. Old outputs are not relabeled without replay. |
+| `relation_map_version` | Applied `relation-map-v2.1.1` for the current native extension, tied to catalog hashes. Future additions require a new pinned version. Old outputs are not relabeled without replay. |
 | `input_assertion` | Preserve all 26 legacy assertion columns and complete raw statement/envelope, or an immutable artifact reference. New-source fields absent from a legacy producer remain explicit, not fabricated. |
 | `count` | 1 per retained base source assertion, not mention frequency. |
 | `attributes`, `embedding` | Supplied qualifier/side/extra payload and existing embedding only. Do not invent participant roles or compute embeddings. |
 
-One source assertion produces one base row. Bidirectional graph navigation is supplied by the separate exporter using the [direction lookup](../GG_Data/mapping/RELATION_DIRECTION_LOOKUP_v2.1.0.csv) and `source_edge_id`. A generated reverse view is not a second independent assertion. Two genuinely separate Wikidata statements in opposite directions retain their own identities. No fixed assumption of exactly two assertions per entity pair is valid.
+One source assertion produces one base row. Bidirectional graph navigation is supplied by the separate exporter using the [direction lookup](../GG_Data/mapping/RELATION_DIRECTION_LOOKUP_v2.1.1.csv) and `source_edge_id`. A generated reverse view is not a second independent assertion. Two genuinely separate Wikidata statements in opposite directions retain their own identities. No fixed assumption of exactly two assertions per entity pair is valid.
 
 ## 9. Geography: existing policy and fields
 
@@ -213,7 +221,7 @@ Before an implementation can claim completion:
 
 Different resolved types for one QID are not an unresolved conflict: keep distinct `(entity_id, type)` combinations. Event membership coexists with other types. MISC classification is not an open decision. Relations stays at QID level, with one base row per source assertion.
 
-The following cases must be brought back with exact IDs, values and counts before adding logic: differing Daniel fallback names when both Wikidata labels are missing; unlabeled events without Daniel names; unknown/ambiguous predicate mappings; incompatible multivalued event dates/classifications; source-page input/lookup conflicts; partial-date interpretation required for geometry selection; or a concrete specialist geometry source. Preserve raw evidence while the required decision is pending, and report the affected population explicitly.
+The following cases must be brought back with exact IDs, values and counts before adding logic: differing Daniel fallback names when both Wikidata labels are missing; unlabeled events without Daniel names; ambiguous/conflicting mappings or unsupported non-native predicate semantics; incompatible multivalued event dates/classifications; source-page input/lookup conflicts; partial-date interpretation required for geometry selection; or a concrete specialist geometry source. Preserve raw evidence while the required decision is pending, and report the affected population explicitly.
 
 Downstream interfaces approved on 19 October 2026: separate graph entities use `QID::type` with original `wikidata_id`; relations keep QID endpoints, resolved to the separate typed entities without copying assertions. `geometry_ref` is null or `{file,place_id,sha256}` identifying GeoParquet/file/place/checksum; the loader returns Shapely and errors on broken references. Agent integration, spatial CRS compatibility and reverse-view evidence checks remain implementation work. These interfaces do not change source population or matching. Final graph sources remain omitted; provenance stays in this model and supporting artifacts.
 
@@ -243,15 +251,16 @@ Poles (`Q105969841`) -> Poland (`Q36`). No mapping was added. The partial check
 had examined 191 eligible non-excluded statements when it stopped; this is not
 a full-population missing-mapping count. Raw evidence and catalog checksums are
 in `GG_Data/pipeline/outputs/poc_10k_relations_preflight/first_exception.json`.
-Status `BLOCKED_RELATION_MAPPING`; consultation is pending before further
-relation checks or population. See the pipeline README for accepted output and
-exception details. This records an observed exception; it approves no new rule.
+The user subsequently approved the general native-preservation rule above.
+P2341 is now present in `relation-map-v2.1.1`; the original exception report
+remains historical evidence. The broader sample relation scan/population has
+not been rerun. See the pipeline README for verification and current limits.
 
 ## 11. Contract references and precedence
 
 - [Six-table ERD and exact column inventories](ENTITY_DATA_MODEL_ERD.md).
 - [Separate model-to-graph JSON S2T](ENTITY_MODEL_TO_AGENT_GRAPH_S2T.md).
-- [v2.1 direction rules](RELATION_MAPPING_V2_1_DATA_LAYER_REVERSE_2026-10-15.md), [mapping table](../GG_Data/mapping/RELATION_MAPPING_TABLE_v2.1.0.csv), [direction catalog](../GG_Data/mapping/RELATION_DIRECTION_CATALOG_v2.1.0.csv), [exact exclusions](../GG_Data/mapping/ASSERTION_EXCLUSIONS.csv).
+- [v2.1 direction rules](RELATION_MAPPING_V2_1_DATA_LAYER_REVERSE_2026-10-15.md), [current mapping table](../GG_Data/mapping/RELATION_MAPPING_TABLE_v2.1.1.csv), [current direction catalog](../GG_Data/mapping/RELATION_DIRECTION_CATALOG_v2.1.1.csv), [exact exclusions](../GG_Data/mapping/ASSERTION_EXCLUSIONS.csv).
 - Existing relation producer: `GG_Data/mapping/RELATION_MAPPING_ALL_ITEMS_v1.0.0.ipynb`; its historical output is an input/evidence contract, not proof of current scope, rank handling or v2.1 population completion.
 - [Geometry source and selection policy](GEOCODING_HIGH_LEVEL_PROCESS.md) and [extraction method](../GG_Data/geocoding/GEO_OBJECT_EXTRACTION_METHOD.md).
 

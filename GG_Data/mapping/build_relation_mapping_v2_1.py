@@ -63,8 +63,35 @@ def local_label(relation_id: str) -> str:
     return " ".join(local.split()).strip().lower()
 
 
-def build() -> dict[str, Any]:
+def build(
+    *, native_rules: Path | None = None, version: str = VERSION, output: Path = OUT
+) -> dict[str, Any]:
+    """Keep v2.1.0 reproducible; native extensions receive a separate version."""
+    if not re.fullmatch(r"relation-map-v\d+\.\d+\.\d+", version):
+        raise ValueError("Invalid relation mapping version")
+    if native_rules is not None and version == VERSION:
+        raise ValueError("Native additions require a new mapping version")
+    suffix = version.removeprefix("relation-map-v")
     mapping = read_csv(MAPPING_V2)
+    if native_rules is not None:
+        from GG_Data.mapping.rebuild_relation_mapping import append_coverage_rules
+
+        rules = read_csv(native_rules)
+        for row in rules:
+            predicate = row["source_predicate"]
+            if not (
+                row["source"] == "Wikidata"
+                and re.fullmatch(r"wd:P[1-9]\d*", predicate)
+                and row["normalized_relation_id"] == predicate
+                and row["level2_relation_id"] == predicate
+                and row["direction_to_level2"] == "same"
+                and row["level2_mapping_basis"] == "IDENTICAL_IDENTIFIER"
+                and row["statement_ids"]
+            ):
+                raise ValueError(
+                    f"Native rule needs source-statement evidence: {predicate}"
+                )
+        append_coverage_rules(mapping, rules, inherit_family=False)
     additional = read_csv(ADDITIONAL_REVERSE)
     assert all(
         row["assertion_review_status"] != "PENDING_SAMPLE_REVIEW" for row in additional
@@ -207,7 +234,7 @@ def build() -> dict[str, Any]:
                 "source_occurrences": sum(
                     int(row["source_occurrence_count"]) for row in source_rows
                 ),
-                "relation_map_version": VERSION,
+                "relation_map_version": version,
             }
         )
 
@@ -272,7 +299,7 @@ def build() -> dict[str, Any]:
                 "formal_bases": direction["formal_bases"],
                 "formal_evidence_urls": direction["formal_evidence_urls"],
                 "agent_action_required": "NONE",
-                "relation_map_version": VERSION,
+                "relation_map_version": version,
             }
             existing = lookup_by_relation.get(input_id)
             if existing:
@@ -334,7 +361,7 @@ def build() -> dict[str, Any]:
                     "NAMED_INVERSE": "DATA_LAYER_RETURN_NAMED_INVERSE_AND_SWAP_ENDPOINTS",
                     "SYNTHETIC_INVERSE": "DATA_LAYER_RETURN_SYNTHETIC_INVERSE_AND_SWAP_ENDPOINTS",
                 }[direction["reverse_resolution_type"]],
-                "relation_map_version": VERSION,
+                "relation_map_version": version,
             }
         )
         mapping_v2_1.append(updated)
@@ -363,9 +390,9 @@ def build() -> dict[str, Any]:
         if row["reverse_resolution_type"] == "NAMED_INVERSE"
     )
 
-    write_csv(OUT / "RELATION_DIRECTION_CATALOG_v2.1.0.csv", direction_catalog)
-    write_csv(OUT / LOOKUP_NAME, direction_lookup)
-    write_csv(OUT / "RELATION_MAPPING_TABLE_v2.1.0.csv", mapping_v2_1)
+    write_csv(output / f"RELATION_DIRECTION_CATALOG_v{suffix}.csv", direction_catalog)
+    write_csv(output / f"RELATION_DIRECTION_LOOKUP_v{suffix}.csv", direction_lookup)
+    write_csv(output / f"RELATION_MAPPING_TABLE_v{suffix}.csv", mapping_v2_1)
 
     type_counts = Counter(row["reverse_resolution_type"] for row in direction_catalog)
     status_counts = Counter(row["reverse_status"] for row in direction_catalog)
@@ -375,7 +402,7 @@ def build() -> dict[str, Any]:
             row["source_occurrences"]
         )
     summary = {
-        "relation_map_version": VERSION,
+        "relation_map_version": version,
         "source_mapping_rows": len(mapping_v2_1),
         "source_occurrences": sum(
             int(row["source_occurrence_count"]) for row in mapping_v2_1
@@ -431,7 +458,14 @@ def build() -> dict[str, Any]:
             "additional_property_metadata": str(ADDITIONAL_METADATA.relative_to(ROOT)),
         },
     }
-    (OUT / "RELATION_MAPPING_V2_1_SUMMARY.json").write_text(
+    if native_rules is not None:
+        summary["inputs"]["native_rules"] = str(native_rules.relative_to(ROOT))
+    summary_name = (
+        "RELATION_MAPPING_V2_1_SUMMARY.json"
+        if version == VERSION
+        else f"RELATION_MAPPING_v{suffix}_SUMMARY.json"
+    )
+    (output / summary_name).write_text(
         json.dumps(summary, ensure_ascii=False, indent=2) + "\n", encoding="utf-8"
     )
     return summary

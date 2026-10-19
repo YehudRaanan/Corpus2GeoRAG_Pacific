@@ -14,7 +14,7 @@ The earlier list overstated the open business decisions. Settled rules, conditio
 | 4. Preserve unresolved mentions | Keep each saved unresolved mention and its existing separate synthetic ID, reason, original type, attempts and evidence. | No synthetic merging, guessed QID or invented entity. Successful normalized dates remain structured mention data with null entity FK. |
 | 5. Populate identities and evidence | Populate Entities, Mentions and Wiki Pages. Name priority is English Wikidata label, Japanese label, then Daniel name. | One Entities row per distinct `(entity_id, type)` combination. Multiple types coexist; QIDs/SYN IDs remain unchanged. Mentions uses the composite key. Full evidence stays in the model/supporting artifacts. |
 | 6. Retrieve Wikidata facts and events | Reuse full saved records; obtain missing relevant assertions in bulk. Discover native event instances under Q140451665 through P31/P279. Check direct connections in either direction to Daniel's matched QIDs. | All native event types are eligible. Include an event only with at least two distinct matched Daniel QIDs. No indirect participant paths or recursive entity expansion. WarSampo/EventKG facts stay outside this workflow. |
-| 7. Populate Relations and Events | Keep QID-level Wikidata assertions between matched Daniel QIDs and included-event/Daniel links. Apply exact exclusions and relation-map-v2.1.0 once from original source orientation. | One base row per source assertion, without expansion across endpoint types; native event QIDs and values. Unknown mappings/conflicting values are reported. Reverse graph views are not new evidence. |
+| 7. Populate Relations and Events | Keep QID-level Wikidata assertions between matched Daniel QIDs and included-event/Daniel links. Apply exact exclusions and the pinned mapping version (currently v2.1.1) once from original source orientation. | One base row per source assertion, without expansion across endpoint types; native event QIDs and values. Missing native source keys follow the approved parameter-addition rule; conflicts are reported. Reverse graph views are not new evidence. |
 | 8. Assign geography | Use the existing OHM -> OSM priority, restricted WHG reconciliation and supported name/context fallback including GeoNames. Apply the existing date, identity, representation and validation rules. | At most one accepted Shapely object per confirmed place QID, persisted as WKB in GeoParquet, plus complete audit. No guessed shapes or Wikidata geometry promotion. |
 | 9. Export graph | Apply the separate model-to-graph S2T. Export the selected entity/event nodes, mapped base/reverse edges and catalog. | One graph JSON with metadata, relation_catalog, nodes and edges. Geometry is an object pointer. No page/mention/paragraph nodes, node text or node/edge provenance payloads. |
 | 10. Verify Agent handoff | Check IDs, endpoints, predicates, dates, reverse evidence identity and geometry-pointer loading. | Acceptance requires the actual Agent integration to work; a valid JSON file alone is insufficient. |
@@ -30,7 +30,7 @@ P01 and P02 are closed business questions. P03-P08 are settled rules with implem
 | P03 | Settled naming rule; only actual missing fallback cases need review. | English -> Japanese -> Daniel. The saved matched population has 21 QIDs without English/Japanese labels, each with one distinct Daniel name; no fallback-name choice is needed there. An unlabeled added event or genuinely differing fallback names is conditional, not an observed current blocker. | Read-only matching CSV/metadata audit; population S2T Entities. |
 | P04 | Technical check: native event classification representation. | Use Wikidata values as supplied. No internal categories or levels. Show an actual target incompatibility before changing representation or requesting a new rule. | Population S2T Events; graph S2T attributes.kind. |
 | P05 | Technical check: native date representation. | Preserve supplied values, precision, calendars and claims. No ranking or invented dates. Show exact source/target incompatibilities if found. | ERD Events/Relations; graph S2T temporal fields. |
-| P06 | Conditional: a newly retrieved predicate lacks a usable mapping. | Use approved exact versioned keys. Show actual unmapped/conflicting rows before adding logic. No fresh acquisition result establishes such a case in this review. | Population S2T Relations; graph S2T catalog. |
+| P06 | Settled native fallback rule; conflicting mappings remain conditional. | Use existing exact mappings first. An actual direct Wikidata statement with a missing native source key can add its original property/direction at Level 2, leaving Level 1 unassigned. Reuse any existing identical definition/reverse contract. No native statement means no relation. Ambiguous/conflicting mappings still stop. | User approval 20 October; population S2T section 8; current catalog v2.1.1. |
 | P07 | Conditional future page-ID conflict, not a current blocker. | Current lookup/null-on-failure rules stand. Show an actual future input/lookup conflict before choosing an override. | Population S2T Mentions. |
 | P08 | Conditional geometry-date exception. | Earliest supported related date inside 1941-12-07..1945-09-02, else 1941-12-07. Do not invent a day; show actual values only if the existing policy cannot handle them. | Population S2T Geography; selection-date policy. |
 | P09 | Closed: file/place/checksum geometry pointer approved. | `geometry_ref={file,place_id,sha256}` references GeoParquet and its place QID. `load_geometry(pointer, artifact_root)` returns Shapely. Helper implemented; Agent integration pending. No inline GeoJSON or memory address. | User approval; both S2Ts; `GG_Data/pipeline/graph_contract.py`. |
@@ -89,7 +89,7 @@ C02 is the one storage-contract clarification in this section. The other entries
 - Wikidata supplies current assertions and events. WarSampo is ignored; EventKG facts are outside current acquisition scope.
 - Use all event types under native root Q140451665; include an event at two distinct matched Daniel QIDs through direct mapped connections in either direction.
 - Relations contains Daniel-QID/Daniel-QID assertions and included-event/Daniel links. No arbitrary event/event expansion or seventh participant table.
-- Apply exact approved exclusions and relation-map-v2.1.0. Reverse views share base evidence; genuinely separate source statements remain separate.
+- Apply exact approved exclusions and the pinned current mapping version (v2.1.1 for the native P2341 addition). Reverse views share base evidence; genuinely separate source statements remain separate.
 - Geography uses approved sources and policy. Older OSM snapshot age is accepted; historical identity/meaning checks remain.
 - Geometry is Shapely, persisted as WKB; graph JSON references the stored object. No inline GeoJSON conversion.
 - Omit node/edge sources and node text from the graph for now. Preserve source provenance in the model/supporting artifacts; omit page/mention/paragraph graph nodes.
@@ -97,7 +97,7 @@ C02 is the one storage-contract clarification in this section. The other entries
 
 ## Discussion order
 
-Do not reopen P01/P02/P09/P11. Typed entity IDs, QID endpoints and geometry pointers are approved. Implement Agent integration under T06 and verify spatial CRS requirements under P10. D: output was approved on 20 October 2026. The first population step completed for 10,000 original mentions and 691 resolved Wiki Pages; exact source rows, saved decisions, output hashes and keys passed verification. Counts and the known missing-page outcomes are in `GG_Data/pipeline/README.md`. The separate Entities step subsequently passed in `poc_10k_entities_approved` with 6,077 rows and unchanged first-step artifacts. Its status is `ENTITIES_STEP_ONLY`; Events, Relations, Geography, graph export and Agent integration remain pending. The next cache-only relation check stopped on the actual P2341 mapping gap below. Consult the user before further relation checks or mapping changes. Bring actual exceptions back before changing logic; retain D01-D05 as deferred work.
+Do not reopen P01/P02/P09/P11. Typed entity IDs, QID endpoints and geometry pointers are approved. Implement Agent integration under T06 and verify spatial CRS requirements under P10. D: output was approved on 20 October 2026. The first population step completed for 10,000 original mentions and 691 resolved Wiki Pages; exact source rows, saved decisions, output hashes and keys passed verification. Counts and the known missing-page outcomes are in `GG_Data/pipeline/README.md`. The separate Entities step subsequently passed in `poc_10k_entities_approved` with 6,077 rows and unchanged first-step artifacts. Its status is `ENTITIES_STEP_ONLY`; Events, Relations, Geography, graph export and Agent integration remain pending. The first relation check stopped on the P2341 native source-key gap below. The user then approved native property preservation; v2.1.1 now includes that key. Missing native keys covered by this rule do not need individual approval. Broader relation population has not rerun. Bring actual exceptions back before changing logic; retain D01-D05 as deferred work.
 
 ## Source documents
 
@@ -114,10 +114,15 @@ Observed P06 exception: the first cache-only D/D mapping check stopped on
 `Q105969841$8D05BA41-C448-45B5-93EA-A37877F5140D`. There is no exact Wikidata
 mapping key in v2.1.0. The check stopped after 191 eligible non-excluded
 statements; total affected population is not yet known. No mapping, relation
-row or event acquisition was added. The user chose to discuss P2341 first; no broader scan is approved. The proposed
-mapping retains `wd:P2341`, its original direction and the existing reverse-view
-rule, leaving the broader family unassigned. This proposal awaits approval;
-further relation checks/population remain stopped.
+row or event acquisition was added during that check. After discussion, the user
+approved the general native-preservation rule: use actual Wikidata statements,
+add missing native source keys, retain Level 2/direction and leave Level 1
+unassigned. The new v2.1.1 table adds P2341's Wikidata key, reusing its existing
+Level 2/reverse definition from the older catalog without importing EventKG
+facts. Checks passed: 27 tests and 2 subtests; historical v2.1.0 CSVs rebuild
+byte-for-byte. No broader sample scan, Relations/Events population or graph
+export has run since that first exception. The general rule is now settled;
+other data surprises still require consultation.
 
 - [Sources to model S2T](SOURCES_TO_ENTITY_DATA_MODEL_S2T.md), especially Entities, Events, Relations, Geography and explicit exceptions.
 - [Six-table ERD](ENTITY_DATA_MODEL_ERD.md), including exact retained field inventories.

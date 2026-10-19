@@ -261,6 +261,8 @@ Event links to Daniel's matched QIDs use Relations. Current acquisition includes
 
 One retained base row per source assertion, with its original input preserved. Canonical endpoints may differ from source orientation after a versioned mapping.
 
+Existing mappings take priority. If a native Wikidata source key is missing, retain the actual direct statement's property unchanged at Level 2 and add it to the versioned mapping parameters. Level 1 stays `UNRESOLVED` / `NOT_ASSIGNED`; do not infer a relation when no statement exists. Population S2T section 8 defines this approved rule. The current catalog is v2.1.1; this adds no business table or entity.
+
 | Column | Type / requirement | Meaning and contract mapping |
 |---|---|---|
 | `observation_id` | string, PK | Existing assertion identity; Agent edge `id`. |
@@ -305,7 +307,7 @@ Generalized source objects retain `{provider, record_id, url, page, paragraph}` 
 - [Agent baseline](../Agent/README.md) and [local loader](../Agent/geo_agent/graph_store.py).
 - [Approved Agent handoff](https://github.com/EtzionR/Corpus2GeoRAG_Pacific/blob/1e1acd4384ad78cc741cb42812792cb5c65ec152/Agent/docs/GRAPH_TEAM.md), read at pinned remote commit. The local Agent checkout is older; this document does not claim that it implements the approved contract.
 - [Requested v2.1 Agent contract](../GG_Data/agent_export/AGENT_CONTRACT_UPDATE_REQUEST.md) and [relation direction rules](RELATION_MAPPING_V2_1_DATA_LAYER_REVERSE_2026-10-15.md). Existing saved assertion/graph exports are v1; v2.1 is the target, not a completed rebuild.
-- [Relation mapping process](WARSAMPO_WIKIDATA_RELATION_MAPPING_PROCESS.md), [mapping table](../GG_Data/mapping/RELATION_MAPPING_TABLE_v2.1.0.csv), [direction lookup](../GG_Data/mapping/RELATION_DIRECTION_LOOKUP_v2.1.0.csv), [direction catalog](../GG_Data/mapping/RELATION_DIRECTION_CATALOG_v2.1.0.csv).
+- [Relation mapping process](WARSAMPO_WIKIDATA_RELATION_MAPPING_PROCESS.md), [mapping table](../GG_Data/mapping/RELATION_MAPPING_TABLE_v2.1.1.csv), [direction lookup](../GG_Data/mapping/RELATION_DIRECTION_LOOKUP_v2.1.1.csv), [direction catalog](../GG_Data/mapping/RELATION_DIRECTION_CATALOG_v2.1.1.csv).
 - [Geography policy](GEOCODING_HIGH_LEVEL_PROCESS.md) and [extraction method](../GG_Data/geocoding/GEO_OBJECT_EXTRACTION_METHOD.md).
 
 Latest user decisions govern the six-table layout, page-ID linkage, original event QIDs, synthetic-per-mention handling and lack of a participant table. Existing evidence remains intact. Reserved event mapping version and the final CRS interface require definition before production export. This ERD does not change matching thresholds, recover missing references or certify match accuracy.
@@ -343,7 +345,7 @@ mapping_origin, relation_map_version
 
 ### Versioned relation mapping catalog (57 columns)
 
-Source: [RELATION_MAPPING_TABLE_v2.1.0.csv](../GG_Data/mapping/RELATION_MAPPING_TABLE_v2.1.0.csv).
+Source: [RELATION_MAPPING_TABLE_v2.1.1.csv](../GG_Data/mapping/RELATION_MAPPING_TABLE_v2.1.1.csv).
 
 ```text
 source, source_predicate, source_predicate_local, source_occurrence_count
@@ -365,7 +367,7 @@ reverse_agent_action_required
 
 ### Versioned reverse-direction lookup (15 columns)
 
-Source: [RELATION_DIRECTION_LOOKUP_v2.1.0.csv](../GG_Data/mapping/RELATION_DIRECTION_LOOKUP_v2.1.0.csv).
+Source: [RELATION_DIRECTION_LOOKUP_v2.1.1.csv](../GG_Data/mapping/RELATION_DIRECTION_LOOKUP_v2.1.1.csv).
 
 ```text
 direction_pair_id, input_relation_id, input_relation_label, output_reverse_relation_id
@@ -376,7 +378,7 @@ formal_evidence_urls, agent_action_required, relation_map_version
 
 ### Versioned direction catalog (23 columns)
 
-Source: [RELATION_DIRECTION_CATALOG_v2.1.0.csv](../GG_Data/mapping/RELATION_DIRECTION_CATALOG_v2.1.0.csv).
+Source: [RELATION_DIRECTION_CATALOG_v2.1.1.csv](../GG_Data/mapping/RELATION_DIRECTION_CATALOG_v2.1.1.csv).
 
 ```text
 direction_pair_id, level2_relation_id, level2_relation_label, reverse_relation_id

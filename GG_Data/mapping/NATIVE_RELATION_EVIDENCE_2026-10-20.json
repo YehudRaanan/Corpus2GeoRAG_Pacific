@@ -1,0 +1,46 @@
+{
+  "approved_on": "2026-10-20",
+  "rule": "Keep an actual native Wikidata property absent from mapping at Level 2; Level 1 remains unassigned. Existing mappings retain priority. No relation is inferred from absence.",
+  "property": {
+    "id": "P2341",
+    "label_en": "indigenous to",
+    "source_url": "https://www.wikidata.org/wiki/Property:P2341",
+    "verified_page_revision": 2555603616
+  },
+  "observed_assertion": {
+    "subject_qid": "Q105969841",
+    "subject_name": "Poles",
+    "object_qid": "Q36",
+    "object_name": "Poland",
+    "source_record_id": "Q105969841$8D05BA41-C448-45B5-93EA-A37877F5140D",
+    "raw_statement": {
+      "mainsnak": {
+        "snaktype": "value",
+        "property": "P2341",
+        "datavalue": {
+          "value": {
+            "entity-type": "item",
+            "numeric-id": 36,
+            "id": "Q36"
+          },
+          "type": "wikibase-entityid"
+        },
+        "datatype": "wikibase-item"
+      },
+      "type": "statement",
+      "id": "Q105969841$8D05BA41-C448-45B5-93EA-A37877F5140D",
+      "rank": "normal"
+    }
+  },
+  "source_evidence": {
+    "file": "GG_Data\\pipeline\\outputs\\poc_10k_relations_preflight\\first_exception.json",
+    "sha256": "b486ad8abfb98f35fe445ce7d19a10bdf34fe8a41303fc09da1b071295b3d641",
+    "record_source": {
+      "provider": "BIGQUERY",
+      "file": "D:\\Projects\\GeoAI\\GG_Data\\pipeline\\outputs\\wikidata_full_cache\\1c8841ce530789458d059e9f8b92254f0fb0835e46a32301852d69b8aa00a8ce.json.gz",
+      "sha256": "d5200fd59373b9827738b2bc3f1ecf2b07b44275468e7c680b7f70612c61c12c",
+      "snapshot_at": "2026-10-18T18:45:19.304197+00:00"
+    }
+  },
+  "count_scope": "One observed statement from the first-exception check; not all P2341 assertions in the sample or Wikidata."
+}

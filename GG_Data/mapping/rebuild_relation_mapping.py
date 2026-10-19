@@ -98,13 +98,20 @@ def normalize_uri(value: str) -> str:
     )
 
 
-def append_coverage_rules(rows: list[dict[str, object]]) -> None:
-    """Add the reviewed source keys that the historical inventory excluded."""
-    rules = read_csv(ADDITIONAL_RULES)
-    assert len(rules) == 75
-    entities = json.loads(
-        (OUT / rules[0]["metadata_snapshot"]).read_text(encoding="utf-8")
-    )["entities"]
+def append_coverage_rules(
+    rows: list[dict[str, object]],
+    rules: list[dict[str, str]] | None = None,
+    *,
+    inherit_family: bool = True,
+) -> None:
+    """Append source keys; native additions retain their IDs and no new family.
+
+    Population S2T 8: the 20 October approval permits native Wikidata additions.
+    The historical 75-rule input and its formal-evidence checks stay unchanged.
+    """
+    if rules is None:
+        rules = read_csv(ADDITIONAL_RULES)
+        assert len(rules) == 75
     keys = {(row["source"], row["source_predicate"]) for row in rows}
     policy_fields = (
         "time_from_input",
@@ -127,6 +134,9 @@ def append_coverage_rules(rows: list[dict[str, object]]) -> None:
         if rule["level2_mapping_basis"] == "IDENTICAL_IDENTIFIER":
             assert source_id == target_id and rule["direction_to_level2"] == "same"
         else:
+            entities = json.loads(
+                (OUT / rule["metadata_snapshot"]).read_text(encoding="utf-8")
+            )["entities"]
             reverse = rule["direction_to_level2"] == "reverse"
             evidence_entity = entities[source_id[3:] if reverse else target_id[3:]]
             property_id = "P1696" if reverse else "P1628"
@@ -198,7 +208,7 @@ def append_coverage_rules(rows: list[dict[str, object]]) -> None:
             if item["level2_relation_id"] == row["level2_relation_id"]
         ]
         families = {item["level1_family"] for item in anchors} - {"UNRESOLVED"}
-        if len(families) == 1:
+        if inherit_family and len(families) == 1:
             row["level1_family"] = families.pop()
             row["level1_assignment_status"] = "EXISTING_CATALOG_ASSIGNMENT"
             row["level1_assignment_source"] = "Existing exact effective Level 2 ID"
