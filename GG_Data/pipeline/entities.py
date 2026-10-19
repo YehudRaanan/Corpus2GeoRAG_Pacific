@@ -21,6 +21,12 @@ from GG_Data.pipeline.poc import ROOT, digest, read_json
 
 LOG = logging.getLogger(__name__)
 ARCHIVE_SHA256 = "95c6a8aa5ab803d904a0f5e85bfc5d2dade97b5b5f18c0c33ea48a54fc217277"
+# S2T 6, user approval 20 October: retain these older English labels despite
+# their absence in the newer full record. Other such cases still need approval.
+APPROVED_OLDER_ENGLISH = {
+    "Q132537": ("Robert Oppenheimer", 2380462137, 2555601950),
+    "Q1771928": ("Why We Fight", 2286990634, 2506639226),
+}
 
 
 def native_record(envelope: dict, qid: str) -> dict:
@@ -42,8 +48,13 @@ def choose_name(qid: str, full: dict, matching: dict, mentions: list[dict]) -> d
             (native, full.get("lastrevid"), "full_record"),
             (prior, matching.get("revision"), "matching_reference"),
         ]
-        # Approval chooses the newer of two supplied labels. It does not yet
-        # choose an older EN label over JA in a newer record (S2T 6 exception).
+        approved_older_english = (
+            language == "en"
+            and not native
+            and qid in APPROVED_OLDER_ENGLISH
+            and (prior, matching.get("revision"), full.get("lastrevid"))
+            == APPROVED_OLDER_ENGLISH[qid]
+        )
         for value, revision, source in candidates:
             for other_value, other_revision, other_source in candidates:
                 if (
@@ -52,6 +63,7 @@ def choose_name(qid: str, full: dict, matching: dict, mentions: list[dict]) -> d
                     and type(revision) is int
                     and type(other_revision) is int
                     and other_revision > revision
+                    and not approved_older_english
                 ):
                     raise ValueError(
                         f"Newer reference lacks {language} label: {qid}; "
@@ -72,7 +84,12 @@ def choose_name(qid: str, full: dict, matching: dict, mentions: list[dict]) -> d
                 )
             candidates.sort(key=lambda c: c[1], reverse=True)
         value, revision, source = candidates[0]
-        return dict(value=value, language=language, source=source, revision=revision)
+        selection = dict(
+            value=value, language=language, source=source, revision=revision
+        )
+        if approved_older_english:
+            selection["approval"] = "2026-10-20_KEEP_OLDER_ENGLISH"
+        return selection
     names = sorted({m["raw"]["word"] for m in mentions})
     if len(names) != 1:
         raise ValueError(f"Conflicting Daniel fallback names: {qid}: {names}")

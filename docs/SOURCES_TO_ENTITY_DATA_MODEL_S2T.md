@@ -115,7 +115,7 @@ The approved name order supersedes a simple copy of the compact metadata's selec
 
 **Display-name version decision, 20 October 2026:** when saved Wikidata versions provide different labels, use the newer saved Wikidata label, retaining both versions and the chosen label's revision/source. Example: Q137378 has English `Romusha` at revision 2298970904 in the matching reference and `rōmusha` at revision 2527180944 in the full saved record; use `rōmusha`. This approval concerns display names only. Saved IDs, matching decisions and resolved types remain unchanged. Equal-revision conflicting labels or an unavailable revision needed to choose between conflicting labels require discussion. Reuse complete saved records first; acquire missing full records from the already-approved BigQuery source, preserving its snapshot and query evidence.
 
-**POC validation hold, 20 October 2026:** two newer full records have no English label but have Japanese labels, while the older matching reference has English labels. The approved rules do not explicitly order cross-version English priority against newer-record Japanese fallback. Q132537: older English `Robert Oppenheimer` at revision 2380462137; newer Japanese `ロバート・オッペンハイマー` at revision 2555601950. Q1771928: older English `Why We Fight` at revision 2286990634; newer Japanese `我々はなぜ戦うのか` at revision 2506639226. The initial Entities attempt chose the older English labels; final validation exposed this unapproved choice. Its output is explicitly `DRAFT_NOT_ACCEPTED`, with manifest status `BLOCKED_NAME_LANGUAGE_VERSION_RULE`. Processing stopped, the user was asked to choose, and a guard now rejects this case. No assignment or type changed. Full acquisition succeeded and remains cached; no new query is needed to resolve this naming decision.
+**POC naming decision, approved 20 October 2026:** retain the older English labels for Q132537 (`Robert Oppenheimer`, revision 2380462137; newer full revision 2555601950 has Japanese `ロバート・オッペンハイマー` and no English) and Q1771928 (`Why We Fight`, revision 2286990634; newer full revision 2506639226 has Japanese `我々はなぜ戦うのか` and no English). Record this approval in each affected row's `attributes.name_selection`; retain both raw versions. This closes the reported language/version hold for these two pinned cases. Other cases in which a newer record lacks a label supplied by an older record still require discussion. The first attempt remains `DRAFT_NOT_ACCEPTED`, with its historical blocked manifest retained. Rerun into a new output directory using the complete saved cache; no new query is needed. No ID, type or matching decision changes.
 
 ## 7. Events: discovery, inclusion and fields
 
@@ -222,6 +222,30 @@ Downstream interfaces approved on 19 October 2026: separate graph entities use `
 `GG_Data/pipeline/poc.py` implements the initial 10,000-row sample, input/matching hash checks, Mentions and resolved Wiki Pages copying. Complete request payloads are stored once in supporting `page_evidence.json.gz`; mention/page references include a record locator and the output manifest binds the file hash. No text extraction or rematching occurs. `graph_contract.py` implements the approved graph interface helpers; it is not yet integrated into the Agent.
 
 On 20 October 2026 the user approved D: data output. Step 1 completed at `GG_Data/pipeline/outputs/poc_10k`: 10,000 unchanged original mentions, comprising 7,692 saved QID assignments, 952 normalized dates and 1,356 existing synthetic IDs. There are 691 distinct resolved EN/JA pages. The sample includes the four already-known missing requests, affecting 29 mentions. Output hashes, original rows, sampling positions, mention/page keys, page links and per-mention synthetic identities passed verification. See [detailed counts](../GG_Data/pipeline/README.md#verified-first-run-results--20-october-2026). Status is `STEP_1_ONLY`; later population stages and the final graph remain pending. This does not certify matching accuracy or a complete six-table POC.
+
+### Entities implementation checkpoint — 20 October 2026
+
+After the two pinned older-English cases in section 6 were approved, the new
+`GG_Data/pipeline/outputs/poc_10k_entities_approved` run passed verification:
+6,077 rows = 4,721 QID/type pairs over 4,712 QIDs + 1,356 unchanged synthetic
+identities. All full records were reused from the archive/query cache; the CLI
+was blocked and zero requests were made. Source/output/first-step hashes,
+identity/type membership, raw native evidence, synthetic names and page subjects
+passed checks. Only approval metadata for Q132537/Q1771928 differs from the
+earlier draft. The 19-test suite and Ruff passed. The 691 Wiki Pages have 197
+existing entity subjects. The manifest remains `ENTITIES_STEP_ONLY`; later
+population stages and graph/Agent integration are not complete.
+
+The following cache-only D/D relation check stopped at the first unknown mapping
+as required by section 8: `(Wikidata, wd:P2341)`, statement
+`Q105969841$8D05BA41-C448-45B5-93EA-A37877F5140D`,
+Poles (`Q105969841`) -> Poland (`Q36`). No mapping was added. The partial check
+had examined 191 eligible non-excluded statements when it stopped; this is not
+a full-population missing-mapping count. Raw evidence and catalog checksums are
+in `GG_Data/pipeline/outputs/poc_10k_relations_preflight/first_exception.json`.
+Status `BLOCKED_RELATION_MAPPING`; consultation is pending before further
+relation checks or population. See the pipeline README for accepted output and
+exception details. This records an observed exception; it approves no new rule.
 
 ## 11. Contract references and precedence
 

@@ -158,7 +158,7 @@ One row per distinct `(entity_id, type)` combination, using the assigned QID or 
 
 The saved metadata `id` maps to `entity_id`. The approved display-name order is Wikidata English label, Japanese label, then Daniel's original name; synthetic IDs use their own mention's original name. Preserve the selected name's provenance and report conflicting/missing fallbacks before choosing. Preserve `labels`, `aliases`, `sitelinks`, `direct_types`, `parents`, `revision`, `modified`, `missing`, and `reference_source`. The raw Wikidata envelope `{requested_qid, entity}` is retained through `raw_reference`; this includes `pageid`, `ns`, `title`, `lastrevid`, `modified`, `type`, `id`, `labels`, `descriptions`, `aliases`, `claims`, and `sitelinks` without reducing statements to QID pairs.
 
-Display-name version decision (20 October 2026): use the newer saved Wikidata label if saved versions differ, with revision/source evidence. This changes no saved ID, type or match. See population S2T section 6 for the exact scope and Q137378 example.
+Display-name version decision (20 October 2026): use the newer saved Wikidata label if saved versions differ, with revision/source evidence. This changes no saved ID, type or match. For Q132537 and Q1771928, the user separately approved keeping the older English labels when their newer full records have only Japanese labels; record the approval and both versions. See population S2T section 6 for the pinned cases and Q137378 example.
 
 ## 2. Mentions
 

@@ -255,6 +255,23 @@ def test_missing_english_in_newer_record_stops_before_choosing_older_english():
         entities.choose_name("Q1", full, matching, [])
 
 
+@pytest.mark.parametrize("qid", ["Q132537", "Q1771928"])
+def test_approved_older_english_is_pinned_and_recorded(qid):
+    name, older_revision, newer_revision = entities.APPROVED_OLDER_ENGLISH[qid]
+    full = {"lastrevid": newer_revision, "labels": {"ja": {"value": "日本"}}}
+    matching = {"revision": older_revision, "labels": {"en": name}}
+    assert entities.choose_name(qid, full, matching, []) == {
+        "value": name,
+        "language": "en",
+        "source": "matching_reference",
+        "revision": older_revision,
+        "approval": "2026-10-20_KEEP_OLDER_ENGLISH",
+    }
+    full["lastrevid"] += 1
+    with pytest.raises(ValueError, match="discuss language/version priority"):
+        entities.choose_name(qid, full, matching, [])
+
+
 def test_entities_keep_typed_pairs_synthetic_ids_and_full_native_evidence():
     mentions = [
         {"entity_id": qid, "entity_type": typ, "mention_id": mid, "raw": {"word": word}}

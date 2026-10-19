@@ -28,10 +28,10 @@ C:\Users\User\anaconda3\python.exe -B -m GG_Data.pipeline.poc --output D:\Projec
 
 The output directory must be new; existing output is never overwritten. The
 manifest marks only `STEP_1_ONLY`. Partial files without that manifest are not
-a completed step. Entities, Events, Relations, Geography, final graph export
-and Agent integration remain pending. Wiki Pages `about_entity_id` is populated
-only after the later Entities stage establishes membership. This is not a
-six-table release, a fresh matching run or a completed 10K POC.
+a completed step. Its marker covers Mentions and Wiki Pages only. The separate
+Entities step establishes membership for Wiki Pages `about_entity_id`. Events,
+Relations, Geography, final graph export and Agent integration remain pending.
+This is not a six-table release, a fresh matching run or a completed 10K POC.
 
 ### Verified first-run results — 20 October 2026
 
@@ -80,7 +80,10 @@ still precedes Japanese, then Daniel's name. When saved labels differ, revision
 IDs determine the newer supplied label; both source versions remain in
 `raw_reference`. This rule changes display names only. Equal-revision conflicts,
 missing revision evidence needed for a choice, and ambiguous Daniel fallbacks
-stop the run before model output.
+stop the run before model output. For the two pinned cases Q132537 and Q1771928,
+the user also approved older English labels where newer full records contain
+only Japanese. Each selected name records `2026-10-20_KEEP_OLDER_ENGLISH`. Other
+such missing-label cases still stop for discussion (population S2T section 6).
 
 Complete native envelopes are reused from the verified saved archive. Missing
 full records are retrieved as the complete BigQuery `item` field through the
@@ -92,7 +95,7 @@ retained. Compact search names have unknown original kind/language and are
 marked `matching_reference_name`, rather than presented as native aliases.
 
 ```powershell
-C:\Users\User\anaconda3\python.exe -B -m GG_Data.pipeline.entities --output D:\Projects\GeoAI\GG_Data\pipeline\outputs\poc_10k_entities
+C:\Users\User\anaconda3\python.exe -B -m GG_Data.pipeline.entities --output D:\Projects\GeoAI\GG_Data\pipeline\outputs\poc_10k_entities_approved
 ```
 
 The destination must be new. `ENTITIES_STEP_ONLY` is written last, after source
@@ -119,16 +122,52 @@ Final inspection found two cases not covered by the approved version rule:
 Q132537 (`Robert Oppenheimer`) and Q1771928 (`Why We Fight`) have older English
 labels, but their newer full records have Japanese labels and no English label.
 The attempt used older English. Work stopped for a user decision between older
-English priority and newer-record Japanese fallback. The code now raises on
-this condition instead of choosing. See population S2T section 6 for values and
-revisions.
+English priority and newer-record Japanese fallback. The code raises on
+unapproved cases instead of choosing. The user subsequently approved the older
+English labels for these two exact saved name/revision combinations. See
+population S2T section 6 for values and revisions.
 
 `outputs/poc_10k_entities/manifest.json` is now
 `BLOCKED_NAME_LANGUAGE_VERSION_RULE`, with `entity_output_state=DRAFT_NOT_ACCEPTED`.
 The original attempt marker is retained as `attempt_manifest.json` for audit;
 it is superseded by the current manifest and is not a release marker. No later
-stage has run. The first-step output remains valid and unchanged. On approval,
-use a new Entities destination and reuse the full-record cache.
+stage was included in that attempt. The first-step output remains valid and
+unchanged. The blocked attempt is retained for audit; the approved rerun uses
+a separate destination and reuses the full-record cache.
+
+### Approved Entities rerun — 20 October 2026
+
+The user approved the two older English names. The separate rerun in
+`outputs/poc_10k_entities_approved` completed as `ENTITIES_STEP_ONLY` and passed
+`validation_report.json`: **6,077 Entities rows**, comprising **4,721 QID/type
+pairs across 4,712 QIDs**, plus **1,356 unchanged synthetic IDs**. All 691 Wiki
+Pages remain; 197 subjects reference existing sample entities.
+
+The run reused the 506 archive records and 4,206 cached BigQuery records.
+The BigQuery CLI method was blocked during replay and its call count was zero;
+no new query was made. Every first-step/output/source-file hash, entity key,
+mention reference, native ID and preserved type passed checks. Relative to the
+draft candidate rows, only approval metadata for the two name selections
+changed. Q137378 still uses the newer `rōmusha` label. The in-memory suite has
+19 passing tests; Ruff checks passed. Accepted manifest SHA-256:
+`a4b967188c7247996309e53dba9851208d8d8e1e69c21d79f7afb1cc35c252e4`.
+
+### Next-stage stop — missing relation mapping
+
+A cache-only check of Daniel-QID/Daniel-QID statements stopped at its first
+missing mapping, after 191 eligible non-excluded statements had been checked.
+This is a partial check, not a total of all sample assertions or missing keys.
+The existing catalog has no `(Wikidata, wd:P2341)` entry. The exact case is
+`Q105969841` (Poles) -> `Q36` (Poland), statement
+`Q105969841$8D05BA41-C448-45B5-93EA-A37877F5140D`, normal rank.
+Wikidata names P2341 [indigenous to](https://www.wikidata.org/wiki/Property:P2341).
+
+Evidence is in `outputs/poc_10k_relations_preflight/first_exception.json`, with
+raw statement, record provenance and catalog/source checksums. Status is
+`BLOCKED_RELATION_MAPPING`. No mapping was added, no statement was dropped,
+and no Relations/Events/Geography/graph output was generated. The user chose to discuss P2341 first; no broader scan is approved. The proposed
+mapping retains `wd:P2341`, its original direction and the existing reverse-view
+rule, leaving the broader family unassigned. This proposal awaits approval.
 
 ## Approved graph interfaces
 

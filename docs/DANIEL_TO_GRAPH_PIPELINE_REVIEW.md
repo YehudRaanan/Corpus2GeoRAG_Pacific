@@ -97,18 +97,27 @@ C02 is the one storage-contract clarification in this section. The other entries
 
 ## Discussion order
 
-Do not reopen P01/P02/P09/P11. Typed entity IDs, QID endpoints and geometry pointers are approved. Implement Agent integration under T06 and verify spatial CRS requirements under P10. D: output was approved on 20 October 2026. The first population step completed for 10,000 original mentions and 691 resolved Wiki Pages; exact source rows, saved decisions, output hashes and keys passed verification. Counts and the known missing-page outcomes are in `GG_Data/pipeline/README.md`. Status is `STEP_1_ONLY`; Entities, Events, Relations, Geography, graph export and Agent integration remain pending. Continue T01-T08 under the agreed rules. Bring actual exceptions back before changing logic; retain D01-D05 as deferred work.
+Do not reopen P01/P02/P09/P11. Typed entity IDs, QID endpoints and geometry pointers are approved. Implement Agent integration under T06 and verify spatial CRS requirements under P10. D: output was approved on 20 October 2026. The first population step completed for 10,000 original mentions and 691 resolved Wiki Pages; exact source rows, saved decisions, output hashes and keys passed verification. Counts and the known missing-page outcomes are in `GG_Data/pipeline/README.md`. The separate Entities step subsequently passed in `poc_10k_entities_approved` with 6,077 rows and unchanged first-step artifacts. Its status is `ENTITIES_STEP_ONLY`; Events, Relations, Geography, graph export and Agent integration remain pending. The next cache-only relation check stopped on the actual P2341 mapping gap below. Consult the user before further relation checks or mapping changes. Bring actual exceptions back before changing logic; retain D01-D05 as deferred work.
 
 ## Source documents
 
 20 October 2026 Entities checkpoint: full references for all 4,712 sample QIDs
-are available (506 reused, 4,206 acquired and cached). The 6,077-row Entities
-attempt is **draft, not accepted**. Final validation found that Q132537 and
-Q1771928 have older English labels but only Japanese labels in their newer full
-records. The attempt selected older English; the user must decide whether that
-priority is allowed. Processing stopped and a validation guard was added.
-Current manifest status is `BLOCKED_NAME_LANGUAGE_VERSION_RULE`; the first-step
-files are unchanged. See population S2T section 6 and the pipeline README.
+are available (506 archive records and 4,206 cached full records). The user
+approved older English labels for Q132537 and Q1771928. The separate approved
+rerun passed with 6,077 Entities rows (4,721 QID/type pairs plus 1,356 unchanged
+synthetic IDs), 691 Wiki Pages and 197 existing subjects. Zero CLI calls were
+made; first-step hashes are unchanged. The first blocked attempt stays draft
+for audit. See population S2T section 6 and the pipeline README.
+
+Observed P06 exception: the first cache-only D/D mapping check stopped on
+`wd:P2341`, Poles (`Q105969841`) -> Poland (`Q36`), native statement
+`Q105969841$8D05BA41-C448-45B5-93EA-A37877F5140D`. There is no exact Wikidata
+mapping key in v2.1.0. The check stopped after 191 eligible non-excluded
+statements; total affected population is not yet known. No mapping, relation
+row or event acquisition was added. The user chose to discuss P2341 first; no broader scan is approved. The proposed
+mapping retains `wd:P2341`, its original direction and the existing reverse-view
+rule, leaving the broader family unassigned. This proposal awaits approval;
+further relation checks/population remain stopped.
 
 - [Sources to model S2T](SOURCES_TO_ENTITY_DATA_MODEL_S2T.md), especially Entities, Events, Relations, Geography and explicit exceptions.
 - [Six-table ERD](ENTITY_DATA_MODEL_ERD.md), including exact retained field inventories.
