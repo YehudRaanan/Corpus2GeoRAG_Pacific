@@ -1,6 +1,26 @@
 # Daniel input to final graph JSON review
 
-## Current result: bounded incoming request timed out
+## Current result: native batch stopped at API response-size limit
+
+The user approved batched current Wikidata records instead of query-service
+search. The implementation reuses successful native caches and requests up to
+50 explicit IDs, full native records and no redirects. Tests: 46 passed.
+
+`outputs/poc_10k_event_seven_native_batches_20261020` reused seven candidate
+records and six of 4,712 Daniel records. The first new 50-ID request returned
+42 records, with an explicit API result-truncation warning. The server reported
+a 12,582,912-byte result limit; the received raw body is 28,842,454 bytes.
+The requested/returned population guard stopped the run. The full response and
+checksum are cached, but none of the partial batch was accepted. No retries,
+smaller requests, Event rows or complete eligibility results followed.
+
+Accepted upstream hashes remain unchanged. Evidence: `report.json`,
+`acquisition_stop.json`, `verification.json`. Proposed for consultation only:
+split a truncated batch into halves, retaining complete native records and
+stopping if a single-ID request still exceeds the limit. No response-size
+fallback is approved or implemented yet. Earlier query failures stay immutable.
+
+## Previous result: bounded incoming request timed out
 
 After discussion, the user agreed to 250-subject batches over the frozen
 4,712 Daniel QIDs and all seven candidate targets. Both official query graphs
@@ -13,7 +33,8 @@ All seven native records were reused; the earlier outgoing counts remain lower
 bounds. No source, Event root, rank policy, type/date filter, or inclusion rule
 changed. A batched native-record API approach was proposed for consultation:
 up to 50 explicit Daniel QIDs per request, about 95 requests before cache reuse,
-then direct statement checks locally. It has not been implemented or executed.
+then direct statement checks locally. The user subsequently approved it; the
+new API response-size stop is recorded above.
 
 ### Previous result: seven native records checked; incoming response incomplete
 

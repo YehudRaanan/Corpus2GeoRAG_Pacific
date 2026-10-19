@@ -520,7 +520,7 @@ def test_bounded_query_preserves_direct_all_rank_scope_and_validates_populations
             events.incoming_candidates_query(subjects, targets)
 
 
-def test_bounded_link_check_covers_both_graphs_and_frozen_raw_non_date_population(
+def test_native_link_check_covers_both_directions_and_frozen_raw_non_date_population(
     tmp_path, monkeypatch
 ):
     from GG_Data.mapping.build_relation_mapping_v2_1 import write_csv
@@ -592,31 +592,90 @@ def test_bounded_link_check_covers_both_graphs_and_frozen_raw_non_date_populatio
     report = dict(records=[dict(qid="Q1", name="event")])
     calls = []
 
-    def source(store, endpoint, params):
-        calls.append(endpoint)
-        assert "wd:Q2 wd:Q3" in params["query"] and "wd:Q4" not in params["query"]
-        return {
-            "results": {
-                "bindings": [
+    def source(store, qids):
+        calls.append(qids)
+        assert qids == ["Q2", "Q3"]
+        yield {
+            qid: dict(
+                id=qid,
+                lastrevid=1,
+                modified="2026-10-20T00:00:00Z",
+                claims=(
                     {
-                        k: dict(value=v)
-                        for k, v in dict(
-                            subject="http://www.wikidata.org/entity/Q3",
-                            event="http://www.wikidata.org/entity/Q1",
-                            property="http://www.wikidata.org/entity/P17",
-                            statement="http://www.wikidata.org/entity/statement/Q3-BB",
-                            rank="http://wikiba.se/ontology#DeprecatedRank",
-                        ).items()
+                        "P17": [
+                            dict(
+                                id="Q3$BB",
+                                rank="deprecated",
+                                mainsnak=dict(
+                                    property="P17",
+                                    datatype="wikibase-item",
+                                    datavalue=dict(
+                                        value={"entity-type": "item", "id": "Q1"}
+                                    ),
+                                ),
+                            )
+                        ]
                     }
-                ]
-            }
+                    if qid == "Q3"
+                    else {}
+                ),
+            )
+            for qid in qids
         }, {"status": "OK"}
 
-    monkeypatch.setattr(events, "cached_json", source)
+    monkeypatch.setattr(events, "current_records", source)
     check_links(report, output, tmp_path / "cache", mentions, relations, lambda: None)
-    assert calls == [events.QUERY_URL, events.SCHOLARLY_QUERY_URL]
+    assert calls == [["Q2", "Q3"]]
+    assert report["native_records_checked"] == 2
     assert report["daniel_distinct_qids"] == 2
     assert report["eligibility"][0]["distinct_daniel_count"] == 2
     assert report["eligibility"][0]["qualifying_statements"] == 2
     assert report["eligibility"][0]["passes_two_entity_gate"] is True
     assert report["status"] == "SEVEN_CANDIDATE_ELIGIBILITY_CHECK_ONLY"
+
+
+def test_native_batches_reuse_saved_records_and_require_exact_full_population(
+    tmp_path, monkeypatch
+):
+    calls = []
+
+    def source(store, url, params):
+        qids = params["ids"].split("|") if params else ["Q1"]
+        calls.append((url, params, qids))
+        return {
+            "entities": {
+                qid: dict(
+                    id=qid,
+                    type="item",
+                    claims={},
+                    lastrevid=1,
+                    modified="2026-10-20T00:00:00Z",
+                )
+                for qid in qids
+            }
+        }, {"status": "OK"}
+
+    events.cache_path(
+        tmp_path, "https://www.wikidata.org/wiki/Special:EntityData/Q1.json", {}
+    ).mkdir()
+    monkeypatch.setattr(events, "cached_json", source)
+    records = list(
+        events.current_records(tmp_path, [f"Q{i}" for i in range(102, 0, -1)])
+    )
+    assert [len(r) for r, _ in records] == [1, 50, 50, 1]
+    assert len({qid for r, _ in records for qid in r}) == 102
+    assert all(
+        p["redirects"] == "no" and "props" not in p and "languages" not in p
+        for _, p, _ in calls[1:]
+    )
+    assert calls[1][2] == [f"Q{i}" for i in range(2, 52)]
+    valid = records[0][0]["Q1"]
+    for data in (
+        {"entities": {}},
+        {"entities": {"Q2": valid}},
+        {"entities": {"Q1": dict(valid, missing="")}},
+        {"entities": {"Q1": dict(valid, claims=None)}},
+        {"entities": {"Q1": valid}, "redirects": []},
+    ):
+        with pytest.raises(SourceException):
+            events.native_records(data, ["Q1"], {})

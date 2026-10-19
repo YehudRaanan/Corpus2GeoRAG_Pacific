@@ -3,8 +3,8 @@
 Use the approved saved hierarchy and cache current native candidate records.
 Check native P31 evidence and, when given the frozen sample, direct links to
 its distinct matched QIDs. No new Daniel entity, matching decision, model Event
-row, or graph assertion is created here. Incoming full-statement materialization
-belongs to population, after this eligibility check.
+row, or graph assertion is created here. Native full statements are cached;
+model population remains a separate step after this eligibility check.
 """
 
 from __future__ import annotations
@@ -137,7 +137,7 @@ def qualifying_links(
 def check_links(
     report: dict, output: Path, store: Path, mentions: Path, relations: Path, save
 ) -> None:
-    """Check both query graphs against all frozen sample QIDs, not five seeds."""
+    """S2T 7: check full native records for all frozen QIDs, not five seeds."""
     first = read_json(mentions.parent / "manifest.json")
     if digest(mentions) != first["outputs"][mentions.name]:
         raise SourceException("Daniel sample checksum mismatch")
@@ -161,7 +161,8 @@ def check_links(
         daniel_distinct_qids=len(daniel),
         mentions_sha256=digest(mentions),
         mapping_sha256=digest(mapping_path),
-        queries=[],
+        native_sources=[],
+        native_records_checked=0,
         eligibility=[],
     )
     save()
@@ -171,53 +172,40 @@ def check_links(
     }
     ordered = sorted(daniel, key=lambda q: int(q[1:]))
     report["incoming_request_policy"] = dict(
-        subject_batch_size=250,
+        subject_batch_size=50,
         candidate_targets=candidates,
-        expected_requests=2 * ((len(ordered) + 249) // 250),
-        approval="User agreed after discussing incomplete HTTP-200 response",
+        method="wbgetentities full native records; verified single-record cache reused",
+        maximum_batch_requests_before_cache_reuse=(len(ordered) + 49) // 50,
+        approval="User approved batched Wikidata records after bounded query timeout",
     )
     save()
-    for offset in range(0, len(ordered), 250):
-        batch = ordered[offset : offset + 250]
-        query = events.incoming_candidates_query(batch, candidates)
-        (output / f"incoming_{offset//250:03d}.sparql").write_text(
-            query, encoding="utf-8"
+    checked = set()
+    for records, evidence in events.current_records(store, ordered):
+        if set(records) - daniel or checked.intersection(records):
+            raise SourceException(
+                "Incoming native population differs", qids=list(records)
+            )
+        for record in records.values():
+            for link in events.item_links(record):
+                if link["object_qid"] in by_candidate:
+                    by_candidate[link["object_qid"]].append(link)
+        checked.update(records)
+        report["native_sources"].append(
+            dict(
+                source=evidence,
+                records=[
+                    dict(qid=qid, revision=r["lastrevid"], modified=r["modified"])
+                    for qid, r in records.items()
+                ],
+            )
         )
-        for endpoint in (events.QUERY_URL, events.SCHOLARLY_QUERY_URL):
-            data, evidence = events.cached_json(
-                store, endpoint, {"query": query, "format": "json"}
-            )
-            report["queries"].append(
-                dict(
-                    batch_offset=offset,
-                    endpoint=endpoint,
-                    source=evidence,
-                    rows=len(data["results"]["bindings"]),
-                )
-            )
-            save()
-            groups = {qid: [] for qid in candidates}
-            for row in data["results"]["bindings"]:
-                uri = row["event"]["value"]
-                qid = uri.rsplit("/", 1)[-1]
-                if (
-                    uri != f"http://www.wikidata.org/entity/{qid}"
-                    or qid not in groups
-                    or row["subject"]["value"]
-                    not in {f"http://www.wikidata.org/entity/{s}" for s in batch}
-                ):
-                    raise SourceException("Incoming batch population differs", row=row)
-                groups[qid].append(row)
-            for qid, bindings in groups.items():
-                by_candidate[qid].extend(
-                    incoming_links({"results": {"bindings": bindings}}, qid)
-                )
-            LOG.info(
-                "Saved incoming request %s/%s: %s rows",
-                len(report["queries"]),
-                report["incoming_request_policy"]["expected_requests"],
-                len(data["results"]["bindings"]),
-            )
+        report["native_records_checked"] = len(checked)
+        save()
+        LOG.info("Checked native Daniel records: %s/%s", len(checked), len(daniel))
+    if checked != daniel:
+        raise SourceException(
+            "Incomplete incoming native population", missing=sorted(daniel - checked)
+        )
     for record_info in report["records"]:
         qid = record_info["qid"]
         links = by_candidate[qid]
@@ -248,7 +236,7 @@ def check_links(
             len(retained),
         )
     report["status"] = "SEVEN_CANDIDATE_ELIGIBILITY_CHECK_ONLY"
-    report["full_incoming_statement_materialization"] = "PENDING_POPULATION"
+    report["full_incoming_statement_materialization"] = "NATIVE_STATEMENTS_CACHED"
 
 
 def run(

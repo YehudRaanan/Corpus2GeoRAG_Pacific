@@ -207,9 +207,22 @@ never by endpoint/predicate alone. The older malformed response is retained.
 The first approved bounded request then reached a 45-second read timeout.
 `outputs/poc_10k_event_seven_bounded_20261020/report.json` records the stop;
 zero incoming requests completed, and no automatic timeout retry was allowed.
-The proposal for consultation is current native-record API acquisition for the
-fixed Daniel QIDs, followed by local direct-statement inspection. No API batch
-run, source substitution, additional filter, or Event population has occurred.
+**Native API acquisition subsequently approved:** retrieve the fixed Daniel QIDs
+through `wbgetentities`, in batches of up to 50, then inspect direct statements
+locally. Reuse verified current single-record caches. Request complete native
+records without redirects, claim/rank projection or language filtering. Require
+every requested ID and revision before accepting a batch. This covers native
+statements directly, without requiring query-graph search for this check.
+
+The first run, `outputs/poc_10k_event_seven_native_batches_20261020`, reused
+seven candidate records and six Daniel records. The first new batch returned
+42 of 50 IDs and a result-truncation warning (stated API limit 12,582,912 bytes).
+The original HTTP-200 body and metadata were cached, but the partial batch was
+not accepted. Acquisition stopped immediately. Incoming coverage, complete
+eligibility results and Event/Relations population remain pending. A proposal
+to halve truncated batches, stopping if one ID still fails, requires discussion;
+no such fallback is approved or implemented. See `acquisition_stop.json` and
+`verification.json`; all accepted upstream output hashes remain unchanged.
 
 The approved root is Wikidata's broad [event, Q140451665](https://www.wikidata.org/wiki/Q140451665), including all classes below it through native [P279 subclass-of](https://www.wikidata.org/wiki/Property:P279) statements. Identify event instances through [P31 instance-of](https://www.wikidata.org/wiki/Property:P31) and those subclass paths. Record root QID, snapshot, native class IDs and path evidence. Do not replace it with the narrower organized-event root, add a local event-type whitelist, or invent war/campaign/battle levels.
 

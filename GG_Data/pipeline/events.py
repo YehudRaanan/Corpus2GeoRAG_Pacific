@@ -12,6 +12,7 @@ import logging
 import math
 import re
 import time
+from collections.abc import Iterator
 from datetime import datetime, timezone
 from email.utils import parsedate_to_datetime
 from pathlib import Path
@@ -31,6 +32,12 @@ REQUEST_PAUSE = 5
 USER_AGENT = "GeoAI-Daniel-POC/1.0 (https://github.com/EtzionR/Corpus2GeoRAG_Pacific)"
 
 
+def cache_path(store: Path, url: str, params: dict) -> Path:
+    request = {"url": url, "params": params}
+    key = hashlib.sha256(json.dumps(request, sort_keys=True).encode()).hexdigest()
+    return store / key
+
+
 def cached_json(store: Path, url: str, params: dict) -> tuple[dict, dict]:
     """Cache untouched responses and request evidence before interpreting them.
 
@@ -40,8 +47,7 @@ def cached_json(store: Path, url: str, params: dict) -> tuple[dict, dict]:
     Attempts are append-only; all other failures still stop immediately.
     """
     request = {"url": url, "params": params}
-    key = hashlib.sha256(json.dumps(request, sort_keys=True).encode()).hexdigest()
-    root = store / key
+    root = cache_path(store, url, params)
     for attempt in range(1, 4):
         directory = root if attempt == 1 else root / f"attempt_{attempt}"
         if directory.exists():
@@ -184,19 +190,75 @@ def current_record(store: Path, qid: str) -> tuple[dict, dict]:
     data, evidence = cached_json(
         store, f"https://www.wikidata.org/wiki/Special:EntityData/{qid}.json", {}
     )
-    record = data.get("entities", {}).get(qid, {})
+    return native_records(data, [qid], evidence)[qid], evidence
+
+
+def native_records(data: dict, qids: list[str], evidence: dict) -> dict[str, dict]:
+    """An omitted, missing or redirected ID is a source stop, never no links."""
+    records = data.get("entities", {})
     if (
-        record.get("id") != qid
-        or record.get("type") != "item"
-        or "missing" in record
-        or not isinstance(record.get("claims"), dict)
-        or not isinstance(record.get("lastrevid"), int)
-        or not record.get("modified")
+        not isinstance(records, dict)
+        or set(records) != set(qids)
+        or "redirects" in data
     ):
         raise SourceException(
-            "Unexpected current native record", qid=qid, source=evidence
+            "Unexpected native record population",
+            qids=qids,
+            returned_qids=list(records) if isinstance(records, dict) else None,
+            warnings=data.get("warnings"),
+            source=evidence,
         )
-    return record, evidence
+    for qid, record in records.items():
+        if (
+            record.get("id") != qid
+            or record.get("type") != "item"
+            or any(k in record for k in ("missing", "redirect", "redirects"))
+            or not isinstance(record.get("claims"), dict)
+            or not isinstance(record.get("lastrevid"), int)
+            or not record.get("modified")
+        ):
+            raise SourceException(
+                "Unexpected current native record", qid=qid, source=evidence
+            )
+    return records
+
+
+def current_records(
+    store: Path, qids: list[str]
+) -> Iterator[tuple[dict[str, dict], dict]]:
+    """S2T 7: approved native batches, full records and explicit no redirects.
+
+    Reuse verified Special:EntityData entries first, then stable batches of at
+    most 50. Raw API wrappers stay in the shared evidence cache. No claim/rank
+    or language projection is applied; repeat runs reuse the same batch keys.
+    """
+    if (
+        not qids
+        or len(qids) != len(set(qids))
+        or any(not re.fullmatch(r"Q[1-9]\d*", qid) for qid in qids)
+    ):
+        raise ValueError("Expected distinct native QIDs")
+    pending = []
+    for qid in sorted(qids, key=lambda q: int(q[1:])):
+        url = f"https://www.wikidata.org/wiki/Special:EntityData/{qid}.json"
+        if cache_path(store, url, {}).exists():
+            record, evidence = current_record(store, qid)
+            yield {qid: record}, evidence
+        else:
+            pending.append(qid)
+    for offset in range(0, len(pending), 50):
+        batch = pending[offset : offset + 50]
+        data, evidence = cached_json(
+            store,
+            "https://www.wikidata.org/w/api.php",
+            {
+                "action": "wbgetentities",
+                "ids": "|".join(batch),
+                "redirects": "no",
+                "format": "json",
+            },
+        )
+        yield native_records(data, batch, evidence), evidence
 
 
 def incoming_candidates_query(subjects: list[str], candidates: list[str]) -> str:

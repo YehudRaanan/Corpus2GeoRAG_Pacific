@@ -1,6 +1,31 @@
 # Daniel pipeline POC
 
-## Bounded incoming check stopped at query-service timeout
+## Current: approved native batch stopped at response-size limit
+
+The user approved current Wikidata `wbgetentities` records in batches of up to
+50 Daniel QIDs, followed by local direct-statement checks. The adapter reuses
+verified single-record cache entries first, requests full native records with
+`redirects=no`, and requires the exact requested population before accepting a
+batch. It uses the existing cache and approved HTTP retry budget.
+
+`outputs/poc_10k_event_seven_native_batches_20261020` reused all seven candidate
+records and six Daniel records. Its first new 50-QID API request returned HTTP
+200 with valid JSON, but only **42 of 50 records** and an explicit truncation
+warning: the result exceeded the API's stated **12,582,912-byte limit**. The
+received body is 28,842,454 bytes; its original bytes, checksum and request are
+cached. Missing requested IDs: Q408, Q538, Q552, Q584, Q652, Q664, Q668, Q685.
+No partial batch was accepted, no automatic retry or smaller batch was made,
+and no complete incoming coverage or Event eligibility result is claimed.
+
+The run stopped under the user's data/service exception rule. Six of 4,712
+Daniel native records were checked; zero Event rows were written. Accepted
+upstream outputs remain unchanged. See `acquisition_stop.json` and
+`verification.json`. Proposed for consultation: split only truncated batches
+into halves until each response is complete; stop if a one-QID request is still
+truncated. Keep full records and the same source, ranks and inclusion rules.
+This response-size handling is **not yet approved or implemented**.
+
+## Previous: bounded incoming check stopped at query-service timeout
 
 The user subsequently agreed to the smaller-query design. The same seven
 native candidates are checked against all 4,712 distinct Daniel QIDs, with
@@ -14,11 +39,12 @@ was made. The failed request metadata and exact bounded query are preserved;
 no response body was received. The previous outgoing lower bounds still apply.
 This is still seven-candidate eligibility, not full discovery or populated Events.
 
-The next proposal is to retrieve Daniel's current native Wikidata records by
+The subsequent proposal was to retrieve Daniel's current native Wikidata records by
 explicit QIDs through `wbgetentities`, at most 50 IDs per request (about 95
 requests before cache reuse), then inspect complete direct statements locally.
 This avoids query-service search and retains the same source, all ranks and
-endpoint/inclusion rules. The user was asked before implementing this method.
+endpoint/inclusion rules. This method was then approved and run; see the current
+response-size stop above.
 Official limit: <https://www.wikidata.org/w/api.php?action=help&modules=wbgetentities>.
 
 ## Seven native candidates checked; incoming query stopped
