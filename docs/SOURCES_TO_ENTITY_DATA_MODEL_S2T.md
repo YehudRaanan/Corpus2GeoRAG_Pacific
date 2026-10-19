@@ -121,6 +121,19 @@ The approved name order supersedes a simple copy of the compact metadata's selec
 
 ### Native hierarchy and inclusion
 
+**Source approval, 20 October 2026:** use current Wikidata for Events and their
+direct links to Daniel QIDs, and cache every retrieval. The approved root is
+absent from the pinned public BigQuery copy; current table metadata is unchanged.
+Live native record evidence confirms Q140451665, revision 2557731706, in
+`outputs/poc_10k_event_root_live_check_20261020`. This changes only Event
+acquisition; accepted matching, Entities and Daniel/Daniel Relations files stay
+unchanged. Record endpoint/query scope, request times, untouched responses,
+checksums and native entity revisions. A live acquisition window is not an
+atomic snapshot. Query-service discovery must report its graph coverage; full
+native records supply ranks, qualifiers and references. A small probe or one
+incomplete endpoint cannot establish a complete Event population. Failed
+requests stop without automatic retries or source substitution.
+
 The approved root is Wikidata's broad [event, Q140451665](https://www.wikidata.org/wiki/Q140451665), including all classes below it through native [P279 subclass-of](https://www.wikidata.org/wiki/Property:P279) statements. Identify event instances through [P31 instance-of](https://www.wikidata.org/wiki/Property:P31) and those subclass paths. Record root QID, snapshot, native class IDs and path evidence. Do not replace it with the narrower organized-event root, add a local event-type whitelist, or invent war/campaign/battle levels.
 
 For each discovered event QID, use its direct mapped Wikidata assertions to/from **D**. Include it only if at least two distinct Daniel QIDs qualify. Repeated mentions, several predicates for one entity, duplicate retrievals and generated reverse views do not increase this count. Classification hierarchy paths identify an event; they do not count as indirect participant paths. Do not count mere shared class ancestry or article co-mentions as an event/entity connection.

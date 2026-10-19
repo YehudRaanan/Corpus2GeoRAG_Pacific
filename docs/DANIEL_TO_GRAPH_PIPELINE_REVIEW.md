@@ -1,5 +1,21 @@
 # Daniel input to final graph JSON review
 
+**Current source decision, 20 October 2026:** the user approved current Wikidata
+for Events and direct Daniel links, with retrieval caching. This supersedes the
+pending-source statements in the historical checkpoints below. Keep Q140451665,
+native P31/P279 and the two-distinct-Daniel-QID minimum unchanged. Preserve
+per-request timestamps, revisions and raw responses; no atomic snapshot or
+Event completion is claimed. Completed upstream outputs remain unchanged.
+
+The approved current-source root check passed. The five-QID direct-link plus
+hierarchy probe then reached a 45-second client read timeout and stopped,
+without retry or Event population. The failed query/request is saved in
+`outputs/poc_10k_current_event_probe_20261020` and the current Event cache.
+This is a retrieval failure, not evidence of zero qualifying events. Proposed
+next step for discussion: retrieve direct links in smaller requests, then check
+the same hierarchy separately using cached native records. No rule/source change
+has been applied and no Events release exists.
+
 Review date: 19 October 2026. This is the consolidated discussion list for the full pipeline. It records agreed rules, decisions still needed, implementation checks, and deferred improvements. It does not approve new rules or start a data run.
 
 The earlier list overstated the open business decisions. Settled rules, conditional exceptions and technical interfaces are separated below. The user confirmed that distinct `(Wikidata QID, type)` combinations coexist and Relations remains at QID level. MISC is not an open issue. Before adding a data-dependent rule, show actual IDs, source values and affected counts.

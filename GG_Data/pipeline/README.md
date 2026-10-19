@@ -1,5 +1,35 @@
 # Daniel pipeline POC
 
+## Current Events source approval — 20 October 2026
+
+The user approved current Wikidata for Events and their direct Daniel links,
+with retrieval caching. This resolves the source decision recorded in the
+historical BigQuery-root stop below; it does not establish Event completion.
+Live Q140451665 evidence and unchanged current BigQuery table metadata are in
+`outputs/poc_10k_event_root_live_check_20261020`.
+
+`events.py` provides a checksum-checked raw-response cache and a direct-link
+discovery query. It preserves full-statement ranks in discovery (p:/ps:, not
+truthy wdt:), both directions and the approved native hierarchy. Failed requests
+stop without retries. This adapter does not select/populate Events, replace
+upstream sources, or rematch Daniel mentions. Query-service graph scope and
+full native-record evidence still need verification before Event completion.
+
+The first live source check passed: WDQS returns the root's native P31 statement
+and Q23958852 class. The next request, for five sample QIDs with direct links
+and hierarchy in one query, reached the client's 45-second read timeout. The
+run stopped immediately without retries. Evidence is in
+`outputs/poc_10k_current_event_probe_20261020/probe.json`, status
+`BLOCKED_CURRENT_EVENT_REQUEST`, and `outputs/wikidata_current_event_cache`.
+The query file and failed request metadata are retained; there is no response
+body to cache for a read timeout. Zero Event model rows were written; discovery
+coverage has not been established. The five QIDs are Q1771928, Q10903802,
+Q129296, Q58425060 and Q101206527, selected with seed 20261018 from the numerically
+sorted 4,712 accepted QIDs. The next proposed implementation separates direct
+link retrieval from cached hierarchy checks, retaining exactly the same rules;
+discussion is required before another acquisition attempt under the user's
+stop-on-problem instruction.
+
 Contract order: [population S2T](../../docs/SOURCES_TO_ENTITY_DATA_MODEL_S2T.md),
 [ERD](../../docs/ENTITY_DATA_MODEL_ERD.md), then
 [model-to-graph S2T](../../docs/ENTITY_MODEL_TO_AGENT_GRAPH_S2T.md).
