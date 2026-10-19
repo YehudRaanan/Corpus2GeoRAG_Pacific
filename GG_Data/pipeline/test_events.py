@@ -87,7 +87,7 @@ def test_cache_preserves_raw_response_reuses_success_and_rejects_tampering(
         events.cached_json(tmp_path, events.QUERY_URL, {"query": "ASK{}"})
 
 
-@pytest.mark.parametrize("http_status", [200, 502])
+@pytest.mark.parametrize("http_status", [200, 429])
 def test_failed_request_is_saved_and_never_automatically_retried(
     tmp_path, monkeypatch, http_status
 ):
@@ -104,7 +104,7 @@ def test_failed_request_is_saved_and_never_automatically_retried(
         is_redirect = False
 
         def raise_for_status(self):
-            if self.status_code == 502:
+            if self.status_code >= 400:
                 raise events.requests.exceptions.HTTPError("502 Bad Gateway")
 
         def json(self):
@@ -161,3 +161,165 @@ def test_direct_hierarchy_edges_and_cycle_safe_path_have_no_truthy_or_depth_filt
     assert events.hierarchy_path(events.EVENT_ROOT, {}) == []
     with pytest.raises(SourceException, match="Incomplete Event hierarchy"):
         events.hierarchy_path("Q1", {"Q1": [{"parent": "Q2"}]})
+
+
+@pytest.mark.parametrize("statuses", [(502, 503, 200), (504, 502, 503)])
+def test_http_retry_budget_is_persistent_and_attempts_are_immutable(
+    tmp_path, monkeypatch, statuses
+):
+    calls, sleeps = [], []
+
+    class Response:
+        headers = {}
+        is_redirect = False
+
+        def __init__(self, status):
+            self.status_code = status
+            self.content = b'{"ok": true}' if status == 200 else b"upstream failure"
+
+        def raise_for_status(self):
+            if self.status_code >= 400:
+                raise events.requests.exceptions.HTTPError(str(self.status_code))
+
+        def json(self):
+            return json.loads(self.content)
+
+    def get(*args, **kwargs):
+        status = statuses[len(calls)]
+        calls.append(status)
+        return Response(status)
+
+    monkeypatch.setattr(events.requests, "get", get)
+    monkeypatch.setattr(events.time, "sleep", sleeps.append)
+    params = {"query": "ASK{}"}
+    for _ in range(2):
+        if statuses[-1] == 200:
+            data, evidence = events.cached_json(tmp_path, events.QUERY_URL, params)
+            assert data == {"ok": True} and evidence["cache"].endswith("attempt_3")
+        else:
+            with pytest.raises(SourceException):
+                events.cached_json(tmp_path, events.QUERY_URL, params)
+    assert calls == list(statuses)
+    assert sleeps == [1.1, 10, 1.1, 30, 1.1]
+    root = next(tmp_path.iterdir())
+    assert (root / "response.json").read_bytes() == b"upstream failure"
+    assert (root / "attempt_2/response.json").read_bytes() == b"upstream failure"
+    assert len(list(root.rglob("request.json"))) == 3
+    (root / "response.json").write_bytes(b"changed")
+    with pytest.raises(SourceException, match="cache mismatch"):
+        events.cached_json(tmp_path, events.QUERY_URL, params)
+    assert calls == list(statuses)
+
+
+def test_resume_old_cached_502_counts_as_attempt_one(tmp_path, monkeypatch):
+    import hashlib
+
+    request = {"url": events.QUERY_URL, "params": {"query": "ASK{}"}}
+    key = hashlib.sha256(json.dumps(request, sort_keys=True).encode()).hexdigest()
+    root = tmp_path / key
+    root.mkdir()
+    (root / "response.json").write_bytes(b"old 502")
+    metadata = {
+        "request": request,
+        "status": "FAILED",
+        "http_status": 502,
+        "sha256": events.digest(root / "response.json"),
+        "cache": str(root),
+    }
+    (root / "request.json").write_text(json.dumps(metadata))
+    original = (root / "request.json").read_bytes()
+    sleeps, calls = [], []
+
+    class Response:
+        content = b"{}"
+        status_code = 200
+        headers = {}
+        is_redirect = False
+
+        def raise_for_status(self):
+            pass
+
+        def json(self):
+            return {}
+
+    monkeypatch.setattr(events.time, "sleep", sleeps.append)
+    monkeypatch.setattr(
+        events.requests, "get", lambda *a, **kw: calls.append(1) or Response()
+    )
+    _, evidence = events.cached_json(tmp_path, request["url"], request["params"])
+    assert evidence["cache"].endswith("attempt_2")
+    assert calls == [1] and sleeps == [10, 1.1]
+    assert (root / "request.json").read_bytes() == original
+    assert (root / "response.json").read_bytes() == b"old 502"
+
+
+@pytest.mark.parametrize("malformed", [False, True])
+def test_resume_hierarchy_reuses_prior_edges_and_writes_no_model_rows(
+    tmp_path, monkeypatch, malformed
+):
+    from GG_Data.pipeline.event_hierarchy_probe import resume
+
+    prior = tmp_path / "prior"
+    prior.mkdir()
+    edges = {
+        "P31": {"Q1": [{"parent": "Q2", "statement": "p31", "rank": "normal"}]},
+        "P279": {},
+    }
+    (prior / "hierarchy_edges.json").write_text(json.dumps(edges))
+    report = {
+        "status": "BLOCKED_HIERARCHY_PROBE",
+        "queries": [],
+        "event_population_complete": False,
+        "exception": {
+            "request": {"params": {"query": events.class_edges_query(["Q2"], "P279")}}
+        },
+    }
+    (prior / "probe.json").write_text(json.dumps(report))
+    (prior / "verification.json").write_text(
+        json.dumps(
+            {
+                "probe_sha256": events.digest(prior / "probe.json"),
+                "outputs": {
+                    "hierarchy_edges.json": events.digest(
+                        prior / "hierarchy_edges.json"
+                    )
+                },
+            }
+        )
+    )
+    before = (prior / "probe.json").read_bytes()
+    calls = []
+
+    def source(store, url, params):
+        calls.append(params)
+        if malformed:
+            raise SourceException("Unexpected source data")
+        return {
+            "results": {
+                "bindings": [
+                    {
+                        "item": {"value": "http://www.wikidata.org/entity/Q2"},
+                        "present": {"value": "true"},
+                        "parent": {
+                            "value": f"http://www.wikidata.org/entity/{events.EVENT_ROOT}"
+                        },
+                        "statement": {"value": "native-statement"},
+                        "rank": {"value": "normal"},
+                    }
+                ]
+            }
+        }, {"status": "OK"}
+
+    monkeypatch.setattr(events, "cached_json", source)
+    output = tmp_path / "output"
+    result = resume(prior, output, tmp_path / "cache")
+    assert len(calls) == 1
+    assert result["event_population_complete"] is False
+    assert (prior / "probe.json").read_bytes() == before
+    assert not (output / "events.json").exists()
+    if malformed:
+        assert result["status"] == "BLOCKED_HIERARCHY_PROBE"
+        assert not (output / "candidate_classifications.json").exists()
+    else:
+        assert result["status"] == "HIERARCHY_PROBE_ONLY"
+        assert result["event_hierarchy_matches"] == ["Q1"]

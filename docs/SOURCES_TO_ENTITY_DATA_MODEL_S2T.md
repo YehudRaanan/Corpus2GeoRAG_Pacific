@@ -133,7 +133,12 @@ checksums and native entity revisions. A live acquisition window is not an
 atomic snapshot. Query-service discovery must report its graph coverage; full
 native records supply ranks, qualifiers and references. A small probe or one
 incomplete endpoint cannot establish a complete Event population. Failed
-requests stop without automatic retries or source substitution.
+requests stop without source substitution. The user approved three total
+attempts for HTTP 502/503/504 only, with waits of 10 and 30 seconds. Preserve
+every attempt; previous failures count toward the same persistent budget.
+Reuse checksum-verified successful responses. All other failures, including
+timeouts, 429, API errors, malformed data and data/business exceptions, still
+stop immediately. No automatic source or business-rule change is allowed.
 
 After the five-QID combined-query timeout, the user approved smaller requests:
 retrieve direct links first, then check the same hierarchy separately. Outgoing

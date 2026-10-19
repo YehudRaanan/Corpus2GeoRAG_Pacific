@@ -8,6 +8,7 @@ from __future__ import annotations
 
 import hashlib
 import json
+import logging
 import re
 import time
 from datetime import datetime, timezone
@@ -21,37 +22,65 @@ from GG_Data.pipeline.relations import SourceException
 EVENT_ROOT = "Q140451665"
 QUERY_URL = "https://query.wikidata.org/sparql"
 SCHOLARLY_QUERY_URL = "https://query-scholarly.wikidata.org/sparql"
+LOG = logging.getLogger(__name__)
+RETRY_HTTP_STATUS = {502, 503, 504}
+RETRY_WAITS = (10, 30)
 USER_AGENT = "GeoAI-Daniel-POC/1.0 (https://github.com/EtzionR/Corpus2GeoRAG_Pacific)"
 
 
 def cached_json(store: Path, url: str, params: dict) -> tuple[dict, dict]:
     """Cache untouched responses and request evidence before interpreting them.
 
-    Current Wikidata was approved on 20 October 2026 for Events/direct links.
-    Cache hits are checksum checked. A failed request stops; it is not retried,
-    overwritten, or silently replaced by another endpoint/snapshot.
+    S2T 7: the user approved three total attempts for HTTP 502/503/504,
+    with waits of 10/30 seconds. Existing failures count toward that budget.
+    Attempts are append-only; all other failures still stop immediately.
     """
     request = {"url": url, "params": params}
     key = hashlib.sha256(json.dumps(request, sort_keys=True).encode()).hexdigest()
-    directory = store / key
+    root = store / key
+    for attempt in range(1, 4):
+        directory = root if attempt == 1 else root / f"attempt_{attempt}"
+        if directory.exists():
+            metadata = directory / "request.json"
+            body = directory / "response.json"
+            if not metadata.exists() or not body.exists():
+                raise SourceException(
+                    "Incomplete current Wikidata cache", cache=str(directory)
+                )
+            evidence = read_json(metadata)
+            if evidence["request"] != request or digest(body) != evidence["sha256"]:
+                raise SourceException(
+                    "Current Wikidata cache mismatch", cache=str(directory)
+                )
+        else:
+            try:
+                return _request_json(directory, request)
+            except SourceException as exc:
+                evidence = exc.case
+        if evidence["status"] == "OK":
+            return read_json(body), evidence
+        if evidence.get("http_status") not in RETRY_HTTP_STATUS or attempt == 3:
+            raise SourceException(
+                "Current Wikidata request failed",
+                **{k: v for k, v in evidence.items() if k != "reason"},
+            )
+        # A saved later attempt is reused without another wait or network call.
+        if not (root / f"attempt_{attempt + 1}").exists():
+            delay = RETRY_WAITS[attempt - 1]
+            LOG.warning(
+                "Wikidata HTTP %s; attempt %s/3 after %ss",
+                evidence["http_status"],
+                attempt + 1,
+                delay,
+            )
+            time.sleep(delay)
+    raise AssertionError("Unreachable retry state")
+
+
+def _request_json(directory: Path, request: dict) -> tuple[dict, dict]:
+    """Save one untouched attempt before the caller applies the retry policy."""
     metadata = directory / "request.json"
     body = directory / "response.json"
-    if directory.exists():
-        if not metadata.exists() or not body.exists():
-            raise SourceException(
-                "Incomplete current Wikidata cache", cache=str(directory)
-            )
-        evidence = read_json(metadata)
-        if evidence["request"] != request or digest(body) != evidence["sha256"]:
-            raise SourceException(
-                "Current Wikidata cache mismatch", cache=str(directory)
-            )
-        if evidence["status"] != "OK":
-            raise SourceException(
-                "Cached request failed; no automatic retry", **evidence
-            )
-        return read_json(body), evidence
-
     directory.mkdir(parents=True)
     evidence = {
         "request": request,
@@ -60,11 +89,11 @@ def cached_json(store: Path, url: str, params: dict) -> tuple[dict, dict]:
         "cache": str(directory),
     }
     try:
-        # Single polite reader; no concurrency or automatic retry (S2T stop rule).
+        # Single polite reader; this helper makes exactly one request.
         time.sleep(1.1)
         response = requests.get(
-            url,
-            params=params,
+            request["url"],
+            params=request["params"],
             headers={"User-Agent": USER_AGENT, "Accept": "application/json"},
             timeout=45,
             allow_redirects=False,

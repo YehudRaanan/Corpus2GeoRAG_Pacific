@@ -1,5 +1,33 @@
 # Daniel input to final graph JSON review
 
+
+### Retry result and new operational stop — 20 October 2026
+
+`outputs/poc_10k_current_event_hierarchy_retry_20261020/probe.json` reuses the
+saved 58 successful hierarchy-stage requests and the original failed response.
+Attempt 2 of the exact HTTP 502 query succeeded. The resumed run saved 35 more
+successful requests, reaching 165 P31 candidate checks and 686 P279 class checks
+(93 successful hierarchy-stage requests in total).
+
+The next request returned HTTP 429 with `Retry-After: 120`. It was not retried:
+the user approved only 502/503/504 retries. Status is `BLOCKED_HIERARCHY_PROBE`.
+The suggested 429 wait/slower-request policy is **not approved**; the user's
+reply asked why BigQuery was not used. No further acquisition is running.
+
+The existing BigQuery snapshot returned zero rows for Q140451665 (saved job
+`geoai_6d050ce4cff5a35c6380e995468a4bfe`); current table metadata was unchanged
+at the saved check. This is why current Wikidata was approved for Events.
+It does not establish that every BigQuery-hosted dataset lacks the hierarchy.
+No newer BigQuery copy has been verified or substituted. Earlier pipeline
+stages still use their agreed BigQuery records/caches.
+
+`verification.json` verifies 105 source-body checksums, unchanged prior probe
+files/failed attempt, and unchanged accepted Entities/Wiki Pages hashes.
+No negative classifications, included Events, new Daniel entities or final graph
+were produced from this partial hierarchy. Code validation: 34 pipeline tests,
+Black and Ruff passed. Code/docs can be checkpointed locally; ignored outputs
+and caches are not protected by Git.
+
 **Current source decision, 20 October 2026:** the user approved current Wikidata
 for Events and direct Daniel links, with retrieval caching. This supersedes the
 pending-source statements in the historical checkpoints below. Keep Q140451665,
@@ -30,8 +58,12 @@ Wikidata returned HTTP 502. Acquisition stopped without retries, status
 `BLOCKED_HIERARCHY_PROBE`; raw requests/responses and partial hierarchy remain
 cached in `outputs/poc_10k_current_event_hierarchy_probe_20261020` and the current
 Event cache. This is a source-service failure, not a zero-Event result. No Event
-model rows were added. A bounded temporary-error retry policy is proposed for
-discussion; it has not been implemented or applied.
+model rows were added. The user then approved three total attempts for HTTP 502/503/504 only,
+with waits of 10 and 30 seconds. `events.py` implements this persistent budget:
+old failed responses count as attempts and remain immutable; successful cache
+entries are reused. Timeouts, 429, API/data errors and business exceptions still
+stop immediately. `event_hierarchy_probe.py` resumes into a new output directory;
+no source, hierarchy, matching or Event-inclusion rule changes.
 
 Review date: 19 October 2026. This is the consolidated discussion list for the full pipeline. It records agreed rules, decisions still needed, implementation checks, and deferred improvements. It does not approve new rules or start a data run.
 

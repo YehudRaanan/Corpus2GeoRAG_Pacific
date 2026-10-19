@@ -1,5 +1,33 @@
 # Daniel pipeline POC
 
+
+### Retry result and new operational stop — 20 October 2026
+
+`outputs/poc_10k_current_event_hierarchy_retry_20261020/probe.json` reuses the
+saved 58 successful hierarchy-stage requests and the original failed response.
+Attempt 2 of the exact HTTP 502 query succeeded. The resumed run saved 35 more
+successful requests, reaching 165 P31 candidate checks and 686 P279 class checks
+(93 successful hierarchy-stage requests in total).
+
+The next request returned HTTP 429 with `Retry-After: 120`. It was not retried:
+the user approved only 502/503/504 retries. Status is `BLOCKED_HIERARCHY_PROBE`.
+The suggested 429 wait/slower-request policy is **not approved**; the user's
+reply asked why BigQuery was not used. No further acquisition is running.
+
+The existing BigQuery snapshot returned zero rows for Q140451665 (saved job
+`geoai_6d050ce4cff5a35c6380e995468a4bfe`); current table metadata was unchanged
+at the saved check. This is why current Wikidata was approved for Events.
+It does not establish that every BigQuery-hosted dataset lacks the hierarchy.
+No newer BigQuery copy has been verified or substituted. Earlier pipeline
+stages still use their agreed BigQuery records/caches.
+
+`verification.json` verifies 105 source-body checksums, unchanged prior probe
+files/failed attempt, and unchanged accepted Entities/Wiki Pages hashes.
+No negative classifications, included Events, new Daniel entities or final graph
+were produced from this partial hierarchy. Code validation: 34 pipeline tests,
+Black and Ruff passed. Code/docs can be checkpointed locally; ignored outputs
+and caches are not protected by Git.
+
 ## Current Events source approval — 20 October 2026
 
 The user approved current Wikidata for Events and their direct Daniel links,
@@ -10,8 +38,8 @@ Live Q140451665 evidence and unchanged current BigQuery table metadata are in
 
 `events.py` provides a checksum-checked raw-response cache and a direct-link
 discovery query. It preserves full-statement ranks in discovery (p:/ps:, not
-truthy wdt:), both directions and the approved native hierarchy. Failed requests
-stop without retries. This adapter does not select/populate Events, replace
+truthy wdt:), both directions and the approved native hierarchy. Only HTTP 502/503/504 permit three total attempts, with waits of 10 and 30
+seconds. Saved failures count toward the budget; all other failures stop. This adapter does not select/populate Events, replace
 upstream sources, or rematch Daniel mentions. Query-service graph scope and
 full native-record evidence still need verification before Event completion.
 
@@ -54,10 +82,18 @@ partial hierarchy, query files and counts persist for reuse. No negative Event
 classification, inclusion count or Event-model completion follows from this
 partial traversal. No Event rows or final graph were written.
 
-Next operational proposal, pending discussion: permit up to three total attempts
-for temporary server failures, with waits of 10 and 30 seconds; reuse successful
-cache entries. Data/business-rule exceptions would still stop immediately.
-No such retry policy is implemented or active at this checkpoint.
+The user approved limited retries on 20 October 2026: exactly three total
+attempts for HTTP 502/503/504, with waits of 10 and 30 seconds. `events.py`
+implements this policy. Existing failed responses count as attempts; retries
+append `attempt_2`/`attempt_3` without overwriting the original evidence.
+Successful cache entries are checksum checked and reused. Exhaustion persists
+across restarts. Timeouts, 429, API errors, malformed data, redirects and
+business/data exceptions still stop immediately. No source substitution occurs.
+
+`event_hierarchy_probe.py` resumes the saved five-QID hierarchy check in a new
+output directory, validates the old files/source checksums, and retries the exact
+interrupted query first. The old run remains immutable. Its output is source
+classification evidence only, not a complete 10K Events population.
 
 Contract order: [population S2T](../../docs/SOURCES_TO_ENTITY_DATA_MODEL_S2T.md),
 [ERD](../../docs/ENTITY_DATA_MODEL_ERD.md), then
@@ -75,7 +111,8 @@ when the saved resolved type is null. Saved type metadata stays unchanged.
 
 Any unexpected count, field, source hash, ID, score, page conflict or missing
 artifact raises an error. Stop and discuss the exact case with the user before
-changing a rule. No automatic repair or retry is implemented.
+changing a rule. No automatic data repair is implemented. Only the approved
+HTTP 502/503/504 retry policy above is an operational exception.
 
 **Output on D: was approved on 20 October 2026.** Step 1 ran successfully in
 `outputs/poc_10k`. Do not rerun into that directory; existing output is protected.
