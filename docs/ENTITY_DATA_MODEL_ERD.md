@@ -10,6 +10,8 @@ Six business tables: **Entities, Mentions, Wiki Pages, Geography, Events, Relati
 
 Type decision, 19 October 2026: distinct `(entity_id, type)` combinations are entirely separate entities. No canonical entity or winner is selected. Relations remains at QID level. Approved graph IDs are `QID::type`, with the original QID retained in `wikidata_id`; the Agent resolves QID endpoints to the separate typed entities without copying assertions. Synthetic IDs remain unchanged. Agent integration is pending.
 
+Snapshot alignment, approved 20 October 2026: new Wikidata population must use the matching BigQuery table as of `2026-10-18T18:45:19.304197+00:00`; see the population S2T's current source rule. `Entities.attributes.bq_availability` retains `status`, `table`, `snapshot_at`, evidence scope and a separate full-record-alignment verification flag. Explicit missing lookups are `MISSING_IN_PINNED_BQ`; unchecked QIDs and synthetic identities must not be labelled missing. Preserve original assignments and all other fields. The missing-reference analysis file is a supporting artifact, not a seventh business table. A presence flag alone does not certify that existing mixed-version full records or the graph are aligned.
+
 ## ERD
 
 ```mermaid
