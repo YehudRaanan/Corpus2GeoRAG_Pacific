@@ -135,6 +135,12 @@ The approved name order supersedes a simple copy of the compact metadata's selec
 
 ## 7. Events: discovery, inclusion and fields
 
+**Latest approved source exception, 20 October 2026:** Event classification uses the latest available Wikidata P31/P279 hierarchy, with verified cache reuse first, even if the agreed snapshot contains an older class record. This supersedes snapshot-first priority for classification evidence only. Entities, Event assertion records and Relations retain the agreed snapshot-first source rule and latest-available same-QID fallback when required input is absent. Root Q140451665, non-deprecated classification, all statement ranks in Relations, and the two-distinct-Daniel-QID gate are unchanged. No version-difference report is required.
+
+Incoming acquisition may first measure a superset of the existing inclusion gate in BigQuery: retain subjects with two or more distinct Daniel main-item targets, plus subjects with one such target that are also targets of a saved Daniel outgoing assertion. Outgoing-only neighbors remain in the local outgoing inventory. Mapping/exclusion checks and the distinct union of both directions still apply before inclusion. This query is a retrieval optimization, not a new relevance rule, assertion cap or claim of complete Event coverage. `event_snapshot_discovery.py` performs this measurement with the existing pinned CLI/cache/dry-run/billing controls and stops on an unapproved source or data failure.
+
+**Verified acquisition measurement, 20 October 2026:** the saved BigQuery query found 2,209,613 incoming candidates before Event classification: 2,189,157 with at least two distinct Daniel targets and 20,456 with one incoming target plus an outgoing Daniel link. Their full native records total 37,433,814,344 bytes (37.4 GB). These are candidate items, not included Events. D: had about 17.1 GB free, so acquisition stopped before any full-record download under the POC consultation rule. The query result, source hashes and SQL receipt are verified in `GG_Data/pipeline/outputs/poc_10k_event_snapshot_measurement_20261020/verification.json`; no Event rows or final graph were written. Proposed next step, pending discussion: apply the approved latest-hierarchy classification before downloading full candidate records, without narrowing Event scope or changing the two-Daniel-QID gate.
+
 ### Native hierarchy and inclusion
 
 **Source approval, 20 October 2026:** use current Wikidata for Events and their
