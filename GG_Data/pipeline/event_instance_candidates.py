@@ -44,6 +44,13 @@ def verified_inputs(catalog: Path, candidates: Path, measurement: Path):
         or len(classes) != report["class_count"]
     ):
         raise ValueError("Class catalog coverage differs")
+    return sorted(classes, key=lambda q: int(q[1:])), candidate_universe(
+        candidates, measurement
+    )
+
+
+def candidate_universe(candidates: Path, measurement: Path) -> set[str]:
+    """Reuse the frozen incoming/outgoing population without a global catalog."""
     check = read_json(candidates / "verification.json")
     candidate_report = read_json(candidates / "report.json")
     if (
@@ -76,7 +83,7 @@ def verified_inputs(catalog: Path, candidates: Path, measurement: Path):
         or len(outgoing) != measured["outgoing_reference_qids"]
     ):
         raise ValueError("Candidate universe differs from saved measurement")
-    return sorted(classes, key=lambda q: int(q[1:])), incoming | outgoing
+    return incoming | outgoing
 
 
 def run(catalog: Path, candidates: Path, measurement: Path, store: Path, output: Path):
