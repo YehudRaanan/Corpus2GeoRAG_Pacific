@@ -9,6 +9,7 @@ from __future__ import annotations
 
 import argparse
 import gzip
+import hashlib
 import json
 import logging
 from pathlib import Path
@@ -16,8 +17,28 @@ from pathlib import Path
 from GG_Data.pipeline.entities import acquire_missing, native_record
 from GG_Data.pipeline.poc import ROOT, digest, read_json
 
+# Exact evidence approved from the first alignment report, not a general
+# permission to accept other classification changes in this or future versions.
+APPROVED_Q1014037_P31 = (
+    "628ae776cc33be2c9fc797c41c62fc0a41cbb3d82a84d4d0a3570e498f48f988",
+    "91f5224ba4375dd84ef18453e019870bd573fe8d0da9c17f8189550a4973d655",
+)
 
-def first_difference(old: dict, pinned: dict) -> dict | None:
+
+def without_snak_checksums(value: object) -> object:
+    """Compare API/dump formats; preserve reference hashes and all fact values."""
+    if isinstance(value, list):
+        return [without_snak_checksums(v) for v in value]
+    if isinstance(value, dict):
+        return {
+            k: without_snak_checksums(v)
+            for k, v in value.items()
+            if not (k == "hash" and "snaktype" in value and "property" in value)
+        }
+    return value
+
+
+def first_difference(old: dict, pinned: dict, *, qid: str | None = None) -> dict | None:
     """Compare identity evidence without selecting a name or inferring a type."""
     for language in ("en", "ja"):
         before = old.get("labels", {}).get(language)
@@ -28,6 +49,23 @@ def first_difference(old: dict, pinned: dict) -> dict | None:
         before = old.get("claims", {}).get(property_id, [])
         after = pinned.get("claims", {}).get(property_id, [])
         if before != after:
+            # API/cache formats can omit the optional snak checksum. It is
+            # not a class, statement ID, rank, qualifier or reference value.
+            comparable = [without_snak_checksums(claims) for claims in (before, after)]
+            if comparable[0] == comparable[1]:
+                continue
+            # S2T 1, user approval 20 October: only this exact source change
+            # is accepted. Keep the QID and MISC type; no type inference here.
+            # Hash the complete claims so a new rank/qualifier change still stops.
+            if qid == "Q1014037" and property_id == "P31":
+                fingerprints = tuple(
+                    hashlib.sha256(
+                        json.dumps(value, sort_keys=True, ensure_ascii=False).encode()
+                    ).hexdigest()
+                    for value in (before, after)
+                )
+                if fingerprints == APPROVED_Q1014037_P31:
+                    continue
             return dict(field=f"claims.{property_id}", archived=before, pinned=after)
     return None
 
@@ -78,7 +116,7 @@ def run(audit: Path, cache: Path, store: Path, output: Path) -> dict:
     for qid in sorted(qids):
         pinned = native_record(records[qid], qid)
         checked += 1
-        difference = first_difference(archived[qid], pinned)
+        difference = first_difference(archived[qid], pinned, qid=qid)
         if difference:
             conflict = dict(qid=qid, **difference)
             break  # No model population or further comparisons after a surprise.
@@ -90,6 +128,13 @@ def run(audit: Path, cache: Path, store: Path, output: Path) -> dict:
         requested_qids=len(qids),
         acquired_qids=len(records),
         compared_qids=checked,
+        approved_case=dict(
+            qid="Q1014037",
+            field="claims.P31",
+            use="PINNED_BQ_EVIDENCE",
+            keep_entity_id=True,
+            keep_type="MISC",
+        ),
         first_difference=conflict,
         provenance=provenance,
         inputs={str(p): digest(p) for p in (manifest_path, reference_path)},
