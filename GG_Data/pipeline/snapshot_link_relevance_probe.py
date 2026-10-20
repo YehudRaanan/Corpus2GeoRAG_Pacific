@@ -1,4 +1,4 @@
-"""Test actual page-link relevance, without using Daniel's entity assignments.
+"""Measure actual page-link concentration separately for English and Japanese.
 
 Approved 20 October 2026: both counts use the saved Wikipedia snapshot;
 Daniel supplies the full source-page scope only. Four missing source titles
@@ -7,6 +7,9 @@ matching decisions, Event rules, or filters. Earlier mention-based ratios do
 not test this measure. Population S2T sections 4/5 remain unchanged.
 Synthetic IDs are excluded: this scope-concentration measure uses QIDs only.
 Purpose: identify broad/unrelated MISC entities before Event retrieval.
+Language clarification: a missing page in one wiki never blocks measurement
+in the other; unavailable counts remain null, not a zero score. No combined
+cross-language decision is inferred. The original 19-QID diagnostic is kept.
 The separate scope_concentration_filter.py applies the provisional 5% cutoff;
 this acquisition diagnostic does not perform the top-20 relation ranking.
 """
@@ -14,6 +17,7 @@ this acquisition diagnostic does not perform the top-20 relation ranking.
 from __future__ import annotations
 
 import csv
+import argparse
 import gzip
 import hashlib
 import json
@@ -49,26 +53,31 @@ def sql_string(value: str) -> bytes:
     return ("'" + "".join(escapes.get(c, c) for c in value) + "'").encode()
 
 
-def aliases(cache: Path, date: str, qids: set[str]) -> dict[str, str]:
+def saved_table(cache: Path, date: str, table: str, wiki: str) -> Path:
+    paths = list(cache.glob(f"{wiki}-{date}-{table}.sql.gz.*.parquet"))
+    if len(paths) != 1:
+        raise ValueError(f"Expected one saved {wiki} {table} table")
+    path = paths[0]
+    if digest(path) != read_json(path.with_suffix(".json"))["sha256"]:
+        raise ValueError(f"Changed saved {wiki} {table} table")
+    return path
+
+
+def aliases(
+    cache: Path, date: str, qids: set[str], wiki: str = "enwiki"
+) -> dict[str, str]:
     """Follow the saved resolver's namespace-0 redirect paths, in reverse.
 
     Include every alias, not only aliases seen in Daniel's scoped links. This
     prevents undercounting the global denominator. No name similarity is used.
     """
 
-    def parquet(table: str) -> Path:
-        paths = list(cache.glob(f"enwiki-{date}-{table}.sql.gz.*.parquet"))
-        if len(paths) != 1:
-            raise ValueError(f"Expected one saved {table} table")
-        path = paths[0]
-        if digest(path) != read_json(path.with_suffix(".json"))["sha256"]:
-            raise ValueError(f"Changed saved {table} table")
-        return path
-
-    props, pages, redirects = (parquet(t) for t in ("page_props", "page", "redirect"))
+    props, pages, redirects = (
+        saved_table(cache, date, t, wiki) for t in ("page_props", "page", "redirect")
+    )
     identities = pq.read_table(props, filters=[("qid", "in", sorted(qids))]).to_pylist()
     if {r["qid"] for r in identities} != qids:
-        raise ValueError("A selected QID has no English snapshot page")
+        raise ValueError(f"A selected QID has no {wiki} snapshot page")
     ids = {r["pageid"]: r["qid"] for r in identities}
     canonical = pq.read_table(pages, filters=[("pageid", "in", list(ids))]).to_pylist()
     if len(canonical) != len(ids) or any(r["is_redirect"] for r in canonical):
@@ -225,38 +234,69 @@ def linked_pages(blocks, targets: dict[int, str]) -> dict[str, set[int]]:
     return pages
 
 
-def run() -> dict:
-    output = BASE / "poc_10k_misc_snapshot_link_relevance_20261020"
+def run(wiki: str = "enwiki", population: bool = False) -> dict:
+    if wiki not in ("enwiki", "jawiki") or (wiki != "enwiki" and not population):
+        raise ValueError("Use --population for separate EN/JA population scores")
+    lang = wiki[:2]
+    output = BASE / (
+        f"poc_10k_misc_snapshot_link_relevance_{wiki}_20261020"
+        if population
+        else "poc_10k_misc_snapshot_link_relevance_20261020"
+    )
     if output.exists():
         raise ValueError("Keep existing diagnostic outputs unchanged")
     manifest_path = SNAPSHOT / "page_snapshot_manifest.json"
     manifest = read_json(manifest_path)
     date = manifest["dump_date"]  # Version lineage, not a new hardcoded source date.
-    source_path = CACHE / "english_sources.json.gz"
-    links_path = CACHE / "en_link_resolution.json.gz"
+    source_path = CACHE / f"{'english' if lang == 'en' else 'japanese'}_sources.json.gz"
+    links_path = CACHE / f"{lang}_link_resolution.json.gz"
     selection_path = (
-        BASE / "poc_10k_misc_incoming_links_probe_20261020/partial_analysis.json"
+        BASE / "poc_10k_entities_snapshot_first_20261020/entities.json.gz"
+        if population
+        else BASE / "poc_10k_misc_incoming_links_probe_20261020/partial_analysis.json"
     )
     # The original manifest pins article files and inventory counts, rather
     # than checksums of these two intermediate caches. Verify its coverage;
     # this diagnostic records the exact intermediate-file hashes below.
     if (
         dict(Counter(r["status"] for r in read_json(links_path)))
-        != manifest["link_inventory"]["en"]["resolution_counts"]
+        != manifest["link_inventory"][lang]["resolution_counts"]
     ):
         raise ValueError("Saved source-page link coverage changed")
+    selection_manifest = selection_path.parent / (
+        "manifest.json" if population else "report.json"
+    )
     if (
         digest(selection_path)
-        != read_json(selection_path.parent / "report.json")["outputs"][
-            selection_path.name
-        ]
+        != read_json(selection_manifest)["outputs"][selection_path.name]
     ):
         raise ValueError("Saved diagnostic QID selection changed")
-    selection = read_json(selection_path)["counts"]  # QIDs only; discard old counts.
+    if population:
+        # S2T 6.1: existing resolved MISC identities only; synthetic IDs never
+        # acquire a QID, denominator or score through this measurement.
+        selection = [
+            {"qid": r["entity_id"], "title": r["name"]}
+            for r in read_json(selection_path)
+            if r["type"] == "MISC" and re.fullmatch(r"Q\d+", r["entity_id"])
+        ]
+    else:
+        selection = read_json(selection_path)["counts"]  # Discard old counts.
+    if len({r["qid"] for r in selection}) != len(selection):
+        raise ValueError("Duplicate MISC QID in selected population")
     sources = read_json(source_path)
-    missing = [r["source"] for r in sources if r["status"] != "RESOLVED"]
-    scope = {int(r["pageid"]) for r in sources if r["status"] == "RESOLVED"}
-    if len(sources) != 428 or len(missing) != 4:
+    # The JA inventory contains only retrieved counterpart pages; EN includes
+    # unresolved source titles. Never mix numeric page IDs between languages.
+    missing = [
+        r["source"] for r in sources if r.get("status", "RESOLVED") != "RESOLVED"
+    ]
+    scope = {
+        int(r["pageid"]) for r in sources if r.get("status", "RESOLVED") == "RESOLVED"
+    }
+    expected = manifest["source_pages"] if lang == "en" else manifest["japanese_pages"]
+    if (
+        len(sources) != expected
+        or len(scope) != manifest["link_inventory"][lang]["source_pages"]
+    ):
         raise ValueError("Approved source coverage changed")
     output.mkdir()
     started = time.monotonic()
@@ -276,28 +316,44 @@ def run() -> dict:
 
     try:
         update("RESOLVING_SNAPSHOT_ALIASES", selected_qids=len(selection))
-        names = aliases(CACHE, date, {r["qid"] for r in selection})
+        selected_qids = {r["qid"] for r in selection}
+        props = saved_table(CACHE, date, "page_props", wiki)
+        identities = pq.read_table(
+            props, filters=[("qid", "in", sorted(selected_qids))]
+        ).to_pylist()
+        page_table = saved_table(CACHE, date, "page", wiki)
+        article_ids = {
+            r["pageid"]
+            for r in pq.read_table(
+                page_table,
+                filters=[("pageid", "in", [r["pageid"] for r in identities])],
+            ).to_pylist()
+        }
+        # page_props includes other namespaces; the agreed measure uses
+        # namespace-0 articles, as does the saved resolver's page table.
+        available = {r["qid"] for r in identities if r["pageid"] in article_ids}
+        names = aliases(CACHE, date, available, wiki)
         (output / "aliases.json").write_text(
             json.dumps(names, indent=2), encoding="utf-8"
         )
         update("SCANNING_LINKTARGET", alias_titles=len(names))
         targets = link_targets(
             dump_blocks(
-                CACHE / f"enwiki-{date}-linktarget.sql.gz",
+                CACHE / f"{wiki}-{date}-linktarget.sql.gz",
                 "linktarget",
                 lambda **v: update("SCANNING_LINKTARGET", **v),
             ),
             names,
         )
-        if set(targets.values()) != {r["qid"] for r in selection}:
-            raise ValueError("A selected QID has no dumped link target")
+        if not set(targets.values()) <= available:
+            raise ValueError("Unexpected QID in dumped link targets")
         (output / "targets.json").write_text(
             json.dumps(targets, indent=2), encoding="utf-8"
         )
         update("SCANNING_GLOBAL_PAGELINKS", selected_target_ids=len(targets))
         pages = linked_pages(
             dump_blocks(
-                CACHE / f"enwiki-{date}-pagelinks.sql.gz",
+                CACHE / f"{wiki}-{date}-pagelinks.sql.gz",
                 "pagelinks",
                 lambda **v: update("SCANNING_GLOBAL_PAGELINKS", **v),
             ),
@@ -305,8 +361,9 @@ def run() -> dict:
         )
         # Independent agreement with the saved scoped resolver is mandatory.
         reference = defaultdict(set)
+        target_qids = set(targets.values())
         for row in read_json(links_path):
-            if row["status"] == "RESOLVED" and row["qid"] in set(targets.values()):
+            if row["status"] == "RESOLVED" and row["qid"] in target_qids:
                 reference[row["qid"]].add(int(row["source"]))
         rows = []
         for row in selection:
@@ -317,19 +374,31 @@ def run() -> dict:
                     f"Actual scoped links disagree with saved resolution: {qid}"
                 )
             numerator, denominator = len(numerator_pages), len(pages[qid])
-            if denominator == 0 or numerator > denominator:
+            if numerator > denominator:
                 raise ValueError(f"Invalid subset count: {qid}")
             rows.append(
                 {
                     "qid": qid,
+                    "wiki": wiki,
                     "name": row["title"],
-                    "scope_linking_pages": numerator,
-                    "all_linking_pages": denominator,
-                    "relevance": numerator / denominator,
+                    "score_status": (
+                        "SCORED"
+                        if denominator
+                        else (
+                            "UNAVAILABLE_SNAPSHOT_PAGE"
+                            if qid not in available
+                            else "UNAVAILABLE_NO_INCOMING_LINKS"
+                        )
+                    ),
+                    "scope_linking_pages": numerator if denominator else None,
+                    "all_linking_pages": denominator or None,
+                    "relevance": numerator / denominator if denominator else None,
                     "scope_page_ids": sorted(numerator_pages),
                 }
             )
-        rows.sort(key=lambda r: (-r["relevance"], r["qid"]))
+        rows.sort(
+            key=lambda r: (r["relevance"] is None, -(r["relevance"] or 0), r["qid"])
+        )
         with (output / "scores.csv").open(
             "w", encoding="utf-8-sig", newline=""
         ) as stream:
@@ -343,7 +412,15 @@ def run() -> dict:
         report = {
             "status": "COMPLETE_DIAGNOSTIC_INCOMPLETE_SOURCE_COVERAGE",
             "dump_date": date,
-            "wiki": "enwiki",
+            "wiki": wiki,
+            "population": (
+                "RESOLVED_MISC_QIDS_IN_FROZEN_10K"
+                if population
+                else "ORIGINAL_19_QID_DIAGNOSTIC"
+            ),
+            "scored_qids": sum(r["score_status"] == "SCORED" for r in rows),
+            "unavailable_qids": sum(r["score_status"] != "SCORED" for r in rows),
+            "scope_policy": "full Daniel source-page inventory in this language, including saved counterparts; no cross-language pooling",
             "formula": "distinct actual linking pages within Daniel full source-page scope / all distinct actual linking pages",
             "link_rules": "namespace-0 source and target pages, including template/navigation links; target redirects resolved; source page IDs counted once per QID",
             "source_titles": len(sources),
@@ -356,12 +433,12 @@ def run() -> dict:
             "filter_applied": False,
             "network_requests": 0,
             "verified_dumps": {
-                table: read_json(CACHE / f"enwiki-{date}-{table}.sql.gz.verified.json")
+                table: read_json(CACHE / f"{wiki}-{date}-{table}.sql.gz.verified.json")
                 for table in ("linktarget", "pagelinks")
             },
             "limits": [
-                "English diagnostic sample only, not an all-language measure.",
-                "Four missing source titles make the scoped numerator incomplete.",
+                "Separate per-language measure; no combined QID-level decision is inferred.",
+                "Only resolved source pages/counterparts contribute; unavailable page counts remain unknown.",
                 "Page-link concentration is not identity-match confidence; this acquisition diagnostic does not apply the separate 5% filter.",
             ],
             "inputs": {
@@ -371,6 +448,10 @@ def run() -> dict:
                     source_path,
                     links_path,
                     selection_path,
+                    selection_manifest,
+                    props,
+                    page_table,
+                    saved_table(CACHE, date, "redirect", wiki),
                     Path(__file__),
                 )
             },
@@ -389,4 +470,8 @@ def run() -> dict:
 
 
 if __name__ == "__main__":
-    run()
+    parser = argparse.ArgumentParser(description=__doc__)
+    parser.add_argument("--wiki", choices=("enwiki", "jawiki"), default="enwiki")
+    parser.add_argument("--population", action="store_true")
+    args = parser.parse_args()
+    run(args.wiki, args.population)

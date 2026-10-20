@@ -176,7 +176,16 @@ does not measure historical importance. The user subsequently approved a
 **provisional 5% threshold**: exclude measured MISC QIDs with score **<0.05**
 from Event retrieval and keep scores **>=0.05**, including exactly 5%.
 Synthetic IDs remain excluded. Missing global denominators remain unknown and
-must not silently become zero scores or exclusion decisions. Preserve all
+must not silently become zero scores or exclusion decisions. **Language
+clarification, 20 October:** calculate English and Japanese independently,
+using the same formula and 5% threshold in each. Key scores and decisions by
+`(wiki, QID)`; never pool languages or reuse page IDs/counts across them.
+A missing article in one language does not block calculation in the other.
+Use the full saved Daniel source-page scope for that language, including
+retrieved Japanese counterparts. An unavailable language score has no filter
+decision; it is not a failed 5% test. A rule to combine different language
+decisions into one QID-level Event retrieval decision is not yet defined.
+Preserve all
 original model rows and matching assignments. This threshold does not change
 the matching similarity threshold, Event hierarchy or two-entity inclusion rule.
 
@@ -208,6 +217,7 @@ business table or populated model column is claimed by this specification:
 | Supporting field | Source and calculation |
 |---|---|
 | `qid`, `name` | Selected existing matched QID and saved diagnostic display name; no new matching or identity creation. |
+| `wiki`, `score_status`, `keep_for_event_retrieval` | Separate English/Japanese measurements. A known positive denominator permits the 5% decision; no snapshot article or no incoming links leaves counts, score and decision null, with an explicit unavailable status. |
 | `scope_linking_pages` | Cardinality of the intersection of actual linking-page IDs and the distinct resolved page IDs in Daniel's full source-page scope. |
 | `all_linking_pages` | All distinct source article page IDs linking to the QID under the same snapshot/language/redirect rules. |
 | `scope_page_ids` | Exact deduplicated page IDs supporting the numerator, retained in the report. |

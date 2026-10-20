@@ -42,6 +42,29 @@ def test_aliases_use_article_join_and_follow_redirect_chains(tmp_path):
         "Alias": "Q1",
         "Chain": "Q1",
     }
+    # Identical page numbers in different wikis are separate identities.
+    japanese = {
+        "page_props": [{"pageid": 1, "qid": "Q2"}],
+        "page": [{"pageid": 1, "title": "Japanese", "is_redirect": False}],
+        "redirect": [],
+    }
+    for name, rows in japanese.items():
+        path = tmp_path / f"jawiki-test-{name}.sql.gz.test.parquet"
+        table = (
+            pa.Table.from_pylist(rows)
+            if rows
+            else pa.table(
+                {
+                    "pageid": pa.array([], type=pa.int64()),
+                    "title": pa.array([], type=pa.string()),
+                }
+            )
+        )
+        pq.write_table(table, path)
+        path.with_suffix(".json").write_text(
+            json.dumps({"sha256": hashlib.sha256(path.read_bytes()).hexdigest()})
+        )
+    assert aliases(tmp_path, "test", {"Q2"}, "jawiki") == {"Japanese": "Q2"}
 
 
 def test_actual_links_count_each_page_once_across_aliases(tmp_path):

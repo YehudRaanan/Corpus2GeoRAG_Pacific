@@ -2,9 +2,10 @@
 
 Reuse the saved page-link diagnostic only. Keep scores >=5%, exclude scores
 <5% from Event retrieval. Preserve model identities, matching and raw evidence.
-This bounded test does not restart Event acquisition or measure other QIDs.
+Accept separate saved EN/JA reports; this does not restart Event acquisition.
 """
 
+import argparse
 import csv
 import json
 import re
@@ -21,9 +22,33 @@ def threshold_rows(rows: list[dict]) -> list[dict]:
     seen = set()
     for row in rows:
         qid = row["qid"]
+        wiki = row.get("wiki", "enwiki")
+        key = (wiki, qid)
         numerator, denominator = row["scope_linking_pages"], row["all_linking_pages"]
-        if not re.fullmatch(r"Q\d+", qid) or qid in seen:
-            raise ValueError("Expected unique matched QIDs; synthetic IDs excluded")
+        if (
+            wiki not in ("enwiki", "jawiki")
+            or not re.fullmatch(r"Q\d+", qid)
+            or key in seen
+        ):
+            raise ValueError(
+                "Expected unique language/QID pairs; synthetic IDs excluded"
+            )
+        seen.add(key)
+        if row.get("score_status") in (
+            "UNAVAILABLE_SNAPSHOT_PAGE",
+            "UNAVAILABLE_NO_INCOMING_LINKS",
+        ):
+            # S2T 6.1: missing in one language does not block another language.
+            # Preserve an explicit unknown decision; never convert it to zero.
+            if any(
+                row[k] is not None
+                for k in ("scope_linking_pages", "all_linking_pages", "relevance")
+            ):
+                raise ValueError(f"Unavailable score contains numeric evidence: {key}")
+            result.append({**row, "keep_for_event_retrieval": None})
+            continue
+        if row.get("score_status", "SCORED") != "SCORED":
+            raise ValueError(f"Unexpected score status: {key}")
         if (
             type(numerator) is not int
             or type(denominator) is not int
@@ -33,33 +58,44 @@ def threshold_rows(rows: list[dict]) -> list[dict]:
             raise ValueError(f"Unknown or invalid counts require consultation: {qid}")
         if row["relevance"] != numerator / denominator:
             raise ValueError(f"Saved ratio disagrees with counts: {qid}")
-        seen.add(qid)
         # Integer comparison includes exactly 5%; never round before filtering.
         keep = 100 * numerator >= THRESHOLD_PERCENT * denominator
         result.append({**row, "keep_for_event_retrieval": keep})
     return result
 
 
-def run() -> dict:
-    source = BASE / "poc_10k_misc_snapshot_link_relevance_20261020/report.json"
+def run(source: Path | None = None, output: Path | None = None) -> dict:
+    source = (
+        source or BASE / "poc_10k_misc_snapshot_link_relevance_20261020/report.json"
+    )
     saved = read_json(source)
     for name, expected in saved["outputs"].items():
         if digest(source.parent / name) != expected:
             raise ValueError(f"Saved diagnostic output changed: {name}")
     rows = threshold_rows(saved["rows"])
-    output = BASE / "poc_10k_scope_concentration_5pct_20261020"
+    output = output or BASE / "poc_10k_scope_concentration_5pct_20261020"
     output.mkdir()  # Keep earlier diagnostic outputs unchanged.
     with (output / "selection.csv").open("w", encoding="utf-8-sig", newline="") as f:
         writer = csv.DictWriter(f, fieldnames=list(rows[0]))
         writer.writeheader()
         writer.writerows(rows)
     report = {
-        "status": "COMPLETE_BOUNDED_THRESHOLD_TEST",
+        "status": (
+            "COMPLETE_PER_LANGUAGE_THRESHOLD"
+            if saved.get("population") == "RESOLVED_MISC_QIDS_IN_FROZEN_10K"
+            else "COMPLETE_BOUNDED_THRESHOLD_TEST"
+        ),
         "threshold_percent": THRESHOLD_PERCENT,
         "rule": "exclude score < 0.05; keep score >= 0.05",
         "evaluated_qids": len(rows),
-        "kept_qids": [r["qid"] for r in rows if r["keep_for_event_retrieval"]],
-        "excluded_qids": [r["qid"] for r in rows if not r["keep_for_event_retrieval"]],
+        "kept_qids": [r["qid"] for r in rows if r["keep_for_event_retrieval"] is True],
+        "excluded_qids": [
+            r["qid"] for r in rows if r["keep_for_event_retrieval"] is False
+        ],
+        "unavailable_qids": [
+            r["qid"] for r in rows if r["keep_for_event_retrieval"] is None
+        ],
+        "decision_scope": "per language; no cross-language QID decision",
         "dump_date": saved["dump_date"],
         "wiki": saved["wiki"],
         "missing_source_titles": saved["missing_source_titles"],
@@ -78,4 +114,13 @@ def run() -> dict:
 
 
 if __name__ == "__main__":
-    print(json.dumps(run(), indent=2))
+    parser = argparse.ArgumentParser(description=__doc__)
+    parser.add_argument("--source", type=Path)
+    parser.add_argument("--output", type=Path)
+    args = parser.parse_args()
+    report = run(args.source, args.output)
+    print(
+        json.dumps(
+            {k: v for k, v in report.items() if not k.endswith("_qids")}, indent=2
+        )
+    )

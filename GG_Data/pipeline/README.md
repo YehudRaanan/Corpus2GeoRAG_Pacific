@@ -1,13 +1,37 @@
 # Daniel pipeline POC
 
-## 10K scope-concentration preflight — stopped for consultation
+## Per-language scope concentration — approved continuation
+
+Calculate **English and Japanese separately**, with the same formula and 5%
+threshold. A missing article in one language does not block the other. Each
+`(wiki, QID)` has its own counts, score, status and threshold decision; unknown
+denominators remain null. Do not merge counts or infer a combined QID decision.
+Use `snapshot_link_relevance_probe.py --population --wiki enwiki` (or `jawiki`)
+to measure all existing resolved MISC QIDs in the frozen 10K model against
+the full saved source-page scope in that language. Reuse the saved dumps;
+no new retrieval, matching or entity creation is involved. The separate
+`scope_concentration_filter.py --source <report.json> --output <new-directory>`
+applies the 5% test to each scored language/QID and preserves unknowns.
+
+**Execution status:** the first Japanese population run stopped before scores
+were written: 12 selected QIDs have redirect pages. Two checked destinations
+carry different QIDs (Q1325845 redirects to Q29190's article; Q59886 to
+Q51881408's article). No identity or link count was reassigned. The 12 cases,
+source hashes and stop are saved in
+`outputs/poc_10k_misc_snapshot_link_relevance_jawiki_20261020/source_exception.json`
+and `progress.json`. The proposed handling (leave the original language score
+unavailable, continue other measurements) awaits user agreement under the POC
+stop rule. No English population scan, language filter output or Event run
+has started. Four focused checks pass, including independent language decisions.
+
+## Historical English-only 10K preflight — superseded by language clarification
 
 The existing resolved Entity rows contain **1,312 distinct matched MISC QIDs**.
 The verified English snapshot page-properties table covers **674**; **638**
 have no English snapshot page. Their denominator is unavailable under the
-current English measurement, not zero. No score or filter decision was made
-in this preflight. Under the POC stop rule, continuation requires agreement
-on leaving these cases pending while measuring the available population.
+English-only measurement, not zero. No score or filter decision was made
+in that preflight. The user clarified that each language must be measured
+independently; missing English pages do not justify stopping Japanese scores.
 Evidence: `outputs/poc_10k_scope_concentration_preflight_20261020/report.json`
 and `coverage.json`, including all QIDs, statuses and source hashes. Original
 matching and model rows remain unchanged; Event retrieval remains stopped.
