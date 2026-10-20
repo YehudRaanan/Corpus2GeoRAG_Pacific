@@ -1,5 +1,11 @@
 # Daniel pipeline POC
 
+## Latest retrieval test — stopped, 20 October 2026
+
+The user approved the one-property retrieval test. Canada/Q16 with P17 (country), on the main Wikidata query graph, also reached the 45-second read timeout. No response body or property page was accepted; no timeout retry ran. `outputs/poc_10k_event_property_probe_20261020/verification.json` records `VERIFIED_PROPERTY_RETRIEVAL_SOURCE_STOP_ONLY`: the failure receipt, code hashes and five upstream output hashes were checked. The existing importance and paged discovery outputs are unchanged. Accepted full incoming coverage remains 2/9,424 graph/QID requests. Zero new Event rows, capped Relations or final graph were written. The process has ended; further retrieval changes require consultation under the user's stop rule.
+
+`event_property_probe.py` performs this diagnostic only; it does not implement complete property-partition discovery. It verifies the latest scored Entities and prior stop artifacts before requesting data, preserves cache evidence and rejects wrong-property responses. All ranks and inclusion rules are unchanged. Before launch, 57 pipeline tests and Ruff passed. The earlier proposal status below is historical and is superseded by this approved test and verified stop.
+
 ## Approved selection rule: Event links uncapped, other links mutual top 20
 
 The user approved direct included-Event/included-Event and Event/Daniel links without a count limit. Each Event must still independently pass the existing two-distinct-Daniel-QID inclusion gate. For non-event/non-event assertions, rank the connected QID by **distinct Daniel source pages times total original Daniel mentions**. Keep an assertion only if it belongs to the top 20 at both endpoints; reverse views share its slot. Some QIDs can retain fewer than 20. Counts and budgets are QID-level, without duplication across types.

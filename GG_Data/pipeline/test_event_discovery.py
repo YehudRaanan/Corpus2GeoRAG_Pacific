@@ -68,6 +68,36 @@ def test_page_query_validates_cursor_and_size_without_changing_source_scope():
         events.incoming_page_query("Q16", 'x") } UNION { ?s ?p ?o')
 
 
+def test_property_partition_binds_native_predicates_and_preserves_ranks(
+    tmp_path, monkeypatch
+):
+    query = events.incoming_page_query("Q16", property_id="P17")
+    assert "?statement ps:P17 wd:Q16" in query
+    assert "?subject p:P17 ?statement" in query
+    assert "BIND(wd:P17 AS ?property)" in query
+    assert "wikibase:rank ?rank" in query and "DeprecatedRank" not in query
+    assert "ORDER BY STR(?statement)" in query and "LIMIT 5000" in query
+    with pytest.raises(ValueError):
+        events.incoming_page_query("Q16", property_id="P17 } UNION {")
+    monkeypatch.setattr(events, "cached_json", lambda *args: ({}, {}))
+    monkeypatch.setattr(
+        event_discovery,
+        "incoming_links",
+        lambda *args: [
+            dict(
+                source_record_id="http://www.wikidata.org/entity/statement/Q1-01234567",
+                source_predicate="wd:P31",
+            )
+        ],
+    )
+    with pytest.raises(SourceException, match="Invalid incoming page"):
+        list(
+            event_discovery.incoming_pages(
+                tmp_path, events.QUERY_URL, "Q16", 5000, property_id="P17"
+            )
+        )
+
+
 @pytest.mark.parametrize("fail_incoming", [False, True])
 def test_inventory_reuses_native_records_covers_both_graphs_and_stops(
     tmp_path, monkeypatch, fail_incoming

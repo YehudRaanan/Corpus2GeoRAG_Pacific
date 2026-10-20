@@ -185,7 +185,13 @@ SELECT DISTINCT ?subject ?statement ?property ?rank WHERE {{
 """
 
 
-def incoming_page_query(qid: str, after: str | None = None, size: int = 5000) -> str:
+def incoming_page_query(
+    qid: str,
+    after: str | None = None,
+    size: int = 5000,
+    *,
+    property_id: str | None = None,
+) -> str:
     """Page the same full assertions; never cap the Event discovery population.
 
     Continuation approved after the Canada stop: order by native statement URI
@@ -203,6 +209,23 @@ def incoming_page_query(qid: str, after: str | None = None, size: int = 5000) ->
             raise ValueError("Expected a native statement URI cursor")
         cursor = f"  FILTER(STR(?statement) > {json.dumps(after)})\n"
     query = incoming_query(qid)
+    if property_id is not None:
+        # Approved retrieval test: bind one native property in both p/ps joins.
+        # This partitions requests, not the eligible Event/relation population.
+        if not re.fullmatch(r"P[1-9]\d*", property_id):
+            raise ValueError("Expected a native Wikidata property ID")
+        query = f"""PREFIX wd: <http://www.wikidata.org/entity/>
+PREFIX p: <http://www.wikidata.org/prop/>
+PREFIX ps: <http://www.wikidata.org/prop/statement/>
+PREFIX wikibase: <http://wikiba.se/ontology#>
+SELECT DISTINCT ?subject ?statement ?property ?rank WHERE {{
+  ?statement ps:{property_id} wd:{qid} .
+  ?subject p:{property_id} ?statement .
+  ?statement wikibase:rank ?rank .
+  BIND(wd:{property_id} AS ?property)
+  FILTER(STRSTARTS(STR(?subject), "http://www.wikidata.org/entity/Q"))
+}}
+"""
     return (
         query.rstrip()[:-1] + cursor + f"}}\nORDER BY STR(?statement)\nLIMIT {size}\n"
     )

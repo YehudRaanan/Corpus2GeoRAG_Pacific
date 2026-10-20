@@ -1,5 +1,9 @@
 # Daniel input to final graph JSON review
 
+## Latest status — approved property test also stopped
+
+The user approved a one-property-at-a-time retrieval test. The Canada/Q16 P17 (country) request to the main Wikidata query graph timed out after 45 seconds without a response body. The process ended; zero pages/statements were accepted and no timeout retry ran. No new Event rows, capped Relations or graph were written. Existing Entity importance and paged discovery artifacts retain their verified hashes. Full incoming coverage remains 2/9,424 graph/QID requests. Evidence: `GG_Data/pipeline/outputs/poc_10k_event_property_probe_20261020/{report,verification}.json`; verification is `VERIFIED_PROPERTY_RETRIEVAL_SOURCE_STOP_ONLY`. The diagnostic code passed the 57-test pipeline suite and Ruff before launch. This supersedes the earlier unapproved-proposal status below; it does not establish complete property or Event coverage. Further retrieval changes require consultation under the existing stop rule.
+
 ## Approved relation selection — 20 October 2026
 
 Event/Event and Event/other-entity links are uncapped, after each Event independently passes the existing inclusion gate. Other entity/other entity links are capped at 20 incident base assertions per QID. Rank by the connected QID's distinct Daniel source-page count multiplied by its original Daniel mention count. Keep a non-event assertion only when it is in the top 20 at both endpoints; do not refill slots lost by this intersection. Reverse views spend no extra slot. Multiple types share the QID-level budget.

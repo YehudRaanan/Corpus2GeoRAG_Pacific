@@ -23,7 +23,7 @@ LOG = logging.getLogger(__name__)
 
 
 def incoming_pages(
-    store: Path, url: str, qid: str, size: int
+    store: Path, url: str, qid: str, size: int, *, property_id: str | None = None
 ) -> Iterator[tuple[list[dict], dict, bool]]:
     """Reuse complete old results, otherwise read a complete ordered page chain.
 
@@ -33,17 +33,24 @@ def incoming_pages(
     partial JSON, repeated/unsorted cursors and other surprises still stop.
     """
     # Validate size/QID before even inspecting a cache directory.
-    events.incoming_page_query(qid, size=size)
+    events.incoming_page_query(qid, size=size, property_id=property_id)
     params = {"query": events.incoming_query(qid), "format": "json"}
     receipt = events.cache_path(store, url, params) / "request.json"
     if receipt.exists() and read_json(receipt).get("status") == "OK":
         data, evidence = events.cached_json(store, url, params)
-        yield incoming_links(data, qid), dict(evidence, reused_unpaged=True), True
+        links = incoming_links(data, qid)
+        if property_id is not None:
+            links = [
+                row for row in links if row["source_predicate"] == f"wd:{property_id}"
+            ]
+        yield links, dict(evidence, reused_unpaged=True), True
         return
     after = None
     while True:
         params = {
-            "query": events.incoming_page_query(qid, after, size),
+            "query": events.incoming_page_query(
+                qid, after, size, property_id=property_id
+            ),
             "format": "json",
         }
         data, evidence = events.cached_json(store, url, params)
@@ -53,6 +60,10 @@ def incoming_pages(
             len(ids) > size
             or ids != sorted(set(ids))
             or (after is not None and any(sid <= after for sid in ids))
+            or (
+                property_id is not None
+                and any(row["source_predicate"] != f"wd:{property_id}" for row in links)
+            )
         ):
             raise SourceException(
                 "Invalid incoming page ordering or population",
@@ -67,6 +78,7 @@ def incoming_pages(
             cursor_before=after,
             cursor_after=ids[-1] if ids else after,
             terminal=complete,
+            property_id=property_id,
         ), complete
         if complete:
             return
