@@ -43,7 +43,8 @@ def cache_path(store: Path, url: str, params: dict) -> Path:
 def cached_json(store: Path, url: str, params: dict) -> tuple[dict, dict]:
     """Cache untouched responses and request evidence before interpreting them.
 
-    S2T 7: the user approved three total attempts for HTTP 429/502/503/504,
+    S2T 7: the user approved three total attempts for connection failures and
+    HTTP 429/502/503/504,
     with waits of at least 10/30 seconds and the server's Retry-After deadline.
     Existing failures count toward that budget. New requests pause five seconds.
     Attempts are append-only; all other failures still stop immediately.
@@ -55,14 +56,38 @@ def cached_json(store: Path, url: str, params: dict) -> tuple[dict, dict]:
         if directory.exists():
             metadata = directory / "request.json"
             body = directory / "response.json"
-            if not metadata.exists() or not body.exists():
+            if not metadata.exists():
                 raise SourceException(
                     "Incomplete current Wikidata cache", cache=str(directory)
                 )
             evidence = read_json(metadata)
-            if evidence["request"] != request or digest(body) != evidence["sha256"]:
+            # Append-only annotation for the approved pre-policy connection
+            # failure. Its original request receipt remains unchanged.
+            annotation = directory / "connection_failure.json"
+            if annotation.exists():
+                note = read_json(annotation)
+                if (
+                    note["request_receipt_sha256"] != digest(metadata)
+                    or note["connection_failure"] is not True
+                ):
+                    raise SourceException(
+                        "Connection annotation mismatch", cache=str(directory)
+                    )
+                evidence = dict(evidence, connection_failure=True)
+            if evidence["request"] != request or (
+                body.exists() and digest(body) != evidence["sha256"]
+            ):
                 raise SourceException(
                     "Current Wikidata cache mismatch", cache=str(directory)
+                )
+            if not body.exists() and not (
+                evidence["status"] == "FAILED"
+                and evidence.get("connection_failure") is True
+                and "http_status" not in evidence
+                and "sha256" not in evidence
+            ):
+                raise SourceException(
+                    "Incomplete current Wikidata cache", cache=str(directory)
                 )
         else:
             try:
@@ -71,7 +96,11 @@ def cached_json(store: Path, url: str, params: dict) -> tuple[dict, dict]:
                 evidence = exc.case
         if evidence["status"] == "OK":
             return read_json(body), evidence
-        if evidence.get("http_status") not in RETRY_HTTP_STATUS or attempt == 3:
+        retryable = (
+            evidence.get("http_status") in RETRY_HTTP_STATUS
+            or evidence.get("connection_failure") is True
+        )
+        if not retryable or attempt == 3:
             raise SourceException(
                 "Current Wikidata request failed",
                 **{k: v for k, v in evidence.items() if k != "reason"},
@@ -80,8 +109,8 @@ def cached_json(store: Path, url: str, params: dict) -> tuple[dict, dict]:
         if not (root / f"attempt_{attempt + 1}").exists():
             delay = retry_delay(evidence, attempt, datetime.now(timezone.utc))
             LOG.warning(
-                "Wikidata HTTP %s; attempt %s/3 after %ss",
-                evidence["http_status"],
+                "Wikidata %s; attempt %s/3 after %ss",
+                evidence.get("http_status", "connection failure"),
                 attempt + 1,
                 delay,
             )
@@ -157,6 +186,12 @@ def _request_json(directory: Path, request: dict) -> tuple[dict, dict]:
         evidence["status"] = "OK"
     except (requests.RequestException, ValueError) as exc:
         evidence["error"] = str(exc)
+        # The approved extension covers connections only. Read/connect
+        # timeouts, TLS validation and malformed source data still stop.
+        if isinstance(exc, requests.exceptions.ConnectionError) and not isinstance(
+            exc, (requests.exceptions.SSLError, requests.exceptions.Timeout)
+        ):
+            evidence["connection_failure"] = True
         raise SourceException("Current Wikidata request failed", **evidence) from exc
     finally:
         metadata.write_text(json.dumps(evidence, indent=2), encoding="utf-8")

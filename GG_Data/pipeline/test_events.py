@@ -144,6 +144,74 @@ def test_timeout_is_recorded_without_retry_or_partial_success(tmp_path, monkeypa
     assert calls == [1]
 
 
+@pytest.mark.parametrize("recover", [False, True])
+def test_connection_retry_reuses_saved_failure_and_keeps_total_budget(
+    tmp_path, monkeypatch, recover
+):
+    params = {"query": "ASK{}"}
+    directory = events.cache_path(tmp_path, events.QUERY_URL, params)
+    directory.mkdir()
+    original = json.dumps(
+        dict(
+            request=dict(url=events.QUERY_URL, params=params),
+            status="FAILED",
+            cache=str(directory),
+            error="verified legacy connection failure",
+        )
+    ).encode()
+    (directory / "request.json").write_bytes(original)
+    (directory / "connection_failure.json").write_text(
+        json.dumps(
+            dict(
+                connection_failure=True,
+                request_receipt_sha256=events.digest(directory / "request.json"),
+            )
+        )
+    )
+    calls, sleeps = [], []
+
+    class Response:
+        content = b'{"ok": true}'
+        status_code = 200
+        headers = {}
+        is_redirect = False
+
+        def raise_for_status(self):
+            pass
+
+        def json(self):
+            return {"ok": True}
+
+    def get(*args, **kwargs):
+        calls.append(1)
+        if recover and len(calls) == 2:
+            return Response()
+        raise events.requests.exceptions.ConnectionError("network unreachable")
+
+    monkeypatch.setattr(events.requests, "get", get)
+    monkeypatch.setattr(events.time, "sleep", sleeps.append)
+    for _ in range(2):
+        if recover:
+            data, evidence = events.cached_json(tmp_path, events.QUERY_URL, params)
+            assert data == {"ok": True} and evidence["cache"].endswith("attempt_3")
+        else:
+            with pytest.raises(SourceException, match="request failed"):
+                events.cached_json(tmp_path, events.QUERY_URL, params)
+    assert len(calls) == 2  # the saved original already counts as attempt 1
+    assert sleeps == [10, 5, 30, 5]
+    assert (directory / "request.json").read_bytes() == original
+    assert not (directory / "response.json").exists()
+    attempt2 = directory / "attempt_2"
+    assert json.loads((attempt2 / "request.json").read_text())["connection_failure"]
+    assert not (attempt2 / "response.json").exists()
+    note = directory / "connection_failure.json"
+    note.write_text(
+        json.dumps(dict(connection_failure=True, request_receipt_sha256="changed"))
+    )
+    with pytest.raises(SourceException, match="Connection annotation mismatch"):
+        events.cached_json(tmp_path, events.QUERY_URL, params)
+
+
 def test_direct_hierarchy_edges_and_cycle_safe_path_have_no_truthy_or_depth_filter():
     query = events.class_edges_query(["Q1", "Q2"], "P279")
     assert "p:P279 ?statement" in query and "ps:P279 ?parent" in query

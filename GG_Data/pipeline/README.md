@@ -6,7 +6,7 @@ The user stopped the full-hierarchy approach and approved checking only our cand
 
 `event_on_demand.py` reuses the verified snapshot candidate universe: **2,218,368 distinct IDs** after unioning the 2,209,613 incoming candidates with the 44,714 outgoing reference QIDs. The input is unchanged; overlap is counted once. It reads current native P31 in batches of up to ten IDs across both official query services. Only a class needed by a candidate triggers an upward P279 lookup. Complete class answers are reused across candidates; saved non-deprecated root paths from the stopped catalog can prove positives without new class requests. Missing paths in that partial catalog never prove negatives. Cycles terminate, deprecated links are retained as evidence but ignored for Event classification, and no depth cutoff is used. An item absent from both query services requires the already-approved current native-record check; source failure or missing native data stops the run rather than becoming a negative classification.
 
-Current run: `outputs/poc_10k_event_on_demand_resumed_20261020/report.json`, status `BLOCKED_ON_DEMAND_CLASSIFICATION`. The user approved preserving the interrupted empty cache folder and repeating its exact request. That request succeeded and its response checksum passed. The resumed run then stopped at a connection failure (WinError 10051) to the scholarly query service while checking P279 for Q53617407. It has 45 validated source answers and 21 fetched class nodes; no candidate classification, Event row or final graph has been completed. Connection failures are outside the approved HTTP retry cases; approval for limited connection retries is pending. The preservation and replay evidence is in `outputs/poc_10k_event_on_demand_resume_approval_20261020/`. Prior stopped outputs and all accepted source cache remain intact. In this method, complete source receipts and candidate decisions are appended to separate JSONL files, with needed class answers checkpointed locally. Existing request caching, limited temporary-error retries and the POC stop rule remain unchanged. No global subclass or instance enumeration is running. This method has no verified full-population speed advantage; it avoids the unneeded global hierarchy preparation. It creates classification evidence only, not new Daniel entities or model Event rows. Positive candidates still require snapshot-first assertion records and the approved two-distinct-Daniel-QID gate before Event inclusion. No full-record worker or model-population controller is started by this classifier. Checks before launch: **72 pipeline tests passed**, Black and focused Ruff passed.
+Current run: `outputs/poc_10k_event_on_demand_connection_retry_20261020/report.json`. The user approved extending the existing persistent three-attempt budget to connection failures, with waits of 10/30 seconds. The saved failed request remains attempt 1; its original metadata are unchanged. An append-only checksum-bound annotation identifies this pre-policy connection failure. The new worker (PID 23932) was launched independently of the interactive shell, passed frozen-input verification and reached `CLASSIFYING_CANDIDATES_ON_DEMAND`. The failed exact request succeeded on attempt 2; the response checksum passed. At the launch check it had 51 valid source answers, 24 class nodes and 0 completed candidate classifications. Live counts are in the run report; launch evidence is `outputs/poc_10k_event_on_demand_connection_retry_launch_20261020.json`. Prior output remains stopped at 45 valid source answers, 21 class nodes and zero completed candidates. Approval and executed-code checksums are in `outputs/poc_10k_event_on_demand_connection_retry_approval_20261020.json`. No Event rows or final graph have been written. Successful response caches and all prior stopped outputs remain intact. In this method, complete source receipts and candidate decisions are appended to separate JSONL files, with needed class answers checkpointed locally. Request caching and the POC stop rule remain unchanged; only the approved connection-failure retry extension is added. No global subclass or instance enumeration is running. This method has no verified full-population speed advantage; it avoids the unneeded global hierarchy preparation. It creates classification evidence only, not new Daniel entities or model Event rows. Positive candidates still require snapshot-first assertion records and the approved two-distinct-Daniel-QID gate before Event inclusion. No full-record worker or model-population controller is started by this classifier. Checks before launch: **74 pipeline tests passed**, Black and focused Ruff passed.
 
 ## Historical full-catalog run — stopped, 20 October 2026
 
@@ -404,13 +404,13 @@ Wikidata for Event data absent from that copy. No automatic source or business
 rule substitution is introduced.
 
 `events.cached_json` permits **three total attempts per exact request**, shared
-across HTTP 429/502/503/504 and across restarts. Minimum backoff is 10 seconds
+across connection failures, HTTP 429/502/503/504 and restarts. Minimum backoff is 10 seconds
 before attempt 2 and 30 seconds before attempt 3. Respect `Retry-After` seconds
 from response receipt or an absolute HTTP date if later. A saved cooldown keeps
 its original deadline. New network requests pause five seconds; retry waits
 use short observable intervals. Original response bytes/metadata stay immutable;
 new attempts append under the same request cache. Successful cache hits make
-no network request. Exhaustion, timeouts, other HTTP/API errors, malformed data,
+no network request. Exhaustion, read/connect timeouts, TLS validation errors, other HTTP/API errors, malformed data,
 and data/business conflicts still stop with visible evidence.
 
 The saved 429 response requested 120 seconds; that deadline had elapsed when
@@ -458,7 +458,7 @@ Live Q140451665 evidence and unchanged current BigQuery table metadata are in
 
 `events.py` provides a checksum-checked raw-response cache and a direct-link
 discovery query. It preserves full-statement ranks in discovery (p:/ps:, not
-truthy wdt:), both directions and the approved native hierarchy. HTTP 429/502/503/504 permit three total attempts under the cooldown and
+truthy wdt:), both directions and the approved native hierarchy. Connection failures and HTTP 429/502/503/504 permit three total attempts under the cooldown and
 five-second request policy above. Saved failures count toward the same budget;
 other failures stop. This adapter does not select/populate Events, replace
 upstream sources, or rematch Daniel mentions. Query-service graph scope and
@@ -533,7 +533,7 @@ when the saved resolved type is null. Saved type metadata stays unchanged.
 Any unexpected count, field, source hash, ID, score, page conflict or missing
 artifact raises an error. Stop and discuss the exact case with the user before
 changing a rule. No automatic data repair is implemented. Only the approved
-HTTP 429/502/503/504 retry policy above is an operational exception.
+connection-failure and HTTP 429/502/503/504 retry policy above is an operational exception.
 
 **Output on D: was approved on 20 October 2026.** Step 1 ran successfully in
 `outputs/poc_10k`. Do not rerun into that directory; existing output is protected.
