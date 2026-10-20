@@ -6,7 +6,47 @@ Specification date: 19 October 2026. Status: approved source scope and rules doc
 
 The [full pipeline review](DANIEL_TO_GRAPH_PIPELINE_REVIEW.md) collects open decisions, implementation checks, documentation alignment and deferred improvements from Daniel input through final JSON. It does not change these population rules.
 
-## Current continuation — checking all filtered sample candidates
+## Current continuation — Event hierarchy parameter tables and timed filter
+
+The user approved a P279-only bulk export, followed by another run of the Event
+filter with measured runtime. `event_hierarchy_parameters.py` exports native
+P279 statements in ordered 1,000-statement pages from both current Wikidata
+query services. It saves every response, cursor and source receipt through the
+existing cache/retry policy. The failed global COUNT is not repeated. A short
+terminal page from **both** services is required; a failed request or partial
+export cannot establish a negative classification. This is a live retrieval
+window with timestamps, not an atomic dated dump snapshot.
+
+Outputs are versioned under
+`GG_Data/pipeline/outputs/event_hierarchy_parameters_20261020/`:
+
+| Parameter/evidence object | Columns and use |
+|---|---|
+| `hierarchy.sqlite`, `hierarchy_edges` | Native statement key, child QID, parent QID, rank, original statement ID, source service and retrieval timestamp. All ranks remain evidence, including deprecated. Incomplete exports are not usable Event parameters. |
+| `event_hierarchy_mapping.csv` | `root_qid`, `child_type_qid`, `parent_type_qid`, `source_statement_id`, `statement_rank`, `source_service`, `retrieved_at_utc`. Only normal/preferred links within the complete Event-root closure. |
+| `event_types.csv` | `root_qid`, `subtype_qid`. Includes Q140451665 itself and its complete non-deprecated subclass closure; no internal Event levels or categories. |
+| `report.json` | Parameter version, retrieval window, per-page evidence/timing, completed services, code/output hashes, `parameter_table_usable` and hierarchy elapsed seconds. Usability requires complete successful retrieval and closure checks. |
+
+Only after usable parameters exist, the controller reruns the unchanged
+2,680-candidate sample from 48 retained Daniel QIDs. It replays the verified
+candidate restriction, reuses accepted complete P31 answers and retrieves only
+missing P31 evidence with the existing adapter. Non-deprecated P31 values are
+tested against the saved subtype table; no repeated ancestor requests occur.
+`filter/report.json` and `filter/classifications.jsonl` record decisions, source
+receipts and filter elapsed seconds separately from hierarchy acquisition.
+The 15 unknown-score sample endpoints remain held; no full-10K unknown policy
+is inferred. This hierarchy filter does not populate Events: native assertion
+mapping/exclusions and the two-distinct-Daniel-QID gate still apply.
+
+Before the paged export: **11 focused tests**, Black and focused Ruff passed.
+Read the run report for live or terminal state; no success is inferred from
+this launch description. The unordered 1,000-row transport probe succeeded in
+about seven seconds, but the subsequent global COUNT timed out after 45 seconds.
+Those earlier responses remain in `outputs/event_hierarchy_bulk_probe_20261020`
+and `outputs/wikidata_event_hierarchy_bulk_cache`; they are not complete coverage.
+The full-dump checksum request had returned HTTP 403 before any dump transfer.
+
+## Historical continuation — checking all filtered sample candidates
 
 The user approved completing all **2,680 preliminary candidates** from the
 unchanged 100-mention sample. `event_on_demand.py --filtered-sample` verifies
@@ -18,6 +58,9 @@ is no 165/200-item cap and no new Daniel seed or matching assignment.
 
 Progress and per-candidate decisions are saved under
 `GG_Data/pipeline/outputs/poc_10k_event_filtered_all_candidates_20261020/`.
+That worker was deliberately stopped at 90/2,680 candidates for the approved
+bulk hierarchy switch. Its cache, decisions and stop receipt are preserved;
+it is not running and its partial classifications are not a complete filter.
 This is the 48-retained-QID sample, not full 10K Event discovery. The 15
 unknown-score seeds remain held separately as in the approved bounded test.
 Classification alone does not populate Events: positive candidates still need

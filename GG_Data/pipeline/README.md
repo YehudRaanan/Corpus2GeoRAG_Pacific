@@ -1,6 +1,41 @@
 # Daniel pipeline POC
 
-## Current filtered sample continuation
+## Current Event hierarchy parameters and timed sample filter
+
+Run `python -m GG_Data.pipeline.event_hierarchy_parameters` with
+`--store GG_Data/pipeline/outputs/wikidata_event_hierarchy_bulk_cache`,
+`--output GG_Data/pipeline/outputs/<new-parameter-version>`, and
+`--candidates GG_Data/pipeline/outputs/poc_10k_event_filtered_sample_query_20261020`.
+The controller exports native P279 links in ordered 1,000-row pages from both
+current query services, without a global COUNT. It preserves all ranks in
+`hierarchy.sqlite` and raw caches. Both terminal pages and validated native
+identities/ranks are required before `parameter_table_usable` becomes true.
+Do not use an incomplete export for negative classifications.
+
+The parameter tables are `event_hierarchy_mapping.csv` (root, child, parent,
+statement ID/rank, source service and retrieval UTC) and `event_types.csv`
+(root and allowed subtype QID). Only normal/preferred P279 paths below
+Q140451665 populate these tables; no categories or levels are inferred.
+They represent a cached live retrieval window, not an atomic dump snapshot.
+The parameter version, source receipts, code/output hashes and hierarchy
+runtime are in `report.json`. See population S2T section 7 and its current
+continuation for field definitions and approval boundaries.
+
+After successful table creation, the controller reruns the same 2,680-candidate,
+48-retained-QID sample. It reuses accepted P31 evidence and the current adapter
+for missing P31 answers, then performs local membership checks instead of
+repeated P279 traversal. `filter/report.json` records complete/blocked state,
+counts and elapsed seconds; `filter/classifications.jsonl` records decisions.
+This is hierarchy filtering, not complete Event population or graph export.
+Eleven focused tests, Black and focused Ruff passed before launch.
+
+Run output: `outputs/event_hierarchy_parameters_20261020/`.
+The earlier unordered 1,000-row export probe passed, but its global COUNT timed
+out after 45 seconds. Its saved results do not prove hierarchy completeness.
+The former on-demand worker was deliberately stopped at 90/2,680 candidates;
+all its caches and the approved-switch stop receipt remain intact.
+
+## Historical filtered sample continuation
 
 The user approved checking all **2,680** preliminary candidates from the same
 100-mention sample (48 retained Daniel QIDs). Run `event_on_demand.py` with
