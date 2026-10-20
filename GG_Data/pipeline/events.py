@@ -7,6 +7,7 @@ changes matching, or declares candidate events included in the data model.
 from __future__ import annotations
 
 import hashlib
+import gzip
 import json
 import logging
 import math
@@ -18,9 +19,10 @@ from email.utils import parsedate_to_datetime
 from pathlib import Path
 
 import requests
+import ijson
 
 from GG_Data.pipeline.poc import digest, read_json
-from GG_Data.pipeline.relations import SourceException
+from GG_Data.pipeline.relations import ACCEPTED_ENTITIES_SHA, SourceException
 
 EVENT_ROOT = "Q140451665"
 QUERY_URL = "https://query.wikidata.org/sparql"
@@ -225,7 +227,7 @@ def native_records(data: dict, qids: list[str], evidence: dict) -> dict[str, dic
 
 
 def current_records(
-    store: Path, qids: list[str]
+    store: Path, qids: list[str], saved_entities: Path | None = None
 ) -> Iterator[tuple[dict[str, dict], dict]]:
     """S2T 7: approved native batches, full records and explicit no redirects.
 
@@ -248,11 +250,62 @@ def current_records(
         else:
             pending.append(qid)
     for offset in range(0, len(pending), 50):
-        yield from _current_batch(store, pending[offset : offset + 50])
+        yield from _current_batch(
+            store, pending[offset : offset + 50], saved_entities=saved_entities
+        )
+
+
+def saved_native_records(path: Path, qids: set[str]) -> tuple[dict, list[dict]]:
+    """S2T 7: approved missing-current fallback, preserving original QIDs.
+
+    Read only the accepted Entities artifact. Preserve its native revision/date;
+    never search for another entity or overwrite the missing-current response.
+    """
+    manifest_path = path.parent / "manifest.json"
+    manifest = read_json(manifest_path)
+    sha = digest(path)
+    if (
+        digest(manifest_path) != ACCEPTED_ENTITIES_SHA
+        or sha != manifest["outputs"][path.name]
+    ):
+        raise SourceException("Saved native fallback checksum mismatch", file=str(path))
+    found = {}
+    with gzip.open(path, "rb") as stream:
+        for row in ijson.items(stream, "item", use_float=True):
+            qid = row["entity_id"]
+            if qid not in qids:
+                continue
+            record = row["raw_reference"]["full"]["entity"]
+            native_records({"entities": {qid: record}}, [qid], {})
+            if qid in found and found[qid] != record:
+                raise SourceException(
+                    "Conflicting saved native fallback records", qid=qid
+                )
+            found[qid] = record
+    if set(found) != qids:
+        raise SourceException(
+            "Saved native fallback unavailable", missing=sorted(qids - set(found))
+        )
+    lineage = [
+        dict(
+            qid=qid,
+            reason="CURRENT_API_MARKS_MISSING",
+            file=str(path),
+            sha256=sha,
+            manifest_sha256=ACCEPTED_ENTITIES_SHA,
+            revision=r["lastrevid"],
+            modified=r["modified"],
+        )
+        for qid, r in found.items()
+    ]
+    return found, lineage
 
 
 def _current_batch(
-    store: Path, batch: list[str], oversized: tuple[dict, ...] = ()
+    store: Path,
+    batch: list[str],
+    oversized: tuple[dict, ...] = (),
+    saved_entities: Path | None = None,
 ) -> Iterator[tuple[dict[str, dict], dict]]:
     """S2T 7: split only explicit response-size truncations, approved 20 October.
 
@@ -296,11 +349,34 @@ def _current_batch(
                 warning=warning,
             ),
         )
-        yield from _current_batch(store, batch[:middle], parents)
-        yield from _current_batch(store, batch[middle:], parents)
+        yield from _current_batch(store, batch[:middle], parents, saved_entities)
+        yield from _current_batch(store, batch[middle:], parents, saved_entities)
     else:
+        fallbacks = []
+        entities = data.get("entities", {})
+        # Only explicit missing markers qualify. Omitted IDs, redirects or other
+        # malformed records still fail the unchanged native-record validation.
+        if (
+            saved_entities is not None
+            and isinstance(entities, dict)
+            and set(entities) == set(batch)
+        ):
+            missing = {
+                qid for qid, r in entities.items() if r == {"id": qid, "missing": ""}
+            }
+            if missing:
+                saved, fallbacks = saved_native_records(saved_entities, missing)
+                data = dict(data, entities={**entities, **saved})
+                LOG.warning(
+                    "Using approved saved native records for missing IDs: %s",
+                    ", ".join(sorted(missing)),
+                )
         records = native_records(data, batch, evidence)
-        yield records, dict(evidence, oversized_ancestors=list(oversized))
+        yield records, dict(
+            evidence,
+            oversized_ancestors=list(oversized),
+            saved_record_fallbacks=fallbacks,
+        )
 
 
 def incoming_candidates_query(subjects: list[str], candidates: list[str]) -> str:

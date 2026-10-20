@@ -135,7 +135,13 @@ def qualifying_links(
 
 
 def check_links(
-    report: dict, output: Path, store: Path, mentions: Path, relations: Path, save
+    report: dict,
+    output: Path,
+    store: Path,
+    mentions: Path,
+    relations: Path,
+    save,
+    saved_entities: Path | None = None,
 ) -> None:
     """S2T 7: check full native records for all frozen QIDs, not five seeds."""
     first = read_json(mentions.parent / "manifest.json")
@@ -163,6 +169,7 @@ def check_links(
         mapping_sha256=digest(mapping_path),
         native_sources=[],
         native_records_checked=0,
+        saved_record_fallbacks=[],
         eligibility=[],
     )
     save()
@@ -178,18 +185,27 @@ def check_links(
         maximum_batch_requests_before_cache_reuse=(len(ordered) + 49) // 50,
         approval="User approved batched Wikidata records after bounded query timeout",
         oversized_response_policy="User approved halving explicitly truncated batches; single-ID truncation stops",
+        missing_current_policy=(
+            "Use approved saved native records with original QIDs and explicit older-revision lineage; stop without saved record"
+            if saved_entities
+            else "Stop"
+        ),
     )
     save()
     checked = set()
-    for records, evidence in events.current_records(store, ordered):
+    for records, evidence in events.current_records(store, ordered, saved_entities):
         if set(records) - daniel or checked.intersection(records):
             raise SourceException(
                 "Incoming native population differs", qids=list(records)
             )
+        fallbacks = {r["qid"]: r for r in evidence.get("saved_record_fallbacks", [])}
         for record in records.values():
             for link in events.item_links(record):
                 if link["object_qid"] in by_candidate:
+                    if record["id"] in fallbacks:
+                        link["source_fallback"] = fallbacks[record["id"]]
                     by_candidate[link["object_qid"]].append(link)
+        report["saved_record_fallbacks"].extend(fallbacks.values())
         checked.update(records)
         report["native_sources"].append(
             dict(
@@ -246,6 +262,7 @@ def run(
     store: Path,
     mentions: Path | None = None,
     relations: Path | None = None,
+    saved_entities: Path | None = None,
 ) -> dict:
     """Approve the saved classification and inspect native candidates first.
 
@@ -328,7 +345,9 @@ def run(
             LOG.info("Saved candidate %s: %s", qid, report["records"][-1]["name"])
         report["status"] = "NATIVE_CANDIDATES_CHECKED_LINK_GATE_PENDING"
         if mentions is not None and relations is not None:
-            check_links(report, output, store, mentions, relations, save)
+            check_links(
+                report, output, store, mentions, relations, save, saved_entities
+            )
     except SourceException as exc:
         report.update(status="BLOCKED_CANDIDATE_CHECK", exception=exc.case)
         LOG.error("Stopped: %s", exc.case["reason"])
@@ -352,10 +371,18 @@ if __name__ == "__main__":
     parser.add_argument("--store", type=Path, required=True)
     parser.add_argument("--mentions", type=Path)
     parser.add_argument("--relations", type=Path)
+    parser.add_argument("--saved-entities", type=Path)
     args = parser.parse_args()
     if (args.mentions is None) != (args.relations is None):
         parser.error("--mentions and --relations must be supplied together")
     logging.basicConfig(level=logging.INFO, format="%(asctime)s %(message)s")
-    result = run(args.source, args.output, args.store, args.mentions, args.relations)
+    result = run(
+        args.source,
+        args.output,
+        args.store,
+        args.mentions,
+        args.relations,
+        args.saved_entities,
+    )
     print(json.dumps(dict(status=result["status"], records=len(result["records"]))))
     raise SystemExit(1 if result["status"].startswith("BLOCKED") else 0)

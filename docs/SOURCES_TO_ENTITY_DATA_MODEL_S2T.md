@@ -244,6 +244,15 @@ for missing current IDs requires consultation; stop if no saved record exists.
 Coverage and final eligibility remain pending. See `source_exception.json` and
 `verification.json` in the split run; accepted upstream hashes are unchanged.
 
+**Missing-current fallback subsequently approved:** for an explicit missing
+marker from current Wikidata, use the accepted saved native record for the same
+QID. Verify the pinned Entities manifest and file checksum. Preserve original
+QIDs, native revisions/dates and raw missing-current responses. Report every
+fallback visibly in source lineage and on any affected qualifying link. Stop
+if no saved native record exists or saved records conflict. An omitted ID or
+redirect does not qualify. This does not authorize rematching or adding an
+entity. Continuation: `outputs/poc_10k_event_seven_saved_fallback_20261020`.
+
 The approved root is Wikidata's broad [event, Q140451665](https://www.wikidata.org/wiki/Q140451665), including all classes below it through native [P279 subclass-of](https://www.wikidata.org/wiki/Property:P279) statements. Identify event instances through [P31 instance-of](https://www.wikidata.org/wiki/Property:P31) and those subclass paths. Record root QID, snapshot, native class IDs and path evidence. Do not replace it with the narrower organized-event root, add a local event-type whitelist, or invent war/campaign/battle levels.
 
 For each discovered event QID, use its direct mapped Wikidata assertions to/from **D**. Include it only if at least two distinct Daniel QIDs qualify. Repeated mentions, several predicates for one entity, duplicate retrievals and generated reverse views do not increase this count. Classification hierarchy paths identify an event; they do not count as indirect participant paths. Do not count mere shared class ancestry or article co-mentions as an event/entity connection.

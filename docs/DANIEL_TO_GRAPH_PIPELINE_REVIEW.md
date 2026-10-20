@@ -1,6 +1,16 @@
 # Daniel input to final graph JSON review
 
-## Current: missing current Wikidata record
+## Current: approved saved native records for missing current IDs
+
+The user approved the saved-record fallback, preserving each original QID and
+explicit older revision/date. Only an explicit current missing marker qualifies;
+the accepted Entities manifest/file checksums must pass. No saved record or a
+conflicting saved record still stops. Current missing responses remain intact.
+Run: `outputs/poc_10k_event_seven_saved_fallback_20261020`. It reuses the cache
+and checks the same seven candidates. Tests: 48 passed before launch. Final
+coverage/eligibility depends on its report/verification, not this launch note.
+
+## Previous: missing current Wikidata record
 
 The approved size split worked. The continuation stopped after **3,406/4,712**
 Daniel native records when the next 50-ID response marked **Q31545924** missing.
@@ -15,7 +25,8 @@ All accepted upstream hashes passed. Evidence:
 `outputs/poc_10k_event_seven_native_split_20261020/source_exception.json` and
 `verification.json`. Proposed for consultation only: reuse saved native records
 for current missing IDs with explicit older-revision/missing-current lineage;
-preserve QIDs and stop if the saved record is absent. No fallback is approved.
+preserve QIDs and stop if the saved record is absent. This was subsequently
+approved as recorded above.
 
 ## Approved split of oversized native responses
 

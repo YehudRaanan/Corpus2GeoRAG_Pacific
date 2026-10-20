@@ -592,7 +592,7 @@ def test_native_link_check_covers_both_directions_and_frozen_raw_non_date_popula
     report = dict(records=[dict(qid="Q1", name="event")])
     calls = []
 
-    def source(store, qids):
+    def source(store, qids, saved_entities=None):
         calls.append(qids)
         assert qids == ["Q2", "Q3"]
         yield {
@@ -729,3 +729,44 @@ def test_only_explicit_oversized_batches_split_without_accepting_partial_records
     monkeypatch.setattr(events, "cached_json", lambda *a: (dict(entities={}), {}))
     with pytest.raises(SourceException, match="Unexpected native record population"):
         list(events.current_records(tmp_path, ["Q1", "Q2"]))
+
+
+def test_missing_current_fallback_keeps_native_id_revision_and_raw_missing_evidence(
+    tmp_path, monkeypatch
+):
+    import gzip
+
+    old = dict(
+        id="Q1", type="item", claims={}, lastrevid=123, modified="2019-09-27T16:40:15Z"
+    )
+    path = tmp_path / "entities.json.gz"
+    with gzip.open(path, "wt", encoding="utf-8") as stream:
+        json.dump(
+            [dict(entity_id="Q1", raw_reference=dict(full=dict(entity=old)))], stream
+        )
+    manifest = tmp_path / "manifest.json"
+    manifest.write_text(json.dumps(dict(outputs={path.name: events.digest(path)})))
+    monkeypatch.setattr(events, "ACCEPTED_ENTITIES_SHA", events.digest(manifest))
+    raw = {"entities": {"Q1": {"id": "Q1", "missing": ""}}}
+    monkeypatch.setattr(
+        events,
+        "cached_json",
+        lambda *a: (raw, {"cache": "current_missing", "sha256": "raw_sha"}),
+    )
+    records, source = next(events.current_records(tmp_path / "cache", ["Q1"], path))
+    assert records == {"Q1": old}
+    assert raw == {"entities": {"Q1": {"id": "Q1", "missing": ""}}}
+    assert source["cache"] == "current_missing"
+    assert source["saved_record_fallbacks"][0]["revision"] == 123
+    assert source["saved_record_fallbacks"][0]["modified"] == old["modified"]
+    assert source["saved_record_fallbacks"][0]["qid"] == "Q1"
+    with pytest.raises(SourceException, match="Saved native fallback unavailable"):
+        events.saved_native_records(path, {"Q2"})
+    with pytest.raises(SourceException, match="Unexpected native record population"):
+        raw["entities"] = {}
+        list(events.current_records(tmp_path / "cache", ["Q1"], path))
+    path.write_bytes(b"changed")
+    with pytest.raises(
+        SourceException, match="Saved native fallback checksum mismatch"
+    ):
+        events.saved_native_records(path, {"Q1"})

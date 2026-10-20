@@ -1,6 +1,21 @@
 # Daniel pipeline POC
 
-## Current: missing native QID stopped the split run
+## Current: approved saved-record fallback for missing current IDs
+
+The user approved using accepted saved native Wikidata records when the current
+API explicitly marks the same QID missing. The original QID remains unchanged.
+`events.saved_native_records` verifies the pinned Entities manifest and file
+checksum, preserves the native revision/date, and stops if the saved record is
+absent or conflicting. Omitted IDs, redirects and other malformed records still
+stop. Raw missing-current responses remain cached. Source reports explicitly
+identify every older fallback; any resulting link carries that lineage too.
+
+Continuation: `outputs/poc_10k_event_seven_saved_fallback_20261020`, with
+`--saved-entities outputs/poc_10k_entities_approved/entities.json.gz`. Tests:
+48 passed before launch. Final coverage and eligibility require this run's
+report and verification. This is still the seven-candidate check only.
+
+## Previous: missing native QID stopped the split run
 
 `outputs/poc_10k_event_seven_native_split_20261020` stopped after checking
 **3,406 of 4,712 Daniel QIDs**. The next complete 50-ID response contains
@@ -21,7 +36,8 @@ and `verification.json`. Proposed for discussion: when the current API marks an
 ID missing, use its already accepted saved native record, retain its original
 QID and record the old revision/date and missing-current evidence explicitly;
 stop if no saved native record exists. This fallback is not yet approved or
-implemented. No replacement entity is proposed.
+implemented at that stop. It was subsequently approved as recorded above.
+No replacement entity is proposed.
 
 ## Approved response-size splitting
 
