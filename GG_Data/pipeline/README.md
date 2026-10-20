@@ -1,6 +1,56 @@
 # Daniel pipeline POC
 
-## Current: approved saved-record fallback for missing current IDs
+## Current: seven-candidate eligibility check verified
+
+`outputs/poc_10k_event_seven_saved_fallback_20261020/verification.json` records
+`VERIFIED_SEVEN_CANDIDATE_ELIGIBILITY_ONLY`. All **4,712 Daniel QIDs** were
+checked: **4,705 current native records and 7 approved saved native records**.
+The check reconstructed both directions from cached full statements, verified
+109 response checksums and all 14 accepted upstream output hashes, and found
+414 qualifying native assertions with zero exact-exclusion hits. The assertion
+ranks are 412 normal, 1 preferred and 1 deprecated; deprecated direct Relations
+remain allowed. Only Event-classification P31/P279 traversal excludes deprecated
+statements. No mapping changes or matching changes were made.
+
+| Candidate | QID | Distinct Daniel QIDs | Qualifying assertions | Two-entity gate |
+|---|---|---:|---:|---|
+| World War II | Q362 | 363 | 398 | Pass |
+| Minoan eruption | Q1144693 | 1 | 1 | Below minimum |
+| Call of Duty: Advanced Warfare | Q16743064 | 7 | 7 | Pass |
+| Raid on Santorini | Q20981909 | 2 | 2 | Pass |
+| WikiProject Kerala | Q21830247 | 4 | 4 | Pass |
+| DTIS 2014, Santorini | Q106336167 | 1 | 1 | Below minimum |
+| 2025 Santorini earthquakes | Q132129067 | 1 | 1 | Below minimum |
+
+These are the seven candidates from the earlier five-seed hierarchy probe,
+not exhaustive Event discovery for the full 10K sample. The video game and
+WikiProject pass the existing broad-root/direct-link rules; no unapproved
+historical, military, date or type filter was applied. Zero Event rows were
+written. Full Event discovery, Event/Relations population, Geography and final
+graph/Agent integration remain pending.
+
+The seven current-missing fallbacks are explicit in `saved_fallback_audit.json`:
+
+| Original QID | Saved native label | Saved modification date (UTC) |
+|---|---|---|
+| Q31545924 | Clark Airbase | 2019-09-27 |
+| Q66477411 | Italy | 2025-02-11 |
+| Q108529126 | ArtStation Pro account | 2025-05-09 |
+| Q109826916 | Daniel | 2025-03-31 |
+| Q123304318 | First Sino-Japanese War | 2023-12-18 |
+| Q126035783 | Elliott | 2025-02-05 |
+| Q132201733 | Spartans | 2025-03-17 |
+
+These labels describe already accepted saved records; they do not establish
+matching accuracy or the reason for the current missing marker. Original QIDs
+and Daniel assignments remain unchanged. The audit retains full timestamps,
+native revisions, source checksums and affected frozen-mention counts. Raw
+current missing responses and oversized parent responses remain intact.
+
+Tests: **48 passed**. Code/docs are locally checkpointed; ignored caches and
+outputs are not backed up on GitHub.
+
+## Approved saved-record fallback for missing current IDs
 
 The user approved using accepted saved native Wikidata records when the current
 API explicitly marks the same QID missing. The original QID remains unchanged.
@@ -12,8 +62,8 @@ identify every older fallback; any resulting link carries that lineage too.
 
 Continuation: `outputs/poc_10k_event_seven_saved_fallback_20261020`, with
 `--saved-entities outputs/poc_10k_entities_approved/entities.json.gz`. Tests:
-48 passed before launch. Final coverage and eligibility require this run's
-report and verification. This is still the seven-candidate check only.
+48 passed before launch. Final coverage and eligibility are verified above.
+This is still the seven-candidate check only.
 
 ## Previous: missing native QID stopped the split run
 

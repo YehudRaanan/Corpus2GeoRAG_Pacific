@@ -1,6 +1,31 @@
 # Daniel input to final graph JSON review
 
-## Current: approved saved native records for missing current IDs
+## Current: seven-candidate eligibility verified
+
+The approved missing-record continuation completed at
+`GG_Data/pipeline/outputs/poc_10k_event_seven_saved_fallback_20261020`.
+`verification.json` has status `VERIFIED_SEVEN_CANDIDATE_ELIGIBILITY_ONLY`:
+**4,712/4,712 Daniel QIDs checked**, comprising **4,705 current records and
+7 approved saved native records** with original QIDs and explicit older
+revisions/dates. `saved_fallback_audit.json` lists all seven; the original
+current missing responses are preserved. No matching decisions changed.
+
+Four candidates meet the approved two-distinct-Daniel-QID minimum:
+World War II (363), Call of Duty: Advanced Warfare (7), Raid on Santorini (2)
+and WikiProject Kerala (4). Minoan eruption, DTIS 2014 and the 2025 Santorini
+earthquakes each connect to one and are below the minimum. The game and
+WikiProject are retained by the approved broad-root rules; no new filter was
+added. See the pipeline README for the full seven-row results and fallback list.
+
+The check reconstructed 414 qualifying native assertions in both directions,
+with all ranks retained (412 normal, 1 preferred, 1 deprecated), zero exact
+exclusions and no mapping changes. All 109 source-response checksums and
+14 accepted upstream output hashes passed; 48 pipeline tests passed. Zero
+Event rows were written. This completes only the seven candidates from the
+five-seed probe. Full 10K Event discovery, model Event/Relations population,
+Geography and graph/Agent integration remain pending.
+
+## Approved saved native records for missing current IDs
 
 The user approved the saved-record fallback, preserving each original QID and
 explicit older revision/date. Only an explicit current missing marker qualifies;
@@ -8,7 +33,7 @@ the accepted Entities manifest/file checksums must pass. No saved record or a
 conflicting saved record still stops. Current missing responses remain intact.
 Run: `outputs/poc_10k_event_seven_saved_fallback_20261020`. It reuses the cache
 and checks the same seven candidates. Tests: 48 passed before launch. Final
-coverage/eligibility depends on its report/verification, not this launch note.
+coverage/eligibility is now verified as recorded above.
 
 ## Previous: missing current Wikidata record
 

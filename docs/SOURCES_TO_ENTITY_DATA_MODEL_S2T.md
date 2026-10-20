@@ -253,6 +253,29 @@ if no saved native record exists or saved records conflict. An omitted ID or
 redirect does not qualify. This does not authorize rematching or adding an
 entity. Continuation: `outputs/poc_10k_event_seven_saved_fallback_20261020`.
 
+**Seven-candidate verification completed, 20 October 2026:** that continuation
+checked all 4,712 frozen Daniel QIDs: 4,705 current native records plus 7 approved
+saved records for explicit current missing markers. `saved_fallback_audit.json`
+records every original QID, older revision/full timestamp, source checksum and
+affected mention count; affected link evidence carries the fallback lineage.
+`verification.json` records `VERIFIED_SEVEN_CANDIDATE_ELIGIBILITY_ONLY`, 109
+source-response checksum checks and 14 unchanged upstream output hashes.
+
+World War II (363 distinct Daniel QIDs), Call of Duty: Advanced Warfare (7),
+Raid on Santorini (2) and WikiProject Kerala (4) pass. Minoan eruption,
+DTIS 2014 and the 2025 Santorini earthquakes each have one and do not pass.
+The existing broad Event hierarchy and direct-link rules apply without a new
+historical/type/date restriction. The 414 qualifying native assertions retain
+all ranks (412 normal, 1 preferred, 1 deprecated), with zero exact-exclusion
+hits and no mapping changes. Both native directions were reconstructed and
+statement identities deduplicated; generated reverse views do not add counts.
+
+This verifies only seven candidates from the earlier five-seed probe, not full
+10K discovery. No Event model rows were written. Event discovery/population,
+addition of Event links to the populated Relations model, Geography and final
+graph/Agent integration remain pending. Tests: 48 passed. See the pipeline
+README for the complete results and visible seven-record fallback list.
+
 The approved root is Wikidata's broad [event, Q140451665](https://www.wikidata.org/wiki/Q140451665), including all classes below it through native [P279 subclass-of](https://www.wikidata.org/wiki/Property:P279) statements. Identify event instances through [P31 instance-of](https://www.wikidata.org/wiki/Property:P31) and those subclass paths. Record root QID, snapshot, native class IDs and path evidence. Do not replace it with the narrower organized-event root, add a local event-type whitelist, or invent war/campaign/battle levels.
 
 For each discovered event QID, use its direct mapped Wikidata assertions to/from **D**. Include it only if at least two distinct Daniel QIDs qualify. Repeated mentions, several predicates for one entity, duplicate retrievals and generated reverse views do not increase this count. Classification hierarchy paths identify an event; they do not count as indirect participant paths. Do not count mere shared class ancestry or article co-mentions as an event/entity connection.
