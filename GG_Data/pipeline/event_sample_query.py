@@ -7,6 +7,7 @@ no live hierarchy walk, full-record download or model population is launched.
 
 from __future__ import annotations
 
+import argparse
 import json
 import logging
 import random
@@ -19,6 +20,7 @@ from GG_Data.pipeline import events
 from GG_Data.pipeline.event_candidate_check import qualifying_links, statement_key
 from GG_Data.pipeline.poc import ROOT, digest, read_json
 from GG_Data.pipeline.relations import SourceException
+from GG_Data.pipeline.scope_concentration_filter import combine_language_rows
 
 BASE = ROOT / "GG_Data/pipeline/outputs"
 
@@ -66,7 +68,53 @@ SELECT ARRAY(SELECT id FROM records ORDER BY id) AS present_qids,
        ORDER BY event_qid, subject_qid, object_qid, property_id, statement_json) AS links"""
 
 
-def run() -> dict:
+def filtered_sample(selection: Path, sample: Path) -> tuple[list[str], dict]:
+    """S2T 6.1: filter only known MISC IDs, holding unknowns separately.
+
+    This bounded test reuses the previous random sample without replacements.
+    Original Entity/Mention records remain intact. Other types are unaffected.
+    """
+    saved = read_json(selection)
+    if saved["status"] != "COMPLETE_MAXIMUM_LANGUAGE_THRESHOLD":
+        raise ValueError("Expected the approved maximum-language filter")
+    for name, sha in saved["outputs"].items():
+        if digest(selection.parent / name) != sha:
+            raise ValueError("Combined filter output changed")
+    sources = [Path(p) for p in saved["inputs"] if Path(p).name == "report.json"]
+    for source in sources:
+        if digest(source) != saved["inputs"][str(source)]:
+            raise ValueError("Combined filter language evidence changed")
+    by_wiki = {read_json(p)["wiki"]: read_json(p) for p in sources}
+    replayed = combine_language_rows(
+        by_wiki["enwiki"]["rows"], by_wiki["jawiki"]["rows"]
+    )
+    if replayed != saved["rows"]:
+        raise ValueError("Combined filter decisions differ from language evidence")
+    original = read_json(sample)["daniel_qids"]
+    if len(set(original)) != len(original):
+        raise ValueError("Repeated QID in the saved random sample")
+    decisions = {r["qid"]: r["keep_for_event_retrieval"] for r in replayed}
+    excluded = sorted(q for q in original if q in decisions and decisions[q] is False)
+    held = sorted(q for q in original if q in decisions and decisions[q] is None)
+    kept = sorted(set(original) - set(excluded) - set(held))
+    if len(kept) < 2:
+        raise ValueError(
+            "Fewer than two usable sample entities; consult before testing"
+        )
+    return kept, dict(
+        original_sample_qids=original,
+        retained_daniel_qids=kept,
+        below_threshold_qids=excluded,
+        held_unknown_qids=held,
+        unknown_policy="Held outside this bounded test; no exclusion decision",
+    )
+
+
+def run(
+    selection: Path | None = None,
+    reuse_sample: Path | None = None,
+    output: Path | None = None,
+) -> dict:
     """Five random Daniel QIDs plus a separately identified positive control.
 
     Controls Q352/Q8007 already occur in Daniel and link to WWII in the frozen
@@ -75,7 +123,7 @@ def run() -> dict:
     entities = BASE / "poc_10k_entities_snapshot_first_20261020"
     prior = BASE / "poc_10k_event_snapshot_measurement_20261020"
     relations = BASE / "poc_10k_relations_original_historical_dates_20261020"
-    output = BASE / "poc_10k_event_sample_query_20261020"
+    output = output or BASE / "poc_10k_event_sample_query_20261020"
     store = BASE / "wikidata_event_snapshot_discovery_cache"
     if output.exists():
         raise ValueError("Keep prior test outputs unchanged")
@@ -107,11 +155,23 @@ def run() -> dict:
     ):
         raise ValueError("Saved Event classifications differ")
     records = read_json(entities / "full_records.json.gz")
-    random_qids = random.Random(20261020).sample(sorted(records), 5)
-    controls = ["Q352", "Q8007"]
+    sample_evidence = {}
+    if selection is not None:
+        if reuse_sample is None:
+            raise ValueError("Filtered test requires an unchanged prior sample")
+        previous = read_json(reuse_sample.parent / "report.json")
+        if digest(reuse_sample) != previous["outputs"][reuse_sample.name]:
+            raise ValueError("Previous random sample changed")
+        random_qids, sample_evidence = filtered_sample(selection, reuse_sample)
+        controls = []  # Do not add or replace entities after filtering.
+    else:
+        random_qids = random.Random(20261020).sample(sorted(records), 5)
+        controls = ["Q352", "Q8007"]
     if not set(controls) <= set(records):
         raise ValueError("Positive controls must already occur in Daniel")
     sample = sorted(set(random_qids + controls))
+    if not set(sample) <= set(records):
+        raise ValueError("Sample QIDs must already occur in frozen Daniel data")
     for qid in controls:
         if not any(
             link["object_qid"] == "Q362"
@@ -144,6 +204,7 @@ def run() -> dict:
         seed=20261020,
         random_daniel_qids=random_qids,
         positive_control_qids=controls,
+        filter_evidence=sample_evidence,
         reference_scope="165_CACHED_CLASSIFIED_CANDIDATES_ONLY",
         reference_count=len(classified),
         snapshot_at=ref["table_snapshot"]["snapshot_at"],
@@ -162,6 +223,13 @@ def run() -> dict:
             )
         },
     )
+    if selection is not None:
+        report["inputs"].update(
+            {
+                str(p): digest(p)
+                for p in (selection, reuse_sample, reuse_sample.parent / "report.json")
+            }
+        )
 
     def save():
         (output / "report.json").write_text(
@@ -252,7 +320,9 @@ def run() -> dict:
                     excluded=excluded,
                 )
             )
-        if not any(r["qid"] == "Q362" and r["eligible"] for r in decisions):
+        if controls and not any(
+            r["qid"] == "Q362" and r["eligible"] for r in decisions
+        ):
             raise SourceException("Known-positive Event did not pass")
         actual = {
             row["qid"]: sorted(
@@ -292,7 +362,21 @@ def run() -> dict:
 
 
 if __name__ == "__main__":
+    parser = argparse.ArgumentParser(description=__doc__)
+    parser.add_argument("--selection", type=Path)
+    parser.add_argument("--reuse-sample", type=Path)
+    parser.add_argument("--output", type=Path)
+    args = parser.parse_args()
     logging.basicConfig(level=logging.INFO, format="%(asctime)s %(message)s")
-    result = run()
-    print(json.dumps(result, ensure_ascii=True))
+    result = run(args.selection, args.reuse_sample, args.output)
+    print(
+        json.dumps(
+            {
+                k: v
+                for k, v in result.items()
+                if k not in {"inputs", "outputs", "source"}
+            },
+            ensure_ascii=True,
+        )
+    )
     raise SystemExit(1 if result["status"].startswith("BLOCKED") else 0)

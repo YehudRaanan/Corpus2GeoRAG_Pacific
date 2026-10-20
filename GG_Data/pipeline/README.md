@@ -9,14 +9,48 @@ denominators remain null. **Approved combined rule:** the QID-level score is
 the highest available English/Japanese percentage. Keep scores >=5%; exclude
 scores <5% from Event retrieval. Use the sole available score when the other
 is missing; if both are missing, keep the combined decision unknown and consult.
-Preserve the separate language evidence and do not pool counts. Implementation
-and validation of the combined decision against the saved 10K outputs are pending.
+Preserve the separate language evidence and do not pool counts. The combined
+decision is implemented and verified against both saved 10K acquisition reports.
 Use `snapshot_link_relevance_probe.py --population --wiki enwiki` (or `jawiki`)
 to measure all existing resolved MISC QIDs in the frozen 10K model against
 the full saved source-page scope in that language. Reuse the saved dumps;
 no new retrieval, matching or entity creation is involved. The separate
 `scope_concentration_filter.py --source <report.json> --output <new-directory>`
 applies the 5% test to each scored language/QID and preserves unknowns.
+Add `--japanese-source <Japanese-acquisition-report.json>` to combine it with
+the English acquisition report supplied by `--source`. Use a new `--output`
+directory; the earlier per-language reports remain unchanged.
+
+**Verified maximum-language result, 20 October:** of the same **1,312** MISC
+QIDs, **66 pass**, **627 are below 5%**, and **619 have no available score in
+either language**. Exact fraction comparisons, the inclusive threshold,
+population preservation, CSV coverage and all input/output hashes passed.
+Unknowns are not exclusion decisions. No matching or model rows changed.
+Evidence: `outputs/poc_10k_scope_concentration_maximum_language_5pct_20261020/`
+(`report.json`, `selection.csv`, `verification.json`).
+
+**Filtered bounded Event query test:** reuse the previous random 100-mention
+sample without adding controls or replacement entities. Its 71 distinct matched
+QIDs split into **48 usable** (46 outside MISC plus 2 passing MISC), **8 below
+threshold**, and **15 held unknown**. Holding unknowns outside this test does
+not decide their full-run inclusion. Restricting the complete cached incoming
+and outgoing link inventory gives **2,680 preliminary candidates**, versus
+15,550 before filtering. An independent intersection of the original candidate
+endpoint inventory gives exactly the same result; no discovery query was needed.
+
+The existing Daniel-first query was then tested against the **165 candidates
+with accepted cached hierarchy evidence**, not all 2,680 candidates. It found
+**World War II/Q362**, linked to **5 distinct retained Daniel QIDs** through
+**6 native assertions**. Snapshot query results agree exactly with the complete
+cached native-record check after mapping and exact exclusions. Query execution:
+**2.790 seconds**, **84,299,218,944 billed bytes**. The existing snapshot, root,
+rank policy and two-distinct-entity rule are unchanged. Fifteen focused tests,
+Black and focused Ruff passed. No model Event rows or graph were written.
+
+Evidence: `outputs/poc_10k_event_filtered_sample_query_20261020/` contains the
+query, raw result, decisions, candidate restriction, candidate endpoints, report
+and verification. The remaining candidate classifications and full 10K Event
+retrieval are **not complete**; no background continuation was launched.
 
 **Approved redirect rule:** count the redirect and final destination as one
 page, once per linking source page, separately by language. The destination
@@ -79,8 +113,9 @@ measurement page; original QIDs remain unchanged. The four known missing
 English source titles remain explicit incomplete scope coverage. Input/output
 hashes, population coverage, deduplicated source-page sets and exact integer
 threshold comparisons passed. The outputs below contain separate language
-decisions; the approved maximum-score combination is not yet implemented. The Entity
-table and matching decisions are unchanged; Event acquisition is still stopped.
+decisions; the verified maximum-score result and bounded Event test are above.
+The Entity table and matching decisions are unchanged; full Event acquisition
+is still stopped.
 
 - English measurements: `outputs/poc_10k_misc_snapshot_link_relevance_enwiki_patternfile_20261020/report.json`
 - English threshold: `outputs/poc_10k_scope_concentration_enwiki_patternfile_5pct_20261020/report.json` and `selection.csv`

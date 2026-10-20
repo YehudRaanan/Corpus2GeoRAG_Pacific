@@ -6,7 +6,41 @@ Specification date: 19 October 2026. Status: approved source scope and rules doc
 
 The [full pipeline review](DANIEL_TO_GRAPH_PIPELINE_REVIEW.md) collects open decisions, implementation checks, documentation alignment and deferred improvements from Daniel input through final JSON. It does not change these population rules.
 
-## Stopped for analysis — larger Event timing sample, 20 October 2026
+## Latest verified continuation — maximum language score and bounded Event test
+
+The approved maximum-language rule in section 6.1 was applied to all **1,312**
+resolved MISC QIDs in the frozen 10K model: **66 pass**, **627 are below 5%**,
+and **619 have no score in either language**. Both language scores are retained;
+the highest available fraction supplies the decision, with exactly 5% passing.
+All original QIDs and model rows remain unchanged. Exact fractions, input/output
+hashes, complete CSV coverage and the original population were verified.
+Evidence: `GG_Data/pipeline/outputs/poc_10k_scope_concentration_maximum_language_5pct_20261020/`.
+
+The earlier random 100-mention Event sample was reused without replacements or
+added controls. Its 71 matched QIDs give **48 usable endpoints**, **8 below the
+threshold**, and **15 unknown endpoints held outside this bounded test**. This
+hold is not a full-run exclusion decision. The unchanged complete cached native
+links yield **2,680 preliminary candidates**, down from 15,550; restricting the
+previous candidate endpoint inventory independently gives the same set. No new
+discovery scan was needed.
+
+The existing Daniel-first query was tested for those 48 endpoints against the
+**165 candidates with previously accepted hierarchy evidence**. **World War
+II/Q362** qualified through **5 distinct Daniel entities**, with **6 native
+assertions**. The returned assertion identities match the complete cached
+native records after the approved mapping/exclusions. Snapshot query execution
+was **2.790 seconds**, with **84,299,218,944 billed bytes**. Fifteen focused
+tests, Black and focused Ruff passed. Query, source result, decisions, candidate
+restriction and hash verification are saved under
+`GG_Data/pipeline/outputs/poc_10k_event_filtered_sample_query_20261020/`.
+
+This verifies a bounded query, not all 2,680 classifications or complete 10K
+Event discovery. No model Event rows, final graph, new Daniel entities or
+matching changes were written. Full Event retrieval remains stopped; no
+background continuation was launched. Unknown-score handling beyond the bounded
+test still requires consultation; unknowns were not changed to zero or rejected.
+
+## Historical stop for analysis — larger Event timing sample, 20 October 2026
 
 The timing experiment used 100 frozen Daniel mentions (seed 20261020), containing 71 distinct matched QIDs, and discovered 15,550 preliminary candidates. The user stopped it at **14:04:37 Jerusalem, 20 October 2026**, after **660.701 seconds**: **69/200** sampled candidates classified, **67 negative**, **2 hierarchy-positive**, **98 successful source-answer receipts**. Link qualification had not started. No Event rows or graph were written; both this worker and the original full run are stopped. BigQuery discovery took 76.008 seconds and is cached. Evidence: `GG_Data/pipeline/outputs/poc_10k_event_timing_100_mentions_200_candidates_20261020/stop_analysis.json`; the worker report before the stop annotation is preserved.
 
@@ -190,8 +224,8 @@ is >=0.05; exclude it from Event retrieval when the maximum is <0.05. If only
 one language has a score, use that score. If neither has a score, the combined
 score and decision remain unknown and require consultation. Do not treat a
 missing score as zero or pool language counts. Preserve both language scores
-as supporting evidence. This decision is now closed; implementation and a
-combined-result check against the saved 10K outputs are still pending.
+as supporting evidence. This decision is closed and implemented; the verified
+combined 10K result and bounded Event test are recorded at the top of this S2T.
 Preserve all
 original model rows and matching assignments. This threshold does not change
 the matching similarity threshold, Event hierarchy or two-entity inclusion rule.
