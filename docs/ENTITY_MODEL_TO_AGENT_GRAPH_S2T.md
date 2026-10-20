@@ -63,7 +63,7 @@ include(event) = count(connected_entities(event)) >= 2
 
 The rule is evaluated on base assertions before non-event capping. Reversing an assertion does not create a second qualifying entity. An event with one entity mentioned 100 times fails; an event connected directly to two distinct matched entities passes. Direct links between included Events do not qualify another Event. Do not run a recursive traversal.
 
-The [approved non-event selection](SOURCES_TO_ENTITY_DATA_MODEL_S2T.md#non-event-relation-selection--approved-20-october-2026) must be evidenced in the source run before export; do not independently rerank or cap its reverse views here. The rule is documented but not implemented. Previous uncapped outputs remain historical; unresolved cutoff ties require consultation rather than an exporter tie-break.
+The [approved non-event selection](SOURCES_TO_ENTITY_DATA_MODEL_S2T.md#non-event-relation-selection--approved-20-october-2026) must be evidenced in the source run before export; do not independently rerank or cap its reverse views here. The selector is implemented and tested; scores for all 4,712 frozen-sample Daniel QIDs are saved, but application awaits complete Event membership. Previous uncapped outputs remain historical; unresolved cutoff ties require consultation rather than an exporter tie-break. No capped model or graph export is claimed by score preparation.
 
 Successfully normalized DATE mentions stay in the source temporal data. Existing synthetic DATE errors also remain there; this S2T does not turn extraction date strings into events or inferred event dates.
 

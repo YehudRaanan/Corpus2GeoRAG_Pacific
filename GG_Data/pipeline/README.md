@@ -4,9 +4,39 @@
 
 The user approved direct included-Event/included-Event and Event/Daniel links without a count limit. Each Event must still independently pass the existing two-distinct-Daniel-QID inclusion gate. For non-event/non-event assertions, rank the connected QID by **distinct Daniel source pages times total original Daniel mentions**. Keep an assertion only if it belongs to the top 20 at both endpoints; reverse views share its slot. Some QIDs can retain fewer than 20. Counts and budgets are QID-level, without duplication across types.
 
-See [population S2T section 8](../../docs/SOURCES_TO_ENTITY_DATA_MODEL_S2T.md#non-event-relation-selection--approved-20-october-2026) for evidence and stop requirements. Status: **approved specification only**. No selection code or capped output has been produced. The existing `relations.py` still produces the historical full D/D source population. Complete Event membership must be established before applying exemptions. The source failure below remains open; no new retrieval was launched and pagination remains unapproved.
+See [population S2T section 8](../../docs/SOURCES_TO_ENTITY_DATA_MODEL_S2T.md#non-event-relation-selection--approved-20-october-2026) for evidence and stop requirements. `relation_selection.py` now implements the score and mutual-top-20 selector, with cutoff ties and incomplete Event membership as explicit stops. The existing `relations.py` preserves the historical full D/D source population. Complete Event membership must be established before applying exemptions; no capped output has been produced.
 
-## Current: full discovery stopped on incomplete Canada response
+## Current continuation: saved scores and paged Event discovery
+
+**Execution order, confirmed by the user:** calculate and verify the Daniel-population importance scores first; then retrieve Relations and Event links; then apply the non-event selection after complete Event membership is known. Reuse the saved scores for relation ranking. Scoring needs only Daniel's accepted mentions, not Wikidata relation retrieval. The frozen 10K scores below are complete; relation acquisition remains stopped at the recorded source failure.
+
+**Verified stop:** the first new Canada/Q16 page request also reached the existing 45-second read timeout, before any response body. No paged result or partial data was accepted and no automatic timeout retry ran. The process ended. The two completed incoming result units are reused Africa responses, not successful new pages. Counts remain 4,712 native records, 87,694 outgoing statements, 29,923 cached incoming statements, 2/9,424 graph/QID requests and 75,655 partial reference candidates. Zero Event rows or capped Relations are written.
+
+`verification.json` records `VERIFIED_PAGED_DISCOVERY_SOURCE_STOP_ONLY`: 105 source-body checksums, 14 upstream hashes and 17 preceding candidate output hashes passed; the old 352 MB failed body remains unchanged. The new failed request receipt and `source_exception.json` are saved. The score run has its own `verification.json`, which independently reconstructed all 4,712 scores. A one-property-at-a-time incoming query was proposed as a retrieval test; the user requested an explanation, so that test remains unapproved and unexecuted. Neither the 20-relation cap nor a 5,000-result page removes the server's need to search/sort eligible incoming candidates.
+
+The user instructed implementation and continued execution after approving the two-endpoint rule. Scores were prepared from the verified frozen 10K Mentions input in `outputs/poc_10k_relation_importance_20261020`: **4,712 QIDs**, based on **7,692 original non-DATE matched mentions**. The distinct-page measure uses Daniel's original `raw.Source` page titles, not the separate EN/JA reference inventory. The saved score includes both factors and the original source-page list. `report.json` pins input, code and output hashes; status is `IMPORTANCE_ONLY_EVENTS_PENDING`, with zero capped Relations written. No complete Event population is assumed.
+
+`event_discovery.py --incoming-page-size 5000` continues in `outputs/poc_10k_event_full_discovery_paged_20261020`. The previous complete incoming responses are reused; failed unpaged responses remain intact. New requests use at most 5,000 statements per page, ordered by the original statement URI and continued strictly after the last accepted URI. All pages and the short terminal page are required for each graph/QID; a response-size limit is not an Event count limit. Both official graphs, all direct ranks, the existing cache, five-second pauses and the approved HTTP retry budget remain in effect. Malformed responses, unsorted/overlapping pages, timeouts and other unapproved failures still stop. Consult the run's `report.json` and logs for live status; starting a process does not establish complete discovery.
+
+Verification before launch: **55 pipeline tests passed**, Ruff checks passed, Black formatting applied. Tests cover page continuation/cache reuse/order errors, score counts, mutual endpoint rejection, no refill, uncapped Event/Event and Event/entity links, separate assertion slots, and explicit cutoff-tie/incomplete-Event stops. No new Daniel extraction, matching, entity identity, source or relevance filter was added. Event classification/population, actual capped Relations, Geography and final graph remain pending.
+
+```powershell
+python -m GG_Data.pipeline.relation_selection `
+  --mentions GG_Data/pipeline/outputs/poc_10k/mentions.json.gz `
+  --output GG_Data/pipeline/outputs/poc_10k_relation_importance_20261020
+
+python -m GG_Data.pipeline.event_discovery `
+  --source GG_Data/pipeline/outputs/poc_10k_event_seven_saved_fallback_20261020 `
+  --mentions GG_Data/pipeline/outputs/poc_10k/mentions.json.gz `
+  --saved-entities GG_Data/pipeline/outputs/poc_10k_entities_approved/entities.json.gz `
+  --output GG_Data/pipeline/outputs/poc_10k_event_full_discovery_paged_20261020 `
+  --store GG_Data/pipeline/outputs/wikidata_current_event_cache `
+  --incoming-page-size 5000
+```
+
+These directories must be new. Reusing the same cache with a new output directory replays verified pages before requesting the next one; previous outputs are never overwritten.
+
+## Previous: full discovery stopped on incomplete Canada response
 
 The new run stopped under the user's first-exception rule. After both Q15
 (Africa) incoming graph searches completed, the main-graph Q16 (Canada) request

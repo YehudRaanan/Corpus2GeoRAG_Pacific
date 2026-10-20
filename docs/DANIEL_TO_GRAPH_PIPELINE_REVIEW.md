@@ -6,9 +6,15 @@ Event/Event and Event/other-entity links are uncapped, after each Event independ
 
 This supersedes the earlier prohibition on direct links between included Events. No new endpoint population, Event hierarchy, source, matching decision or date policy is approved. Selection evidence remains supporting data; acquired raw statements and historical outputs remain intact. Exact cutoff ties or unavailable score inputs require a concrete case discussion. The [population S2T](SOURCES_TO_ENTITY_DATA_MODEL_S2T.md#non-event-relation-selection--approved-20-october-2026) is the rule reference.
 
-Status: rule recorded; implementation and application pending. Event discovery remains stopped at the Canada source failure below. The cap neither authorizes the pending pagination proposal nor proves full Event coverage.
+Status: selector implemented and tested; actual application awaits complete Event membership. `outputs/poc_10k_relation_importance_20261020` saves scores for 4,712 QIDs from the frozen sample's 7,692 matched non-DATE mentions, with original `raw.Source` page counts and checksum lineage. No capped Relations or graph is written. The user's subsequent instruction to implement and keep running starts the paged continuation below; the cap does not prove full Event coverage.
 
-## Current: full discovery stopped at Canada source failure
+## Current continuation: paged source acquisition
+
+Verified status: **stopped, not running**. The first new Canada/Q16 page timed out after 45 seconds without a response body. No automatic timeout retry or smaller/new query was attempted. All 4,712 native records and the two complete Africa incoming responses were reused; accepted source coverage remains 2/9,424 graph/QID requests and 75,655 partial reference candidates. `verification.json` is `VERIFIED_PAGED_DISCOVERY_SOURCE_STOP_ONLY`, with 105 source-response hashes, 14 upstream hashes and 17 preceding candidate output hashes checked. The earlier failed body is unchanged. Zero Event rows, capped Relations or final graph are produced. The proposed one-property retrieval test is under discussion after the user asked for an explanation; it is not authorized or running.
+
+Run: `GG_Data/pipeline/outputs/poc_10k_event_full_discovery_paged_20261020`. The continuation reuses complete native and incoming caches, then requests up to 5,000 incoming statements per ordered native-URI page on both official query graphs. It requires complete page coverage and a short terminal page, rejects unordered/overlapping results, preserves all original responses, and keeps the approved request pauses/retry budget and stop rule. Reference candidates remain distinct from included Events. No Event date/type/endpoint rule or Daniel matching decision changes. Read the current report/logs for stage and counts. Before launch: 55 tests and Ruff checks passed. The historical Canada response remains immutable.
+
+## Previous: full discovery stopped at Canada source failure
 
 The continuation reached complete outgoing coverage but stopped during incoming
 acquisition, as required. Both Africa/Q15 graph searches completed (29,923
