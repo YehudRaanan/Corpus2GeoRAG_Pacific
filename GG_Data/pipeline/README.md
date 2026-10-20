@@ -1,5 +1,30 @@
 # Daniel pipeline POC
 
+## Stopped diagnostic — Wikipedia incoming-link counts, 20 October 2026
+
+`incoming_links_probe.py` tests precomputed CirrusSearch counts without changing
+matching, model rows, or Event runs. The diagnostic selects two known problem
+QIDs, six frequent eligible MISC QIDs, and twelve random eligible MISC QIDs
+(seed 20261020). Of 1,182 matched MISC QIDs in the frozen 10K input, 633 have a
+saved English or Japanese sitelink; 549 do not. This is a selected diagnostic,
+not an accuracy estimate or a representative full-population distribution.
+
+The English response returned 19 pages: **18 supplied a count**, while
+`O (2022 film)/Q129084702` omitted the field. The strict parser stopped; the
+Japanese request was not sent. Missing counts remain unknown, not zero.
+Saved-response analysis found Japanese language/Q5287: **39,178**, Brazilian
+Portuguese/Q750553: **1,613**, M4 Sherman/Q191643: **1,362**, and World War II/Q362:
+**217,991**. A high-count cutoff misses the Brazilian-language example; a low
+cutoff can remove useful matches. No threshold was selected or applied.
+
+These are **current, per-wiki index counts**, not all-language totals or values
+from the agreed historical snapshot. Index article timestamps do not establish
+the measurement time of the incoming-link count. The debug API has no stable
+schema guarantee. Evidence is in ignored local outputs
+`outputs/poc_10k_misc_incoming_links_probe_20261020`: raw response, request URL,
+retrieval time, checksums, `partial_analysis.json`, and `partial_counts.csv`.
+Continuation requires discussion under the user's POC stop rule.
+
 ## Stopped for analysis — larger Event timing sample, 20 October 2026
 
 `event_timing_sample.py` draws 100 original frozen Daniel mentions (seed 20261020), including 71 distinct matched QIDs. Unrestricted snapshot discovery returned 16,097 incoming candidates; combining both native directions and requiring two distinct Daniel endpoints left **15,550 candidates**. The full inventory is retained. A separate uniform sample of **200 candidate QIDs** measures latest-hierarchy classification and link qualification; it is a timing experiment, not an Event population cap. No untested candidate is rejected and no model Event or graph is written.
