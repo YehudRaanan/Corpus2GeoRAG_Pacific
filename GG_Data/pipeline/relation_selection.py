@@ -151,8 +151,50 @@ def select(
     return retained, audit
 
 
-def prepare(mentions: Path, output: Path) -> dict:
-    """Prepare the verified frozen POC scores while Event discovery continues.
+def attach_importance(
+    entities: list[dict], scores: dict[str, dict], population_sha256: str
+) -> list[dict]:
+    """ERD 1 / population S2T 6: persist the approved QID-level score.
+
+    Separate typed rows retain their identities and share their QID's score.
+    Synthetic rows have no Wikidata score; null never means zero importance.
+    """
+    result, seen, qids = [], set(), set()
+    for row in entities:
+        qid = row["entity_id"]
+        key = (qid, row["type"])
+        if key in seen:
+            raise SourceException("Repeated Entity identity", entity_id=qid)
+        seen.add(key)
+        if "importance" in row or "importance_basis" in row["attributes"]:
+            raise SourceException("Entity importance already supplied", entity_id=qid)
+        synthetic = qid.startswith("SYN_")
+        if not synthetic:
+            qids.add(qid)
+            if qid not in scores:
+                raise SourceException("Entity importance missing", entity_id=qid)
+        score = None if synthetic else scores[qid]
+        basis = dict(
+            policy=POLICY,
+            population_sha256=population_sha256,
+            status="SYNTHETIC_UNRESOLVED" if synthetic else "SCORED",
+            distinct_source_pages=None if synthetic else score["distinct_source_pages"],
+            total_mentions=None if synthetic else score["total_mentions"],
+        )
+        result.append(
+            {
+                **row,
+                "importance": None if synthetic else score["score"],
+                "attributes": {**row["attributes"], "importance_basis": basis},
+            }
+        )
+    if qids != set(scores):
+        raise SourceException("Entity and importance populations differ")
+    return result
+
+
+def prepare(mentions: Path, output: Path, entities_source: Path | None = None) -> dict:
+    """Prepare verified frozen POC scores, optionally saved on Entity rows.
 
     This is scoring only: it does not classify Events or select Relations. A
     later caller must supply verified complete Event membership to `select`.
@@ -165,6 +207,22 @@ def prepare(mentions: Path, output: Path) -> dict:
     if manifest["outputs"].get(mentions.name) != digest(mentions):
         raise SourceException("Frozen mention input checksum differs")
     scores = importance(read_json(mentions))
+    entities = None
+    if entities_source is not None:
+        entity_manifest_path = entities_source / "manifest.json"
+        entity_manifest = read_json(entity_manifest_path)
+        if entity_manifest["status"] != "ENTITIES_STEP_ONLY" or entity_manifest[
+            "step1_manifest"
+        ]["sha256"] != digest(mentions.parent / "manifest.json"):
+            raise SourceException("Entities and importance input lineage differs")
+        for name, sha256 in entity_manifest["outputs"].items():
+            if digest(entities_source / name) != sha256:
+                raise SourceException("Entities input checksum differs", file=name)
+        entities = attach_importance(
+            read_json(entities_source / "entities.json.gz"),
+            scores,
+            digest(mentions),
+        )
     output.mkdir(parents=True, exist_ok=False)
     destination = output / "entity_importance.json.gz"
     with gzip.open(destination, "wt", encoding="utf-8") as stream:
@@ -187,6 +245,26 @@ def prepare(mentions: Path, output: Path) -> dict:
         capped_relations_written=0,
         event_population_complete=False,
     )
+    if entities is not None:
+        entity_file = output / "entities.json.gz"
+        with gzip.open(entity_file, "wt", encoding="utf-8") as stream:
+            json.dump(entities, stream, ensure_ascii=False, allow_nan=False)
+        if read_json(entity_file) != entities:
+            raise ValueError("Entities importance output readback differs")
+        report.update(
+            status="ENTITIES_IMPORTANCE_ONLY_EVENTS_PENDING",
+            entity_count=len(entities),
+            scored_entity_rows=sum(r["importance"] is not None for r in entities),
+            synthetic_entity_rows=sum(r["importance"] is None for r in entities),
+            entities_input=dict(
+                file=str(entity_manifest_path), sha256=digest(entity_manifest_path)
+            ),
+        )
+        report["outputs"][entity_file.name] = digest(entity_file)
+        # This is a new table version; old accepted Entities/Relations stay intact.
+        (output / "manifest.json").write_text(
+            json.dumps(report, indent=2), encoding="utf-8"
+        )
     (output / "report.json").write_text(json.dumps(report, indent=2), encoding="utf-8")
     LOG.info(
         "Prepared importance for %s Daniel QIDs; no Relations selected", len(scores)
@@ -198,6 +276,7 @@ if __name__ == "__main__":
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--mentions", type=Path, required=True)
     parser.add_argument("--output", type=Path, required=True)
+    parser.add_argument("--entities", type=Path, help="Accepted Entities directory")
     args = parser.parse_args()
     logging.basicConfig(level=logging.INFO)
-    prepare(args.mentions, args.output)
+    prepare(args.mentions, args.output, args.entities)

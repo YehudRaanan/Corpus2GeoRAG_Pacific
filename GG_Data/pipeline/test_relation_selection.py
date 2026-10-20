@@ -4,7 +4,7 @@ import copy
 
 import pytest
 
-from GG_Data.pipeline.relation_selection import importance, select
+from GG_Data.pipeline.relation_selection import attach_importance, importance, select
 from GG_Data.pipeline.relations import SourceException
 
 
@@ -74,3 +74,32 @@ def test_equal_cutoff_scores_stop_and_multiple_assertions_spend_separate_slots()
         select(rows[:1] * 2, scores, set(), event_population_complete=True)
     with pytest.raises(SourceException, match="Missing Daniel importance"):
         select(rows[:1], {}, set(), event_population_complete=True)
+
+
+def test_entity_score_preserves_types_raw_evidence_and_synthetic_null():
+    rows = [
+        dict(entity_id=qid, type=kind, attributes={"original": ["evidence"]})
+        for qid, kind in [("Q1", "LOC"), ("Q1", "ORG"), ("SYN_1", "MISC")]
+    ]
+    original = copy.deepcopy(rows)
+    scores = {"Q1": dict(distinct_source_pages=2, total_mentions=3, score=6)}
+    result = attach_importance(rows, scores, "population-hash")
+    assert rows == original
+    assert [r["importance"] for r in result] == [6, 6, None]
+    for prior, current in zip(original, result):
+        assert current["attributes"]["original"] == prior["attributes"]["original"]
+        assert current["entity_id"] == prior["entity_id"]
+        assert current["type"] == prior["type"]
+        assert (
+            current["attributes"]["importance_basis"]["population_sha256"]
+            == "population-hash"
+        )
+    assert (
+        result[-1]["attributes"]["importance_basis"]["status"] == "SYNTHETIC_UNRESOLVED"
+    )
+    with pytest.raises(SourceException, match="Entity importance missing"):
+        attach_importance(rows, {}, "population-hash")
+    with pytest.raises(SourceException, match="Repeated Entity identity"):
+        attach_importance(rows + rows[:1], scores, "population-hash")
+    with pytest.raises(SourceException, match="already supplied"):
+        attach_importance(result, scores, "population-hash")

@@ -8,6 +8,17 @@ See [population S2T section 8](../../docs/SOURCES_TO_ENTITY_DATA_MODEL_S2T.md#no
 
 ## Current continuation: saved scores and paged Event discovery
 
+**Entity attribute, approved 20 October:** `relation_selection.py --entities <accepted-entities-directory>` also writes a new `entities.json.gz` table version with scalar `importance` and `attributes.importance_basis` (page count, mention count, policy, input SHA-256 and status). Each existing typed row gets its QID-level score; synthetic rows keep null with an explicit unresolved status. No identity, name, source record or Event importance is changed. The source Entities manifest and all its outputs are verified before enrichment; the new manifest pins both input lineages and output checksums. Use a new output directory; prior tables are immutable.
+
+Verified run: `outputs/poc_10k_entities_importance_20261020`, status `ENTITIES_IMPORTANCE_ONLY_EVENTS_PENDING`. All **6,077** Entity rows are retained: **4,721** scored typed rows for **4,712** QIDs, and **1,356** synthetic rows with null scores. `verification.json` is `VERIFIED_ENTITIES_IMPORTANCE_ONLY`: independently reconstructed page/mention counts match every row, previous score values match, every prior field is unchanged, and input/output hashes pass. Tests: **56 passed**, Ruff passed. No new network request or selected Relations output was made; the Canada Event-source stop below is still open. The new Entity-table manifest is a stage-specific version, not a complete model release or a replacement for hard-coded historical source manifests in existing consumers.
+
+```powershell
+python -m GG_Data.pipeline.relation_selection `
+  --mentions GG_Data/pipeline/outputs/poc_10k/mentions.json.gz `
+  --entities GG_Data/pipeline/outputs/poc_10k_entities_approved `
+  --output GG_Data/pipeline/outputs/poc_10k_entities_importance_20261020
+```
+
 **Execution order, confirmed by the user:** calculate and verify the Daniel-population importance scores first; then retrieve Relations and Event links; then apply the non-event selection after complete Event membership is known. Reuse the saved scores for relation ranking. Scoring needs only Daniel's accepted mentions, not Wikidata relation retrieval. The frozen 10K scores below are complete; relation acquisition remains stopped at the recorded source failure.
 
 **Verified stop:** the first new Canada/Q16 page request also reached the existing 45-second read timeout, before any response body. No paged result or partial data was accepted and no automatic timeout retry ran. The process ended. The two completed incoming result units are reused Africa responses, not successful new pages. Counts remain 4,712 native records, 87,694 outgoing statements, 29,923 cached incoming statements, 2/9,424 graph/QID requests and 75,655 partial reference candidates. Zero Event rows or capped Relations are written.

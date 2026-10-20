@@ -31,6 +31,7 @@ erDiagram
         json aliases
         json alias_details
         string identity_status
+        bigint importance "nullable; Daniel pages times mentions"
         json sources
         json attributes
         json raw_reference
@@ -146,6 +147,8 @@ One row per distinct `(entity_id, type)` combination, using the assigned QID or 
 | `aliases` | string array | Agent-compatible search aliases, without deleting original names. |
 | `alias_details` | JSON array | Each supplied `{label, kind, provider, record_id}` plus `language` where known; kind can be alias, nickname, hull_number, codename. Unknown language stays null. |
 | `identity_status`, `review_status` | string | QID_MATCHED / SYNTHETIC_UNRESOLVED; separate review state such as NOT_REVIEWED. A score does not imply manual verification. |
+| `importance` | integer, nullable | Approved distinct Daniel source pages multiplied by total original matched mentions in the declared input population. QID-level value shared by its separate typed rows, without multiplying counts. Synthetic rows remain null, not zero. This is separate from Wikidata Event importance. |
+| `attributes.importance_basis` | JSON | Policy, frozen Mentions SHA-256, distinct source-page count, total mention count and score status. Synthetic rows retain an explicit unresolved status with null counts. The frozen 10K POC is the scoring population. |
 | `sources` | JSON array | Provenance objects described below. |
 | `text` | string, legacy optional field | Not exported in the current S2T. No paragraph object, passage assembly or paragraph-level text processing is in scope. |
 | `attributes` | JSON | Open Agent fields, including `kind`, `country`, `scale`, hull numbers (P879), commissioning/decommissioning dates (P729/P730), and their evidence when supplied. Do not infer unsupported values. |
@@ -261,7 +264,7 @@ Event links to Daniel's matched QIDs use Relations. Acquisition includes direct 
 
 One retained base row per source assertion, with its original input preserved. Canonical endpoints may differ from source orientation after a versioned mapping.
 
-Approved on 20 October 2026: non-event QIDs have at most 20 incident base relations to other non-events. Rank by the other QID's distinct Daniel source pages multiplied by original mention count; retain an assertion only if selected in both endpoint top-20 sets. Reverse views do not spend another slot. Event/Event and Event/other links are exempt. Scores and selection decisions belong in supporting evidence, without a seventh business table or an inferred Event importance value. The selector is implemented and tested; actual application awaits complete Event membership. See population S2T section 8 for the full rule, score-population evidence and stop conditions.
+Approved on 20 October 2026: non-event QIDs have at most 20 incident base relations to other non-events. Rank by the other QID's distinct Daniel source pages multiplied by original mention count; retain an assertion only if selected in both endpoint top-20 sets. Reverse views do not spend another slot. Event/Event and Event/other links are exempt. Persist the score in Entities.importance and its factors/lineage in attributes.importance_basis; selection decisions and full source-page lists remain supporting evidence. No seventh business table or inferred Event importance value is added. The selector is implemented and tested; actual application awaits complete Event membership. See population S2T section 8 for the full rule, score-population evidence and stop conditions.
 
 Existing mappings take priority. If a native Wikidata source key is missing, retain the actual direct statement's property unchanged at Level 2 and add it to the versioned mapping parameters. Level 1 stays `UNRESOLVED` / `NOT_ASSIGNED`; do not infer a relation when no statement exists. Population S2T section 8 defines this approved rule. The current catalog is v2.1.1; this adds no business table or entity.
 
