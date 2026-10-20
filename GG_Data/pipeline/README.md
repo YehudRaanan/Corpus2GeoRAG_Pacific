@@ -28,8 +28,37 @@ titles (`Conscription in Japan`, `Two Lords Incident`, `BUROGU`, and
 observations. The score measures link concentration, not matching confidence.
 No filtering threshold, matching change or Event restart is approved.
 
-Current run: **scanning saved files; no final scores yet**. Evidence:
-`outputs/poc_10k_misc_snapshot_link_relevance_20261020/progress.json`.
+Current run: **complete for all 19 sample QIDs, with the approved incomplete
+source coverage**. Both counts use English Wikipedia snapshot `20261001`.
+The completed worker took 316.5 seconds. It verified all **131,511,582
+linktarget rows** and **1,669,535,683 pagelinks rows**; every scoped page-ID set
+agreed with the independently saved scoped resolver. All 19 global denominators
+are available, including `O (2022 film)/Q129084702`, whose previous index count
+was missing. Twelve QIDs have observed scope links; seven have none.
+
+| Sample QID / name | Scope linking pages | All English linking pages | Scope share |
+| --- | ---: | ---: | ---: |
+| Q162284 / Battle of Kiev (1941) | 123 | 1,545 | 7.9612% |
+| Q122100 / Continuation War | 135 | 2,623 | 5.1468% |
+| Q191643 / M4 Sherman | 10 | 1,221 | 0.8190% |
+| Q362 / World War II | 327 | 232,279 | 0.1408% |
+| Q5287 / Japanese language | 58 | 49,222 | 0.1178% |
+| Q1196012 / Britannicus (play) | 0 | 100 | 0% |
+| Q750553 / Brazilian Portuguese | 0 | 2,703 | 0% |
+
+The other zero-scope QIDs are Common Brittonic, O (2022 film), Battle of the
+Bulge (1991 film), 39 (number), and Welsh language. Zero means no observed link
+within the 413 resolved pages; it makes no claim about the four missing titles.
+Higher shares mean stronger concentration within this page scope, so globally
+common relevant subjects can score below narrower subjects. No match is
+changed and no cutoff is applied. Counts include template/navigation links.
+
+Evidence: `outputs/poc_10k_misc_snapshot_link_relevance_20261020/report.json`,
+`scores.csv`, `linking_page_ids.json.gz`, `aliases.json`, `targets.json` and
+`progress.json`. Input/output hashes and stored page-ID cardinalities were
+verified after worker exit. Two focused tests, Ruff and Black checks pass.
+Code has local Git checkpoints; ignored result files remain local.
+
 An initial implementation check incorrectly required non-article redirect
 sources to occur in the article-only page table. It was corrected to use the
 existing resolver's namespace-0 join rule; the failed preflight is retained in
