@@ -15,7 +15,9 @@ date from the source-page snapshot manifest. It scans the complete saved raw
 linktarget/pagelinks files, resolves all target aliases, and deduplicates source
 page IDs across aliases. Links from templates/navigation remain included, as
 in the existing dump-backed resolver. No source download or API request is
-needed. The raw dump SHA1, gzip integrity, completion footer and complete row
+needed. The installed `rg` tool filters the pagelinks stream with the same
+integer-only regex used by Python; only selected rows go to a temporary file.
+The raw dump SHA1, gzip integrity, completion footer and complete row
 counts must pass before scores are published. Scoped counts must also agree
 with the independently saved per-page link resolution.
 
@@ -32,6 +34,8 @@ An initial implementation check incorrectly required non-article redirect
 sources to occur in the article-only page table. It was corrected to use the
 existing resolver's namespace-0 join rule; the failed preflight is retained in
 `outputs/poc_10k_misc_snapshot_link_relevance_20261020_preflight`.
+The slower Python-filter attempt was stopped for a local performance change
+and retained in `outputs/poc_10k_misc_snapshot_link_relevance_20261020_python_scan`.
 
 ## Offline relevance ratio test — 20 October 2026
 

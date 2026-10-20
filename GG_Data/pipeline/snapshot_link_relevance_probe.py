@@ -15,6 +15,9 @@ import hashlib
 import json
 import os
 import re
+import shutil
+import subprocess
+import tempfile
 import time
 from collections import Counter, defaultdict
 from datetime import datetime, timezone
@@ -170,9 +173,50 @@ def linked_pages(blocks, targets: dict[int, str]) -> dict[str, set[int]]:
         + rb")\)[,;]$",
         re.MULTILINE,
     )
+    # The installed native search tool applies the identical regex much faster
+    # than Python over 1.67 billion rows. Python still verifies the entire dump
+    # and owns QID/source-page deduplication. Only selected rows go to temp disk.
+    rg = shutil.which("rg")
+    if rg is None:
+        raise ValueError("The installed rg file-search tool is required")
     pages = defaultdict(set)
-    for block in blocks:
-        for match in pattern.finditer(block):
+    with tempfile.TemporaryFile() as selected, tempfile.TemporaryFile() as errors:
+        with subprocess.Popen(
+            [
+                rg,
+                "--no-config",
+                "--text",
+                "--no-unicode",
+                "--no-line-number",
+                "--no-heading",
+                "--no-filename",
+                "--color",
+                "never",
+                "--",
+                pattern.pattern.decode(),
+                "-",
+            ],
+            stdin=subprocess.PIPE,
+            stdout=selected,
+            stderr=errors,
+        ) as process:
+            try:
+                for block in blocks:
+                    process.stdin.write(block)
+                process.stdin.close()
+                if process.wait() not in (0, 1):
+                    errors.seek(0)
+                    raise ValueError(
+                        f"Native file filter failed: {errors.read(4096)!r}"
+                    )
+            except BaseException:
+                process.kill()
+                raise
+        selected.seek(0)
+        for line in selected:
+            match = pattern.fullmatch(line.rstrip(b"\n"))
+            if match is None:
+                raise ValueError("Native file filter returned an unexpected row")
             pages[targets[int(match[2])]].add(int(match[1]))
     return pages
 
