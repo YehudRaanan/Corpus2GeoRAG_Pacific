@@ -1,5 +1,25 @@
 # Daniel pipeline POC
 
+## Synthetic source-page numerators — 20 October 2026
+
+Approved follow-up: use Daniel's original `Source` relationship for the
+**134 non-date synthetic IDs on the four missing source pages**. Each existing
+synthetic ID has numerator **1**, referring to its own Daniel source title:
+BUROGU 34, Conscription in Japan 45, Gabriel Maurício Teixeira 54, Two Lords
+Incident 1. No grouping by name, new entity, or new match is created. Dates
+remain excluded from this entity diagnostic.
+
+`synthetic_page_numerators.py` verifies the full saved matching file against
+its manifest and adds these rows alongside the 19 existing QID rows in
+`outputs/missing_pages_synthetic_numerators_20261020/numerators.csv`.
+The original QID numerators and scores remain unchanged. `numerator_source`
+distinguishes actual Wikipedia snapshot links from Daniel's source relationships;
+these are not added together. Synthetic QIDs, Wikipedia page IDs, global
+denominators and relevance scores remain empty, since they are unknown.
+Source titles preserve the relationships even when the page lookup failed.
+The report records original row/mention IDs, reasons, input hashes and output hash.
+No network request, filtering, or Event processing is performed.
+
 ## Actual Wikipedia page-link relevance test — 20 October 2026
 
 The approved corrected numerator counts **actual Wikipedia links to each QID**
