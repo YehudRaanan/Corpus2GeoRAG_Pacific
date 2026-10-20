@@ -1,5 +1,17 @@
 # Daniel pipeline POC
 
+## 10K scope-concentration preflight — stopped for consultation
+
+The existing resolved Entity rows contain **1,312 distinct matched MISC QIDs**.
+The verified English snapshot page-properties table covers **674**; **638**
+have no English snapshot page. Their denominator is unavailable under the
+current English measurement, not zero. No score or filter decision was made
+in this preflight. Under the POC stop rule, continuation requires agreement
+on leaving these cases pending while measuring the available population.
+Evidence: `outputs/poc_10k_scope_concentration_preflight_20261020/report.json`
+and `coverage.json`, including all QIDs, statuses and source hashes. Original
+matching and model rows remain unchanged; Event retrieval remains stopped.
+
 ## Measure purpose and eligible entities — 20 October 2026
 
 Use the scope-concentration ratio to identify broad or unrelated MISC entities
