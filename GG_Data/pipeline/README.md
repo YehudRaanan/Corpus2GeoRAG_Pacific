@@ -1,6 +1,62 @@
 # Daniel pipeline POC
 
-## Current: seven-candidate eligibility check verified
+## Current: full discovery stopped on incomplete Canada response
+
+The new run stopped under the user's first-exception rule. After both Q15
+(Africa) incoming graph searches completed, the main-graph Q16 (Canada) request
+returned HTTP 200 with **352,032,025 bytes**, ending inside a result with a
+`java.util.concurrent.TimeoutException` stack trace. JSON parsing failed. The
+entire original response/checksum is cached; no partial rows were accepted and
+no automatic malformed-response retry or new query design was attempted.
+
+Verified status: `VERIFIED_FULL_DISCOVERY_SOURCE_STOP_ONLY`. All 4,712 outgoing
+records were reused (4,705 current and 7 approved saved records). Two of 9,424
+required incoming graph/QID requests completed, containing 29,923 statements.
+The partial union has 75,655 distinct reference QIDs; this is not an Event
+count or complete candidate population. Source verification reconstructed that
+union, checked 105 response receipts, all 17 preceding candidate output hashes
+and all 14 upstream hashes. Zero Event rows were written; no process remains
+running for this continuation.
+
+Evidence: this run's `report.json`, `source_exception.json`,
+`candidate_qids.json` and `verification.json`. The proposed recovery, awaiting
+user approval, is incoming pages of at most 5,000 statements, ordered by native
+statement identity and continued from the last identity. Both graphs and a
+complete page chain remain required. No incomplete page would establish a
+negative result. This changes retrieval size only and is not implemented or
+approved at this checkpoint. The user was consulted before any new retrieval.
+
+## Full-population direct-candidate acquisition
+
+The user approved extending discovery to all 4,712 matched Daniel QIDs.
+`event_discovery.py` reuses the accepted native records for outgoing statements
+and the existing single-Daniel-QID incoming query on both official Wikidata
+query graphs. Source adapters, five-second request spacing, persistent limited
+HTTP retries, size splitting, saved-native fallback and stop rules are reused.
+No Event/type/date filter, matching change or new Daniel identity is introduced.
+
+Run: `outputs/poc_10k_event_full_discovery_20261020`. All 4,712 outgoing records
+were read from the cache, including the same seven approved saved fallbacks:
+87,694 item-valued statements lead to 46,094 distinct reference QIDs. Incoming
+requests then started, with 9,424 graph/QID requests required before cache reuse.
+`report.json` records live counts, source receipts and any first exception;
+`candidate_qids.json` is a partial reference inventory, not included Events.
+Complete acquisition must precede the non-deprecated Event hierarchy and the
+two-distinct-Daniel-QID gate. No model Event rows have been written.
+
+Tests: 50 passed before launch; the strengthened incoming-direction test also
+passed after launch. The preceding seven-candidate outputs remain immutable.
+
+```powershell
+python -m GG_Data.pipeline.event_discovery `
+  --source GG_Data/pipeline/outputs/poc_10k_event_seven_saved_fallback_20261020 `
+  --mentions GG_Data/pipeline/outputs/poc_10k/mentions.json.gz `
+  --saved-entities GG_Data/pipeline/outputs/poc_10k_entities_approved/entities.json.gz `
+  --output GG_Data/pipeline/outputs/poc_10k_event_full_discovery_20261020 `
+  --store GG_Data/pipeline/outputs/wikidata_current_event_cache
+```
+
+## Previous: seven-candidate eligibility check verified
 
 `outputs/poc_10k_event_seven_saved_fallback_20261020/verification.json` records
 `VERIFIED_SEVEN_CANDIDATE_ELIGIBILITY_ONLY`. All **4,712 Daniel QIDs** were

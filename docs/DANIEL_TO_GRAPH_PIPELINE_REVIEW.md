@@ -1,6 +1,45 @@
 # Daniel input to final graph JSON review
 
-## Current: seven-candidate eligibility verified
+## Current: full discovery stopped at Canada source failure
+
+The continuation reached complete outgoing coverage but stopped during incoming
+acquisition, as required. Both Africa/Q15 graph searches completed (29,923
+statements). The next main-graph Canada/Q16 response had HTTP 200 and
+352,032,025 bytes, with a server `TimeoutException` appended inside unfinished
+JSON. Its complete bytes/checksum remain cached. No partial rows, malformed-data
+retry or independent retrieval change were accepted; the process has ended.
+
+`verification.json` in the new run records
+`VERIFIED_FULL_DISCOVERY_SOURCE_STOP_ONLY`: 4,712 native records checked,
+2/9,424 incoming graph/QID requests complete, 75,655 partial reference candidates,
+105 source-response checks, 17 unchanged preceding candidate output hashes and
+14 unchanged upstream hashes. There are zero new Event rows. These reference
+counts do not establish Event inclusion or full discovery.
+
+User consultation is pending on smaller incoming pages (at most 5,000 native
+statements, ordered identity cursor, both graphs and complete page chain).
+No pagination logic or new data rule is approved/implemented at this checkpoint.
+Tests: 50 passed before launch; the strengthened discovery test passed afterward.
+
+## Full-population discovery authorization
+
+The user approved discovery across all 4,712 matched Daniel QIDs, using the
+existing approved sources/rules. `event_discovery.py` reads cached outgoing
+native records and the existing incoming query on both Wikidata graphs. It
+preserves the raw non-DATE population definition, all statement ranks and the
+same seven explicit saved-native fallbacks. Sources, matching and IDs stay
+unchanged; reference candidates never become Daniel entities.
+
+Run: `GG_Data/pipeline/outputs/poc_10k_event_full_discovery_20261020`.
+Outgoing coverage is complete: 4,712 records, 87,694 native item statements,
+46,094 distinct reference targets. Incoming acquisition started; the exact
+graph/QID requirement is 9,424 requests before cache reuse. Read `report.json`
+for progress/first exception. This inventory still requires full acquisition,
+Event hierarchy classification and the two-distinct-Daniel-QID gate. No Event
+model rows are written. Tests: 50 passed before launch. Earlier results remain
+immutable; no full-population completion is claimed.
+
+## Previous: seven-candidate eligibility verified
 
 The approved missing-record continuation completed at
 `GG_Data/pipeline/outputs/poc_10k_event_seven_saved_fallback_20261020`.

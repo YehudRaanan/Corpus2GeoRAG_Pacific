@@ -51,7 +51,20 @@ def test_inventory_reuses_native_records_covers_both_graphs_and_stops(
         assert params["query"] == events.incoming_query("Q1")
         if fail_incoming:
             raise SourceException("Unexpected source data")
-        return {"results": {"bindings": []}}, dict(cache="test")
+        return {
+            "results": {
+                "bindings": [
+                    {
+                        "subject": {"value": "http://www.wikidata.org/entity/Q4"},
+                        "property": {"value": "http://www.wikidata.org/entity/P17"},
+                        "statement": {
+                            "value": "http://www.wikidata.org/entity/statement/Q4-00000000-0000-0000-0000-000000000000"
+                        },
+                        "rank": {"value": "http://wikiba.se/ontology#DeprecatedRank"},
+                    }
+                ]
+            }
+        }, dict(cache="test")
 
     monkeypatch.setattr(events, "current_records", records)
     monkeypatch.setattr(
@@ -66,7 +79,9 @@ def test_inventory_reuses_native_records_covers_both_graphs_and_stops(
     assert report["event_population_complete"] is False
     assert report["full_10k_event_discovery_complete"] is False
     assert not (output / "events.json").exists()
-    assert json.loads((output / "candidate_qids.json").read_text()) == ["Q3"]
+    assert json.loads((output / "candidate_qids.json").read_text()) == (
+        ["Q3"] if fail_incoming else ["Q3", "Q4"]
+    )
     if fail_incoming:
         assert requests == [events.QUERY_URL]
         assert report["status"] == "BLOCKED_EVENT_DISCOVERY"
@@ -75,6 +90,7 @@ def test_inventory_reuses_native_records_covers_both_graphs_and_stops(
         assert requests == [events.QUERY_URL, events.SCHOLARLY_QUERY_URL]
         assert report["status"] == "DIRECT_CANDIDATE_ACQUISITION_ONLY"
         assert report["incoming_requests_complete"] == 2
+        assert report["incoming_statements"] == 2
     # Changed accepted evidence stops before another request or output creation.
     mentions.write_text("[]")
     with pytest.raises(SourceException, match="Accepted upstream output changed"):

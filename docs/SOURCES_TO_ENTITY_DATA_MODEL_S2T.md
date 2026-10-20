@@ -276,6 +276,33 @@ addition of Event links to the populated Relations model, Geography and final
 graph/Agent integration remain pending. Tests: 48 passed. See the pipeline
 README for the complete results and visible seven-record fallback list.
 
+**Full-population continuation approved, 20 October 2026:** extend the same
+direct-candidate discovery to all 4,712 matched Daniel QIDs. The implementation
+`GG_Data.pipeline.event_discovery` verifies accepted upstream checksums, reuses
+the full native outgoing cache and issues the existing single-QID incoming query
+to both official Wikidata graphs. All ranks and both directions remain required.
+The same source adapters, approved retries/size split/saved-native fallback and
+first-exception stop rule apply. No new classification or matching rule is added.
+`outputs/poc_10k_event_full_discovery_20261020` records progress and candidate
+reference QIDs; these are not additional Daniel entities or included Events.
+Outgoing cache coverage is 4,712 records, 87,694 item-valued statements and
+46,094 distinct targets. Complete incoming acquisition, approved hierarchy and
+inclusion gates, and model population remain separate required steps.
+
+**Full-discovery source exception:** both Africa/Q15 incoming graph searches
+completed, but the main-graph Canada/Q16 response returned HTTP 200 with
+352,032,025 bytes ending in an embedded server `TimeoutException`. The original
+body/checksum remains cached; malformed JSON was rejected without using partial
+rows or retrying. The run stopped at 2/9,424 incoming graph/QID requests, with
+29,923 incoming statements and 75,655 partial reference QIDs in the union.
+`verification.json` has status `VERIFIED_FULL_DISCOVERY_SOURCE_STOP_ONLY`;
+105 response checks, 17 prior candidate output hashes and 14 upstream hashes
+passed. No Event rows or complete discovery result exist. Proposed smaller
+incoming pages (at most 5,000 statements with a native identity cursor and
+complete coverage across both graphs) were brought back to the user before
+implementation or another source request. Approval is pending; source and
+business rules are unchanged.
+
 The approved root is Wikidata's broad [event, Q140451665](https://www.wikidata.org/wiki/Q140451665), including all classes below it through native [P279 subclass-of](https://www.wikidata.org/wiki/Property:P279) statements. Identify event instances through [P31 instance-of](https://www.wikidata.org/wiki/Property:P31) and those subclass paths. Record root QID, snapshot, native class IDs and path evidence. Do not replace it with the narrower organized-event root, add a local event-type whitelist, or invent war/campaign/battle levels.
 
 For each discovered event QID, use its direct mapped Wikidata assertions to/from **D**. Include it only if at least two distinct Daniel QIDs qualify. Repeated mentions, several predicates for one entity, duplicate retrievals and generated reverse views do not increase this count. Classification hierarchy paths identify an event; they do not count as indirect participant paths. Do not count mere shared class ancestry or article co-mentions as an event/entity connection.
