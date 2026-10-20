@@ -248,7 +248,15 @@ def linked_pages(blocks, targets: dict[int, str]) -> dict[str, set[int]]:
     if rg is None:
         raise ValueError("The installed rg file-search tool is required")
     pages = defaultdict(set)
-    with tempfile.TemporaryFile() as selected, tempfile.TemporaryFile() as errors:
+    with (
+        tempfile.TemporaryDirectory() as pattern_dir,
+        tempfile.TemporaryFile() as selected,
+        tempfile.TemporaryFile() as errors,
+    ):
+        # Pass the identical expression by file: the English population exceeds
+        # Windows' command-line limit. Counts and S2T 6.1 rules stay unchanged.
+        pattern_path = Path(pattern_dir) / "targets.regex"
+        pattern_path.write_bytes(pattern.pattern + b"\n")
         with subprocess.Popen(
             [
                 rg,
@@ -260,8 +268,9 @@ def linked_pages(blocks, targets: dict[int, str]) -> dict[str, set[int]]:
                 "--no-filename",
                 "--color",
                 "never",
+                "--file",
+                str(pattern_path),
                 "--",
-                pattern.pattern.decode(),
                 "-",
             ],
             stdin=subprocess.PIPE,

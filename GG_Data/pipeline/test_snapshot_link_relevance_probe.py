@@ -121,3 +121,14 @@ def test_actual_links_count_each_page_once_across_aliases(tmp_path):
     receipt.write_text(json.dumps({"scanned_rows": 7}))
     with pytest.raises(ValueError, match="coverage differs"):
         list(dump_blocks(path, "pagelinks", lambda **v: None, block_size=17))
+
+
+def test_population_filter_exceeds_windows_command_limit():
+    # Regression for WinError 206: realistic target count and ID lengths.
+    targets = {100000000 + i: "1" for i in range(9000)}
+    assert len("|".join(map(str, targets))) > 32767
+    blocks = [
+        b"(100,0,100000000),\n(100,0,100008999),\n(200,0,100008999),\n"
+        b"(300,1,100000000),\n(400,0,100009000),\n(500,0,1000000000);\n"
+    ]
+    assert dict(linked_pages(blocks, targets)) == {"1": {100, 200}}

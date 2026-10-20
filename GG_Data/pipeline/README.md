@@ -44,12 +44,12 @@ hashes, source-page deduplication and population coverage passed.
 The English continuation resolved its aliases and verified all **131,511,582**
 link-target rows, selecting **8,723** target IDs. It then stopped before the
 global page-link scan: Windows rejected the filter command length (WinError
-206). No English population scores or threshold output were written. Proposed
-technical correction: pass the identical native `rg` filter through a temporary
-pattern file instead of the command line. Approval is pending under the POC
-stop rule. No retrieval, matching or Event acquisition was started. The four
-focused tests pass, including shared final-page counting and separate EN/JA
-decisions. Generated outputs remain ignored local artifacts.
+206). No English population scores or threshold output were written in that
+attempt. The user approved fixing and resuming: pass the identical native `rg`
+filter through a temporary pattern file instead of the command line. Counts,
+sources and rules stay unchanged. Preserve the failed attempt and write the
+continuation to a new directory. No retrieval, matching or Event acquisition
+was started. Generated outputs remain ignored local artifacts.
 
 ## Historical English-only 10K preflight — superseded by language clarification
 
