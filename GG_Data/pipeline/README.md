@@ -5,7 +5,12 @@
 Calculate **English and Japanese separately**, with the same formula and 5%
 threshold. A missing article in one language does not block the other. Each
 `(wiki, QID)` has its own counts, score, status and threshold decision; unknown
-denominators remain null. Do not merge counts or infer a combined QID decision.
+denominators remain null. **Approved combined rule:** the QID-level score is
+the highest available English/Japanese percentage. Keep scores >=5%; exclude
+scores <5% from Event retrieval. Use the sole available score when the other
+is missing; if both are missing, keep the combined decision unknown and consult.
+Preserve the separate language evidence and do not pool counts. Implementation
+and validation of the combined decision against the saved 10K outputs are pending.
 Use `snapshot_link_relevance_probe.py --population --wiki enwiki` (or `jawiki`)
 to measure all existing resolved MISC QIDs in the frozen 10K model against
 the full saved source-page scope in that language. Reuse the saved dumps;
@@ -73,7 +78,8 @@ English unavailable cases comprise **639 without a snapshot article** and
 measurement page; original QIDs remain unchanged. The four known missing
 English source titles remain explicit incomplete scope coverage. Input/output
 hashes, population coverage, deduplicated source-page sets and exact integer
-threshold comparisons passed. Language decisions remain separate. The Entity
+threshold comparisons passed. The outputs below contain separate language
+decisions; the approved maximum-score combination is not yet implemented. The Entity
 table and matching decisions are unchanged; Event acquisition is still stopped.
 
 - English measurements: `outputs/poc_10k_misc_snapshot_link_relevance_enwiki_patternfile_20261020/report.json`

@@ -183,8 +183,15 @@ using the same formula and 5% threshold in each. Key scores and decisions by
 A missing article in one language does not block calculation in the other.
 Use the full saved Daniel source-page scope for that language, including
 retrieved Japanese counterparts. An unavailable language score has no filter
-decision; it is not a failed 5% test. A rule to combine different language
-decisions into one QID-level Event retrieval decision is not yet defined.
+decision; it is not a failed 5% test. **Combined-language rule, approved
+20 October 2026:** use the highest available percentage across English and
+Japanese as the QID-level Event retrieval score. Keep the QID when this maximum
+is >=0.05; exclude it from Event retrieval when the maximum is <0.05. If only
+one language has a score, use that score. If neither has a score, the combined
+score and decision remain unknown and require consultation. Do not treat a
+missing score as zero or pool language counts. Preserve both language scores
+as supporting evidence. This decision is now closed; implementation and a
+combined-result check against the saved 10K outputs are still pending.
 Preserve all
 original model rows and matching assignments. This threshold does not change
 the matching similarity threshold, Event hierarchy or two-entity inclusion rule.
