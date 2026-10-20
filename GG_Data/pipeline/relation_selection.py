@@ -1,6 +1,6 @@
 """Approved non-event cap: population S2T 8 and ERD 6.
 
-Score existing Daniel QIDs without a graph. Select only after the complete Event
+Score existing Daniel identities without a graph. Select only after the complete Event
 population is supplied, so no Event link can accidentally consume a capped slot.
 Raw statements, matching decisions and previous outputs are never modified.
 """
@@ -19,7 +19,7 @@ from GG_Data.pipeline.poc import ROOT, digest, read_json
 from GG_Data.pipeline.relations import SourceException
 
 LOG = logging.getLogger(__name__)
-POLICY = "daniel-mutual-top-20-v1.0.0"
+POLICY = "daniel-mutual-top-20-v1.0.1"
 LIMIT = 20
 
 
@@ -27,9 +27,10 @@ def importance(mentions: list[dict]) -> dict[str, dict]:
     """Count original mention occurrences and distinct Daniel source pages.
 
     `raw.Source` is Daniel's supplied source-page title, not the separately
-    retrieved bilingual page inventory. Count only accepted non-DATE QIDs,
-    once per original mention; repeated type rows are not additional mentions.
-    Do not invent a page ID for an unresolved page lookup.
+    retrieved bilingual page inventory. Count accepted non-DATE QIDs and all
+    existing synthetic identities, once per original mention. Synthetic DATE
+    errors remain Entity rows, unlike successfully normalized dates. Count no
+    extra mentions for repeated types; invent no source-page identities.
     """
     seen, counts, pages = set(), Counter(), defaultdict(set)
     for row in mentions:
@@ -40,8 +41,10 @@ def importance(mentions: list[dict]) -> dict[str, dict]:
             )
         seen.add(mid)
         qid = row.get("entity_id")
-        if row["raw"]["entity_group"] == "DATE" or not re.fullmatch(
-            r"Q[1-9]\d*", qid or ""
+        synthetic = isinstance(qid, str) and qid.startswith("SYN_")
+        if not synthetic and (
+            row["raw"]["entity_group"] == "DATE"
+            or not re.fullmatch(r"Q[1-9]\d*", qid or "")
         ):
             continue
         source = row["raw"]["Source"]
@@ -51,6 +54,10 @@ def importance(mentions: list[dict]) -> dict[str, dict]:
             )
         counts[qid] += 1
         pages[qid].add(source)
+        if synthetic and counts[qid] > 1:
+            raise SourceException(
+                "Synthetic identity reused across mentions", entity_id=qid
+            )
     return {
         qid: dict(
             distinct_source_pages=len(pages[qid]),
@@ -58,7 +65,7 @@ def importance(mentions: list[dict]) -> dict[str, dict]:
             score=len(pages[qid]) * count,
             source_pages=sorted(pages[qid]),
         )
-        for qid, count in sorted(counts.items(), key=lambda pair: int(pair[0][1:]))
+        for qid, count in sorted(counts.items())
     }
 
 
@@ -154,10 +161,11 @@ def select(
 def attach_importance(
     entities: list[dict], scores: dict[str, dict], population_sha256: str
 ) -> list[dict]:
-    """ERD 1 / population S2T 6: persist the approved QID-level score.
+    """ERD 1 / population S2T 6: persist the approved identity-level score.
 
     Separate typed rows retain their identities and share their QID's score.
-    Synthetic rows have no Wikidata score; null never means zero importance.
+    Synthetic identities use their own mention/page counts, independent of
+    Wikidata matching. Each per-mention synthetic ID therefore scores 1.
     """
     result, seen, qids = [], set(), set()
     for row in entities:
@@ -168,23 +176,21 @@ def attach_importance(
         seen.add(key)
         if "importance" in row or "importance_basis" in row["attributes"]:
             raise SourceException("Entity importance already supplied", entity_id=qid)
-        synthetic = qid.startswith("SYN_")
-        if not synthetic:
-            qids.add(qid)
-            if qid not in scores:
-                raise SourceException("Entity importance missing", entity_id=qid)
-        score = None if synthetic else scores[qid]
+        qids.add(qid)
+        if qid not in scores:
+            raise SourceException("Entity importance missing", entity_id=qid)
+        score = scores[qid]
         basis = dict(
             policy=POLICY,
             population_sha256=population_sha256,
-            status="SYNTHETIC_UNRESOLVED" if synthetic else "SCORED",
-            distinct_source_pages=None if synthetic else score["distinct_source_pages"],
-            total_mentions=None if synthetic else score["total_mentions"],
+            status="SCORED",
+            distinct_source_pages=score["distinct_source_pages"],
+            total_mentions=score["total_mentions"],
         )
         result.append(
             {
                 **row,
-                "importance": None if synthetic else score["score"],
+                "importance": score["score"],
                 "attributes": {**row["attributes"], "importance_basis": basis},
             }
         )
@@ -238,8 +244,12 @@ def prepare(mentions: Path, output: Path, entities_source: Path | None = None) -
             manifest_sha256=digest(mentions.parent / "manifest.json"),
         ),
         source_page_basis="Original raw.Source values supplied by Daniel",
-        qids_scored=len(scores),
-        matched_non_date_mentions=sum(row["total_mentions"] for row in scores.values()),
+        qids_scored=sum(qid.startswith("Q") for qid in scores),
+        synthetic_ids_scored=sum(qid.startswith("SYN_") for qid in scores),
+        mentions_scored=sum(row["total_mentions"] for row in scores.values()),
+        matched_non_date_mentions=sum(
+            row["total_mentions"] for qid, row in scores.items() if qid.startswith("Q")
+        ),
         code_sha256=digest(Path(__file__)),
         outputs={destination.name: digest(destination)},
         capped_relations_written=0,
@@ -255,7 +265,9 @@ def prepare(mentions: Path, output: Path, entities_source: Path | None = None) -
             status="ENTITIES_IMPORTANCE_ONLY_EVENTS_PENDING",
             entity_count=len(entities),
             scored_entity_rows=sum(r["importance"] is not None for r in entities),
-            synthetic_entity_rows=sum(r["importance"] is None for r in entities),
+            synthetic_entity_rows=sum(
+                r["entity_id"].startswith("SYN_") for r in entities
+            ),
             entities_input=dict(
                 file=str(entity_manifest_path), sha256=digest(entity_manifest_path)
             ),
@@ -267,7 +279,8 @@ def prepare(mentions: Path, output: Path, entities_source: Path | None = None) -
         )
     (output / "report.json").write_text(json.dumps(report, indent=2), encoding="utf-8")
     LOG.info(
-        "Prepared importance for %s Daniel QIDs; no Relations selected", len(scores)
+        "Prepared importance for %s Daniel identities; no Relations selected",
+        len(scores),
     )
     return report
 

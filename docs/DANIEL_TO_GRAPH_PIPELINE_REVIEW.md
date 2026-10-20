@@ -8,7 +8,9 @@ This supersedes the earlier prohibition on direct links between included Events.
 
 Status: selector implemented and tested; actual application awaits complete Event membership. `outputs/poc_10k_relation_importance_20261020` saves scores for 4,712 QIDs from the frozen sample's 7,692 matched non-DATE mentions, with original `raw.Source` page counts and checksum lineage. No capped Relations or graph is written. The user's subsequent instruction to implement and keep running starts the paged continuation below; the cap does not prove full Event coverage.
 
-Latest approved Entity attribute run: `outputs/poc_10k_entities_importance_20261020` persists scalar `importance` plus `attributes.importance_basis` on the existing Entities table. Verified: 6,077 unchanged identities, 4,721 scored typed rows for 4,712 QIDs, 1,356 synthetic nulls, unchanged prior fields and source evidence, valid hashes, 56 tests passed. Scores use the frozen 10K population. Event importance is separate. No new service request ran; the Canada Event acquisition stop remains open.
+Historical Entity attribute run (superseded): `outputs/poc_10k_entities_importance_20261020` stored scalar `importance` plus `attributes.importance_basis` on the existing Entities table. It retained 6,077 identities and scored 4,721 QID/type rows, but left 1,356 synthetic nulls. The user correctly rejected that restriction: each per-mention synthetic ID has one mention on one page and must score 1. Scores use the frozen 10K population. Event importance is separate; no new service request was run.
+
+Current corrected output: `outputs/poc_10k_entities_importance_synthetic_scored_20261020`, verified `VERIFIED_ENTITIES_IMPORTANCE_INCLUDING_SYNTHETICS`. All 6,077 Entity rows have scores, with all 1,356 synthetic scores equal to 1. Previous QID scores and original fields are unchanged; input/output hashes pass and 56 tests pass. No new query was run; the Canada Event acquisition stop remains open.
 
 ## Current continuation: paged source acquisition
 

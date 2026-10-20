@@ -26,6 +26,8 @@ def test_counts_original_mentions_and_source_pages_without_type_or_counterpart_f
                 ("Q1", "ORG", "Page B"),
                 ("Q2", "DATE", "Page A"),
                 ("SYN_3", "LOC", "Page C"),
+                ("SYN_DATE_4", "DATE", "Page D"),
+                (None, "DATE", "Page D"),
             ]
         )
     ]
@@ -35,10 +37,18 @@ def test_counts_original_mentions_and_source_pages_without_type_or_counterpart_f
             total_mentions=3,
             score=6,
             source_pages=["Page A", "Page B"],
-        )
+        ),
+        "SYN_3": dict(
+            distinct_source_pages=1, total_mentions=1, score=1, source_pages=["Page C"]
+        ),
+        "SYN_DATE_4": dict(
+            distinct_source_pages=1, total_mentions=1, score=1, source_pages=["Page D"]
+        ),
     }
     with pytest.raises(SourceException, match="Repeated original mention"):
         importance(mentions + [mentions[0]])
+    with pytest.raises(SourceException, match="Synthetic identity reused"):
+        importance(mentions + [{**mentions[4], "mention_id": "new-mention"}])
 
 
 def test_mutual_selection_no_refill_event_exemption_and_source_preservation():
@@ -76,16 +86,19 @@ def test_equal_cutoff_scores_stop_and_multiple_assertions_spend_separate_slots()
         select(rows[:1], {}, set(), event_population_complete=True)
 
 
-def test_entity_score_preserves_types_raw_evidence_and_synthetic_null():
+def test_entity_score_preserves_types_raw_evidence_and_scores_synthetic():
     rows = [
         dict(entity_id=qid, type=kind, attributes={"original": ["evidence"]})
         for qid, kind in [("Q1", "LOC"), ("Q1", "ORG"), ("SYN_1", "MISC")]
     ]
     original = copy.deepcopy(rows)
-    scores = {"Q1": dict(distinct_source_pages=2, total_mentions=3, score=6)}
+    scores = {
+        "Q1": dict(distinct_source_pages=2, total_mentions=3, score=6),
+        "SYN_1": dict(distinct_source_pages=1, total_mentions=1, score=1),
+    }
     result = attach_importance(rows, scores, "population-hash")
     assert rows == original
-    assert [r["importance"] for r in result] == [6, 6, None]
+    assert [r["importance"] for r in result] == [6, 6, 1]
     for prior, current in zip(original, result):
         assert current["attributes"]["original"] == prior["attributes"]["original"]
         assert current["entity_id"] == prior["entity_id"]
@@ -94,9 +107,7 @@ def test_entity_score_preserves_types_raw_evidence_and_synthetic_null():
             current["attributes"]["importance_basis"]["population_sha256"]
             == "population-hash"
         )
-    assert (
-        result[-1]["attributes"]["importance_basis"]["status"] == "SYNTHETIC_UNRESOLVED"
-    )
+    assert result[-1]["attributes"]["importance_basis"]["status"] == "SCORED"
     with pytest.raises(SourceException, match="Entity importance missing"):
         attach_importance(rows, {}, "population-hash")
     with pytest.raises(SourceException, match="Repeated Entity identity"):
