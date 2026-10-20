@@ -167,6 +167,65 @@ The approved name order supersedes a simple copy of the compact metadata's selec
 
 **POC naming decision, approved 20 October 2026:** retain the older English labels for Q132537 (`Robert Oppenheimer`, revision 2380462137; newer full revision 2555601950 has Japanese `ロバート・オッペンハイマー` and no English) and Q1771928 (`Why We Fight`, revision 2286990634; newer full revision 2506639226 has Japanese `我々はなぜ戦うのか` and no English). Record this approval in each affected row's `attributes.name_selection`; retain both raw versions. This closes the reported language/version hold for these two pinned cases. Other cases in which a newer record lacks a label supplied by an older record still require discussion. The first attempt remains `DRAFT_NOT_ACCEPTED`, with its historical blocked manifest retained. Rerun into a new output directory using the complete saved cache; no new query is needed. No ID, type or matching decision changes.
 
+### 6.1 Scope-concentration measure: approved purpose and synthetic exclusion
+
+**User decision, 20 October 2026:** use this measure to identify broad or
+unrelated MISC entities before Event retrieval, using their concentration in
+Daniel's WWII/Pacific page scope. It does not require a constructed graph and
+does not measure historical importance. No numerical filtering cutoff has
+been approved; the diagnostic does not itself filter entities or restart Events.
+
+For each eligible matched Wikidata QID:
+
+**Scope concentration = distinct Wikipedia source pages linking to the QID
+within Daniel's full source-page scope / all distinct Wikipedia source pages
+linking to that QID.**
+
+Daniel supplies the source-page scope from the full input version, not the
+mention-to-QID assignments used in the earlier, superseded numerator. Count
+actual Wikipedia links once per `(QID, source page ID)`, across target aliases
+and redirects. Use the same language, Wikipedia snapshot and namespace rules
+for both counts. The saved resolver includes template/navigation links.
+Bind the measure to the input version/hash and page snapshot manifest; do not
+hardcode this run's snapshot date for later Daniel versions.
+
+**Synthetic IDs are excluded from this measure.** A Daniel source-page
+relationship alone does not supply a matched QID or a global linking-page
+denominator. Do not add synthetic page counts to QID numerators, create QIDs,
+merge unresolved mentions, or delete their existing model records. Their
+original Daniel page relationships remain preserved. This exclusion does not
+change the separate `Entities.importance` rule above or its synthetic score of
+1; scope concentration is not the top-20 relation importance measure.
+
+The existing supporting diagnostic report/CSV supplies these fields; no new
+business table or populated model column is claimed by this specification:
+
+| Supporting field | Source and calculation |
+|---|---|
+| `qid`, `name` | Selected existing matched QID and saved diagnostic display name; no new matching or identity creation. |
+| `scope_linking_pages` | Cardinality of the intersection of actual linking-page IDs and the distinct resolved page IDs in Daniel's full source-page scope. |
+| `all_linking_pages` | All distinct source article page IDs linking to the QID under the same snapshot/language/redirect rules. |
+| `scope_page_ids` | Exact deduplicated page IDs supporting the numerator, retained in the report. |
+| `relevance` | `scope_linking_pages / all_linking_pages` when the global denominator is known and positive. An unavailable denominator is unknown, not zero. |
+| Snapshot, coverage and hashes | Full Daniel source-title scope, missing titles, distinct resolved page count, dump date, language, link rules, input/output hashes and dump-verification receipts. |
+
+**Verified diagnostic:** the 19 selected English QIDs use snapshot `20261001`
+for both counts. Daniel's 428 source titles resolve to 424 titles and 413
+distinct article page IDs; four titles remain missing. Twelve QIDs have
+positive observed scope counts and seven have zero. Zero means no link in
+the checked pages, not proven absence from the four missing pages. Missing
+source pages remain explicit incomplete coverage. The 19-QID test does not
+establish full-population measurement or approve a threshold.
+
+Active evidence:
+`GG_Data/pipeline/outputs/poc_10k_misc_snapshot_link_relevance_20261020/report.json`
+and `scores.csv`; implementation:
+[snapshot_link_relevance_probe.py](../GG_Data/pipeline/snapshot_link_relevance_probe.py).
+The later 153-row synthetic extension under
+`outputs/missing_pages_synthetic_numerators_20261020/` is superseded historical
+evidence only; its code was removed. No original matching decision, model row,
+Event rule or relation-importance score was changed.
+
 ## 7. Events: discovery, inclusion and fields
 
 **Latest approved source exception, 20 October 2026:** Event classification uses the latest available Wikidata P31/P279 hierarchy, with verified cache reuse first, even if the agreed snapshot contains an older class record. This supersedes snapshot-first priority for classification evidence only. Entities, Event assertion records and Relations retain the agreed snapshot-first source rule and latest-available same-QID fallback when required input is absent. Root Q140451665, non-deprecated classification, all statement ranks in Relations, and the two-distinct-Daniel-QID gate are unchanged. No version-difference report is required.
@@ -488,6 +547,7 @@ Before an implementation can claim completion:
 |---|---|
 | Input and decision accounting | Exactly 309,864 Mentions for the pinned input, unchanged original fields/order/IDs, complete stage/reason accounting and separate NER/matching scores. |
 | Identity and page keys | Unique `(entity_id, type)` pairs and valid composite mention FKs; QID-level references exist without multiplying assertions; page-key pairs complete; no talk IDs, Index-as-page-ID, cache-only entity expansion or extra Daniel mentions. |
+| Scope-concentration measure, when supplied | Matched QIDs only; exclude synthetic IDs. Both page counts use the same snapshot/language/link rules, with source-page deduplication and full Daniel page scope. Report missing coverage and unknown denominators. Keep this measure separate from `Entities.importance`; no cutoff or automatic filtering without approval. |
 | Events | Native root/snapshot/path evidence; original QIDs; all approved event types; at least two distinct direct Daniel QIDs; incoming/outgoing acquisition coverage reported. |
 | Assertions | Reconcile retrieved eligible statements = retained mapped base rows + exact exclusions + explicitly reported unmapped/ambiguous/blocked cases, deduplicated by source statement. Report all categories and ranks. No silent loss through join/mapping/rank filters. |
 | Geometry | At most one accepted object per place; failed attempts retained; source and CRS known; valid nonempty Shapely/WKB round trip before delivery. |
