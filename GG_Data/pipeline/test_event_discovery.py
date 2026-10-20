@@ -9,6 +9,65 @@ from GG_Data.pipeline.poc import digest
 from GG_Data.pipeline.relations import SourceException
 
 
+def test_paged_incoming_keeps_all_pages_reuses_cache_and_rejects_overlap(
+    tmp_path, monkeypatch
+):
+    qid, url = "Q1", events.QUERY_URL
+    ids = [f"http://www.wikidata.org/entity/statement/Q2-{i:032x}" for i in range(3)]
+    calls = []
+
+    def cached(store, source, params):
+        calls.append(params["query"])
+        index = 0 if len(calls) == 1 else 2
+        return {"ids": ids[index : index + 2]}, dict(cache="test", status="OK")
+
+    monkeypatch.setattr(events, "cached_json", cached)
+    monkeypatch.setattr(
+        event_discovery,
+        "incoming_links",
+        lambda data, _: [dict(source_record_id=sid) for sid in data["ids"]],
+    )
+    pages = list(event_discovery.incoming_pages(tmp_path, url, qid, 2))
+    assert [len(rows) for rows, _, _ in pages] == [2, 1]
+    assert [complete for _, _, complete in pages] == [False, True]
+    assert ids[1] in calls[1] and "LIMIT 2" in calls[1]
+    # A complete older unpaged response is reused rather than requested anew.
+    receipt = (
+        events.cache_path(
+            tmp_path, url, {"query": events.incoming_query(qid), "format": "json"}
+        )
+        / "request.json"
+    )
+    receipt.parent.mkdir(parents=True)
+    receipt.write_text(json.dumps(dict(status="OK")))
+    calls.clear()
+    pages = list(event_discovery.incoming_pages(tmp_path, url, qid, 2))
+    assert len(pages) == 1 and calls == [events.incoming_query(qid)]
+    assert pages[0][1]["reused_unpaged"] is True
+    # A failed old response remains intact; it is not treated as complete data.
+    receipt.write_text(json.dumps(dict(status="FAILED")))
+    monkeypatch.setattr(
+        events, "cached_json", lambda *args: ({"ids": [ids[1], ids[0]]}, {})
+    )
+    with pytest.raises(SourceException, match="Invalid incoming page"):
+        list(event_discovery.incoming_pages(tmp_path, url, qid, 2))
+    assert json.loads(receipt.read_text())["status"] == "FAILED"
+    monkeypatch.setattr(events, "cached_json", lambda *args: ({"ids": ids[:2]}, {}))
+    with pytest.raises(SourceException, match="Invalid incoming page"):
+        list(event_discovery.incoming_pages(tmp_path, url, qid, 2))
+
+
+def test_page_query_validates_cursor_and_size_without_changing_source_scope():
+    query = events.incoming_page_query("Q16")
+    assert "LIMIT 5000" in query and "ORDER BY STR(?statement)" in query
+    assert "wikibase:rank ?rank" in query and "P279" not in query
+    for size in (0, 5001, True):
+        with pytest.raises(ValueError):
+            events.incoming_page_query("Q16", size=size)
+    with pytest.raises(ValueError):
+        events.incoming_page_query("Q16", 'x") } UNION { ?s ?p ?o')
+
+
 @pytest.mark.parametrize("fail_incoming", [False, True])
 def test_inventory_reuses_native_records_covers_both_graphs_and_stops(
     tmp_path, monkeypatch, fail_incoming

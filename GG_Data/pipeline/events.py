@@ -185,6 +185,29 @@ SELECT DISTINCT ?subject ?statement ?property ?rank WHERE {{
 """
 
 
+def incoming_page_query(qid: str, after: str | None = None, size: int = 5000) -> str:
+    """Page the same full assertions; never cap the Event discovery population.
+
+    Continuation approved after the Canada stop: order by native statement URI
+    and advance only after a complete validated page. No OFFSET or hierarchy
+    join is added. Existing failed unpaged responses remain untouched.
+    """
+    if type(size) is not int or not 1 <= size <= 5000:
+        raise ValueError("Expected a page size from 1 through 5000")
+    cursor = ""
+    if after is not None:
+        if not re.fullmatch(
+            r"http://www.wikidata.org/entity/statement/[Qq][1-9]\d*-[0-9a-fA-F-]+",
+            after,
+        ):
+            raise ValueError("Expected a native statement URI cursor")
+        cursor = f"  FILTER(STR(?statement) > {json.dumps(after)})\n"
+    query = incoming_query(qid)
+    return (
+        query.rstrip()[:-1] + cursor + f"}}\nORDER BY STR(?statement)\nLIMIT {size}\n"
+    )
+
+
 def current_record(store: Path, qid: str) -> tuple[dict, dict]:
     """Retrieve the complete native JSON; never redirect or project claims."""
     if not re.fullmatch(r"Q[1-9]\d*", qid):
