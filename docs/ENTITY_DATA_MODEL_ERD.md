@@ -255,11 +255,13 @@ One event-specific extension per Wikidata event entity. Names, aliases, source r
 | `importance` | number, nullable | Optional Agent ranking input only when supplied with its basis. |
 | `attributes` | JSON | Existing event enrichment, including kind/importance aliases required by Agent, with evidence. |
 
-Event links to Daniel's matched QIDs use Relations. Current acquisition includes Wikidata assertions between Daniel's matched QIDs and included-event/Daniel links; it does not expand to arbitrary event/event assertions. Roles such as attacker/defender belong in the sourced relation's `attributes.side`, not an extra participant table or an inferred relationship. Event discovery uses the approved native P31/P279 hierarchy rooted at Q140451665, without internal event categories or levels.
+Event links to Daniel's matched QIDs use Relations. Acquisition includes direct Wikidata assertions between Daniel's matched QIDs, included-event/Daniel links, and links between two independently included Events. Event links are uncapped; they do not extend the Event population or replace the two-Daniel-QID gate. Roles such as attacker/defender belong in the sourced relation's `attributes.side`, not an extra participant table or an inferred relationship. Event discovery uses the approved native P31/P279 hierarchy rooted at Q140451665, without internal event categories or levels.
 
 ## 6. Relations
 
 One retained base row per source assertion, with its original input preserved. Canonical endpoints may differ from source orientation after a versioned mapping.
+
+Approved on 20 October 2026: non-event QIDs have at most 20 incident base relations to other non-events. Rank by the other QID's distinct Daniel source pages multiplied by original mention count; retain an assertion only if selected in both endpoint top-20 sets. Reverse views do not spend another slot. Event/Event and Event/other links are exempt. Scores and selection decisions belong in supporting evidence, without a seventh business table or an inferred Event importance value. See population S2T section 8 for the full rule, stop conditions and pending implementation status.
 
 Existing mappings take priority. If a native Wikidata source key is missing, retain the actual direct statement's property unchanged at Level 2 and add it to the versioned mapping parameters. Level 1 stays `UNRESOLVED` / `NOT_ASSIGNED`; do not infer a relation when no statement exists. Population S2T section 8 defines this approved rule. The current catalog is v2.1.1; this adds no business table or entity.
 

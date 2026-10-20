@@ -1,5 +1,13 @@
 # Daniel input to final graph JSON review
 
+## Approved relation selection — 20 October 2026
+
+Event/Event and Event/other-entity links are uncapped, after each Event independently passes the existing inclusion gate. Other entity/other entity links are capped at 20 incident base assertions per QID. Rank by the connected QID's distinct Daniel source-page count multiplied by its original Daniel mention count. Keep a non-event assertion only when it is in the top 20 at both endpoints; do not refill slots lost by this intersection. Reverse views spend no extra slot. Multiple types share the QID-level budget.
+
+This supersedes the earlier prohibition on direct links between included Events. No new endpoint population, Event hierarchy, source, matching decision or date policy is approved. Selection evidence remains supporting data; acquired raw statements and historical outputs remain intact. Exact cutoff ties or unavailable score inputs require a concrete case discussion. The [population S2T](SOURCES_TO_ENTITY_DATA_MODEL_S2T.md#non-event-relation-selection--approved-20-october-2026) is the rule reference.
+
+Status: rule recorded; implementation and application pending. Event discovery remains stopped at the Canada source failure below. The cap neither authorizes the pending pagination proposal nor proves full Event coverage.
+
 ## Current: full discovery stopped at Canada source failure
 
 The continuation reached complete outgoing coverage but stopped during incoming
@@ -386,12 +394,12 @@ C02 is the one storage-contract clarification in this section. The other entries
 - Name order is English Wikidata, Japanese Wikidata, Daniel name, subject to P03's remaining fallback cases.
 - Wikidata supplies current assertions and events. WarSampo is ignored; EventKG facts are outside current acquisition scope.
 - Use all event types under native root Q140451665; include an event at two distinct matched Daniel QIDs through direct mapped connections in either direction.
-- Relations contains Daniel-QID/Daniel-QID assertions and included-event/Daniel links. No arbitrary event/event expansion or seventh participant table.
+- Relations contains selected Daniel-QID/Daniel-QID assertions, uncapped included-event/Daniel links and uncapped direct included-event/included-event assertions. Non-event assertions use the approved mutual-top-20 rule above. No new endpoint entities or seventh participant table.
 - Apply exact approved exclusions and the pinned current mapping version (v2.1.1 for the native P2341 addition). Reverse views share base evidence; genuinely separate source statements remain separate.
 - Geography uses approved sources and policy. Older OSM snapshot age is accepted; historical identity/meaning checks remain.
 - Geometry is Shapely, persisted as WKB; graph JSON references the stored object. No inline GeoJSON conversion.
 - Omit node/edge sources and node text from the graph for now. Preserve source provenance in the model/supporting artifacts; omit page/mention/paragraph graph nodes.
-- Do not invent event categories, levels, preferred dates, participant roles, importance scores, embeddings or geometry.
+- Do not invent event categories, levels, preferred dates, participant roles, Event importance scores, embeddings or geometry. The approved Daniel page-count times mention-count score is solely a non-event relation-selection measure.
 
 ## Discussion order
 

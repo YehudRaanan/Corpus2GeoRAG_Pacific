@@ -1,5 +1,11 @@
 # Daniel pipeline POC
 
+## Approved selection rule: Event links uncapped, other links mutual top 20
+
+The user approved direct included-Event/included-Event and Event/Daniel links without a count limit. Each Event must still independently pass the existing two-distinct-Daniel-QID inclusion gate. For non-event/non-event assertions, rank the connected QID by **distinct Daniel source pages times total original Daniel mentions**. Keep an assertion only if it belongs to the top 20 at both endpoints; reverse views share its slot. Some QIDs can retain fewer than 20. Counts and budgets are QID-level, without duplication across types.
+
+See [population S2T section 8](../../docs/SOURCES_TO_ENTITY_DATA_MODEL_S2T.md#non-event-relation-selection--approved-20-october-2026) for evidence and stop requirements. Status: **approved specification only**. No selection code or capped output has been produced. The existing `relations.py` still produces the historical full D/D source population. Complete Event membership must be established before applying exemptions. The source failure below remains open; no new retrieval was launched and pagination remains unapproved.
+
 ## Current: full discovery stopped on incomplete Canada response
 
 The new run stopped under the user's first-exception rule. After both Q15

@@ -324,11 +324,11 @@ Native multivalued classifications/dates must fit a lossless model representatio
 
 ### Eligible assertions
 
-- Current fact provider is **Wikidata**. Retain item-to-item source assertions where both endpoints belong to D, plus direct included-event/D links in either source direction. Both event/entity and entity/event source statements are covered.
+- Current fact provider is **Wikidata**. Eligible item-to-item source assertions connect D/D, included-event/D, or two included Events, in either source direction. Apply the non-event selection rule below after Event inclusion is established.
 - Include every available predicate, subject to the existing exact exclusions and versioned mapping. Do not restrict to the earlier saved assertion file. An actual native Wikidata property without a source mapping follows the approved native-preservation rule below; ambiguous or conflicting mappings still require discussion.
 - All retrieved ranks, qualifiers, references, literals, somevalue and novalue remain raw evidence. The latest "any assertion" scope does not authorize the legacy producer's silent deprecated-rank skip. Do not select only a preferred statement as a substitute for preserving all eligible assertions.
 - Non-item values cannot satisfy the two-entity relation filter or event threshold; keep them in raw claims/audit without manufacturing entity rows. The nullable object fields remain available in the model contract.
-- Event/event assertions are not added merely because both events were included. They qualify only if they independently meet the approved D/D or E/D endpoint rule. No other endpoint expansion, transitive relation, or synthetic participation is allowed.
+- Direct assertions between two included Events are eligible under the 20 October user correction. Both Events must independently pass the existing inclusion gate against D; an event/event link cannot satisfy that gate. No other endpoint expansion, transitive relation, or synthetic participation is allowed.
 - Apply the 14 approved exact source-record/predicate/original-endpoint exclusions before mapping; retain excluded records and reasons. Do not blanket-remove self-links.
 
 Resolve the mapping by exact source/predicate key and version in [RELATION_MAPPING_TABLE_v2.1.1.csv](../GG_Data/mapping/RELATION_MAPPING_TABLE_v2.1.1.csv). `direction_to_level2` supplies same/reverse endpoint normalization, once. For a legacy v1 row, reconstruct source orientation before v2.1 normalization. Do not transform an already transformed pair twice. Ambiguous keys, unsupported sources and proposed semantic translations require a visible case report and discussion. Missing exact native Wikidata keys follow the approved rule below.
@@ -362,6 +362,19 @@ The first applied entry is `(Wikidata, wd:P2341)` in `ADDITIONAL_NATIVE_RELATION
 | `input_assertion` | Preserve all 26 legacy assertion columns and complete raw statement/envelope, or an immutable artifact reference. New-source fields absent from a legacy producer remain explicit, not fabricated. |
 | `count` | 1 per retained base source assertion, not mention frequency. |
 | `attributes`, `embedding` | Supplied qualifier/side/extra payload and existing embedding only. Do not invent participant roles or compute embeddings. |
+
+### Non-event relation selection — approved 20 October 2026
+
+Status: approved specification, not implemented or applied to accepted outputs.
+
+- Event/Event and Event/other-entity assertions are uncapped. Keep every eligible assertion under the existing source, mapping and exact-exclusion rules. All Events still require the agreed two-distinct-Daniel-QID inclusion gate, evaluated before selection. A QID present in included Events receives the Event exemption even when it also has other entity types.
+- For assertions with two non-event endpoints, the maximum is **20 base relations incident on each QID**, across both native directions. Separate typed rows do not get separate budgets. Reverse delivery views share the original assertion's slot; they do not consume additional slots.
+- Score each connected entity using **distinct Daniel source-page count multiplied by total original Daniel mention count**, aggregated by its accepted QID, without duplicating mentions across typed Entities rows or counting retrieved Japanese counterparts as Daniel source appearances. No graph centrality, BM25, new extraction or rematching is approved.
+- Each endpoint ranks its eligible non-event assertions by the other endpoint's score. Keep an assertion only if it is in the top 20 at **both endpoints**. Intersect these selections; do not refill rejected slots. Some entities can therefore retain fewer than 20 relations.
+- Preserve all acquired source evidence and previous outputs. Supporting selection evidence must pin the Daniel input population/checksums, page and mention counts, score, both endpoint decisions and retained/omitted counts. This score is not a Wikidata-supplied Event `importance` value and must not overwrite that field.
+- If equal scores cross the cutoff, or the declared source population/page identity cannot support the calculation, stop with the concrete cases for discussion. No new tie-break, missing-value substitution or score-population change is approved by this rule.
+
+Complete Event membership is required before applying the exemption. The current Canada source stop remains open; this selection rule does not approve pagination, truncate Event discovery or make incomplete retrieval complete. The implementation and a fresh versioned output remain pending; historical full D/D outputs are not relabeled as capped.
 
 ### Relations date policy — approved 20 October 2026
 
