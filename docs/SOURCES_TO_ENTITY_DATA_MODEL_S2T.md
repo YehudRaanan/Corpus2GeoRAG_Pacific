@@ -40,7 +40,15 @@ mapping/exclusions and the two-distinct-Daniel-QID gate still apply.
 
 Before the paged export: **11 focused tests**, Black and focused Ruff passed.
 Read the run report for live or terminal state; no success is inferred from
-this launch description. The unordered 1,000-row transport probe succeeded in
+this launch description. **Verified terminal result:** the first ordered page
+failed after the approved three attempts (HTTP 502, HTTP 502, read timeout).
+Elapsed wall time was **145.4167 seconds** including pauses/retry waits. Zero
+hierarchy pages/rows were accepted; `parameter_table_usable=false` and
+`filter_started=false`. The SQLite schema exists but is empty; no usable CSV
+parameters or filter runtime exist. `verification.json` checks source attempt
+receipts, code/output hashes, empty database integrity and the absent filter.
+The worker has ended. Further acquisition changes require consultation.
+The unordered 1,000-row transport probe succeeded in
 about seven seconds, but the subsequent global COUNT timed out after 45 seconds.
 Those earlier responses remain in `outputs/event_hierarchy_bulk_probe_20261020`
 and `outputs/wikidata_event_hierarchy_bulk_cache`; they are not complete coverage.

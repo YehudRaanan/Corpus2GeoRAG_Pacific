@@ -30,6 +30,12 @@ This is hierarchy filtering, not complete Event population or graph export.
 Eleven focused tests, Black and focused Ruff passed before launch.
 
 Run output: `outputs/event_hierarchy_parameters_20261020/`.
+**Terminal result:** blocked after **145.4167 seconds** (two HTTP 502 responses,
+then a read timeout; three attempts total). Zero pages/rows were accepted.
+The database schema exists but is empty; no usable parameter CSVs were created
+and the filter did not start. `verification.json` verifies source receipts,
+code/output hashes, empty database integrity and the absent filter. The worker
+has ended; no acquisition workaround or extra retry was launched.
 The earlier unordered 1,000-row export probe passed, but its global COUNT timed
 out after 45 seconds. Its saved results do not prove hierarchy completeness.
 The former on-demand worker was deliberately stopped at 90/2,680 candidates;
