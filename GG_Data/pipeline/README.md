@@ -1,6 +1,12 @@
 # Daniel pipeline POC
 
-## Current run — candidate-only classification, approved 20 October 2026
+## Current result — small Daniel-first query test, 20 October 2026
+
+`event_sample_query.py` tested five Daniel QIDs selected with seed 20261020 and two separate positive controls already present in Daniel: Hitler/Q352 and Roosevelt/Q8007. It reused the accepted 165-candidate hierarchy probe, queried native assertions from the agreed BigQuery snapshot, counted distinct Daniel endpoints and checked mapping/exclusions before the final decision. Result: **World War II/Q362, two distinct Daniel QIDs, five native assertions**, with both native directions represented. Statement identities matched an independent check of the complete saved records exactly. Repeated links to Hitler did not count as additional entities. SQL, response, source/job evidence and decisions are in `outputs/poc_10k_event_sample_query_20261020`; all recorded input/output checksums passed. BigQuery execution was 1.975 seconds; billed bytes were 68,943,872,000. No live Wikidata request was needed.
+
+This is a bounded query test using previously classified references, not validation of complete Event discovery or full-scale performance. It writes no model Events or graph JSON and does not restart the full run. The preceding on-demand worker stopped on a read timeout: **17/2,218,368 candidates classified, 568 source answers, 282 fetched class nodes, zero Event rows**. Its launch details below are historical. The full run remains stopped.
+
+## Historical run — candidate-only classification, approved 20 October 2026
 
 The user stopped the full-hierarchy approach and approved checking only our candidates, fetching class paths when needed and caching answers. The full P279 catalog process and its queued global-instance controller are stopped. Their accepted cache remains intact. The terminal catalog status is `STOPPED_FOR_USER_APPROVED_ON_DEMAND_SWITCH` (13,990 classes found, 1,599 fully checked); these are reference classes, not included Events. The switch receipt is `outputs/poc_10k_event_on_demand_switch_20261020.json`. This supersedes the historical full-catalog continuation below.
 

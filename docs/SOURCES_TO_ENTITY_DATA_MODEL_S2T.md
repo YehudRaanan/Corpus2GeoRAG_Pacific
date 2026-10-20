@@ -6,7 +6,13 @@ Specification date: 19 October 2026. Status: approved source scope and rules doc
 
 The [full pipeline review](DANIEL_TO_GRAPH_PIPELINE_REVIEW.md) collects open decisions, implementation checks, documentation alignment and deferred improvements from Daniel input through final JSON. It does not change these population rules.
 
-## Current run — candidate-only classification, approved 20 October 2026
+## Current result — small Daniel-first query test, 20 October 2026
+
+The bounded `event_sample_query.py` test used five random Daniel QIDs (seed 20261020), two separate positive controls already in Daniel, and the accepted 165-candidate hierarchy probe. The agreed BigQuery snapshot supplied assertions. The query returned only World War II/Q362: five native assertions connecting two distinct Daniel QIDs, Hitler/Q352 and Roosevelt/Q8007. Both native directions were covered; mapping/exclusions were checked and assertion identities matched the complete cached records exactly. Repeated links did not increase the distinct-entity count. Evidence: `GG_Data/pipeline/outputs/poc_10k_event_sample_query_20261020`. All input/output checksums passed. Query execution: 1.975 seconds; billed bytes: 68,943,872,000.
+
+This validates a bounded join and qualification test against previously classified candidates, not complete Event discovery. No model Event or final graph was written. The preceding worker is stopped after a read timeout at 17/2,218,368 classified candidates, 568 source answers and 282 fetched classes. Its launch evidence below is historical; no full run was restarted. Source and inclusion rules are unchanged.
+
+## Historical run — candidate-only classification, approved 20 October 2026
 
 The user stopped the full-hierarchy approach and approved checking only our candidates, fetching class paths when needed and caching answers. The full P279 catalog process and its queued global-instance controller are stopped. Their accepted cache remains intact. The terminal catalog status is `STOPPED_FOR_USER_APPROVED_ON_DEMAND_SWITCH` (13,990 classes found, 1,599 fully checked); these are reference classes, not included Events. The switch receipt is `outputs/poc_10k_event_on_demand_switch_20261020.json`. This supersedes the historical full-catalog continuation below.
 
