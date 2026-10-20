@@ -229,47 +229,20 @@ def test_geometry_duplicate_rows_are_not_silently_selected(monkeypatch):
         )
 
 
-def test_entity_name_uses_newer_revision_without_changing_language_order():
-    full = {"lastrevid": 20, "labels": {"en": {"value": "rōmusha"}}}
-    matching = {"revision": 10, "labels": {"en": "Romusha"}}
-    assert entities.choose_name("Q1", full, matching, [])["value"] == "rōmusha"
-    matching["revision"] = 30
+def test_entity_name_uses_selected_record_and_existing_language_order():
+    full = {"lastrevid": 20, "labels": {"en": {"value": "snapshot name"}}}
+    matching = {"revision": 30, "labels": {"en": "newer name"}}
+    assert entities.choose_name("Q1", full, matching, [])["value"] == "snapshot name"
+    full["labels"] = {"ja": {"value": "Japanese name"}}
+    assert entities.choose_name("Q1", full, matching, [])["value"] == "Japanese name"
     assert (
-        entities.choose_name("Q1", full, matching, [])["source"] == "matching_reference"
-    )
-    matching["revision"] = 20
-    with pytest.raises(ValueError, match="Cannot order"):
-        entities.choose_name("Q1", full, matching, [])
-    assert (
-        entities.choose_name("Q1", {}, {"labels": {"ja": "日本"}}, [])["value"]
-        == "日本"
+        entities.choose_name("Q1", {}, matching, [{"raw": {"word": "Daniel name"}}])[
+            "value"
+        ]
+        == "Daniel name"
     )
     with pytest.raises(ValueError, match="fallback names"):
         entities.choose_name("Q1", {}, {}, [{"raw": {"word": w}} for w in ("a", "b")])
-
-
-def test_missing_english_in_newer_record_stops_before_choosing_older_english():
-    full = {"lastrevid": 20, "labels": {"ja": {"value": "日本"}}}
-    matching = {"revision": 10, "labels": {"en": "older English"}}
-    with pytest.raises(ValueError, match="discuss language/version priority"):
-        entities.choose_name("Q1", full, matching, [])
-
-
-@pytest.mark.parametrize("qid", ["Q132537", "Q1771928"])
-def test_approved_older_english_is_pinned_and_recorded(qid):
-    name, older_revision, newer_revision = entities.APPROVED_OLDER_ENGLISH[qid]
-    full = {"lastrevid": newer_revision, "labels": {"ja": {"value": "日本"}}}
-    matching = {"revision": older_revision, "labels": {"en": name}}
-    assert entities.choose_name(qid, full, matching, []) == {
-        "value": name,
-        "language": "en",
-        "source": "matching_reference",
-        "revision": older_revision,
-        "approval": "2026-10-20_KEEP_OLDER_ENGLISH",
-    }
-    full["lastrevid"] += 1
-    with pytest.raises(ValueError, match="discuss language/version priority"):
-        entities.choose_name(qid, full, matching, [])
 
 
 def test_entities_keep_typed_pairs_synthetic_ids_and_full_native_evidence():

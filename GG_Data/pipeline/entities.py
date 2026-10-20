@@ -21,12 +21,6 @@ from GG_Data.pipeline.poc import ROOT, digest, read_json
 
 LOG = logging.getLogger(__name__)
 ARCHIVE_SHA256 = "95c6a8aa5ab803d904a0f5e85bfc5d2dade97b5b5f18c0c33ea48a54fc217277"
-# S2T 6, user approval 20 October: retain these older English labels despite
-# their absence in the newer full record. Other such cases still need approval.
-APPROVED_OLDER_ENGLISH = {
-    "Q132537": ("Robert Oppenheimer", 2380462137, 2555601950),
-    "Q1771928": ("Why We Fight", 2286990634, 2506639226),
-}
 
 
 def native_record(envelope: dict, qid: str) -> dict:
@@ -40,56 +34,20 @@ def native_record(envelope: dict, qid: str) -> dict:
 
 
 def choose_name(qid: str, full: dict, matching: dict, mentions: list[dict]) -> dict:
-    """S2T 6: EN -> JA -> Daniel; approved newer revision wins label conflicts."""
+    """S2T 1/6: EN -> JA -> Daniel from the selected whole source record.
+
+    Latest 20 October approval supersedes cross-version name ranking and
+    per-QID exceptions. Matching evidence remains frozen, not a name source.
+    """
     for language in ("en", "ja"):
-        native = full.get("labels", {}).get(language, {}).get("value")
-        prior = matching.get("labels", {}).get(language)
-        candidates = [
-            (native, full.get("lastrevid"), "full_record"),
-            (prior, matching.get("revision"), "matching_reference"),
-        ]
-        approved_older_english = (
-            language == "en"
-            and not native
-            and qid in APPROVED_OLDER_ENGLISH
-            and (prior, matching.get("revision"), full.get("lastrevid"))
-            == APPROVED_OLDER_ENGLISH[qid]
-        )
-        for value, revision, source in candidates:
-            for other_value, other_revision, other_source in candidates:
-                if (
-                    value
-                    and not other_value
-                    and type(revision) is int
-                    and type(other_revision) is int
-                    and other_revision > revision
-                    and not approved_older_english
-                ):
-                    raise ValueError(
-                        f"Newer reference lacks {language} label: {qid}; "
-                        f"{source}={value!r} at {revision}; "
-                        f"{other_source} at {other_revision}; discuss language/version priority"
-                    )
-        candidates = [c for c in candidates if c[0]]
-        if not candidates:
-            continue
-        if len(candidates) == 2 and native != prior:
-            revisions = [c[1] for c in candidates]
-            if (
-                any(type(r) is not int for r in revisions)
-                or revisions[0] == revisions[1]
-            ):
-                raise ValueError(
-                    f"Cannot order conflicting name revisions: {qid}: {candidates}"
-                )
-            candidates.sort(key=lambda c: c[1], reverse=True)
-        value, revision, source = candidates[0]
-        selection = dict(
-            value=value, language=language, source=source, revision=revision
-        )
-        if approved_older_english:
-            selection["approval"] = "2026-10-20_KEEP_OLDER_ENGLISH"
-        return selection
+        value = full.get("labels", {}).get(language, {}).get("value")
+        if value:
+            return dict(
+                value=value,
+                language=language,
+                source="full_record",
+                revision=full.get("lastrevid"),
+            )
     names = sorted({m["raw"]["word"] for m in mentions})
     if len(names) != 1:
         raise ValueError(f"Conflicting Daniel fallback names: {qid}: {names}")
@@ -121,8 +79,33 @@ def full_records(qids: set[str], archive: Path) -> tuple[dict, dict]:
     return records, provenance
 
 
+def select_reference(
+    qid: str, pinned: tuple[dict, dict] | None, available: list[tuple[dict, dict]]
+) -> tuple[dict, dict]:
+    """S2T 1: snapshot first, otherwise latest available complete same-ID record.
+
+    Select a whole record, never combine fields or redirect a matched QID.
+    Source provenance remains; no archived-versus-snapshot difference log.
+    """
+    if pinned is not None:
+        native_record(pinned[0], qid)
+        return pinned
+    if not available:
+        raise ValueError(f"No available Wikidata version: {qid}")
+    for envelope, _ in available:
+        record = native_record(envelope, qid)
+        if type(record.get("lastrevid")) is not int:
+            raise ValueError(f"Cannot order available Wikidata versions: {qid}")
+    return max(available, key=lambda pair: pair[0]["entity"]["lastrevid"])
+
+
 def acquire_missing(
-    qids: set[str], store: Path, reference: dict, *, prefix: str = "Q"
+    qids: set[str],
+    store: Path,
+    reference: dict,
+    *,
+    prefix: str = "Q",
+    available_records: dict[str, list[tuple[dict, dict]]] | None = None,
 ) -> tuple[dict, dict]:
     """S2T 1/T02: full `item`, not the legacy P31/P279-only projection.
 
@@ -178,7 +161,12 @@ def acquire_missing(
         records[qid] = envelope
         provenance[qid] = {**source, "record_id": qid}
     missing = sorted(qids - records.keys())
-    if missing:
+    if missing and available_records is not None:
+        for qid in missing:
+            records[qid], provenance[qid] = select_reference(
+                qid, None, available_records.get(qid, [])
+            )
+    elif missing:
         raise ValueError(f"BigQuery full records missing ({len(missing)}): {missing}")
     return records, provenance
 
@@ -190,7 +178,10 @@ def digest_sql(sql: str) -> str:
 
 
 def populate(
-    mentions: list[dict], records: dict, metadata: dict, provenance: dict
+    mentions: list[dict],
+    records: dict,
+    metadata: dict,
+    provenance: dict,
 ) -> list[dict]:
     """One row per existing ID/type; normalized dates do not produce Entities."""
     groups = defaultdict(list)
@@ -282,9 +273,11 @@ def populate(
                 modified=full.get("modified"),
                 missing=None if synthetic else False,
                 reference_source="Daniel" if synthetic else provenance[qid]["provider"],
-                raw_reference={"mention_id": group[0]["mention_id"]}
-                if synthetic
-                else {"full": records[qid], "matching": matching},
+                raw_reference=(
+                    {"mention_id": group[0]["mention_id"]}
+                    if synthetic
+                    else {"full": records[qid], "matching": matching}
+                ),
             )
         )
     if {(r["entity_id"], r["type"]) for r in result} != set(groups):
@@ -324,18 +317,16 @@ def run(step1: Path, cache: Path, archive: Path, store: Path, output: Path) -> N
         }
     if metadata.keys() != qids:
         raise ValueError("Saved matching metadata is incomplete")
-    records, provenance = full_records(qids, archive)
-    reused_count = len(records)
-    LOG.info(
-        "Full records reused=%d; BigQuery acquisition needed=%d",
-        reused_count,
-        len(qids - records.keys()),
+    archived, archive_sources = full_records(qids, archive)
+    records, provenance = acquire_missing(
+        qids,
+        store,
+        read_json(cache / "reference_manifest.json"),
+        available_records={q: [(r, archive_sources[q])] for q, r in archived.items()},
     )
-    acquired, sources = acquire_missing(
-        qids - records.keys(), store, read_json(cache / "reference_manifest.json")
+    reused_count = sum(
+        source["provider"] != "BIGQUERY" for source in provenance.values()
     )
-    records.update(acquired)
-    provenance.update(sources)
     entities = populate(mentions, records, metadata, provenance)
     for page in pages:
         page["about_entity_id"] = (
@@ -351,7 +342,7 @@ def run(step1: Path, cache: Path, archive: Path, store: Path, output: Path) -> N
         entity_count=len(entities),
         qid_count=len(qids),
         reused_full_records=reused_count,
-        acquired_full_records=len(acquired),
+        acquired_full_records=len(records) - reused_count,
         pending_stages=["Events", "Relations", "Geography", "graph", "Agent"],
         outputs={p.name: digest(p) for p in output.glob("*.json.gz")},
     )
