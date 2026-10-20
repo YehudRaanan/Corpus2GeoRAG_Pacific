@@ -5,6 +5,9 @@ Daniel supplies the full source-page scope only. Four missing source titles
 remain explicit incomplete coverage. This diagnostic changes no model rows,
 matching decisions, Event rules, or filters. Earlier mention-based ratios do
 not test this measure. Population S2T sections 4/5 remain unchanged.
+Synthetic IDs are excluded: this scope-concentration measure uses QIDs only.
+Purpose: identify broad/unrelated MISC entities before Event retrieval; no
+numerical cutoff is approved and this is not the top-20 relation ranking.
 """
 
 from __future__ import annotations

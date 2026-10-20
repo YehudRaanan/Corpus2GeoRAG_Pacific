@@ -1,24 +1,22 @@
 # Daniel pipeline POC
 
-## Synthetic source-page numerators — 20 October 2026
+## Measure purpose and eligible entities — 20 October 2026
 
-Approved follow-up: use Daniel's original `Source` relationship for the
-**134 non-date synthetic IDs on the four missing source pages**. Each existing
-synthetic ID has numerator **1**, referring to its own Daniel source title:
-BUROGU 34, Conscription in Japan 45, Gabriel Maurício Teixeira 54, Two Lords
-Incident 1. No grouping by name, new entity, or new match is created. Dates
-remain excluded from this entity diagnostic.
+Use the scope-concentration ratio to identify broad or unrelated MISC entities
+before Event retrieval, without building the graph first. This measures
+specificity to Daniel's WWII/Pacific page scope, not historical importance or
+the separate top-20 relation rule. No numerical cutoff has been approved.
 
-`synthetic_page_numerators.py` verifies the full saved matching file against
-its manifest and adds these rows alongside the 19 existing QID rows in
-`outputs/missing_pages_synthetic_numerators_20261020/numerators.csv`.
-The original QID numerators and scores remain unchanged. `numerator_source`
-distinguishes actual Wikipedia snapshot links from Daniel's source relationships;
-these are not added together. Synthetic QIDs, Wikipedia page IDs, global
-denominators and relevance scores remain empty, since they are unknown.
-Source titles preserve the relationships even when the page lookup failed.
-The report records original row/mention IDs, reasons, input hashes and output hash.
-No network request, filtering, or Event processing is performed.
+**Synthetic IDs are excluded from this measure**, as requested by the user.
+They have no matched QID and cannot supply a Wikidata-linked global denominator.
+Their original mentions, assignments and Daniel source-page relationships stay
+in the data model. No matching result or unresolved record is removed.
+
+The active diagnostic is the **19-QID** result at
+`outputs/poc_10k_misc_snapshot_link_relevance_20261020/scores.csv`.
+The earlier 153-row file under
+`outputs/missing_pages_synthetic_numerators_20261020/` is superseded and retained
+as historical evidence only. Its synthetic extension code has been removed.
 
 ## Actual Wikipedia page-link relevance test — 20 October 2026
 
