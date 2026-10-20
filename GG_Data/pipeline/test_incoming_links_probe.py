@@ -3,6 +3,7 @@
 import pytest
 
 from GG_Data.pipeline.incoming_links_probe import indexed_counts
+from GG_Data.pipeline.misc_relevance_probe import relevance_rows
 
 
 def payload(count=0, qid="Q5287"):
@@ -40,3 +41,29 @@ def test_validate_existing_counts_and_stop_on_missing_or_wrong_identity():
     del missing["query"]["pages"][0]["cirrusdoc"][0]["source"]["incoming_links"]
     with pytest.raises(KeyError):
         indexed_counts(missing, {"Q5287"})
+
+
+def test_relevance_counts_distinct_english_pages_and_keeps_unknown_counts():
+    def mention(page, site="enwiki"):
+        return {
+            "entity_id": "Q5287",
+            "wiki_site": site,
+            "wiki_page_id": page,
+            "raw": {"word": "Japanese"},
+        }
+
+    mentions = [mention(1), mention(1), mention(2), mention(3, "jawiki")]
+    for denominator, expected in [(100, 0.02), (None, None), (0, None)]:
+        row = relevance_rows(
+            mentions,
+            [
+                {
+                    "qid": "Q5287",
+                    "title": "Japanese language",
+                    "incoming_links": denominator,
+                }
+            ],
+        )[0]
+        assert row["daniel_english_pages_in_10k"] == 2
+        assert row["daniel_english_mentions_in_10k"] == 3
+        assert row["relevance"] == expected

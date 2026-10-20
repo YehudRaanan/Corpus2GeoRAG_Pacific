@@ -1,5 +1,25 @@
 # Daniel pipeline POC
 
+## Offline relevance ratio test — 20 October 2026
+
+`misc_relevance_probe.py` uses the saved English count response only; no new
+source requests or matching changes. Score = distinct English Daniel page IDs
+in the frozen 10K sample / current English incoming-link count. All mentions of
+the same QID count toward the numerator, without counting repeated mentions or
+types twice on one page. This is a diagnostic score, not a confidence or a true
+share of Wikipedia backlinks: Daniel mentions and actual hyperlinks differ.
+
+**18 QIDs scored; one missing count remains unknown.** The result does not
+support automatic filtering: `British` matched to `Britannicus (play)/Q1196012`
+ranks first at **19 / 82 = 0.231707**, while World War II/Q362 ranks last among
+measured items at **23 / 217,991 = 0.000105509**. M4 Sherman/Q191643 scores
+**1 / 1,362 = 0.000734214**; Japanese language/Q5287 scores
+**28 / 39,178 = 0.000714687**. A small denominator can promote a wrong match.
+Existing mistaken QID assignments also contaminate the numerator. No cutoff,
+identity correction, or changed scoring formula was selected. Further changes
+require discussion under the user's POC rule. Evidence:
+`outputs/poc_10k_misc_relevance_probe_20261020/report.json` and `scores.csv`.
+
 ## Stopped diagnostic — Wikipedia incoming-link counts, 20 October 2026
 
 `incoming_links_probe.py` tests precomputed CirrusSearch counts without changing
