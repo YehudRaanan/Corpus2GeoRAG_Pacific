@@ -1,5 +1,38 @@
 # Daniel pipeline POC
 
+## Actual Wikipedia page-link relevance test — 20 October 2026
+
+The approved corrected numerator counts **actual Wikipedia links to each QID**
+within **all Daniel source pages**, once per QID/source-page ID. Daniel's
+mention-to-QID assignments do not supply this count. The denominator counts all
+distinct source article pages linking to that QID, using the same language,
+snapshot, redirect resolution and namespace rules. The earlier mention-based
+ratio below is retained as historical evidence and does **not** test this measure.
+
+`snapshot_link_relevance_probe.py` runs the English diagnostic for the same 19
+QIDs with saved English probe pages. Both sides use the saved Wikipedia dump
+date from the source-page snapshot manifest. It scans the complete saved raw
+linktarget/pagelinks files, resolves all target aliases, and deduplicates source
+page IDs across aliases. Links from templates/navigation remain included, as
+in the existing dump-backed resolver. No source download or API request is
+needed. The raw dump SHA1, gzip integrity, completion footer and complete row
+counts must pass before scores are published. Scoped counts must also agree
+with the independently saved per-page link resolution.
+
+The user approved incomplete scope coverage: 428 Daniel source titles, 424
+resolved titles, **413 distinct resolved article pages**, and four missing
+titles (`Conscription in Japan`, `Two Lords Incident`, `BUROGU`, and
+`Gabriel Maurício Teixeira`). Missing pages remain unknown; they are not zero
+observations. The score measures link concentration, not matching confidence.
+No filtering threshold, matching change or Event restart is approved.
+
+Current run: **scanning saved files; no final scores yet**. Evidence:
+`outputs/poc_10k_misc_snapshot_link_relevance_20261020/progress.json`.
+An initial implementation check incorrectly required non-article redirect
+sources to occur in the article-only page table. It was corrected to use the
+existing resolver's namespace-0 join rule; the failed preflight is retained in
+`outputs/poc_10k_misc_snapshot_link_relevance_20261020_preflight`.
+
 ## Offline relevance ratio test — 20 October 2026
 
 `misc_relevance_probe.py` uses the saved English count response only; no new
