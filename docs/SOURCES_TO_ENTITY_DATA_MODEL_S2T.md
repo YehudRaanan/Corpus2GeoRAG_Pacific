@@ -6,7 +6,27 @@ Specification date: 19 October 2026. Status: approved source scope and rules doc
 
 The [full pipeline review](DANIEL_TO_GRAPH_PIPELINE_REVIEW.md) collects open decisions, implementation checks, documentation alignment and deferred improvements from Daniel input through final JSON. It does not change these population rules.
 
-## Latest verified continuation — maximum language score and bounded Event test
+## Current continuation — checking all filtered sample candidates
+
+The user approved completing all **2,680 preliminary candidates** from the
+unchanged 100-mention sample. `event_on_demand.py --filtered-sample` verifies
+the saved restriction and replays its complete candidate inventory before
+classification. It reuses complete accepted P31/P279 answers and the existing
+request cache; missing hierarchy evidence follows the already-approved current
+Wikidata rules, deprecated-link exclusion and persistent retry limits. There
+is no 165/200-item cap and no new Daniel seed or matching assignment.
+
+Progress and per-candidate decisions are saved under
+`GG_Data/pipeline/outputs/poc_10k_event_filtered_all_candidates_20261020/`.
+This is the 48-retained-QID sample, not full 10K Event discovery. The 15
+unknown-score seeds remain held separately as in the approved bounded test.
+Classification alone does not populate Events: positive candidates still need
+snapshot native assertions, mapping/exclusions and two distinct retained
+Daniel endpoints. No Event table or final graph is declared complete by a
+running classification report. Before launch: 20 focused tests, Black and
+focused Ruff passed. Read `report.json` for current or terminal status.
+
+## Previous verified result — maximum language score and bounded Event test
 
 The approved maximum-language rule in section 6.1 was applied to all **1,312**
 resolved MISC QIDs in the frozen 10K model: **66 pass**, **627 are below 5%**,
@@ -36,8 +56,8 @@ restriction and hash verification are saved under
 
 This verifies a bounded query, not all 2,680 classifications or complete 10K
 Event discovery. No model Event rows, final graph, new Daniel entities or
-matching changes were written. Full Event retrieval remains stopped; no
-background continuation was launched. Unknown-score handling beyond the bounded
+matching changes were written by that test. The subsequent all-candidate
+sample continuation is recorded above. Unknown-score handling beyond the bounded
 test still requires consultation; unknowns were not changed to zero or rejected.
 
 ## Historical stop for analysis — larger Event timing sample, 20 October 2026

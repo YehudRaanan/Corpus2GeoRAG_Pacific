@@ -1,5 +1,22 @@
 # Daniel pipeline POC
 
+## Current filtered sample continuation
+
+The user approved checking all **2,680** preliminary candidates from the same
+100-mention sample (48 retained Daniel QIDs). Run `event_on_demand.py` with
+`--filtered-sample --candidates outputs/poc_10k_event_filtered_sample_query_20261020`,
+the existing `--saved-catalog` and `--store`, and a new `--output` directory.
+The complete verified inventory replaces the old bounded reference; there is
+no candidate sample limit. Complete saved P31/P279 answers and request caches
+are reused. Source rules, deprecated ancestry, retry limits, IDs and the 15
+held unknown-score seeds remain unchanged. Twenty focused tests passed.
+
+Current output: `outputs/poc_10k_event_filtered_all_candidates_20261020/`.
+Read `report.json`, `classifications.jsonl` and `source_receipts.jsonl` for
+progress or a stop. This is sample classification, not full 10K Event discovery,
+Event table population or graph export. Hierarchy positives still require
+native snapshot link qualification before inclusion.
+
 ## Per-language scope concentration — approved continuation
 
 Calculate **English and Japanese separately**, with the same formula and 5%
@@ -49,8 +66,9 @@ Black and focused Ruff passed. No model Event rows or graph were written.
 
 Evidence: `outputs/poc_10k_event_filtered_sample_query_20261020/` contains the
 query, raw result, decisions, candidate restriction, candidate endpoints, report
-and verification. The remaining candidate classifications and full 10K Event
-retrieval are **not complete**; no background continuation was launched.
+and verification. That bounded test did not complete the remaining candidate
+classifications. The all-candidate continuation is recorded above; full 10K
+Event retrieval remains incomplete.
 
 **Approved redirect rule:** count the redirect and final destination as one
 page, once per linking source page, separately by language. The destination

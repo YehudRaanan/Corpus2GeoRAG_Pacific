@@ -62,7 +62,8 @@ def test_native_record_fallback_preserves_statement_rank(tmp_path, monkeypatch):
 
 
 @pytest.mark.parametrize("failure", [False, True])
-def test_candidate_only_paths_and_stop(tmp_path, monkeypatch, failure):
+@pytest.mark.parametrize("filtered", [False, True])
+def test_candidate_only_paths_and_stop(tmp_path, monkeypatch, failure, filtered):
     monkeypatch.setattr(stage, "ROOT", tmp_path)
     root = tmp_path / "GG_Data/pipeline/outputs"
     candidates, measurement, saved = [root / p for p in ("ids", "measure", "stopped")]
@@ -73,6 +74,21 @@ def test_candidate_only_paths_and_stop(tmp_path, monkeypatch, failure):
     monkeypatch.setattr(
         stage, "candidate_universe", lambda *args: {f"Q{n}" for n in range(10, 16)}
     )
+    # The filtered sample uses its complete inventory, not a 165/200-item cap.
+    # Complete saved P31 answers are reused without requesting them again.
+    monkeypatch.setattr(
+        stage,
+        "filtered_candidate_universe",
+        lambda source: (
+            {f"Q{n}" for n in range(10, 16)},
+            {"retained_daniel_qids": ["Q1", "Q2"]},
+            {
+                "P31": {"Q10": [dict(parent="Q20", rank="normal")]},
+                "P279": {},
+            },
+        ),
+    )
+    (candidates / "candidate_restriction.json").write_text("{}")
     # Reuse only a positive path from the stopped catalog, never its absences.
     (saved / "catalog.json").write_text(
         json.dumps(
@@ -148,7 +164,14 @@ def test_candidate_only_paths_and_stop(tmp_path, monkeypatch, failure):
 
     monkeypatch.setattr(stage.events, "cached_json", cached)
     output = root / "new"
-    result = stage.run(candidates, measurement, saved, root / "store", output)
+    result = stage.run(
+        candidates,
+        None if filtered else measurement,
+        saved,
+        root / "store",
+        output,
+        filtered_sample=filtered,
+    )
     assert result["status"].startswith("BLOCKED") == failure
     assert result["classification_complete"] is (not failure)
     assert not result["events_complete"] and result["event_rows_written"] == 0
@@ -173,6 +196,9 @@ def test_candidate_only_paths_and_stop(tmp_path, monkeypatch, failure):
         )
         assert len(calls) == 6  # two graphs each for P31 and two reused P279 nodes
         assert set(read_json(output / "class_parents.json")) == {"Q21", "Q24"}
+    if filtered:
+        assert all("Q10" not in batch for prop, batch, _ in calls if prop == "P31")
+        assert result["filter_evidence"]["retained_daniel_qids"] == ["Q1", "Q2"]
     # Missing candidate rows are an incomplete response, not a negative result.
     with pytest.raises(SourceException, match="Incomplete"):
         stage.class_answers({"results": {"bindings": []}}, ["Q10"], "P31")

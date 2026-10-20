@@ -144,17 +144,84 @@ def event_path(qid: str, parents: dict, hints: dict, fetch) -> list[dict] | None
     return None
 
 
+def filtered_candidate_universe(source: Path) -> tuple[set[str], dict, dict]:
+    """S2T 6.1/7: replay the verified sample restriction, without new seeds.
+
+    This inventory is the complete restriction of the earlier native-link
+    superset, not the bounded 165-item classification test. Unknown seed scores
+    stay held outside this sample. Previously complete class answers are reused.
+    """
+    from GG_Data.pipeline.event_sample_query import filtered_sample
+    from GG_Data.pipeline.event_timing_sample import native_rank_answers
+
+    verified = read_json(source / "verification.json")
+    restriction = read_json(source / "candidate_restriction.json")
+    report = read_json(source / "report.json")
+    if (
+        digest(source / "report.json") != verified["report_sha256"]
+        or digest(source / "candidate_restriction.json")
+        != verified["candidate_restriction_sha256"]
+        or restriction["status"] != "VERIFIED_CACHED_SUPERSET_RESTRICTION"
+    ):
+        raise ValueError("Filtered sample verification changed")
+    for manifest in (restriction, report):
+        for name, sha in manifest["inputs"].items():
+            if digest(ROOT / name) != sha:
+                raise ValueError(f"Filtered sample input changed: {name}")
+        for name, sha in manifest["outputs"].items():
+            if digest(source / name) != sha:
+                raise ValueError(f"Filtered sample output changed: {name}")
+    inputs = [ROOT / p for p in restriction["inputs"]]
+    sample = next(p for p in inputs if p.name == "sample.json")
+    selection = next(
+        p for p in inputs if p.name == "report.json" and "maximum_language" in str(p)
+    )
+    retained, evidence = filtered_sample(selection, sample)
+    original = read_json(
+        next(p for p in inputs if p.name == "candidate_endpoints.json.gz")
+    )
+    replayed = {
+        q: sorted(set(targets) & set(retained))
+        for q, targets in original.items()
+        if len(set(targets) & set(retained)) >= 2
+    }
+    candidates = read_json(source / "filtered_candidate_endpoints.json.gz")
+    if (
+        candidates != replayed
+        or len(candidates) != restriction["filtered_candidate_count"]
+        or any(not re.fullmatch(r"Q[1-9]\d*", q) for q in candidates)
+    ):
+        raise ValueError("Filtered candidate population differs from native inventory")
+    hierarchy = next(
+        ROOT / p for p in report["inputs"] if p.endswith("hierarchy_edges.json")
+    )
+    return set(candidates), evidence, native_rank_answers(read_json(hierarchy))
+
+
 def run(
-    candidates: Path, measurement: Path, saved_catalog: Path, store: Path, output: Path
+    candidates: Path,
+    measurement: Path | None,
+    saved_catalog: Path,
+    store: Path,
+    output: Path,
+    *,
+    filtered_sample: bool = False,
 ) -> dict:
     if output.exists() or any(
         not p.resolve().is_relative_to(ROOT / "GG_Data/pipeline/outputs")
         for p in (store, output)
     ):
         raise ValueError("Use a new approved pipeline output directory")
-    universe = sorted(
-        candidate_universe(candidates, measurement), key=lambda q: int(q[1:])
-    )
+    sample_evidence, saved_answers = {}, {"P31": {}, "P279": {}}
+    if filtered_sample:
+        population, sample_evidence, saved_answers = filtered_candidate_universe(
+            candidates
+        )
+    else:
+        if measurement is None:
+            raise ValueError("Unfiltered discovery requires its measurement")
+        population = candidate_universe(candidates, measurement)
+    universe = sorted(population, key=lambda q: int(q[1:]))
     old = read_json(saved_catalog / "report.json")
     if (
         old["status"] != "STOPPED_FOR_USER_APPROVED_ON_DEMAND_SWITCH"
@@ -176,7 +243,7 @@ def run(
                 )
             )
     output.mkdir(parents=True)
-    parents = {}
+    parents = dict(saved_answers["P279"])
     result = dict(
         status="CLASSIFYING_CANDIDATES_ON_DEMAND",
         candidate_count=len(universe),
@@ -187,6 +254,7 @@ def run(
         event_rows_written=0,
         events_complete=False,
         classification_complete=False,
+        filter_evidence=sample_evidence,
         final_graph_written=False,
         code_sha256=digest(Path(__file__)),
         inputs={
@@ -194,9 +262,14 @@ def run(
             for p in (
                 candidates / "report.json",
                 candidates / "verification.json",
-                measurement / "report.json",
                 saved_catalog / "report.json",
                 saved_catalog / "catalog.json",
+                *(
+                    [candidates / "candidate_restriction.json"]
+                    if filtered_sample
+                    else []
+                ),
+                *([measurement / "report.json"] if measurement is not None else []),
             )
         },
     )
@@ -224,7 +297,10 @@ def run(
         with (output / "classifications.jsonl").open("a", encoding="utf-8") as f:
             for offset in range(0, len(universe), 10):
                 batch = universe[offset : offset + 10]
-                direct = fetch(batch, "P31")
+                missing = [q for q in batch if q not in saved_answers["P31"]]
+                direct = {q: saved_answers["P31"][q] for q in batch if q not in missing}
+                if missing:
+                    direct.update(fetch(missing, "P31"))
                 for qid in batch:
                     result["current_qid"] = qid
                     save()
@@ -280,12 +356,19 @@ def run(
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(description=__doc__)
-    for name in ("candidates", "measurement", "saved-catalog", "store", "output"):
+    for name in ("candidates", "saved-catalog", "store", "output"):
         parser.add_argument(f"--{name}", type=Path, required=True)
+    parser.add_argument("--measurement", type=Path)
+    parser.add_argument("--filtered-sample", action="store_true")
     args = parser.parse_args()
     logging.basicConfig(level=logging.INFO, format="%(asctime)s %(message)s")
     result = run(
-        args.candidates, args.measurement, args.saved_catalog, args.store, args.output
+        args.candidates,
+        args.measurement,
+        args.saved_catalog,
+        args.store,
+        args.output,
+        filtered_sample=args.filtered_sample,
     )
     print(
         json.dumps({k: v for k, v in result.items() if k not in {"inputs", "outputs"}})
