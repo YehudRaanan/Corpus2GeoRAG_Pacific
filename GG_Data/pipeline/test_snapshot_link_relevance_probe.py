@@ -13,13 +13,19 @@ from GG_Data.pipeline.snapshot_link_relevance_probe import (
     dump_blocks,
     link_targets,
     linked_pages,
+    measurement_pages,
     sql_string,
 )
 
 
 def test_aliases_use_article_join_and_follow_redirect_chains(tmp_path):
     tables = {
-        "page_props": [{"pageid": 1, "qid": "Q1"}],
+        "page_props": [
+            {"pageid": 1, "qid": "Q1"},
+            {"pageid": 2, "qid": "Q2"},
+            {"pageid": 4, "qid": "Q4"},
+            {"pageid": 99, "qid": "Q99"},  # Outside article namespace.
+        ],
         "page": [
             {"pageid": 1, "title": "Canonical", "is_redirect": False},
             {"pageid": 2, "title": "Alias", "is_redirect": True},
@@ -37,11 +43,24 @@ def test_aliases_use_article_join_and_follow_redirect_chains(tmp_path):
         path.with_suffix(".json").write_text(
             json.dumps({"sha256": hashlib.sha256(path.read_bytes()).hexdigest()})
         )
-    assert aliases(tmp_path, "test", {"Q1"}) == {
-        "Canonical": "Q1",
-        "Alias": "Q1",
-        "Chain": "Q1",
+    basis = measurement_pages(tmp_path, "test", {"Q1", "Q2", "Q4", "Q99"}, "enwiki")
+    assert set(basis) == {"Q1", "Q2", "Q4"}  # Assigned identities stay separate.
+    assert {r["qid"] for r in basis.values()} == {"Q1"}
+    assert {r["pageid"] for r in basis.values()} == {1}
+    assert [basis[q]["redirect_depth"] for q in ("Q1", "Q2", "Q4")] == [0, 1, 2]
+    canonical = {r["title"]: str(r["pageid"]) for r in basis.values()}
+    assert aliases(tmp_path, "test", canonical) == {
+        "Canonical": "1",
+        "Alias": "1",
+        "Chain": "1",
     }
+    targets = link_targets(
+        [b"(10,0,'Canonical'),\n(11,0,'Alias');\n"],
+        aliases(tmp_path, "test", canonical),
+    )
+    assert dict(
+        linked_pages([b"(100,0,10),\n(100,0,11),\n(200,0,11);\n"], targets)
+    ) == {"1": {100, 200}}
     # Identical page numbers in different wikis are separate identities.
     japanese = {
         "page_props": [{"pageid": 1, "qid": "Q2"}],
@@ -64,7 +83,9 @@ def test_aliases_use_article_join_and_follow_redirect_chains(tmp_path):
         path.with_suffix(".json").write_text(
             json.dumps({"sha256": hashlib.sha256(path.read_bytes()).hexdigest()})
         )
-    assert aliases(tmp_path, "test", {"Q2"}, "jawiki") == {"Japanese": "Q2"}
+    basis = measurement_pages(tmp_path, "test", {"Q2"}, "jawiki")
+    assert basis["Q2"]["qid"] == "Q2"
+    assert aliases(tmp_path, "test", {"Japanese": "1"}, "jawiki") == {"Japanese": "1"}
 
 
 def test_actual_links_count_each_page_once_across_aliases(tmp_path):

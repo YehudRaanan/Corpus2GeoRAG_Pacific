@@ -200,6 +200,15 @@ mention-to-QID assignments used in the earlier, superseded numerator. Count
 actual Wikipedia links once per `(QID, source page ID)`, across target aliases
 and redirects. Use the same language, Wikipedia snapshot and namespace rules
 for both counts. The saved resolver includes template/navigation links.
+**Redirect clarification, 20 October:** count a redirect and its destination
+as **one final page**, independently in each language. Union incoming links
+to that page and all its redirect aliases; count each source page once.
+If the final page carries a different QID, use that page for both counts and
+record its page ID, title and QID as measurement metadata. Preserve the
+original entity QID and its separate model row; this is not a new match.
+Several selected QIDs may share one measurement page without duplicating
+the underlying page counts. Keep the stopped Japanese attempt unchanged and
+write the approved continuation to a new output directory.
 Bind the measure to the input version/hash and page snapshot manifest; do not
 hardcode this run's snapshot date for later Daniel versions.
 
@@ -217,6 +226,7 @@ business table or populated model column is claimed by this specification:
 | Supporting field | Source and calculation |
 |---|---|
 | `qid`, `name` | Selected existing matched QID and saved diagnostic display name; no new matching or identity creation. |
+| `measurement_page_id`, `measurement_page_title`, `measurement_page_qid`, `redirect_depth` | Final namespace-0 page after redirects and its optional QID; measurement evidence only. The original `qid` stays unchanged. Both counts use this single page and its aliases. |
 | `wiki`, `score_status`, `keep_for_event_retrieval` | Separate English/Japanese measurements. A known positive denominator permits the 5% decision; no snapshot article or no incoming links leaves counts, score and decision null, with an explicit unavailable status. |
 | `scope_linking_pages` | Cardinality of the intersection of actual linking-page IDs and the distinct resolved page IDs in Daniel's full source-page scope. |
 | `all_linking_pages` | All distinct source article page IDs linking to the QID under the same snapshot/language/redirect rules. |

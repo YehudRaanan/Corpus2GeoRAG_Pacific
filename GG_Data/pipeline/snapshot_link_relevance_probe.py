@@ -16,8 +16,8 @@ this acquisition diagnostic does not perform the top-20 relation ranking.
 
 from __future__ import annotations
 
-import csv
 import argparse
+import csv
 import gzip
 import hashlib
 import json
@@ -63,8 +63,72 @@ def saved_table(cache: Path, date: str, table: str, wiki: str) -> Path:
     return path
 
 
+def measurement_pages(
+    cache: Path, date: str, qids: set[str], wiki: str
+) -> dict[str, dict]:
+    """S2T 6.1: count one final page; never change the assigned entity QID.
+
+    Follow the saved resolver's namespace-0 paths, cycle guard and 20-hop
+    limit. A redirect's destination may carry a different QID. That QID is
+    measurement metadata only; counts are keyed by the final page ID.
+    """
+    props, pages, redirects = (
+        saved_table(cache, date, t, wiki) for t in ("page_props", "page", "redirect")
+    )
+    identities = pq.read_table(props, filters=[("qid", "in", sorted(qids))]).to_pylist()
+    by_id = {
+        r["pageid"]: r
+        for r in pq.read_table(
+            pages, filters=[("pageid", "in", [r["pageid"] for r in identities])]
+        ).to_pylist()
+    }
+    result = {}
+    for identity in identities:
+        if identity["pageid"] not in by_id:  # Non-article page properties.
+            continue
+        qid = identity["qid"]
+        if qid in result:
+            raise ValueError(f"Multiple snapshot articles for {qid}")
+        result[qid] = {**by_id[identity["pageid"]], "redirect_depth": 0}
+    seen = {qid: {row["pageid"]} for qid, row in result.items()}
+    for depth in range(21):
+        pending = {qid: r for qid, r in result.items() if r["is_redirect"]}
+        if not pending:
+            break
+        if depth == 20:
+            raise ValueError("Redirect path reaches the saved resolver's depth limit")
+        destinations = {
+            r["pageid"]: r["title"]
+            for r in pq.read_table(
+                redirects,
+                filters=[("pageid", "in", [r["pageid"] for r in pending.values()])],
+            ).to_pylist()
+        }
+        by_title = {
+            r["title"]: r
+            for r in pq.read_table(
+                pages, filters=[("title", "in", list(destinations.values()))]
+            ).to_pylist()
+        }
+        for qid, row in pending.items():
+            target = by_title.get(destinations.get(row["pageid"]))
+            if target is None or target["pageid"] in seen[qid]:
+                raise ValueError(f"Missing or cyclic redirect destination: {qid}")
+            seen[qid].add(target["pageid"])
+            result[qid] = {**target, "redirect_depth": depth + 1}
+    final_qids = {
+        r["pageid"]: r["qid"]
+        for r in pq.read_table(
+            props, filters=[("pageid", "in", [r["pageid"] for r in result.values()])]
+        ).to_pylist()
+    }
+    for row in result.values():
+        row["qid"] = final_qids.get(row["pageid"])
+    return result
+
+
 def aliases(
-    cache: Path, date: str, qids: set[str], wiki: str = "enwiki"
+    cache: Path, date: str, canonical: dict[str, str], wiki: str = "enwiki"
 ) -> dict[str, str]:
     """Follow the saved resolver's namespace-0 redirect paths, in reverse.
 
@@ -72,17 +136,8 @@ def aliases(
     prevents undercounting the global denominator. No name similarity is used.
     """
 
-    props, pages, redirects = (
-        saved_table(cache, date, t, wiki) for t in ("page_props", "page", "redirect")
-    )
-    identities = pq.read_table(props, filters=[("qid", "in", sorted(qids))]).to_pylist()
-    if {r["qid"] for r in identities} != qids:
-        raise ValueError(f"A selected QID has no {wiki} snapshot page")
-    ids = {r["pageid"]: r["qid"] for r in identities}
-    canonical = pq.read_table(pages, filters=[("pageid", "in", list(ids))]).to_pylist()
-    if len(canonical) != len(ids) or any(r["is_redirect"] for r in canonical):
-        raise ValueError("Selected QID page is missing or a redirect")
-    result = {r["title"]: ids[r["pageid"]] for r in canonical}
+    pages, redirects = (saved_table(cache, date, t, wiki) for t in ("page", "redirect"))
+    result = dict(canonical)
     frontier = dict(result)
     for _ in range(20):  # Same maximum path length as resolve_sql().
         rows = pq.read_table(
@@ -234,11 +289,13 @@ def linked_pages(blocks, targets: dict[int, str]) -> dict[str, set[int]]:
     return pages
 
 
-def run(wiki: str = "enwiki", population: bool = False) -> dict:
+def run(
+    wiki: str = "enwiki", population: bool = False, output: Path | None = None
+) -> dict:
     if wiki not in ("enwiki", "jawiki") or (wiki != "enwiki" and not population):
         raise ValueError("Use --population for separate EN/JA population scores")
     lang = wiki[:2]
-    output = BASE / (
+    output = output or BASE / (
         f"poc_10k_misc_snapshot_link_relevance_{wiki}_20261020"
         if population
         else "poc_10k_misc_snapshot_link_relevance_20261020"
@@ -318,21 +375,13 @@ def run(wiki: str = "enwiki", population: bool = False) -> dict:
         update("RESOLVING_SNAPSHOT_ALIASES", selected_qids=len(selection))
         selected_qids = {r["qid"] for r in selection}
         props = saved_table(CACHE, date, "page_props", wiki)
-        identities = pq.read_table(
-            props, filters=[("qid", "in", sorted(selected_qids))]
-        ).to_pylist()
         page_table = saved_table(CACHE, date, "page", wiki)
-        article_ids = {
-            r["pageid"]
-            for r in pq.read_table(
-                page_table,
-                filters=[("pageid", "in", [r["pageid"] for r in identities])],
-            ).to_pylist()
-        }
-        # page_props includes other namespaces; the agreed measure uses
-        # namespace-0 articles, as does the saved resolver's page table.
-        available = {r["qid"] for r in identities if r["pageid"] in article_ids}
-        names = aliases(CACHE, date, available, wiki)
+        basis = measurement_pages(CACHE, date, selected_qids, wiki)
+        canonical = {r["title"]: str(r["pageid"]) for r in basis.values()}
+        names = aliases(CACHE, date, canonical, wiki)
+        (output / "measurement_pages.json").write_text(
+            json.dumps(basis, indent=2, ensure_ascii=False), encoding="utf-8"
+        )
         (output / "aliases.json").write_text(
             json.dumps(names, indent=2), encoding="utf-8"
         )
@@ -345,8 +394,8 @@ def run(wiki: str = "enwiki", population: bool = False) -> dict:
             ),
             names,
         )
-        if not set(targets.values()) <= available:
-            raise ValueError("Unexpected QID in dumped link targets")
+        if not set(targets.values()) <= set(canonical.values()):
+            raise ValueError("Unexpected measurement page in dumped link targets")
         (output / "targets.json").write_text(
             json.dumps(targets, indent=2), encoding="utf-8"
         )
@@ -361,19 +410,23 @@ def run(wiki: str = "enwiki", population: bool = False) -> dict:
         )
         # Independent agreement with the saved scoped resolver is mandatory.
         reference = defaultdict(set)
-        target_qids = set(targets.values())
+        target_pages = set(targets.values())
         for row in read_json(links_path):
-            if row["status"] == "RESOLVED" and row["qid"] in target_qids:
-                reference[row["qid"]].add(int(row["source"]))
+            page_id = str(row.get("pageid"))
+            if row["status"] in ("RESOLVED", "NO_PAGE_QID") and page_id in target_pages:
+                reference[page_id].add(int(row["source"]))
         rows = []
         for row in selection:
             qid = row["qid"]
-            numerator_pages = pages[qid] & scope
-            if numerator_pages != reference[qid]:
+            measured = basis.get(qid, {})
+            page_id = str(measured.get("pageid"))
+            linking_pages = pages.get(page_id, set())
+            numerator_pages = linking_pages & scope
+            if numerator_pages != reference[page_id]:
                 raise ValueError(
                     f"Actual scoped links disagree with saved resolution: {qid}"
                 )
-            numerator, denominator = len(numerator_pages), len(pages[qid])
+            numerator, denominator = len(numerator_pages), len(linking_pages)
             if numerator > denominator:
                 raise ValueError(f"Invalid subset count: {qid}")
             rows.append(
@@ -381,12 +434,16 @@ def run(wiki: str = "enwiki", population: bool = False) -> dict:
                     "qid": qid,
                     "wiki": wiki,
                     "name": row["title"],
+                    "measurement_page_id": measured.get("pageid"),
+                    "measurement_page_title": measured.get("title"),
+                    "measurement_page_qid": measured.get("qid"),
+                    "redirect_depth": measured.get("redirect_depth"),
                     "score_status": (
                         "SCORED"
                         if denominator
                         else (
                             "UNAVAILABLE_SNAPSHOT_PAGE"
-                            if qid not in available
+                            if qid not in basis
                             else "UNAVAILABLE_NO_INCOMING_LINKS"
                         )
                     ),
@@ -422,7 +479,10 @@ def run(wiki: str = "enwiki", population: bool = False) -> dict:
             "unavailable_qids": sum(r["score_status"] != "SCORED" for r in rows),
             "scope_policy": "full Daniel source-page inventory in this language, including saved counterparts; no cross-language pooling",
             "formula": "distinct actual linking pages within Daniel full source-page scope / all distinct actual linking pages",
-            "link_rules": "namespace-0 source and target pages, including template/navigation links; target redirects resolved; source page IDs counted once per QID",
+            "link_rules": "namespace-0 source and target pages, including template/navigation links; redirect and destination count as one final page; source page IDs counted once across its aliases",
+            "measurement_policy": "original entity QID unchanged; final destination page supplies both counts, even if its QID differs; linking_page_ids is keyed by final page ID",
+            "redirected_qids": sum(r["redirect_depth"] > 0 for r in basis.values()),
+            "distinct_measurement_pages": len(canonical),
             "source_titles": len(sources),
             "resolved_source_titles": len(sources) - len(missing),
             "distinct_resolved_source_pages": len(scope),
@@ -462,7 +522,12 @@ def run(wiki: str = "enwiki", population: bool = False) -> dict:
         (output / "report.json").write_text(
             json.dumps(report, indent=2), encoding="utf-8"
         )
-        update("COMPLETE", scored_qids=len(rows), report=str(output / "report.json"))
+        update(
+            "COMPLETE",
+            scored_qids=report["scored_qids"],
+            unavailable_qids=report["unavailable_qids"],
+            report=str(output / "report.json"),
+        )
         return report
     except Exception as exc:
         update("STOPPED_FOR_CONSULTATION", error=f"{type(exc).__name__}: {exc}")
@@ -473,5 +538,6 @@ if __name__ == "__main__":
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--wiki", choices=("enwiki", "jawiki"), default="enwiki")
     parser.add_argument("--population", action="store_true")
+    parser.add_argument("--output", type=Path)
     args = parser.parse_args()
-    run(args.wiki, args.population)
+    run(args.wiki, args.population, args.output)

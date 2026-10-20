@@ -13,16 +13,43 @@ no new retrieval, matching or entity creation is involved. The separate
 `scope_concentration_filter.py --source <report.json> --output <new-directory>`
 applies the 5% test to each scored language/QID and preserves unknowns.
 
-**Execution status:** the first Japanese population run stopped before scores
+**Approved redirect rule:** count the redirect and final destination as one
+page, once per linking source page, separately by language. The destination
+supplies both counts, even when its QID differs. Keep the original assigned
+QID unchanged and record the measurement page separately. `--output` selects
+a new attempt directory without overwriting earlier evidence.
+
+**Historical stop:** the first Japanese population run stopped before scores
 were written: 12 selected QIDs have redirect pages. Two checked destinations
 carry different QIDs (Q1325845 redirects to Q29190's article; Q59886 to
 Q51881408's article). No identity or link count was reassigned. The 12 cases,
 source hashes and stop are saved in
 `outputs/poc_10k_misc_snapshot_link_relevance_jawiki_20261020/source_exception.json`
-and `progress.json`. The proposed handling (leave the original language score
-unavailable, continue other measurements) awaits user agreement under the POC
-stop rule. No English population scan, language filter output or Event run
-has started. Four focused checks pass, including independent language decisions.
+and `progress.json`. The user then approved counting one final page. The
+continuation uses the rule above; Event acquisition remains stopped.
+
+**Verified continuation results:** all **1,312** selected resolved MISC QIDs
+remain unchanged. The Japanese run completed against **296** scoped pages:
+**391** QIDs have scores (**45 >=5%**, **346 <5%**). **921** have no score:
+920 have no snapshot article and one has no incoming links. All **12** redirect
+cases now have scores based on one final page. Final-page IDs, optional QIDs
+and redirect depths are retained as measurement evidence; no model rows were
+merged or removed. Full dump checks, saved scoped-link agreement, output/input
+hashes, source-page deduplication and population coverage passed.
+
+- Measurements: `outputs/poc_10k_misc_snapshot_link_relevance_jawiki_redirects_20261020/report.json`
+- Threshold: `outputs/poc_10k_scope_concentration_jawiki_redirects_5pct_20261020/report.json`
+- English continuation: `outputs/poc_10k_misc_snapshot_link_relevance_enwiki_redirects_20261020/progress.json`
+
+The English continuation resolved its aliases and verified all **131,511,582**
+link-target rows, selecting **8,723** target IDs. It then stopped before the
+global page-link scan: Windows rejected the filter command length (WinError
+206). No English population scores or threshold output were written. Proposed
+technical correction: pass the identical native `rg` filter through a temporary
+pattern file instead of the command line. Approval is pending under the POC
+stop rule. No retrieval, matching or Event acquisition was started. The four
+focused tests pass, including shared final-page counting and separate EN/JA
+decisions. Generated outputs remain ignored local artifacts.
 
 ## Historical English-only 10K preflight — superseded by language clarification
 
