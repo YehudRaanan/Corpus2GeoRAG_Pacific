@@ -6,8 +6,9 @@ remain explicit incomplete coverage. This diagnostic changes no model rows,
 matching decisions, Event rules, or filters. Earlier mention-based ratios do
 not test this measure. Population S2T sections 4/5 remain unchanged.
 Synthetic IDs are excluded: this scope-concentration measure uses QIDs only.
-Purpose: identify broad/unrelated MISC entities before Event retrieval; no
-numerical cutoff is approved and this is not the top-20 relation ranking.
+Purpose: identify broad/unrelated MISC entities before Event retrieval.
+The separate scope_concentration_filter.py applies the provisional 5% cutoff;
+this acquisition diagnostic does not perform the top-20 relation ranking.
 """
 
 from __future__ import annotations
@@ -361,7 +362,7 @@ def run() -> dict:
             "limits": [
                 "English diagnostic sample only, not an all-language measure.",
                 "Four missing source titles make the scoped numerator incomplete.",
-                "Page-link concentration is not identity-match confidence; no cutoff is approved.",
+                "Page-link concentration is not identity-match confidence; this acquisition diagnostic does not apply the separate 5% filter.",
             ],
             "inputs": {
                 str(p): digest(p)

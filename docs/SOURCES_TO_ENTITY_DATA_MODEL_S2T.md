@@ -172,8 +172,13 @@ The approved name order supersedes a simple copy of the compact metadata's selec
 **User decision, 20 October 2026:** use this measure to identify broad or
 unrelated MISC entities before Event retrieval, using their concentration in
 Daniel's WWII/Pacific page scope. It does not require a constructed graph and
-does not measure historical importance. No numerical filtering cutoff has
-been approved; the diagnostic does not itself filter entities or restart Events.
+does not measure historical importance. The user subsequently approved a
+**provisional 5% threshold**: exclude measured MISC QIDs with score **<0.05**
+from Event retrieval and keep scores **>=0.05**, including exactly 5%.
+Synthetic IDs remain excluded. Missing global denominators remain unknown and
+must not silently become zero scores or exclusion decisions. Preserve all
+original model rows and matching assignments. This threshold does not change
+the matching similarity threshold, Event hierarchy or two-entity inclusion rule.
 
 For each eligible matched Wikidata QID:
 
@@ -215,7 +220,18 @@ distinct article page IDs; four titles remain missing. Twelve QIDs have
 positive observed scope counts and seven have zero. Zero means no link in
 the checked pages, not proven absence from the four missing pages. Missing
 source pages remain explicit incomplete coverage. The 19-QID test does not
-establish full-population measurement or approve a threshold.
+establish full-population measurement.
+
+**Provisional 5% test:** apply the approved threshold to those same 19 scored
+QIDs using [scope_concentration_filter.py](../GG_Data/pipeline/scope_concentration_filter.py).
+Keep two: Battle of Kiev (1941)/Q162284 (7.9612%) and Continuation War/Q122100
+(5.1468%). Seventeen fall below 5%, including World War II/Q362 (0.1408%).
+No exception is added for a low-scoring relevant subject. Decisions use full
+counts without rounding; original scores remain unchanged. The bounded test
+records all keep/exclude decisions in
+`GG_Data/pipeline/outputs/poc_10k_scope_concentration_5pct_20261020/selection.csv`
+and `report.json`. This is a 19-QID test, not a completed filter of the full
+10K population; it makes no new request and does not restart Event acquisition.
 
 Active evidence:
 `GG_Data/pipeline/outputs/poc_10k_misc_snapshot_link_relevance_20261020/report.json`
@@ -547,7 +563,7 @@ Before an implementation can claim completion:
 |---|---|
 | Input and decision accounting | Exactly 309,864 Mentions for the pinned input, unchanged original fields/order/IDs, complete stage/reason accounting and separate NER/matching scores. |
 | Identity and page keys | Unique `(entity_id, type)` pairs and valid composite mention FKs; QID-level references exist without multiplying assertions; page-key pairs complete; no talk IDs, Index-as-page-ID, cache-only entity expansion or extra Daniel mentions. |
-| Scope-concentration measure, when supplied | Matched QIDs only; exclude synthetic IDs. Both page counts use the same snapshot/language/link rules, with source-page deduplication and full Daniel page scope. Report missing coverage and unknown denominators. Keep this measure separate from `Entities.importance`; no cutoff or automatic filtering without approval. |
+| Scope-concentration measure, when supplied | Matched QIDs only; exclude synthetic IDs. Both page counts use the same snapshot/language/link rules, with source-page deduplication and full Daniel page scope. Report missing coverage and unknown denominators. Apply the provisional 5% rule to measured MISC QIDs: exclude <0.05 from Event retrieval, keep >=0.05; retain model records. Keep this measure separate from `Entities.importance`. |
 | Events | Native root/snapshot/path evidence; original QIDs; all approved event types; at least two distinct direct Daniel QIDs; incoming/outgoing acquisition coverage reported. |
 | Assertions | Reconcile retrieved eligible statements = retained mapped base rows + exact exclusions + explicitly reported unmapped/ambiguous/blocked cases, deduplicated by source statement. Report all categories and ranks. No silent loss through join/mapping/rank filters. |
 | Geometry | At most one accepted object per place; failed attempts retained; source and CRS known; valid nonempty Shapely/WKB round trip before delivery. |

@@ -5,7 +5,18 @@
 Use the scope-concentration ratio to identify broad or unrelated MISC entities
 before Event retrieval, without building the graph first. This measures
 specificity to Daniel's WWII/Pacific page scope, not historical importance or
-the separate top-20 relation rule. No numerical cutoff has been approved.
+the separate top-20 relation rule. The user approved a **provisional 5% cutoff**:
+exclude measured MISC QIDs with score **<0.05** from Event retrieval and keep
+scores **>=0.05**. Exactly 5% passes; compare full counts without rounding.
+Unknown denominators remain unknown and require consultation, not a zero score.
+
+`scope_concentration_filter.py` tests this rule against the saved 19 QIDs.
+**Two pass**: Battle of Kiev (1941)/Q162284 (7.9612%) and Continuation
+War/Q122100 (5.1468%). **Seventeen fall below 5%**, including World War
+II/Q362 (0.1408%). No exception or new matching decision is added.
+Evidence: `outputs/poc_10k_scope_concentration_5pct_20261020/selection.csv`
+and `report.json`. This bounded test does not measure/filter the full 10K
+population or restart Event retrieval. All model and original score rows stay.
 
 **Synthetic IDs are excluded from this measure**, as requested by the user.
 They have no matched QID and cannot supply a Wikidata-linked global denominator.
@@ -44,7 +55,8 @@ resolved titles, **413 distinct resolved article pages**, and four missing
 titles (`Conscription in Japan`, `Two Lords Incident`, `BUROGU`, and
 `Gabriel Maurício Teixeira`). Missing pages remain unknown; they are not zero
 observations. The score measures link concentration, not matching confidence.
-No filtering threshold, matching change or Event restart is approved.
+The separate provisional 5% test above uses these saved scores. The original
+acquisition report remains unchanged; no matching change or Event restart ran.
 
 Current run: **complete for all 19 sample QIDs, with the approved incomplete
 source coverage**. Both counts use English Wikipedia snapshot `20261001`.
@@ -69,7 +81,9 @@ Bulge (1991 film), 39 (number), and Welsh language. Zero means no observed link
 within the 413 resolved pages; it makes no claim about the four missing titles.
 Higher shares mean stronger concentration within this page scope, so globally
 common relevant subjects can score below narrower subjects. No match is
-changed and no cutoff is applied. Counts include template/navigation links.
+changed. This original acquisition does not apply a cutoff; the separate 5%
+test above records the subsequent filtering decisions. Counts include
+template/navigation links.
 
 Evidence: `outputs/poc_10k_misc_snapshot_link_relevance_20261020/report.json`,
 `scores.csv`, `linking_page_ids.json.gz`, `aliases.json`, `targets.json` and
