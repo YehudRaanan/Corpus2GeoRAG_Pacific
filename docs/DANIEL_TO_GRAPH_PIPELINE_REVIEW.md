@@ -1,6 +1,12 @@
 # Daniel input to final graph JSON review
 
-## Current result — small Daniel-first query test, 20 October 2026
+## Current run — larger Event timing sample, 20 October 2026
+
+The timing experiment starts from 100 frozen Daniel mentions (seed 20261020), containing 71 distinct matched QIDs. Snapshot discovery and the union of both direct-link directions produce 15,550 preliminary candidates. The complete inventory is retained; 200 uniformly sampled candidate IDs measure the existing latest-hierarchy classification and qualification rules. This sample changes no population rule or Event cap and creates no model rows. BigQuery discovery took 76.008 seconds; its results are cached for repeat attempts. Classification is running with the approved HTTP 429 cooldown/retry rule. Evidence: `GG_Data/pipeline/outputs/poc_10k_event_timing_100_mentions_200_candidates_20261020`. A full-run ETA is not yet established; the original full run remains stopped.
+
+The benchmark's rank-URL adapter was corrected to apply the already-approved exclusion of deprecated ancestry. The raw cache and source/rule selections remain unchanged. Invalid interrupted benchmark classifications were not imported and are retained as failed-test evidence. Regression checks: 32 tests passed, with Black and focused Ruff.
+
+## Previous result — small Daniel-first query test, 20 October 2026
 
 The bounded `event_sample_query.py` test used five random Daniel QIDs (seed 20261020), two separate positive controls already in Daniel, and the accepted 165-candidate hierarchy probe. The agreed BigQuery snapshot supplied assertions. The query returned only World War II/Q362: five native assertions connecting two distinct Daniel QIDs, Hitler/Q352 and Roosevelt/Q8007. Both native directions were covered; mapping/exclusions were checked and assertion identities matched the complete cached records exactly. Repeated links did not increase the distinct-entity count. Evidence: `GG_Data/pipeline/outputs/poc_10k_event_sample_query_20261020`. All input/output checksums passed. Query execution: 1.975 seconds; billed bytes: 68,943,872,000.
 

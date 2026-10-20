@@ -1,6 +1,14 @@
 # Daniel pipeline POC
 
-## Current result — small Daniel-first query test, 20 October 2026
+## Current run — larger Event timing sample, 20 October 2026
+
+`event_timing_sample.py` draws 100 original frozen Daniel mentions (seed 20261020), including 71 distinct matched QIDs. Unrestricted snapshot discovery returned 16,097 incoming candidates; combining both native directions and requiring two distinct Daniel endpoints left **15,550 candidates**. The full inventory is retained. A separate uniform sample of **200 candidate QIDs** measures latest-hierarchy classification and link qualification; it is a timing experiment, not an Event population cap. No untested candidate is rejected and no model Event or graph is written.
+
+The discovery query took **76.008 seconds** on BigQuery and billed 1,561,930,498,048 bytes. Later benchmark attempts reuse its saved result. The active evidence directory is `outputs/poc_10k_event_timing_100_mentions_200_candidates_20261020`. Classification has encountered an HTTP 429 cooldown and follows the already-approved retry budget. There is no reliable full-run ETA yet. The original full run remains stopped.
+
+The initial benchmark adapter compared native rank names with saved SPARQL rank URLs incorrectly and produced invalid country classifications. It was stopped before any import. `native_rank_answers` now adapts verified rank URLs to native names; the existing deprecated-ancestry rule and raw source caches are unchanged. A regression test checks this exact failure. Both interrupted attempts and their code/response evidence are retained. A verified empty folder left by the interruption was preserved separately before repeating that request under the existing recovery approval. Checks: **32 tests passed**, Black and focused Ruff passed. Cache/output evidence is local and ignored by Git.
+
+## Previous result — small Daniel-first query test, 20 October 2026
 
 `event_sample_query.py` tested five Daniel QIDs selected with seed 20261020 and two separate positive controls already present in Daniel: Hitler/Q352 and Roosevelt/Q8007. It reused the accepted 165-candidate hierarchy probe, queried native assertions from the agreed BigQuery snapshot, counted distinct Daniel endpoints and checked mapping/exclusions before the final decision. Result: **World War II/Q362, two distinct Daniel QIDs, five native assertions**, with both native directions represented. Statement identities matched an independent check of the complete saved records exactly. Repeated links to Hitler did not count as additional entities. SQL, response, source/job evidence and decisions are in `outputs/poc_10k_event_sample_query_20261020`; all recorded input/output checksums passed. BigQuery execution was 1.975 seconds; billed bytes were 68,943,872,000. No live Wikidata request was needed.
 
