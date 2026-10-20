@@ -51,6 +51,37 @@ sources and rules stay unchanged. Preserve the failed attempt and write the
 continuation to a new directory. No retrieval, matching or Event acquisition
 was started. Generated outputs remain ignored local artifacts.
 
+**English fix and continuation completed:** the identical regex is now read
+from a temporary file, avoiding Windows' command-length limit. Five focused
+tests pass, including a 9,000-target regression. The new English run completed
+in **303.7 seconds**, verified all **1,669,535,683** page-link rows, and agreed
+with the saved scoped-link resolver. All 19 earlier English scores and exact
+numerator page sets are unchanged. Aliases, final-page mappings and the 8,723
+target IDs are byte-identical to the stopped English attempt.
+
+| Frozen 10K resolved MISC QIDs | English | Japanese |
+|---|---:|---:|
+| Selected per language | 1,312 | 1,312 |
+| Scored | 670 | 391 |
+| Keep: score >=5% | 41 | 45 |
+| Exclude from Event retrieval: score <5% | 629 | 346 |
+| Unavailable score | 642 | 921 |
+| Distinct scoped source pages | 413 | 296 |
+
+English unavailable cases comprise **639 without a snapshot article** and
+**3 without incoming links**. All 34 English redirect cases use one final
+measurement page; original QIDs remain unchanged. The four known missing
+English source titles remain explicit incomplete scope coverage. Input/output
+hashes, population coverage, deduplicated source-page sets and exact integer
+threshold comparisons passed. Language decisions remain separate. The Entity
+table and matching decisions are unchanged; Event acquisition is still stopped.
+
+- English measurements: `outputs/poc_10k_misc_snapshot_link_relevance_enwiki_patternfile_20261020/report.json`
+- English threshold: `outputs/poc_10k_scope_concentration_enwiki_patternfile_5pct_20261020/report.json` and `selection.csv`
+
+Backup status: **Local checkpoint only**; generated outputs are local ignored
+artifacts. No push was performed.
+
 ## Historical English-only 10K preflight — superseded by language clarification
 
 The existing resolved Entity rows contain **1,312 distinct matched MISC QIDs**.

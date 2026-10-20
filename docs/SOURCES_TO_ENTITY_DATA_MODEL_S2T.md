@@ -253,7 +253,7 @@ records all keep/exclude decisions in
 and `report.json`. This is a 19-QID test, not a completed filter of the full
 10K population; it makes no new request and does not restart Event acquisition.
 
-Active evidence:
+Historical 19-QID evidence:
 `GG_Data/pipeline/outputs/poc_10k_misc_snapshot_link_relevance_20261020/report.json`
 and `scores.csv`; implementation:
 [snapshot_link_relevance_probe.py](../GG_Data/pipeline/snapshot_link_relevance_probe.py).
@@ -261,6 +261,27 @@ The later 153-row synthetic extension under
 `outputs/missing_pages_synthetic_numerators_20261020/` is superseded historical
 evidence only; its code was removed. No original matching decision, model row,
 Event rule or relation-importance score was changed.
+
+**Verified frozen-10K population measurements, 20 October:** both language
+runs now cover the same **1,312** existing resolved MISC QIDs independently.
+English: **670 scored**, comprising **41 >=5%** and **629 <5%**; **642 unknown**
+(639 without a snapshot article, three without incoming links). Japanese:
+**391 scored**, comprising **45 >=5%** and **346 <5%**; **921 unknown**
+(920 without a snapshot article, one without incoming links). Scoped page
+counts are 413 English and 296 Japanese. The four known missing English source
+titles remain incomplete scope coverage. All original QIDs/model rows remain
+unchanged; 34 English and 12 Japanese redirect cases use one final page each.
+These are separate language decisions, with no combined Event retrieval rule
+inferred and no Event acquisition restarted. Input/output hashes, full dump
+coverage and saved scoped-link agreement passed; all 19 earlier English
+measurements are unchanged.
+
+Current population evidence under `GG_Data/pipeline/outputs/`:
+
+- `poc_10k_misc_snapshot_link_relevance_enwiki_patternfile_20261020/report.json`
+- `poc_10k_scope_concentration_enwiki_patternfile_5pct_20261020/report.json`
+- `poc_10k_misc_snapshot_link_relevance_jawiki_redirects_20261020/report.json`
+- `poc_10k_scope_concentration_jawiki_redirects_5pct_20261020/report.json`
 
 ## 7. Events: discovery, inclusion and fields
 
