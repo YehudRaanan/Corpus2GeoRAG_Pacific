@@ -39,6 +39,25 @@ have approved direct mapped assertions to/from at least **two distinct matched
 Daniel QIDs** before Event import. This approval does not waive that gate or
 assert complete Event population, and it changes no existing match assignment.
 
+**Verified two-entity gate, 21 October 2026:** all **1,414 recognized
+candidates** passed against the unchanged **48 retained matched Daniel QIDs**
+in this bounded sample. Native assertions came from the same agreed BigQuery
+snapshot. The existing mapping and exact assertion exclusions were applied:
+**2,889 unique native assertions**, no missing property mappings, and no
+excluded assertions. Both directions were checked (2,872 Event-to-Daniel;
+17 Daniel-to-Event). Counts use distinct Daniel QIDs, not mentions, predicates,
+typed rows, or reverse views: **1,398 candidates have two**, **14 have three**,
+**one has four**, and **one has five**. All assertion ranks remain eligible
+under the existing rule (2,887 normal; two deprecated); the ancestry-only rank
+filter was not applied to Relations. Independent replay matched the saved
+preliminary endpoint inventory and the post-exclusion endpoint counts.
+
+Evidence: `../GG_Data/pipeline/outputs/event_hierarchy_bigquery_occurrence_test_20261021/two_entity_gate/`
+contains the native query/result, full decisions, `decisions.csv`, source/job
+receipt, checksums, and `verification.json`. Client query time was 30.785
+seconds. This verifies the gate for this sample only; it does not verify the
+full 10K population. No Event rows or final graph were written.
+
 Saved evidence: `../GG_Data/pipeline/outputs/event_hierarchy_bigquery_occurrence_test_20261021/`
 contains `recognition_approval.json`, complete query results and parameter CSVs;
 `audit_375/REPORT.md`, `records_375.csv`, `types_295.csv` and `report.json` contain
