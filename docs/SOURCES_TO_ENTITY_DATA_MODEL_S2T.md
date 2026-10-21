@@ -1,5 +1,7 @@
 # Source-to-target: approved sources to the six-table data model
 
+**Synthetic LOC approval - 21 October 2026:** all existing LOC identities enter Geography, including unresolved SYN IDs. QIDs use exact-ID lookup first; SYN IDs use the existing name/alias/date/type/context fallback and keep their original IDs. Supported geometry does not create a Wikidata match. Ambiguous candidates remain unresolved. `Geography.geometry_ref.place_id` can therefore be an existing QID or SYN ID; the reference stays in the model, not graph JSON. This extends target coverage under the existing source and acceptance policy.
+
 **Geometry pointer correction - 21 October 2026:** `Geography.geometry_ref` belongs to the data model, not final graph JSON. It retains the approved `{file, place_id, sha256}` format and identifies the saved Shapely/WKB object. The existing loader can read this model reference; Agent access to the model still requires integration verification. Earlier graph-node pointer instructions are superseded. No pointer or inline GeoJSON is exported in graph JSON.
 
 Specification date: 19 October 2026. Status: approved source scope and rules documented; required implementation exceptions remain explicit. This document does not execute acquisition, matching, table population, geocoding, or graph export.
@@ -1395,9 +1397,9 @@ One source assertion produces one base row. Bidirectional graph navigation is su
 
 Follow the complete [geocoding policy](GEOCODING_HIGH_LEVEL_PROCESS.md), version `geo-object-selection-v0.5.0`; this S2T does not replace its place-type/representation table or acceptance rules.
 
-1. Target confirmed place QIDs only. No geocoding of synthetic unresolved identities or non-place events by name.
+1. Target every existing `Entities.type=LOC` identity: matched QIDs and unresolved synthetic IDs. Approved extension, 21 October 2026: synthetic LOC rows enter the existing name/alias/date/type/context fallback; they must not be excluded because they lack a QID. Preserve each original `SYN_...` ID separately, even when names repeat. A supported source-object geometry does not establish a Wikidata match: leave entity IDs, types, matching decisions and identity status unchanged. Non-place events are not name-geocoding targets.
 2. Set selection date to the earliest supported related event/relation date inside `1941-12-07` through `1945-09-02`, else `1941-12-07`. Approval, 21 October: retain a year-only date as `YYYY` and a month-only date as `YYYY-MM`; compare source date-range bounds at that same precision. Do not add a month/day or derive a first day. Use the existing precision-aware possible-overlap test against the project period. For overlapping supplied prefixes, retain the shorter/coarser earliest prefix. Decade/century/millennium values keep their native year plus `selection_precision` in the selection audit; compare with the already approved Wikidata precision ranges, never interpret that year as an exact day. Preserve all original dates, precision and calendars. Unsupported representations or calendar cases still require consultation.
-3. Search OHM and OSM exact QID candidates, preferring OHM then OSM after identity/date/meaning/geometry checks. WHG reconciliation is used only when their combined exact-QID candidate count is zero or greater than one. WHG unions are not selected geometries.
+3. For matched QIDs, search OHM and OSM exact QID candidates, preferring OHM then OSM after identity/date/meaning/geometry checks. WHG reconciliation is used only when their combined exact-QID candidate count is zero or greater than one. Synthetic IDs have no exact-QID query: send them directly to the existing fallback in step 4, never as `wikidata=SYN_...`. WHG unions are not selected geometries.
 4. Apply the existing OHM/OSM/GeoNames name/alias/context fallback with added identity evidence. A high name score alone is insufficient. Use original linked-source geometry, not a guessed shape.
 5. Use the existing preferred representation and stable source-object-ID tie rule. Do not union, buffer, simplify, construct or replace with a centroid automatically.
 6. Validate a nonempty Shapely geometry; persist WKB in GeoParquet with CRS metadata. Record provenance, selection date and every failed/rejected/unselected attempt. Older OSM snapshot age is accepted; historical suitability still needs the existing checks.
@@ -1406,7 +1408,7 @@ Reuse approved saved snapshots/bulk retrieval first. The approved plan allows OH
 
 | Target column(s) | Source and population rule |
 |---|---|
-| `place_id`, `name`, `place_type` | Confirmed entity QID and existing selection context/type evidence. One accepted geometry per QID at most. |
+| `place_id`, `name`, `place_type` | Existing LOC entity ID (QID or unchanged per-mention SYN ID), name and existing context/type evidence. One accepted geometry per existing place ID at most. |
 | `source_dataset`, `source_object_id`, `source_url` | Selected original source object, snapshot/version and link; no Wikidata geometry. |
 | `match_method`, `selection_policy_version` | Actual evidence method and applied version. |
 | `retrieved_at`, `review_status`, `decision_reason` | Real retrieval and acceptance decision; selected rows require `ACCEPTED_AUTO` or `ACCEPTED_REVIEWED` evidence. |
@@ -1414,6 +1416,8 @@ Reuse approved saved snapshots/bulk retrieval first. The approved plan allows OH
 | `audit` | Full original input, candidates, dates, source attempts, WHG evidence, validation and decisions, including `selection_date`. Retain the complete audit or immutable reference. |
 
 `UNRESOLVED` and `REJECTED_NOT_PLACE` remain audit results without selected Geography rows. Preserve the ERD's exact 13-column geometry compatibility view; `selection_date` projects from audit, not link validity. Geometry type comes from the object. Store `geometry_ref={file,place_id,sha256}` in Geography model records separately from the referenced geometry artifact; the compatibility view stays at 13 columns. Do not export this pointer in graph JSON. The loader helper exists; Agent access to Geography remains an integration check.
+
+For synthetic targets, reuse Daniel's original name, type/subtype and source-page references from the checksum-pinned Mentions artifact, together with any already-supported date evidence. A page title is context, not proof of a parent area. Do not extract new entities, infer dates from paragraph text, or fabricate place classes or parents. The existing default selection date still applies when no supported related date exists. Name and date alone do not remove identity ambiguity: retain the existing additional identity-evidence checks. Insufficient evidence remains visibly unresolved. This is the `geo-object-selection-v0.5.0` policy with the approved synthetic-LOC population extension; no source or acceptance threshold is added.
 
 ## 10. Evidence, required checks and explicit exceptions
 

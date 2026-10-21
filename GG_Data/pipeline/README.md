@@ -1,5 +1,44 @@
 # Daniel pipeline POC
 
+### Synthetic LOC coverage - 21 October 2026
+
+The approved synthetic-LOC extension supersedes the exclusions in the historical
+preflight notes below. `geography.prepare` includes every existing LOC identity:
+**1,768 targets = 1,646 matched QIDs + 122 unchanged synthetic IDs**. A QID uses
+`EXACT_QID_THEN_NAME_ALIAS_CONTEXT`; a synthetic target uses `NAME_ALIAS_CONTEXT`
+with `wikidata_id=null`. These are retrieval routes, not matching decisions.
+No SYN ID is sent as a Wikidata identifier. Repeated synthetic names remain
+separate targets.
+
+The populated model pins the original Daniel Mentions artifact by checksum.
+Targets retain existing aliases, LOC type, identity status, mention IDs,
+Daniel's type/subtype and source-page references. No paragraph text is copied
+or parsed; source-page titles do not establish a parent area. Existing supported
+dates and their native precision are retained. With no supported related date,
+the existing default applies. Candidate acceptance still requires the documented
+identity/date/type/context evidence; names alone do not establish identity.
+
+`load_geometry` accepts an existing SYN place ID as well as a QID and checks the
+same artifact hash, contained path, CRS, unique row and valid nonempty Shapely
+object. The pointer remains in Geography; graph JSON omits it. This change does
+not alter entity matching, create QIDs, merge identities or assign geometries.
+
+Verified run: `outputs/poc_10k_geography_synthetic_included_20261021/` contains
+`report.json`, `targets.json` and `verification.json`. Status is
+`GEOGRAPHY_INPUTS_READY`, not populated Geography. All 122 synthetic targets have
+their exact original mention references; every prior QID selection is unchanged.
+All populated model output hashes still pass. Zero source requests and zero
+geometry rows were written. The 26 focused tests passed, including a real
+GeoParquet/Shapely round trip for a synthetic ID and checksum-drift guards.
+Actual source retrieval, candidate checks and Geography population remain next.
+
+Reproduce with a fresh output directory:
+
+```powershell
+python -m GG_Data.pipeline.geography --model GG_Data/pipeline/outputs/poc_10k_event_model_stable_ties_20261021 --output GG_Data/pipeline/outputs/poc_10k_geography_synthetic_included_20261021_replay
+python -m pytest GG_Data/pipeline/test_geography.py GG_Data/pipeline/test_pipeline.py GG_Data/pipeline/test_relation_selection.py -q
+```
+
 ### Geography native-precision continuation - 21 October 2026
 
 The user approved comparing partial dates with equivalent source date ranges

@@ -1,19 +1,23 @@
 # Geocoding High-Level Process
 
+**Synthetic LOC approval - 21 October 2026:** all existing LOC identities enter Geography, including unresolved SYN IDs. QIDs use exact-ID lookup first; SYN IDs use the existing name/alias/date/type/context fallback and keep their original IDs. Supported geometry does not create a Wikidata match. Ambiguous candidates remain unresolved. `Geography.geometry_ref.place_id` can therefore be an existing QID or SYN ID; the reference stays in the model, not graph JSON. This extends target coverage under the existing source and acceptance policy.
+
 **Geometry pointer correction - 21 October 2026:** `Geography.geometry_ref` belongs to the data model, not final graph JSON. It retains the approved `{file, place_id, sha256}` format and identifies the saved Shapely/WKB object. The existing loader can read this model reference; Agent access to the model still requires integration verification. Earlier graph-node pointer instructions are superseded. No pointer or inline GeoJSON is exported in graph JSON.
 
 ## Purpose
 
-This process assigns one geographic object to each confirmed place entity in the WWII graph. The result is designed for graph construction and Agent testing.
+This process seeks one supported geographic object for each existing LOC entity, including synthetic identities without a Wikidata match. The result is designed for model population and Agent testing. Insufficient identity evidence leaves geometry unresolved.
 
 Policy version: `geo-object-selection-v0.5.0`
+
+Approved population extension, 21 October 2026: include synthetic LOC identities in the existing name/alias/date/type/context fallback. Keep each original SYN ID; do not assign a new QID or merge repeated names. This changes target coverage, not the source list or acceptance rules.
 
 Bulk acquisition plan added: `2026-10-19`. This is a planned retrieval method;
 the place-selection rules remain unchanged.
 
 ## Final data model
 
-- The Wikidata QID is the canonical place identifier.
+- The existing entity ID identifies the place: its QID when matched, otherwise its unchanged SYN ID. A geometry match does not change the entity's Wikidata matching status.
 - Each place entity has one selected geographic object.
 - The geographic object is stored as a Shapely geometry.
 - Geocoding returns a validated Shapely object, not GeoJSON. GeoParquet persists it as WKB and restores it as Shapely when loaded. The Geography data model contains `geometry_ref={file,place_id,sha256}` pointing to the saved object. The loader restores Shapely from this model reference. Final graph JSON omits the pointer and inline geometry. Agent access to the model must be verified, as defined in the [S2T](ENTITY_MODEL_TO_AGENT_GRAPH_S2T.md#geometry-object-reference-and-loading).
@@ -27,8 +31,10 @@ the place-selection rules remain unchanged.
 
 ```mermaid
 flowchart TD
-    A[Confirmed place entity and Wikidata QID] --> B[Set a source-selection date]
-    B --> C[Search OHM for exact QID]
+    A[Existing LOC entity: QID or SYN ID] --> B[Set a source-selection date]
+    B --> P{Has a matched Wikidata QID?}
+    P -- Yes --> C[Search OHM for exact QID]
+    P -- No --> J
     C --> D[Search OSM for exact QID]
     D --> E{Exact-QID result count is 1?}
     E -- Yes --> G[Check identity, date, place type, and geometry]
@@ -76,7 +82,7 @@ WHG requests are batched, with up to 50 place queries in one API request. The WH
 ## Bulk downloads and reuse
 
 Use saved snapshots and bulk exports as the main retrieval method. Search them
-for all distinct confirmed place QIDs after entity matching, rather than making
+for all existing LOC targets after entity matching, using QID lookup where available and the supported name/context fallback otherwise, rather than making
 the same request for every mention. Retain all candidate objects for the
 existing identity, date, type, and geometry checks. Source priority remains
 OHM, then OSM, with WHG used under the exact-QID count rule above.
@@ -98,8 +104,10 @@ its shapes represent the WWII period.
 
 The planned sequence is:
 
-1. Produce a distinct list of confirmed place QIDs, retaining links to all
-   original mentions. Synthetic IDs remain unresolved identity cases.
+1. Produce targets for all existing LOC identities, retaining original mention
+   and page references. QIDs use exact-ID lookup first; synthetic IDs use the
+   existing name/alias/context fallback directly. Never send a SYN ID as a QID.
+   Retain each synthetic target separately; no new entity extraction or merging.
 2. Reuse saved references and retrieve missing candidates in bulk. For BigQuery,
    estimate bytes processed before execution and save the query and result.
 3. Apply the existing selection policy to each place; preserve rejected
@@ -119,7 +127,7 @@ start a new download, geocoding run, or Agent release.
 For each place, the process:
 
 1. Collects the OHM and OSM candidates.
-2. Uses the Wikidata QID as the strongest identity link.
+2. Uses the Wikidata QID as the strongest identity link when available; otherwise uses supported name/alias/type/context evidence. Daniel's source-page title is context, not proof of a parent area. Missing type/parent evidence is not invented. Dates use the existing rule, including its default when unsupported.
 3. Uses WHG only under the rule above.
 4. Removes candidates that do not apply on the selection date.
 5. Removes candidates whose geographic meaning conflicts with the place type.
@@ -160,7 +168,7 @@ The main geometry table needs these fields:
 
 | Field | Meaning |
 |---|---|
-| `place_id` | Canonical Wikidata QID |
+| `place_id` | Existing LOC entity ID: QID or unchanged SYN ID |
 | `name` | Place label used in the run |
 | `place_type` | Normalized place class |
 | `geometry` | Selected Shapely object |

@@ -73,12 +73,42 @@ def prepare(model: Path, output: Path) -> dict:
         if digest(model / name) != expected:
             raise ValueError(f"Model artifact checksum differs: {name}")
     entities = read_json(model / "entities.json.gz")
-    # S2T 9.1: use resolved LOC rows; do not promote synthetic names to QIDs.
-    places = {
-        row["entity_id"]: row
-        for row in entities
-        if row["type"] == "LOC" and re.fullmatch(r"Q[1-9][0-9]*", row["entity_id"])
-    }
+    # S2T 9.1, approved synthetic-LOC extension (21 October): a missing
+    # Wikidata identity is not a reason to skip geographic identity matching.
+    places = {row["entity_id"]: row for row in entities if row["type"] == "LOC"}
+    for place_id in places:
+        if not re.fullmatch(r"Q[1-9][0-9]*|SYN_[A-Za-z0-9_]+", place_id):
+            raise ValueError(f"Unexpected location identity: {place_id!r}")
+    # Reuse the frozen Daniel input already pinned by the populated model.
+    # Page references are context, not evidence that a place lies in that page's
+    # named area. Do not infer a parent, extract names, or parse paragraph text.
+    mention_paths = [
+        Path(name)
+        for name in manifest["inputs"]
+        if Path(name).name == "mentions.json.gz"
+    ]
+    if len(mention_paths) != 1:
+        raise ValueError("Expected one pinned Daniel mentions artifact")
+    mention_path = mention_paths[0]
+    if digest(mention_path) != manifest["inputs"][str(mention_path)]:
+        raise ValueError("Daniel mentions checksum differs")
+    contexts = defaultdict(list)
+    for mention in read_json(mention_path):
+        if mention["entity_id"] in places:
+            contexts[mention["entity_id"]].append(
+                {
+                    key: mention.get(key)
+                    for key in (
+                        "mention_id",
+                        "word",
+                        "entity_group",
+                        "subtype",
+                        "Source",
+                        "wiki_site",
+                        "wiki_page_id",
+                    )
+                }
+            )
     events = {row["event_id"]: row for row in read_json(model / "events.json.gz")}
     dates = defaultdict(list)
     for row in read_json(model / "relations.json.gz"):
@@ -136,11 +166,16 @@ def prepare(model: Path, output: Path) -> dict:
                     )
     report = dict(
         status="GEOGRAPHY_INPUTS_READY",
-        confirmed_place_qids=len(places),
+        total_loc_targets=len(places),
+        confirmed_place_qids=sum(
+            bool(re.fullmatch(r"Q[1-9][0-9]*", place_id)) for place_id in places
+        ),
         synthetic_loc_rows=sum(
             r["type"] == "LOC" and r["entity_id"].startswith("SYN_") for r in entities
         ),
         source_manifest_sha256=digest(model / "manifest.json"),
+        source_mentions_sha256=digest(mention_path),
+        code_sha256=digest(Path(__file__)),
         new_source_requests=0,
         geometry_rows_written=0,
     )
@@ -151,6 +186,17 @@ def prepare(model: Path, output: Path) -> dict:
                 dict(
                     place_id=qid,
                     name=row["name"],
+                    aliases=row.get("aliases", []),
+                    type=row["type"],
+                    identity_status=row["identity_status"],
+                    # Never send a SYN ID as wikidata=QID to a source service.
+                    wikidata_id=None if qid.startswith("SYN_") else qid,
+                    lookup_method=(
+                        "NAME_ALIAS_CONTEXT"
+                        if qid.startswith("SYN_")
+                        else "EXACT_QID_THEN_NAME_ALIAS_CONTEXT"
+                    ),
+                    source_context=contexts[qid],
                     **selection_value(dates[qid], qid),
                 )
             )

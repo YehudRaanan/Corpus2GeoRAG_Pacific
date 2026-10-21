@@ -69,8 +69,10 @@ def load_geometry(pointer: dict | None, artifact_root: Path) -> BaseGeometry | N
         raise ValueError("Geometry pointer requires file, place_id and sha256")
     if not all(isinstance(v, str) and v for v in pointer.values()):
         raise ValueError("Geometry pointer fields must be nonempty strings")
-    if not re.fullmatch(r"Q[1-9][0-9]*", pointer["place_id"]):
-        raise ValueError("Geometry place_id must be a Wikidata QID")
+    # Population S2T 9.1: geocoding may resolve a synthetic LOC to a source
+    # object without resolving its Wikidata identity or changing its model ID.
+    if not re.fullmatch(r"Q[1-9][0-9]*|SYN_[A-Za-z0-9_]+", pointer["place_id"]):
+        raise ValueError("Geometry place_id must be a QID or existing SYN ID")
     if not re.fullmatch(r"[0-9a-f]{64}", pointer["sha256"]):
         raise ValueError("Geometry checksum must be a SHA-256 hex digest")
     root = artifact_root.resolve()

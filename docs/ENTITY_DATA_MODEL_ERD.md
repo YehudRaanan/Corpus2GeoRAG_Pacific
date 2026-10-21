@@ -1,5 +1,7 @@
 # Entity data model and ERD
 
+**Synthetic LOC approval - 21 October 2026:** all existing LOC identities enter Geography, including unresolved SYN IDs. QIDs use exact-ID lookup first; SYN IDs use the existing name/alias/date/type/context fallback and keep their original IDs. Supported geometry does not create a Wikidata match. Ambiguous candidates remain unresolved. `Geography.geometry_ref.place_id` can therefore be an existing QID or SYN ID; the reference stays in the model, not graph JSON. This extends target coverage under the existing source and acceptance policy.
+
 **Geometry pointer correction - 21 October 2026:** `Geography.geometry_ref` belongs to the data model, not final graph JSON. It retains the approved `{file, place_id, sha256}` format and identifies the saved Shapely/WKB object. The existing loader can read this model reference; Agent access to the model still requires integration verification. Earlier graph-node pointer instructions are superseded. No pointer or inline GeoJSON is exported in graph JSON.
 
 Implementation status, 21 October 2026: maximum linked-entity relevance >=2%, with missing scores contributing zero, supersedes the verified 775-Event average test. This inclusive assumption can admit unrelated items and may need improvement; no extra filter is approved. The maximum-rule replay selected 2,135 of 21,797 candidates; all decisions were independently verified. The stable-tie continuation populated 8,212 typed Entity rows (6,077 original rows unchanged), 2,135 Events and 11,409 base Relations in 122.285 seconds. Independent ranking, cap, Event-exemption and checksum checks passed; no new source request ran. Geography, graph export and Agent integration remain pending. Evidence and acquisition details are in the [population S2T](SOURCES_TO_ENTITY_DATA_MODEL_S2T.md).
@@ -83,7 +85,7 @@ erDiagram
         json reference_payload
     }
     GEOGRAPHY {
-        string place_id PK "QID-level reference"
+        string place_id PK "Existing LOC QID or SYN ID"
         string name
         string place_type
         string source_dataset
@@ -128,7 +130,7 @@ erDiagram
 
 Diagram fields are a short overview; the dictionaries and contract coverage below complete the schema. `PK` means primary key; `FK` means foreign key. Each foreign key must refer to an existing row, except when explicitly nullable.
 
-Entities has a composite primary key. Mentions uses the corresponding composite foreign key. QID-only references in Relations, Geography and Wiki Pages are checked against the distinct existing entity IDs; they are not single-column physical foreign keys to the composite key. A QID-level assertion is stored once, regardless of how many types its endpoints have. Events joins its event-typed Entities row. No additional business table or typed relation expansion is introduced.
+Entities has a composite primary key. Mentions uses the corresponding composite foreign key. QID-only references in Relations and Wiki Pages, and QID-or-SYN references in Geography, are checked against the distinct existing entity IDs; they are not single-column physical foreign keys to the composite key. A QID-level assertion is stored once, regardless of how many types its endpoints have. Events joins its event-typed Entities row. No additional business table or typed relation expansion is introduced.
 
 ## Identity and connection rules
 
@@ -233,11 +235,11 @@ Retain the page checkpoint `{source, status, mentions, linked_qids, articles}` a
 
 ## 4. Geography
 
-At most one selected geometry per confirmed place entity. It is optional until supported. Unresolved and rejected attempts stay in audit evidence; they do not create a selected geometry row.
+At most one selected geometry per existing LOC identity, including an unchanged synthetic ID. It is optional until supported. A synthetic identity can have supported geometry without acquiring a Wikidata QID. Unresolved and rejected geometry attempts stay in audit evidence; they do not create a selected geometry row. Keep repeated synthetic names as separate existing identities.
 
 | Column | Type / requirement | Meaning and existing output |
 |---|---|---|
-| `place_id` | string, PK, QID-level reference | Existing entity QID, independent of how many typed Entities rows it has. Synthetic identities are not confirmed geocoding targets. |
+| `place_id` | string, PK, existing LOC identity reference | Existing entity QID or original SYN ID. Independent of how many typed Entities rows share a QID. Synthetic LOC rows use supported name/date/type/context matching; successful geocoding leaves their entity identity and matching status unchanged. |
 | `name`, `place_type` | string | Existing selection-output context. |
 | `source_dataset`, `source_object_id`, `source_url` | string | Selected OHM/OSM or approved fallback object. |
 | `match_method`, `selection_policy_version` | string | Identity/selection method and policy, currently geo-object-selection-v0.5.0. |
@@ -343,7 +345,7 @@ Latest user decisions govern the six-table layout, page-ID linkage, original eve
 Before any later implementation/release:
 
 1. Preserve every Daniel row, original field value, offset, mention ID and order. Check raw NER confidence separately from matching similarity.
-2. Check composite `(entity_id, type)` uniqueness and mention foreign keys; verify QID-level reference existence without multiplying relations. Enforce page composite-key completeness and uniqueness, one Geography row per QID and Wikidata-only Events IDs.
+2. Check composite `(entity_id, type)` uniqueness and mention foreign keys; verify QID-level reference existence without multiplying relations. Enforce page composite-key completeness and uniqueness, one Geography row per existing LOC identity (QID or SYN ID) and Wikidata-only Events IDs.
 3. Reproduce matching JSON/CSV fields and all 26 input assertion fields without loss; retain full nested evidence and immutable manifests.
 4. Check dates remain precision-aware and synthetic/date IDs cannot enter the event QID population. Distinguish resolution decision from review/accuracy.
 5. Resolve mapping by exact version/source key; validate inverse views against the lookup and count evidence by the base assertion ID.
