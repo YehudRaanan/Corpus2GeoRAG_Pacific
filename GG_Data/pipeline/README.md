@@ -2,6 +2,31 @@
 
 ## Current Event rule — clarified 21 October 2026
 
+### Corrected-rule continuation: stopped for content consultation, 21 October 2026
+
+The corrected selector passed 41 focused tests and a BigQuery fixture covering
+two endpoints, both native directions, duplicate counts and the qualifying
+exactly-two partition. Local code/docs checkpoint: `09e2231`; no push.
+
+A saved-only replay of the old 20,024-candidate partition gives **681 known-score
+passes, 31 unscored-exception passes and 19,312 rejects**. The two previously
+reported medical-study examples fail the restored 2% threshold. However, the
+exception also admits Q112813915 (2024 Indonesian People's Representative
+Council election), through unscored Q123712945/Q123713644, and Q113392972
+(The Behavior and Reproduction of Salmonid Fishes in a Small Coastal Stream),
+through unscored Q16938057. These are observed rule consequences, not new
+filters or accepted Pacific Events.
+
+Under the POC stop rule, the local controller (PID 20676) was stopped at
+**15:32:32 Asia/Jerusalem, 21 October 2026**, before model import. The already
+submitted BigQuery job `geoai_044494de23c55237ae5f174ae918ddb3` was last verified
+RUNNING and was not cancelled. Do not submit a duplicate query: check its state
+and recover its destination results after consultation. Current attempt:
+`outputs/poc_10k_events_2pct_unscored_two_entities_20261021/consultation_stop.json`.
+The full corrected eligibility result is **not complete**. No Event rows or
+final graph were written. User decision pending: finish checking the current
+rule, or discuss narrower Event scope. Existing sources and rules are unchanged.
+
 Require native recognition and **at least two distinct retained Daniel QIDs**,
 then **maximum known linked-entity relevance >=2% OR at least one explicitly
 unscored linked entity**. Unknown is not zero. Missing score records stop the
