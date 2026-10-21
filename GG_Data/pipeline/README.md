@@ -28,6 +28,17 @@ contains the SQL, dry run, table metadata, empty result, source/job statistics,
 measured report and verification. The existing BigQuery query cache also retains
 the SQL and complete result/receipt. Outputs are ignored and local only.
 
+**Follow-up diagnostic, same source:** a separate cloud query verified native
+P31/P279 parsing and found World War II (Q362), war (Q198), battle (Q178561),
+occurrence (Q1190554) and event (Q1656682). The snapshot explicitly contains
+normal-rank `war -> occurrence` and `event -> occurrence` subclass statements.
+Evidence: `GG_Data/pipeline/outputs/event_hierarchy_bigquery_controls_20261021/`.
+The zero result for Q140451665 does not establish that this data version is
+unsuitable for Event acquisition. The root assumption must be validated against
+the source's own hierarchy before proposing a source-version change. No alternate
+root has been applied; a Q1190554 root test is a proposed classification-rule
+change that requires agreement under the user's POC rule.
+
 ## Historical stop: root-scoped Event hierarchy query
 
 The approved narrower query is
