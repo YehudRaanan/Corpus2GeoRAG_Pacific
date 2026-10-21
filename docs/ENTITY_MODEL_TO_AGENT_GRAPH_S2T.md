@@ -61,10 +61,9 @@ connected_entities(event) = distinct matched Daniel QIDs
     with a direct retained mapped Wikidata assertion to/from that event
 
 include(event) = recognized(event) AND count(connected_entities(event)) >= 2
-    AND count(known_scores(event)) > 0
-    AND mean(known_scores(event)) >= 0.02
+    AND max(score_or_zero(entity) for entity in connected_entities(event)) >= 0.02
 # One score per distinct linked Daniel QID: its highest available EN/JA ratio.
-# Missing scores enter neither sum nor divisor. No missing-score exception.
+# Missing scores contribute zero; keep their missing status in evidence.
 # The upstream 5% MISC filter remains.
 ```
 
@@ -73,6 +72,14 @@ The rule is evaluated on base assertions before non-event capping. Reversing an 
 The [approved non-event selection](SOURCES_TO_ENTITY_DATA_MODEL_S2T.md#non-event-relation-selection--approved-20-october-2026) must be evidenced in the source run before export; do not independently rerank or cap its reverse views here. The selector is implemented and tested; scores for all 4,712 frozen-sample Daniel QIDs are saved, but application awaits complete Event membership. Previous uncapped outputs remain historical; unresolved cutoff ties require consultation rather than an exporter tie-break. No capped model or graph export is claimed by score preparation.
 
 Successfully normalized DATE mentions stay in the source temporal data. Existing synthetic DATE errors also remain there; this S2T does not turn extraction date strings into events or inferred event dates.
+
+21 October population-selection update: for each non-event endpoint, dated
+assertions overlapping 7 December 1941 through 2 September 1945 rank first;
+undated assertions fill remaining slots, up to 20 total. Importance ranks within
+each group, and mutual-endpoint intersection still applies without refill.
+Event links bypass both period filtering and the cap. The exporter consumes
+this selected population; it must not rerank relations or cap reverse views.
+Outside-period evidence remains in supporting source records and prior outputs.
 
 ## 3. Top-level target fields
 

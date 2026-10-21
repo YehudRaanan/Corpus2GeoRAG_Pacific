@@ -81,7 +81,61 @@ point-range issue in the historical preflight stop below. Resume with the
 same snapshot, selected Event IDs and source assertions. No new matching,
 source substitution or Event filter is authorized.
 
-### Model population continuation - cutoff tie requires agreement
+### Non-event period selection - approved 21 October 2026
+
+For the non-event cap, the relevant period is **7 December 1941 through
+2 September 1945, inclusive**. At each endpoint, select relations whose dated
+interval overlaps this period first, ranked by the existing other-entity
+importance. Fill unused slots with completely undated relations, ranked by the
+same score, up to **20 total**. A missing interval bound is open at that end;
+a point date remains a point. Dated relations outside the period are omitted
+from this selection, while source evidence and prior uncapped outputs remain
+preserved. No source date is changed by selection.
+
+Keep the existing mutual-endpoint intersection, with no refill afterwards.
+Event/Event and Event/other links bypass the date filter and cap. Count base
+assertions, not reverse views. Equal scores crossing the cutoff within one
+temporal group still require consultation. Compare partial dates only at their
+supplied precision; ambiguous boundary cases, calendar conversion or combined
+point/interval interpretation stop for consultation. Do not invent exact days.
+
+Implementation: `relation_selection.py`, policy
+`daniel-mutual-top-20-period-first-v1.1.1`. The first continuation used
+`outputs/poc_10k_event_model_period_first_20261021/` and reuses the previous
+verified native mapping extensions. Require its final status before claiming
+model population. This rule supersedes ranking all dates together below.
+
+The first period-filter run stopped after **32.983 seconds** on native statement
+`Q10905632$d37d0b33-4b2d-545f-40a1-9a8a7e814b71`: Huaxia (ethnicity)
+(Q10905632) -> P1366 replaced by -> Han Chinese (Q42740), point year **-207**,
+year precision, Julian calendar (Q1985786). The calendar guard stops before
+interpreting non-Gregorian dates. No Entity/Event/Relation model output was
+written and no source requests ran; all pinned input checksums were verified.
+Evidence: `report.json`, `calendar_case.json`, `stop_verification.json` in the
+fresh continuation directory. The existing source scan still covers 18,349
+in-scope assertions and the selected 2,135 Events remain unchanged.
+
+Approved after this stop: compare Julian dates whose supplied year is outside
+1941-1945 by year without converting the day. Apply the existing point/interval
+overlap logic: an old start with an open end is not automatically excluded.
+Julian dates within 1941-1945 still stop for calendar interpretation. Original
+dates and calendars remain unchanged. Resume in the fresh directory
+`outputs/poc_10k_event_model_period_julian_year_20261021/`; its report determines
+completion. Other unexpected data still stop under the POC consultation rule.
+
+The year-check continuation stopped after **23.908 seconds** on a different
+case: Republic of China (Q13426199) -> P1365 replaces -> Manchukuo (Q30623),
+statement `Q13426199$6355b014-40c1-bf12-4a3e-66e5aab2182e`, with a Gregorian
+P585 point date supplied only as **1945**, precision 9. Its position relative
+to 2 September cannot be established. No month/day was invented. No model rows
+were written, no source requests ran, and all pinned inputs were verified
+unchanged. Evidence: `partial_date_case.json`, `report.json`,
+`stop_verification.json` in the year-check continuation directory. Eleven
+focused relation/model tests pass; Ruff and Black pass. Population is paused
+for the partial-date overlap decision; including possible overlap is proposed,
+not yet approved. The selected 2,135 Events are unchanged.
+
+### Historical model population continuation - cutoff before period filtering
 
 `event_model.py` resumed using the approved point-date range. The full source
 scan completed: **6,796 distinct QIDs**, **246,936 native claims** and **18,349
@@ -1232,7 +1286,7 @@ Historical Entity-attribute run, 20 October (superseded): `outputs/poc_10k_entit
 - Event/Event and Event/other-entity assertions are uncapped. Keep every eligible assertion under the existing source, mapping and exact-exclusion rules. All Events still require the agreed two-distinct-retained-Daniel-QID inclusion gate and maximum linked-entity score >=2%, with missing scores contributing zero and no bypass, evaluated before selection. A QID present in included Events receives the Event exemption even when it also has other entity types.
 - For assertions with two non-event endpoints, the maximum is **20 base relations incident on each QID**, across both native directions. Separate typed rows do not get separate budgets. Reverse delivery views share the original assertion's slot; they do not consume additional slots.
 - Score each existing Daniel Entity identity using **distinct Daniel source-page count multiplied by total original Daniel mention count**, aggregated by assigned QID or existing synthetic ID, without duplicating mentions across typed Entities rows or counting retrieved Japanese counterparts as Daniel source appearances. Each separate synthetic ID has one page and one mention, hence importance 1; no QID is required to count it. Count Daniel's original `raw.Source` values for source-page appearances, without inventing page IDs or processing paragraph text. Pin the input population: this POC uses its frozen 10K mentions, not an unstated whole-corpus frequency. No graph centrality, BM25, new extraction or rematching is approved.
-- Each endpoint ranks its eligible non-event assertions by the other endpoint's score. Keep an assertion only if it is in the top 20 at **both endpoints**. Intersect these selections; do not refill rejected slots. Some entities can therefore retain fewer than 20 relations.
+- Each endpoint ranks dated assertions overlapping 7 December 1941 through 2 September 1945 first, then fills remaining slots with undated assertions, up to 20 total; use the other endpoint's score within each group. Dated assertions outside the period are omitted from selection while preserving source evidence. Keep an assertion only if it is in the top 20 at **both endpoints**. Intersect these selections; do not refill rejected slots. Some entities can therefore retain fewer than 20 relations.
 - Preserve all acquired source evidence and previous outputs. Persist the approved score as Entities.importance and the factors/lineage as attributes.importance_basis. Supporting selection evidence must pin the Daniel input population/checksums, page and mention counts, score, both endpoint decisions and retained/omitted counts. This score is not a Wikidata-supplied Event `importance` value and must not overwrite that field.
 - If equal scores cross the cutoff, or the declared source population/page identity cannot support the calculation, stop with the concrete cases for discussion. No new tie-break, missing-value substitution or score-population change is approved by this rule.
 

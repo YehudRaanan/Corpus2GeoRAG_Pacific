@@ -20,7 +20,13 @@ from GG_Data.mapping.build_relation_mapping_v2_1 import read_csv
 from GG_Data.pipeline.entities import choose_name
 from GG_Data.pipeline.event_selection import load_scores, select_events
 from GG_Data.pipeline.poc import ROOT, digest, read_json
-from GG_Data.pipeline.relation_selection import importance, select
+from GG_Data.pipeline.relation_selection import (
+    PERIOD_END,
+    PERIOD_START,
+    POLICY,
+    importance,
+    select,
+)
 from GG_Data.pipeline.relations import (
     SourceException,
     extend_mapping,
@@ -33,6 +39,7 @@ from GG_Data.pipeline.relations import (
 BASE = ROOT / "GG_Data/pipeline/outputs"
 SELECTION = BASE / "poc_10k_events_maximum_missing_zero_20261021"
 ENTITIES = BASE / "poc_10k_entities_snapshot_first_20261020"
+MAPPING = BASE / "poc_10k_event_model_point_ranges_20261021/mapping"
 LOG = logging.getLogger(__name__)
 
 
@@ -236,10 +243,26 @@ def run(output: Path) -> dict:
             entity, event = event_rows(record, source, chosen[qid])
             additions.append(entity)
             event_table.append(event)
+        # Reuse the accepted native extensions from the preceding source scan;
+        # their names are already cached, so no retrieval is needed again.
+        mapping_receipt = read_json(MAPPING.parent / "stop_verification.json")
+        if pin(MAPPING.parent / "report.json") != mapping_receipt["report_sha256"]:
+            raise SourceException("Prior native mapping stop receipt changed")
+        for name, expected in mapping_receipt["mapping_artifacts"].items():
+            if pin(MAPPING / name) != expected:
+                raise SourceException(
+                    "Prior native mapping artifact changed", file=name
+                )
         mapping = {
             (r["source"], r["source_predicate"]): r
-            for r in read_csv(SELECTION / "mapping/RELATION_MAPPING_TABLE_v2.1.2.csv")
+            for r in read_csv(MAPPING / "RELATION_MAPPING_TABLE_v2.1.2.csv")
         }
+        report.update(
+            relation_selection_policy=POLICY,
+            relation_period=dict(
+                start=PERIOD_START, end=PERIOD_END, inclusive=True, undated_fill=True
+            ),
+        )
         report["status"] = "VALIDATING_ALL_NATIVE_RELATIONS"
         save()
         # S2T 8: all original Daniel QIDs plus independently selected Events.
@@ -271,7 +294,7 @@ def run(output: Path) -> dict:
                 mapping,
                 output,
                 reference,
-                native_rules=SELECTION / "mapping/NATIVE_RELATION_RULES_v2.1.2.csv",
+                native_rules=MAPPING / "NATIVE_RELATION_RULES_v2.1.2.csv",
             )
         relations = populate(statements, mapping)
         temporal = [

@@ -75,7 +75,41 @@ point-range issue in the historical preflight stop below. Resume with the
 same snapshot, selected Event IDs and source assertions. No new matching,
 source substitution or Event filter is authorized.
 
-### Model population continuation - cutoff tie requires agreement
+### Non-event period selection - approved 21 October 2026
+
+For each non-event endpoint, rank dated relations overlapping **7 December
+1941 through 2 September 1945, inclusive** first; fill remaining slots with
+undated relations, up to 20 total. Use the existing other-entity importance
+within each group. Keep only the intersection of endpoint selections; no
+refill after intersection. Event links bypass both date filtering and the cap.
+Preserve raw evidence for all omitted relations. Do not change source dates.
+Partial-date ambiguity, calendar conversion, combined point/interval
+interpretation and equal scores crossing a group cutoff still stop the POC.
+
+Policy: `daniel-mutual-top-20-period-first-v1.1.1`. First continuation:
+`outputs/poc_10k_event_model_period_first_20261021/`. It reuses verified property
+names/mappings from the preceding stop. Require its final report; this rule
+does not itself establish a populated model or final graph.
+
+First run: **32.983 seconds**, then `STOPPED_FOR_CONSULTATION`, no model output
+and no new source request. Huaxia (Q10905632) -> P1366 -> Han Chinese (Q42740)
+has point year -207 in the Julian calendar. The calendar guard requires
+agreement before interpretation. The user then approved year comparison for
+Julian dates outside 1941-1945, retaining point/interval semantics and all raw
+dates. Julian dates within these years still require consultation. Resume in
+`outputs/poc_10k_event_model_period_julian_year_20261021/`. All pinned inputs were verified unchanged and
+27 focused tests pass. See this run's `calendar_case.json` and
+`stop_verification.json`. The selected 2,135 Events remain unchanged.
+
+Year-check continuation: **23.908 seconds**, then `STOPPED_FOR_CONSULTATION`
+on Republic of China (Q13426199) -> P1365 -> Manchukuo (Q30623), dated only
+1945. The year spans the 2 September boundary; no exact day is supplied.
+`partial_date_case.json` records the native statement; `stop_verification.json`
+confirms unchanged pinned inputs, zero model rows and zero source requests.
+Eleven focused relation/model tests, Ruff and Black pass. The possible-overlap
+rule is pending consultation; no resumed run or completed model is claimed.
+
+### Historical model population continuation - cutoff before period filtering
 
 The approved date rule passed the full source scan: 6,796 QIDs, 246,936 claims
 and 18,349 in-scope assertions. All 34 pre-1900 historical relations remain.

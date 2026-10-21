@@ -16,11 +16,99 @@ from collections import Counter, defaultdict
 from pathlib import Path
 
 from GG_Data.pipeline.poc import ROOT, digest, read_json
-from GG_Data.pipeline.relations import SourceException
+from GG_Data.pipeline.relations import SourceException, date_parts
 
 LOG = logging.getLogger(__name__)
-POLICY = "daniel-mutual-top-20-v1.0.1"
+POLICY = "daniel-mutual-top-20-period-first-v1.1.1"
 LIMIT = 20
+PERIOD_START = (1941, 12, 7)
+PERIOD_END = (1945, 9, 2)
+
+
+def temporal_group(row: dict) -> str:
+    """S2T 8, 21 October: dated overlap first, then completely undated.
+
+    Missing interval bounds are open; a point is not an open-ended interval.
+    Compare only supplied precision. Never invent a day for a partial date;
+    stop if its precision cannot establish the period-overlap decision.
+    Event links bypass this non-event selection helper entirely.
+    """
+    values = {k: row.get(f"time_{k}") for k in ("from", "to", "point")}
+    if not any(values.values()):
+        return "UNDATED"
+    if values["point"] and (values["from"] or values["to"]):
+        raise SourceException(
+            "Point and interval require period interpretation",
+            observation_id=row["observation_id"],
+        )
+    qualifiers = row.get("attributes", {}).get("qualifiers", {})
+    for prop in ("P580", "P582", "P585"):
+        for snak in qualifiers.get(prop, []):
+            value = snak.get("datavalue", {}).get("value", {})
+            calendar = value.get("calendarmodel")
+            if calendar and calendar != "http://www.wikidata.org/entity/Q1985727":
+                # S2T 8: approved Julian year comparison outside 1941-1945.
+                # Keep interval semantics: an old start alone is not exclusion.
+                if calendar == "http://www.wikidata.org/entity/Q1985786" and value.get(
+                    "time"
+                ):
+                    year = date_parts(value["time"])[0]
+                    if year < PERIOD_START[0] or year > PERIOD_END[0]:
+                        continue
+                raise SourceException(
+                    "Calendar requires period interpretation",
+                    observation_id=row["observation_id"],
+                    calendar=calendar,
+                )
+    precision = row.get("time_precision", {})
+    if isinstance(precision, str):
+        precision = json.loads(precision)
+    decisions = row.get("attributes", {}).get("time_selection", {}).get("decisions", {})
+
+    def compare(name: str, boundary: tuple[int, int, int]) -> int:
+        parts = date_parts(values[name])[:3]
+        supplied = decisions.get(name, {}).get(
+            "selected_precision", precision.get(name, [])
+        )
+        if len(supplied) > 1:
+            raise SourceException(
+                "Multiple precisions require period interpretation",
+                observation_id=row["observation_id"],
+                field=name,
+            )
+        count = (
+            min(3, supplied[0] - 8)
+            if supplied
+            else next((i for i, part in enumerate(parts) if i and part == 0), 3)
+        )
+        if count < 1:
+            raise SourceException(
+                "Coarse date requires period interpretation",
+                observation_id=row["observation_id"],
+                field=name,
+            )
+        left, right = parts[:count], boundary[:count]
+        if left == right and count < 3:
+            raise SourceException(
+                "Partial date crosses period boundary",
+                observation_id=row["observation_id"],
+                field=name,
+                value=values[name],
+                boundary=boundary,
+            )
+        return (left > right) - (left < right)
+
+    if values["point"]:
+        return (
+            "IN_PERIOD"
+            if compare("point", PERIOD_START) >= 0 and compare("point", PERIOD_END) <= 0
+            else "OUTSIDE_PERIOD"
+        )
+    if values["from"] and compare("from", PERIOD_END) > 0:
+        return "OUTSIDE_PERIOD"
+    if values["to"] and compare("to", PERIOD_START) < 0:
+        return "OUTSIDE_PERIOD"
+    return "IN_PERIOD"
 
 
 def importance(mentions: list[dict]) -> dict[str, dict]:
@@ -86,7 +174,7 @@ def select(
         raise SourceException(
             "Complete Event membership required before relation selection"
         )
-    incident, ids = defaultdict(list), set()
+    incident, ids, groups = defaultdict(list), set(), {}
     for row in relations:
         oid = row["observation_id"]
         if oid in ids or row.get("derived") or row.get("source_edge_id"):
@@ -98,6 +186,10 @@ def select(
         if not all(re.fullmatch(r"Q[1-9]\d*", qid or "") for qid in (subject, target)):
             raise SourceException("Expected native item endpoints", observation_id=oid)
         if included_events.intersection((subject, target)):
+            groups[oid] = "EVENT_EXEMPT"
+            continue
+        group = groups[oid] = temporal_group(row)
+        if group == "OUTSIDE_PERIOD":
             continue
         for qid in {subject, target}:
             other = target if qid == subject else subject
@@ -105,31 +197,34 @@ def select(
                 raise SourceException(
                     "Missing Daniel importance input", qid=other, observation_id=oid
                 )
-            incident[qid].append((scores[other]["score"], oid, other))
+            incident[qid].append(
+                (0 if group == "IN_PERIOD" else 1, scores[other]["score"], oid, other)
+            )
     choices = {}
     for qid, rows in sorted(incident.items()):
-        ordered = sorted(rows, key=lambda row: -row[0])
-        if len(ordered) > LIMIT and ordered[LIMIT - 1][0] == ordered[LIMIT][0]:
-            boundary = ordered[LIMIT][0]
+        ordered = sorted(rows, key=lambda row: (row[0], -row[1]))
+        if len(ordered) > LIMIT and ordered[LIMIT - 1][:2] == ordered[LIMIT][:2]:
+            group, boundary = ordered[LIMIT][:2]
             raise SourceException(
                 "Unapproved importance tie at relation cutoff",
                 qid=qid,
                 score=boundary,
+                temporal_group="IN_PERIOD" if group == 0 else "UNDATED",
                 incident_assertions=len(rows),
                 tied_assertions=[
                     dict(observation_id=oid, other_qid=other)
-                    for score, oid, other in ordered
-                    if score == boundary
+                    for tier, score, oid, other in ordered
+                    if (tier, score) == (group, boundary)
                 ],
             )
-        choices[qid] = {oid for _, oid, _ in ordered[:LIMIT]}
+        choices[qid] = {oid for _, _, oid, _ in ordered[:LIMIT]}
     retained, audit = [], []
     for row in relations:
         oid = row["observation_id"]
         endpoints = {row["subject_entity_id"], row["object_entity_id"]}
         exempt = bool(included_events.intersection(endpoints))
         decisions = (
-            {qid: oid in choices[qid] for qid in sorted(endpoints)}
+            {qid: oid in choices.get(qid, set()) for qid in sorted(endpoints)}
             if not exempt
             else {}
         )
@@ -139,6 +234,8 @@ def select(
                 observation_id=oid,
                 retained=keep,
                 event_exempt=exempt,
+                temporal_group=groups[oid],
+                policy=POLICY,
                 endpoint_selections=decisions,
             )
         )

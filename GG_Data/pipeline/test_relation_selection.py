@@ -4,7 +4,12 @@ import copy
 
 import pytest
 
-from GG_Data.pipeline.relation_selection import attach_importance, importance, select
+from GG_Data.pipeline.relation_selection import (
+    attach_importance,
+    importance,
+    select,
+    temporal_group,
+)
 from GG_Data.pipeline.relations import SourceException
 
 
@@ -114,3 +119,109 @@ def test_entity_score_preserves_types_raw_evidence_and_scores_synthetic():
         attach_importance(rows + rows[:1], scores, "population-hash")
     with pytest.raises(SourceException, match="already supplied"):
         attach_importance(result, scores, "population-hash")
+
+
+def test_period_first_undated_fill_and_outside_evidence_preserved():
+    # Nineteen low-importance dated assertions outrank a higher-scored undated
+    # assertion. The 20th slot goes to the strongest undated assertion.
+    rows = [
+        dict(edge(i, "Q1", f"Q{100+i}"), time_from="+1942-01-01T00:00:00Z")
+        for i in range(19)
+    ]
+    rows += [edge(20, "Q1", "Q200"), edge(21, "Q1", "Q201")]
+    rows += [
+        dict(
+            edge(22, "Q1", "Q252"),
+            time_from="+1950-09-28T00:00:00Z",
+            time_to="+1965-01-07T00:00:00Z",
+        )
+    ]
+    # An out-of-period Event link is still uncapped and unfiltered.
+    rows += [dict(edge(23, "Q1", "Q999"), time_point="+2000-01-01T00:00:00Z")]
+    scores = {
+        q: dict(score=1)
+        for r in rows
+        for q in (r["subject_entity_id"], r["object_entity_id"])
+    }
+    scores["Q200"]["score"], scores["Q201"]["score"] = 200, 100
+    original = copy.deepcopy(rows)
+    kept, audit = select(rows, scores, {"Q999"}, event_population_complete=True)
+    assert {r["observation_id"] for r in kept} == {str(i) for i in range(19)} | {
+        "20",
+        "23",
+    }
+    assert rows == original
+    assert audit[-2]["temporal_group"] == "OUTSIDE_PERIOD"
+    assert audit[-1]["temporal_group"] == "EVENT_EXEMPT"
+    # No tie between the dated tier and undated tier at their shared boundary.
+    scores["Q200"]["score"] = 1
+    rows = rows[:19] + [edge(20, "Q1", "Q200"), edge(21, "Q1", "Q201")]
+    scores["Q201"]["score"] = 1
+    with pytest.raises(SourceException, match="Unapproved importance tie") as error:
+        select(rows, scores, set(), event_population_complete=True)
+    assert error.value.case["temporal_group"] == "UNDATED"
+    # Equal importance across different temporal tiers is not a cutoff tie.
+    dated = rows[:19] + [
+        dict(edge(30, "Q1", "Q200"), time_from="+1943-01-01T00:00:00Z")
+    ]
+    kept, _ = select(
+        dated + [edge(31, "Q1", "Q201")], scores, set(), event_population_complete=True
+    )
+    assert kept == dated
+
+
+def test_period_boundaries_points_open_intervals_and_partial_date_guard():
+    assert temporal_group(edge(1, "Q1", "Q2")) == "UNDATED"
+    for day in ("1941-12-07", "1945-09-02"):
+        assert (
+            temporal_group(dict(edge(1, "Q1", "Q2"), time_point=f"+{day}T00:00:00Z"))
+            == "IN_PERIOD"
+        )
+    for day in ("1941-12-06", "1945-09-03"):
+        assert (
+            temporal_group(dict(edge(1, "Q1", "Q2"), time_point=f"+{day}T00:00:00Z"))
+            == "OUTSIDE_PERIOD"
+        )
+    assert (
+        temporal_group(dict(edge(1, "Q1", "Q2"), time_to="+1942-00-00T00:00:00Z"))
+        == "IN_PERIOD"
+    )
+    assert (
+        temporal_group(dict(edge(1, "Q1", "Q2"), time_from="+1940-00-00T00:00:00Z"))
+        == "IN_PERIOD"
+    )
+    with pytest.raises(SourceException, match="Partial date crosses"):
+        temporal_group(dict(edge(1, "Q1", "Q2"), time_point="+1945-00-00T00:00:00Z"))
+    # Approved year-only check; no Julian day conversion is added.
+    julian = dict(
+        edge(2, "Q1", "Q2"),
+        time_point="-0207-00-00T00:00:00Z",
+        attributes={
+            "qualifiers": {
+                "P585": [
+                    {
+                        "datavalue": {
+                            "value": {
+                                "calendarmodel": "http://www.wikidata.org/entity/Q1985786",
+                                "time": "-0207-00-00T00:00:00Z",
+                            }
+                        }
+                    }
+                ]
+            }
+        },
+    )
+    assert temporal_group(julian) == "OUTSIDE_PERIOD"
+    # An old Julian start with an open end can overlap the period.
+    interval = copy.deepcopy(julian)
+    interval["time_from"] = interval.pop("time_point")
+    interval["attributes"]["qualifiers"]["P580"] = interval["attributes"][
+        "qualifiers"
+    ].pop("P585")
+    assert temporal_group(interval) == "IN_PERIOD"
+    julian["time_point"] = "+1945-09-02T00:00:00Z"
+    julian["attributes"]["qualifiers"]["P585"][0]["datavalue"]["value"]["time"] = (
+        julian["time_point"]
+    )
+    with pytest.raises(SourceException, match="Calendar requires"):
+        temporal_group(julian)
