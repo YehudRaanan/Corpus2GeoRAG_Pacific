@@ -4,10 +4,11 @@ import gzip
 import hashlib
 import json
 
-import pytest
 import pyarrow as pa
 import pyarrow.parquet as pq
+import pytest
 
+from GG_Data.pipeline import snapshot_link_relevance_probe as probe
 from GG_Data.pipeline.snapshot_link_relevance_probe import (
     aliases,
     dump_blocks,
@@ -16,6 +17,39 @@ from GG_Data.pipeline.snapshot_link_relevance_probe import (
     measurement_pages,
     sql_string,
 )
+
+
+def test_explicit_diagnostic_selection_rejects_synthetic_and_duplicate_ids(
+    tmp_path, monkeypatch
+):
+    monkeypatch.setattr(probe, "CACHE", tmp_path)
+    monkeypatch.setattr(probe, "SNAPSHOT", tmp_path)
+    (tmp_path / "page_snapshot_manifest.json").write_text(
+        json.dumps(
+            {"dump_date": "test", "link_inventory": {"en": {"resolution_counts": {}}}}
+        )
+    )
+    with gzip.open(
+        tmp_path / "en_link_resolution.json.gz", "wt", encoding="utf-8"
+    ) as f:
+        json.dump([], f)
+    selection = tmp_path / "selection.json"
+    for rows, message in (
+        ([{"qid": "SYN_1", "title": "Original"}], "existing QIDs"),
+        ([{"qid": "Q1", "title": "Original"}] * 2, "Duplicate QID"),
+    ):
+        selection.write_text(json.dumps(rows))
+        (tmp_path / "manifest.json").write_text(
+            json.dumps(
+                {
+                    "population": "DIAGNOSTIC_ONLY",
+                    "outputs": {selection.name: probe.digest(selection)},
+                }
+            )
+        )
+        with pytest.raises(ValueError, match=message):
+            probe.run(output=tmp_path / "output", selection_file=selection)
+        assert not (tmp_path / "output").exists()
 
 
 def test_aliases_use_article_join_and_follow_redirect_chains(tmp_path):

@@ -516,6 +516,37 @@ original Daniel page relationships remain preserved. This exclusion does not
 change the separate `Entities.importance` rule above or its synthetic score of
 1; scope concentration is not the top-20 relation importance measure.
 
+**Event relevance diagnostic, clarified 21 October 2026:** measure the
+**linked Daniel entities**, not the Event candidate itself. First calculate
+each linked QID's scope concentration independently in English and Japanese,
+then use its highest available language score as specified above. For each
+recognized Event passing the two-distinct-entity gate, calculate the arithmetic
+mean, minimum and maximum of its distinct linked Daniel QID scores. Each QID
+counts once, regardless of mentions, typed rows, predicates or reverse views.
+Do not pool entities' page counts or weight their scores by assertion counts.
+Keep missing scores explicit; if any linked entity is unmeasurable, the complete
+Event statistics remain unknown, with scored/total counts and missing QIDs shown.
+This is a diagnostic comparison only: no choice of mean/minimum/maximum as an
+Event filter is approved, and no Event inclusion or import changes are made.
+The existing 5% entity-retrieval rule remains unchanged. The reproducible
+diagnostic is [event_linked_entity_relevance_probe.py](../GG_Data/pipeline/event_linked_entity_relevance_probe.py).
+
+**Verified linked-entity test, 21 October 2026:** the same 1,414 candidates
+link to 13 distinct Daniel QIDs in the bounded 48-QID sample. English scores
+are available for all 13; Japanese scores for 12. The per-entity maximum
+therefore supplies complete mean/minimum/maximum statistics for all 1,414
+Events, with no unknown aggregates. This does not establish full-10K coverage.
+At a diagnostic 5% cutoff, mean and minimum would each retain zero Events;
+maximum would retain only World War II/Q362. All 1,282 clinical trials share
+Hungary/Q28 and Netherlands/Q55: minimum **0.0880%**, mean **0.2410%**, maximum
+**0.3939%**. Pacific War/Q184425 has minimum **0.3939%**, mean **0.4317%**,
+maximum **0.4696%**; World War II/Q362 has minimum **0.4696%**, mean **2.5454%**,
+maximum **6.1385%**. Thus the tested cutoff also rejects a central Pacific
+War example. No aggregate filter or new threshold is selected, no recognition
+or matching rule changes, and no Event rows are imported. Full entity counts,
+per-language evidence, all Event statistics, hashes and independent replay
+are in `../GG_Data/pipeline/outputs/event_hierarchy_bigquery_occurrence_test_20261021/linked_entity_relevance_test/`.
+
 The existing supporting diagnostic report/CSV supplies these fields; no new
 business table or populated model column is claimed by this specification:
 

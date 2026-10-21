@@ -299,7 +299,10 @@ def linked_pages(blocks, targets: dict[int, str]) -> dict[str, set[int]]:
 
 
 def run(
-    wiki: str = "enwiki", population: bool = False, output: Path | None = None
+    wiki: str = "enwiki",
+    population: bool = False,
+    output: Path | None = None,
+    selection_file: Path | None = None,
 ) -> dict:
     if wiki not in ("enwiki", "jawiki") or (wiki != "enwiki" and not population):
         raise ValueError("Use --population for separate EN/JA population scores")
@@ -316,7 +319,7 @@ def run(
     date = manifest["dump_date"]  # Version lineage, not a new hardcoded source date.
     source_path = CACHE / f"{'english' if lang == 'en' else 'japanese'}_sources.json.gz"
     links_path = CACHE / f"{lang}_link_resolution.json.gz"
-    selection_path = (
+    selection_path = selection_file or (
         BASE / "poc_10k_entities_snapshot_first_20261020/entities.json.gz"
         if population
         else BASE / "poc_10k_misc_incoming_links_probe_20261020/partial_analysis.json"
@@ -330,14 +333,24 @@ def run(
     ):
         raise ValueError("Saved source-page link coverage changed")
     selection_manifest = selection_path.parent / (
-        "manifest.json" if population else "report.json"
+        "manifest.json" if population or selection_file else "report.json"
     )
     if (
         digest(selection_path)
         != read_json(selection_manifest)["outputs"][selection_path.name]
     ):
         raise ValueError("Saved diagnostic QID selection changed")
-    if population:
+    if selection_file:
+        # Approved linked-entity diagnostic: reuse S2T 6.1 counts, not its MISC
+        # population. The caller pins existing QIDs/names in a hashed manifest;
+        # acquisition never imports Events or changes inclusion decisions.
+        selection = read_json(selection_path)
+        if not selection or any(
+            not re.fullmatch(r"Q\d+", r["qid"]) or not isinstance(r["title"], str)
+            for r in selection
+        ):
+            raise ValueError("Expected existing QIDs and display names")
+    elif population:
         # S2T 6.1: existing resolved MISC identities only; synthetic IDs never
         # acquire a QID, denominator or score through this measurement.
         selection = [
@@ -348,7 +361,7 @@ def run(
     else:
         selection = read_json(selection_path)["counts"]  # Discard old counts.
     if len({r["qid"] for r in selection}) != len(selection):
-        raise ValueError("Duplicate MISC QID in selected population")
+        raise ValueError("Duplicate QID in selected population")
     sources = read_json(source_path)
     # The JA inventory contains only retrieved counterpart pages; EN includes
     # unresolved source titles. Never mix numeric page IDs between languages.
@@ -480,9 +493,13 @@ def run(
             "dump_date": date,
             "wiki": wiki,
             "population": (
-                "RESOLVED_MISC_QIDS_IN_FROZEN_10K"
-                if population
-                else "ORIGINAL_19_QID_DIAGNOSTIC"
+                read_json(selection_manifest)["population"]
+                if selection_file
+                else (
+                    "RESOLVED_MISC_QIDS_IN_FROZEN_10K"
+                    if population
+                    else "ORIGINAL_19_QID_DIAGNOSTIC"
+                )
             ),
             "scored_qids": sum(r["score_status"] == "SCORED" for r in rows),
             "unavailable_qids": sum(r["score_status"] != "SCORED" for r in rows),
@@ -548,5 +565,6 @@ if __name__ == "__main__":
     parser.add_argument("--wiki", choices=("enwiki", "jawiki"), default="enwiki")
     parser.add_argument("--population", action="store_true")
     parser.add_argument("--output", type=Path)
+    parser.add_argument("--selection-file", type=Path)
     args = parser.parse_args()
-    run(args.wiki, args.population, args.output)
+    run(args.wiki, args.population, args.output, args.selection_file)
