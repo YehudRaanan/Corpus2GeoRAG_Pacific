@@ -56,6 +56,24 @@ No Event model rows or final graph were written. Next: populate the approved
 Event model rows and their Relations. Code/docs receive a local Git checkpoint;
 generated artifacts remain local and ignored by Git.
 
+### Model population preflight stopped - 21 October 2026
+
+The approved continuation stopped before any model rows were written. The
+snapshot assertion `Q204424$4c059d94-49a4-80c6-8ff6-19af6b801cfd` is
+**Enola Gay (Q204424) -> P793 significant event -> atomic bombings of Hiroshima
+and Nagasaki (Q488)**. It supplies two P585 point-date qualifiers:
+**6 August 1945** and **9 August 1945**. Existing relation start/end selection
+rules do not define selection between multiple point dates. `relations.scan`
+correctly stopped under the POC consultation rule; the complete relation scan
+and model population remain pending. The verified 2,135-Event selection is
+unchanged. No new source requests ran.
+
+Proposed, not yet approved: preserve one source assertion with both original
+point dates, leave its scalar selected point date empty, and expose the case in
+the temporal report. Do not choose a date, split the source assertion, or apply
+start/end rules to P585 without agreement. Stop receipt:
+`GG_Data/pipeline/outputs/poc_10k_event_model_population_stop_20261021/report.json`.
+
 ## Historical Event rule - average test, superseded 21 October 2026
 
 Require accepted native recognition and direct mapped, non-excluded assertions
