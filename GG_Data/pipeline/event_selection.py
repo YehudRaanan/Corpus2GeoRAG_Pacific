@@ -1,6 +1,7 @@
 """10K Event selection, population S2T 6.1/7; no graph or identity changes.
 
-Events require three distinct retained Daniel QIDs, without a relevance cutoff.
+Events require two distinct retained Daniel QIDs and either >=2% maximum known
+linked-entity relevance or at least one explicitly unscored linked entity.
 The user approved holding its 619 unknown MISC QIDs aside for this full POC.
 Native recognition and mapped/excluded assertion checks precede selection.
 """
@@ -10,6 +11,7 @@ from __future__ import annotations
 import argparse
 import json
 from collections import Counter
+from fractions import Fraction
 from pathlib import Path
 from time import perf_counter
 
@@ -18,16 +20,56 @@ from GG_Data.pipeline.poc import ROOT, digest, read_json
 from GG_Data.pipeline.scope_concentration_filter import combine_language_rows
 from GG_Data.pipeline.snapshot_link_relevance_probe import run as measure
 
-MINIMUM_DANIEL_QIDS = 3
+MINIMUM_DANIEL_QIDS = 2
+EVENT_THRESHOLD_PERCENT = 2
 BASE = ROOT / "GG_Data/pipeline/outputs"
+SCORES = BASE / "poc_10k_event_selection_2pct_redirect_priority_20261021"
+SCORES_SHA = "3e46b4da5b18621aa4513a788adb75e4bc6b9c0c581c7591b0d9c3fd09f96212"
 
 
-def select_events(events: list[dict], retained_qids: set[str]) -> list[dict]:
-    """S2T 7: recognition plus >=3 distinct, mapped/excluded Daniel endpoints.
+def load_scores(retained_qids: set[str]) -> dict[str, Fraction | None]:
+    """Reuse the approved language maxima; missing records are not unscored."""
+    path = SCORES / "entity_scores.json"
+    report = read_json(SCORES / "report.json")
+    if digest(path) != SCORES_SHA or report["outputs"][path.name] != SCORES_SHA:
+        raise ValueError("Approved retained-entity scores changed")
+    rows = read_json(path)
+    if len(rows) != len(retained_qids) or {r["qid"] for r in rows} != retained_qids:
+        raise ValueError("Entity scores do not exactly cover retained Daniel QIDs")
+    result = {}
+    for row in rows:
+        value = row["maximum_relevance"]
+        numerator, denominator = row["scope_linking_pages"], row["all_linking_pages"]
+        languages = [row["enwiki_relevance"], row["jawiki_relevance"]]
+        if value is None:
+            if any(v is not None for v in [numerator, denominator, *languages]):
+                raise ValueError("Unscored entity has numeric score evidence")
+            result[row["qid"]] = None
+        else:
+            if (
+                type(numerator) is not int
+                or type(denominator) is not int
+                or not 0 <= numerator <= denominator
+                or denominator <= 0
+                or value != numerator / denominator
+                or value != max(v for v in languages if v is not None)
+            ):
+                raise ValueError("Entity score disagrees with saved page counts")
+            result[row["qid"]] = Fraction(numerator, denominator)
+    return result
+
+
+def select_events(
+    events: list[dict],
+    retained_qids: set[str],
+    scores: dict[str, Fraction | None],
+) -> list[dict]:
+    """S2T 7: >=2 endpoints, known maximum >=2% OR any unscored endpoint.
 
     Repeated mentions, predicates and reverse views cannot add endpoints.
-    Scores are deliberately not inputs: unavailable non-MISC relevance cannot
-    block an otherwise qualified Event. The separate MISC filter precedes this.
+    The user clarified that missing scores exempt only those connected Events,
+    not all Events. Missing score rows are errors; explicit None is unscored.
+    The separate 5% MISC scope filter precedes this decision.
     """
     rows, seen = [], set()
     for event in events:
@@ -38,8 +80,20 @@ def select_events(events: list[dict], retained_qids: set[str]) -> list[dict]:
             raise ValueError("Expected unique Events with explicit recognition")
         if not set(related) <= retained_qids:
             raise ValueError("Event endpoint is outside retained Daniel scope")
+        if not set(related) <= scores.keys() or any(
+            scores[q] is not None and not isinstance(scores[q], Fraction)
+            for q in related
+        ):
+            raise ValueError("Expected explicit exact scores or unscored records")
         seen.add(qid)
-        keep = recognized and len(related) >= MINIMUM_DANIEL_QIDS
+        unscored = [q for q in related if scores[q] is None]
+        known = [scores[q] for q in related if scores[q] is not None]
+        maximum = max(known, default=None)
+        meets_relevance = (
+            maximum is not None and 100 * maximum >= EVENT_THRESHOLD_PERCENT
+        )
+        enough = len(related) >= MINIMUM_DANIEL_QIDS
+        keep = recognized and enough and (meets_relevance or bool(unscored))
         rows.append(
             dict(
                 qid=qid,
@@ -47,14 +101,26 @@ def select_events(events: list[dict], retained_qids: set[str]) -> list[dict]:
                 linked_entity_count=len(related),
                 keep_event=keep,
                 minimum_distinct_daniel_qids=MINIMUM_DANIEL_QIDS,
-                event_threshold_percent=None,
+                event_threshold_percent=EVENT_THRESHOLD_PERCENT,
+                maximum_known_relevance=float(maximum) if maximum is not None else None,
+                unscored_entity_qids=unscored,
+                known_relevance_pass=meets_relevance,
+                unscored_exception_used=bool(keep and unscored and not meets_relevance),
                 decision_reason=(
                     "NOT_RECOGNIZED"
                     if not recognized
                     else (
-                        "AT_LEAST_THREE_DISTINCT_DANIEL_QIDS"
-                        if keep
-                        else "FEWER_THAN_THREE_DISTINCT_DANIEL_QIDS"
+                        "FEWER_THAN_TWO_DISTINCT_DANIEL_QIDS"
+                        if not enough
+                        else (
+                            "KNOWN_MAXIMUM_AT_LEAST_2PCT"
+                            if meets_relevance
+                            else (
+                                "UNSCORED_LINKED_ENTITY_EXCEPTION"
+                                if unscored
+                                else "ALL_SCORED_BELOW_2PCT"
+                            )
+                        )
                     )
                 ),
             )
@@ -103,7 +169,7 @@ def prepare(output: Path) -> dict:
         held_unknown_misc_qids=held,
         unknown_policy="User-approved hold aside for the full 10K POC; model records preserved",
         entity_threshold_percent=5,
-        event_threshold_percent=None,
+        event_threshold_percent=EVENT_THRESHOLD_PERCENT,
         minimum_distinct_daniel_qids=MINIMUM_DANIEL_QIDS,
     )
     (output / "retrieval_scope.json").write_text(
@@ -161,7 +227,7 @@ def measure_population(output: Path) -> dict:
             unavailable_qids=[
                 r["qid"] for r in scores if r["maximum_relevance"] is None
             ],
-            event_threshold_percent=None,
+            event_threshold_percent=EVENT_THRESHOLD_PERCENT,
             score_status_counts=dict(
                 Counter(r["maximum_score_wiki"] or "unknown" for r in scores)
             ),

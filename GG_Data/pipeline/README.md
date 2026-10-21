@@ -1,43 +1,29 @@
 # Daniel pipeline POC
 
-## Current Event rule and full retained-scope check
+## Current Event rule — clarified 21 October 2026
 
-**21 October result:** cache-only continuation
-`outputs/poc_10k_events_three_entities_resumed_20261021/` verified 20,024
-eligible records and 120,674 unique native assertions in 81.890 seconds.
-All 15 prior Pacific targets agree: 13 pass; Tarawa (two QIDs) and Bismarck
-Sea (one) fail. The source and output hashes and prior native mapping rules
-passed independent verification. The shared mapping builder now resolves
-relative paths before recording repository provenance; 37 focused tests passed.
+Require native recognition and **at least two distinct retained Daniel QIDs**,
+then **maximum known linked-entity relevance >=2% OR at least one explicitly
+unscored linked entity**. Unknown is not zero. Missing score records stop the
+run. The separate 5% MISC scope filter and all frozen assignments stay unchanged.
 
-**STOP FOR CONTENT CONSULTATION:** modern medical studies and papers also
-qualify through country/topic links. Q100788305 has five P17 country endpoints;
-Q100306760 has three P921 country-topic endpoints. The approved broad hierarchy
-and count alone permit these records. No additional filter was applied. Native
-type counts and exact examples are saved in the verification/content evidence
-and population S2T. Eligibility is technically complete; import acceptance is
-pending. No Event model rows or final graph were written. The original failed
-attempt and saved query results remain intact. No new cloud query ran on resume.
+`event_selection.py` reuses the approved 2,446 known/1,020 unscored scores.
+`event_population.py` combines the complete cached >=3-QID partition with a
+BigQuery exactly-two partition requiring a qualifying scored/unscored endpoint.
+Local native mapping, exclusions and exact score decisions recheck every record.
+The SQL fixture checks both directions, unique counts, active recognition,
+relation ranks, and the disjoint exactly-two source filter. No new entities.
 
-Approved 21 October: keep the 5% MISC filter, include recognized Events with
-**at least three distinct retained Daniel QIDs**, and apply **no Event relevance
-threshold**. The 1,020 unscored retained non-MISC QIDs remain valid endpoints.
-The frozen 3,466-QID scope and original Entity/Mention rows remain unchanged.
+The earlier three-QID/no-relevance interpretation was incorrect. Its unchanged
+20,024-candidate output in `outputs/poc_10k_events_three_entities_resumed_20261021/`
+is diagnostic evidence only, not an accepted Event population. Its content
+review found medical studies connected through countries; the corrected rule
+restores relevance and applies the exception only where an endpoint is unscored.
+No new content filter is authorized. No Event model rows or graph were written.
 
-`event_population.py` uses the existing BigQuery CLI/cache controls and the
-accepted complete Q1190554 parameters. Native Daniel outgoing endpoint pairs
-and incoming Event statements are combined before the cloud three-QID gate;
-recognition also runs in BigQuery. Local native mapping/exclusions then replay
-recognition and final distinct counts. Only qualified candidate records return.
-`event_population_fixture.py` checks both directions, mixed directions, repeated
-endpoints and deprecated classification separately from relation ranks.
-
-Run: `python -m GG_Data.pipeline.event_population --output
-GG_Data/pipeline/outputs/<new-attempt>`. It preserves source and output hashes,
-SQL/receipts, native records, decisions and selected assertion evidence. This
-completes Event eligibility checking only; model-table population and final graph
-export are separate stages. Do not rerun a failed source request without applying
-the existing stop/consult and approved retry rules. No new Daniel entities.
+Run `python -m GG_Data.pipeline.event_population --output <new-absolute-folder>`.
+An eligibility check is separate from model-table population and graph export.
+Saved receipts, native evidence, hashes and earlier attempts remain intact.
 
 ## Historical 2% continuation: measurement complete, consultation resolved
 

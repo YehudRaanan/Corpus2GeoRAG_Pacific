@@ -28,7 +28,7 @@ Type interface approved on 19 October 2026: the source Entities key is `(entity_
 ## 1. Confirmed scope
 
 - Daniel's input supplies entity mentions only. Reuse existing entity assignments, original QIDs and separate unresolved synthetic IDs. Do not derive events from Daniel's mentions or from MISC.
-- Events come separately from Wikidata, use their original QIDs and supplied values, and enter the graph only if directly connected to **at least three distinct retained matched Daniel entity QIDs**.
+- Events come separately from Wikidata, use their original QIDs and supplied values, and enter the graph only if directly connected to **at least two distinct retained matched Daniel entity QIDs, with maximum known linked-entity relevance >=2% or at least one explicitly unscored linked entity**.
 - For this event test, any mapped Wikidata relation can connect the event and the Daniel entity, in either direction. Repeated mentions count once. Multiple assertions and forward/reverse copies count once per connected entity. Indirect paths do not count. The test uses the whole input dataset, not one Wikipedia page at a time.
 - Include retained mapped Wikidata assertions between Daniel's matched QIDs, included-event/Daniel links and direct links between included Events. Require both endpoints in included nodes. Event links are uncapped; non-event assertions follow the approved mutual-top-20 selection in population S2T section 8. Deliver both directions through the pinned mapping version (currently v2.1.1, preserving the v2.1 direction contract). Preserve different predicates and source assertions as distinct selection units.
 - Omit node/edge `sources` from this export for now. Supporting provenance remains in the source model and audit artifacts. This omission does not remove edge endpoint `source` or the required reverse-view link `source_edge_id`.
@@ -46,7 +46,7 @@ The following names describe sets/views used for this export; they are not new s
 | Matched Daniel QIDs | Daniel entity IDs that are existing accepted QID assignments, rather than synthetic IDs. | The only IDs that can satisfy the event threshold. A match is an existing decision, not a new accuracy certification. |
 | Event candidates | `Events.event_id`, with its corresponding `Entities.entity_id`. Events is the authoritative Wikidata-only event population supplied to this S2T. | Do not classify new events by name, MISC or a new P31 hierarchy in this phase. |
 | Event connections | Direct retained Wikidata source assertions, after approved exclusions and relation mapping, with event QID at one endpoint and a matched Daniel QID at the other. Use original provider evidence in Relations, not the omitted target `sources`. | Both directions and any mapped predicate qualify. Candidate completeness depends on the supplied Wikidata event/assertion population; do not claim complete Wikidata coverage without acquisition evidence. |
-| Included events | Event candidates with at least three distinct connected retained matched Daniel QIDs. | Keep their original event QIDs. Record the distinct entity list and count in the supporting event-selection report. |
+| Included events | Event candidates with at least two distinct connected retained matched Daniel QIDs, with known maximum relevance >=2% or at least one explicitly unscored linked entity. | Keep their original event QIDs. Record the distinct entity list and count in the supporting event-selection report. |
 | Included nodes | Union of Daniel entity QIDs/SYN IDs and included event QIDs, with every associated Entities type. | Use separate `QID::type` nodes and original `wikidata_id`; preserve synthetic IDs. No canonical node, type winner or unrelated cached candidate QID. |
 | Included base relations | Retained Wikidata Relations rows between matched Daniel QIDs, included-event/Daniel links, and direct included-event/included-event links, with both item endpoints in included nodes. | Event links are uncapped. For two non-event endpoints, require the assertion in both endpoint top-20 selections, ranked by the connected QID's distinct Daniel pages times original mention count. Keep each retained `observation_id`; reverse views use no extra slot. No transitive relation creation or synthetic endpoint claims. |
 | Node geography | Left join included nodes to `Geography.place_id = Entities.entity_id`. | At most one accepted stored geometry object per place QID. Export `geometry_ref={file,place_id,sha256}`, or null if absent. Count missing geometries visibly. No retrieval or geometry selection in this S2T. |
@@ -58,11 +58,12 @@ Event membership can be expressed without any ranking:
 connected_entities(event) = distinct matched Daniel QIDs
     with a direct retained mapped Wikidata assertion to/from that event
 
-include(event) = recognized(event) AND count(connected_entities(event)) >= 3
-# No Event relevance-score threshold; the upstream 5% MISC filter remains.
+include(event) = recognized(event) AND count(connected_entities(event)) >= 2
+    AND (maximum_known_relevance(event) >= 0.02 OR any_unscored_endpoint(event))
+# Missing scores are unknown, not zero. The upstream 5% MISC filter remains.
 ```
 
-The rule is evaluated on base assertions before non-event capping. Reversing an assertion does not create a second qualifying entity. An event with one entity mentioned 100 times fails; an event connected directly to two distinct matched entities fails; three qualify after recognition and source/mapping checks. Missing relevance for retained non-MISC QIDs does not block links. Direct links between included Events do not qualify another Event. Do not run a recursive traversal.
+The rule is evaluated on base assertions before non-event capping. Reversing an assertion does not create a second qualifying entity. An event with one entity mentioned 100 times fails; two distinct matched entities satisfy the count gate but still require known maximum >=2% or at least one explicitly unscored endpoint after recognition and source/mapping checks. Direct links between included Events do not qualify another Event. Do not run a recursive traversal.
 
 The [approved non-event selection](SOURCES_TO_ENTITY_DATA_MODEL_S2T.md#non-event-relation-selection--approved-20-october-2026) must be evidenced in the source run before export; do not independently rerank or cap its reverse views here. The selector is implemented and tested; scores for all 4,712 frozen-sample Daniel QIDs are saved, but application awaits complete Event membership. Previous uncapped outputs remain historical; unresolved cutoff ties require consultation rather than an exporter tie-break. No capped model or graph export is claimed by score preparation.
 

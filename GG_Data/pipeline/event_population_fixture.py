@@ -35,6 +35,8 @@ def run(output: Path):
         ("Q14", ["Q1", "Q2", "Q3"], "Q100", "deprecated"),
         ("Q15", ["Q1", "Q2", "Q3"], "Q999", "normal"),
         ("Q16", ["Q1", "Q2", "Q2"], "Q100", "normal"),
+        ("Q17", ["Q2", "Q3"], "Q100", "normal"),
+        ("Q18", ["Q3"], "Q100", "normal"),
     ]:
         claims = {
             "P31": [statement(qid, "P31", cls, 0, rank)],
@@ -74,8 +76,25 @@ def run(output: Path):
     rows = client.query(sql)
     (output / "result.json").write_text(json.dumps(rows, indent=2), encoding="utf-8")
     assert {r["qid"]: r["daniel_qids"] for r in rows} == {
-        q: ["Q1", "Q2", "Q3"] for q in ["Q11", "Q12", "Q13"]
+        **{q: ["Q1", "Q2", "Q3"] for q in ["Q11", "Q12", "Q13"]},
+        "Q10": ["Q1", "Q2"],
+        "Q16": ["Q1", "Q2"],
+        "Q17": ["Q2", "Q3"],
     }
+    partition_sql = discovery_query(
+        source,
+        {"Q1", "Q2", "Q3"},
+        types,
+        pairs,
+        exact_count=2,
+        qualifying_qids={"Q3"},
+    )
+    (output / "partition_query.sql").write_text(partition_sql, encoding="utf-8")
+    partition = client.query(partition_sql)
+    (output / "partition_result.json").write_text(
+        json.dumps(partition, indent=2), encoding="utf-8"
+    )
+    assert {r["qid"]: r["daniel_qids"] for r in partition} == {"Q17": ["Q2", "Q3"]}
     report = dict(
         status="VERIFIED_CLOUD_DIRECTION_COUNT_RECOGNITION_FIXTURE",
         requests=client.requests,
@@ -83,7 +102,9 @@ def run(output: Path):
             "three incoming",
             "three outgoing",
             "mixed directions",
-            "duplicate endpoint rejected",
+            "duplicate endpoint counted once",
+            "two endpoints included; one rejected",
+            "exactly-two partition requires a qualifying endpoint",
             "deprecated-only classification rejected",
             "unknown class rejected",
             "deprecated relation evidence retained",

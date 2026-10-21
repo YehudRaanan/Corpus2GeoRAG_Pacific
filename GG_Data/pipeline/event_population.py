@@ -21,7 +21,10 @@ from GG_Data.pipeline import events
 from GG_Data.pipeline.event_candidate_check import qualifying_links, statement_key
 from GG_Data.pipeline.event_selection import (
     BASE,
+    EVENT_THRESHOLD_PERCENT,
     MINIMUM_DANIEL_QIDS,
+    SCORES,
+    load_scores,
     prepare,
     select_events,
 )
@@ -33,15 +36,22 @@ HIERARCHY = BASE / "event_hierarchy_bigquery_occurrence_test_20261021"
 ENTITIES = BASE / "poc_10k_entities_snapshot_first_20261020"
 RELATIONS = BASE / "poc_10k_relations_original_historical_dates_20261020"
 STORE = BASE / "wikidata_event_snapshot_discovery_cache"
+PRIOR_THREE = BASE / "poc_10k_events_three_entities_resumed_20261021"
 
 
 def discovery_query(
-    source: str, daniel: set[str], types_table: str, pairs_table: str
+    source: str,
+    daniel: set[str],
+    types_table: str,
+    pairs_table: str,
+    *,
+    exact_count: int | None = None,
+    qualifying_qids: set[str] | None = None,
 ) -> str:
     """S2T 7: both native directions, distinct QIDs, then native recognition.
 
     A cached Daniel -> Event pair survives even with no Event -> Daniel link.
-    Full records are returned only after the preliminary three-QID gate and
+    Full records are returned only after the preliminary two-QID gate and
     recognition. Local exclusions/mapping must still precede final inclusion.
     Uploaded tables contain class IDs and endpoint pairs, never inferred edges.
     """
@@ -49,6 +59,20 @@ def discovery_query(
         raise ValueError("Expected retained native Daniel QIDs")
     if any(not re.fullmatch(r"[a-z0-9_.-]+", t) for t in (types_table, pairs_table)):
         raise ValueError("Unexpected cloud parameter table")
+    filters = f"ARRAY_LENGTH(daniel_qids) >= {MINIMUM_DANIEL_QIDS}"
+    if exact_count is not None:
+        if type(exact_count) is not int or exact_count < MINIMUM_DANIEL_QIDS:
+            raise ValueError("Invalid exact endpoint count")
+        filters += f" AND ARRAY_LENGTH(daniel_qids) = {exact_count}"
+    if qualifying_qids is not None:
+        if not qualifying_qids <= daniel:
+            raise ValueError("Qualifying QIDs are outside retained scope")
+        eligible = ",".join(f"'{q}'" for q in sorted(qualifying_qids))
+        filters += (
+            f" AND EXISTS (SELECT 1 FROM UNNEST(daniel_qids) q WHERE q IN ({eligible}))"
+            if eligible
+            else " AND FALSE"
+        )
     targets = ",".join(f"'{q}'" for q in sorted(daniel))
     return f"""WITH outgoing AS (
  SELECT JSON_VALUE(pair, '$.event_qid') AS event_qid,
@@ -80,7 +104,7 @@ def discovery_query(
 )
 SELECT id AS qid, item, daniel_qids
 FROM connected
-WHERE ARRAY_LENGTH(daniel_qids) >= {MINIMUM_DANIEL_QIDS}
+WHERE {filters}
 ORDER BY qid"""
 
 
@@ -107,7 +131,7 @@ def run(output: Path) -> dict:
         final_graph_written=False,
         full_retained_scope_checked=False,
         minimum_distinct_daniel_qids=MINIMUM_DANIEL_QIDS,
-        event_threshold_percent=None,
+        event_threshold_percent=EVENT_THRESHOLD_PERCENT,
         scope_counts={
             k: len(v) if isinstance(v, list) else v for k, v in scope.items()
         },
@@ -143,6 +167,7 @@ def run(output: Path) -> dict:
         if not types or any(not re.fullmatch(r"Q[1-9]\d*", q) for q in types):
             raise ValueError("Invalid Event class parameters")
         daniel = set(scope["retained_qids"])
+        scores = load_scores(daniel)
         records = read_json(ENTITIES / "full_records.json.gz")
         all_outgoing = [
             link
@@ -193,6 +218,10 @@ def run(output: Path) -> dict:
             Path(__file__),
             ROOT / "GG_Data/pipeline/event_selection.py",
             ROOT / "GG_Data/mapping/ASSERTION_EXCLUSIONS.csv",
+            SCORES / "entity_scores.json",
+            SCORES / "report.json",
+            ROOT / "GG_Data/mapping/build_relation_mapping_v2_1.py",
+            ROOT / "GG_Data/pipeline/relations.py",
         ]
         report["inputs"] = {str(p): digest(p) for p in paths}
         report.update(
@@ -212,11 +241,69 @@ def run(output: Path) -> dict:
         types_table = client.upload_values(sorted(types), "event_type")
         pairs_table = client.upload_values(pairs, "pair")
         report["parameter_tables"] = dict(types=types_table, outgoing=pairs_table)
-        sql = discovery_query(client.source, daniel, types_table, pairs_table)
+        # Corrected S2T 7: the prior >=3 query is a complete cached partition.
+        # Fetch only exactly-two candidates that can pass relevance/unknown;
+        # no qualifying Event is lost by this source-side prefilter. Final
+        # exclusions and the same score rule are still replayed locally.
+        prior_report = read_json(PRIOR_THREE / "report.json")
+        prior_verification = read_json(PRIOR_THREE / "verification.json")
+        prior_query = PRIOR_THREE / "query_result.json.gz"
+        if (
+            prior_verification["report_sha256"] != digest(PRIOR_THREE / "report.json")
+            or not prior_report["full_retained_scope_checked"]
+            or digest(prior_query) != prior_report["outputs"][prior_query.name]
+            or set(read_json(PRIOR_THREE / "retrieval_scope.json")["retained_qids"])
+            != daniel
+            or prior_report["snapshot_at"] != report["snapshot_at"]
+            or prior_report["inputs"][str(type_path)] != digest(type_path)
+            or digest(output / "outgoing_pairs.json")
+            != prior_report["outputs"]["outgoing_pairs.json"]
+        ):
+            raise ValueError("Prior >=3 partition is not the same verified scope")
+        answer = read_json(prior_query)
+        if len(answer) != prior_report["cloud_preliminary_events"] or any(
+            len(set(row["daniel_qids"])) < 3 for row in answer
+        ):
+            raise ValueError("Prior query does not contain the complete >=3 partition")
+        report["inputs"].update(
+            {str(p): digest(p) for p in [prior_query, PRIOR_THREE / "report.json"]}
+        )
+        qualifying = {
+            q
+            for q, value in scores.items()
+            if value is None or 100 * value >= EVENT_THRESHOLD_PERCENT
+        }
+        report.update(
+            reused_three_or_more_candidates=len(answer),
+            scored_entity_qids=sum(v is not None for v in scores.values()),
+            unscored_entity_qids=sum(v is None for v in scores.values()),
+            cloud_qualifying_endpoint_qids=len(qualifying),
+            retrieval_partition="cached >=3 plus exactly 2 with known >=2% or unscored",
+            reused_source_requests=prior_report["source_requests"],
+        )
+        sql = discovery_query(
+            client.source,
+            daniel,
+            types_table,
+            pairs_table,
+            exact_count=2,
+            qualifying_qids=qualifying,
+        )
         (output / "query.sql").write_text(sql, encoding="utf-8")
         report["status"] = "QUERYING_FULL_RETAINED_SCOPE_IN_BIGQUERY"
         save()
-        answer = client.query(sql)
+        additional = client.query(sql)
+        previous_qids = {row["qid"] for row in answer}
+        if any(
+            len(row["daniel_qids"]) != 2
+            or len(set(row["daniel_qids"])) != 2
+            or not set(row["daniel_qids"]) & qualifying
+            or row["qid"] in previous_qids
+            for row in additional
+        ):
+            raise ValueError("Exactly-two query overlaps or violates its source gate")
+        report["additional_two_entity_candidates"] = len(additional)
+        answer.extend(additional)
         report["source_requests"] = client.requests
         with gzip.open(
             output / "query_result.json.gz", "wt", encoding="utf-8"
@@ -271,6 +358,7 @@ def run(output: Path) -> dict:
             decision = select_events(
                 [dict(qid=qid, event_hierarchy_match=True, daniel_qids=endpoints)],
                 daniel,
+                scores,
             )[0]
             decisions.append(dict(decision, links=kept, excluded=excluded))
         write("decisions.json", decisions)
@@ -303,7 +391,16 @@ def run(output: Path) -> dict:
             full_retained_scope_checked=True,
             included_event_qids=[r["qid"] for r in selected],
             included_events=len(selected),
-            rejected_after_exclusions=len(decisions) - len(selected),
+            rejected_after_local_rules=len(decisions) - len(selected),
+            included_by_known_relevance=sum(
+                r["known_relevance_pass"] for r in selected
+            ),
+            included_by_unscored_exception=sum(
+                r["unscored_exception_used"] for r in selected
+            ),
+            included_with_exactly_two_entities=sum(
+                r["linked_entity_count"] == 2 for r in selected
+            ),
             native_event_daniel_assertions=len(unique),
             native_mapping_keys_added=len(additions),
             event_model_population_pending=True,
