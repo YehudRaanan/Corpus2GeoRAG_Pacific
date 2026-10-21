@@ -1,5 +1,7 @@
 # Entity data model and ERD
 
+Implementation status, 21 October 2026: retained-scope 10K Event eligibility is verified (775 selected of 21,797 candidates, average of known linked-entity scores >=2%). No Event model rows or final graph were written. Evidence and acquisition details are in the [population S2T](SOURCES_TO_ENTITY_DATA_MODEL_S2T.md).
+
 Status: agreed six-table design with explicit implementation exceptions, 19 October 2026. This document does not change matching assignments, build tables, or rebuild the graph.
 
 The separate [sources-to-model population S2T](SOURCES_TO_ENTITY_DATA_MODEL_S2T.md) defines approved inputs and population rules. It uses Wikidata assertions and events, including the accepted Q1190554 occurrence hierarchy and the two-distinct-retained-Daniel-QID inclusion rule with arithmetic mean of known linked-entity relevance >=2%; missing scores enter neither sum nor divisor and provide no bypass. WarSampo and EventKG facts are outside this population scope.

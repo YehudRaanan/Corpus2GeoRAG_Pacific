@@ -4,7 +4,9 @@
 > EN/JA score. Missing scores enter neither sum nor divisor and provide no
 > exception; all-unscored candidates fail relevance. The separate 5% MISC
 > filter stays unchanged. This supersedes maximum and the missing-score bypass.
-> Code and saved-data verification do not resume cloud retrieval or import.
+> Retained 10K eligibility is complete: 775 Events pass from 21,797 candidates.
+> Missing scores were excluded from the average. No model import or graph export
+> ran. See the current result in the population S2T; historical runs follow.
 
 # Daniel input to final graph JSON review
 

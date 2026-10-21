@@ -9,6 +9,7 @@ from __future__ import annotations
 import argparse
 import csv
 import gzip
+import hashlib
 import json
 import logging
 import re
@@ -122,7 +123,31 @@ def verify_recognition(record: dict, types: set[str]) -> bool:
     )
 
 
-def run(output: Path) -> dict:
+def recovered_partition(query_path: Path, expected_sql: str) -> tuple[dict, Path]:
+    """Reuse a complete completed-job download; never resubmit an old query.
+
+    The earlier max/unknown source filter is a safe superset for the mean rule.
+    Exact SQL binds the snapshot, recognition, Daniel scope and both directions.
+    Native local mapping/exclusions and the current selector still decide rows.
+    """
+    sql = query_path.read_text(encoding="utf-8")
+    if sql != expected_sql:
+        raise ValueError("Recovered query differs from the expected source scope")
+    key = hashlib.sha256(sql.encode()).hexdigest()
+    cache_path = STORE / (key + ".json.gz")
+    saved = read_json(cache_path)
+    if (
+        saved.get("sql_sha256") != key
+        or saved.get("job_id") != "geoai_" + key[:32]
+        or saved.get("recovered_from_completed_job") is not True
+        or saved.get("result_table_rows") != len(saved["rows"])
+        or len({r["qid"] for r in saved["rows"]}) != len(saved["rows"])
+    ):
+        raise ValueError("Recovered job result is incomplete or mismatched")
+    return saved, cache_path
+
+
+def run(output: Path, recovered_two_query: Path | None = None) -> dict:
     started = perf_counter()
     scope = prepare(output)
     report = dict(
@@ -284,23 +309,47 @@ def run(output: Path) -> dict:
             retrieval_partition="cached >=3 plus exactly 2 with at least one known >=2%",
             reused_source_requests=prior_report["source_requests"],
         )
+        # Resume from the already completed broader query when supplied. No
+        # new source scan is needed; the local average rejects extra rows.
+        partition_qualifying = qualifying
+        if recovered_two_query is not None:
+            partition_qualifying = qualifying | {
+                q for q, value in scores.items() if value is None
+            }
         sql = discovery_query(
             client.source,
             daniel,
             types_table,
             pairs_table,
             exact_count=2,
-            qualifying_qids=qualifying,
+            qualifying_qids=partition_qualifying,
         )
         (output / "query.sql").write_text(sql, encoding="utf-8")
-        report["status"] = "QUERYING_FULL_RETAINED_SCOPE_IN_BIGQUERY"
+        report["status"] = (
+            "RECOVERING_COMPLETED_JOB"
+            if recovered_two_query
+            else "QUERYING_FULL_RETAINED_SCOPE_IN_BIGQUERY"
+        )
         save()
-        additional = client.query(sql)
+        if recovered_two_query is None:
+            additional = client.query(sql)
+        else:
+            saved, cache_path = recovered_partition(recovered_two_query, sql)
+            additional = saved["rows"]
+            client.requests.append({k: v for k, v in saved.items() if k != "rows"})
+            report["inputs"].update(
+                {str(p): digest(p) for p in [recovered_two_query, cache_path]}
+            )
+            report.update(
+                retrieval_partition="cached >=3 plus recovered exactly-two superset (known >=2% or unscored)",
+                recovered_cloud_job=saved["job_id"],
+                new_event_discovery_queries=0,
+            )
         previous_qids = {row["qid"] for row in answer}
         if any(
             len(row["daniel_qids"]) != 2
             or len(set(row["daniel_qids"])) != 2
-            or not set(row["daniel_qids"]) & qualifying
+            or not set(row["daniel_qids"]) & partition_qualifying
             or row["qid"] in previous_qids
             for row in additional
         ):
@@ -444,9 +493,10 @@ def run(output: Path) -> dict:
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--output", type=Path, required=True)
+    parser.add_argument("--recovered-two-query", type=Path)
     args = parser.parse_args()
     logging.basicConfig(level=logging.INFO, format="%(asctime)s %(message)s")
-    result = run(args.output)
+    result = run(args.output, args.recovered_two_query)
     LOG.info(
         "%s: %s included Events in %.3f seconds",
         result["status"],

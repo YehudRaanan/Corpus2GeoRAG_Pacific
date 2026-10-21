@@ -1,5 +1,7 @@
 # Source-to-target: six-table model to final Agent graph JSON
 
+Implementation status, 21 October 2026: retained-scope 10K Event eligibility is verified (775 selected of 21,797 candidates, average of known linked-entity scores >=2%). No Event model rows or final graph were written. Evidence and acquisition details are in the [population S2T](SOURCES_TO_ENTITY_DATA_MODEL_S2T.md).
+
 Specification date: 19 October 2026. Status: agreed scope documented; identified compatibility and field-selection gaps remain explicit. This is a design specification, not an executed export or a production acceptance claim.
 
 Geometry interface approved on 19 October 2026: `geometry_ref` is null or `{file, place_id, sha256}`, identifying the GeoParquet file, place QID and file checksum. The Agent loads the selected object as Shapely. A broken reference is an explicit error. Inline GeoJSON export is superseded. Preserve stored CRS; spatial-function compatibility still requires verification.

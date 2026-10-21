@@ -22,22 +22,56 @@ The saved scores contain 2,446 known and 1,020 explicitly unscored QIDs.
 `event_selection.select_events()` records the average, scored/total counts,
 missing QIDs and an explicit decision reason. Maximum is diagnostic only.
 
-The retrieval controller still reuses the verified >=3-endpoint partition.
-For exactly-two candidates, one known score >=2% is a necessary source
-prefilter, not the final decision. Any passing average after local exclusions
-must contain at least one such score. Mapping/exclusions precede the local
-mean; filtering by the preliminary average could incorrectly lose Events.
-There is no missing-score bypass in either final selection or the prefilter.
+The retrieval controller reuses the verified >=3-endpoint partition. For new
+exactly-two retrievals, one known score >=2% is a necessary source prefilter,
+not the final decision. Mapping/exclusions precede the local mean; filtering by
+the preliminary average could incorrectly lose Events after exclusions.
 
-This change does not start a new cloud query, import Event model rows or export
-the graph. The existing stopped attempt remains intact. Its already-submitted
-job `geoai_044494de23c55237ae5f174ae918ddb3` must be checked and recovered before
-any future cloud continuation; its current state is not asserted here. Its
-old-rule query result can only be candidate evidence, never accepted output
-under the new average rule. Do not submit a duplicate of that pending query.
-Earlier maximum/unknown-exception results below are historical, not this rule.
+The completed cloud job `geoai_044494de23c55237ae5f174ae918ddb3` was recovered
+on 21 October, with its exact SQL, destination row count and all **1,773 rows**
+verified and cached. Its older prefilter (known >=2% OR unscored endpoint) is a
+safe candidate superset, not an inclusion rule. Every recovered candidate was
+rechecked with the current average rule. No duplicate Event discovery query
+was submitted. The original stopped attempt remains intact. Earlier maximum
+and missing-score-exception selections below are historical.
 
-### Verified saved-data replay - 21 October 2026
+### Completed retained-scope eligibility check - 21 October 2026
+
+The frozen 10K POC's retained **3,466 Daniel QIDs** were checked using **20,024**
+cached >=3-endpoint candidates and **1,773** recovered exactly-two candidates:
+
+| Result | Count |
+|---|---:|
+| Candidates checked | 21,797 |
+| Events passing current rules | 775 |
+| Passing with exactly two retained linked QIDs | 536 |
+| Passing with three or more retained linked QIDs | 239 |
+| Rejected: known-score average below 2% | 21,021 |
+| Rejected: no known linked-entity scores | 1 |
+| Unique native assertions supporting selected Events | 3,025 |
+
+Independent exact-fraction arithmetic reproduced all 21,797 decisions and
+checked input/output hashes, distinct endpoints and assertion identities.
+Completed-job recovery and connected query/selection checks passed **19 tests**,
+Black and focused Ruff; `git diff --check` passed. The
+239 selected cached candidates exactly match the earlier partial replay.
+The continuation took **119.039 seconds**, including an approved BigQuery
+lookup/cache of nine missing property names; Event discovery reused completed
+results. The recovered original Event query took **376.464 seconds** when it
+ran. These timings are not a full-300K estimate.
+
+Evidence: `GG_Data/pipeline/outputs/poc_10k_events_average_2pct_completed_job_20261021/`,
+including `report.json`, `decisions.json`, `selected_links.json`, source records,
+mapping additions, `verification.json` and `independent_verification.json`.
+The controller's `--recovered-two-query` option requires the exact expected
+snapshot/scope SQL and a complete, matching completed-job cache.
+
+This completes eligibility for the retained 10K scope, not all Wikidata or all
+Daniel data. The separate MISC filter/hold remains unchanged. **No Event model
+rows or final graph were written.** Model population is the next phase.
+Code/docs have a local Git checkpoint; generated artifacts remain ignored.
+
+### Earlier partial saved-data replay - 21 October 2026
 
 The average selector passed **53 focused tests**, Black and focused Ruff.
 A saved-only replay retained **239 of 20,024** cached candidates; **19,785**
@@ -45,10 +79,10 @@ failed the known-score average threshold. Independent exact-fraction arithmetic
 reproduced every decision. The 15 Pacific battle examples retain **10**, matching
 the earlier diagnostic comparison. No source requests were made.
 
-This is **not the full 10K Event result**: the cached partition originally
-required >=3 preliminary endpoints; the exactly-two cloud partition remains
-unchecked here. No Event model rows or final graph were written, and cloud
-retrieval was not restarted. Evidence, input/output hashes and replay code:
+This earlier replay was **not the full 10K Event result**: it checked only the
+>=3 preliminary-endpoint partition. The complete retained-scope eligibility
+check above now includes exactly-two candidates. No Event model rows or final
+graph were written. Earlier replay evidence, input/output hashes and code:
 `GG_Data/pipeline/outputs/poc_10k_event_average_2pct_replay_20261021/`.
 Code/docs receive a local Git checkpoint; generated output remains ignored.
 
