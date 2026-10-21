@@ -84,9 +84,11 @@ within each group. Keep only the intersection of endpoint selections; no
 refill after intersection. Event links bypass both date filtering and the cap.
 Preserve raw evidence for all omitted relations. Do not change source dates.
 Partial dates use possible overlap at supplied precision. Calendar conversion, combined point/interval
-interpretation and equal scores crossing a group cutoff still stop the POC.
+interpretation still stop the POC. Equal scores within a temporal group use
+ascending native source assertion ID (`source_record_id`), approved 21 October.
+Missing/repeated source IDs still stop.
 
-Policy: `daniel-mutual-top-20-period-first-v1.1.3`. First continuation:
+Policy: `daniel-mutual-top-20-period-first-v1.1.4`. First continuation:
 `outputs/poc_10k_event_model_period_first_20261021/`. It reuses verified property
 names/mappings from the preceding stop. Require its final report; this rule
 does not itself establish a populated model or final graph.
@@ -132,11 +134,43 @@ Require its report before claiming population completion.
 Precision-range continuation: **21.486 seconds**, then
 `STOPPED_FOR_CONSULTATION` at Madagascar (Q1019). All date checks passed.
 Seventeen undated assertions tie at importance 1 across the 20-relation cutoff
-(34 eligible assertions total). Stable assertion-ID ordering is proposed,
-not implemented. `report.json` lists the ties and `stop_verification.json`
+(34 eligible assertions total). Stable assertion-ID ordering was proposed
+at that stop and subsequently approved. The selector now orders equal scores
+within each temporal group by ascending native `source_record_id`. Fresh run:
+`outputs/poc_10k_event_model_stable_ties_20261021/`; its report determines completion. `report.json` lists the ties and `stop_verification.json`
 verifies unchanged pinned inputs, zero model rows and zero source requests.
 Twelve focused relation/model tests, Ruff and Black pass. The selected 2,135
 Events and all raw source evidence remain unchanged.
+
+### Verified model population - stable ties, 21 October 2026
+
+The approved native source assertion-ID tie-break completed the frozen 10K
+Events/Relations population in **122.285 seconds** without new source requests.
+Output: `GG_Data/pipeline/outputs/poc_10k_event_model_stable_ties_20261021/`.
+Status: **EVENTS_AND_RELATIONS_POPULATED**. Tables contain **8,212 typed Entity
+rows** (all **6,077 original rows unchanged**, plus 2,135 separate event-typed
+rows), **2,135 Events**, and **11,409 retained base Relations**.
+
+All **8,861 Event-linked assertions** bypassed date filtering and the cap.
+The non-event selection retains **304 overlapping dated** and **2,244 undated**
+assertions; its maximum incident assertion count is **20**. Of 18,349 scanned
+in-scope source assertions, 767 are dated outside the period and 6,173 other
+assertions fail mutual top-20 selection. Their full source evidence is preserved;
+this selection does not delete original dates or older outputs. Madagascar
+selects 20 assertions locally and retains six after mutual intersection, with
+no refill. Each assertion remains distinct; reverse views are not counted.
+
+Independent verification reproduced every endpoint ranking from native IDs,
+importance and temporal groups, checked all Event exemptions and foreign keys,
+verified all output hashes and original Entity contents, and confirmed unchanged
+pinned inputs. Evidence: `report.json`, `manifest.json`, `verification.json`,
+`independent_verification.json`, and all six model/audit gzip files.
+Report SHA-256: `8cde86c52285958f197c27166b53652181efac2233d05afd8bafbc33ba956357`.
+Twelve focused tests, Ruff and Black passed. `population_s2t_at_run.md` preserves
+the exact S2T revision pinned during execution; this results update was added
+after the run. Geography, final graph JSON and Agent integration remain pending.
+Code/docs receive a local Git checkpoint; generated outputs remain local and
+ignored by Git.
 
 ### Historical model population continuation - cutoff before period filtering
 
@@ -836,7 +870,7 @@ The user approved the one-property retrieval test. Canada/Q16 with P17 (country)
 
 The user approved direct included-Event/included-Event and Event/Daniel links without a count limit. Each Event must still independently pass the existing two-distinct-Daniel-QID inclusion gate. For non-event/non-event assertions, rank the connected QID by **distinct Daniel source pages times total original Daniel mentions**. Keep an assertion only if it belongs to the top 20 at both endpoints; reverse views share its slot. Some QIDs can retain fewer than 20. Counts and budgets are QID-level, without duplication across types.
 
-See [population S2T section 8](../../docs/SOURCES_TO_ENTITY_DATA_MODEL_S2T.md#non-event-relation-selection--approved-20-october-2026) for evidence and stop requirements. `relation_selection.py` now implements the score and mutual-top-20 selector, with cutoff ties and incomplete Event membership as explicit stops. The existing `relations.py` preserves the historical full D/D source population. Complete Event membership must be established before applying exemptions; no capped output has been produced.
+See [population S2T section 8](../../docs/SOURCES_TO_ENTITY_DATA_MODEL_S2T.md#non-event-relation-selection--approved-20-october-2026) for evidence and stop requirements. `relation_selection.py` now implements the score and mutual-top-20 selector, with missing/repeated source assertion IDs and incomplete Event membership as explicit stops; equal-score ties use ascending native source assertion ID. The existing `relations.py` preserves the historical full D/D source population. Complete Event membership is required before applying exemptions; the verified stable-tie continuation above now supplies the capped model.
 
 ## Current continuation: saved scores and paged Event discovery
 
@@ -863,7 +897,7 @@ The user instructed implementation and continued execution after approving the t
 
 `event_discovery.py --incoming-page-size 5000` continues in `outputs/poc_10k_event_full_discovery_paged_20261020`. The previous complete incoming responses are reused; failed unpaged responses remain intact. New requests use at most 5,000 statements per page, ordered by the original statement URI and continued strictly after the last accepted URI. All pages and the short terminal page are required for each graph/QID; a response-size limit is not an Event count limit. Both official graphs, all direct ranks, the existing cache, five-second pauses and the approved HTTP retry budget remain in effect. Malformed responses, unsorted/overlapping pages, timeouts and other unapproved failures still stop. Consult the run's `report.json` and logs for live status; starting a process does not establish complete discovery.
 
-Verification before launch: **55 pipeline tests passed**, Ruff checks passed, Black formatting applied. Tests cover page continuation/cache reuse/order errors, score counts, mutual endpoint rejection, no refill, uncapped Event/Event and Event/entity links, separate assertion slots, and explicit cutoff-tie/incomplete-Event stops. No new Daniel extraction, matching, entity identity, source or relevance filter was added. Event classification/population, actual capped Relations, Geography and final graph remain pending.
+Verification before launch: **55 pipeline tests passed**, Ruff checks passed, Black formatting applied. Tests cover page continuation/cache reuse/order errors, score counts, mutual endpoint rejection, no refill, uncapped Event/Event and Event/entity links, separate assertion slots, and stable cutoff-tie ordering and explicit incomplete-Event stops. No new Daniel extraction, matching, entity identity, source or relevance filter was added. Event classification/population, actual capped Relations, Geography and final graph remain pending.
 
 ```powershell
 python -m GG_Data.pipeline.relation_selection `

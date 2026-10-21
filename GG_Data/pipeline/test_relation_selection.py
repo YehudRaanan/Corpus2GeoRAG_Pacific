@@ -15,7 +15,10 @@ from GG_Data.pipeline.relations import SourceException
 
 def edge(index, subject, target):
     return dict(
-        observation_id=str(index), subject_entity_id=subject, object_entity_id=target
+        observation_id=str(index),
+        source_record_id=f"Q1$statement-{index:04d}",
+        subject_entity_id=subject,
+        object_entity_id=target,
     )
 
 
@@ -78,17 +81,38 @@ def test_mutual_selection_no_refill_event_exemption_and_source_preservation():
         select(rows, scores, set(), event_population_complete=False)
 
 
-def test_equal_cutoff_scores_stop_and_multiple_assertions_spend_separate_slots():
+def test_equal_cutoff_scores_use_source_id_and_assertions_spend_separate_slots():
     rows = [edge(i, "Q1", "Q2") for i in range(21)]
+    # Reverse observation IDs so this proves the native source ID is the key.
+    for i, row in enumerate(rows):
+        row["observation_id"] = str(100 - i)
     scores = {"Q1": dict(score=1), "Q2": dict(score=2)}
-    with pytest.raises(SourceException, match="Unapproved importance tie"):
-        select(rows, scores, set(), event_population_complete=True)
+    original = copy.deepcopy(rows)
+    kept, _ = select(rows[::-1], scores, set(), event_population_complete=True)
+    assert {r["source_record_id"] for r in kept} == {
+        r["source_record_id"] for r in rows[:20]
+    }
+    assert rows == original
     kept, _ = select(rows[:20], scores, set(), event_population_complete=True)
     assert kept == rows[:20]
     with pytest.raises(SourceException, match="unique base assertions"):
         select(rows[:1] * 2, scores, set(), event_population_complete=True)
     with pytest.raises(SourceException, match="Missing Daniel importance"):
         select(rows[:1], {}, set(), event_population_complete=True)
+    with pytest.raises(SourceException, match="Missing source assertion ID"):
+        select(
+            [{**rows[0], "source_record_id": None}],
+            scores,
+            set(),
+            event_population_complete=True,
+        )
+    with pytest.raises(SourceException, match="Repeated source assertion ID"):
+        select(
+            [rows[0], {**rows[0], "observation_id": "other"}],
+            scores,
+            set(),
+            event_population_complete=True,
+        )
 
 
 def test_entity_score_preserves_types_raw_evidence_and_scores_synthetic():
@@ -157,9 +181,8 @@ def test_period_first_undated_fill_and_outside_evidence_preserved():
     scores["Q200"]["score"] = 1
     rows = rows[:19] + [edge(20, "Q1", "Q200"), edge(21, "Q1", "Q201")]
     scores["Q201"]["score"] = 1
-    with pytest.raises(SourceException, match="Unapproved importance tie") as error:
-        select(rows, scores, set(), event_population_complete=True)
-    assert error.value.case["temporal_group"] == "UNDATED"
+    kept, _ = select(rows[::-1], scores, set(), event_population_complete=True)
+    assert {r["observation_id"] for r in kept} == {str(i) for i in range(19)} | {"20"}
     # Equal importance across different temporal tiers is not a cutoff tie.
     dated = rows[:19] + [
         dict(edge(30, "Q1", "Q200"), time_from="+1943-01-01T00:00:00Z")

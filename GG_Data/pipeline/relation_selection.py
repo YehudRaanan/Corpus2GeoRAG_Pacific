@@ -19,7 +19,7 @@ from GG_Data.pipeline.poc import ROOT, digest, read_json
 from GG_Data.pipeline.relations import SourceException, date_parts
 
 LOG = logging.getLogger(__name__)
-POLICY = "daniel-mutual-top-20-period-first-v1.1.3"
+POLICY = "daniel-mutual-top-20-period-first-v1.1.4"
 LIMIT = 20
 PERIOD_START = (1941, 12, 7)
 PERIOD_END = (1945, 9, 2)
@@ -179,14 +179,15 @@ def select(
     """Keep uncapped Event links and the intersection of endpoint top-20 sets.
 
     S2T 8: budget base assertions, not entity pairs or generated reverse views.
-    No refill after intersection. Unapproved cutoff ties stop before returning
-    any selected population; all source records remain available to the caller.
+    No refill after intersection. Equal importance within a temporal group uses
+    ascending native source assertion ID (approved 21 October); never input order.
     """
     if not event_population_complete:
         raise SourceException(
             "Complete Event membership required before relation selection"
         )
-    incident, ids, groups = defaultdict(list), set(), {}
+    incident, ids, groups, source_ids = defaultdict(list), set(), {}, {}
+    seen_source_ids = set()
     for row in relations:
         oid = row["observation_id"]
         if oid in ids or row.get("derived") or row.get("source_edge_id"):
@@ -194,6 +195,15 @@ def select(
                 "Expected unique base assertions before selection", observation_id=oid
             )
         ids.add(oid)
+        source_id = row.get("source_record_id")
+        if not isinstance(source_id, str) or not source_id:
+            raise SourceException("Missing source assertion ID", observation_id=oid)
+        if source_id in seen_source_ids:
+            raise SourceException(
+                "Repeated source assertion ID", source_record_id=source_id
+            )
+        source_ids[oid] = source_id
+        seen_source_ids.add(source_id)
         subject, target = row["subject_entity_id"], row["object_entity_id"]
         if not all(re.fullmatch(r"Q[1-9]\d*", qid or "") for qid in (subject, target)):
             raise SourceException("Expected native item endpoints", observation_id=oid)
@@ -214,21 +224,7 @@ def select(
             )
     choices = {}
     for qid, rows in sorted(incident.items()):
-        ordered = sorted(rows, key=lambda row: (row[0], -row[1]))
-        if len(ordered) > LIMIT and ordered[LIMIT - 1][:2] == ordered[LIMIT][:2]:
-            group, boundary = ordered[LIMIT][:2]
-            raise SourceException(
-                "Unapproved importance tie at relation cutoff",
-                qid=qid,
-                score=boundary,
-                temporal_group="IN_PERIOD" if group == 0 else "UNDATED",
-                incident_assertions=len(rows),
-                tied_assertions=[
-                    dict(observation_id=oid, other_qid=other)
-                    for tier, score, oid, other in ordered
-                    if (tier, score) == (group, boundary)
-                ],
-            )
+        ordered = sorted(rows, key=lambda row: (row[0], -row[1], source_ids[row[2]]))
         choices[qid] = {oid for _, _, oid, _ in ordered[:LIMIT]}
     retained, audit = [], []
     for row in relations:
@@ -244,6 +240,7 @@ def select(
         audit.append(
             dict(
                 observation_id=oid,
+                source_record_id=source_ids[oid],
                 retained=keep,
                 event_exempt=exempt,
                 temporal_group=groups[oid],

@@ -1,6 +1,6 @@
 # Entity data model and ERD
 
-Implementation status, 21 October 2026: maximum linked-entity relevance >=2%, with missing scores contributing zero, supersedes the verified 775-Event average test. This inclusive assumption can admit unrelated items and may need improvement; no extra filter is approved. The maximum-rule replay selected 2,135 of 21,797 candidates; all decisions were independently verified. No Event model rows or final graph were written. Evidence and acquisition details are in the [population S2T](SOURCES_TO_ENTITY_DATA_MODEL_S2T.md).
+Implementation status, 21 October 2026: maximum linked-entity relevance >=2%, with missing scores contributing zero, supersedes the verified 775-Event average test. This inclusive assumption can admit unrelated items and may need improvement; no extra filter is approved. The maximum-rule replay selected 2,135 of 21,797 candidates; all decisions were independently verified. The stable-tie continuation populated 8,212 typed Entity rows (6,077 original rows unchanged), 2,135 Events and 11,409 base Relations in 122.285 seconds. Independent ranking, cap, Event-exemption and checksum checks passed; no new source request ran. Geography, graph export and Agent integration remain pending. Evidence and acquisition details are in the [population S2T](SOURCES_TO_ENTITY_DATA_MODEL_S2T.md).
 
 Status: agreed six-table design with explicit implementation exceptions, 19 October 2026. This document does not change matching assignments, build tables, or rebuild the graph.
 
@@ -277,10 +277,11 @@ prior uncapped outputs, but not in the newly selected Relations population.
 Partial dates qualify on possible overlap, preserving source precision.
 Supported Wikidata ranges include decades, centuries and millennia; their
 limits are used only for selection comparisons, not replacement source dates.
-Unsupported date interpretation or cutoff ties require consultation; see population
-S2T section 8. Source dates remain unchanged.
+Equal scores within a temporal group use ascending native source assertion ID
+(`source_record_id`), approved 21 October. Unsupported date interpretation or
+missing/repeated source IDs require consultation; see population S2T section 8. Source dates remain unchanged.
 
-Approved on 20 October 2026: non-event QIDs have at most 20 incident base relations to other non-events. Rank by the other QID's distinct Daniel source pages multiplied by original mention count; retain an assertion only if selected in both endpoint top-20 sets. Reverse views do not spend another slot. Event/Event and Event/other links are exempt. Persist the score in Entities.importance and its factors/lineage in attributes.importance_basis; selection decisions and full source-page lists remain supporting evidence. No seventh business table or inferred Event importance value is added. The selector is implemented and tested; actual application awaits complete Event membership. See population S2T section 8 for the full rule, score-population evidence and stop conditions.
+Approved on 20 October 2026: non-event QIDs have at most 20 incident base relations to other non-events. Rank by the other QID's distinct Daniel source pages multiplied by original mention count; retain an assertion only if selected in both endpoint top-20 sets. Reverse views do not spend another slot. Event/Event and Event/other links are exempt. Persist the score in Entities.importance and its factors/lineage in attributes.importance_basis; selection decisions and full source-page lists remain supporting evidence. No seventh business table or inferred Event importance value is added. The selector was applied to complete Event membership in the verified stable-tie continuation: 8,861 Event-linked assertions uncapped, 304 overlapping dated and 2,244 undated non-event assertions retained; maximum non-event incident count 20. See population S2T section 8 for the full rule, score-population evidence and stop conditions.
 
 Existing mappings take priority. If a native Wikidata source key is missing, retain the actual direct statement's property unchanged at Level 2 and add it to the versioned mapping parameters. Level 1 stays `UNRESOLVED` / `NOT_ASSIGNED`; do not infer a relation when no statement exists. Population S2T section 8 defines this approved rule. The current catalog is v2.1.1; this adds no business table or entity.
 

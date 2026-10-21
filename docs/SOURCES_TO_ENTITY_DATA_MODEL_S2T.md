@@ -58,8 +58,8 @@ The deliberately broad assumption and unwanted examples above remain relevant.
 Current evidence: `GG_Data/pipeline/outputs/poc_10k_events_maximum_missing_zero_20261021/`:
 `report.json`, `decisions.json`, `selected_links.json`, source/mapping records,
 `verification.json`, `independent_verification.json`, and `pacific_battles.json`.
-No Event model rows or final graph were written. Next: populate the approved
-Event model rows and their Relations. Code/docs receive a local Git checkpoint;
+That selection-only run wrote no Event model rows or final graph. The later
+verified stable-tie population below completes Events and Relations. Code/docs receive a local Git checkpoint;
 generated artifacts remain local and ignored by Git.
 
 ### Derived range from point dates - approved 21 October 2026
@@ -94,14 +94,15 @@ preserved. No source date is changed by selection.
 
 Keep the existing mutual-endpoint intersection, with no refill afterwards.
 Event/Event and Event/other links bypass the date filter and cap. Count base
-assertions, not reverse views. Equal scores crossing the cutoff within one
-temporal group still require consultation. Compare partial dates only at their
+assertions, not reverse views. Equal scores within one temporal group use
+ascending native Wikidata source assertion ID (`source_record_id`), as approved
+on 21 October. This stable order is independent of input and observation-ID order. Compare partial dates only at their
 supplied precision and include possible overlap for partial dates. Calendar
 conversion or combined point/interval interpretation still stop for consultation.
 Do not invent exact days.
 
 Implementation: `relation_selection.py`, policy
-`daniel-mutual-top-20-period-first-v1.1.3`. The first continuation used
+`daniel-mutual-top-20-period-first-v1.1.4`. The first continuation used
 `outputs/poc_10k_event_model_period_first_20261021/` and reuses the previous
 verified native mapping extensions. Require its final status before claiming
 model population. This rule supersedes ranking all dates together below.
@@ -140,7 +141,7 @@ source date and precision. Compare year/month/day prefixes only at the supplied
 precision: 1945 or September 1945 can overlap the period; October 1945 cannot.
 The same rule applies to interval bounds. This changes selection eligibility,
 not the source date, and does not assert a specific day or certain overlap.
-Other calendar and cutoff-tie safeguards remain in force; the later approval
+Other calendar safeguards remain in force; the later approval
 below extends supported precision to decades, centuries and millennia.
 Fresh continuation: `outputs/poc_10k_event_model_possible_overlap_20261021/`.
 Its final report is required before claiming population completion.
@@ -179,9 +180,42 @@ East Africa, Maevatanana, Antananarivo, Turkey and the Kingdom of Denmark.
 `stop_verification.json` confirms all pinned inputs unchanged, zero model rows
 written and zero source requests. The scan preserves 18,349 source assertions
 across 6,796 QIDs and the selected 2,135 Events remain unchanged. Twelve focused
-relation/model tests, Ruff and Black pass. A stable assertion-ID tie-break is
-proposed for consultation only; no tie-break has been implemented and the
-model remains incomplete.
+relation/model tests, Ruff and Black passed at that stop. The user subsequently
+approved ascending native source assertion-ID ordering for equal scores within
+a temporal group. The fresh continuation is
+`outputs/poc_10k_event_model_stable_ties_20261021/`; its final report determines
+completion. Missing or repeated source assertion IDs still stop. No other
+ranking, date, importance or Event rule changes.
+
+### Verified model population - stable ties, 21 October 2026
+
+The approved native source assertion-ID tie-break completed the frozen 10K
+Events/Relations population in **122.285 seconds** without new source requests.
+Output: `GG_Data/pipeline/outputs/poc_10k_event_model_stable_ties_20261021/`.
+Status: **EVENTS_AND_RELATIONS_POPULATED**. Tables contain **8,212 typed Entity
+rows** (all **6,077 original rows unchanged**, plus 2,135 separate event-typed
+rows), **2,135 Events**, and **11,409 retained base Relations**.
+
+All **8,861 Event-linked assertions** bypassed date filtering and the cap.
+The non-event selection retains **304 overlapping dated** and **2,244 undated**
+assertions; its maximum incident assertion count is **20**. Of 18,349 scanned
+in-scope source assertions, 767 are dated outside the period and 6,173 other
+assertions fail mutual top-20 selection. Their full source evidence is preserved;
+this selection does not delete original dates or older outputs. Madagascar
+selects 20 assertions locally and retains six after mutual intersection, with
+no refill. Each assertion remains distinct; reverse views are not counted.
+
+Independent verification reproduced every endpoint ranking from native IDs,
+importance and temporal groups, checked all Event exemptions and foreign keys,
+verified all output hashes and original Entity contents, and confirmed unchanged
+pinned inputs. Evidence: `report.json`, `manifest.json`, `verification.json`,
+`independent_verification.json`, and all six model/audit gzip files.
+Report SHA-256: `8cde86c52285958f197c27166b53652181efac2233d05afd8bafbc33ba956357`.
+Twelve focused tests, Ruff and Black passed. `population_s2t_at_run.md` preserves
+the exact S2T revision pinned during execution; this results update was added
+after the run. Geography, final graph JSON and Agent integration remain pending.
+Code/docs receive a local Git checkpoint; generated outputs remain local and
+ignored by Git.
 
 ### Historical model population continuation - cutoff before period filtering
 
@@ -1336,7 +1370,7 @@ Historical Entity-attribute run, 20 October (superseded): `outputs/poc_10k_entit
 - Score each existing Daniel Entity identity using **distinct Daniel source-page count multiplied by total original Daniel mention count**, aggregated by assigned QID or existing synthetic ID, without duplicating mentions across typed Entities rows or counting retrieved Japanese counterparts as Daniel source appearances. Each separate synthetic ID has one page and one mention, hence importance 1; no QID is required to count it. Count Daniel's original `raw.Source` values for source-page appearances, without inventing page IDs or processing paragraph text. Pin the input population: this POC uses its frozen 10K mentions, not an unstated whole-corpus frequency. No graph centrality, BM25, new extraction or rematching is approved.
 - Each endpoint ranks dated assertions overlapping 7 December 1941 through 2 September 1945 first, then fills remaining slots with undated assertions, up to 20 total; use the other endpoint's score within each group. Dated assertions outside the period are omitted from selection while preserving source evidence. Keep an assertion only if it is in the top 20 at **both endpoints**. Intersect these selections; do not refill rejected slots. Some entities can therefore retain fewer than 20 relations.
 - Preserve all acquired source evidence and previous outputs. Persist the approved score as Entities.importance and the factors/lineage as attributes.importance_basis. Supporting selection evidence must pin the Daniel input population/checksums, page and mention counts, score, both endpoint decisions and retained/omitted counts. This score is not a Wikidata-supplied Event `importance` value and must not overwrite that field.
-- If equal scores cross the cutoff, or the declared source population/page identity cannot support the calculation, stop with the concrete cases for discussion. No new tie-break, missing-value substitution or score-population change is approved by this rule.
+- Equal scores within the same temporal group use ascending native source assertion ID (`source_record_id`), approved 21 October 2026. Keep dated-first ranking, descending importance, mutual intersection, no refill and Event exemptions. Missing/repeated source IDs or unsupported source population/page identity stop for discussion. No missing-value substitution or score-population change is approved.
 
 Complete Event membership is required before applying the exemption. After approving this rule, the user instructed implementation and continued execution. The continuation uses the proposed incoming pages of at most 5,000 statements, with a strict native-statement-URI cursor, both graphs and the complete page chain. Existing complete unpaged responses are reused; malformed unpaged responses remain untouched. Page ordering, uniqueness and cursor progress are checked before accepting data; a short terminal page is required. No new Event count limit or relevance filter is authorized, and the existing retry/stop rules remain in force. Run: `outputs/poc_10k_event_full_discovery_paged_20261020`; live status belongs in its report, not an assumed completion. Tests before launch: 55 passed. Applying the selector and producing a fresh versioned Relations output remain pending; historical full D/D outputs are not relabeled as capped.
 
