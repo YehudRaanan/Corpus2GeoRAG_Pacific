@@ -56,7 +56,48 @@ No Event model rows or final graph were written. Next: populate the approved
 Event model rows and their Relations. Code/docs receive a local Git checkpoint;
 generated artifacts remain local and ignored by Git.
 
-### Model population preflight stopped - 21 October 2026
+### Derived range from point dates - approved 21 October 2026
+
+When multiple distinct P585 point dates are supplied and explicit P580/P582
+start/end dates are absent, derive start = earliest point date and end = latest
+point date. Keep one source assertion and all original point dates, snaks,
+precision, calendars and source evidence. Mark both bounds as derived from
+P585; the range covers recorded dates and does not assert continuous activity.
+Do not overwrite explicit start/end dates. Do not apply the relation 1900 start
+floor to this point-derived range. Different calendars, unsupported formats or
+other unresolved date conflicts still require consultation. A single point
+date stays a point date. This rule applies to Events and Relations; native
+Event dates remain lossless lists, with derived bounds marked separately.
+
+For Enola Gay -> significant event -> atomic bombings of Hiroshima and
+Nagasaki, the derived range is 6-9 August 1945. This approval resolves the
+point-range issue in the historical preflight stop below. Resume with the
+same snapshot, selected Event IDs and source assertions. No new matching,
+source substitution or Event filter is authorized.
+
+### Model population continuation - cutoff tie requires agreement
+
+The approved date rule passed the full source scan: 6,796 QIDs, 246,936 claims
+and 18,349 in-scope assertions. All 34 pre-1900 historical relations remain.
+The real Enola Gay assertion now yields derived bounds 6-9 August 1945 while
+preserving both original points. All 25 focused tests, Ruff and Black pass.
+
+`event_model.py` stopped after 46.187 seconds at the existing non-event top-20
+gate: United Nations (Q1065) has 101 incident assertions; three Indonesia
+(Q252) assertions tie at the cutoff at importance 28. There is no approved
+tie rule. Fixed assertion-ID ordering is proposed, not implemented.
+Event links remain exempt. No Entity/Event/Relation model output was written.
+
+The approved native-property extension cached four names from the same
+BigQuery snapshot and added P2567, P2715, P3833 and P6477 to the continuation's
+parameters, without Level 1 assignment or overwriting prior mappings.
+Evidence: `outputs/poc_10k_event_model_point_ranges_20261021/report.json`,
+`stop_verification.json` and `mapping/`. Continue only after tie-rule agreement;
+use a fresh output directory and retain this stop evidence. Geography, graph
+export and Agent integration remain pending. Generated data remain local and
+ignored; code/docs receive a local checkpoint only.
+
+### Historical model population preflight stop - resolved 21 October 2026
 
 The approved continuation stopped before any model rows were written. The
 snapshot assertion `Q204424$4c059d94-49a4-80c6-8ff6-19af6b801cfd` is
@@ -68,10 +109,11 @@ correctly stopped under the POC consultation rule; the complete relation scan
 and model population remain pending. The verified 2,135-Event selection is
 unchanged. No new source requests ran.
 
-Proposed, not yet approved: preserve one source assertion with both original
+At that historical stop, the unapproved proposal was to preserve one source assertion with both original
 point dates, leave its scalar selected point date empty, and expose the case in
 the temporal report. Do not choose a date, split the source assertion, or apply
-start/end rules to P585 without agreement. Stop receipt:
+start/end rules to P585 without agreement. The approved derived-range rule above
+now supersedes that proposal. Historical stop receipt:
 `GG_Data/pipeline/outputs/poc_10k_event_model_population_stop_20261021/report.json`.
 
 ## Historical Event rule - average test, superseded 21 October 2026

@@ -256,7 +256,7 @@ One event-specific extension per Wikidata event entity. Names, aliases, source r
 |---|---|---|
 | `event_id` | string, PK | Original Wikidata event QID; joins the event-typed Entities row without replacing any other type. No new event IDs. |
 | `kind` | source value, nullable | Retain the supplied Wikidata classification as is. No internal event classification or inferred level. Report a target-format mismatch rather than inventing a conversion. |
-| `start_date`, `end_date`, `point_date` | source temporal values, nullable | Use supplied Wikidata values. No new ranking, date selection or conflict-resolution logic is authorized. Highlight multiple values or incompatible formats before export. |
+| `start_date`, `end_date`, `point_date` | source temporal values, nullable | Preserve supplied Wikidata values. Approved 21 October: when both explicit bounds are absent and multiple P585 dates exist, derive start=min(points), end=max(points), preserving the points and marking derived bounds in temporal_evidence. This covers recorded dates, not continuous activity. No other new date selection is authorized; highlight incompatible values before export. |
 | `temporal_evidence` | JSON | All date claims, precision, calendar, qualifiers, references, selection status and conflicts. Raw claims stay accessible. |
 | `event_map_version` | string, nullable, reserved | No internal event mapping is authorized for the current S2T. Do not create or populate a mapping version. |
 | `importance` | number, nullable | Optional Agent ranking input only when supplied with its basis. |

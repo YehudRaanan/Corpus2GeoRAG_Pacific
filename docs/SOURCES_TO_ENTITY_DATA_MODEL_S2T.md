@@ -62,7 +62,55 @@ No Event model rows or final graph were written. Next: populate the approved
 Event model rows and their Relations. Code/docs receive a local Git checkpoint;
 generated artifacts remain local and ignored by Git.
 
-### Model population preflight stopped - 21 October 2026
+### Derived range from point dates - approved 21 October 2026
+
+When multiple distinct P585 point dates are supplied and explicit P580/P582
+start/end dates are absent, derive start = earliest point date and end = latest
+point date. Keep one source assertion and all original point dates, snaks,
+precision, calendars and source evidence. Mark both bounds as derived from
+P585; the range covers recorded dates and does not assert continuous activity.
+Do not overwrite explicit start/end dates. Do not apply the relation 1900 start
+floor to this point-derived range. Different calendars, unsupported formats or
+other unresolved date conflicts still require consultation. A single point
+date stays a point date. This rule applies to Events and Relations; native
+Event dates remain lossless lists, with derived bounds marked separately.
+
+For Enola Gay -> significant event -> atomic bombings of Hiroshima and
+Nagasaki, the derived range is 6-9 August 1945. This approval resolves the
+point-range issue in the historical preflight stop below. Resume with the
+same snapshot, selected Event IDs and source assertions. No new matching,
+source substitution or Event filter is authorized.
+
+### Model population continuation - cutoff tie requires agreement
+
+`event_model.py` resumed using the approved point-date range. The full source
+scan completed: **6,796 distinct QIDs**, **246,936 native claims** and **18,349
+in-scope assertions**, including all 34 historical relations with original
+pre-1900 dates. The Enola Gay assertion now has the verified derived range
+6-9 August 1945, with both source points preserved. The saved 2,135-Event
+selection and original typed Entities remain unchanged.
+
+The existing native-property rule added P2567 (amended by), P2715 (elected in),
+P3833 (diaspora), and P6477 (does not have characteristic) to this continuation's
+mapping parameters. Their names were retrieved together from the agreed
+BigQuery snapshot and cached. IDs and native direction are retained; no Level 1
+category was assigned. Earlier mapping files were not overwritten.
+
+The run stopped at the non-event top-20 gate after **46.187 seconds**:
+United Nations (Q1065) has 101 incident non-event assertions, with three
+Indonesia (Q252) assertions tied at the cutoff at importance 28. No tie rule
+is approved. Fixed ordering by the existing assertion ID has been proposed,
+but is not implemented. Event links remain exempt from this cap.
+
+No Entity, Event or Relation model output was written. Supporting mapping and
+stop records are in `GG_Data/pipeline/outputs/poc_10k_event_model_point_ranges_20261021/`:
+`report.json`, `stop_verification.json`, and `mapping/`. Focused date, model,
+selection and population tests pass (25 tests); focused Ruff and Black pass.
+The next step requires agreement on the cutoff tie rule, then a fresh run
+that reuses saved source records and property names. Geography, graph export
+and Agent integration remain pending.
+
+### Historical model population preflight stop - resolved 21 October 2026
 
 The approved continuation stopped before any model rows were written. The
 snapshot assertion `Q204424$4c059d94-49a4-80c6-8ff6-19af6b801cfd` is
@@ -74,10 +122,11 @@ correctly stopped under the POC consultation rule; the complete relation scan
 and model population remain pending. The verified 2,135-Event selection is
 unchanged. No new source requests ran.
 
-Proposed, not yet approved: preserve one source assertion with both original
+At that historical stop, the unapproved proposal was to preserve one source assertion with both original
 point dates, leave its scalar selected point date empty, and expose the case in
 the temporal report. Do not choose a date, split the source assertion, or apply
-start/end rules to P585 without agreement. Stop receipt:
+start/end rules to P585 without agreement. The approved derived-range rule above
+now supersedes that proposal. Historical stop receipt:
 `GG_Data/pipeline/outputs/poc_10k_event_model_population_stop_20261021/report.json`.
 
 ## Historical Event rule - average test, superseded 21 October 2026
@@ -1120,7 +1169,7 @@ Use all event types under the root. No additional date, geography or old-referen
 |---|---|
 | `event_id` | Included native Wikidata QID; same key as its Entities row. |
 | `kind` | Native supplied classification values/QIDs with evidence. No internal category/level conversion. Preserve multiple values; report scalar-target incompatibility. |
-| `start_date`, `end_date`, `point_date` | Supplied Wikidata P580, P582, P585 values respectively. Retain all values, precision/calendar and evidence; do not select a preferred date or infer start/end from other properties. |
+| `start_date`, `end_date`, `point_date` | Supplied Wikidata P580, P582, P585 values respectively. Retain all values, precision/calendar and evidence; do not select a preferred date. The approved P585-derived range is the sole fallback when explicit start/end are absent; preserve and mark its derivation. |
 | `temporal_evidence` | Complete relevant claims, rank, qualifiers, references, precision, calendar and conflicts, including missing values. |
 | `event_map_version` | Null/reserved; no internal event mapping catalog is approved. The native hierarchy root/snapshot belongs in supporting lineage. |
 | `importance`, `attributes` | Supplied values with basis only; no invented ranking, role or event level. Missing optional values remain null. |
@@ -1200,7 +1249,7 @@ That continuation stopped on the first new Canada/Q16 page: a 45-second read tim
 - Historical exception first: if the latest supplied P582 end year is before 1900, retain the relation with its supplied start and end dates, precision and calendar. Do not apply a 1900 floor or exclude it on this basis. A missing start remains missing. If multiple dates are supplied, preserve every value; select the earliest original start and latest end under the existing conflict rule. Mark `attributes.time_selection.original_pre_1900_end=true`.
 - Other relations: select the earliest supplied P580 value whose year is at least 1900. If all supplied starts precede 1900, use derived year 1900 with year precision (9), without inventing a month/day. Select the latest supplied P582 end. Missing dates stay missing. The 14 exact assertion exclusions still apply before date selection; no date-only exclusion is authorized.
 - Keep every original value, snak, precision and calendar. Store selection rules, selected precision and the derived flag in `attributes.time_selection`; preserve the same evidence in `input_assertion`. Multiple supplied start/end values remain visible as `MULTIPLE`, even when this approved rule selects a value.
-- Different calendars within a date field, multiple distinct point dates, unsupported date formats, or a remaining start-after-end interval require consultation. No silent repair or point-date selection is approved.
+- Different calendars within a date field, unsupported date formats, a remaining start-after-end interval, or multiple point dates accompanied by explicit bounds require consultation. Multiple P585 dates without explicit bounds use the approved derived minimum/maximum range above; do not select a single point date.
 
 One source assertion produces one base row. Bidirectional graph navigation is supplied by the separate exporter using the [direction lookup](../GG_Data/mapping/RELATION_DIRECTION_LOOKUP_v2.1.1.csv) and `source_edge_id`. A generated reverse view is not a second independent assertion. Two genuinely separate Wikidata statements in opposite directions retain their own identities. No fixed assumption of exactly two assertions per entity pair is valid.
 

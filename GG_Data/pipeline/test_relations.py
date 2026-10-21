@@ -162,3 +162,36 @@ def test_population_preserves_statement_identity_raw_dates_and_single_direction_
     assert len({r["observation_id"] for r in rows}) == 2
     with pytest.raises(SourceException, match="Repeated base assertion"):
         populate([case, case], mapping)
+
+
+def test_multiple_points_derive_bounds_without_changing_native_dates():
+    def snak(value):
+        return {
+            "datavalue": {
+                "value": {"time": value, "precision": 11, "calendarmodel": "gregorian"}
+            }
+        }
+
+    statement = {
+        "qualifiers": {
+            "P585": [snak("+1945-08-09T00:00:00Z"), snak("+1945-08-06T00:00:00Z")]
+        }
+    }
+    original = deepcopy(statement)
+    result = statement_time(statement)
+    assert result["time_from"] == "+1945-08-06T00:00:00Z"
+    assert result["time_to"] == "+1945-08-09T00:00:00Z"
+    assert result["time_point"] == "" and result["time_status"] == "MULTIPLE"
+    assert all(d["derived"] for d in result["time_selection"]["decisions"].values())
+    assert result["time_selection"]["decisions"]["from"]["source_property"] == "P585"
+    assert statement == original
+    statement["qualifiers"]["P580"] = [snak("+1945-08-01T00:00:00Z")]
+    assert statement_time(statement)["time_from"] == "+1945-08-01T00:00:00Z"
+    assert statement_time(statement)["time_to"] == ""
+    del statement["qualifiers"]["P580"]
+    statement["qualifiers"]["P585"][0] = snak("+1867-03-29T00:00:00Z")
+    statement["qualifiers"]["P585"][1] = snak("+1804-08-11T00:00:00Z")
+    assert statement_time(statement)["time_from"] == "+1804-08-11T00:00:00Z"
+    statement["qualifiers"]["P585"][0]["datavalue"]["value"]["calendarmodel"] = "julian"
+    with pytest.raises(SourceException, match="Different calendars"):
+        statement_time(statement)

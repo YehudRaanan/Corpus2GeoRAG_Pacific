@@ -29,7 +29,7 @@ ACCEPTED_ENTITIES_SHA = (
     "a4b967188c7247996309e53dba9851208d8d8e1e69c21d79f7afb1cc35c252e4"
 )
 BASE_MAPPING_SHA = "8ecdc0095d10ec1fc24dfb82510473faef42b896c126b76cb0daeb233b301821"
-TIME_POLICY = "relation-date-selection-v1.1.0"
+TIME_POLICY = "relation-date-selection-v1.2.0"
 NATIVE_RULES = OUT / "ADDITIONAL_NATIVE_RELATION_RULES_2026-10-20.csv"
 PROPERTY_METADATA = (
     ROOT / "poc/relation_alignment/relation_catalog_eda/wikidata_property_metadata.json"
@@ -44,6 +44,54 @@ class SourceException(ValueError):
         super().__init__(f"{reason}: {case.get('source_record_id', '')}")
 
 
+def date_parts(value: str) -> tuple[int, ...]:
+    match = re.fullmatch(r"([+-]\d+)-(\d{2})-(\d{2})T(\d{2}):(\d{2}):(\d{2})Z", value)
+    if not match:
+        raise SourceException("Unsupported native date format", value=value)
+    return tuple(map(int, match.groups()))
+
+
+def point_date_range(snaks: dict) -> dict:
+    """S2T 7/8, 21 October: bound multiple points only without explicit bounds.
+
+    This is a derived coverage range, not evidence of continuous activity.
+    Do not apply the relation start-year floor to original point dates.
+    Original snaks, precision and calendar remain unchanged at the caller.
+    """
+    if snaks.get("P580") or snaks.get("P582"):
+        return {}
+    values = [
+        s["datavalue"]["value"]
+        for s in snaks.get("P585", [])
+        if isinstance(s.get("datavalue", {}).get("value"), dict)
+        and s["datavalue"]["value"].get("time")
+    ]
+    times = {v["time"] for v in values}
+    if len(times) < 2:
+        return {}
+    if len({v.get("calendarmodel") for v in values}) > 1:
+        raise SourceException(
+            "Different calendars require consultation", property="P585"
+        )
+    return {
+        name: dict(
+            value=pick(times, key=date_parts),
+            rule="POINT_DATE_MINIMUM" if name == "from" else "POINT_DATE_MAXIMUM",
+            derived=True,
+            source_property="P585",
+            selected_precision=sorted(
+                {
+                    v["precision"]
+                    for v in values
+                    if v["time"] == pick(times, key=date_parts)
+                    and v.get("precision") is not None
+                }
+            ),
+        )
+        for name, pick in (("from", min), ("to", max))
+    }
+
+
 def statement_time(statement: dict) -> dict:
     """Population S2T 8: approved start/end selection, 20 October 2026.
 
@@ -51,17 +99,10 @@ def statement_time(statement: dict) -> dict:
     End: latest supplied value. Preserve original snaks, precision and calendars.
     User correction: when the latest end precedes 1900, keep the original
     supplied dates without the start floor; never exclude on this date alone.
-    No point-date selection or reversed-interval repair has been approved.
+    Multiple point dates without explicit start/end use the approved derived
+    minimum/maximum coverage range. No reversed-interval repair is approved.
     """
     selected, raw, precisions, decisions = {}, {}, {}, {}
-
-    def date_parts(value: str) -> tuple[int, ...]:
-        match = re.fullmatch(
-            r"([+-]\d+)-(\d{2})-(\d{2})T(\d{2}):(\d{2}):(\d{2})Z", value
-        )
-        if not match:
-            raise SourceException("Unsupported native date format", value=value)
-        return tuple(map(int, match.groups()))
 
     # Inspect the end first so a historical relation keeps its original start.
     for name, prop in (("to", "P582"), ("from", "P580"), ("point", "P585")):
@@ -131,6 +172,10 @@ def statement_time(statement: dict) -> dict:
                     )
                 ),
             )
+    bounds = point_date_range(statement.get("qualifiers", {}))
+    for name, decision in bounds.items():
+        selected[name] = decision["value"]
+        decisions[name] = decision
     start, end, point = (selected[k] for k in ("from", "to", "point"))
     first, last = date_parts(start) if start else None, date_parts(end) if end else None
     status = (
@@ -246,9 +291,9 @@ def scan(
                     raise SourceException(
                         error.case["reason"], **case, temporal_exception=error.case
                     ) from error
-                if (
-                    time["time_status"] == "CONFLICT"
-                    or len(time["raw_time_values"]["point"]) > 1
+                if time["time_status"] == "CONFLICT" or (
+                    len(time["raw_time_values"]["point"]) > 1
+                    and not point_date_range(statement.get("qualifiers", {}))
                 ):
                     raise SourceException(
                         "Temporal values require consultation",
