@@ -6,7 +6,48 @@ Specification date: 19 October 2026. Status: approved source scope and rules doc
 
 The [full pipeline review](DANIEL_TO_GRAPH_PIPELINE_REVIEW.md) collects open decisions, implementation checks, documentation alignment and deferred improvements from Daniel input through final JSON. It does not change these population rules.
 
-## Current test — BigQuery occurrence root, 21 October 2026
+## Approved Event recognition rule — 21 October 2026
+
+The user accepted the tested recognition rule after the 375-record audit:
+"This is good enough for events recognition". Use the complete native P279
+descendant list of **Q1190554 (occurrence)** from the agreed BigQuery snapshot.
+A candidate passes recognition when at least one normal or preferred P31 value
+is in that list. Normal and preferred P279 statements confer membership at
+every hierarchy step; deprecated statements remain evidence only. Reuse the
+locally saved, checksum-verified query results and parameter tables.
+
+This supersedes Q140451665 and the latest-available live-hierarchy requirement
+for this recognition method. It does not introduce another source, root,
+manual exception, local type category, or name-based recognition. For each new
+Daniel data version, bind the parameters to that version's agreed source
+snapshot; the POC timestamp below is evidence for this run, not a fixed future
+pipeline date. Assertion acquisition and matching source rules are unchanged.
+
+**Accepted limit:** a negative means "not recognized by the approved hierarchy",
+not "confirmed not an Event". The 2,680-record test has 1,414 recognition
+positives and 1,266 negatives. The negatives include 891 records with human as
+an active P31 type and the audited 375: 367 with other active P31 types and
+8 with no P31 statements. All 375 candidate records and all 295 direct type
+records were found in the same source (665 distinct QIDs after overlap).
+Missing P31 is not a missing source record. The audit identified Cyclone Kyrill
+(Q939336), typed European windstorm (Q148942), outside the approved descendant
+list. The user accepts this recognition limit; do not add an exception for it.
+The audit does not certify every other negative as a non-Event.
+
+Recognition and inclusion are separate gates. A recognized candidate must still
+have approved direct mapped assertions to/from at least **two distinct matched
+Daniel QIDs** before Event import. This approval does not waive that gate or
+assert complete Event population, and it changes no existing match assignment.
+
+Saved evidence: `../GG_Data/pipeline/outputs/event_hierarchy_bigquery_occurrence_test_20261021/`
+contains `recognition_approval.json`, complete query results and parameter CSVs;
+`audit_375/REPORT.md`, `records_375.csv`, `types_295.csv` and `report.json` contain
+the audit, original type evidence, source/job receipt and checksums. These are
+local, ignored artifacts. **Implementation status:** this S2T records the
+approved rule; the production root constant and parameter-loading integration
+have not yet been changed. No Event rows or final graph were created.
+
+## Verified test — BigQuery occurrence root, 21 October 2026
 
 The user approved a **test** of Q1190554 (occurrence) in the same public
 BigQuery source on 21 October. `sql/event_hierarchy_bigquery_test.sql` uses native
@@ -521,7 +562,14 @@ Current population evidence under `GG_Data/pipeline/outputs/`:
 
 ## 7. Events: discovery, inclusion and fields
 
-**Latest approved source exception, 20 October 2026:** Event classification uses the latest available Wikidata P31/P279 hierarchy, with verified cache reuse first, even if the agreed snapshot contains an older class record. This supersedes snapshot-first priority for classification evidence only. Entities, Event assertion records and Relations retain the agreed snapshot-first source rule and latest-available same-QID fallback when required input is absent. Root Q140451665, non-deprecated classification, all statement ranks in Relations, and the two-distinct-Daniel-QID gate are unchanged. No version-difference report is required.
+**Current recognition rule, 21 October 2026:** use the approved same-snapshot
+BigQuery Q1190554/P279 parameter list and normal/preferred P31 recognition
+specified above. Recognition negatives receive no manual exceptions; they are
+not proof of non-Event status. The two-distinct-Daniel-QID inclusion gate remains
+mandatory. Production integration is pending; this specification does not claim
+it has run.
+
+**Historical source exception, 20 October 2026 (superseded for classification by the 21 October rule above):** Event classification uses the latest available Wikidata P31/P279 hierarchy, with verified cache reuse first, even if the agreed snapshot contains an older class record. This supersedes snapshot-first priority for classification evidence only. Entities, Event assertion records and Relations retain the agreed snapshot-first source rule and latest-available same-QID fallback when required input is absent. Root Q140451665, non-deprecated classification, all statement ranks in Relations, and the two-distinct-Daniel-QID gate are unchanged. No version-difference report is required.
 
 Incoming acquisition may first measure a superset of the existing inclusion gate in BigQuery: retain subjects with two or more distinct Daniel main-item targets, plus subjects with one such target that are also targets of a saved Daniel outgoing assertion. Outgoing-only neighbors remain in the local outgoing inventory. Mapping/exclusion checks and the distinct union of both directions still apply before inclusion. This query is a retrieval optimization, not a new relevance rule, assertion cap or claim of complete Event coverage. `event_snapshot_discovery.py` performs this measurement with the existing pinned CLI/cache/dry-run/billing controls and stops on an unapproved source or data failure.
 
@@ -531,7 +579,7 @@ Incoming acquisition may first measure a superset of the existing inclusion gate
 
 ### Native hierarchy and inclusion
 
-**Source approval, 20 October 2026:** use current Wikidata for Events and their
+**Historical source approval, 20 October 2026 (classification is superseded by the 21 October rule above):** use current Wikidata for Events and their
 direct links to Daniel QIDs, and cache every retrieval. The approved root is
 absent from the pinned public BigQuery copy; current table metadata is unchanged.
 Live native record evidence confirms Q140451665, revision 2557731706, in
@@ -712,7 +760,7 @@ complete coverage across both graphs) were brought back to the user before
 implementation or another source request. Approval is pending; source and
 business rules are unchanged.
 
-The approved root is Wikidata's broad [event, Q140451665](https://www.wikidata.org/wiki/Q140451665), including all classes below it through native [P279 subclass-of](https://www.wikidata.org/wiki/Property:P279) statements. Identify event instances through [P31 instance-of](https://www.wikidata.org/wiki/Property:P31) and those subclass paths. Record root QID, snapshot, native class IDs and path evidence. Do not replace it with the narrower organized-event root, add a local event-type whitelist, or invent war/campaign/battle levels.
+The approved recognition root is **Q1190554 (occurrence)**, including its complete normal/preferred native P279 descendant list from the agreed BigQuery snapshot. Identify candidate instances through normal/preferred P31 values in that list. Record root QID, source snapshot, native class IDs and statement evidence. Reuse the verified local parameter tables. Do not add another root, a local event-type whitelist, manual exceptions, or invented war/campaign/battle levels. A failed recognition test is not proof that an item is not an Event; the accepted coverage limit is documented above.
 
 For each discovered event QID, use its direct mapped Wikidata assertions to/from **D**. Include it only if at least two distinct Daniel QIDs qualify. Repeated mentions, several predicates for one entity, duplicate retrievals and generated reverse views do not increase this count. Classification hierarchy paths identify an event; they do not count as indirect participant paths. Do not count mere shared class ancestry or article co-mentions as an event/entity connection.
 
@@ -897,7 +945,7 @@ The subsequent Daniel/Daniel Relations population passed in `outputs/poc_10k_rel
 - Existing relation producer: `GG_Data/mapping/RELATION_MAPPING_ALL_ITEMS_v1.0.0.ipynb`; its historical output is an input/evidence contract, not proof of current scope, rank handling or v2.1 population completion.
 - [Geometry source and selection policy](GEOCODING_HIGH_LEVEL_PROCESS.md) and [extraction method](../GG_Data/geocoding/GEO_OBJECT_EXTRACTION_METHOD.md).
 
-Latest user decisions govern name priority, Wikidata-only assertions, included event links in Relations, all event types under Q140451665, two-entity event minimum, per-mention synthetic IDs, no new Daniel entities, and Shapely objects with downstream JSON pointers. No physical model tables or new production outputs are created by this specification.
+Latest user decisions govern name priority, Wikidata-only assertions, included event links in Relations, recognition through the approved Q1190554 hierarchy with its accepted limits and no manual exceptions, two-entity event minimum, per-mention synthetic IDs, no new Daniel entities, and Shapely objects with downstream JSON pointers. No physical model tables or new production outputs are created by this specification.
 
 ### Correction: retain historical relations
 
