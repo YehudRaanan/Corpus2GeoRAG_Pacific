@@ -526,8 +526,8 @@ counts once, regardless of mentions, typed rows, predicates or reverse views.
 Do not pool entities' page counts or weight their scores by assertion counts.
 Keep missing scores explicit; if any linked entity is unmeasurable, the complete
 Event statistics remain unknown, with scored/total counts and missing QIDs shown.
-This is a diagnostic comparison only: no choice of mean/minimum/maximum as an
-Event filter is approved, and no Event inclusion or import changes are made.
+The initial run was a diagnostic comparison only; the subsequent maximum-score
+decision is recorded below. No Event import changes were made by that test.
 The existing 5% entity-retrieval rule remains unchanged. The reproducible
 diagnostic is [event_linked_entity_relevance_probe.py](../GG_Data/pipeline/event_linked_entity_relevance_probe.py).
 
@@ -542,10 +542,23 @@ Hungary/Q28 and Netherlands/Q55: minimum **0.0880%**, mean **0.2410%**, maximum
 **0.3939%**. Pacific War/Q184425 has minimum **0.3939%**, mean **0.4317%**,
 maximum **0.4696%**; World War II/Q362 has minimum **0.4696%**, mean **2.5454%**,
 maximum **6.1385%**. Thus the tested cutoff also rejects a central Pacific
-War example. No aggregate filter or new threshold is selected, no recognition
-or matching rule changes, and no Event rows are imported. Full entity counts,
+War example. At the time of the test no aggregate filter or new threshold was
+selected; no recognition or matching rule changed, and no Event rows were
+imported. Full entity counts,
 per-language evidence, all Event statistics, hashes and independent replay
 are in `../GG_Data/pipeline/outputs/event_hierarchy_bigquery_occurrence_test_20261021/linked_entity_relevance_test/`.
+
+**User decision after the test, 21 October 2026:** use **maximum**, not mean
+or minimum, across the distinct linked Daniel entity scores. Each entity score
+continues to use the highest available English/Japanese percentage. With the
+existing 5% cutoff, the saved bounded sample includes only World War II/Q362
+(6.1385%) and excludes 1,413 candidates. Excluded WWII examples include Pacific
+War, Normandy landings, Eastern Front, Eastern European theatre of World War II,
+Battle of Stalingrad and Battle of Debrecen; their actual scores remain in the
+saved diagnostic. This records the selected aggregate, not completion of the
+production filter or Event import. No new threshold, historical exception,
+entity match or recognition rule is introduced. Future cases with unavailable
+scores still require consultation before an exclusion decision.
 
 The existing supporting diagnostic report/CSV supplies these fields; no new
 business table or populated model column is claimed by this specification:
