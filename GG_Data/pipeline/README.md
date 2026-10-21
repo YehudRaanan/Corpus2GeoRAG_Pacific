@@ -86,7 +86,7 @@ Preserve raw evidence for all omitted relations. Do not change source dates.
 Partial dates use possible overlap at supplied precision. Calendar conversion, combined point/interval
 interpretation and equal scores crossing a group cutoff still stop the POC.
 
-Policy: `daniel-mutual-top-20-period-first-v1.1.2`. First continuation:
+Policy: `daniel-mutual-top-20-period-first-v1.1.3`. First continuation:
 `outputs/poc_10k_event_model_period_first_20261021/`. It reuses verified property
 names/mappings from the preceding stop. Require its final report; this rule
 does not itself establish a populated model or final graph.
@@ -115,12 +115,28 @@ completion; all other consultation safeguards remain.
 
 Possible-overlap continuation: **30.569 seconds**, then
 `STOPPED_FOR_CONSULTATION` on Germany (Q183) -> P530 -> Tunisia (Q948), start
-recorded as the 1950s (precision 8). Precision below year still requires
-consultation. Extending selection to native decade/century/millennium ranges
-is pending, not implemented. See `coarse_date_case.json` and
+recorded as the 1950s (precision 8). Precision below year required
+consultation at this stop. See `coarse_date_case.json` and
 `stop_verification.json`: all pinned inputs unchanged, zero model rows and
 zero source requests. Eleven focused relation/model tests, Ruff and Black
 pass; the selected 2,135 Events are unchanged.
+
+The user approved native precision ranges: decades x0-x9, historical centuries
+x01-x00 and millennia x001-x000. Apply possible overlap using these ranges
+only for comparison; retain all source timestamps/precision. The 1950s start
+is outside scope. Julian ranges overlapping 1941-1945 still stop for calendar
+interpretation, as do unsupported precisions and non-positive coarse years.
+Fresh continuation: `outputs/poc_10k_event_model_precision_ranges_20261021/`.
+Require its report before claiming population completion.
+
+Precision-range continuation: **21.486 seconds**, then
+`STOPPED_FOR_CONSULTATION` at Madagascar (Q1019). All date checks passed.
+Seventeen undated assertions tie at importance 1 across the 20-relation cutoff
+(34 eligible assertions total). Stable assertion-ID ordering is proposed,
+not implemented. `report.json` lists the ties and `stop_verification.json`
+verifies unchanged pinned inputs, zero model rows and zero source requests.
+Twelve focused relation/model tests, Ruff and Black pass. The selected 2,135
+Events and all raw source evidence remain unchanged.
 
 ### Historical model population continuation - cutoff before period filtering
 

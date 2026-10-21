@@ -242,3 +242,53 @@ def test_period_boundaries_points_open_intervals_and_partial_overlap():
     )
     with pytest.raises(SourceException, match="Calendar requires"):
         temporal_group(julian)
+
+
+def test_wikidata_precision_ranges_preserve_raw_dates_and_calendar_guard():
+    for year, precision, expected in (
+        (1950, 8, "OUTSIDE_PERIOD"),
+        (1949, 8, "IN_PERIOD"),
+        (1939, 8, "OUTSIDE_PERIOD"),
+        (1900, 7, "OUTSIDE_PERIOD"),
+        (1901, 7, "IN_PERIOD"),
+        (2000, 7, "IN_PERIOD"),
+        (2001, 7, "OUTSIDE_PERIOD"),
+        (1000, 6, "OUTSIDE_PERIOD"),
+        (1001, 6, "IN_PERIOD"),
+        (2000, 6, "IN_PERIOD"),
+        (2001, 6, "OUTSIDE_PERIOD"),
+    ):
+        row = dict(
+            edge(1, "Q1", "Q2"),
+            time_point=f"+{year:04d}-00-00T00:00:00Z",
+            time_precision={"point": [precision]},
+        )
+        original = copy.deepcopy(row)
+        assert temporal_group(row) == expected
+        assert row == original
+    row = dict(
+        edge(2, "Q183", "Q948"),
+        time_from="+1950-00-00T00:00:00Z",
+        time_precision={"from": [8]},
+    )
+    assert temporal_group(row) == "OUTSIDE_PERIOD"
+    row["time_from"] = "+1940-00-00T00:00:00Z"
+    assert temporal_group(row) == "IN_PERIOD"
+    row["attributes"] = {
+        "qualifiers": {
+            "P580": [
+                {
+                    "datavalue": {
+                        "value": {
+                            "time": row["time_from"],
+                            "precision": 8,
+                            "calendarmodel": "http://www.wikidata.org/entity/Q1985786",
+                        }
+                    }
+                }
+            ]
+        }
+    }
+    # A Julian decade spanning the boundary years still needs interpretation.
+    with pytest.raises(SourceException, match="Calendar requires"):
+        temporal_group(row)

@@ -19,7 +19,7 @@ from GG_Data.pipeline.poc import ROOT, digest, read_json
 from GG_Data.pipeline.relations import SourceException, date_parts
 
 LOG = logging.getLogger(__name__)
-POLICY = "daniel-mutual-top-20-period-first-v1.1.2"
+POLICY = "daniel-mutual-top-20-period-first-v1.1.3"
 LIMIT = 20
 PERIOD_START = (1941, 12, 7)
 PERIOD_END = (1945, 9, 2)
@@ -41,6 +41,25 @@ def temporal_group(row: dict) -> str:
             "Point and interval require period interpretation",
             observation_id=row["observation_id"],
         )
+
+    def year_span(year: int, precision: int) -> tuple[int, int]:
+        # S2T 8 / Wikidata Help:Dates#Precision: decades start at x0;
+        # historical centuries/millennia start at x01 and end at x00.
+        # These bounds are comparison-only; never write them over source dates.
+        if precision >= 9:
+            return year, year
+        if precision not in (6, 7, 8) or year <= 0:
+            raise SourceException(
+                "Coarse date requires period interpretation",
+                observation_id=row["observation_id"],
+                year=year,
+                precision=precision,
+            )
+        width = 10 ** (9 - precision)
+        offset = 0 if precision == 8 else 1
+        start = ((year - offset) // width) * width + offset
+        return start, start + width - 1
+
     qualifiers = row.get("attributes", {}).get("qualifiers", {})
     for prop in ("P580", "P582", "P585"):
         for snak in qualifiers.get(prop, []):
@@ -52,8 +71,10 @@ def temporal_group(row: dict) -> str:
                 if calendar == "http://www.wikidata.org/entity/Q1985786" and value.get(
                     "time"
                 ):
-                    year = date_parts(value["time"])[0]
-                    if year < PERIOD_START[0] or year > PERIOD_END[0]:
+                    lower, upper = year_span(
+                        date_parts(value["time"])[0], value.get("precision", 9)
+                    )
+                    if upper < PERIOD_START[0] or lower > PERIOD_END[0]:
                         continue
                 raise SourceException(
                     "Calendar requires period interpretation",
@@ -82,11 +103,8 @@ def temporal_group(row: dict) -> str:
             else next((i for i, part in enumerate(parts) if i and part == 0), 3)
         )
         if count < 1:
-            raise SourceException(
-                "Coarse date requires period interpretation",
-                observation_id=row["observation_id"],
-                field=name,
-            )
+            lower, upper = year_span(parts[0], supplied[0])
+            return (lower > boundary[0]) - (upper < boundary[0])
         left, right = parts[:count], boundary[:count]
         # Equal supplied prefixes mean possible overlap, not an exact date.
         # Returning zero admits boundary years/months without changing evidence.

@@ -101,7 +101,7 @@ conversion or combined point/interval interpretation still stop for consultation
 Do not invent exact days.
 
 Implementation: `relation_selection.py`, policy
-`daniel-mutual-top-20-period-first-v1.1.2`. The first continuation used
+`daniel-mutual-top-20-period-first-v1.1.3`. The first continuation used
 `outputs/poc_10k_event_model_period_first_20261021/` and reuses the previous
 verified native mapping extensions. Require its final status before claiming
 model population. This rule supersedes ranking all dates together below.
@@ -140,7 +140,8 @@ source date and precision. Compare year/month/day prefixes only at the supplied
 precision: 1945 or September 1945 can overlap the period; October 1945 cannot.
 The same rule applies to interval bounds. This changes selection eligibility,
 not the source date, and does not assert a specific day or certain overlap.
-Other calendar, coarse-precision and cutoff-tie safeguards remain in force.
+Other calendar and cutoff-tie safeguards remain in force; the later approval
+below extends supported precision to decades, centuries and millennia.
 Fresh continuation: `outputs/poc_10k_event_model_possible_overlap_20261021/`.
 Its final report is required before claiming population completion.
 
@@ -149,13 +150,38 @@ The possible-overlap continuation stopped after **30.569 seconds** on Germany
 `Q183$fc5817e6-485b-8f61-78ea-42000433e85c`. The native start is
 `+1950-00-00T00:00:00Z` with **precision 8 (decade)**, not year precision.
 [Wikidata's date model](https://www.wikidata.org/wiki/Help:Dates#Precision)
-defines this as the 1950s. The selector still stops on precision below year;
-extending the possible-overlap rule to decade/century/millennium ranges is
-pending consultation, not implemented. No model rows were written and no
+defines this as the 1950s. At this stop, precision below year required
+consultation. No model rows were written and no
 source requests ran. All pinned input hashes were verified unchanged;
 `coarse_date_case.json` and `stop_verification.json` preserve the case and
 receipt. Eleven focused relation/model tests, Ruff and Black pass. The selected
 2,135 Events remain unchanged. Population remains incomplete.
+
+The user approved Wikidata precision ranges for selection: decade precision 8
+uses x0-x9 (1950-1959); century precision 7 uses x01-x00 (1901-2000);
+millennium precision 6 uses x001-x000 (1001-2000). Interpret the supplied year
+within its native bucket, including values such as 2000 at century precision.
+Use possible overlap for points and interval bounds, with comparison-only
+range limits; preserve the native timestamp, precision and raw qualifiers.
+The Germany/Tunisia 1950s start is outside the period. For Julian coarse dates,
+the whole precision range must be outside 1941-1945 to bypass conversion;
+otherwise stop. Unhandled precision and non-positive coarse years still stop
+for interpretation. Fresh continuation:
+`outputs/poc_10k_event_model_precision_ranges_20261021/`. Its report determines
+completion. All other matching, Event and relation-cap rules stay unchanged.
+
+The precision-range continuation passed all date checks, then stopped after
+**21.486 seconds** at the still-unapproved cutoff tie. Madagascar (Q1019) has
+34 eligible non-event assertions; 17 undated assertions tie at importance 1
+across the cutoff. Their endpoints include Africa, Russia, Mozambique Channel,
+East Africa, Maevatanana, Antananarivo, Turkey and the Kingdom of Denmark.
+`report.json` preserves every tied observation ID and endpoint.
+`stop_verification.json` confirms all pinned inputs unchanged, zero model rows
+written and zero source requests. The scan preserves 18,349 source assertions
+across 6,796 QIDs and the selected 2,135 Events remain unchanged. Twelve focused
+relation/model tests, Ruff and Black pass. A stable assertion-ID tie-break is
+proposed for consultation only; no tie-break has been implemented and the
+model remains incomplete.
 
 ### Historical model population continuation - cutoff before period filtering
 

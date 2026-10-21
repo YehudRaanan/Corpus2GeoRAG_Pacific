@@ -275,6 +275,8 @@ Keep the mutual-endpoint intersection without refill. Event links bypass the
 date filter and cap. Outside-period assertions remain in source evidence and
 prior uncapped outputs, but not in the newly selected Relations population.
 Partial dates qualify on possible overlap, preserving source precision.
+Supported Wikidata ranges include decades, centuries and millennia; their
+limits are used only for selection comparisons, not replacement source dates.
 Unsupported date interpretation or cutoff ties require consultation; see population
 S2T section 8. Source dates remain unchanged.
 
