@@ -1,7 +1,7 @@
 """10K Event selection, population S2T 6.1/7; no graph or identity changes.
 
-Events require two distinct retained Daniel QIDs and either >=2% maximum known
-linked-entity relevance or at least one explicitly unscored linked entity.
+Events require two distinct retained Daniel QIDs and >=2% arithmetic mean of
+known linked-entity relevance scores. Unscored endpoints do not enter the mean.
 The user approved holding its 619 unknown MISC QIDs aside for this full POC.
 Native recognition and mapped/excluded assertion checks precede selection.
 """
@@ -64,11 +64,12 @@ def select_events(
     retained_qids: set[str],
     scores: dict[str, Fraction | None],
 ) -> list[dict]:
-    """S2T 7: >=2 endpoints, known maximum >=2% OR any unscored endpoint.
+    """S2T 7: >=2 endpoints and mean of known endpoint scores >=2%.
 
     Repeated mentions, predicates and reverse views cannot add endpoints.
-    The user clarified that missing scores exempt only those connected Events,
-    not all Events. Missing score rows are errors; explicit None is unscored.
+    Missing scores are excluded from both sum and divisor, never set to zero
+    or used to bypass relevance. All-unscored Events cannot pass. Missing
+    score rows are errors; explicit None is unscored (21 October approval).
     The separate 5% MISC scope filter precedes this decision.
     """
     rows, seen = [], set()
@@ -89,11 +90,12 @@ def select_events(
         unscored = [q for q in related if scores[q] is None]
         known = [scores[q] for q in related if scores[q] is not None]
         maximum = max(known, default=None)
+        average = sum(known, Fraction(0)) / len(known) if known else None
         meets_relevance = (
-            maximum is not None and 100 * maximum >= EVENT_THRESHOLD_PERCENT
+            average is not None and 100 * average >= EVENT_THRESHOLD_PERCENT
         )
         enough = len(related) >= MINIMUM_DANIEL_QIDS
-        keep = recognized and enough and (meets_relevance or bool(unscored))
+        keep = recognized and enough and meets_relevance
         rows.append(
             dict(
                 qid=qid,
@@ -103,9 +105,11 @@ def select_events(
                 minimum_distinct_daniel_qids=MINIMUM_DANIEL_QIDS,
                 event_threshold_percent=EVENT_THRESHOLD_PERCENT,
                 maximum_known_relevance=float(maximum) if maximum is not None else None,
+                average_known_relevance=float(average) if average is not None else None,
+                scored_entity_count=len(known),
+                relevance_aggregation="arithmetic_mean_known_scores",
                 unscored_entity_qids=unscored,
                 known_relevance_pass=meets_relevance,
-                unscored_exception_used=bool(keep and unscored and not meets_relevance),
                 decision_reason=(
                     "NOT_RECOGNIZED"
                     if not recognized
@@ -113,12 +117,12 @@ def select_events(
                         "FEWER_THAN_TWO_DISTINCT_DANIEL_QIDS"
                         if not enough
                         else (
-                            "KNOWN_MAXIMUM_AT_LEAST_2PCT"
+                            "KNOWN_AVERAGE_AT_LEAST_2PCT"
                             if meets_relevance
                             else (
-                                "UNSCORED_LINKED_ENTITY_EXCEPTION"
-                                if unscored
-                                else "ALL_SCORED_BELOW_2PCT"
+                                "NO_KNOWN_SCORES"
+                                if not known
+                                else "KNOWN_AVERAGE_BELOW_2PCT"
                             )
                         )
                     )
@@ -170,6 +174,8 @@ def prepare(output: Path) -> dict:
         unknown_policy="User-approved hold aside for the full 10K POC; model records preserved",
         entity_threshold_percent=5,
         event_threshold_percent=EVENT_THRESHOLD_PERCENT,
+        event_relevance_aggregation="arithmetic_mean_known_scores",
+        event_missing_score_policy="exclude_from_mean_no_exception",
         minimum_distinct_daniel_qids=MINIMUM_DANIEL_QIDS,
     )
     (output / "retrieval_scope.json").write_text(

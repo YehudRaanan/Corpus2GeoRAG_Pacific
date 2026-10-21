@@ -1,8 +1,10 @@
-> Current Event rule (clarified 21 October 2026): accepted Q1190554 snapshot
-> recognition, at least two distinct retained Daniel QIDs, and maximum known
-> linked-entity relevance >=2% OR at least one explicitly unscored linked entity.
-> Unknown is not zero. The separate 5% MISC filter stays unchanged. This corrects
-> the earlier global three-QID/no-relevance interpretation. See population S2T.
+> Current Event rule (updated 21 October 2026): accepted Q1190554 snapshot
+> recognition, at least two distinct retained Daniel QIDs, and arithmetic mean
+> of known linked-entity relevance >=2%. Each QID uses its highest available
+> EN/JA score. Missing scores enter neither sum nor divisor and provide no
+> exception; all-unscored candidates fail relevance. The separate 5% MISC
+> filter stays unchanged. This supersedes maximum and the missing-score bypass.
+> Code and saved-data verification do not resume cloud retrieval or import.
 
 # Daniel input to final graph JSON review
 

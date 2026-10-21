@@ -1,4 +1,4 @@
-"""Population S2T 7: two distinct QIDs, 2% or explicit unknown score."""
+"""Population S2T 7: two distinct QIDs and known-score mean >=2%."""
 
 from fractions import Fraction
 import pytest
@@ -11,30 +11,37 @@ from GG_Data.pipeline.event_selection import select_events
         (
             ["Q1", "Q2"],
             True,
-            {"Q1": Fraction(1, 50), "Q2": Fraction(0)},
+            {"Q1": Fraction(1, 25), "Q2": Fraction(0)},
             True,
-            "KNOWN_MAXIMUM_AT_LEAST_2PCT",
+            "KNOWN_AVERAGE_AT_LEAST_2PCT",
         ),
         (
             ["Q1", "Q2"],
             True,
-            {"Q1": Fraction(199, 10000), "Q2": Fraction(0)},
+            {"Q1": Fraction(399, 10000), "Q2": Fraction(0)},
             False,
-            "ALL_SCORED_BELOW_2PCT",
+            "KNOWN_AVERAGE_BELOW_2PCT",
+        ),
+        (
+            ["Q1", "Q2"],
+            True,
+            {"Q1": Fraction(1, 50), "Q2": Fraction(0)},
+            False,
+            "KNOWN_AVERAGE_BELOW_2PCT",
         ),
         (
             ["Q1", "Q2"],
             True,
             {"Q1": Fraction(0), "Q2": None},
-            True,
-            "UNSCORED_LINKED_ENTITY_EXCEPTION",
+            False,
+            "KNOWN_AVERAGE_BELOW_2PCT",
         ),
         (
             ["Q1", "Q2"],
             True,
             {"Q1": None, "Q2": None},
-            True,
-            "UNSCORED_LINKED_ENTITY_EXCEPTION",
+            False,
+            "NO_KNOWN_SCORES",
         ),
         (
             ["Q1", "Q1"],
@@ -49,7 +56,14 @@ from GG_Data.pipeline.event_selection import select_events
             True,
             {"Q1": Fraction(1, 50), "Q2": None},
             True,
-            "KNOWN_MAXIMUM_AT_LEAST_2PCT",
+            "KNOWN_AVERAGE_AT_LEAST_2PCT",
+        ),
+        (
+            ["Q1", "Q1", "Q2"],
+            True,
+            {"Q1": Fraction(3, 100), "Q2": Fraction(0)},
+            False,
+            "KNOWN_AVERAGE_BELOW_2PCT",
         ),
     ],
 )
@@ -62,8 +76,12 @@ def test_event_gate(endpoints, recognized, scores, keep, reason):
     assert row["keep_event"] is keep
     assert row["decision_reason"] == reason
     assert row["linked_entity_count"] == len(set(endpoints))
-    assert row["unscored_exception_used"] is (
-        reason == "UNSCORED_LINKED_ENTITY_EXCEPTION"
+    known = [scores[q] for q in set(endpoints) if scores[q] is not None]
+    mean = sum(known, Fraction(0)) / len(known) if known else None
+    assert row["average_known_relevance"] == (float(mean) if mean is not None else None)
+    assert row["scored_entity_count"] == len(known)
+    assert row["unscored_entity_qids"] == sorted(
+        q for q in set(endpoints) if scores[q] is None
     )
 
 

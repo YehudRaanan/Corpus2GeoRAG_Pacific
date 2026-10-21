@@ -1,54 +1,56 @@
 # Daniel pipeline POC
 
-## Current Event rule — clarified 21 October 2026
+## Current Event rule - average approved 21 October 2026
 
-### Corrected-rule continuation: stopped for content consultation, 21 October 2026
+Require accepted native recognition and direct mapped, non-excluded assertions
+connecting an Event to at least **two distinct retained Daniel QIDs**. Include
+it only when the **arithmetic mean of known linked-entity scores is >=2%**,
+including exactly 2%. Each distinct QID supplies one score: its highest
+available English/Japanese scope concentration, using exact page-count ratios.
+Do not pool page counts or weight scores by mentions, predicates or typed rows.
 
-The corrected selector passed 41 focused tests and a BigQuery fixture covering
-two endpoints, both native directions, duplicate counts and the qualifying
-exactly-two partition. Local code/docs checkpoint: `09e2231`; no push.
+**Missing scores enter neither sum nor divisor. They are not zero and no longer
+provide an inclusion exception.** All-unscored Events fail relevance visibly
+(`NO_KNOWN_SCORES`); a missing score record is still an integrity error.
+Explicitly unscored QIDs can satisfy the two-entity count, but not the mean.
+Thus two linked QIDs, one scored 3% and one unscored, pass; 3% and 0% fail.
 
-A saved-only replay of the old 20,024-candidate partition gives **681 known-score
-passes, 31 unscored-exception passes and 19,312 rejects**. The two previously
-reported medical-study examples fail the restored 2% threshold. However, the
-exception also admits Q112813915 (2024 Indonesian People's Representative
-Council election), through unscored Q123712945/Q123713644, and Q113392972
-(The Behavior and Reproduction of Salmonid Fishes in a Small Coastal Stream),
-through unscored Q16938057. These are observed rule consequences, not new
-filters or accepted Pacific Events.
+This approval supersedes maximum aggregation and the missing-score bypass.
+The separate 5% MISC scope filter, 3,466 retained QIDs, matching assignments,
+native hierarchy, assertion mapping/exclusions and all original data stay fixed.
+The saved scores contain 2,446 known and 1,020 explicitly unscored QIDs.
+`event_selection.select_events()` records the average, scored/total counts,
+missing QIDs and an explicit decision reason. Maximum is diagnostic only.
 
-Under the POC stop rule, the local controller (PID 20676) was stopped at
-**15:32:32 Asia/Jerusalem, 21 October 2026**, before model import. The already
-submitted BigQuery job `geoai_044494de23c55237ae5f174ae918ddb3` was last verified
-RUNNING and was not cancelled. Do not submit a duplicate query: check its state
-and recover its destination results after consultation. Current attempt:
-`outputs/poc_10k_events_2pct_unscored_two_entities_20261021/consultation_stop.json`.
-The full corrected eligibility result is **not complete**. No Event rows or
-final graph were written. User decision pending: finish checking the current
-rule, or discuss narrower Event scope. Existing sources and rules are unchanged.
+The retrieval controller still reuses the verified >=3-endpoint partition.
+For exactly-two candidates, one known score >=2% is a necessary source
+prefilter, not the final decision. Any passing average after local exclusions
+must contain at least one such score. Mapping/exclusions precede the local
+mean; filtering by the preliminary average could incorrectly lose Events.
+There is no missing-score bypass in either final selection or the prefilter.
 
-Require native recognition and **at least two distinct retained Daniel QIDs**,
-then **maximum known linked-entity relevance >=2% OR at least one explicitly
-unscored linked entity**. Unknown is not zero. Missing score records stop the
-run. The separate 5% MISC scope filter and all frozen assignments stay unchanged.
+This change does not start a new cloud query, import Event model rows or export
+the graph. The existing stopped attempt remains intact. Its already-submitted
+job `geoai_044494de23c55237ae5f174ae918ddb3` must be checked and recovered before
+any future cloud continuation; its current state is not asserted here. Its
+old-rule query result can only be candidate evidence, never accepted output
+under the new average rule. Do not submit a duplicate of that pending query.
+Earlier maximum/unknown-exception results below are historical, not this rule.
 
-`event_selection.py` reuses the approved 2,446 known/1,020 unscored scores.
-`event_population.py` combines the complete cached >=3-QID partition with a
-BigQuery exactly-two partition requiring a qualifying scored/unscored endpoint.
-Local native mapping, exclusions and exact score decisions recheck every record.
-The SQL fixture checks both directions, unique counts, active recognition,
-relation ranks, and the disjoint exactly-two source filter. No new entities.
+### Verified saved-data replay - 21 October 2026
 
-The earlier three-QID/no-relevance interpretation was incorrect. Its unchanged
-20,024-candidate output in `outputs/poc_10k_events_three_entities_resumed_20261021/`
-is diagnostic evidence only, not an accepted Event population. Its content
-review found medical studies connected through countries; the corrected rule
-restores relevance and applies the exception only where an endpoint is unscored.
-No new content filter is authorized. No Event model rows or graph were written.
+The average selector passed **53 focused tests**, Black and focused Ruff.
+A saved-only replay retained **239 of 20,024** cached candidates; **19,785**
+failed the known-score average threshold. Independent exact-fraction arithmetic
+reproduced every decision. The 15 Pacific battle examples retain **10**, matching
+the earlier diagnostic comparison. No source requests were made.
 
-Run `python -m GG_Data.pipeline.event_population --output <new-absolute-folder>`.
-An eligibility check is separate from model-table population and graph export.
-Saved receipts, native evidence, hashes and earlier attempts remain intact.
+This is **not the full 10K Event result**: the cached partition originally
+required >=3 preliminary endpoints; the exactly-two cloud partition remains
+unchecked here. No Event model rows or final graph were written, and cloud
+retrieval was not restarted. Evidence, input/output hashes and replay code:
+`GG_Data/pipeline/outputs/poc_10k_event_average_2pct_replay_20261021/`.
+Code/docs receive a local Git checkpoint; generated output remains ignored.
 
 ## Historical 2% continuation: measurement complete, consultation resolved
 
@@ -78,7 +80,7 @@ assignments and both thresholds stay unchanged. Ten focused tests passed,
 including redirect chains whose page flags are false. The original stopped
 attempt below remains unchanged; resume into a new output directory.
 
-The approved Event relevance cutoff is **2%**, using the highest score among
+The historical maximum-rule Event relevance cutoff was **2%**, using the highest score among
 distinct qualifying linked Daniel QIDs; each QID uses its highest available
 EN/JA scope concentration. `event_selection.select_events()` uses exact
 fractions, includes exactly 2% and keeps unknown decisions explicit. It

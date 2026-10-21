@@ -132,6 +132,8 @@ def run(output: Path) -> dict:
         full_retained_scope_checked=False,
         minimum_distinct_daniel_qids=MINIMUM_DANIEL_QIDS,
         event_threshold_percent=EVENT_THRESHOLD_PERCENT,
+        event_relevance_aggregation="arithmetic_mean_known_scores",
+        event_missing_score_policy="exclude_from_mean_no_exception",
         scope_counts={
             k: len(v) if isinstance(v, list) else v for k, v in scope.items()
         },
@@ -242,8 +244,9 @@ def run(output: Path) -> dict:
         pairs_table = client.upload_values(pairs, "pair")
         report["parameter_tables"] = dict(types=types_table, outgoing=pairs_table)
         # Corrected S2T 7: the prior >=3 query is a complete cached partition.
-        # Fetch only exactly-two candidates that can pass relevance/unknown;
-        # no qualifying Event is lost by this source-side prefilter. Final
+        # A passing mean requires at least one known score >=2%, including
+        # after exclusions remove endpoints. This is a necessary prefilter,
+        # not the final mean decision. Final
         # exclusions and the same score rule are still replayed locally.
         prior_report = read_json(PRIOR_THREE / "report.json")
         prior_verification = read_json(PRIOR_THREE / "verification.json")
@@ -271,14 +274,14 @@ def run(output: Path) -> dict:
         qualifying = {
             q
             for q, value in scores.items()
-            if value is None or 100 * value >= EVENT_THRESHOLD_PERCENT
+            if value is not None and 100 * value >= EVENT_THRESHOLD_PERCENT
         }
         report.update(
             reused_three_or_more_candidates=len(answer),
             scored_entity_qids=sum(v is not None for v in scores.values()),
             unscored_entity_qids=sum(v is None for v in scores.values()),
             cloud_qualifying_endpoint_qids=len(qualifying),
-            retrieval_partition="cached >=3 plus exactly 2 with known >=2% or unscored",
+            retrieval_partition="cached >=3 plus exactly 2 with at least one known >=2%",
             reused_source_requests=prior_report["source_requests"],
         )
         sql = discovery_query(
@@ -395,8 +398,8 @@ def run(output: Path) -> dict:
             included_by_known_relevance=sum(
                 r["known_relevance_pass"] for r in selected
             ),
-            included_by_unscored_exception=sum(
-                r["unscored_exception_used"] for r in selected
+            included_with_unscored_ignored=sum(
+                bool(r["unscored_entity_qids"]) for r in selected
             ),
             included_with_exactly_two_entities=sum(
                 r["linked_entity_count"] == 2 for r in selected
