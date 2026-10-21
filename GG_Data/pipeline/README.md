@@ -1,5 +1,31 @@
 # Daniel pipeline POC
 
+## Current 10K continuation: 2% Event selection, stopped for consultation
+
+The approved Event relevance cutoff is **2%**, using the highest score among
+distinct qualifying linked Daniel QIDs; each QID uses its highest available
+EN/JA scope concentration. `event_selection.select_events()` uses exact
+fractions, includes exactly 2% and keeps unknown decisions explicit. It
+requires the upstream native recognition and two-distinct-entity gate.
+The separate MISC retrieval cutoff remains **5%**. The user approved holding
+the 619 unknown MISC QIDs aside for this full POC: 3,466 retained, 627 below
+the MISC threshold, 619 held, out of 4,712 original matched QIDs. Model rows,
+synthetic IDs and matching assignments remain unchanged.
+
+Run the measurement stage with `python -m GG_Data.pipeline.event_selection
+--output GG_Data/pipeline/outputs/<new-attempt>`. This is measurement preparation
+and a reusable selector, not a complete Event discovery/import controller.
+It reuses the saved dump and existing count/redirect implementation. It fails
+closed and preserves the stopped attempt; do not rerun before resolving a stop.
+
+Attempt `outputs/poc_10k_event_selection_2pct_20261021/` stopped during English
+alias validation. Page 78426011 (`State_of_the_Turks`) is marked non-redirect in
+the page table, but its redirect row points to `Turkey`, affecting Q43. The
+hashed tables are intact. No retry, skip, source correction or Event query ran.
+Read `report.json`, `enwiki/progress.json` and `redirect_conflict.json`; consult
+the user before changing the handling. Five focused tests and Ruff passed.
+No completed 10K Event result or graph output exists from this attempt.
+
 ## Current test: BigQuery occurrence root
 
 The user approved a **test** of Q1190554 (occurrence) in the same public

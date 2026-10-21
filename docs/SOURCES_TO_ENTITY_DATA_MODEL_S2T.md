@@ -14,6 +14,32 @@ entity score and keep Events with a known score **>=0.02**, including exactly
 Event results below are historical diagnostics, not the current Event cutoff.
 This document update does not implement or run the new cutoff.
 
+**10K continuation approval and stop, 21 October 2026:** the user approved
+holding the **619 unknown MISC QIDs** aside for the full 10K POC, reporting
+them separately without deleting model rows. The frozen 4,712 matched QIDs
+therefore split into **3,466 retained**, **627 below the 5% MISC retrieval
+cutoff**, and **619 held unknown**. This approval covers the retrieval scope;
+it does not treat unknown scores as zero or waive consultation for unknown
+linked-entity Event aggregates.
+
+The reusable `GG_Data/pipeline/event_selection.py` selector implements the
+maximum linked-entity **>=2%** comparison with exact fractions. Five focused
+tests passed, including exactly 2%, below 2%, repeated endpoint deduplication
+and an explicit unknown decision. Full-POC relevance acquisition started, but
+stopped during English reverse-redirect validation before either language's
+new scores or any Event query/import completed. In the saved 20261001 dump,
+page **78426011 / State_of_the_Turks** is marked **not a redirect** in the page
+table, while the redirect table links it to **Turkey**, affecting the alias
+inventory for **Q43**. Both saved table hashes validate. No source priority,
+skip, correction or retry has been applied to this conflict. It requires user
+consultation under the POC stop rule.
+
+Evidence: `../GG_Data/pipeline/outputs/poc_10k_event_selection_2pct_20261021/`
+contains `retrieval_scope.json`, the pinned selection/manifest, the stopped
+`report.json`, `enwiki/progress.json` and `redirect_conflict.json`. Zero Event
+rows, graph outputs or new cloud requests were produced. This is a stopped
+attempt, not a completed 10K Event selection or a replacement for prior tests.
+
 ## Approved Event recognition rule — 21 October 2026
 
 The user accepted the tested recognition rule after the 375-record audit:
