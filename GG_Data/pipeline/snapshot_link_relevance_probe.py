@@ -68,7 +68,8 @@ def measurement_pages(
 ) -> dict[str, dict]:
     """S2T 6.1: count one final page; never change the assigned entity QID.
 
-    Follow the saved resolver's namespace-0 paths, cycle guard and 20-hop
+    S2T 6.1, approved 21 October: a saved redirect row takes precedence over
+    the page table's flag. Keep namespace-0 paths, cycle guard and 20-hop
     limit. A redirect's destination may carry a different QID. That QID is
     measurement metadata only; counts are keyed by the final page ID.
     """
@@ -92,18 +93,22 @@ def measurement_pages(
         result[qid] = {**by_id[identity["pageid"]], "redirect_depth": 0}
     seen = {qid: {row["pageid"]} for qid, row in result.items()}
     for depth in range(21):
-        pending = {qid: r for qid, r in result.items() if r["is_redirect"]}
-        if not pending:
-            break
-        if depth == 20:
-            raise ValueError("Redirect path reaches the saved resolver's depth limit")
         destinations = {
             r["pageid"]: r["title"]
             for r in pq.read_table(
                 redirects,
-                filters=[("pageid", "in", [r["pageid"] for r in pending.values()])],
+                filters=[("pageid", "in", [r["pageid"] for r in result.values()])],
             ).to_pylist()
         }
+        pending = {
+            qid: r
+            for qid, r in result.items()
+            if r["is_redirect"] or r["pageid"] in destinations
+        }
+        if not pending:
+            break
+        if depth == 20:
+            raise ValueError("Redirect path reaches the saved resolver's depth limit")
         by_title = {
             r["title"]: r
             for r in pq.read_table(
@@ -151,8 +156,8 @@ def aliases(
         ).to_pylist()
         # Same namespace-0 source JOIN as resolve_sql(). The redirect table
         # filters target namespace and can also contain non-article sources.
-        if any(not r["is_redirect"] for r in sources):
-            raise ValueError("Redirect source differs from saved page table")
+        # S2T 6.1, approved 21 October: always use the saved redirect row,
+        # including when the source page's is_redirect flag disagrees.
         next_frontier = {}
         for row in sources:
             title, qid = row["title"], target[row["pageid"]]

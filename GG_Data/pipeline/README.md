@@ -1,6 +1,14 @@
 # Daniel pipeline POC
 
-## Current 10K continuation: 2% Event selection, stopped for consultation
+## Current 10K continuation: 2% Event selection, redirect priority approved
+
+On 21 October the user approved **"Use the redirect always"**. Saved redirect
+rows now take precedence over conflicting page-table flags in forward page
+resolution and reverse alias collection. Namespace, missing-destination, cycle
+and depth checks remain. Relevance counts still use one final page; identity
+assignments and both thresholds stay unchanged. Ten focused tests passed,
+including redirect chains whose page flags are false. The original stopped
+attempt below remains unchanged; resume into a new output directory.
 
 The approved Event relevance cutoff is **2%**, using the highest score among
 distinct qualifying linked Daniel QIDs; each QID uses its highest available

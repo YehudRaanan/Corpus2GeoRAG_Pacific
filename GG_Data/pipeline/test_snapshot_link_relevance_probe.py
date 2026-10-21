@@ -52,7 +52,8 @@ def test_explicit_diagnostic_selection_rejects_synthetic_and_duplicate_ids(
         assert not (tmp_path / "output").exists()
 
 
-def test_aliases_use_article_join_and_follow_redirect_chains(tmp_path):
+@pytest.mark.parametrize("redirect_flag", [True, False])
+def test_aliases_use_article_join_and_follow_redirect_chains(tmp_path, redirect_flag):
     tables = {
         "page_props": [
             {"pageid": 1, "qid": "Q1"},
@@ -62,8 +63,8 @@ def test_aliases_use_article_join_and_follow_redirect_chains(tmp_path):
         ],
         "page": [
             {"pageid": 1, "title": "Canonical", "is_redirect": False},
-            {"pageid": 2, "title": "Alias", "is_redirect": True},
-            {"pageid": 4, "title": "Chain", "is_redirect": True},
+            {"pageid": 2, "title": "Alias", "is_redirect": redirect_flag},
+            {"pageid": 4, "title": "Chain", "is_redirect": redirect_flag},
         ],
         "redirect": [
             {"pageid": 2, "title": "Canonical"},

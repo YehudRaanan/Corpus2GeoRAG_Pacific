@@ -30,9 +30,14 @@ stopped during English reverse-redirect validation before either language's
 new scores or any Event query/import completed. In the saved 20261001 dump,
 page **78426011 / State_of_the_Turks** is marked **not a redirect** in the page
 table, while the redirect table links it to **Turkey**, affecting the alias
-inventory for **Q43**. Both saved table hashes validate. No source priority,
-skip, correction or retry has been applied to this conflict. It requires user
-consultation under the POC stop rule.
+inventory for **Q43**. Both saved table hashes validate. The user subsequently
+approved: **"Use the redirect always"**. Saved redirect rows therefore take
+precedence over conflicting page-table redirect flags, both when resolving a
+measurement page and when collecting its reverse aliases. Keep the original
+entity QID, count the final destination page once, and retain the existing
+namespace, missing-destination, cycle and 20-hop checks. This approval changes
+redirect handling only; source dates, matching assignments and thresholds stay
+unchanged. Preserve this stopped attempt and use a new continuation directory.
 
 Evidence: `../GG_Data/pipeline/outputs/poc_10k_event_selection_2pct_20261021/`
 contains `retrieval_scope.json`, the pinned selection/manifest, the stopped
