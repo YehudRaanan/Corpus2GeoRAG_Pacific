@@ -25,6 +25,27 @@ PERIOD_START = (1941, 12, 7)
 PERIOD_END = (1945, 9, 2)
 
 
+def year_span(
+    year: int, precision: int, observation_id: str | None = None
+) -> tuple[int, int]:
+    # S2T 8 / Wikidata Help:Dates#Precision: decades start at x0;
+    # historical centuries/millennia start at x01 and end at x00.
+    # These bounds are comparison-only; never write them over source dates.
+    if precision >= 9:
+        return year, year
+    if precision not in (6, 7, 8) or year <= 0:
+        raise SourceException(
+            "Coarse date requires period interpretation",
+            observation_id=observation_id,
+            year=year,
+            precision=precision,
+        )
+    width = 10 ** (9 - precision)
+    offset = 0 if precision == 8 else 1
+    start = ((year - offset) // width) * width + offset
+    return start, start + width - 1
+
+
 def temporal_group(row: dict) -> str:
     """S2T 8, 21 October: dated overlap first, then completely undated.
 
@@ -42,24 +63,6 @@ def temporal_group(row: dict) -> str:
             observation_id=row["observation_id"],
         )
 
-    def year_span(year: int, precision: int) -> tuple[int, int]:
-        # S2T 8 / Wikidata Help:Dates#Precision: decades start at x0;
-        # historical centuries/millennia start at x01 and end at x00.
-        # These bounds are comparison-only; never write them over source dates.
-        if precision >= 9:
-            return year, year
-        if precision not in (6, 7, 8) or year <= 0:
-            raise SourceException(
-                "Coarse date requires period interpretation",
-                observation_id=row["observation_id"],
-                year=year,
-                precision=precision,
-            )
-        width = 10 ** (9 - precision)
-        offset = 0 if precision == 8 else 1
-        start = ((year - offset) // width) * width + offset
-        return start, start + width - 1
-
     qualifiers = row.get("attributes", {}).get("qualifiers", {})
     for prop in ("P580", "P582", "P585"):
         for snak in qualifiers.get(prop, []):
@@ -72,7 +75,9 @@ def temporal_group(row: dict) -> str:
                     "time"
                 ):
                     lower, upper = year_span(
-                        date_parts(value["time"])[0], value.get("precision", 9)
+                        date_parts(value["time"])[0],
+                        value.get("precision", 9),
+                        row["observation_id"],
                     )
                     if upper < PERIOD_START[0] or lower > PERIOD_END[0]:
                         continue
@@ -103,7 +108,7 @@ def temporal_group(row: dict) -> str:
             else next((i for i, part in enumerate(parts) if i and part == 0), 3)
         )
         if count < 1:
-            lower, upper = year_span(parts[0], supplied[0])
+            lower, upper = year_span(parts[0], supplied[0], row["observation_id"])
             return (lower > boundary[0]) - (upper < boundary[0])
         left, right = parts[:count], boundary[:count]
         # Equal supplied prefixes mean possible overlap, not an exact date.

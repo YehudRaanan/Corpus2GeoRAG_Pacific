@@ -14,20 +14,20 @@ from collections import defaultdict
 from pathlib import Path
 
 from .poc import digest, read_json
-from .relation_selection import PERIOD_START, temporal_group
+from .relation_selection import PERIOD_START, temporal_group, year_span
 from .relations import SourceException, date_parts
 
 LOG = logging.getLogger(__name__)
 
 
-def selection_date(values: list[dict], place_id: str) -> str:
-    """Reuse approved precision comparisons, never turn a partial date into a day.
+def selection_value(values: list[dict], place_id: str) -> dict:
+    """S2T 9.2: retain partial dates; compare at their supplied precision.
 
-    Partial dates later than an already established exact minimum cannot change
-    that minimum. An earlier/overlapping partial date requires user agreement.
-    Missing dates use the existing 7 December 1941 default (S2T 9.2).
+    Approved 21 October after the Transcarpathia stop. Missing dates use the
+    existing 7 December 1941 default. Zero month/day values are not real days;
+    use them only to order the native prefixes, never to construct a date.
     """
-    exact, partial = [], []
+    candidates = []
     for value in values:
         precision = value["precision"]
         probe = {
@@ -39,24 +39,29 @@ def selection_date(values: list[dict], place_id: str) -> str:
         if temporal_group(probe) == "OUTSIDE_PERIOD":
             continue
         parts = date_parts(value["time"])[:3]
-        if precision >= 11:
-            exact.append(parts)
-        else:
-            partial.append(value)
-    earliest = min(exact) if exact else None
-    for value in partial:
-        supplied = max(1, min(3, value["precision"] - 8))
-        prefix = date_parts(value["time"])[:supplied]
-        if earliest is None or (
-            earliest != PERIOD_START and prefix <= earliest[:supplied]
-        ):
-            raise SourceException(
-                "Geography selection date needs partial-date agreement",
-                place_id=place_id,
-                earliest_exact_date=earliest,
-                partial_date=value,
-            )
-    return "%04d-%02d-%02d" % (earliest or PERIOD_START)
+        supplied = max(1, min(3, precision - 8))
+        prefix = parts[:supplied]
+        lower_year, _ = year_span(parts[0], precision)
+        candidates.append(((lower_year, *prefix[1:]), precision, prefix))
+    if not candidates:
+        return dict(
+            selection_date="%04d-%02d-%02d" % PERIOD_START, selection_precision=11
+        )
+    _, precision, earliest = min(candidates)
+    # Native precision accompanies the value: 1940 + precision 8 means the
+    # 1940s, not 1 January 1940. Reuse approved ranges, not invented dates.
+    return dict(
+        selection_date="-".join(
+            f"{part:04d}" if i == 0 else f"{part:02d}"
+            for i, part in enumerate(earliest)
+        ),
+        selection_precision=precision,
+    )
+
+
+def selection_date(values: list[dict], place_id: str) -> str:
+    """Display only; source comparison must also use selection_precision."""
+    return selection_value(values, place_id)["selection_date"]
 
 
 def prepare(model: Path, output: Path) -> dict:
@@ -146,7 +151,7 @@ def prepare(model: Path, output: Path) -> dict:
                 dict(
                     place_id=qid,
                     name=row["name"],
-                    selection_date=selection_date(dates[qid], qid),
+                    **selection_value(dates[qid], qid),
                 )
             )
     except SourceException as error:

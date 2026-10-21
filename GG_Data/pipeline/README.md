@@ -1,5 +1,37 @@
 # Daniel pipeline POC
 
+### Geography native-precision continuation - 21 October 2026
+
+The user approved comparing partial dates with equivalent source date ranges
+at the same supplied precision, without adding a day. This supersedes the
+partial-date consultation below. Reuse the existing decade/century/millennium
+range rules as well; retain native `selection_precision` so a decade year is
+never interpreted as an exact year/day. `relation_selection.year_span` is now
+shared by both callers; its established range calculations are unchanged.
+
+Continuation: `outputs/poc_10k_geography_native_precision_20261021/`.
+Status **GEOGRAPHY_INPUTS_READY**: all **1,646 confirmed LOC QIDs** have a
+precision-preserving selection value. The **122 synthetic LOC rows** remain
+excluded. Output precision counts: 1,591 day, 41 year, eight month, four decade,
+and two century. Day precision includes the existing default when no supplied
+date overlaps the period. Transcarpathia's September 1944 date stays unchanged
+in source evidence, but its earlier supplied year-only 1941 date is the final
+selection. The intermediate coarse-date stop in
+`poc_10k_geography_partial_precision_20261021` is historical; the same approved
+partial-date rule now handles it. Native coarse values use the original year
+plus precision in the selection audit, not fabricated dates.
+
+Evidence: `report.json`, `targets.json`, `verification.json`. All model outputs
+remain hash-identical. There were zero source requests and zero geometry rows
+written. This is input preparation, not completed Geography population. Source
+range checks and geometry selection still have to consume these values at
+their supplied precision. The old file's CRS metadata problem is not bypassed.
+
+Validation: 24 focused geography/pipeline/relation-selection tests passed,
+with Ruff and Black. Inputs cover every confirmed LOC QID exactly once. The
+approved model-level pointer correction remains in effect. Bulk retrieval and
+actual geometry assignment are the next work; final graph export is pending.
+
 ### Geography preflight and model-pointer correction - 21 October 2026
 
 The user corrected pointer ownership: `Geography.geometry_ref` belongs to the

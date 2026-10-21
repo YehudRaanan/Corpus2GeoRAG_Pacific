@@ -55,6 +55,8 @@ For each place:
 2. If no related date exists, use `1941-12-07`.
 3. If several dates exist, use the earliest date inside the period.
 
+**Partial-date approval - 21 October 2026:** retain year/month precision (`YYYY` or `YYYY-MM`) and compare the source date range at that same precision. Do not insert day 01 or invent an exact date. Project-period eligibility uses the existing possible-overlap comparison at the supplied precision. Preserve the original date evidence.
+
 The date helps select a historical source object. It is kept in the audit record and is not an attribute of the final place-to-geometry link.
 
 A dated source geometry is eligible when its source interval contains the selection date. An undated geometry remains eligible when its identity and place meaning are correct.
