@@ -1,6 +1,64 @@
 # Daniel pipeline POC
 
-## Current stop: direct BigQuery root-edge query
+## Current test: BigQuery occurrence root
+
+The user approved a **test** of Q1190554 (occurrence) in the same public
+BigQuery source on 21 October. `sql/event_hierarchy_bigquery_test.sql` uses native
+P279 statements from the agreed source snapshot, builds the complete descendant
+closure in cloud temporary tables, and returns only that closure with original
+statement IDs/ranks. The frontier contains each QID once, so cycles terminate
+without a depth limit. Normal and preferred ranks confer membership at each hop;
+deprecated statements remain evidence only. No production root constant, Entity
+row, Event row or graph export is changed by this test.
+
+A cloud fixture verified cycle termination, coexisting normal/preferred links,
+and exclusion of a deprecated-only branch and its descendants. BigQuery script
+messages and final rows are decoded separately; the saved result is checked
+against both its window count and the actual destination table row count. The
+initial fixture reader error and its original response remain saved. No source
+request was repeated to correct the reader.
+
+Test evidence and measurements:
+`GG_Data/pipeline/outputs/event_hierarchy_bigquery_occurrence_test_20261021/`.
+**Verified result:** the same-source cloud query found **103,893 types** and
+117,093 nondeprecated hierarchy statements after 18 frontier iterations. Another
+110 deprecated statements remain in the raw evidence. War, battle and World War
+II passed the controls; human, country, organization and city classes were not
+in the descendant list. The two test-only parameter tables are saved under
+`parameters/event_types.csv` and `parameters/event_hierarchy_mapping.csv`.
+These are the occurrence hierarchy, not a population of WWII Event records.
+
+The unchanged Daniel-first sample contained **2,680 preliminary candidates**
+from 48 retained Daniel QIDs. A second query joined their native, nondeprecated
+P31 values to the completed hierarchy **inside BigQuery**: **1,414 passed**,
+**1,266 did not pass**, and **zero source records were missing**. The sample's
+relevance threshold and candidate population were unchanged. A positive result
+establishes hierarchy membership only; it does not replace the existing
+minimum-two-distinct-Daniel-entities rule, relation mapping checks, or final
+Event inclusion. This bounded sample is not the complete 10K Event population.
+
+| Measurement | Cloud execution | Client execution, including checks |
+| --- | ---: | ---: |
+| Complete hierarchy | 125.148 seconds | 208.435 seconds |
+| 2,680-candidate classification | 1.727 seconds | 29.014 seconds |
+
+The hierarchy job billed 1,564,857,073,664 bytes under the existing 2 TiB cap.
+Only 221,097 completed result rows (14,961,458 logical bytes), not the full
+Wikidata source records, were returned for the hierarchy. The sample query
+returned only candidate IDs, P31 evidence and classification flags. Both source
+queries used `bigquery-public-data.wikipedia.wikidata` at the agreed snapshot
+`2026-10-18T18:45:19.304197+00:00`.
+
+The sample reader initially expected Boolean objects; the CLI supplied the
+literal strings `"true"` and `"false"`. The reader now accepts only the explicit
+Boolean literals or null, and was checked against the saved P31 evidence. The
+original failed validation report is retained. Neither source query was repeated
+to fix a reader. `verification.json` verifies hashes, complete row counts,
+unique native statement IDs, parameter counts, the 2,680-row partition and the
+unchanged production root. No Event rows or final graph JSON were created.
+The test root and parameter tables have **not** been promoted to production.
+
+## Historical stop: direct BigQuery root-edge query
 
 At the user's request, the native P279 query ran directly in
 `bigquery-public-data.wikipedia.wikidata`, using the agreed source snapshot
