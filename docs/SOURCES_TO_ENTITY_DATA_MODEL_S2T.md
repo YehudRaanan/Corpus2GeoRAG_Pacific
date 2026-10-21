@@ -6,7 +6,35 @@ Specification date: 19 October 2026. Status: approved source scope and rules doc
 
 The [full pipeline review](DANIEL_TO_GRAPH_PIPELINE_REVIEW.md) collects open decisions, implementation checks, documentation alignment and deferred improvements from Daniel input through final JSON. It does not change these population rules.
 
-## Current stop — root-scoped Event hierarchy query, 21 October 2026
+## Current stop — direct BigQuery root-edge query, 21 October 2026
+
+At the user's request, the native P279 query ran directly in
+`bigquery-public-data.wikipedia.wikidata`, using the agreed source snapshot
+`2026-10-18T18:45:19.304197+00:00`. No Wikidata dump or full records were
+downloaded. The query returned only native child/parent QIDs, statement IDs and
+ranks whose parent is the approved Event root Q140451665. It preserved all ranks;
+normal/preferred would be required for classification. This checks incoming root
+references directly; absence of the root item alone was not treated as proof.
+
+**Verified cloud result:** 90,722,347 source records scanned, **zero P279 links**
+to Q140451665 at any rank. BigQuery execution took **11.986 seconds**;
+client execution, including CLI dry-run/result verification, took **37.1015
+seconds**. Bytes processed: 1,561,204,455,825; bytes billed: 1,561,204,883,456,
+within the existing 2 TiB cap. The result table's complete row count was verified.
+Job: `geoai_212ecea6bc0d93fcc59f8c40219a0485` (US).
+
+The cloud query succeeded, but this table cannot supply a nontrivial hierarchy
+below the approved root. No root-only parameter table was published, no candidate
+was rejected, and the 2,680-candidate filter did not start. This result concerns
+this source snapshot, not the existence of Events in Wikidata. Retrieval stopped
+under the POC consultation rule; changing the root or source needs agreement.
+
+Evidence: `GG_Data/pipeline/outputs/event_hierarchy_bigquery_root_edges_20261021/`
+contains the SQL, dry run, table metadata, empty result, source/job statistics,
+measured report and verification. The existing BigQuery query cache also retains
+the SQL and complete result/receipt. Outputs are ignored and local only.
+
+## Historical stop — root-scoped Event hierarchy query, 21 October 2026
 
 The user approved limiting acquisition to Q140451665 and its native subclass
 hierarchy, for reuse with wider Pacific War inputs. The tested
