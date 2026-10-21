@@ -6,6 +6,14 @@ Specification date: 19 October 2026. Status: approved source scope and rules doc
 
 The [full pipeline review](DANIEL_TO_GRAPH_PIPELINE_REVIEW.md) collects open decisions, implementation checks, documentation alignment and deferred improvements from Daniel input through final JSON. It does not change these population rules.
 
+**Current Event relevance threshold, approved 21 October 2026: 2%.** After
+recognition and the two-distinct-Daniel-entity gate, use the maximum linked
+entity score and keep Events with a known score **>=0.02**, including exactly
+2%. The separate **5% MISC entity-retrieval filter remains unchanged**. The
+15-battle test, findings and limits are recorded in section 6.1. Earlier 5%
+Event results below are historical diagnostics, not the current Event cutoff.
+This document update does not implement or run the new cutoff.
+
 ## Approved Event recognition rule — 21 October 2026
 
 The user accepted the tested recognition rule after the 375-record audit:
@@ -548,7 +556,7 @@ imported. Full entity counts,
 per-language evidence, all Event statistics, hashes and independent replay
 are in `../GG_Data/pipeline/outputs/event_hierarchy_bigquery_occurrence_test_20261021/linked_entity_relevance_test/`.
 
-**User decision after the test, 21 October 2026:** use **maximum**, not mean
+**Earlier user decision after the test, 21 October 2026:** use **maximum**, not mean
 or minimum, across the distinct linked Daniel entity scores. Each entity score
 continues to use the highest available English/Japanese percentage. With the
 existing 5% cutoff, the saved bounded sample includes only World War II/Q362
@@ -559,6 +567,73 @@ saved diagnostic. This records the selected aggregate, not completion of the
 production filter or Event import. No new threshold, historical exception,
 entity match or recognition rule is introduced. Future cases with unavailable
 scores still require consultation before an exclusion decision.
+
+**Pacific battle test and updated threshold, approved 21 October 2026:**
+the user approved lowering the **Event relevance cutoff from 5% to 2%** after
+reviewing 15 specific Pacific WWII battles against the existing 10K POC data.
+The aggregate remains the maximum of distinct qualifying linked Daniel QID
+scores; each QID score remains its highest available English/Japanese scope
+concentration. A known maximum **>=0.02** passes, including exactly 2%; a known
+maximum **<0.02** fails Event relevance. Missing scores remain explicit and
+require consultation under the existing rule. Recognition, direct-link mapping,
+the two-distinct-entity gate, identity assignments and the **5% MISC retrieval
+filter** are unchanged. This is not a lower entity-name matching threshold.
+
+All 15 targets occur in the earlier wider candidate pool, but none occur in
+the latest bounded 2,680-candidate test drawn from 48 retained Daniel QIDs.
+Their absence from that small test therefore did not establish rejection.
+All 15 pass the approved native Event recognition rule and have at least two
+directly linked QIDs in the original 4,712-QID Daniel population. After the
+existing MISC retrieval filter, 14 retain at least two qualifying QIDs. All
+target aggregates are measurable; there are no unknown Event scores.
+
+Replaying the saved scores at 2% gives **13 passes, one relevance failure and
+one two-entity-gate failure**, compared with **nine passes, five relevance
+failures and one two-entity-gate failure at 5%**. Percentages below are rounded
+for display; comparisons use the unrounded saved fractions.
+
+| Battle Event | Wikidata ID | Qualifying linked Daniel QIDs after MISC filter | Maximum linked-entity score | At 5% | At approved 2% |
+|---|---|---:|---:|---|---|
+| Pearl Harbor | Q52418 | 5 | 9.230769% | Pass | Pass |
+| Wake Island | Q1141380 | 4 | 6.441224% | Pass | Pass |
+| Coral Sea | Q207165 | 4 | 2.702703% | Relevance failure | Pass |
+| Midway | Q173034 | 4 | 6.601467% | Pass | Pass |
+| Naval Battle of Guadalcanal | Q696438 | 4 | 3.369390% | Relevance failure | Pass |
+| Attu | Q700572 | 3 | 3.369390% | Relevance failure | Pass |
+| Tarawa | Q250309 | 2 | 14.285714% | Pass | Pass |
+| Bismarck Sea | Q1753578 | 1 | 3.369390% | Two-entity failure | Two-entity failure |
+| Philippine Sea | Q504347 | 5 | 28.571429% | Pass | Pass |
+| Leyte Gulf | Q308999 | 4 | 3.369390% | Relevance failure | Pass |
+| Saipan | Q700705 | 4 | 11.764706% | Pass | Pass |
+| Guam | Q696900 | 4 | 6.250000% | Pass | Pass |
+| Manila | Q696931 | 3 | 0.683631% | Relevance failure | Relevance failure |
+| Iwo Jima | Q180182 | 4 | 6.250000% | Pass | Pass |
+| Okinawa | Q192660 | 7 | 17.777778% | Pass | Pass |
+
+**Finding:** the 2% cutoff recovers Coral Sea, Naval Guadalcanal, Attu and
+Leyte Gulf. Manila remains below the Event cutoff. These relevance failures
+apply to the battle Events, not deletion of their linked entity rows.
+Bismarck Sea is a separate retrieval issue: its two original linked QIDs are
+World War II/Q362 and Pacific War/Q184425. Q362's entity score is 0.464266%,
+so the unchanged 5% MISC filter removes it from retrieval, leaving only
+Q184425. Lowering Event relevance alone does not restore the second endpoint;
+both original entity records remain in the model. No exception is approved.
+
+**Limits and implementation status:** this is a targeted battle diagnostic,
+not a representative estimate of unrelated Events admitted at 2%, complete
+10K Event coverage, or a completed production rerun. No Event rows or final
+graph were written. The original saved 5% diagnostic artifacts remain unchanged;
+the 2% comparison above is a replay of their recorded scores and gates.
+
+Evidence: [15-battle decisions CSV](../GG_Data/pipeline/outputs/event_pacific_targets_trace_20261021/decisions.csv),
+[final report](../GG_Data/pipeline/outputs/event_pacific_targets_trace_20261021/final_report.json),
+and [verification](../GG_Data/pipeline/outputs/event_pacific_targets_trace_20261021/verification.json).
+The same directory contains the native assertion trace, source receipts and
+per-language scores. The verified report SHA-256 is
+`01c8232ac645cd7e47fe9db49bd5df65cfcf0732c3442ca9359f89d82aba23f9`;
+the decisions CSV SHA-256 is
+`4dce5e5339970918e9055303fbf09d44cbaa0c34bb61fe45d3c45fcb6f12eea6`.
+These evidence files are local ignored outputs, not an off-device backup.
 
 The existing supporting diagnostic report/CSV supplies these fields; no new
 business table or populated model column is claimed by this specification:
@@ -952,7 +1027,7 @@ Before an implementation can claim completion:
 | Input and decision accounting | Exactly 309,864 Mentions for the pinned input, unchanged original fields/order/IDs, complete stage/reason accounting and separate NER/matching scores. |
 | Identity and page keys | Unique `(entity_id, type)` pairs and valid composite mention FKs; QID-level references exist without multiplying assertions; page-key pairs complete; no talk IDs, Index-as-page-ID, cache-only entity expansion or extra Daniel mentions. |
 | Scope-concentration measure, when supplied | Matched QIDs only; exclude synthetic IDs. Both page counts use the same snapshot/language/link rules, with source-page deduplication and full Daniel page scope. Report missing coverage and unknown denominators. Apply the provisional 5% rule to measured MISC QIDs: exclude <0.05 from Event retrieval, keep >=0.05; retain model records. Keep this measure separate from `Entities.importance`. |
-| Events | Native root/snapshot/path evidence; original QIDs; all approved event types; at least two distinct direct Daniel QIDs; incoming/outgoing acquisition coverage reported. |
+| Events | Native root/snapshot/path evidence; original QIDs; all approved event types; at least two distinct direct Daniel QIDs after the existing retrieval filter; maximum linked-entity relevance >=0.02 (2%), with unknown scores explicit and subject to consultation; incoming/outgoing acquisition coverage reported. The separate MISC retrieval cutoff remains 5%. |
 | Assertions | Reconcile retrieved eligible statements = retained mapped base rows + exact exclusions + explicitly reported unmapped/ambiguous/blocked cases, deduplicated by source statement. Report all categories and ranks. No silent loss through join/mapping/rank filters. |
 | Geometry | At most one accepted object per place; failed attempts retained; source and CRS known; valid nonempty Shapely/WKB round trip before delivery. |
 | Contract coverage | All ERD fields, nine Daniel fields, 16 matching CSV fields, 26 legacy assertion fields, full nested reference/attempt payloads, geometry compatibility fields and versioned catalog columns retained or explicitly unavailable. |
