@@ -19,7 +19,7 @@ from GG_Data.pipeline.poc import ROOT, digest, read_json
 from GG_Data.pipeline.relations import SourceException, date_parts
 
 LOG = logging.getLogger(__name__)
-POLICY = "daniel-mutual-top-20-period-first-v1.1.1"
+POLICY = "daniel-mutual-top-20-period-first-v1.1.2"
 LIMIT = 20
 PERIOD_START = (1941, 12, 7)
 PERIOD_END = (1945, 9, 2)
@@ -29,8 +29,8 @@ def temporal_group(row: dict) -> str:
     """S2T 8, 21 October: dated overlap first, then completely undated.
 
     Missing interval bounds are open; a point is not an open-ended interval.
-    Compare only supplied precision. Never invent a day for a partial date;
-    stop if its precision cannot establish the period-overlap decision.
+    Compare only supplied precision: include a partial date if its possible
+    dates overlap the period (approved S2T rule). Never invent an exact day.
     Event links bypass this non-event selection helper entirely.
     """
     values = {k: row.get(f"time_{k}") for k in ("from", "to", "point")}
@@ -88,14 +88,8 @@ def temporal_group(row: dict) -> str:
                 field=name,
             )
         left, right = parts[:count], boundary[:count]
-        if left == right and count < 3:
-            raise SourceException(
-                "Partial date crosses period boundary",
-                observation_id=row["observation_id"],
-                field=name,
-                value=values[name],
-                boundary=boundary,
-            )
+        # Equal supplied prefixes mean possible overlap, not an exact date.
+        # Returning zero admits boundary years/months without changing evidence.
         return (left > right) - (left < right)
 
     if values["point"]:

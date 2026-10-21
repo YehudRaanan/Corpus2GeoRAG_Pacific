@@ -170,7 +170,7 @@ def test_period_first_undated_fill_and_outside_evidence_preserved():
     assert kept == dated
 
 
-def test_period_boundaries_points_open_intervals_and_partial_date_guard():
+def test_period_boundaries_points_open_intervals_and_partial_overlap():
     assert temporal_group(edge(1, "Q1", "Q2")) == "UNDATED"
     for day in ("1941-12-07", "1945-09-02"):
         assert (
@@ -190,8 +190,25 @@ def test_period_boundaries_points_open_intervals_and_partial_date_guard():
         temporal_group(dict(edge(1, "Q1", "Q2"), time_from="+1940-00-00T00:00:00Z"))
         == "IN_PERIOD"
     )
-    with pytest.raises(SourceException, match="Partial date crosses"):
-        temporal_group(dict(edge(1, "Q1", "Q2"), time_point="+1945-00-00T00:00:00Z"))
+    for value, expected in (
+        ("1945-00-00", "IN_PERIOD"),
+        ("1941-00-00", "IN_PERIOD"),
+        ("1945-09-00", "IN_PERIOD"),
+        ("1941-12-00", "IN_PERIOD"),
+        ("1940-00-00", "OUTSIDE_PERIOD"),
+        ("1946-00-00", "OUTSIDE_PERIOD"),
+        ("1945-10-00", "OUTSIDE_PERIOD"),
+        ("1941-11-00", "OUTSIDE_PERIOD"),
+    ):
+        row = dict(edge(1, "Q1", "Q2"), time_point=f"+{value}T00:00:00Z")
+        original = copy.deepcopy(row)
+        assert temporal_group(row) == expected
+        assert row == original
+    for field, value in (("from", "1945"), ("to", "1941")):
+        row = dict(
+            edge(1, "Q1", "Q2"), **{f"time_{field}": f"+{value}-00-00T00:00:00Z"}
+        )
+        assert temporal_group(row) == "IN_PERIOD"
     # Approved year-only check; no Julian day conversion is added.
     julian = dict(
         edge(2, "Q1", "Q2"),

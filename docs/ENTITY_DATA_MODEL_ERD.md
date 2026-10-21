@@ -274,7 +274,8 @@ up to 20 total per endpoint. Importance ranks within each temporal group.
 Keep the mutual-endpoint intersection without refill. Event links bypass the
 date filter and cap. Outside-period assertions remain in source evidence and
 prior uncapped outputs, but not in the newly selected Relations population.
-Unresolved partial dates or cutoff ties require consultation; see population
+Partial dates qualify on possible overlap, preserving source precision.
+Unsupported date interpretation or cutoff ties require consultation; see population
 S2T section 8. Source dates remain unchanged.
 
 Approved on 20 October 2026: non-event QIDs have at most 20 incident base relations to other non-events. Rank by the other QID's distinct Daniel source pages multiplied by original mention count; retain an assertion only if selected in both endpoint top-20 sets. Reverse views do not spend another slot. Event/Event and Event/other links are exempt. Persist the score in Entities.importance and its factors/lineage in attributes.importance_basis; selection decisions and full source-page lists remain supporting evidence. No seventh business table or inferred Event importance value is added. The selector is implemented and tested; actual application awaits complete Event membership. See population S2T section 8 for the full rule, score-population evidence and stop conditions.

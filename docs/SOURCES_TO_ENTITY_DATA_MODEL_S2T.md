@@ -96,11 +96,12 @@ Keep the existing mutual-endpoint intersection, with no refill afterwards.
 Event/Event and Event/other links bypass the date filter and cap. Count base
 assertions, not reverse views. Equal scores crossing the cutoff within one
 temporal group still require consultation. Compare partial dates only at their
-supplied precision; ambiguous boundary cases, calendar conversion or combined
-point/interval interpretation stop for consultation. Do not invent exact days.
+supplied precision and include possible overlap for partial dates. Calendar
+conversion or combined point/interval interpretation still stop for consultation.
+Do not invent exact days.
 
 Implementation: `relation_selection.py`, policy
-`daniel-mutual-top-20-period-first-v1.1.1`. The first continuation used
+`daniel-mutual-top-20-period-first-v1.1.2`. The first continuation used
 `outputs/poc_10k_event_model_period_first_20261021/` and reuses the previous
 verified native mapping extensions. Require its final status before claiming
 model population. This rule supersedes ranking all dates together below.
@@ -131,9 +132,30 @@ to 2 September cannot be established. No month/day was invented. No model rows
 were written, no source requests ran, and all pinned inputs were verified
 unchanged. Evidence: `partial_date_case.json`, `report.json`,
 `stop_verification.json` in the year-check continuation directory. Eleven
-focused relation/model tests pass; Ruff and Black pass. Population is paused
-for the partial-date overlap decision; including possible overlap is proposed,
-not yet approved. The selected 2,135 Events are unchanged.
+focused relation/model tests passed; Ruff and Black passed. The selected
+2,135 Events were unchanged.
+
+The user then approved **possible overlap for partial dates**, preserving the
+source date and precision. Compare year/month/day prefixes only at the supplied
+precision: 1945 or September 1945 can overlap the period; October 1945 cannot.
+The same rule applies to interval bounds. This changes selection eligibility,
+not the source date, and does not assert a specific day or certain overlap.
+Other calendar, coarse-precision and cutoff-tie safeguards remain in force.
+Fresh continuation: `outputs/poc_10k_event_model_possible_overlap_20261021/`.
+Its final report is required before claiming population completion.
+
+The possible-overlap continuation stopped after **30.569 seconds** on Germany
+(Q183) -> P530 diplomatic relations -> Tunisia (Q948), statement
+`Q183$fc5817e6-485b-8f61-78ea-42000433e85c`. The native start is
+`+1950-00-00T00:00:00Z` with **precision 8 (decade)**, not year precision.
+[Wikidata's date model](https://www.wikidata.org/wiki/Help:Dates#Precision)
+defines this as the 1950s. The selector still stops on precision below year;
+extending the possible-overlap rule to decade/century/millennium ranges is
+pending consultation, not implemented. No model rows were written and no
+source requests ran. All pinned input hashes were verified unchanged;
+`coarse_date_case.json` and `stop_verification.json` preserve the case and
+receipt. Eleven focused relation/model tests, Ruff and Black pass. The selected
+2,135 Events remain unchanged. Population remains incomplete.
 
 ### Historical model population continuation - cutoff before period filtering
 

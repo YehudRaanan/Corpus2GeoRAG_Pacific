@@ -83,10 +83,10 @@ undated relations, up to 20 total. Use the existing other-entity importance
 within each group. Keep only the intersection of endpoint selections; no
 refill after intersection. Event links bypass both date filtering and the cap.
 Preserve raw evidence for all omitted relations. Do not change source dates.
-Partial-date ambiguity, calendar conversion, combined point/interval
+Partial dates use possible overlap at supplied precision. Calendar conversion, combined point/interval
 interpretation and equal scores crossing a group cutoff still stop the POC.
 
-Policy: `daniel-mutual-top-20-period-first-v1.1.1`. First continuation:
+Policy: `daniel-mutual-top-20-period-first-v1.1.2`. First continuation:
 `outputs/poc_10k_event_model_period_first_20261021/`. It reuses verified property
 names/mappings from the preceding stop. Require its final report; this rule
 does not itself establish a populated model or final graph.
@@ -106,8 +106,21 @@ on Republic of China (Q13426199) -> P1365 -> Manchukuo (Q30623), dated only
 1945. The year spans the 2 September boundary; no exact day is supplied.
 `partial_date_case.json` records the native statement; `stop_verification.json`
 confirms unchanged pinned inputs, zero model rows and zero source requests.
-Eleven focused relation/model tests, Ruff and Black pass. The possible-overlap
-rule is pending consultation; no resumed run or completed model is claimed.
+Eleven focused relation/model tests, Ruff and Black passed. The user then
+approved possible overlap for partial dates, without changing source dates or
+precision. A boundary year/month can qualify; an entirely outside year/month
+cannot. Fresh continuation:
+`outputs/poc_10k_event_model_possible_overlap_20261021/`. Its report determines
+completion; all other consultation safeguards remain.
+
+Possible-overlap continuation: **30.569 seconds**, then
+`STOPPED_FOR_CONSULTATION` on Germany (Q183) -> P530 -> Tunisia (Q948), start
+recorded as the 1950s (precision 8). Precision below year still requires
+consultation. Extending selection to native decade/century/millennium ranges
+is pending, not implemented. See `coarse_date_case.json` and
+`stop_verification.json`: all pinned inputs unchanged, zero model rows and
+zero source requests. Eleven focused relation/model tests, Ruff and Black
+pass; the selected 2,135 Events are unchanged.
 
 ### Historical model population continuation - cutoff before period filtering
 

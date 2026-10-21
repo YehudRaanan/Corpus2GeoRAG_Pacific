@@ -80,6 +80,8 @@ each group, and mutual-endpoint intersection still applies without refill.
 Event links bypass both period filtering and the cap. The exporter consumes
 this selected population; it must not rerank relations or cap reverse views.
 Outside-period evidence remains in supporting source records and prior outputs.
+Partial dates qualify on possible overlap; their original precision remains
+unchanged. Selection does not establish an exact day or certain overlap.
 
 ## 3. Top-level target fields
 
