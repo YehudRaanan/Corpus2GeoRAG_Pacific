@@ -6,7 +6,34 @@ Specification date: 19 October 2026. Status: approved source scope and rules doc
 
 The [full pipeline review](DANIEL_TO_GRAPH_PIPELINE_REVIEW.md) collects open decisions, implementation checks, documentation alignment and deferred improvements from Daniel input through final JSON. It does not change these population rules.
 
-## Current continuation — Event hierarchy parameter tables and timed filter
+## Current stop — root-scoped Event hierarchy query, 21 October 2026
+
+The user approved limiting acquisition to Q140451665 and its native subclass
+hierarchy, for reuse with wider Pacific War inputs. The tested
+`event_hierarchy_parameters.event_scope_query()` uses native
+`(^ps:P279/^p:P279)*` traversal from that root and returns only child/parent
+QIDs, the P279 property, statement IDs and ranks. It has no global sort, COUNT,
+LIMIT, labels or Event-instance population. All returned ranks would remain
+evidence; only the existing local normal/preferred closure could accept types.
+The traversal's unfiltered paths are a retrieval superset, not permission to
+accept deprecated ancestry. A result from one service alone would not prove
+cross-service completeness.
+
+**Verified result:** the first main-service request reached its 45-second read
+timeout. Total wall time was **50.4147 seconds**, including the approved
+five-second request pause. There was one attempt; read timeouts are not covered
+by the existing retry allowance. No hierarchy rows were accepted, the scholarly
+service was not queried, no usable parameter tables were produced and the Event
+filter did not start. The probe ended with exit code 1. No acquisition workaround
+was started after this stop; the user's POC consultation rule applies.
+
+Query, code/commit hashes, source request receipt and measured result:
+`GG_Data/pipeline/outputs/event_hierarchy_scope_probe_20261021/`.
+The source receipt is retained in the existing bulk cache. Twelve focused tests,
+Black and focused Ruff passed before the probe. The previous ordered-export
+failure below remains historical evidence, not a running worker.
+
+## Historical stop — Event hierarchy parameter tables and timed filter
 
 The user approved a P279-only bulk export, followed by another run of the Event
 filter with measured runtime. `event_hierarchy_parameters.py` exports native

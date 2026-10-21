@@ -1,6 +1,25 @@
 # Daniel pipeline POC
 
-## Current Event hierarchy parameters and timed sample filter
+## Current stop: root-scoped Event hierarchy query
+
+The approved narrower query is
+`event_hierarchy_parameters.event_scope_query()`: native P279 subclass
+links below Q140451665, with statement IDs/ranks, no global sort, COUNT, LIMIT,
+labels or Event-instance scan. Raw ranks remain evidence; only normal/preferred
+links can confer Event membership through the local closure. A single query
+service cannot establish cross-service hierarchy completeness.
+
+The 21 October probe stopped on its first main-service request: **45-second
+read timeout, 50.4147 seconds total** including the five-second request pause.
+No rows were accepted. No scholarly request, parameter publication or Event
+filter followed. Read timeouts are outside the approved automatic retry policy;
+the user's POC stop/consult rule applies. No alternative retrieval was launched.
+Twelve focused tests, Black and focused Ruff passed before launch.
+
+Evidence: `outputs/event_hierarchy_scope_probe_20261021/` contains the exact
+query, source receipt reference, code/commit hashes and measured report.
+
+## Historical ordered hierarchy export and timed sample filter
 
 Run `python -m GG_Data.pipeline.event_hierarchy_parameters` with
 `--store GG_Data/pipeline/outputs/wikidata_event_hierarchy_bulk_cache`,
