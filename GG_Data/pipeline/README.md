@@ -1,5 +1,41 @@
 # Daniel pipeline POC
 
+### Geography preflight and model-pointer correction - 21 October 2026
+
+The user corrected pointer ownership: `Geography.geometry_ref` belongs to the
+model, not final graph JSON. The approved `{file,place_id,sha256}` format and
+Shapely loader remain applicable. The ERD, both S2Ts, geocoding policy and
+pipeline review now record this correction. The referenced geometry artifact
+retains its 13-column compatibility view; its checksum is kept in the separate
+model reference, avoiding a self-referential file checksum.
+
+`geography.py` starts from the verified populated frozen 10K model, not the
+older draft graph or its first-50 geometry file. It verifies the previous
+model output hashes and finds **1,646 confirmed LOC QIDs** and **122 synthetic
+LOC rows**. Synthetic identities are not geocoding targets. The date preflight
+reuses approved precision comparisons without inventing exact days, querying
+sources, changing matching, or writing accepted Geography rows.
+
+Run: `outputs/poc_10k_geography_preflight_20261021/report.json`.
+Status: **STOPPED_FOR_CONSULTATION**, after 169 places passed their date check.
+Transcarpathia (`Q1148511`) links to Event `Q12084222`, whose end is only
+September 1944 (`+1944-09-00T00:00:00Z`, precision 10). No exact supported
+selection date was found for that place. The old first-50 script inserts day
+01, but population S2T 9.2 explicitly forbids inventing a day without agreement.
+The user was asked how partial dates should drive geometry selection. No
+choice has been applied. The preflight guard has a focused runnable test.
+There were **zero new source requests and zero geometry rows written**.
+
+Resume requires the user's date-selection decision. Bulk retrieval and actual
+Geography population have not started. Existing model outputs and the old
+geometry file remain unchanged. Generated reports remain local and Git-ignored.
+
+Reproduce (use a fresh output directory; existing outputs are never overwritten):
+
+```powershell
+python -m GG_Data.pipeline.geography --model GG_Data/pipeline/outputs/poc_10k_event_model_stable_ties_20261021 --output GG_Data/pipeline/outputs/poc_10k_geography_preflight_20261021
+```
+
 ## Current Event rule - maximum restored 21 October 2026
 
 After native recognition and approved assertion mapping/exclusions, include an

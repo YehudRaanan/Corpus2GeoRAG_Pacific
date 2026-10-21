@@ -1,5 +1,7 @@
 # Geocoding High-Level Process
 
+**Geometry pointer correction - 21 October 2026:** `Geography.geometry_ref` belongs to the data model, not final graph JSON. It retains the approved `{file, place_id, sha256}` format and identifies the saved Shapely/WKB object. The existing loader can read this model reference; Agent access to the model still requires integration verification. Earlier graph-node pointer instructions are superseded. No pointer or inline GeoJSON is exported in graph JSON.
+
 ## Purpose
 
 This process assigns one geographic object to each confirmed place entity in the WWII graph. The result is designed for graph construction and Agent testing.
@@ -14,7 +16,7 @@ the place-selection rules remain unchanged.
 - The Wikidata QID is the canonical place identifier.
 - Each place entity has one selected geographic object.
 - The geographic object is stored as a Shapely geometry.
-- Geocoding returns a validated Shapely object, not GeoJSON. GeoParquet persists it as WKB and restores it as Shapely when loaded. Final graph JSON contains a pointer to the stored object. The Agent uses a function to load and use the Shapely geometry, as defined in the [S2T](ENTITY_MODEL_TO_AGENT_GRAPH_S2T.md#geometry-object-reference-and-loading). No inline GeoJSON export is required. The pointer format and function interface still need agreement.
+- Geocoding returns a validated Shapely object, not GeoJSON. GeoParquet persists it as WKB and restores it as Shapely when loaded. The Geography data model contains `geometry_ref={file,place_id,sha256}` pointing to the saved object. The loader restores Shapely from this model reference. Final graph JSON omits the pointer and inline geometry. Agent access to the model must be verified, as defined in the [S2T](ENTITY_MODEL_TO_AGENT_GRAPH_S2T.md#geometry-object-reference-and-loading).
 - The geometry can represent a point, line, polygon, or multipolygon. Its type comes from the Shapely object, so a separate geometry-type field is not required.
 - The place-to-geometry connection has no `valid_from` or `valid_to` fields.
 - Wikidata coordinates and shapes are not used as geometry sources.
@@ -196,6 +198,6 @@ The four GeoNames results are points. They are usable starting geometries and ca
 
 ## Production limits
 
-- The Agent integration still needs an agreed JSON pointer schema, geometry loading function, storage/version binding, required coordinate reference system and missing-object behavior. The graph pointer-to-Shapely interface supersedes the earlier inline-GeoJSON plan; it has not been implemented or verified by this document.
+- The model pointer schema and geometry loading helper exist. Agent access to Geography, storage/version binding and spatial CRS compatibility remain integration checks. Graph JSON does not carry a geometry pointer or inline GeoJSON.
 - Bulk exports and saved snapshots are the planned main retrieval route. Public query services used for gaps can time out or limit requests; use controlled retries, persistent caches, and resumable checkpoints.
 - Source coverage does not prove geographic truth. Candidate evidence and provenance must remain available for quality review.

@@ -1,5 +1,7 @@
 # Source-to-target: approved sources to the six-table data model
 
+**Geometry pointer correction - 21 October 2026:** `Geography.geometry_ref` belongs to the data model, not final graph JSON. It retains the approved `{file, place_id, sha256}` format and identifies the saved Shapely/WKB object. The existing loader can read this model reference; Agent access to the model still requires integration verification. Earlier graph-node pointer instructions are superseded. No pointer or inline GeoJSON is exported in graph JSON.
+
 Specification date: 19 October 2026. Status: approved source scope and rules documented; required implementation exceptions remain explicit. This document does not execute acquisition, matching, table population, geocoding, or graph export.
 
 **Target:** [Entities, Mentions, Wiki Pages, Geography, Events, Relations](ENTITY_DATA_MODEL_ERD.md). This is the population S2T. The separate [model-to-Agent graph JSON S2T](ENTITY_MODEL_TO_AGENT_GRAPH_S2T.md) starts after these tables. The ERD dictionaries and exact contract inventories form part of this specification; every input field and nested evidence payload must remain recoverable.
@@ -1411,7 +1413,7 @@ Reuse approved saved snapshots/bulk retrieval first. The approved plan allows OH
 | `geometry` | Validated Shapely object, persisted as WKB; load as Shapely. No inline GeoJSON export. |
 | `audit` | Full original input, candidates, dates, source attempts, WHG evidence, validation and decisions, including `selection_date`. Retain the complete audit or immutable reference. |
 
-`UNRESOLVED` and `REJECTED_NOT_PLACE` remain audit results without selected Geography rows. Preserve the ERD's exact 13-column geometry compatibility view; `selection_date` projects from audit, not link validity. Geometry type comes from the object. Graph JSON's object pointer and Agent loading function are downstream interfaces, still requiring their exact contract before integration.
+`UNRESOLVED` and `REJECTED_NOT_PLACE` remain audit results without selected Geography rows. Preserve the ERD's exact 13-column geometry compatibility view; `selection_date` projects from audit, not link validity. Geometry type comes from the object. Store `geometry_ref={file,place_id,sha256}` in Geography model records separately from the referenced geometry artifact; the compatibility view stays at 13 columns. Do not export this pointer in graph JSON. The loader helper exists; Agent access to Geography remains an integration check.
 
 ## 10. Evidence, required checks and explicit exceptions
 
@@ -1434,7 +1436,7 @@ Different resolved types for one QID are not an unresolved conflict: keep distin
 
 The following cases must be brought back with exact IDs, values and counts before adding logic: differing Daniel fallback names when both Wikidata labels are missing; unlabeled events without Daniel names; ambiguous/conflicting mappings or unsupported non-native predicate semantics; incompatible multivalued event dates/classifications; source-page input/lookup conflicts; partial-date interpretation required for geometry selection; or a concrete specialist geometry source. Preserve raw evidence while the required decision is pending, and report the affected population explicitly.
 
-Downstream interfaces approved on 19 October 2026: separate graph entities use `QID::type` with original `wikidata_id`; relations keep QID endpoints, resolved to the separate typed entities without copying assertions. `geometry_ref` is null or `{file,place_id,sha256}` identifying GeoParquet/file/place/checksum; the loader returns Shapely and errors on broken references. Agent integration, spatial CRS compatibility and reverse-view evidence checks remain implementation work. These interfaces do not change source population or matching. Final graph sources remain omitted; provenance stays in this model and supporting artifacts.
+Downstream interfaces approved on 19 October 2026: separate graph entities use `QID::type` with original `wikidata_id`; relations keep QID endpoints, resolved to the separate typed entities without copying assertions. `Geography.geometry_ref` is null or `{file,place_id,sha256}` identifying GeoParquet/file/place/checksum; it is not exported in graph JSON; the loader returns Shapely and errors on broken references. Agent integration, spatial CRS compatibility and reverse-view evidence checks remain implementation work. These interfaces do not change source population or matching. Final graph sources remain omitted; provenance stays in this model and supporting artifacts.
 
 ### First implementation checkpoint
 
@@ -1480,7 +1482,7 @@ The subsequent Daniel/Daniel Relations population passed in `outputs/poc_10k_rel
 - Existing relation producer: `GG_Data/mapping/RELATION_MAPPING_ALL_ITEMS_v1.0.0.ipynb`; its historical output is an input/evidence contract, not proof of current scope, rank handling or v2.1 population completion.
 - [Geometry source and selection policy](GEOCODING_HIGH_LEVEL_PROCESS.md) and [extraction method](../GG_Data/geocoding/GEO_OBJECT_EXTRACTION_METHOD.md).
 
-Latest user decisions govern name priority, Wikidata-only assertions, included event links in Relations, recognition through the approved Q1190554 hierarchy with its accepted limits and no manual exceptions, two-distinct-retained-Daniel-QID event minimum with maximum linked-entity score >=2%, missing contributes zero with missing evidence preserved, no missing-score bypass, per-mention synthetic IDs, no new Daniel entities, and Shapely objects with downstream JSON pointers. No physical model tables or new production outputs are created by this specification.
+Latest user decisions govern name priority, Wikidata-only assertions, included event links in Relations, recognition through the approved Q1190554 hierarchy with its accepted limits and no manual exceptions, two-distinct-retained-Daniel-QID event minimum with maximum linked-entity score >=2%, missing contributes zero with missing evidence preserved, no missing-score bypass, per-mention synthetic IDs, no new Daniel entities, and Shapely objects with Geography model pointers, omitted from graph JSON. No physical model tables or new production outputs are created by this specification.
 
 ### Correction: retain historical relations
 

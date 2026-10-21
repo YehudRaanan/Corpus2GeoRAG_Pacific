@@ -56,8 +56,9 @@ def endpoint_index(nodes: list[dict], edges: list[dict]) -> dict[str, tuple[str,
 
 
 def load_geometry(pointer: dict | None, artifact_root: Path) -> BaseGeometry | None:
-    """Load the approved GeoParquet/file/place/checksum pointer as Shapely.
+    """Load Geography's model-level file/place/checksum pointer as Shapely.
 
+    User correction, 21 October: this reference is not a graph JSON field.
     No accepted object -> null. A broken pointer is an error, never a fallback
     geometry. Preserve stored CRS; this loader does not transform coordinates.
     The Agent must check that CRS against its spatial-function requirements.

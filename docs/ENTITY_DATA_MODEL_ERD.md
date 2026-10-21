@@ -1,5 +1,7 @@
 # Entity data model and ERD
 
+**Geometry pointer correction - 21 October 2026:** `Geography.geometry_ref` belongs to the data model, not final graph JSON. It retains the approved `{file, place_id, sha256}` format and identifies the saved Shapely/WKB object. The existing loader can read this model reference; Agent access to the model still requires integration verification. Earlier graph-node pointer instructions are superseded. No pointer or inline GeoJSON is exported in graph JSON.
+
 Implementation status, 21 October 2026: maximum linked-entity relevance >=2%, with missing scores contributing zero, supersedes the verified 775-Event average test. This inclusive assumption can admit unrelated items and may need improvement; no extra filter is approved. The maximum-rule replay selected 2,135 of 21,797 candidates; all decisions were independently verified. The stable-tie continuation populated 8,212 typed Entity rows (6,077 original rows unchanged), 2,135 Events and 11,409 base Relations in 122.285 seconds. Independent ranking, cap, Event-exemption and checksum checks passed; no new source request ran. Geography, graph export and Agent integration remain pending. Evidence and acquisition details are in the [population S2T](SOURCES_TO_ENTITY_DATA_MODEL_S2T.md).
 
 Status: agreed six-table design with explicit implementation exceptions, 19 October 2026. This document does not change matching assignments, build tables, or rebuild the graph.
@@ -93,6 +95,7 @@ erDiagram
         string review_status
         string decision_reason
         binary geometry "WKB to Shapely"
+        json geometry_ref "model pointer; not graph JSON"
         json audit
     }
     EVENTS {
@@ -239,14 +242,15 @@ At most one selected geometry per confirmed place entity. It is optional until s
 | `source_dataset`, `source_object_id`, `source_url` | string | Selected OHM/OSM or approved fallback object. |
 | `match_method`, `selection_policy_version` | string | Identity/selection method and policy, currently geo-object-selection-v0.5.0. |
 | `retrieved_at`, `review_status`, `decision_reason` | datetime / string / string | Retrieval and acceptance evidence. Geometry rows require accepted status. |
-| `geometry` | Shapely object; WKB binary in GeoParquet, required | Selected Shapely object, persisted as WKB in GeoParquet. Approved graph `geometry_ref={file,place_id,sha256}` identifies the artifact and place; the loader restores Shapely. No accepted object -> null pointer; broken reference -> explicit error. No inline GeoJSON. Geometry type comes from the object. |
+| `geometry` | Shapely object; WKB binary in GeoParquet, required | Selected Shapely object, persisted as WKB in GeoParquet. Model `geometry_ref={file,place_id,sha256}` identifies the artifact and place; the loader restores Shapely. No accepted object -> null pointer; broken reference -> explicit error. No inline GeoJSON. Geometry type comes from the object. |
+| `geometry_ref` | JSON object, required for an accepted Geography row | Model-level `{file,place_id,sha256}` pointer to the separate geometry artifact. Keep the artifact checksum outside the artifact it identifies; the legacy 13-column geometry view stays unchanged. Not exported in graph JSON. |
 | `audit` | JSON or immutable artifact reference | Complete candidate/rejection/validation evidence and selection date, as described below. |
 
 Existing Parquet columns are preserved in a compatibility export: `place_id`, `name`, `place_type`, `selection_date`, `source_dataset`, `source_object_id`, `source_url`, `match_method`, `selection_policy_version`, `retrieved_at`, `review_status`, `decision_reason`, `geometry`. `selection_date` comes from `audit.selection_date`, not a validity interval on the entity-geometry link.
 
 Audit retention includes the entire `{policy_version, generated_at, input, summary, results}` document, with each result's `input_rank`, `qid`, `name`, `description`, `p31`, `place_type`, `related_dates`, `selection_date`, `exact_qid_count`, `source_attempts`, `whg`, selected candidates, validation and decisions. Keep nested source object dates/tags and WHG evidence without truncation. Unaccepted results remain in this audit artifact even though Geography has no selected row for them.
 
-CRS is table metadata. Graph export supplies the approved file/place/checksum pointer, not transformed coordinates. `GG_Data/pipeline/graph_contract.py` implements `load_geometry(pointer, artifact_root)`; Agent integration and spatial CRS compatibility remain pending. No `valid_from`, `valid_to`, or redundant `geometry_type` column is added. Wikidata coordinates/shapes remain identity context, not selected geometry. Older OSM snapshot age is accepted; retain the snapshot and historical suitability evidence. No new non-place geometry policy is authorized.
+CRS is table metadata. Geography holds the approved file/place/checksum pointer. Graph export omits it and does not transform coordinates. `GG_Data/pipeline/graph_contract.py` implements `load_geometry(pointer, artifact_root)`; Agent integration and spatial CRS compatibility remain pending. No `valid_from`, `valid_to`, or redundant `geometry_type` column is added. Wikidata coordinates/shapes remain identity context, not selected geometry. Older OSM snapshot age is accepted; retain the snapshot and historical suitability evidence. No new non-place geometry policy is authorized.
 
 ## 5. Events
 
@@ -343,7 +347,7 @@ Before any later implementation/release:
 3. Reproduce matching JSON/CSV fields and all 26 input assertion fields without loss; retain full nested evidence and immutable manifests.
 4. Check dates remain precision-aware and synthetic/date IDs cannot enter the event QID population. Distinguish resolution decision from review/accuracy.
 5. Resolve mapping by exact version/source key; validate inverse views against the lookup and count evidence by the base assertion ID.
-6. Preserve geometry provenance and all unsuccessful attempts. Validate geometry/CRS and the graph pointer-to-Shapely loading interface before Agent integration acceptance. Do not export inline GeoJSON.
+6. Preserve geometry provenance and all unsuccessful attempts. Validate geometry/CRS and the model pointer-to-Shapely loading interface before Agent integration acceptance. Do not export inline GeoJSON.
 
 The contract inventory below records actual file headers. It is a coverage check for this design, not an implementation test of the future tables.
 
