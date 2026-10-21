@@ -1,6 +1,62 @@
 # Daniel pipeline POC
 
-## Current Event rule - average approved 21 October 2026
+## Current Event rule - maximum restored 21 October 2026
+
+After native recognition and approved assertion mapping/exclusions, include an
+Event when it connects directly to at least **two distinct retained Daniel QIDs**
+and the **maximum linked-entity relevance is >=2%**, including exactly 2%.
+This uses maximum rather than average or minimum across all qualifying linked
+entities; it does not restrict an Event to three entities. Each entity still
+uses its highest available EN/JA scope-concentration score.
+
+**Missing relevance contributes 0 to this selection.** Preserve its original
+missing status and evidence in supporting records; a missing score record is
+still an integrity error. All-missing endpoints give an Event score of 0 and
+fail. Missing scores do not grant an inclusion exception. The known-score mean
+may remain as a diagnostic only. Keep the separate 5% MISC filter, retained
+population, source snapshot, hierarchy, assignments and assertion rules fixed.
+
+**Inclusive/wide assumption, subject to improvement:** one highly relevant
+linked entity can admit a weakly related Event. The accepted broad hierarchy
+and unrestricted mapped predicates can also admit items that are not historical
+events. Review of the average-selected output found scientific articles,
+Netflix, black hair, modern military exercises and other unrelated items.
+Maximum does not solve those problems and can admit more of them. This rule
+favours coverage; it does not establish semantic relevance or battle completeness.
+Any narrower hierarchy, predicate/date constraint or other improvement requires
+separate agreement. No such extra filter is introduced here.
+
+The maximum rule supersedes the average rule and historical missing-score
+bypass. The earlier 775-Event average result below is preserved as test evidence,
+not the current selection. The new saved-data continuation is
+`GG_Data/pipeline/outputs/poc_10k_events_maximum_missing_zero_20261021/`.
+No Event model import or final graph export is part of this rule change.
+
+### Verified maximum-rule continuation - 21 October 2026
+
+The retained 10K scope completed in **94.986 seconds**, reusing saved source
+records and completed cloud-query results. **2,135 of 21,797 candidates pass**;
+**19,662 fail** the maximum threshold. This retains all 775 average-selected
+Events and adds 1,360. Of the selected Events, **1,454 have exactly two distinct
+retained linked QIDs** and 681 have three or more. Their supporting links contain
+**7,286 unique native assertions**. No new source query was needed.
+
+Independent exact-fraction replay reproduced all decisions, endpoint counts,
+assertion identities and input/output checksums. The connected selection/query
+checks passed **19 tests**, Black, focused Ruff and `git diff --check`.
+The 15 saved Pacific battle checks retain **13**: Manila remains below 2%, and
+Bismarck Sea still has only one retained qualifying linked entity. This is a
+15-case coverage check, not proof that all Pacific battles were acquired.
+The deliberately broad assumption and unwanted examples above remain relevant.
+
+Current evidence: `GG_Data/pipeline/outputs/poc_10k_events_maximum_missing_zero_20261021/`:
+`report.json`, `decisions.json`, `selected_links.json`, source/mapping records,
+`verification.json`, `independent_verification.json`, and `pacific_battles.json`.
+No Event model rows or final graph were written. Next: populate the approved
+Event model rows and their Relations. Code/docs receive a local Git checkpoint;
+generated artifacts remain local and ignored by Git.
+
+## Historical Event rule - average test, superseded 21 October 2026
 
 Require accepted native recognition and direct mapped, non-excluded assertions
 connecting an Event to at least **two distinct retained Daniel QIDs**. Include

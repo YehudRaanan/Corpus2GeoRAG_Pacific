@@ -1,4 +1,4 @@
-"""Population S2T 7: two distinct QIDs and known-score mean >=2%."""
+"""Population S2T 7: two distinct QIDs and maximum >=2%, missing zero."""
 
 from fractions import Fraction
 import pytest
@@ -13,35 +13,35 @@ from GG_Data.pipeline.event_selection import select_events
             True,
             {"Q1": Fraction(1, 25), "Q2": Fraction(0)},
             True,
-            "KNOWN_AVERAGE_AT_LEAST_2PCT",
+            "MAXIMUM_AT_LEAST_2PCT",
         ),
         (
             ["Q1", "Q2"],
             True,
-            {"Q1": Fraction(399, 10000), "Q2": Fraction(0)},
+            {"Q1": Fraction(199, 10000), "Q2": Fraction(0)},
             False,
-            "KNOWN_AVERAGE_BELOW_2PCT",
+            "MAXIMUM_BELOW_2PCT",
         ),
         (
             ["Q1", "Q2"],
             True,
             {"Q1": Fraction(1, 50), "Q2": Fraction(0)},
-            False,
-            "KNOWN_AVERAGE_BELOW_2PCT",
+            True,
+            "MAXIMUM_AT_LEAST_2PCT",
         ),
         (
             ["Q1", "Q2"],
             True,
             {"Q1": Fraction(0), "Q2": None},
             False,
-            "KNOWN_AVERAGE_BELOW_2PCT",
+            "MAXIMUM_BELOW_2PCT",
         ),
         (
             ["Q1", "Q2"],
             True,
             {"Q1": None, "Q2": None},
             False,
-            "NO_KNOWN_SCORES",
+            "MAXIMUM_BELOW_2PCT",
         ),
         (
             ["Q1", "Q1"],
@@ -56,14 +56,14 @@ from GG_Data.pipeline.event_selection import select_events
             True,
             {"Q1": Fraction(1, 50), "Q2": None},
             True,
-            "KNOWN_AVERAGE_AT_LEAST_2PCT",
+            "MAXIMUM_AT_LEAST_2PCT",
         ),
         (
             ["Q1", "Q1", "Q2"],
             True,
             {"Q1": Fraction(3, 100), "Q2": Fraction(0)},
-            False,
-            "KNOWN_AVERAGE_BELOW_2PCT",
+            True,
+            "MAXIMUM_AT_LEAST_2PCT",
         ),
     ],
 )
@@ -76,6 +76,12 @@ def test_event_gate(endpoints, recognized, scores, keep, reason):
     assert row["keep_event"] is keep
     assert row["decision_reason"] == reason
     assert row["linked_entity_count"] == len(set(endpoints))
+    effective = max(
+        (scores[q] or Fraction(0) for q in set(endpoints)), default=Fraction(0)
+    )
+    assert row["effective_event_relevance"] == float(effective)
+    assert row["relevance_aggregation"] == "maximum_missing_zero"
+    assert row["missing_score_policy"] == "zero_for_selection_preserve_missing_metadata"
     known = [scores[q] for q in set(endpoints) if scores[q] is not None]
     mean = sum(known, Fraction(0)) / len(known) if known else None
     assert row["average_known_relevance"] == (float(mean) if mean is not None else None)

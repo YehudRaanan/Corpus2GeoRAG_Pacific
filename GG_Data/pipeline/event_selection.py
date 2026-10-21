@@ -1,7 +1,7 @@
 """10K Event selection, population S2T 6.1/7; no graph or identity changes.
 
-Events require two distinct retained Daniel QIDs and >=2% arithmetic mean of
-known linked-entity relevance scores. Unscored endpoints do not enter the mean.
+Events require two distinct retained Daniel QIDs and >=2% maximum linked-entity
+relevance. Missing scores contribute zero to selection, with evidence preserved.
 The user approved holding its 619 unknown MISC QIDs aside for this full POC.
 Native recognition and mapped/excluded assertion checks precede selection.
 """
@@ -22,6 +22,8 @@ from GG_Data.pipeline.snapshot_link_relevance_probe import run as measure
 
 MINIMUM_DANIEL_QIDS = 2
 EVENT_THRESHOLD_PERCENT = 2
+EVENT_AGGREGATION = "maximum_missing_zero"
+EVENT_MISSING_POLICY = "zero_for_selection_preserve_missing_metadata"
 BASE = ROOT / "GG_Data/pipeline/outputs"
 SCORES = BASE / "poc_10k_event_selection_2pct_redirect_priority_20261021"
 SCORES_SHA = "3e46b4da5b18621aa4513a788adb75e4bc6b9c0c581c7591b0d9c3fd09f96212"
@@ -64,12 +66,14 @@ def select_events(
     retained_qids: set[str],
     scores: dict[str, Fraction | None],
 ) -> list[dict]:
-    """S2T 7: >=2 endpoints and mean of known endpoint scores >=2%.
+    """S2T 7: >=2 endpoints and maximum endpoint score >=2%; missing is zero.
 
     Repeated mentions, predicates and reverse views cannot add endpoints.
-    Missing scores are excluded from both sum and divisor, never set to zero
-    or used to bypass relevance. All-unscored Events cannot pass. Missing
-    score rows are errors; explicit None is unscored (21 October approval).
+    This is the deliberately inclusive 21 October rule; related entities can
+    give an unrelated item a high score. See the S2T limitation before tuning.
+    Explicit None contributes zero but remains visible in missing metadata.
+    Missing score rows are integrity errors. The known-score mean is retained
+    only as a diagnostic; it does not control inclusion.
     The separate 5% MISC scope filter precedes this decision.
     """
     rows, seen = [], set()
@@ -90,10 +94,11 @@ def select_events(
         unscored = [q for q in related if scores[q] is None]
         known = [scores[q] for q in related if scores[q] is not None]
         maximum = max(known, default=None)
-        average = sum(known, Fraction(0)) / len(known) if known else None
-        meets_relevance = (
-            average is not None and 100 * average >= EVENT_THRESHOLD_PERCENT
+        effective = max(
+            (scores[q] or Fraction(0) for q in related), default=Fraction(0)
         )
+        average = sum(known, Fraction(0)) / len(known) if known else None
+        meets_relevance = 100 * effective >= EVENT_THRESHOLD_PERCENT
         enough = len(related) >= MINIMUM_DANIEL_QIDS
         keep = recognized and enough and meets_relevance
         rows.append(
@@ -105,9 +110,11 @@ def select_events(
                 minimum_distinct_daniel_qids=MINIMUM_DANIEL_QIDS,
                 event_threshold_percent=EVENT_THRESHOLD_PERCENT,
                 maximum_known_relevance=float(maximum) if maximum is not None else None,
+                effective_event_relevance=float(effective),
                 average_known_relevance=float(average) if average is not None else None,
                 scored_entity_count=len(known),
-                relevance_aggregation="arithmetic_mean_known_scores",
+                relevance_aggregation=EVENT_AGGREGATION,
+                missing_score_policy=EVENT_MISSING_POLICY,
                 unscored_entity_qids=unscored,
                 known_relevance_pass=meets_relevance,
                 decision_reason=(
@@ -117,13 +124,9 @@ def select_events(
                         "FEWER_THAN_TWO_DISTINCT_DANIEL_QIDS"
                         if not enough
                         else (
-                            "KNOWN_AVERAGE_AT_LEAST_2PCT"
+                            "MAXIMUM_AT_LEAST_2PCT"
                             if meets_relevance
-                            else (
-                                "NO_KNOWN_SCORES"
-                                if not known
-                                else "KNOWN_AVERAGE_BELOW_2PCT"
-                            )
+                            else "MAXIMUM_BELOW_2PCT"
                         )
                     )
                 ),
@@ -174,8 +177,8 @@ def prepare(output: Path) -> dict:
         unknown_policy="User-approved hold aside for the full 10K POC; model records preserved",
         entity_threshold_percent=5,
         event_threshold_percent=EVENT_THRESHOLD_PERCENT,
-        event_relevance_aggregation="arithmetic_mean_known_scores",
-        event_missing_score_policy="exclude_from_mean_no_exception",
+        event_relevance_aggregation=EVENT_AGGREGATION,
+        event_missing_score_policy=EVENT_MISSING_POLICY,
         minimum_distinct_daniel_qids=MINIMUM_DANIEL_QIDS,
     )
     (output / "retrieval_scope.json").write_text(

@@ -22,6 +22,8 @@ from GG_Data.pipeline import events
 from GG_Data.pipeline.event_candidate_check import qualifying_links, statement_key
 from GG_Data.pipeline.event_selection import (
     BASE,
+    EVENT_AGGREGATION,
+    EVENT_MISSING_POLICY,
     EVENT_THRESHOLD_PERCENT,
     MINIMUM_DANIEL_QIDS,
     SCORES,
@@ -126,7 +128,8 @@ def verify_recognition(record: dict, types: set[str]) -> bool:
 def recovered_partition(query_path: Path, expected_sql: str) -> tuple[dict, Path]:
     """Reuse a complete completed-job download; never resubmit an old query.
 
-    The earlier max/unknown source filter is a safe superset for the mean rule.
+    The earlier max/unknown source filter is a safe superset for maximum with
+    missing zero. Missing-only candidates still fail the local threshold.
     Exact SQL binds the snapshot, recognition, Daniel scope and both directions.
     Native local mapping/exclusions and the current selector still decide rows.
     """
@@ -157,8 +160,8 @@ def run(output: Path, recovered_two_query: Path | None = None) -> dict:
         full_retained_scope_checked=False,
         minimum_distinct_daniel_qids=MINIMUM_DANIEL_QIDS,
         event_threshold_percent=EVENT_THRESHOLD_PERCENT,
-        event_relevance_aggregation="arithmetic_mean_known_scores",
-        event_missing_score_policy="exclude_from_mean_no_exception",
+        event_relevance_aggregation=EVENT_AGGREGATION,
+        event_missing_score_policy=EVENT_MISSING_POLICY,
         scope_counts={
             k: len(v) if isinstance(v, list) else v for k, v in scope.items()
         },
@@ -310,7 +313,7 @@ def run(output: Path, recovered_two_query: Path | None = None) -> dict:
             reused_source_requests=prior_report["source_requests"],
         )
         # Resume from the already completed broader query when supplied. No
-        # new source scan is needed; the local average rejects extra rows.
+        # new source scan is needed; the local selector rejects extra rows.
         partition_qualifying = qualifying
         if recovered_two_query is not None:
             partition_qualifying = qualifying | {

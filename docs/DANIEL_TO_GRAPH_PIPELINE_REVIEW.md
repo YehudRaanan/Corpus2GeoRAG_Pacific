@@ -1,12 +1,13 @@
-> Current Event rule (updated 21 October 2026): accepted Q1190554 snapshot
-> recognition, at least two distinct retained Daniel QIDs, and arithmetic mean
-> of known linked-entity relevance >=2%. Each QID uses its highest available
-> EN/JA score. Missing scores enter neither sum nor divisor and provide no
-> exception; all-unscored candidates fail relevance. The separate 5% MISC
-> filter stays unchanged. This supersedes maximum and the missing-score bypass.
-> Retained 10K eligibility is complete: 775 Events pass from 21,797 candidates.
-> Missing scores were excluded from the average. No model import or graph export
-> ran. See the current result in the population S2T; historical runs follow.
+> Current Event rule (21 October 2026): accepted native recognition, at least
+> two distinct retained Daniel QIDs, and maximum linked-entity relevance >=2%.
+> Each QID uses its highest available EN/JA score; missing contributes zero to
+> selection, with missing evidence preserved. No missing-score bypass applies.
+> This inclusive/wide assumption can admit unrelated items and may need
+> improvement. Hierarchy, predicate/date restrictions and other improvements
+> are not silently added. See the population S2T for the current run receipt.
+> Verified maximum replay: 2,135 of 21,797 candidates pass; 13 of 15 saved battle
+> checks pass. The prior 775-Event average result is historical. No Event model
+> import or graph export has run. The separate 5% MISC filter is unchanged.
 
 # Daniel input to final graph JSON review
 
