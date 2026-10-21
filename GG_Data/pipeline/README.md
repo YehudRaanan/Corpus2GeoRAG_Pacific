@@ -2,6 +2,23 @@
 
 ## Current Event rule and full retained-scope check
 
+**21 October result:** cache-only continuation
+`outputs/poc_10k_events_three_entities_resumed_20261021/` verified 20,024
+eligible records and 120,674 unique native assertions in 81.890 seconds.
+All 15 prior Pacific targets agree: 13 pass; Tarawa (two QIDs) and Bismarck
+Sea (one) fail. The source and output hashes and prior native mapping rules
+passed independent verification. The shared mapping builder now resolves
+relative paths before recording repository provenance; 37 focused tests passed.
+
+**STOP FOR CONTENT CONSULTATION:** modern medical studies and papers also
+qualify through country/topic links. Q100788305 has five P17 country endpoints;
+Q100306760 has three P921 country-topic endpoints. The approved broad hierarchy
+and count alone permit these records. No additional filter was applied. Native
+type counts and exact examples are saved in the verification/content evidence
+and population S2T. Eligibility is technically complete; import acceptance is
+pending. No Event model rows or final graph were written. The original failed
+attempt and saved query results remain intact. No new cloud query ran on resume.
+
 Approved 21 October: keep the 5% MISC filter, include recognized Events with
 **at least three distinct retained Daniel QIDs**, and apply **no Event relevance
 threshold**. The 1,020 unscored retained non-MISC QIDs remain valid endpoints.

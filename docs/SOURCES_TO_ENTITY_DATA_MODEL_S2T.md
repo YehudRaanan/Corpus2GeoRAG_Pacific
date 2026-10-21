@@ -8,6 +8,50 @@ The [full pipeline review](DANIEL_TO_GRAPH_PIPELINE_REVIEW.md) collects open dec
 
 ## Current Event inclusion rule — 21 October 2026
 
+### Full retained-scope check: technical verification passed; content review stopped
+
+The path-error continuation completed from saved data on 21 October 2026,
+with cloud calls blocked. Evidence:
+`../GG_Data/pipeline/outputs/poc_10k_events_three_entities_resumed_20261021/`.
+The original stopped attempt remains intact in
+`../GG_Data/pipeline/outputs/poc_10k_events_three_entities_20261021/`.
+
+All **20,024 preliminary records** pass the approved recognition and
+three-distinct-retained-QID rules, after mapping and exact exclusions. They
+carry **120,674 unique native Event/Daniel assertions**. The 3,466-QID scope,
+5% MISC filter and frozen assignments are unchanged. Fifteen native property
+keys were added under the approved native-preservation rule; all ten prior
+native parameter rows remain unchanged and no Level 1 category was inferred.
+The cached continuation took **81.890 seconds**; this is not the original cloud
+query duration. The original query took **402.632 seconds** in BigQuery;
+its complete 20,024-row result and receipt were reused, not queried again.
+
+`verification.json` binds the report and native checks.
+`independent_verification.json` checks 15 output hashes, eight input hashes,
+scope/count decisions, cumulative native rules, and all 15 prior Pacific
+examples: 13 qualify; Tarawa has two retained QIDs and Bismarck Sea one.
+These two therefore fail the approved three-QID minimum in this POC.
+
+**New content issue — STOP FOR CONSULTATION:** satisfying the broad native
+hierarchy and three links does not establish Pacific WWII relevance. The
+results include modern medical studies and research papers connected through
+countries or topics already present in Daniel's population. For example,
+Q100788305, “Identification of Biomarkers of Tofacitinib Therapy in Patients
+With Ulcerative Colitis,” qualifies through five P17 country links:
+Q16, Q30, Q31, Q38 and Q55. Another example, Q100306760,
+“Social Participation in Long-term Residential Care: Case Studies from Canada,
+Norway, and Germany,” has three P921 topic links: Q16, Q183 and Q20.
+The active direct-type distribution includes 15,492 records with Q30612 and
+1,123 with Q13442814; type counts can overlap. No new type, date, geography,
+predicate or relevance filter is approved by this finding.
+
+The technical eligibility check is complete. **Import acceptance is held for
+the user's decision on this content issue.** Event model rows written: **0**;
+final graph written: **false**. The path repair only resolves filesystem paths
+in the shared mapping builder; it changes no data policy. A relative-versus-
+absolute regression check and the focused mapping/Event/relation tests passed
+(37 tests). Generated evidence remains local and ignored by Git.
+
 The user approved keeping **all recognized Wikidata Events connected directly to
 at least three distinct retained Daniel QIDs**, with **no Event relevance
 threshold**. “More than two” means a minimum of three, not two. Recognition
@@ -40,7 +84,7 @@ historical tests and are superseded by this section.
 
 ## Historical Event relevance tests and measurement stops
 
-**Current Event relevance threshold, approved 21 October 2026: 2%.** After
+**Historical Event relevance threshold, superseded by the current rule above: 2%.** After
 recognition and the two-distinct-Daniel-entity gate, use the maximum linked
 entity score and keep Events with a known score **>=0.02**, including exactly
 2%. The separate **5% MISC entity-retrieval filter remains unchanged**. The
@@ -575,7 +619,7 @@ as supporting evidence. This decision is closed and implemented; the verified
 combined 10K result and bounded Event test are recorded at the top of this S2T.
 Preserve all
 original model rows and matching assignments. This threshold does not change
-the matching similarity threshold, Event hierarchy or two-entity inclusion rule.
+the matching similarity threshold or Event hierarchy. The current Event minimum is three distinct retained Daniel QIDs, with no Event relevance threshold.
 
 For each eligible matched Wikidata QID:
 

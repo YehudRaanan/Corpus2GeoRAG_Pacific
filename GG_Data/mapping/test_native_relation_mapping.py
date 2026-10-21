@@ -10,6 +10,26 @@ from GG_Data.mapping.build_relation_mapping_v2_1 import OUT, build, read_csv
 RULES = OUT / "ADDITIONAL_NATIVE_RELATION_RULES_2026-10-20.csv"
 
 
+def test_relative_native_paths_match_absolute_build(tmp_path, monkeypatch):
+    monkeypatch.chdir(catalog.ROOT)
+    prior = OUT / "RELATION_DIRECTION_CATALOG_v2.1.1.csv"
+    relative = tmp_path / "relative"
+    absolute = tmp_path / "absolute"
+    for directory, native, directions in (
+        (relative, RULES.relative_to(catalog.ROOT), prior.relative_to(catalog.ROOT)),
+        (absolute, RULES, prior),
+    ):
+        directory.mkdir()
+        build(
+            native_rules=native,
+            prior_directions=directions,
+            version="relation-map-v2.1.2",
+            output=directory,
+        )
+    for path in relative.iterdir():
+        assert path.read_bytes() == (absolute / path.name).read_bytes()
+
+
 def test_native_extension_preserves_existing_rules_and_reverse_contract(tmp_path: Path):
     # Rebuild the historical version only in a temporary directory. No data,
     # network, assertions or original catalog files are changed by this test.

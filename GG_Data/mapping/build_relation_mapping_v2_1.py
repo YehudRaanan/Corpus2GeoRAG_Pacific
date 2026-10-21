@@ -71,6 +71,12 @@ def build(
     prior_directions: Path | None = None,
 ) -> dict[str, Any]:
     """Keep v2.1.0 reproducible; native extensions receive a separate version."""
+    # CLI callers may supply relative paths; provenance uses repository paths.
+    output = output.resolve()
+    native_rules = native_rules.resolve() if native_rules is not None else None
+    prior_directions = (
+        prior_directions.resolve() if prior_directions is not None else None
+    )
     if not re.fullmatch(r"relation-map-v\d+\.\d+\.\d+", version):
         raise ValueError("Invalid relation mapping version")
     if native_rules is not None and version == VERSION:
