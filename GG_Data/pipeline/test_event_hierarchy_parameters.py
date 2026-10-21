@@ -79,6 +79,20 @@ def test_page_order_and_cursor_are_verified():
     assert "ORDER BY STR(?statement)" in query
 
 
+def test_event_scope_is_native_rooted_uncapped_and_not_sorted():
+    query = stage.event_scope_query()
+    assert f"wd:{stage.events.EVENT_ROOT} (^ps:P279/^p:P279)* ?parent" in query
+    assert all(
+        word not in query for word in ("wdt:", "LIMIT", "ORDER BY", "COUNT", "label")
+    )
+    # Native rows are unordered; both normal and preferred remain available
+    # even when they coexist. Deprecated evidence cannot confer membership.
+    rows = [binding("Q3", "Q2", "preferred"), binding("Q2", "Q1", "normal")]
+    assert [
+        r["rank"] for r in stage.hierarchy_links(dict(results=dict(bindings=rows)))
+    ] == ["preferred", "normal"]
+
+
 @pytest.mark.parametrize("fail", [False, True])
 def test_complete_services_required_before_filter(tmp_path, monkeypatch, fail):
     monkeypatch.setattr(stage, "ROOT", tmp_path)

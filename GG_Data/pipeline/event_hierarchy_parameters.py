@@ -28,6 +28,31 @@ PAGE_SIZE = 1000
 SERVICES = (events.QUERY_URL, events.SCHOLARLY_QUERY_URL)
 
 
+def event_scope_query() -> str:
+    """Retrieve only native P279 ancestry below the approved root (S2T 7).
+
+    This transport query keeps all ranks. A deprecated hop can enlarge its
+    result, so only the local per-hop rank-filtered closure can accept types.
+    No global sort, COUNT, result cap, labels or instance population is needed.
+    One service's result cannot prove cross-service hierarchy completeness.
+    """
+    return f"""PREFIX wd: <http://www.wikidata.org/entity/>
+PREFIX p: <http://www.wikidata.org/prop/>
+PREFIX ps: <http://www.wikidata.org/prop/statement/>
+PREFIX wikibase: <http://wikiba.se/ontology#>
+SELECT ?subject ?parent ?property ?statement ?rank WHERE {{
+ {{ SELECT DISTINCT ?parent WHERE {{
+    wd:{events.EVENT_ROOT} (^ps:P279/^p:P279)* ?parent .
+ }} }}
+ ?subject p:P279 ?statement .
+ ?statement ps:P279 ?parent ; wikibase:rank ?rank .
+ BIND(wd:P279 AS ?property)
+ FILTER(STRSTARTS(STR(?subject), "http://www.wikidata.org/entity/Q"))
+ FILTER(STRSTARTS(STR(?parent), "http://www.wikidata.org/entity/Q"))
+}}
+"""
+
+
 def bulk_page_query(after: str | None = None) -> str:
     """A transport page, never a class/population limit (S2T 7).
 
@@ -57,8 +82,8 @@ LIMIT {PAGE_SIZE}
 """
 
 
-def page_links(data: dict, after: str | None) -> list[dict]:
-    """Reuse native rank/identity validation before accepting a page."""
+def hierarchy_links(data: dict) -> list[dict]:
+    """Validate native hierarchy evidence without assuming transport order."""
     result = []
     for row in data["results"]["bindings"]:
         parent = row["parent"]["value"]
@@ -70,6 +95,12 @@ def page_links(data: dict, after: str | None) -> list[dict]:
         if link["source_predicate"] != "wd:P279":
             raise SourceException("Unexpected hierarchy property", row=row)
         result.append(link)
+    return result
+
+
+def page_links(data: dict, after: str | None) -> list[dict]:
+    """Reuse native rank/identity validation before accepting an ordered page."""
+    result = hierarchy_links(data)
     ids = [r["source_record_id"] for r in result]
     if (
         len(ids) > PAGE_SIZE
