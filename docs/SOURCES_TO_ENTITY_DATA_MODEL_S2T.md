@@ -45,6 +45,25 @@ contains `retrieval_scope.json`, the pinned selection/manifest, the stopped
 rows, graph outputs or new cloud requests were produced. This is a stopped
 attempt, not a completed 10K Event selection or a replacement for prior tests.
 
+**Redirect-priority continuation result, 21 October 2026:** both saved-dump
+language measurements completed in **419.082 seconds**, with no source network
+requests. English has **2,351 scored / 1,115 unavailable**; Japanese has **1,333
+scored / 2,133 unavailable**. The highest available language produces **2,446
+scored / 1,020 unavailable** among the 3,466 retained QIDs. Of those 1,020,
+**1,018 have no saved article page in either language**; two have no English
+article and no incoming Japanese links. These are non-MISC QIDs, separate from
+the already held 619 MISC QIDs. Their model rows and identities remain intact;
+unavailable is not zero and does not establish absence from Wikidata. Under
+the POC stop rule, continuation pauses for consultation before Event discovery
+or import; unknown linked-entity Event aggregates remain undecided. This is
+completed measurement, not completed Event selection.
+
+Evidence: `../GG_Data/pipeline/outputs/poc_10k_event_selection_2pct_redirect_priority_20261021/`
+contains the complete EN/JA reports, combined `entity_scores.json`, a separate
+`unavailable_entity_scores.json` list, approval/code evidence and
+`verification.json`. Output hashes, retained-QID coverage and exact language
+maxima passed verification. Zero Event rows or graph outputs were written.
+
 ## Approved Event recognition rule — 21 October 2026
 
 The user accepted the tested recognition rule after the 375-record audit:

@@ -1,6 +1,23 @@
 # Daniel pipeline POC
 
-## Current 10K continuation: 2% Event selection, redirect priority approved
+## Current 10K continuation: measurement complete, unknown-score consultation
+
+Continuation `outputs/poc_10k_event_selection_2pct_redirect_priority_20261021/`
+completed both saved-dump measurements in **419.082 seconds**. English: **2,351
+scored / 1,115 unavailable**. Japanese: **1,333 scored / 2,133 unavailable**.
+The highest available language gives **2,446 scored / 1,020 unavailable** out
+of 3,466 retained QIDs. Of the 1,020, **1,018 have no saved article page in
+either language**; two have no English article and no incoming Japanese links.
+These are non-MISC QIDs, separate from the 619 held MISC QIDs. They are not
+zero scores or proof that the items are absent from Wikidata. Model rows and
+assignments remain unchanged. The POC pauses before Event discovery to consult
+on these unscored linked entities. No Event query, import or graph output ran.
+
+`verification.json` checks output hashes, exact per-QID language maxima and
+retained-scope coverage. `unavailable_entity_scores.json` lists all 1,020 QIDs
+with names, types and both language statuses. `redirect_approval.json` and
+the source copies preserve the approved rule and launched code. All source
+work was local; zero network requests were made. The worker ended normally.
 
 On 21 October the user approved **"Use the redirect always"**. Saved redirect
 rows now take precedence over conflicting page-table flags in forward page
