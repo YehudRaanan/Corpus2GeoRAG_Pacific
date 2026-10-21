@@ -6,6 +6,40 @@ Specification date: 19 October 2026. Status: approved source scope and rules doc
 
 The [full pipeline review](DANIEL_TO_GRAPH_PIPELINE_REVIEW.md) collects open decisions, implementation checks, documentation alignment and deferred improvements from Daniel input through final JSON. It does not change these population rules.
 
+## Current Event inclusion rule — 21 October 2026
+
+The user approved keeping **all recognized Wikidata Events connected directly to
+at least three distinct retained Daniel QIDs**, with **no Event relevance
+threshold**. “More than two” means a minimum of three, not two. Recognition
+continues to use the accepted Q1190554 occurrence hierarchy and native active
+P31 evidence. Existing relation mapping and exact assertion exclusions apply
+before counting distinct endpoints. Repeated mentions, several predicates,
+reverse views and typed rows of one QID count once.
+
+The separate **5% MISC retrieval filter remains unchanged**: 3,466 retained
+QIDs, 627 below threshold and 619 unknown MISC held aside, from 4,712 matched
+QIDs in the frozen 10K sample. Missing relevance for the 1,020 retained non-MISC
+QIDs does not block their Event links. Their scores remain unavailable, not zero.
+No identity assignment, synthetic ID, entity type or source snapshot changes.
+
+`event_selection.select_events()` implements this count-only decision and has
+no relevance-score input. `event_population.py` queries the agreed BigQuery
+snapshot with the saved complete class parameters and frozen Daniel outgoing
+endpoint pairs. It combines both native directions, counts distinct retained
+QIDs, and recognizes Events in the cloud before returning qualifying records.
+Local native mapping/exclusion checks replay the final three-QID gate. The query
+has no candidate LIMIT, relation cap, additional Event relevance test, or new
+Daniel entity extraction. Original snapshot records and all native ranks remain
+evidence; only classification excludes deprecated P31/P279.
+
+Outputs, query receipts, scope, native records and final inclusion decisions
+belong in a new run directory. A completed Event check is not Event model-table
+population, geocoding, capped Relations or final graph export. Those stages must
+be reported separately. The earlier two-QID and 2% Event rules below describe
+historical tests and are superseded by this section.
+
+## Historical Event relevance tests and measurement stops
+
 **Current Event relevance threshold, approved 21 October 2026: 2%.** After
 recognition and the two-distinct-Daniel-entity gate, use the maximum linked
 entity score and keep Events with a known score **>=0.02**, including exactly
@@ -950,7 +984,7 @@ business rules are unchanged.
 
 The approved recognition root is **Q1190554 (occurrence)**, including its complete normal/preferred native P279 descendant list from the agreed BigQuery snapshot. Identify candidate instances through normal/preferred P31 values in that list. Record root QID, source snapshot, native class IDs and statement evidence. Reuse the verified local parameter tables. Do not add another root, a local event-type whitelist, manual exceptions, or invented war/campaign/battle levels. A failed recognition test is not proof that an item is not an Event; the accepted coverage limit is documented above.
 
-For each discovered event QID, use its direct mapped Wikidata assertions to/from **D**. Include it only if at least two distinct Daniel QIDs qualify. Repeated mentions, several predicates for one entity, duplicate retrievals and generated reverse views do not increase this count. Classification hierarchy paths identify an event; they do not count as indirect participant paths. Do not count mere shared class ancestry or article co-mentions as an event/entity connection.
+For each discovered event QID, use its direct mapped Wikidata assertions to/from **D**. Include it only if at least three distinct retained Daniel QIDs qualify; apply no Event relevance threshold. Repeated mentions, several predicates for one entity, duplicate retrievals and generated reverse views do not increase this count. Classification hierarchy paths identify an event; they do not count as indirect participant paths. Do not count mere shared class ancestry or article co-mentions as an event/entity connection.
 
 Use all event types under the root. No additional date, geography or old-reference-pool filter is introduced. Do not promote an event class into an occurrence merely because it is a class in the hierarchy. Save candidate QIDs, classification evidence, direct qualifying statement IDs, distinct connected Daniel QIDs/count, inclusion decision and acquisition coverage in a supporting report. No seventh participant table is needed.
 
@@ -1018,7 +1052,7 @@ Status: score and selector implemented in `GG_Data/pipeline/relation_selection.p
 
 Historical Entity-attribute run, 20 October (superseded): `outputs/poc_10k_entities_importance_20261020` retained all 6,077 existing Entity rows but left 1,356 synthetic nulls. Its historical `VERIFIED_ENTITIES_IMPORTANCE_ONLY` check verified that implementation, not the corrected rule. The user clarified that each per-mention synthetic ID has one mention on one page and therefore must score 1. Prior output files remain unchanged; complete Events, capped Relations and final graph remain pending.
 
-- Event/Event and Event/other-entity assertions are uncapped. Keep every eligible assertion under the existing source, mapping and exact-exclusion rules. All Events still require the agreed two-distinct-Daniel-QID inclusion gate, evaluated before selection. A QID present in included Events receives the Event exemption even when it also has other entity types.
+- Event/Event and Event/other-entity assertions are uncapped. Keep every eligible assertion under the existing source, mapping and exact-exclusion rules. All Events still require the agreed three-distinct-retained-Daniel-QID inclusion gate, evaluated before selection, with no Event relevance threshold. A QID present in included Events receives the Event exemption even when it also has other entity types.
 - For assertions with two non-event endpoints, the maximum is **20 base relations incident on each QID**, across both native directions. Separate typed rows do not get separate budgets. Reverse delivery views share the original assertion's slot; they do not consume additional slots.
 - Score each existing Daniel Entity identity using **distinct Daniel source-page count multiplied by total original Daniel mention count**, aggregated by assigned QID or existing synthetic ID, without duplicating mentions across typed Entities rows or counting retrieved Japanese counterparts as Daniel source appearances. Each separate synthetic ID has one page and one mention, hence importance 1; no QID is required to count it. Count Daniel's original `raw.Source` values for source-page appearances, without inventing page IDs or processing paragraph text. Pin the input population: this POC uses its frozen 10K mentions, not an unstated whole-corpus frequency. No graph centrality, BM25, new extraction or rematching is approved.
 - Each endpoint ranks its eligible non-event assertions by the other endpoint's score. Keep an assertion only if it is in the top 20 at **both endpoints**. Intersect these selections; do not refill rejected slots. Some entities can therefore retain fewer than 20 relations.
@@ -1077,7 +1111,7 @@ Before an implementation can claim completion:
 | Input and decision accounting | Exactly 309,864 Mentions for the pinned input, unchanged original fields/order/IDs, complete stage/reason accounting and separate NER/matching scores. |
 | Identity and page keys | Unique `(entity_id, type)` pairs and valid composite mention FKs; QID-level references exist without multiplying assertions; page-key pairs complete; no talk IDs, Index-as-page-ID, cache-only entity expansion or extra Daniel mentions. |
 | Scope-concentration measure, when supplied | Matched QIDs only; exclude synthetic IDs. Both page counts use the same snapshot/language/link rules, with source-page deduplication and full Daniel page scope. Report missing coverage and unknown denominators. Apply the provisional 5% rule to measured MISC QIDs: exclude <0.05 from Event retrieval, keep >=0.05; retain model records. Keep this measure separate from `Entities.importance`. |
-| Events | Native root/snapshot/path evidence; original QIDs; all approved event types; at least two distinct direct Daniel QIDs after the existing retrieval filter; maximum linked-entity relevance >=0.02 (2%), with unknown scores explicit and subject to consultation; incoming/outgoing acquisition coverage reported. The separate MISC retrieval cutoff remains 5%. |
+| Events | Native root/snapshot/path evidence; original QIDs; all approved event types; at least three distinct direct retained Daniel QIDs after the existing MISC retrieval filter; no Event relevance threshold; unavailable retained non-MISC scores do not block links; incoming/outgoing acquisition coverage reported. The separate MISC retrieval cutoff remains 5%. |
 | Assertions | Reconcile retrieved eligible statements = retained mapped base rows + exact exclusions + explicitly reported unmapped/ambiguous/blocked cases, deduplicated by source statement. Report all categories and ranks. No silent loss through join/mapping/rank filters. |
 | Geometry | At most one accepted object per place; failed attempts retained; source and CRS known; valid nonempty Shapely/WKB round trip before delivery. |
 | Contract coverage | All ERD fields, nine Daniel fields, 16 matching CSV fields, 26 legacy assertion fields, full nested reference/attempt payloads, geometry compatibility fields and versioned catalog columns retained or explicitly unavailable. |
@@ -1133,7 +1167,7 @@ The subsequent Daniel/Daniel Relations population passed in `outputs/poc_10k_rel
 - Existing relation producer: `GG_Data/mapping/RELATION_MAPPING_ALL_ITEMS_v1.0.0.ipynb`; its historical output is an input/evidence contract, not proof of current scope, rank handling or v2.1 population completion.
 - [Geometry source and selection policy](GEOCODING_HIGH_LEVEL_PROCESS.md) and [extraction method](../GG_Data/geocoding/GEO_OBJECT_EXTRACTION_METHOD.md).
 
-Latest user decisions govern name priority, Wikidata-only assertions, included event links in Relations, recognition through the approved Q1190554 hierarchy with its accepted limits and no manual exceptions, two-entity event minimum, per-mention synthetic IDs, no new Daniel entities, and Shapely objects with downstream JSON pointers. No physical model tables or new production outputs are created by this specification.
+Latest user decisions govern name priority, Wikidata-only assertions, included event links in Relations, recognition through the approved Q1190554 hierarchy with its accepted limits and no manual exceptions, three-distinct-retained-Daniel-QID event minimum without an Event relevance threshold, per-mention synthetic IDs, no new Daniel entities, and Shapely objects with downstream JSON pointers. No physical model tables or new production outputs are created by this specification.
 
 ### Correction: retain historical relations
 

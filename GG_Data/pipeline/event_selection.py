@@ -1,8 +1,8 @@
 """10K Event selection, population S2T 6.1/7; no graph or identity changes.
 
-The 2% Event cutoff is separate from the existing 5% MISC retrieval filter.
+Events require three distinct retained Daniel QIDs, without a relevance cutoff.
 The user approved holding its 619 unknown MISC QIDs aside for this full POC.
-Native acquisition and the two-entity gate must precede Event selection.
+Native recognition and mapped/excluded assertion checks precede selection.
 """
 
 from __future__ import annotations
@@ -10,58 +10,54 @@ from __future__ import annotations
 import argparse
 import json
 from collections import Counter
-from fractions import Fraction
 from pathlib import Path
 from time import perf_counter
 
-from GG_Data.pipeline.event_linked_entity_relevance_probe import (
-    summarize_events,
-    verified_report,
-)
+from GG_Data.pipeline.event_linked_entity_relevance_probe import verified_report
 from GG_Data.pipeline.poc import ROOT, digest, read_json
 from GG_Data.pipeline.scope_concentration_filter import combine_language_rows
 from GG_Data.pipeline.snapshot_link_relevance_probe import run as measure
 
-EVENT_THRESHOLD_PERCENT = 2
+MINIMUM_DANIEL_QIDS = 3
 BASE = ROOT / "GG_Data/pipeline/outputs"
 
 
-def select_events(events: list[dict], scores: list[dict]) -> list[dict]:
-    """S2T 6.1: exact maximum, inclusive 2%; missing requires consultation.
+def select_events(events: list[dict], retained_qids: set[str]) -> list[dict]:
+    """S2T 7: recognition plus >=3 distinct, mapped/excluded Daniel endpoints.
 
-    summarize_events validates distinct endpoints and the upstream two-entity
-    gate. Unknowns never become zero or a decision based on a measured subset.
-    Other entity scores below 5% are still valid Event evidence; only the MISC
-    retrieval stage uses the separate 5% cutoff.
+    Repeated mentions, predicates and reverse views cannot add endpoints.
+    Scores are deliberately not inputs: unavailable non-MISC relevance cannot
+    block an otherwise qualified Event. The separate MISC filter precedes this.
     """
-    by_qid = {row["qid"]: row for row in scores}
-    rows = summarize_events(events, scores)
-    for row in rows:
-        known = not row["unknown_entity_qids"]
-        maximum = (
-            max(
-                Fraction(
-                    by_qid[q]["scope_linking_pages"],
-                    by_qid[q]["all_linking_pages"],
-                )
-                for q in row["linked_entity_qids"]
+    rows, seen = [], set()
+    for event in events:
+        qid = event["qid"]
+        related = sorted(set(event["daniel_qids"]))
+        recognized = event["event_hierarchy_match"]
+        if qid in seen or type(recognized) is not bool:
+            raise ValueError("Expected unique Events with explicit recognition")
+        if not set(related) <= retained_qids:
+            raise ValueError("Event endpoint is outside retained Daniel scope")
+        seen.add(qid)
+        keep = recognized and len(related) >= MINIMUM_DANIEL_QIDS
+        rows.append(
+            dict(
+                qid=qid,
+                linked_entity_qids=related,
+                linked_entity_count=len(related),
+                keep_event=keep,
+                minimum_distinct_daniel_qids=MINIMUM_DANIEL_QIDS,
+                event_threshold_percent=None,
+                decision_reason=(
+                    "NOT_RECOGNIZED"
+                    if not recognized
+                    else (
+                        "AT_LEAST_THREE_DISTINCT_DANIEL_QIDS"
+                        if keep
+                        else "FEWER_THAN_THREE_DISTINCT_DANIEL_QIDS"
+                    )
+                ),
             )
-            if known
-            else None
-        )
-        keep = maximum >= Fraction(EVENT_THRESHOLD_PERCENT, 100) if known else None
-        row.update(
-            keep_event=keep,
-            event_threshold_percent=EVENT_THRESHOLD_PERCENT,
-            decision_reason=(
-                "UNKNOWN_LINKED_ENTITY_SCORE_REQUIRES_CONSULTATION"
-                if keep is None
-                else (
-                    "EVENT_MAXIMUM_AT_LEAST_2PCT"
-                    if keep
-                    else "EVENT_MAXIMUM_BELOW_2PCT"
-                )
-            ),
         )
     return rows
 
@@ -107,7 +103,8 @@ def prepare(output: Path) -> dict:
         held_unknown_misc_qids=held,
         unknown_policy="User-approved hold aside for the full 10K POC; model records preserved",
         entity_threshold_percent=5,
-        event_threshold_percent=EVENT_THRESHOLD_PERCENT,
+        event_threshold_percent=None,
+        minimum_distinct_daniel_qids=MINIMUM_DANIEL_QIDS,
     )
     (output / "retrieval_scope.json").write_text(
         json.dumps(scope, indent=2), encoding="utf-8"
@@ -164,7 +161,7 @@ def measure_population(output: Path) -> dict:
             unavailable_qids=[
                 r["qid"] for r in scores if r["maximum_relevance"] is None
             ],
-            event_threshold_percent=EVENT_THRESHOLD_PERCENT,
+            event_threshold_percent=None,
             score_status_counts=dict(
                 Counter(r["maximum_score_wiki"] or "unknown" for r in scores)
             ),

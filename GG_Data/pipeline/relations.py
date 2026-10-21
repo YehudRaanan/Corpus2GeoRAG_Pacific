@@ -293,7 +293,11 @@ def read_entities(path: Path) -> list[dict]:
 
 
 def extend_mapping(
-    statements: list[dict], mapping: dict, output: Path, reference: dict
+    statements: list[dict],
+    mapping: dict,
+    output: Path,
+    reference: dict,
+    native_rules: Path = NATIVE_RULES,
 ) -> tuple:
     """S2T 8: actual native statements only; no family or semantic inference.
 
@@ -331,7 +335,9 @@ def extend_mapping(
         prefix="P",
     )
     extra.update({p: envelope["entity"] for p, envelope in acquired.items()})
-    rules = read_csv(NATIVE_RULES)
+    # Later stages carry forward the accepted cumulative parameter file. Starting
+    # again from the base would lose earlier native additions (population S2T 8).
+    rules = read_csv(native_rules)
     evidence = []
     for predicate, cases in sorted(missing.items()):
         prop = predicate.removeprefix("wd:")

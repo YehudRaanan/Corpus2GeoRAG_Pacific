@@ -1,6 +1,29 @@
 # Daniel pipeline POC
 
-## Current 10K continuation: measurement complete, unknown-score consultation
+## Current Event rule and full retained-scope check
+
+Approved 21 October: keep the 5% MISC filter, include recognized Events with
+**at least three distinct retained Daniel QIDs**, and apply **no Event relevance
+threshold**. The 1,020 unscored retained non-MISC QIDs remain valid endpoints.
+The frozen 3,466-QID scope and original Entity/Mention rows remain unchanged.
+
+`event_population.py` uses the existing BigQuery CLI/cache controls and the
+accepted complete Q1190554 parameters. Native Daniel outgoing endpoint pairs
+and incoming Event statements are combined before the cloud three-QID gate;
+recognition also runs in BigQuery. Local native mapping/exclusions then replay
+recognition and final distinct counts. Only qualified candidate records return.
+`event_population_fixture.py` checks both directions, mixed directions, repeated
+endpoints and deprecated classification separately from relation ranks.
+
+Run: `python -m GG_Data.pipeline.event_population --output
+GG_Data/pipeline/outputs/<new-attempt>`. It preserves source and output hashes,
+SQL/receipts, native records, decisions and selected assertion evidence. This
+completes Event eligibility checking only; model-table population and final graph
+export are separate stages. Do not rerun a failed source request without applying
+the existing stop/consult and approved retry rules. No new Daniel entities.
+
+## Historical 2% continuation: measurement complete, consultation resolved
+
 
 Continuation `outputs/poc_10k_event_selection_2pct_redirect_priority_20261021/`
 completed both saved-dump measurements in **419.082 seconds**. English: **2,351

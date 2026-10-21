@@ -1,3 +1,10 @@
+> Current Event rule (approved 21 October 2026): recognition through the accepted
+> Q1190554 snapshot hierarchy, plus at least three distinct retained Daniel QIDs,
+> with no Event relevance threshold. Keep the separate 5% MISC filter. Missing
+> relevance for retained non-MISC QIDs does not block Event links. This supersedes
+> earlier two-entity/2% references in historical review notes below. See the
+> population S2T for current scope and implementation evidence.
+
 # Daniel input to final graph JSON review
 
 ## Stopped for analysis — larger Event timing sample, 20 October 2026
