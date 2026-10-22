@@ -132,6 +132,30 @@ def parent_labels(candidate: dict, admin: dict) -> list[str]:
     ]
 
 
+def checked_context(clue: dict, candidates: list[dict], admin: dict) -> dict:
+    """Owner-approved pre-search gate: use only saved parent agreement.
+
+    Keep unsupported literal clues in the audit, but never put them into a
+    search. This checks context only; it does not accept a candidate identity.
+    """
+    verified, rejected = [], []
+    for parent in clue["parents"]:
+        supporting = [
+            dict(source=c["source"], source_id=c["source_id"])
+            for c in candidates
+            if exact_alias(parent["value"], parent_labels(c, admin))
+        ]
+        if supporting:
+            verified.append(parent | dict(supporting_candidates=supporting))
+        else:
+            rejected.append(parent | dict(reason="NO_SAVED_PARENT_AGREEMENT"))
+    return clue | dict(
+        parents=verified,
+        rejected_parents=rejected,
+        evidence_status="PARENT_CHECKED_BEFORE_SEARCH",
+    )
+
+
 def compatible(kind: str, candidate: dict) -> bool:
     if candidate["source"] == "GeoNames":
         return candidate.get("feature_code") in GN_TYPES.get(kind, set())
@@ -149,7 +173,7 @@ def compatible(kind: str, candidate: dict) -> bool:
     )
 
 
-def run(base: Path, output: Path) -> dict:
+def run(base: Path, output: Path, request_cache: Path | None = None) -> dict:
     if output.exists():
         raise ValueError("Preserve prior output; choose a new directory")
     old = base / "geography_sample"
@@ -195,11 +219,12 @@ def run(base: Path, output: Path) -> dict:
     output.mkdir(parents=True)
     cache = output / "sources"
     cache.mkdir()
-    report = dict(status="RUNNING", inputs=10, results=[], new_requests=0)
+    report = dict(
+        status="RUNNING", inputs=10, results=[], new_requests=0, reused_requests=0
+    )
     contexts = {
         p["place_id"]: context(mentions[p["original_mention_id"]]) for p in sample
     }
-    write(output / "contexts.json", contexts)
     candidates = {
         pid: list(prior_candidates[pid].get("candidates", [])) for pid in sample_ids
     }
@@ -231,6 +256,12 @@ def run(base: Path, output: Path) -> dict:
                 if fields[7] in {"PCLI", "ADM1"}:
                     key = (fields[8], "" if fields[7] == "PCLI" else fields[10])
                     admin[key] = [fields[1], fields[2], *fields[3].split(",")]
+
+    contexts = {
+        pid: checked_context(clue, candidates[pid], admin)
+        for pid, clue in contexts.items()
+    }
+    write(output / "contexts.json", contexts)
 
     try:
         for place in sample:
@@ -305,8 +336,8 @@ def run(base: Path, output: Path) -> dict:
                     match_method="EXACT_QID_DATE_TYPE",
                 )
             else:
-                # Query the existing approved name services with the literal
-                # adjacent parent. No new identity is created from that query.
+                # Only parents verified from saved country/region evidence
+                # above may enter a query. No new identity is created here.
                 if clue["parents"]:
                     query = name + ", " + clue["parents"][0]["value"]
                     for source, url in client.NOMINATIM.items():
@@ -319,20 +350,32 @@ def run(base: Path, output: Path) -> dict:
                             namedetails="1",
                             limit="50",
                         )
-                        rows = client.request_json(url + "/search", params=params)
-                        if not isinstance(rows, list):
-                            raise ValueError("Unexpected name-service response")
-                        path = cache / f"{pid}_{source}.json"
-                        write(
-                            path,
-                            dict(
+                        filename = f"{pid}_{source}.json"
+                        prior_path = request_cache / filename if request_cache else None
+                        saved = None
+                        if prior_path and prior_path.exists():
+                            saved = read_json(prior_path)
+                            if saved["query"] != params:
+                                raise ValueError(
+                                    f"Cached request differs: {prior_path}"
+                                )
+                            source_hashes[str(prior_path)] = digest(prior_path)
+                        if saved is None:
+                            rows = client.request_json(url + "/search", params=params)
+                            saved = dict(
                                 query=params,
                                 rows=rows,
                                 retrieved_at=datetime.now(timezone.utc).isoformat(),
-                            ),
-                        )
+                            )
+                            report["new_requests"] += 1
+                        else:
+                            rows = saved["rows"]
+                            report["reused_requests"] += 1
+                        if not isinstance(rows, list):
+                            raise ValueError("Unexpected name-service response")
+                        path = cache / filename
+                        write(path, saved)
                         source_hashes[str(path)] = digest(path)
-                        report["new_requests"] += 1
                         for row in rows:
                             aliases = [row.get("name", "")]
                             for value in row.get("namedetails", {}).values():
@@ -359,7 +402,8 @@ def run(base: Path, output: Path) -> dict:
                                 requests=report["new_requests"],
                             ),
                         )
-                        time.sleep(1.1)
+                        if prior_path is None or not prior_path.exists():
+                            time.sleep(1.1)
                 supported = []
                 seen = set()
                 kinds = {f["value"] for f in clue["features"]}
@@ -535,6 +579,7 @@ def run(base: Path, output: Path) -> dict:
             "accepted",
             "unresolved",
             "new_requests",
+            "reused_requests",
             "main_model_changed",
             "identity_assignments_changed",
         )
@@ -558,5 +603,14 @@ if __name__ == "__main__":
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--base", type=Path, required=True)
     parser.add_argument("--output", type=Path, required=True)
+    parser.add_argument("--request-cache", type=Path)
     args = parser.parse_args()
-    print(json.dumps(run(args.base.resolve(), args.output.resolve())))
+    print(
+        json.dumps(
+            run(
+                args.base.resolve(),
+                args.output.resolve(),
+                args.request_cache.resolve() if args.request_cache else None,
+            )
+        )
+    )

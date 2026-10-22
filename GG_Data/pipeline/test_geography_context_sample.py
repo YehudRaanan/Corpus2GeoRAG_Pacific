@@ -3,6 +3,7 @@
 import pytest
 
 from GG_Data.pipeline.geography_context_sample import (
+    checked_context,
     compatible,
     context,
     exact_alias,
@@ -52,3 +53,19 @@ def test_candidate_cannot_supply_its_own_missing_input_context():
     assert compatible("settlement", candidate)
     assert exact_alias("Donbaik", ["Done Paik", "Donbaik"])
     assert not exact_alias("Crabbs Peninsula", ["Crabs Peninsula"])
+
+
+def test_parent_gate_rejects_person_clue_and_keeps_supported_region():
+    clue = context(mention("For the assault on Donbaik, Lloyd planned it.", "Donbaik"))
+    candidate = dict(source="GeoNames", source_id="1", country_code="MM", admin1="01")
+    checked = checked_context(clue, [candidate], {("MM", "01"): ["Rakhine"]})
+    assert not checked["parents"]
+    assert checked["rejected_parents"][0]["value"] == "Lloyd"
+    assert clue["parents"][0]["value"] == "Lloyd"  # Original evidence unchanged.
+    positive = context(mention("Hoosick Falls, New York.", "Hoosick Falls"))
+    candidate = candidate | dict(country_code="US", admin1="NY")
+    checked = checked_context(positive, [candidate], {("US", "NY"): ["New York"]})
+    assert checked["parents"][0]["value"] == "New York"
+    assert checked["parents"][0]["supporting_candidates"][0]["source_id"] == "1"
+    assert not checked["rejected_parents"]
+    assert not checked_context(positive, [], {})["parents"]
