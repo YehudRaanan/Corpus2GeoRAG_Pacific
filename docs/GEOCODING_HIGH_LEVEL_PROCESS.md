@@ -176,7 +176,7 @@ Existing identity checks still apply. For a matched QID, use evidence for that i
 
 Retain the original coordinate statement, precision, globe/CRS, source item and statement identifier, available dates/qualifiers, snapshot/retrieval evidence and the fallback reason in the existing audit. Apply the agreed snapshot-first acquisition rule and cache reuse. A point is a position, not a place boundary or proof of its WWII extent. Persist it through the existing Shapely/WKB/GeoParquet path; keep its pointer in Geography and out of graph JSON.
 
-This section records the approved rule. No coordinate retrieval or selector change has been run under it yet. Existing ten-example results remain historical test outputs.
+The [bounded ten-example coordinate test](GEOGRAPHY_COORDINATE_10_2026-10-22.md) reused the agreed snapshot and made and cached four Nominatim reverse requests. It retained three geometries, left seven unresolved, and selected no new Point fallback. Its cached replay made zero new requests. The sample helper implements and code-tests the Point fallback, but no real unresolved input passed its identity gate. Production selection and earlier outputs remain unchanged.
 
 ## Decision outcomes
 

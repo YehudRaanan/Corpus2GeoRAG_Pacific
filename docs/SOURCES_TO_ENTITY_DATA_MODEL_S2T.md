@@ -1466,7 +1466,7 @@ The owner approved available Wikidata coordinates (`P625`) for (1) Nominatim ret
 
 Keep existing IDs and identity checks. A synthetic input can receive supported Geography without a new QID; a candidate's own coordinate is not independent proof of the candidate match. Do not choose conflicting coordinates, impose a new distance/radius threshold, or accept a nearest result silently. Preserve source coordinate values and precision; convert to `Point(longitude, latitude)` without moving, buffering or averaging. Store original statements, globe/CRS, dates/qualifiers, snapshot/retrieval evidence and the fallback reason in the existing audit and source fields. The 13-column compatibility view and model-only geometry pointer remain unchanged.
 
-Use the agreed snapshot-first source priority and cached evidence. This is a documented rule approval, not a completed retrieval, implementation or rerun. The ten-example local-polygon outputs remain unchanged.
+Use the agreed snapshot-first source priority and cached evidence. The [ten-example coordinate test](GEOGRAPHY_COORDINATE_10_2026-10-22.md) reused the agreed snapshot: four Nominatim reverse requests, three retained geometries, seven unresolved, zero new Point fallbacks. Candidate coordinates strengthened source-record context for Tinian Town and Sunharon Bay but did not establish input identity. A cached replay used zero new requests; nine focused tests passed. The sample helper implements the guarded Point fallback, with no qualifying real input in this sample. Production model/selection, IDs and prior local-polygon outputs remain unchanged.
 
 ## 10. Evidence, required checks and explicit exceptions
 
