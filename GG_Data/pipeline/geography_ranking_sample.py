@@ -8,12 +8,14 @@ This is a ranked proposal test, not a production acceptance or accuracy test.
 from __future__ import annotations
 
 import argparse
+import csv
 import importlib
 import json
 import re
 import sys
 import time
 import zipfile
+from collections import Counter
 from datetime import datetime, timezone
 from pathlib import Path
 
@@ -577,7 +579,9 @@ def run(
     request_count = 0
     reused_requests = 0
 
-    def fetch(kind: str, params: dict) -> tuple[list[dict], str]:
+    def fetch(
+        kind: str, params: dict, source: str = "OpenStreetMap"
+    ) -> tuple[list[dict], str]:
         nonlocal request_count, reused_requests
         params = (
             dict(
@@ -590,7 +594,7 @@ def run(
             | params
         )
         path = cache / f"{request_count:02d}_{kind}.json"
-        url = client.NOMINATIM["OpenStreetMap"] + "/" + kind
+        url = client.NOMINATIM[source] + "/" + kind
         previous = request_cache / path.name if request_cache else None
         if previous and previous.exists():
             saved = read_json(previous)
@@ -658,6 +662,31 @@ def run(
                 requests=request_count,
             ),
         )
+    if comparison:
+        # S2T 9: both approved exact-QID inventories need native geometries.
+        # Historical tag centres are not polygons and must not become shapes.
+        # Place this after existing requests so a saved OSM run replays exactly.
+        historical = read_json(comp / "sources/first_50_openhistoricalmap.json")[
+            "response"
+        ]["elements"]
+        for offset in range(0, len(historical), 50):
+            rows, receipt = fetch(
+                "lookup",
+                dict(
+                    osm_ids=",".join(
+                        {"node": "N", "way": "W", "relation": "R"}[e["type"]]
+                        + str(e["id"])
+                        for e in historical[offset : offset + 50]
+                    )
+                ),
+                source="OpenHistoricalMap",
+            )
+            for row in rows:
+                qid = (row.get("extratags") or {}).get("wikidata")
+                if qid in candidates:
+                    candidates[qid].append(
+                        native_candidate(row, "OpenHistoricalMap", receipt)
+                    )
     for p in sample:
         pid = p["place_id"]
         # Keep input-local source links; never join another input's candidates
@@ -732,6 +761,61 @@ def run(
     restored = gpd.read_parquet(path)
     assert len(restored) == len(proposals)
     assert all(a.equals_exact(b, 0) for a, b in zip(frame.geometry, restored.geometry))
+    # S2T 9.7: verify the owner's central rule over the complete denominator.
+    with_geometry = sum(
+        any(c["geometry_available"] for c in r["ranking"]) for r in results
+    )
+    if len(results) != len(sample) or with_geometry != len(proposals):
+        raise ValueError("Lost input or an available geometry was left unresolved")
+    with (output / "results.csv").open("w", encoding="utf-8-sig", newline="") as stream:
+        writer = csv.DictWriter(
+            stream,
+            fieldnames=[
+                "place_id",
+                "input_name",
+                "wikidata_id",
+                "source_page",
+                "status",
+                "selected_name",
+                "source",
+                "source_id",
+                "geometry_type",
+                "score",
+                "qid",
+                "coordinate",
+                "context",
+                "name",
+                "feature_type",
+                "uncertainty_flags",
+                "geometry_candidates",
+                "wikidata_coordinates",
+            ],
+        )
+        writer.writeheader()
+        for result in results:
+            p, chosen = result["input"], result["proposed"]
+            writer.writerow(
+                dict(
+                    place_id=p["place_id"],
+                    input_name=p["name"],
+                    wikidata_id=p["wikidata_id"],
+                    source_page=evidence[p["place_id"]]["source_page"],
+                    status=result["status"],
+                    selected_name=chosen["name"] if chosen else None,
+                    source=chosen["source"] if chosen else None,
+                    source_id=chosen["source_id"] if chosen else None,
+                    geometry_type=chosen["geometry"]["type"] if chosen else None,
+                    score=chosen["total"] if chosen else None,
+                    **(chosen["components"] if chosen else {}),
+                    uncertainty_flags=json.dumps(
+                        chosen["uncertainty_flags"] if chosen else []
+                    ),
+                    geometry_candidates=sum(
+                        c["geometry_available"] for c in result["ranking"]
+                    ),
+                    wikidata_coordinates=result["anchors_available"],
+                )
+            )
     for name, sha in protected.items():
         if digest(Path(name)) != sha:
             raise ValueError(f"Protected input changed: {name}")
@@ -753,6 +837,11 @@ def run(
         main_model_changed=False,
         identity_assignments_changed=False,
         accepted_geometry_assignments=0,
+        inputs_with_available_geometry=with_geometry,
+        avoidable_unresolved=with_geometry - len(proposals),
+        selected_sources=dict(Counter(p["source"] for p in proposals)),
+        geometry_types=dict(Counter(p["geometry"].geom_type for p in proposals)),
+        selected_zero_score=sum(p["total"] == 0 for p in proposals),
     )
     write(
         output / "audit.json",
