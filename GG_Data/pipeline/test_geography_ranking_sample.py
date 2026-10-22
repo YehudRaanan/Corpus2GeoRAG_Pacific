@@ -2,7 +2,12 @@
 
 from shapely.geometry import Point, Polygon, mapping
 
-from GG_Data.pipeline.geography_ranking_sample import distance_m, score, select_proposal
+from GG_Data.pipeline.geography_ranking_sample import (
+    coordinate_candidates,
+    distance_m,
+    score,
+    select_proposal,
+)
 
 
 def test_qid_and_coordinates_dominate_names_with_explicit_uncertainty():
@@ -79,3 +84,26 @@ def test_source_coordinate_context_and_always_select_available_geometry():
     assert select_proposal([zero_score]) == zero_score
     assert select_proposal([zero_score | dict(geometry_available=False)]) is None
     assert select_proposal([]) is None
+
+
+def test_multiple_coordinates_keep_native_values_and_skip_deprecated():
+    value = dict(
+        latitude=1,
+        longitude=2,
+        altitude=None,
+        globe="http://www.wikidata.org/entity/Q2",
+    )
+    statements = [
+        dict(
+            id=f"Q1${rank}",
+            rank=rank,
+            mainsnak=dict(snaktype="value", datavalue=dict(value=value)),
+        )
+        for rank in ("normal", "preferred", "deprecated")
+    ]
+    entity = dict(id="Q1", claims=dict(P625=statements))
+    result = coordinate_candidates(entity)
+    assert [r["statement"]["rank"] for r in result] == ["normal", "preferred"]
+    assert all(r["xy"] == [2, 1] for r in result)
+    assert len(entity["claims"]["P625"]) == 3
+    assert coordinate_candidates(dict(id="Q2")) == []

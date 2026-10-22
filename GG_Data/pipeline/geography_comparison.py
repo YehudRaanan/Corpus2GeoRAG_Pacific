@@ -95,7 +95,7 @@ def query_for(place: dict, countries: list[str], dated: bool) -> dict:
     return result
 
 
-def prepare(base: Path, output: Path) -> dict:
+def prepare(base: Path, output: Path, frozen_sample: Path | None = None) -> dict:
     if output.exists():
         raise ValueError("Preserve prior comparison; use a new output directory")
     files = [
@@ -123,7 +123,19 @@ def prepare(base: Path, output: Path) -> dict:
     ):
         raise ValueError("Model entities differ from the saved manifest")
     targets = read_json(files[0])
-    sample = sample_targets(targets, read_json(files[2]))
+    sample = (
+        read_json(frozen_sample)
+        if frozen_sample
+        else sample_targets(targets, read_json(files[2]))
+    )
+    if frozen_sample:
+        # S2T 9: a wider test uses existing LOC rows, never invented identities.
+        inputs[str(frozen_sample)] = digest(frozen_sample)
+        target_by_id = {r["place_id"]: r for r in targets}
+        if len({r["place_id"] for r in sample}) != len(sample) or any(
+            r != target_by_id.get(r["place_id"]) for r in sample
+        ):
+            raise ValueError("Frozen sample differs from the existing LOC targets")
     entities = {
         e["entity_id"]: e
         for e in read_json(base / "model_qid_name/entities.json.gz")
@@ -189,10 +201,10 @@ def prepare(base: Path, output: Path) -> dict:
     plan = dict(
         status="PREPARED",
         created_at=datetime.now(timezone.utc).isoformat(),
-        seed=SEED,
-        input_count=40,
+        seed=None if frozen_sample else SEED,
+        input_count=len(sample),
         population_count=len(targets),
-        cohorts=dict(Counter(p["cohort"] for p in sample)),
+        cohorts=dict(Counter(p.get("cohort", "new_random") for p in sample)),
         source_languages=dict(Counter(e["wiki_site"] for e in evidence.values())),
         query_counts={k: len(v) for k, v in queries.items()},
         country_scoped=sum(bool(e["country_codes_used"]) for e in evidence.values()),
@@ -489,9 +501,11 @@ def analyze(output: Path) -> dict:
                 for c in rows
             )
             baseline = dict(
-                status="EXACT_QID_TAG_CANDIDATES_GEOMETRY_UNTESTED"
-                if eligible_count
-                else "NO_ELIGIBLE_EXACT_QID_TAG_CANDIDATE",
+                status=(
+                    "EXACT_QID_TAG_CANDIDATES_GEOMETRY_UNTESTED"
+                    if eligible_count
+                    else "NO_ELIGIBLE_EXACT_QID_TAG_CANDIDATE"
+                ),
                 eligible_count=eligible_count,
                 complete_geocoding=False,
             )
@@ -613,10 +627,11 @@ if __name__ == "__main__":
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("phase", choices=["prepare", "retrieve", "analyze"])
     parser.add_argument("--base", type=Path)
+    parser.add_argument("--frozen-sample", type=Path)
     parser.add_argument("--output", type=Path, required=True)
     args = parser.parse_args()
     if args.phase == "prepare":
-        result = prepare(args.base, args.output)
+        result = prepare(args.base, args.output, args.frozen_sample)
     else:
         result = {"retrieve": retrieve, "analyze": analyze}[args.phase](args.output)
     print(json.dumps(result, ensure_ascii=True))

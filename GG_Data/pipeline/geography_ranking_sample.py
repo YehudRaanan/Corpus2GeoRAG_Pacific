@@ -226,6 +226,20 @@ def select_proposal(ranked: list[dict]) -> dict | None:
     return next((c for c in ranked if c["geometry_available"]), None)
 
 
+def coordinate_candidates(entity: dict) -> list[dict]:
+    """Owner approval, 22 October: retain every non-deprecated P625 candidate.
+
+    Keep rank and precision in each original statement. The existing ranking
+    and stable assertion-ID tie rule select among them; no coordinate average
+    or replacement identity is created. Existing Earth/value checks still apply.
+    """
+    return [
+        coordinate(entity | {"claims": {"P625": [claim]}})
+        for claim in entity.get("claims", {}).get("P625", [])
+        if claim.get("rank") != "deprecated"
+    ]
+
+
 def native_candidate(row: dict, source: str, receipt: str) -> dict:
     """Nominatim source geometry and tags, with the complete receipt retained."""
     aliases = [row.get("name", "")]
@@ -252,14 +266,25 @@ def native_candidate(row: dict, source: str, receipt: str) -> dict:
     )
 
 
-def run(output: Path, request_cache: Path | None = None) -> dict:
-    """Freeze 10 regression cases plus the first 5 of each saved random arm."""
+def run(
+    output: Path,
+    request_cache: Path | None = None,
+    comparison: Path | None = None,
+) -> dict:
+    """Rank the fixed twenty, or every row of a frozen wider comparison."""
     started = time.perf_counter()
     root = ROOT / "GG_Data/pipeline/outputs"
     base, comp = (
         root / "rebuild_page_scope_20261022",
         root / "geography_comparison_40_20261022",
     )
+    if comparison:
+        comp = comparison
+        if read_json(comp / "progress.json")["status"] != "RETRIEVED":
+            raise ValueError("Wider sample source retrieval is incomplete")
+        for filename, sha in read_json(comp / "plan.json")["inputs"].items():
+            if digest(Path(filename)) != sha:
+                raise ValueError(f"Frozen comparison input changed: {filename}")
     prior = root / "geography_coordinate_10_20261022_points_applied"
     diagnostic = root / "geography_context_evidence_5_20261022"
     if output.exists():
@@ -276,9 +301,13 @@ def run(output: Path, request_cache: Path | None = None) -> dict:
             if p.is_file():
                 protected[str(p)] = digest(p)
     all_sample = read_json(comp / "sample.json")
-    sample = all_sample[:10] + all_sample[10:15] + all_sample[25:30]
-    if len({p["place_id"] for p in sample}) != 20:
-        raise ValueError("Expected twenty distinct preserved identities")
+    sample = (
+        all_sample
+        if comparison
+        else all_sample[:10] + all_sample[10:15] + all_sample[25:30]
+    )
+    if len({p["place_id"] for p in sample}) != len(sample):
+        raise ValueError("Expected distinct preserved identities")
     write(output / "sample.json", sample)
     write(output / "parameters.json", PARAMETERS)
     evidence = read_json(comp / "evidence.json")
@@ -354,10 +383,12 @@ def run(output: Path, request_cache: Path | None = None) -> dict:
         anchors[pid] = []
         qids = [p["wikidata_id"]] if p["wikidata_id"] else sorted(linked)
         for q in qids:
-            a = anchors_extra.get(q) or (
-                coordinate(records[q]) if q in records else None
+            available = (
+                [anchors_extra[q]]
+                if q in anchors_extra
+                else coordinate_candidates(records.get(q, {}))
             )
-            if a:
+            for a in available:
                 anchors[pid].append(
                     a
                     | dict(
@@ -442,6 +473,8 @@ def run(output: Path, request_cache: Path | None = None) -> dict:
     old = read_json(base / "geography_sample/audit.json")
     for row in old["results"]:
         pid = row["input"]["place_id"]
+        if pid not in candidates:
+            continue
         for filename in row.get("name_source_files", []):
             path = Path(filename)
             if not path.is_absolute():
@@ -453,6 +486,8 @@ def run(output: Path, request_cache: Path | None = None) -> dict:
                     native_candidate(r, data.get("source", "Nominatim"), str(path))
                 )
     for row in read_json(diagnostic / "retrieval.json")["results"]:
+        if row["place_id"] not in candidates:
+            continue
         for r in row["rows"]:
             if r.get("osm_id"):
                 candidates[row["place_id"]].append(
@@ -460,6 +495,8 @@ def run(output: Path, request_cache: Path | None = None) -> dict:
                 )
     for row in original["results"]:
         pid = row["input"]["place_id"]
+        if pid not in candidates:
+            continue
         if row.get("geometry_ref"):
             geo = load_geometry(row["geometry_ref"], prior)
             candidates[pid].append(
@@ -584,15 +621,17 @@ def run(output: Path, request_cache: Path | None = None) -> dict:
     inventory = read_json(comp / "sources/first_50_openstreetmap.json")["response"][
         "elements"
     ]
-    new_ids = {p["place_id"] for p in sample[10:15]}
+    fresh_sample = sample if comparison else sample[10:]
+    new_ids = {p["place_id"] for p in fresh_sample}
     objects = [e for e in inventory if e.get("tags", {}).get("wikidata") in new_ids]
-    if objects:
+    # Nominatim lookup accepts at most 50 native object IDs per request.
+    for offset in range(0, len(objects), 50):
         rows, receipt = fetch(
             "lookup",
             dict(
                 osm_ids=",".join(
                     {"node": "N", "way": "W", "relation": "R"}[e["type"]] + str(e["id"])
-                    for e in objects
+                    for e in objects[offset : offset + 50]
                 )
             ),
         )
@@ -600,7 +639,7 @@ def run(output: Path, request_cache: Path | None = None) -> dict:
             q = (r.get("extratags") or {}).get("wikidata")
             if q in candidates:
                 candidates[q].append(native_candidate(r, "OpenStreetMap", receipt))
-    for p in sample[10:]:
+    for index, p in enumerate(fresh_sample, 1):
         pid = p["place_id"]
         rows, receipt = fetch("search", dict(q=p["name"], limit="10"))
         for r in rows:
@@ -615,7 +654,7 @@ def run(output: Path, request_cache: Path | None = None) -> dict:
             output / "progress.json",
             dict(
                 status="RETRIEVING",
-                completed_new_inputs=sample[10:].index(p) + 1,
+                completed_new_inputs=index,
                 requests=request_count,
             ),
         )
@@ -697,12 +736,16 @@ def run(output: Path, request_cache: Path | None = None) -> dict:
         if digest(Path(name)) != sha:
             raise ValueError(f"Protected input changed: {name}")
     summary = dict(
-        status="VERIFIED_TWENTY_RANKING_PROPOSALS",
-        inputs=20,
-        original=10,
-        new=10,
+        status=(
+            "VERIFIED_RANKING_PROPOSALS"
+            if comparison
+            else "VERIFIED_TWENTY_RANKING_PROPOSALS"
+        ),
+        inputs=len(sample),
+        original=0 if comparison else 10,
+        new=len(fresh_sample),
         geometry_proposals=len(proposals),
-        no_geometry_proposal=20 - len(proposals),
+        no_geometry_proposal=len(sample) - len(proposals),
         requests=request_count,
         new_requests=request_count - reused_requests,
         reused_requests=reused_requests,
@@ -734,5 +777,6 @@ if __name__ == "__main__":
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--output", type=Path, required=True)
     parser.add_argument("--request-cache", type=Path)
+    parser.add_argument("--comparison", type=Path)
     args = parser.parse_args()
-    print(json.dumps(run(args.output, args.request_cache)))
+    print(json.dumps(run(args.output, args.request_cache, args.comparison)))
