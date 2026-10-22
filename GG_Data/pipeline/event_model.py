@@ -135,7 +135,15 @@ def event_rows(record: dict, source: dict, decision: dict) -> tuple[dict, dict]:
     return entity, event
 
 
-def run(output: Path) -> dict:
+def run(
+    output: Path,
+    *,
+    selection: Path = SELECTION,
+    entities: Path = ENTITIES,
+    mapping_dir: Path = MAPPING,
+    mentions: Path | None = None,
+    scores_dir: Path | None = None,
+) -> dict:
     started = perf_counter()
     if output.exists() or not output.resolve().is_relative_to(BASE):
         raise ValueError("Use a new directory under approved pipeline outputs")
@@ -161,26 +169,26 @@ def run(output: Path) -> dict:
 
     save()
     try:
-        receipt = read_json(SELECTION / "report.json")
+        receipt = read_json(selection / "report.json")
         if (
-            read_json(SELECTION / "verification.json")["report_sha256"]
-            != pin(SELECTION / "report.json")
+            read_json(selection / "verification.json")["report_sha256"]
+            != pin(selection / "report.json")
             or not receipt["full_retained_scope_checked"]
             or receipt["event_relevance_aggregation"] != "maximum_missing_zero"
         ):
             raise SourceException("Expected verified maximum Event selection")
         for name, expected in receipt["outputs"].items():
-            if pin(SELECTION / name) != expected:
+            if pin(selection / name) != expected:
                 raise SourceException("Event input checksum differs", file=name)
-        manifest = read_json(ENTITIES / "manifest.json")
+        manifest = read_json(entities / "manifest.json")
         if (
-            read_json(ENTITIES / "verification.json")["manifest_sha256"]
-            != pin(ENTITIES / "manifest.json")
+            read_json(entities / "verification.json")["manifest_sha256"]
+            != pin(entities / "manifest.json")
             or manifest["snapshot_at"] != receipt["snapshot_at"]
         ):
             raise SourceException("Entities snapshot verification differs")
         for name, expected in manifest["outputs"].items():
-            if pin(ENTITIES / name) != expected:
+            if pin(entities / name) != expected:
                 raise SourceException("Entities checksum differs", file=name)
         pin(Path(__file__))
         for name in (
@@ -192,8 +200,8 @@ def run(output: Path) -> dict:
             pin(ROOT / "GG_Data/pipeline" / name)
         pin(ROOT / "GG_Data/mapping/ASSERTION_EXCLUSIONS.csv")
         pin(ROOT / "docs/SOURCES_TO_ENTITY_DATA_MODEL_S2T.md")
-        decisions = read_json(SELECTION / "decisions.json")
-        retained = set(read_json(SELECTION / "retrieval_scope.json")["retained_qids"])
+        decisions = read_json(selection / "decisions.json")
+        retained = set(read_json(selection / "retrieval_scope.json")["retained_qids"])
         # These saved candidates already passed native Event recognition in
         # event_population.run; replay selection, not hierarchy discovery.
         replay = select_events(
@@ -206,7 +214,7 @@ def run(output: Path) -> dict:
                 for r in decisions
             ],
             retained,
-            load_scores(retained),
+            load_scores(retained, scores_dir),
         )
         if any(
             a["keep_event"] != b["keep_event"]
@@ -218,11 +226,11 @@ def run(output: Path) -> dict:
             raise SourceException("Selected Event population differs")
         report.update(included_events=len(chosen), snapshot_at=receipt["snapshot_at"])
         save()
-        original = read_entities(ENTITIES / "entities.json.gz")
+        original = read_entities(entities / "entities.json.gz")
         daniel = {r["entity_id"] for r in original if r["entity_id"].startswith("Q")}
         existing = {(r["entity_id"], r["type"]) for r in original}
         raw_events = {}
-        with gzip.open(SELECTION / "full_records.json.gz", "rb") as stream:
+        with gzip.open(selection / "full_records.json.gz", "rb") as stream:
             for qid, record in ijson.kvitems(stream, "", use_float=True):
                 if qid in chosen:
                     raw_events[qid] = record
@@ -234,7 +242,7 @@ def run(output: Path) -> dict:
                 raise SourceException("Event typed row already exists", qid=qid)
             source = dict(
                 provider="BIGQUERY",
-                file=str(SELECTION / "full_records.json.gz"),
+                file=str(selection / "full_records.json.gz"),
                 sha256=receipt["outputs"]["full_records.json.gz"],
                 record_id=qid,
                 snapshot_at=receipt["snapshot_at"],
@@ -245,17 +253,17 @@ def run(output: Path) -> dict:
             event_table.append(event)
         # Reuse the accepted native extensions from the preceding source scan;
         # their names are already cached, so no retrieval is needed again.
-        mapping_receipt = read_json(MAPPING.parent / "stop_verification.json")
-        if pin(MAPPING.parent / "report.json") != mapping_receipt["report_sha256"]:
+        mapping_receipt = read_json(mapping_dir.parent / "stop_verification.json")
+        if pin(mapping_dir.parent / "report.json") != mapping_receipt["report_sha256"]:
             raise SourceException("Prior native mapping stop receipt changed")
         for name, expected in mapping_receipt["mapping_artifacts"].items():
-            if pin(MAPPING / name) != expected:
+            if pin(mapping_dir / name) != expected:
                 raise SourceException(
                     "Prior native mapping artifact changed", file=name
                 )
         mapping = {
             (r["source"], r["source_predicate"]): r
-            for r in read_csv(MAPPING / "RELATION_MAPPING_TABLE_v2.1.2.csv")
+            for r in read_csv(mapping_dir / "RELATION_MAPPING_TABLE_v2.1.2.csv")
         }
         report.update(
             relation_selection_policy=POLICY,
@@ -294,7 +302,7 @@ def run(output: Path) -> dict:
                 mapping,
                 output,
                 reference,
-                native_rules=MAPPING / "NATIVE_RELATION_RULES_v2.1.2.csv",
+                native_rules=mapping_dir / "NATIVE_RELATION_RULES_v2.1.2.csv",
             )
         relations = populate(statements, mapping)
         temporal = [
@@ -309,7 +317,7 @@ def run(output: Path) -> dict:
             or c["time_selection"]["original_pre_1900_end"]
             or any(d["derived"] for d in c["time_selection"]["decisions"].values())
         ]
-        mentions = BASE / "poc_10k/mentions.json.gz"
+        mentions = mentions or BASE / "poc_10k/mentions.json.gz"
         first = read_json(mentions.parent / "manifest.json")
         if pin(mentions) != first["outputs"][mentions.name]:
             raise SourceException("Original 10K Mentions changed")

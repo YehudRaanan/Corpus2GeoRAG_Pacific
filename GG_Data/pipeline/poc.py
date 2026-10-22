@@ -21,6 +21,9 @@ import ijson
 import pandas as pd
 
 ROOT = Path(__file__).resolve().parents[2]
+# Shared manifest interface with the legacy script entry point; avoid importing
+# its CLI-only sibling imports into the population package.
+PAGE_CANDIDATE_SCOPE = "SOURCE_PAGE_EN_JA_LINKS_ONLY_V1"
 INPUT_SHA256 = "dcd51dfa237b63378279ced4f9739a45d8cf8ce3991579f20848295448f83f16"
 INPUT_COUNT = 309_864
 SAMPLE_COUNT = 10_000
@@ -203,6 +206,9 @@ def prepare(input_path: Path, cache: Path) -> dict:
         raise ValueError("Daniel input hash differs from the pinned S2T input")
     manifest_path = cache / "manifest.json"
     manifest = read_json(manifest_path)
+    # Population S2T 3: old global-name page pools invalidate every later stage.
+    if manifest.get("page_candidate_scope") != PAGE_CANDIDATE_SCOPE:
+        raise ValueError("Matching run does not enforce source-page candidate scope")
     if (manifest["input_sha256"], manifest["threshold"], manifest["seed"]) != (
         INPUT_SHA256,
         0.8,
@@ -255,6 +261,7 @@ def prepare(input_path: Path, cache: Path) -> dict:
             "status": "STEP_1_ONLY",
             "input_sha256": INPUT_SHA256,
             "resolution_run_id": run_id,
+            "page_candidate_scope": PAGE_CANDIDATE_SCOPE,
             "seed": SEED,
             "sample_indices": indices,
             "sample_count": len(mentions),

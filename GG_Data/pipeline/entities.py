@@ -285,7 +285,15 @@ def populate(
     return result
 
 
-def run(step1: Path, cache: Path, archive: Path, store: Path, output: Path) -> None:
+def run(
+    step1: Path,
+    cache: Path,
+    archive: Path,
+    store: Path,
+    output: Path,
+    *,
+    available_entities: Path | None = None,
+) -> None:
     # D: output is approved. Keep the completed first step immutable; a new
     # manifest marks this step only after every source and entity check passes.
     for path in (store, output):
@@ -318,26 +326,75 @@ def run(step1: Path, cache: Path, archive: Path, store: Path, output: Path) -> N
     if metadata.keys() != qids:
         raise ValueError("Saved matching metadata is incomplete")
     archived, archive_sources = full_records(qids, archive)
+    available = {q: [(r, archive_sources[q])] for q, r in archived.items()}
+    if available_entities is not None:
+        # S2T 1: reuse whole same-ID source records only. Never import saved
+        # identities, aggregates or matching decisions from the older model.
+        prior_manifest = read_json(available_entities / "manifest.json")
+        prior_path = available_entities / "entities.json.gz"
+        if digest(prior_path) != prior_manifest["outputs"][prior_path.name]:
+            raise ValueError("Available source records differ from their manifest")
+        for row in read_json(prior_path):
+            qid = row["entity_id"]
+            if qid in qids:
+                available.setdefault(qid, []).append(
+                    (row["raw_reference"]["full"], row["sources"][0])
+                )
+    reference_path = cache / "reference_manifest.json"
+    reference = read_json(reference_path)
     records, provenance = acquire_missing(
         qids,
         store,
-        read_json(cache / "reference_manifest.json"),
-        available_records={q: [(r, archive_sources[q])] for q, r in archived.items()},
+        reference,
+        available_records=available,
     )
     reused_count = sum(
         source["provider"] != "BIGQUERY" for source in provenance.values()
     )
     entities = populate(mentions, records, metadata, provenance)
+    from GG_Data.pipeline.relation_selection import importance
+
+    # S2T 6/8: recompute page-count * mention-count from corrected identities;
+    # each existing synthetic mention also has its own score of one.
+    scores = importance(mentions)
+    for row in entities:
+        qid = row["entity_id"]
+        row["importance"] = scores[qid]["score"]
+        row["attributes"]["importance"] = scores[qid]
+        source = provenance.get(qid)
+        row["attributes"]["bq_availability"] = dict(
+            status=(
+                "NOT_APPLICABLE_SYNTHETIC"
+                if qid.startswith("SYN_")
+                else (
+                    "PRESENT_IN_PINNED_BQ"
+                    if source["provider"] == "BIGQUERY"
+                    else "MISSING_IN_PINNED_BQ"
+                )
+            ),
+            snapshot_at=reference["table_snapshot"]["snapshot_at"],
+        )
     for page in pages:
         page["about_entity_id"] = (
             page["wikidata_qid"] if page["wikidata_qid"] in qids else None
         )
     output.mkdir(parents=True, exist_ok=False)
-    for name, rows in (("entities", entities), ("wiki_pages", pages)):
+    for name, rows in (
+        ("entities", entities),
+        ("wiki_pages", pages),
+        ("full_records", records),
+    ):
         with gzip.open(output / f"{name}.json.gz", "wt", encoding="utf-8") as stream:
             json.dump(rows, stream, ensure_ascii=False, allow_nan=False)
     completion = dict(
-        status="ENTITIES_STEP_ONLY",
+        status="ENTITIES_SNAPSHOT_FIRST",
+        snapshot_at=reference["table_snapshot"]["snapshot_at"],
+        source_rule="AGREED_SNAPSHOT_THEN_LATEST_AVAILABLE_SAME_QID",
+        provenance=provenance,
+        inputs={
+            str(p): digest(p)
+            for p in (manifest_path, reference_path, step1 / "mentions.json.gz")
+        },
         step1_manifest=dict(file=str(manifest_path), sha256=digest(manifest_path)),
         entity_count=len(entities),
         qid_count=len(qids),
@@ -348,6 +405,21 @@ def run(step1: Path, cache: Path, archive: Path, store: Path, output: Path) -> N
     )
     (output / "manifest.json").write_text(
         json.dumps(completion, indent=2), encoding="utf-8"
+    )
+    if read_json(output / "entities.json.gz") != entities:
+        raise ValueError("Entity output readback differs")
+    (output / "verification.json").write_text(
+        json.dumps(
+            dict(
+                status="VERIFIED_ENTITIES_SNAPSHOT_FIRST",
+                manifest_sha256=digest(output / "manifest.json"),
+                original_sample_preserved=True,
+                importance_recomputed=True,
+                output_readback=True,
+            ),
+            indent=2,
+        ),
+        encoding="utf-8",
     )
     LOG.info(
         "Entities complete: %d rows; remaining pipeline stages pending", len(entities)
@@ -376,9 +448,17 @@ def main() -> None:
         default=ROOT / "GG_Data/pipeline/outputs/wikidata_full_cache",
     )
     parser.add_argument("--output", type=Path, required=True)
+    parser.add_argument("--available-entities", type=Path)
     args = parser.parse_args()
     logging.basicConfig(level=logging.INFO)
-    run(args.step1, args.cache, args.archive, args.store, args.output)
+    run(
+        args.step1,
+        args.cache,
+        args.archive,
+        args.store,
+        args.output,
+        available_entities=args.available_entities,
+    )
 
 
 if __name__ == "__main__":

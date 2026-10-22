@@ -15,11 +15,25 @@ Relations and Geography inputs; no historical aggregate is a valid new input.
 Geography continuation is limited to the previous sample phase, not an implied
 full Geography import or final graph acceptance. See population S2T section 3.
 
-Initial London regression: the saved source-page pool contains 721 QIDs,
-including neither Q84 nor Q1001456. The corrected page pass therefore returns
-`NO_NAME_ABOVE_THRESHOLD`, rather than randomly choosing London, Ohio. London
-must still be checked through both fallback stages and the resulting model.
-This is not a completed rerun result.
+Verified matching checkpoint (22 October, 07:16 Asia/Jerusalem): the fresh run
+preserves all **309,864** original rows: **134,406 page matches + 60,787
+already-matched-pool matches + 5,717 WWII matches + 29,969 dates + 78,985
+synthetic unresolved mentions**. Counts are not identity-accuracy estimates.
+The same fixed 10K source positions were verified and imported again.
+
+London regression passed without overriding any assignment. Its source-page
+pool contains 721 QIDs, including neither Q84 nor Q1001456. The corrected page
+pass returns `NO_NAME_ABOVE_THRESHOLD`. The second pass selects **Q84, London,
+UK**, at 1.0 similarity with **one** highest-scoring candidate. The old assignment
+was Q1001456, London, Ohio. The row and its attempts are preserved in
+`outputs/rebuild_page_scope_20261022/matching/london_validation.json`.
+
+Downstream rebuild is still in progress; the matching checkpoint does not
+validate the old populated model or Geography outputs. New stage outputs live
+under `outputs/rebuild_page_scope_20261022/`. `rebuild_poc.py` passes explicit
+fresh paths into the existing population stages, remeasures language-specific
+relevance, and requests a new full-scope Event query. Approved hierarchy and
+relation-mapping parameter tables are reused; old selections are not.
 
 ### Synthetic LOC coverage - 21 October 2026
 

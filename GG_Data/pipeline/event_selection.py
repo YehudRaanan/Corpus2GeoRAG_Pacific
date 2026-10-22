@@ -29,11 +29,15 @@ SCORES = BASE / "poc_10k_event_selection_2pct_redirect_priority_20261021"
 SCORES_SHA = "3e46b4da5b18621aa4513a788adb75e4bc6b9c0c581c7591b0d9c3fd09f96212"
 
 
-def load_scores(retained_qids: set[str]) -> dict[str, Fraction | None]:
+def load_scores(
+    retained_qids: set[str], scores_dir: Path | None = None
+) -> dict[str, Fraction | None]:
     """Reuse the approved language maxima; missing records are not unscored."""
-    path = SCORES / "entity_scores.json"
-    report = read_json(SCORES / "report.json")
-    if digest(path) != SCORES_SHA or report["outputs"][path.name] != SCORES_SHA:
+    directory = scores_dir or SCORES
+    path = directory / "entity_scores.json"
+    report = read_json(directory / "report.json")
+    expected = report["outputs"][path.name]
+    if digest(path) != expected or (directory == SCORES and expected != SCORES_SHA):
         raise ValueError("Approved retained-entity scores changed")
     rows = read_json(path)
     if len(rows) != len(retained_qids) or {r["qid"] for r in rows} != retained_qids:
@@ -135,13 +139,17 @@ def select_events(
     return rows
 
 
-def prepare(output: Path) -> dict:
+def prepare(
+    output: Path,
+    entities: Path | None = None,
+    scope_report: Path | None = None,
+) -> dict:
     """Pin the frozen 10K sources and preserve every model row (S2T 1/6.1).
 
     Selection lists are retrieval scope only, never rewritten Entities or
     Mentions. Unknown MISC QIDs are held aside under the explicit user approval.
     """
-    entities = BASE / "poc_10k_entities_snapshot_first_20261020"
+    entities = entities or BASE / "poc_10k_entities_snapshot_first_20261020"
     entity_manifest = read_json(entities / "manifest.json")
     if (
         digest(entities / "manifest.json")
@@ -151,7 +159,7 @@ def prepare(output: Path) -> dict:
     for name, expected in entity_manifest["outputs"].items():
         if digest(entities / name) != expected:
             raise ValueError(f"Frozen Entity output changed: {name}")
-    source = (
+    source = scope_report or (
         BASE / "poc_10k_scope_concentration_maximum_language_5pct_20261020/report.json"
     )
     saved = verified_report(source)

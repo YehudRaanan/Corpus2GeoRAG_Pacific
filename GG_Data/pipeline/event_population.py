@@ -150,9 +150,21 @@ def recovered_partition(query_path: Path, expected_sql: str) -> tuple[dict, Path
     return saved, cache_path
 
 
-def run(output: Path, recovered_two_query: Path | None = None) -> dict:
+def run(
+    output: Path,
+    recovered_two_query: Path | None = None,
+    *,
+    entities_dir: Path | None = None,
+    relations_dir: Path | None = None,
+    scores_dir: Path | None = None,
+    scope_report: Path | None = None,
+    fresh_scope: bool = False,
+) -> dict:
     started = perf_counter()
-    scope = prepare(output)
+    entities_dir = entities_dir or ENTITIES
+    relations_dir = relations_dir or RELATIONS
+    scores_dir = scores_dir or SCORES
+    scope = prepare(output, entities_dir, scope_report)
     report = dict(
         status="PREPARING_CLOUD_EVENT_CHECK",
         event_rows_written=0,
@@ -197,8 +209,8 @@ def run(output: Path, recovered_two_query: Path | None = None) -> dict:
         if not types or any(not re.fullmatch(r"Q[1-9]\d*", q) for q in types):
             raise ValueError("Invalid Event class parameters")
         daniel = set(scope["retained_qids"])
-        scores = load_scores(daniel)
-        records = read_json(ENTITIES / "full_records.json.gz")
+        scores = load_scores(daniel, scores_dir)
+        records = read_json(entities_dir / "full_records.json.gz")
         all_outgoing = [
             link
             for q in sorted(daniel)
@@ -212,7 +224,7 @@ def run(output: Path, recovered_two_query: Path | None = None) -> dict:
             for q in sorted(by_event)
             for d in sorted({r["subject_qid"] for r in by_event[q]})
         ]
-        manifest = read_json(ENTITIES / "manifest.json")
+        manifest = read_json(entities_dir / "manifest.json")
         references = [
             Path(p)
             for p in manifest["inputs"]
@@ -226,8 +238,8 @@ def run(output: Path, recovered_two_query: Path | None = None) -> dict:
         ref = read_json(references[0])
         if read_json(STORE / "table_snapshot.json") != ref["table_snapshot"]:
             raise ValueError("Cloud cache uses another snapshot")
-        mapping_path = RELATIONS / "mapping/RELATION_MAPPING_TABLE_v2.1.2.csv"
-        mapping_manifest = read_json(RELATIONS / "manifest.json")
+        mapping_path = relations_dir / "mapping/RELATION_MAPPING_TABLE_v2.1.2.csv"
+        mapping_manifest = read_json(relations_dir / "manifest.json")
         if (
             digest(mapping_path)
             != mapping_manifest["mapping_artifacts"][
@@ -243,13 +255,13 @@ def run(output: Path, recovered_two_query: Path | None = None) -> dict:
             type_path,
             HIERARCHY / "recognition_approval.json",
             mapping_path,
-            ENTITIES / "manifest.json",
+            entities_dir / "manifest.json",
             references[0],
             Path(__file__),
             ROOT / "GG_Data/pipeline/event_selection.py",
             ROOT / "GG_Data/mapping/ASSERTION_EXCLUSIONS.csv",
-            SCORES / "entity_scores.json",
-            SCORES / "report.json",
+            scores_dir / "entity_scores.json",
+            scores_dir / "report.json",
             ROOT / "GG_Data/mapping/build_relation_mapping_v2_1.py",
             ROOT / "GG_Data/pipeline/relations.py",
         ]
@@ -271,34 +283,40 @@ def run(output: Path, recovered_two_query: Path | None = None) -> dict:
         types_table = client.upload_values(sorted(types), "event_type")
         pairs_table = client.upload_values(pairs, "pair")
         report["parameter_tables"] = dict(types=types_table, outgoing=pairs_table)
-        # Corrected S2T 7: the prior >=3 query is a complete cached partition.
-        # A passing mean requires at least one known score >=2%, including
-        # after exclusions remove endpoints. This is a necessary prefilter,
-        # not the final mean decision. Final
-        # exclusions and the same score rule are still replayed locally.
-        prior_report = read_json(PRIOR_THREE / "report.json")
-        prior_verification = read_json(PRIOR_THREE / "verification.json")
-        prior_query = PRIOR_THREE / "query_result.json.gz"
-        if (
-            prior_verification["report_sha256"] != digest(PRIOR_THREE / "report.json")
-            or not prior_report["full_retained_scope_checked"]
-            or digest(prior_query) != prior_report["outputs"][prior_query.name]
-            or set(read_json(PRIOR_THREE / "retrieval_scope.json")["retained_qids"])
-            != daniel
-            or prior_report["snapshot_at"] != report["snapshot_at"]
-            or prior_report["inputs"][str(type_path)] != digest(type_path)
-            or digest(output / "outgoing_pairs.json")
-            != prior_report["outputs"]["outgoing_pairs.json"]
-        ):
-            raise ValueError("Prior >=3 partition is not the same verified scope")
-        answer = read_json(prior_query)
-        if len(answer) != prior_report["cloud_preliminary_events"] or any(
-            len(set(row["daniel_qids"])) < 3 for row in answer
-        ):
-            raise ValueError("Prior query does not contain the complete >=3 partition")
-        report["inputs"].update(
-            {str(p): digest(p) for p in [prior_query, PRIOR_THREE / "report.json"]}
-        )
+        # S2T 3/7: corrected identities require a fresh full-scope query.
+        # Old population-dependent aggregates are never source-cache evidence.
+        if fresh_scope:
+            if recovered_two_query is not None:
+                raise ValueError("A fresh scope cannot recover an old partition")
+            answer = []
+            prior_report = {"source_requests": []}
+        else:
+            prior_report = read_json(PRIOR_THREE / "report.json")
+            prior_verification = read_json(PRIOR_THREE / "verification.json")
+            prior_query = PRIOR_THREE / "query_result.json.gz"
+            if (
+                prior_verification["report_sha256"]
+                != digest(PRIOR_THREE / "report.json")
+                or not prior_report["full_retained_scope_checked"]
+                or digest(prior_query) != prior_report["outputs"][prior_query.name]
+                or set(read_json(PRIOR_THREE / "retrieval_scope.json")["retained_qids"])
+                != daniel
+                or prior_report["snapshot_at"] != report["snapshot_at"]
+                or prior_report["inputs"][str(type_path)] != digest(type_path)
+                or digest(output / "outgoing_pairs.json")
+                != prior_report["outputs"]["outgoing_pairs.json"]
+            ):
+                raise ValueError("Prior >=3 partition is not the same verified scope")
+            answer = read_json(prior_query)
+            if len(answer) != prior_report["cloud_preliminary_events"] or any(
+                len(set(row["daniel_qids"])) < 3 for row in answer
+            ):
+                raise ValueError(
+                    "Prior query does not contain the complete >=3 partition"
+                )
+            report["inputs"].update(
+                {str(p): digest(p) for p in [prior_query, PRIOR_THREE / "report.json"]}
+            )
         qualifying = {
             q
             for q, value in scores.items()
@@ -309,7 +327,11 @@ def run(output: Path, recovered_two_query: Path | None = None) -> dict:
             scored_entity_qids=sum(v is not None for v in scores.values()),
             unscored_entity_qids=sum(v is None for v in scores.values()),
             cloud_qualifying_endpoint_qids=len(qualifying),
-            retrieval_partition="cached >=3 plus exactly 2 with at least one known >=2%",
+            retrieval_partition=(
+                "fresh full scope >=2 with at least one known >=2%"
+                if fresh_scope
+                else "cached >=3 plus exactly 2 with at least one known >=2%"
+            ),
             reused_source_requests=prior_report["source_requests"],
         )
         # Resume from the already completed broader query when supplied. No
@@ -324,7 +346,7 @@ def run(output: Path, recovered_two_query: Path | None = None) -> dict:
             daniel,
             types_table,
             pairs_table,
-            exact_count=2,
+            exact_count=None if fresh_scope else 2,
             qualifying_qids=partition_qualifying,
         )
         (output / "query.sql").write_text(sql, encoding="utf-8")
@@ -350,14 +372,15 @@ def run(output: Path, recovered_two_query: Path | None = None) -> dict:
             )
         previous_qids = {row["qid"] for row in answer}
         if any(
-            len(row["daniel_qids"]) != 2
-            or len(set(row["daniel_qids"])) != 2
+            len(row["daniel_qids"]) < 2
+            or len(set(row["daniel_qids"])) != len(row["daniel_qids"])
+            or (not fresh_scope and len(row["daniel_qids"]) != 2)
             or not set(row["daniel_qids"]) & partition_qualifying
             or row["qid"] in previous_qids
             for row in additional
         ):
-            raise ValueError("Exactly-two query overlaps or violates its source gate")
-        report["additional_two_entity_candidates"] = len(additional)
+            raise ValueError("Event query overlaps or violates its source gate")
+        report["additional_candidates"] = len(additional)
         answer.extend(additional)
         report["source_requests"] = client.requests
         with gzip.open(
@@ -404,7 +427,7 @@ def run(output: Path, recovered_two_query: Path | None = None) -> dict:
             mapping,
             output,
             ref,
-            native_rules=RELATIONS / "mapping/NATIVE_RELATION_RULES_v2.1.2.csv",
+            native_rules=relations_dir / "mapping/NATIVE_RELATION_RULES_v2.1.2.csv",
         )
         decisions = []
         for qid, links in candidate_links.items():

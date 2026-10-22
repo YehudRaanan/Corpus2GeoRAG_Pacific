@@ -48,6 +48,13 @@ def test_sample_is_reproducible_without_replacement_and_in_source_order():
     assert positions[-1] < poc.INPUT_COUNT
 
 
+def test_prepare_rejects_old_page_scope_before_loading_decisions(monkeypatch):
+    monkeypatch.setattr(poc, "digest", lambda _: poc.INPUT_SHA256)
+    monkeypatch.setattr(poc, "read_json", lambda _: {"outputs": {}})
+    with pytest.raises(ValueError, match="source-page candidate scope"):
+        poc.prepare(Path("input.parquet"), Path("old_matching"))
+
+
 def test_mention_preserves_source_and_nested_decisions_and_separates_scores():
     saved = saved_row()
     original = copy.deepcopy(saved)
@@ -127,6 +134,7 @@ def test_prepare_joins_original_positions_and_saved_pages_in_memory(monkeypatch)
     page_name = hashlib.sha256(b"Tokyo").hexdigest() + ".json.gz"
     manifest = {
         "input_sha256": poc.INPUT_SHA256,
+        "page_candidate_scope": poc.PAGE_CANDIDATE_SCOPE,
         "threshold": 0.8,
         "seed": poc.SEED,
         "outputs": {"matches.json.gz": "artifact-hash"},
