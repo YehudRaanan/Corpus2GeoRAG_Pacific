@@ -1757,6 +1757,12 @@ C:\Users\User\anaconda3\python.exe -B -m GG_Data.pipeline.relations --output D:\
 
 ## Approved graph interfaces
 
+Latest bounded Geography research: the [40-input candidate comparison](../../docs/GEOGRAPHY_CANDIDATE_COMPARISON_40_2026-10-22.md)
+compares existing dated WHG requests with native country/no-date requests.
+Status is `VERIFIED_CANDIDATE_COMPARISON_ONLY`; no model or geometry assignments
+changed. Its local sources are cached in `outputs/geography_comparison_40_20261022`.
+Do not treat candidate coverage as completed geocoding or a new production rule.
+
 `graph_contract.py` provides small interface helpers:
 
 - Distinct QID/type nodes use `QID::type`, keeping `wikidata_id` separately.

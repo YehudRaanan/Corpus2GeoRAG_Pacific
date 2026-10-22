@@ -1425,6 +1425,31 @@ Reuse approved saved snapshots/bulk retrieval first. The approved plan allows OH
 
 For synthetic targets, reuse Daniel's original name, type/subtype and source-page references from the checksum-pinned Mentions artifact, together with any already-supported date evidence. A page title is context, not proof of a parent area. Do not extract new entities, infer dates from paragraph text, or fabricate place classes or parents. The existing default selection date still applies when no supported related date exists. Name and date alone do not remove identity ambiguity: retain the existing additional identity-evidence checks. Insufficient evidence remains visibly unresolved. This is the `geo-object-selection-v0.5.0` policy with the approved synthetic-LOC population extension; no source or acceptance threshold is added.
 
+### 9.1 Candidate comparison checkpoint — 22 October 2026
+
+The approved 40-input diagnostic preserves the original ten and adds 15 random
+QID and 15 random synthetic LOC targets. WHG native country/no-date queries
+increased first-ten reference-ID coverage from 10/17 to 13/17 QIDs and first-hit
+agreement from 5/17 to 8/17. This is retrieval agreement, not independent
+identity accuracy or accepted geometry coverage. Both query arms returned
+candidates for all 38 searchable names; two punctuation inputs were retained
+without searching. Four requests completed in 66.103 seconds and were cached.
+
+Country scoping improved Java but lost Bora Bora because saved France evidence
+yielded `FR` while the expected gazetteer record uses `PF`. Fourteen additional
+searchable synthetic inputs are blocked by the existing feature parser, which
+does not cover classes such as mountain ranges, hills and cemeteries. Candidate
+coverage and parser limitations must not be reported as absence from Wikidata
+or absence of a real place. No country conversion, feature class, acceptance
+threshold, date rule, new entity or geometry assignment was promoted. The
+original two accepted/eight unresolved decisions and main model are unchanged.
+
+See [complete test, per-input results and limitations](GEOGRAPHY_CANDIDATE_COMPARISON_40_2026-10-22.md).
+The additional 30 inputs have candidate diagnostics only; nine have eligible
+exact-QID tag candidates whose full geometry was not tested. Production rules
+above remain in force. General structured context and country-code handling
+still require discussion before implementation.
+
 ## 10. Evidence, required checks and explicit exceptions
 
 Supporting manifests, catalogs, page/checkpoint files, query evidence, event-selection reports and geocoding audits are not new business tables. Each release must retain URI/path, checksum, schema/media version and record locator where a row uses an immutable reference. A local cache path alone is not a recoverable off-device artifact. Do not truncate unknown source fields or replace native statement evidence with just a QID pair.
