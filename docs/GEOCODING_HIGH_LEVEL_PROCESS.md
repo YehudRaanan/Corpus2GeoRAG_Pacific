@@ -23,7 +23,7 @@ the place-selection rules remain unchanged.
 - Geocoding returns a validated Shapely object, not GeoJSON. GeoParquet persists it as WKB and restores it as Shapely when loaded. The Geography data model contains `geometry_ref={file,place_id,sha256}` pointing to the saved object. The loader restores Shapely from this model reference. Final graph JSON omits the pointer and inline geometry. Agent access to the model must be verified, as defined in the [S2T](ENTITY_MODEL_TO_AGENT_GRAPH_S2T.md#geometry-object-reference-and-loading).
 - The geometry can represent a point, line, polygon, or multipolygon. Its type comes from the Shapely object, so a separate geometry-type field is not required.
 - The place-to-geometry connection has no `valid_from` or `valid_to` fields.
-- Wikidata coordinates and shapes are not used as geometry sources.
+- Wikidata coordinates may guide retrieval, strengthen location context, and supply an unchanged last-resort Shapely Point under the coordinate rule below. Wikidata shapes are not approved geometry sources.
 - Wikidata names, aliases, types, parent context, QIDs, and external identifiers can be used as identity evidence.
 - The coordinate reference system must be stored in the geometry table metadata. The Agent contract does not yet define its required CRS.
 
@@ -76,6 +76,7 @@ A dated source geometry is eligible when its source interval contains the select
 | 3 | World Historical Gazetteer (WHG) | Query only when the combined OHM and OSM exact-QID count is zero or greater than one. Use it for reconciliation and linked-source evidence. | WHG can resolve missing or ambiguous identities, but its request quota is limited and a WHG union is not a final geometry. |
 | 4 | Name, alias, and context search | Search OHM or OSM name services and GeoNames. Require added evidence such as a source ID, compatible type and parent area, or two airport codes. | This recovers places without an exact QID link while controlling false matches from shared names. |
 | 5 | Specialist source or documented manual construction | Use a suitable public dataset or digitize a documented historical map. | Some historical places have no supported object in the general sources. |
+| 6 | Wikidata coordinate fallback | If no other supported geometry is available after the approved source attempts, use the supported coordinate as a Shapely Point without moving or expanding it. | Owner approval, 22 October 2026; this is the last geometry fallback, not a shortcut around identity checks. |
 
 WHG requests are batched, with up to 50 place queries in one API request. The WHG key stays in the local `.env` file and must not appear in outputs or logs.
 
@@ -89,7 +90,7 @@ OHM, then OSM, with WHG used under the exact-QID count rule above.
 
 | Data | Bulk retrieval plan |
 |---|---|
-| Wikidata identity evidence | Reuse the saved BigQuery reference results first. Retrieve missing QIDs together from BigQuery, or use an [official Wikidata dump](https://www.wikidata.org/wiki/Wikidata:Database_download). Wikidata remains an identity source only. |
+| Wikidata identity and coordinate evidence | Reuse the saved BigQuery reference results first. Retrieve missing QIDs together from BigQuery, or use an [official Wikidata dump](https://www.wikidata.org/wiki/Wikidata:Database_download). Coordinates have the three approved uses below; Wikidata shapes remain excluded. |
 | OHM geometries and tags | Download a pinned [OHM snapshot](https://wiki.openstreetmap.org/wiki/OpenHistoricalMap/Reuse) and search locally for QIDs and supported fallback evidence. |
 | OSM geometries and tags | Export candidates for the place-QID list from the [OSM BigQuery dataset](https://wiki.openstreetmap.org/wiki/BigQuery_dataset). [Geofabrik regional files](https://www.geofabrik.de/en/data/download.html) are an alternative when required objects or complete geometry are unavailable in that dataset. |
 | GeoNames fallback records | Reuse or download the needed [country files](https://download.geonames.org/export/dump/readme.txt) and search them locally using the existing identity-evidence rules. |
@@ -162,6 +163,20 @@ The selected area must be identified as approximate, with its actual source obje
 **Implementation pending:** the maximum permitted extent, the rule for selecting a broader area, and the machine-readable representation of approximation must be agreed before changing the automatic selector. No numerical limit, parent-area rule, or new acceptance status is approved by this preference alone. The current selector and previous sample assignments are unchanged.
 
 **Ten-example test approval and result:** the owner subsequently approved the smallest supported existing local polygon covering the plausible locations, marked approximate, with country-wide and larger approximations excluded. The [cached ten-input test](GEOGRAPHY_LOCAL_POLYGON_10_2026-10-22.md) retained London and Java, added an approximate 3.847 km² Hoosick Falls village polygon, and left seven inputs unresolved. This sample-only helper does not replace the production selector, define a numerical maximum area, or approve new identity/alias/context rules. The prior outputs remain unchanged.
+
+## Wikidata coordinate approval — 22 October 2026
+
+The owner approved three uses of available Wikidata coordinates (`P625`):
+
+1. **Retrieval context:** use the coordinate to guide Nominatim retrieval of candidate places, addresses and source geometries. It does not authorize an arbitrary search radius or automatic acceptance of the nearest result.
+2. **Supporting context:** use the coordinate with names, aliases, place type, dates and supported parent evidence to strengthen or reject unresolved location candidates. Keep candidate coordinates distinct from independently supported input evidence; do not use a candidate's own coordinate to prove that the candidate is Daniel's intended place.
+3. **Last-resort geometry:** when no other supported geometry is available after the approved source attempts, use the supported coordinate as-is as `Shapely.Point(longitude, latitude)`. Do not buffer, snap, average, infer a polygon, or replace it with another location. This explicitly supersedes the previous ban on Wikidata coordinates as selected geometry; it does not approve Wikidata shapes.
+
+Existing identity checks still apply. For a matched QID, use evidence for that item. For a synthetic input, a supported source-candidate match may supply Geography without assigning a new QID, merging identities or changing the existing entity ID. An unsupported candidate point cannot resolve an identity conflict by itself. Multiple conflicting coordinates or unsupported coordinate representations require consultation, not a silent choice.
+
+Retain the original coordinate statement, precision, globe/CRS, source item and statement identifier, available dates/qualifiers, snapshot/retrieval evidence and the fallback reason in the existing audit. Apply the agreed snapshot-first acquisition rule and cache reuse. A point is a position, not a place boundary or proof of its WWII extent. Persist it through the existing Shapely/WKB/GeoParquet path; keep its pointer in Geography and out of graph JSON.
+
+This section records the approved rule. No coordinate retrieval or selector change has been run under it yet. Existing ten-example results remain historical test outputs.
 
 ## Decision outcomes
 
