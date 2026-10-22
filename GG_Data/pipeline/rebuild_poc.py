@@ -27,6 +27,40 @@ def write(path: Path, value: object) -> None:
     )
 
 
+def geography_sample_inputs(base: Path, original_sample: Path) -> list[dict]:
+    """S2T 3/9: preserve the ten mention IDs, never the superseded QIDs.
+
+    A corrected QID can have more model contexts than the original example.
+    Retain those supported contexts and the new model's selection date. This
+    step prepares inputs only; it neither selects geometry nor repairs IDs.
+    """
+    old = read_json(original_sample)
+    if len(old) != 10:
+        raise ValueError("Expected the approved ten-input Geography sample")
+    mentions = {
+        r["mention_id"]: r for r in read_json(base / "mentions_pages/mentions.json.gz")
+    }
+    targets = {
+        r["place_id"]: r for r in read_json(base / "geography_inputs/targets.json")
+    }
+    sample = []
+    for rank, previous in enumerate(old, 1):
+        mention_id = previous["source_context"][0]["mention_id"]
+        mention = mentions[mention_id]
+        target = targets[mention["entity_id"]]
+        if not any(r["mention_id"] == mention_id for r in target["source_context"]):
+            raise ValueError("Original sample mention is absent from corrected target")
+        sample.append(
+            dict(
+                **target,
+                input_rank=rank,
+                original_mention_id=mention_id,
+                previous_place_id=previous["place_id"],
+            )
+        )
+    return sample
+
+
 def relevance(base: Path) -> dict:
     """S2T 6.1: measure corrected QIDs against the unchanged full page scope.
 
@@ -150,6 +184,38 @@ def run(stage: str, base: Path) -> dict:
             )
         if stage == "geography-inputs":
             return geography.prepare(base / "model", base / "geography_inputs")
+        if stage == "geography-sample-inputs":
+            original = (
+                ROOT
+                / "GG_Data/pipeline/outputs/poc_geography_10_input_consultation_20261022/sample.json"
+            )
+            if (
+                digest(original)
+                != "e5ac13b4e2fcbf9460693d05b28ac4efbcbaded05a569023c58400c5dde3c06a"
+            ):
+                raise ValueError("Approved ten-input sample changed")
+            output = base / "geography_sample"
+            if output.exists():
+                raise ValueError("Preserve existing Geography sample outputs")
+            sample = geography_sample_inputs(base, original)
+            output.mkdir()
+            write(output / "sample.json", sample)
+            report = dict(
+                status="CORRECTED_TEN_INPUT_SAMPLE_READY",
+                sample_rows=len(sample),
+                geometry_rows_written=0,
+                inputs={
+                    str(p): digest(p)
+                    for p in (
+                        original,
+                        base / "geography_inputs/targets.json",
+                        base / "mentions_pages/mentions.json.gz",
+                    )
+                },
+                outputs={"sample.json": digest(output / "sample.json")},
+            )
+            write(output / "inputs_report.json", report)
+            return report
         raise ValueError(f"Unknown rebuild stage: {stage}")
     except Exception as exc:
         write(
@@ -167,7 +233,14 @@ def run(stage: str, base: Path) -> dict:
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument(
-        "stage", choices=("relevance", "events", "model", "geography-inputs")
+        "stage",
+        choices=(
+            "relevance",
+            "events",
+            "model",
+            "geography-inputs",
+            "geography-sample-inputs",
+        ),
     )
     parser.add_argument("--base", type=Path, required=True)
     args = parser.parse_args()

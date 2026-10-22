@@ -3,8 +3,39 @@
 import gzip
 import json
 
+import pytest
+
 from GG_Data.pipeline import rebuild_poc
 from GG_Data.pipeline.poc import digest, read_json
+
+
+def test_geography_sample_follows_original_mentions_to_corrected_ids(tmp_path):
+    (tmp_path / "mentions_pages").mkdir()
+    (tmp_path / "geography_inputs").mkdir()
+    contexts = [dict(mention_id=f"mention-{i}") for i in range(10)]
+    sample = [
+        dict(place_id=f"Q{i + 100}", source_context=[context])
+        for i, context in enumerate(contexts)
+    ]
+    rebuild_poc.write(tmp_path / "original.json", sample)
+    with gzip.open(
+        tmp_path / "mentions_pages/mentions.json.gz", "wt", encoding="utf-8"
+    ) as stream:
+        json.dump([dict(**c, entity_id="Q84") for c in contexts], stream)
+    target = dict(
+        place_id="Q84", name="London", selection_date="1942", source_context=contexts
+    )
+    rebuild_poc.write(tmp_path / "geography_inputs/targets.json", [target])
+    result = rebuild_poc.geography_sample_inputs(tmp_path, tmp_path / "original.json")
+    assert len(result) == 10
+    assert [r["original_mention_id"] for r in result] == [
+        r["mention_id"] for r in contexts
+    ]
+    assert all(r["place_id"] == "Q84" and r["selection_date"] == "1942" for r in result)
+    target["source_context"] = contexts[1:]
+    rebuild_poc.write(tmp_path / "geography_inputs/targets.json", [target])
+    with pytest.raises(ValueError, match="absent from corrected target"):
+        rebuild_poc.geography_sample_inputs(tmp_path, tmp_path / "original.json")
 
 
 def test_relevance_uses_corrected_qids_and_preserves_model_rows(tmp_path, monkeypatch):
