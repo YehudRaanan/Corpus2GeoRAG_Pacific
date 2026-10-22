@@ -14,13 +14,12 @@ import os
 import re
 import shutil
 import subprocess
-from collections import defaultdict
 from concurrent.futures import ThreadPoolExecutor, as_completed
 from datetime import datetime, timezone
 from pathlib import Path
 
 from bilingual_page_pilot import LiveData, article, digest, read
-from direct_wikidata_pilot import BASE, clean_name
+from direct_wikidata_pilot import BASE, PAGE_CANDIDATE_SCOPE, page_candidate_ids
 from full_direct_wikidata import DEFAULT_OUTPUT, INPUT, input_rows, run, save
 
 LOG = logging.getLogger(__name__)
@@ -248,11 +247,13 @@ class BigQueryData(LiveData):
 
     def name_lookups(self, names: list[str]) -> list[dict]:
         table = self.upload_values(names, "name")
-        return self.query(f"""SELECT DISTINCT w.id AS qid,n.value AS daniel_name_variant
+        return self.query(
+            f"""SELECT DISTINCT w.id AS qid,n.value AS daniel_name_variant
  FROM {self.source},
  UNNEST(ARRAY_CONCAT(w.labels,w.aliases)) AS n
  JOIN `{table}` AS t ON n.value=t.name
- WHERE n.language IN ('en','ja') AND STARTS_WITH(w.id,'Q')""")
+ WHERE n.language IN ('en','ja') AND STARTS_WITH(w.id,'Q')"""
+        )
 
 
 def collect_page(source: str, output: Path) -> dict:
@@ -313,7 +314,6 @@ def execute(
     output.mkdir(parents=True, exist_ok=True)
     (output / "pages").mkdir(exist_ok=True)
     rows = input_rows()
-    names = defaultdict(set)
     sources = sorted({r["raw"]["Source"] for r in rows})
     page_reference = None
     if page_snapshot is not None:
@@ -347,15 +347,9 @@ def execute(
         )
         LOG.info("%s %s", stage, counts)
 
-    for row in rows:
-        raw = row["raw"]
-        if raw["entity_group"] != "DATE":
-            for name in {raw["word"].strip(), clean_name(raw["word"])}:
-                for variant in {name, name.casefold(), name.title()} - {""}:
-                    names[variant].add(raw["Source"])
     api = api or BigQueryData(project, store)
-    progress("BIGQUERY_DANIEL_NAME_LOOKUPS", distinct_name_variants=len(names))
-    lookup = api.name_lookups(sorted(names))
+    # Population S2T section 3: global name hits do not establish page identity.
+    lookup = []
     save(output / "daniel_name_lookups.json.gz", lookup)
     old_world = BASE / "fresh_wwii_names.json.gz"
     assert (
@@ -374,7 +368,7 @@ def execute(
         pending = {
             pool.submit(collect_page, source, output): source for source in sources
         }
-        known_ids = {hit["qid"] for hit in lookup} | world_ids
+        known_ids = world_ids
         progress("BIGQUERY_REFERENCE_EXPORT", candidate_qids=len(known_ids))
         api.entities_for(known_ids)
         for future in as_completed(pending):
@@ -383,17 +377,11 @@ def execute(
             progress(
                 "COLLECT_WIKIPEDIA_PAGES", completed=len(pages), total=len(sources)
             )
-    pools = {
-        s: {a["qid"] for a in pages[s]["articles"] if a["qid"]}
-        | {link["qid"] for a in pages[s]["articles"] for link in a["links"]}
-        for s in sources
-    }
-    for hit in lookup:
-        for source in names[hit["daniel_name_variant"]]:
-            pools[source].add(hit["qid"])
+    pools = {s: page_candidate_ids(pages[s]["articles"]) for s in sources}
     save(
         output / "candidate_evidence.json.gz",
         {
+            "page_candidate_scope": PAGE_CANDIDATE_SCOPE,
             "page_pools": {s: sorted(ids) for s, ids in pools.items()},
             "daniel_name_lookups": lookup,
         },

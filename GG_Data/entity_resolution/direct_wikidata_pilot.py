@@ -5,7 +5,6 @@ from __future__ import annotations
 import argparse
 import calendar
 import csv
-import json
 import logging
 import random
 import re
@@ -20,6 +19,18 @@ from generate_candidates import NameIndex
 BASE = Path(__file__).parent / "runs/bilingual_pilot_20261018_v1"
 MONTHS = {n.casefold(): i for i, n in enumerate(calendar.month_name) if n}
 SEED = 20261018
+PAGE_CANDIDATE_SCOPE = "SOURCE_PAGE_EN_JA_LINKS_ONLY_V1"
+
+
+def page_candidate_ids(articles: list[dict]) -> set[str]:
+    """Population S2T section 3: only this source page and its EN/JA links.
+
+    A global label/alias hit proves a name exists, not that its QID occurs on
+    this page. Never add such hits, extracted names or a former saved pool.
+    """
+    return {a["qid"] for a in articles if a.get("qid")} | {
+        link["qid"] for a in articles for link in a["links"]
+    }
 
 
 def clean_name(text: str) -> str:
@@ -110,56 +121,15 @@ def run(output: Path, snapshot: Path | None = None) -> dict:
     for a in articles:
         # Only saved page references and direct hyperlinks; never extracted_names,
         # searches, or the former phrase-derived article pool.
-        pools.setdefault(a["daniel_source"], set()).update(
-            {a["qid"]} | {link["qid"] for link in a["links"]}
-        )
+        pools.setdefault(a["daniel_source"], set()).update(page_candidate_ids([a]))
     for row in rows:
         for key in list(row):
             if key not in {"input_row_number", "mention_id", "raw"}:
                 del row[key]
         row["attempts"] = []
-    names: dict[str, set[str]] = {}
-    for row in rows:
-        raw = row["raw"]
-        if raw["entity_group"] != "DATE":
-            for name in {raw["word"].strip(), clean_name(raw["word"])}:
-                for variant in {name, name.casefold(), name.title()} - {""}:
-                    names.setdefault(variant, set()).add(raw["Source"])
     lookup = []
-    if snapshot:
-        evidence = read(snapshot / "candidate_evidence.json.gz")
-        pools = {page: set(ids) for page, ids in evidence["page_pools"].items()}
-        lookup = evidence["daniel_name_lookups"]
-    for offset in [] if snapshot else range(0, len(names), 100):
-        terms = list(sorted(names))[offset : offset + 100]
-        literals = " ".join(
-            json.dumps(n, ensure_ascii=False) + "@" + lang
-            for n in terms
-            for lang in ("en", "ja")
-        )
-        result = api.get(
-            "https://query.wikidata.org/sparql",
-            {
-                "query": "SELECT DISTINCT ?term ?item WHERE { VALUES ?term { "
-                + literals
-                + " } { { ?item rdfs:label ?term } UNION { ?item skos:altLabel ?term } } }",
-                "format": "json",
-            },
-            post=True,
-        )
-        for hit in result["results"]["bindings"]:
-            name = hit["term"]["value"]
-            q = hit["item"]["value"].rsplit("/", 1)[-1]
-            if not re.fullmatch(r"Q[1-9]\d*", q):
-                continue
-            lookup.append({"daniel_name_variant": name, "qid": q})
-            for page in names[name]:
-                pools[page].add(q)
-        logging.info(
-            "Direct Daniel-name lookups: %d/%d",
-            min(offset + 100, len(names)),
-            len(names),
-        )
+    # Rebuild from article links even when replaying a historical snapshot.
+    # Its global-name candidate pools are not eligible source-page evidence.
     if not snapshot:
         api.hierarchy(set().union(*pools.values()))
     world = read(BASE / "fresh_wwii_names.json.gz")
@@ -248,13 +218,15 @@ def run(output: Path, snapshot: Path | None = None) -> dict:
             "type_metadata",
             {
                 "original_type": row["raw"]["entity_group"],
-                "resolved_type": "DATE"
-                if row.get("matched_stage") == "DATE_NORMALIZED"
-                else None,
+                "resolved_type": (
+                    "DATE" if row.get("matched_stage") == "DATE_NORMALIZED" else None
+                ),
                 "type_changed": False,
-                "type_source": "CALENDAR_VALIDATION"
-                if row.get("matched_stage") == "DATE_NORMALIZED"
-                else "UNRESOLVED",
+                "type_source": (
+                    "CALENDAR_VALIDATION"
+                    if row.get("matched_stage") == "DATE_NORMALIZED"
+                    else "UNRESOLVED"
+                ),
             },
         )
         if "assigned_id" not in row:
@@ -294,6 +266,7 @@ def run(output: Path, snapshot: Path | None = None) -> dict:
     dump(
         output / "candidate_evidence.json.gz",
         {
+            "page_candidate_scope": PAGE_CANDIDATE_SCOPE,
             "page_pools": {p: sorted(q) for p, q in pools.items()},
             "daniel_name_lookups": lookup,
             "frozen_matched_ids": frozen,
@@ -351,6 +324,7 @@ def run(output: Path, snapshot: Path | None = None) -> dict:
             "threshold": 0.8,
             "seed": SEED,
             "same_page_only_cleanup": True,
+            "page_candidate_scope": PAGE_CANDIDATE_SCOPE,
             "titles_removed": False,
             "fresh_wwii": "Reused verified same-day 103235-ID snapshot",
             "outputs": {p.name: digest(p) for p in output.iterdir() if p.is_file()},
@@ -358,7 +332,7 @@ def run(output: Path, snapshot: Path | None = None) -> dict:
                 "Exact label/alias lookup can miss name variants.",
                 "Broad saved type rules and trigram false matches remain.",
                 "Date values are calendar values, not Wikidata QIDs; no missing year/day is inferred.",
-                "Page candidates use direct article links plus Daniel-name Wikidata lookups; no article phrase extraction.",
+                "Page candidates use only source EN/JA article links and page QIDs; no global name lookups or article phrase extraction.",
             ],
         },
     )

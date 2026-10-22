@@ -34,7 +34,15 @@ from bilingual_page_pilot import (
     read,
     synthetic_id,
 )
-from direct_wikidata_pilot import BASE, SEED, clean_name, normalize_date, page_find
+from direct_wikidata_pilot import (
+    BASE,
+    PAGE_CANDIDATE_SCOPE,
+    SEED,
+    clean_name,
+    normalize_date,
+    page_candidate_ids,
+    page_find,
+)
 from generate_candidates import NameIndex
 from prepare_examples import ROOT, URL
 
@@ -176,6 +184,10 @@ def run(output: Path, api: LiveData | None = None, page_workers: int = 2) -> dic
     output.mkdir(parents=True, exist_ok=True)
     if (output / "manifest.json").exists():
         manifest = read(output / "manifest.json")
+        if manifest.get("page_candidate_scope") != PAGE_CANDIDATE_SCOPE:
+            raise ValueError(
+                "Historical matching scope is invalid; use a new output directory"
+            )
         for name, expected in manifest["outputs"].items():
             assert digest(output / name) == expected, name
         return read(output / "summary.json")
@@ -249,10 +261,9 @@ def run(output: Path, api: LiveData | None = None, page_workers: int = 2) -> dic
                 }
             save(path, saved)
             save(metadata_path, api.entities)
-        for a in saved["articles"]:
-            pools[source].update(link["qid"] for link in a["links"])
-            if a["qid"]:
-                pools[source].add(a["qid"])
+        if saved["source"] != source:
+            raise ValueError(f"Page cache source differs: {source}")
+        pools[source] = page_candidate_ids(saved["articles"])
         page_status.append(
             {
                 "source": source,
@@ -278,61 +289,30 @@ def run(output: Path, api: LiveData | None = None, page_workers: int = 2) -> dic
         progress("COLLECT_PAGES", completed=number + 1, total=len(sources))
     save(output / "page_status.json", page_status)
 
-    names = defaultdict(set)
-    for row in rows:
-        raw = row["raw"]
-        if raw["entity_group"] != "DATE":
-            for name in {raw["word"].strip(), clean_name(raw["word"])}:
-                for variant in {name, name.casefold(), name.title()} - {""}:
-                    names[variant].add(raw["Source"])
     evidence_path = output / "candidate_evidence.json.gz"
     if evidence_path.exists():
         evidence = read(evidence_path)
-        pools = {p: set(ids) for p, ids in evidence["page_pools"].items()}
-        lookup = evidence["daniel_name_lookups"]
-    else:
-        lookup = []
-        terms = sorted(names)
-        for offset in range(0, len(terms), 100):
-            batch = terms[offset : offset + 100]
-            literals = " ".join(
-                json.dumps(n, ensure_ascii=False) + "@" + lang
-                for n in batch
-                for lang in ("en", "ja")
+        cached_pools = {p: set(ids) for p, ids in evidence["page_pools"].items()}
+        if cached_pools != pools or evidence.get("daniel_name_lookups"):
+            raise ValueError(
+                "Cached page candidates include non-page QIDs; use a new run"
             )
-            result = api.get(
-                "https://query.wikidata.org/sparql",
-                {
-                    "query": "SELECT DISTINCT ?term ?item WHERE { VALUES ?term { "
-                    + literals
-                    + " } { { ?item rdfs:label ?term } UNION { ?item skos:altLabel ?term } } }",
-                    "format": "json",
-                },
-                post=True,
-            )
-            for hit in result["results"]["bindings"]:
-                name, qid = (
-                    hit["term"]["value"],
-                    hit["item"]["value"].rsplit("/", 1)[-1],
-                )
-                if not qid.startswith("Q") or not qid[1:].isdigit():
-                    continue
-                lookup.append({"daniel_name_variant": name, "qid": qid})
-                for page in names[name]:
-                    pools[page].add(qid)
-            progress(
-                "DANIEL_NAME_LOOKUPS",
-                completed=min(offset + 100, len(terms)),
-                total=len(terms),
-                hits=len(lookup),
-            )
-        save(
-            evidence_path,
-            {
-                "page_pools": {p: sorted(ids) for p, ids in pools.items()},
-                "daniel_name_lookups": lookup,
-            },
-        )
+        if (output / "page_matches.json.gz").exists() and evidence.get(
+            "page_candidate_scope"
+        ) != PAGE_CANDIDATE_SCOPE:
+            raise ValueError("Historical page matches cannot be resumed")
+    elif (output / "page_matches.json.gz").exists():
+        raise ValueError("Page matches have no verified candidate-scope evidence")
+    # S2T section 3 correction: the pool is reconstructed from page links.
+    # Never import historical name-search pools or their frozen matched IDs.
+    save(
+        evidence_path,
+        {
+            "page_candidate_scope": PAGE_CANDIDATE_SCOPE,
+            "page_pools": {p: sorted(ids) for p, ids in pools.items()},
+            "daniel_name_lookups": [],
+        },
+    )
     all_page_ids = set().union(*pools.values())
     progress("PAGE_CANDIDATE_METADATA", candidate_qids=len(all_page_ids))
     # Fetch only missing IDs: BigQuery has already populated the saved metadata.
@@ -448,13 +428,15 @@ def run(output: Path, api: LiveData | None = None, page_workers: int = 2) -> dic
             "type_metadata",
             {
                 "original_type": row["raw"]["entity_group"],
-                "resolved_type": "DATE"
-                if row.get("matched_stage") == "DATE_NORMALIZED"
-                else None,
+                "resolved_type": (
+                    "DATE" if row.get("matched_stage") == "DATE_NORMALIZED" else None
+                ),
                 "type_changed": False,
-                "type_source": "CALENDAR_VALIDATION"
-                if row.get("matched_stage") == "DATE_NORMALIZED"
-                else "UNRESOLVED",
+                "type_source": (
+                    "CALENDAR_VALIDATION"
+                    if row.get("matched_stage") == "DATE_NORMALIZED"
+                    else "UNRESOLVED"
+                ),
             },
         )
     progress("VERIFY_AND_EXPORT")
@@ -561,6 +543,7 @@ def run(output: Path, api: LiveData | None = None, page_workers: int = 2) -> dic
             "input_sha256": INPUT_SHA256,
             "threshold": 0.8,
             "seed": SEED,
+            "page_candidate_scope": PAGE_CANDIDATE_SCOPE,
             "execution": {"page_workers": page_workers},
             "code_sha256": {
                 p.name: digest(p)
@@ -582,10 +565,12 @@ def run(output: Path, api: LiveData | None = None, page_workers: int = 2) -> dic
             "page_evidence": {p.name: digest(p) for p in pages_dir.glob("*.json.gz")},
             "limits": [
                 "Counts are not accuracy measurements. Existing trigram/type/homonym errors remain.",
-                "Only direct page hyperlinks and original Daniel-name Wikidata lookups; no independent name extraction.",
-                "WWII membership uses the agreed same-day query population; names/types use the recorded BigQuery snapshot."
-                if reference
-                else "The fresh same-day WWII snapshot is the agreed query population, not all Wikidata.",
+                "Only source EN/JA page QIDs and direct page hyperlinks; no global name lookups or independent name extraction.",
+                (
+                    "WWII membership uses the agreed same-day query population; names/types use the recorded BigQuery snapshot."
+                    if reference
+                    else "The fresh same-day WWII snapshot is the agreed query population, not all Wikidata."
+                ),
             ],
         },
     )

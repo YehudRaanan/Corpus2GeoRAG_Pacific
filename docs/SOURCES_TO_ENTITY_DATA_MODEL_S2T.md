@@ -791,13 +791,19 @@ Relevant matching artifacts are `matches.json.gz`, `matches.csv.gz`, `entity_met
 
 Let **D** be the distinct existing matched Wikidata QIDs from Daniel's original non-DATE mentions. Let **E** be qualifying Wikidata event QIDs. Adding E does not expand D, trigger recursive event discovery through other events, or create extra Daniel mentions. Synthetic IDs cannot satisfy event inclusion or acquire Wikidata statements through a guessed QID. Unresolved DATE placeholders retain their existing synthetic identity and reason in the model; temporal-only records are not the graph's Daniel entity population.
 
-## 3. Reused matching logic: no new matching run
+## 3. Matching logic and page-scope correction (22 October 2026)
 
-The saved run already applies the agreed stages:
+The historical run incorrectly mixed global exact-name lookup hits into its
+page candidate pool. The user requires a rebuild from matching onward. Its
+matching decisions and all dependent POC outputs are historical evidence, not
+validated inputs for the corrected pipeline. Reuse source records only after
+checksum/version/scope checks; preserve the old artifacts without overwriting.
+The same original 10K row sample is retained downstream. Rebuild all 309,864
+matching rows first because the already-matched pool depends on all page passes.
 
-1. Resolve each source page and retrieve its Japanese counterpart where available. Use page-linked Wikidata names plus the saved exact label/alias lookup for Daniel names. The first pool is not strictly page-only.
+1. Resolve each source page and retrieve its Japanese counterpart where available. The first-stage candidate QIDs are only the QIDs of those source articles and their saved direct links. Compare Daniel's original names with those candidates' English/Japanese labels and aliases. A global exact-name lookup must never add a candidate to this stage. Reconstruct pools from source-page evidence; do not reuse the old candidate pools or old page matches. Record scope `SOURCE_PAGE_EN_JA_LINKS_ONLY_V1`. The saved SQL-dump links include transcluded navigation; they are not revision-pinned article-body-only links, and this existing evidence limitation remains explicit.
 2. Choose the highest character-trigram Dice similarity at **>=0.80**, with compatible types. Reuse the saved single-type override rule and its metadata when applicable. Ties reuse the recorded seeded random choice (`20261018`), not a new choice at population time.
-3. After all page passes, freeze their matched QID pool. Match remaining mentions against that already-matched pool; then use the saved fresh-WWII reference pool under the same threshold/type rules.
+3. After every corrected page pass completes, create a new frozen matched-QID pool. Match remaining mentions against that newly matched pool; then use the saved fresh-WWII reference pool under the same threshold/type rules. Never reuse the historical frozen pool or historical fallback decisions. These two fallback stages are wider than the source page, as previously agreed; the page-only constraint applies to the first stage.
 4. Retain an existing separate synthetic ID for every still-unresolved mention, including the distinct type/date failure prefixes. Repeated unresolved names do not merge their synthetic IDs.
 5. Reuse the saved DATE parser result and precision/error, not fuzzy name matching. Leading/trailing space and symbol normalization remains a comparison-only operation within the page stage; preserve the original word. Do not introduce title stripping or cross-stage cleanup that changes saved assignments.
 

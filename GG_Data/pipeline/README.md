@@ -1,5 +1,26 @@
 # Daniel pipeline POC
 
+### Page-scope correction and rebuild - 22 October 2026
+
+The historical first matching stage incorrectly included global name-search
+hits in per-page candidate pools. All counts and dependent POC results below
+describe historical runs; they do not validate the corrected matching pipeline.
+The user approved a 2-4 hour correction/rebuild on 22 October, with a required
+London check throughout. Preserve the old outputs and source caches. Rebuild
+all 309,864 matching rows with page-only EN/JA first-stage candidates, then
+rebuild the same 10K POC sample from the corrected matching manifest. The
+already-matched and WWII fallback rules remain unchanged and run from fresh
+decisions. Recompute affected populations, importance, relevance, Events,
+Relations and Geography inputs; no historical aggregate is a valid new input.
+Geography continuation is limited to the previous sample phase, not an implied
+full Geography import or final graph acceptance. See population S2T section 3.
+
+Initial London regression: the saved source-page pool contains 721 QIDs,
+including neither Q84 nor Q1001456. The corrected page pass therefore returns
+`NO_NAME_ABOVE_THRESHOLD`, rather than randomly choosing London, Ohio. London
+must still be checked through both fallback stages and the resulting model.
+This is not a completed rerun result.
+
 ### Synthetic LOC coverage - 21 October 2026
 
 The approved synthetic-LOC extension supersedes the exclusions in the historical
