@@ -35,6 +35,16 @@ fresh paths into the existing population stages, remeasures language-specific
 relevance, and requests a new full-scope Event query. Approved hierarchy and
 relation-mapping parameter tables are reused; old selections are not.
 
+**Stopped checkpoint, 22 October at 07:42 Asia/Jerusalem:** corrected Entity
+population contains 5,210 typed rows (2,683 QIDs and 2,503 synthetic mentions).
+Fresh relevance retains 2,055 QIDs for Event retrieval. The new cloud query
+and local gates validate 2,785 Events. Model population then stops before table
+writes: Q2949904 has no EN/JA label or Daniel name, so the approved name rule
+has no remaining fallback. No independent label choice was made. The rebuilt
+model, Geography sample and final graph are incomplete. All known workers have
+exited. See [the correction checkpoint](../../docs/PAGE_SCOPE_REBUILD_2026-10-22.md)
+and `outputs/rebuild_page_scope_20261022/stop_checkpoint.json`.
+
 ### Synthetic LOC coverage - 21 October 2026
 
 The approved synthetic-LOC extension supersedes the exclusions in the historical

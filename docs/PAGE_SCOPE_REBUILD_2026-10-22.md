@@ -69,7 +69,7 @@ Geography must use those new identities; it cannot restore the old QIDs.
 
 ## Downstream checkpoint
 
-Verified at 07:23, 22 October 2026, Asia/Jerusalem (UTC+03):
+Verified at 07:42, 22 October 2026, Asia/Jerusalem (UTC+03):
 
 - The exact original 10K sampled input positions were imported again.
 - Entity population completed: 5,210 typed rows, including 2,683 distinct
@@ -77,10 +77,36 @@ Verified at 07:23, 22 October 2026, Asia/Jerusalem (UTC+03):
 - Entity full records use the agreed Wikidata snapshot. Importance was
   recalculated from the corrected 10K mention-to-ID assignments. No synthetic
   row has a null importance score.
-- English/Japanese relevance recalculation is running from the saved full
-  page-link sources. Events, Relations and Geography continuation are pending.
+- English/Japanese relevance recalculation completed from the saved full
+  page-link sources in 573.550 seconds. The existing MISC rule retains 2,055
+  QIDs, filters 623 below 5%, and holds five unknown-score MISC IDs aside.
+- The fresh BigQuery Event query and local validation completed in 478.998
+  seconds. All 2,785 returned candidates passed native classification, direct
+  links to at least two distinct retained Daniel QIDs, mapping/exclusions,
+  and maximum relevance of at least 2% with missing scores treated as zero.
+  The verified receipt is `events/verification.json`; this is Event selection,
+  not a populated model.
+- Model population stopped before writing any Entity/Event/Relation model
+  tables: Q2949904 has French, Italian and Spanish labels, no English or
+  Japanese label, and no Daniel fallback name. The approved name priority has
+  no rule for this case. No translation or new name was invented.
+- Q2949904 is the Italian rugby championship season 1945–1946. Its two
+  qualifying Daniel QIDs are Q172579 and Q38. Maximum relevance is
+  2.1706361169731684%. This illustrates the previously documented inclusive
+  Event scope; it was not silently removed or reclassified.
+- The source-candidate requests for corrected London and Java completed.
+  Java's original OSM geometry is cached. No corrected ten-input Geography
+  selection or populated Geography rows have been produced.
 - The previous populated model and Geography outputs remain historical
   artifacts and are not valid corrected outputs.
 
-Code has local Git checkpoints. Generated artifacts are ignored by Git and
-are not protected on GitHub. No final graph has been written.
+All known pipeline processes have exited. The pause is recorded in
+`stop_checkpoint.json`, `model_failure.json` and `model/report.json`. Resume
+requires the owner's name-fallback decision; completed corrected stages and
+saved sources can be reused. Preserve the failed model directory and resume
+model population into a fresh directory.
+
+Code has local Git checkpoints. The bounded Geography sample continuation has
+passed its two focused cache/identity/geometry regression tests but has not
+been run on the rebuilt model, which is blocked above. Generated artifacts
+are ignored by Git and are not protected on GitHub. No final graph exists.
