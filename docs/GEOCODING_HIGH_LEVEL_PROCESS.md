@@ -161,6 +161,8 @@ The selected area must be identified as approximate, with its actual source obje
 
 **Implementation pending:** the maximum permitted extent, the rule for selecting a broader area, and the machine-readable representation of approximation must be agreed before changing the automatic selector. No numerical limit, parent-area rule, or new acceptance status is approved by this preference alone. The current selector and previous sample assignments are unchanged.
 
+**Ten-example test approval and result:** the owner subsequently approved the smallest supported existing local polygon covering the plausible locations, marked approximate, with country-wide and larger approximations excluded. The [cached ten-input test](GEOGRAPHY_LOCAL_POLYGON_10_2026-10-22.md) retained London and Java, added an approximate 3.847 km² Hoosick Falls village polygon, and left seven inputs unresolved. This sample-only helper does not replace the production selector, define a numerical maximum area, or approve new identity/alias/context rules. The prior outputs remain unchanged.
+
 ## Decision outcomes
 
 - `ACCEPTED_AUTO`: deterministic identity, date, type, and geometry checks pass.

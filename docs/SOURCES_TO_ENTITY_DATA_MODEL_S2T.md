@@ -1458,6 +1458,8 @@ Follow the [broader-polygon preference](GEOCODING_HIGH_LEVEL_PROCESS.md#approved
 
 This is an approved preference, not an implemented selector change. Maximum extent, broader-area selection, and machine-readable approximation metadata require agreement before implementation. No new field, status, area threshold, or parent-selection algorithm is specified here. Existing model outputs and the 40-input diagnostic remain unchanged.
 
+Subsequent approval applies to the **ten-example test only**: choose the smallest supported existing local polygon covering the plausible locations; mark it approximate and exclude country-wide and larger approximations. The [verified cached test](GEOGRAPHY_LOCAL_POLYGON_10_2026-10-22.md) retained two accepted geometries, added the Hoosick Falls village polygon (3.847 km²), and retained seven unresolved inputs. Its experimental approximation metadata stays in the sample audit; no production schema or model is changed. Identity/name/context requirements remain in force. A numerical extent limit and general production metadata still require agreement.
+
 ## 10. Evidence, required checks and explicit exceptions
 
 Supporting manifests, catalogs, page/checkpoint files, query evidence, event-selection reports and geocoding audits are not new business tables. Each release must retain URI/path, checksum, schema/media version and record locator where a row uses an immutable reference. A local cache path alone is not a recoverable off-device artifact. Do not truncate unknown source fields or replace native statement evidence with just a QID pair.
