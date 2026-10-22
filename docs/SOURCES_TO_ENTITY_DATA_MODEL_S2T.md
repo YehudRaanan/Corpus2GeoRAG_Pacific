@@ -1474,6 +1474,12 @@ The owner challenged the narrow use of available context. The [five-input diagno
 
 This is an explicit diagnostic query plan, not a new unattended extractor or acceptance policy. Original IDs and model outputs remain unchanged; no new geometry or identity was assigned. Candidate-derived coordinates/parents and same-page co-occurrence are not silently promoted to independent input evidence. The report preserves actual requests, zero-result searches and ambiguity; no distance threshold, historical alias, type override or broad-area assignment is introduced.
 
+### 9.5 Twenty-input weighted ranking diagnostic — 22 October 2026
+
+The owner requested the 45/30/15/7/3 QID, coordinate, context, name and feature-type ranking on the ten current and ten additional frozen inputs. The [twenty-input report](GEOGRAPHY_RANKING_20_2026-10-22.md) records all component scores, source objects, exclusions and coverage limits. The corrected cached run produced thirteen geometry proposals (seven current, six new) and seven unresolved inputs. Zero production geometry or identity assignments changed. Source geometries precede last-resort unchanged P625 Points.
+
+This is an experiment, not a production acceptance policy or accuracy estimate. The prototype retains a separate QID/name/prior-geometry eligibility gate that blocks the context-supported Pocatello airport candidate; this requires discussion before a wider run. Candidate-derived coordinates are not independent identity evidence. Stated coordinate uncertainty and full feature/context coverage remain incomplete. Raw receipts and experimental GeoParquet remain supporting artifacts, not populated production model rows.
+
 ## 10. Evidence, required checks and explicit exceptions
 
 Supporting manifests, catalogs, page/checkpoint files, query evidence, event-selection reports and geocoding audits are not new business tables. Each release must retain URI/path, checksum, schema/media version and record locator where a row uses an immutable reference. A local cache path alone is not a recoverable off-device artifact. Do not truncate unknown source fields or replace native statement evidence with just a QID pair.
