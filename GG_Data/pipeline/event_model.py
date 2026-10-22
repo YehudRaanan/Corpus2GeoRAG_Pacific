@@ -51,7 +51,7 @@ def event_rows(record: dict, source: dict, decision: dict) -> tuple[dict, dict]:
     Scalar Agent compatibility is a later export check, not a date ranking here.
     """
     qid = record["id"]
-    name = choose_name(qid, record, {}, [])  # EN then JA; no Daniel fallback invented.
+    name = choose_name(qid, record, {}, [], event_qid_fallback=True)
     claims = record["claims"]
     temporal = {p: claims.get(p, []) for p in ("P580", "P582", "P585")}
     snaks = {

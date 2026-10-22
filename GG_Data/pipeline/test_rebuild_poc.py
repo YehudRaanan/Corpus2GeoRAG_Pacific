@@ -120,3 +120,34 @@ def test_event_stage_routes_only_fresh_scope(tmp_path, monkeypatch):
     assert kwargs["fresh_scope"] is True
     assert kwargs["entities_dir"] == base / "entities"
     assert kwargs["scores_dir"] == base / "relevance"
+
+
+def test_model_resume_and_geography_use_explicit_new_directory(tmp_path, monkeypatch):
+    monkeypatch.setattr(rebuild_poc, "ROOT", tmp_path)
+    base = tmp_path / "GG_Data/pipeline/outputs/corrected"
+    (base / "matching").mkdir(parents=True)
+    rebuild_poc.write(
+        base / "matching/manifest.json",
+        dict(page_candidate_scope=rebuild_poc.PAGE_CANDIDATE_SCOPE),
+    )
+    rebuild_poc.write(
+        base / "matching/london_validation.json", dict(status="CORRECT_QID")
+    )
+    failed = base / "model"
+    failed.mkdir()
+    rebuild_poc.write(failed / "report.json", {"status": "STOPPED_FOR_CONSULTATION"})
+    stopped_hash = digest(failed / "report.json")
+    model = base / "model_qid_name"
+    calls = []
+    monkeypatch.setattr(
+        rebuild_poc.event_model, "run", lambda *a, **kw: calls.append(a) or {}
+    )
+    monkeypatch.setattr(
+        rebuild_poc.geography, "prepare", lambda *a: calls.append(a) or {}
+    )
+    rebuild_poc.run("model", base, model_dir=model)
+    rebuild_poc.run("geography-inputs", base, model_dir=model)
+    assert calls == [(model,), (model, base / "geography_inputs")]
+    assert digest(failed / "report.json") == stopped_hash
+    with pytest.raises(ValueError, match="inside this rebuild bundle"):
+        rebuild_poc.run("model", base, model_dir=base.parent / "outside")

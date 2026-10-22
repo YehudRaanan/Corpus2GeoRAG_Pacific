@@ -2,6 +2,9 @@
 
 from copy import deepcopy
 
+import pytest
+
+from GG_Data.pipeline.entities import choose_name
 from GG_Data.pipeline.event_model import event_rows
 
 
@@ -44,3 +47,23 @@ def test_event_dates_preserve_evidence_and_explicit_bounds():
     assert event["start_date"][0]["time"] == "+1944-01-01T00:00:00Z"
     assert event["end_date"] == []
     assert event["temporal_evidence"]["derived_range"] == {}
+
+
+def test_event_missing_name_uses_qid_without_changing_source_labels():
+    record = {
+        "id": "Q2949904",
+        "labels": {"it": {"value": "Divisione Nazionale 1945-46"}},
+        "claims": {},
+    }
+    original = deepcopy(record)
+    entity, event = event_rows(record, {}, {})
+    assert entity["name"] == entity["entity_id"] == event["event_id"] == "Q2949904"
+    assert entity["attributes"]["name_selection"]["source"] == "wikidata_id_fallback"
+    assert record == original
+    # The owner approved Events only, not a fallback for other Entity rows.
+    with pytest.raises(ValueError, match="Conflicting Daniel fallback names"):
+        choose_name(record["id"], record, {}, [])
+    record["labels"]["ja"] = {"value": "Japanese source name"}
+    assert event_rows(record, {}, {})[0]["name"] == "Japanese source name"
+    record["labels"]["en"] = {"value": "English source name"}
+    assert event_rows(record, {}, {})[0]["name"] == "English source name"

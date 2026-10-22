@@ -33,7 +33,7 @@ def tools():
         sys.path.pop(0)
 
 
-def run(base: Path) -> dict:
+def run(base: Path, *, model_dir: Path | None = None) -> dict:
     output, cache = base / "geography_sample", base / "geography_sources"
     original = ROOT / "GG_Data/pipeline/outputs/poc_geography_10_sources_20261022"
     if (output / "verification.json").exists():
@@ -42,7 +42,9 @@ def run(base: Path) -> dict:
     inputs = read_json(output / "inputs_report.json")
     if digest(output / "sample.json") != inputs["outputs"]["sample.json"]:
         raise ValueError("Corrected sample changed")
-    model = base / "model"
+    model = model_dir or base / "model"
+    if not model.resolve().is_relative_to(base.resolve()):
+        raise ValueError("The model input must stay inside this rebuild bundle")
     manifest = read_json(model / "manifest.json")
     for name, expected in manifest["outputs"].items():
         if digest(model / name) != expected:
@@ -323,9 +325,10 @@ def run(base: Path) -> dict:
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--base", type=Path, required=True)
+    parser.add_argument("--model-dir", type=Path)
     args = parser.parse_args()
     try:
-        print(json.dumps(run(args.base), indent=2))
+        print(json.dumps(run(args.base, model_dir=args.model_dir), indent=2))
     except Exception as error:
         write(
             args.base / "geography_sample_failure.json",

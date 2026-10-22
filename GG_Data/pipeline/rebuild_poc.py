@@ -148,10 +148,14 @@ def relevance(base: Path) -> dict:
     return report
 
 
-def run(stage: str, base: Path) -> dict:
+def run(stage: str, base: Path, *, model_dir: Path | None = None) -> dict:
     """Explicit stage paths prevent fallback to the historical POC outputs."""
     if not base.resolve().is_relative_to(ROOT / "GG_Data/pipeline/outputs"):
         raise ValueError("Use the approved local pipeline output directory")
+    # Preserve stopped attempts; all dependent stages use the explicit new model.
+    model = model_dir or base / "model"
+    if not model.resolve().is_relative_to(base.resolve()):
+        raise ValueError("The model output must stay inside this rebuild bundle")
     matching = base / "matching"
     if (
         read_json(matching / "manifest.json").get("page_candidate_scope")
@@ -176,14 +180,14 @@ def run(stage: str, base: Path) -> dict:
             )
         if stage == "model":
             return event_model.run(
-                base / "model",
+                model,
                 selection=base / "events",
                 entities=base / "entities",
                 mentions=base / "mentions_pages/mentions.json.gz",
                 scores_dir=base / "relevance",
             )
         if stage == "geography-inputs":
-            return geography.prepare(base / "model", base / "geography_inputs")
+            return geography.prepare(model, base / "geography_inputs")
         if stage == "geography-sample-inputs":
             original = (
                 ROOT
@@ -243,6 +247,12 @@ if __name__ == "__main__":
         ),
     )
     parser.add_argument("--base", type=Path, required=True)
+    parser.add_argument("--model-dir", type=Path)
     args = parser.parse_args()
     logging.basicConfig(level=logging.INFO, format="%(asctime)s %(message)s")
-    logging.info("%s", json.dumps(run(args.stage, args.base), ensure_ascii=True))
+    logging.info(
+        "%s",
+        json.dumps(
+            run(args.stage, args.base, model_dir=args.model_dir), ensure_ascii=True
+        ),
+    )

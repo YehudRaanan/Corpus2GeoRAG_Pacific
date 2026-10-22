@@ -33,7 +33,14 @@ def native_record(envelope: dict, qid: str) -> dict:
     return entity
 
 
-def choose_name(qid: str, full: dict, matching: dict, mentions: list[dict]) -> dict:
+def choose_name(
+    qid: str,
+    full: dict,
+    matching: dict,
+    mentions: list[dict],
+    *,
+    event_qid_fallback: bool = False,
+) -> dict:
     """S2T 1/6: EN -> JA -> Daniel from the selected whole source record.
 
     Latest 20 October approval supersedes cross-version name ranking and
@@ -49,6 +56,15 @@ def choose_name(qid: str, full: dict, matching: dict, mentions: list[dict]) -> d
                 revision=full.get("lastrevid"),
             )
     names = sorted({m["raw"]["word"] for m in mentions})
+    # S2T 6, owner approval 22 October: only Events without EN/JA or Daniel
+    # names may display their existing QID. This is not a Wikidata label.
+    if not names and event_qid_fallback:
+        return dict(
+            value=qid,
+            language=None,
+            source="wikidata_id_fallback",
+            revision=full.get("lastrevid"),
+        )
     if len(names) != 1:
         raise ValueError(f"Conflicting Daniel fallback names: {qid}: {names}")
     return dict(value=names[0], language=None, source="Daniel", revision=None)

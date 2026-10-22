@@ -110,3 +110,13 @@ Code has local Git checkpoints. The bounded Geography sample continuation has
 passed its two focused cache/identity/geometry regression tests but has not
 been run on the rebuilt model, which is blocked above. Generated artifacts
 are ignored by Git and are not protected on GitHub. No final graph exists.
+
+## Approved continuation after the missing-name stop
+
+On 22 October the owner approved the existing Wikidata QID as an Event display
+name when English, Japanese and Daniel names are all absent. Original labels
+remain unchanged and `attributes.name_selection.source` records
+`wikidata_id_fallback`. This approval changes no identities or Event gates.
+The stopped `model/` remains immutable; the resumed model is written to
+`model_qid_name/`. Dependent Geography stages receive this explicit model path.
+The focused naming, path and Geography cache/identity tests passed (8 tests).
