@@ -35,15 +35,28 @@ fresh paths into the existing population stages, remeasures language-specific
 relevance, and requests a new full-scope Event query. Approved hierarchy and
 relation-mapping parameter tables are reused; old selections are not.
 
-**Stopped checkpoint, 22 October at 07:42 Asia/Jerusalem:** corrected Entity
-population contains 5,210 typed rows (2,683 QIDs and 2,503 synthetic mentions).
-Fresh relevance retains 2,055 QIDs for Event retrieval. The new cloud query
-and local gates validate 2,785 Events. Model population then stops before table
-writes: Q2949904 has no EN/JA label or Daniel name, so the approved name rule
-has no remaining fallback. No independent label choice was made. The rebuilt
-model, Geography sample and final graph are incomplete. All known workers have
-exited. See [the correction checkpoint](../../docs/PAGE_SCOPE_REBUILD_2026-10-22.md)
-and `outputs/rebuild_page_scope_20261022/stop_checkpoint.json`.
+**Completed correction, 22 October at 07:54 Asia/Jerusalem:** the owner approved
+QID display names for Events without EN/JA or Daniel names. The earlier stopped
+`model/` is preserved. The accepted rebuild is `model_qid_name/`: **7,995 typed
+Entities, 2,785 Events and 17,042 Relations**. All 5,210 original Entity rows
+remain unchanged. There are 13,517 uncapped Event-involving assertions and 3,525
+other assertions; no non-Event endpoint exceeds the approved 20-assertion limit.
+Q2949904 is the only QID display-name fallback. Its original labels remain.
+
+Geography preflight prepared 1,261 LOC targets (956 QIDs and 305 synthetics).
+The same ten original mention examples were replayed against corrected IDs:
+London/Q84 accepts the original OHM Point, and Java/Q3757 accepts the original
+OSM MultiPolygon. Eight synthetic examples remain explicitly unresolved: seven
+lack sufficient identity evidence and one has only punctuation as its name.
+The sample's Geography rows contain checksum-checked GeoParquet pointers;
+Shapely objects were loaded and compared exactly after saving. No main-model
+rows or identity assignments were modified by the sample. Full Geography
+population and final graph export remain outside this correction's scope.
+
+The final receipts are `outputs/rebuild_page_scope_20261022/completion_audit.json`,
+`model_qid_name/verification.json` and `geography_sample/verification.json`.
+See [the correction record](../../docs/PAGE_SCOPE_REBUILD_2026-10-22.md).
+`stop_checkpoint.json` records the earlier pause, not the current run state.
 
 ### Synthetic LOC coverage - 21 October 2026
 

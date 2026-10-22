@@ -67,7 +67,7 @@ Indonesia), replacing the Scottish hamlet assignment. Hoosick Falls, Tinian
 Town and Sunharon Bay remain synthetic under the unchanged matching rules.
 Geography must use those new identities; it cannot restore the old QIDs.
 
-## Downstream checkpoint
+## Historical downstream stop
 
 Verified at 07:42, 22 October 2026, Asia/Jerusalem (UTC+03):
 
@@ -120,3 +120,58 @@ remain unchanged and `attributes.name_selection.source` records
 The stopped `model/` remains immutable; the resumed model is written to
 `model_qid_name/`. Dependent Geography stages receive this explicit model path.
 The focused naming, path and Geography cache/identity tests passed (8 tests).
+
+## Completed correction
+
+Verified at 07:54, 22 October 2026, Asia/Jerusalem (UTC+03):
+
+- The resumed model completed in 110.391 seconds. It contains **7,995 typed
+  Entity rows, 2,785 Events and 17,042 Relations**. All 5,210 original Entity
+  rows are preserved exactly, including synthetic importance scores of 1.
+- The Relations include 13,517 Event-involving assertions, which are uncapped,
+  and 3,525 non-Event assertions. The maximum non-Event incident assertion
+  count is 20. All endpoints exist in Entities; typed identities remain
+  separate while Relations use QID endpoints.
+- Exactly one Event uses the approved display fallback: Q2949904. Its original
+  language labels are unchanged. No Event was removed because of its name.
+- Geography input preparation passed for **1,261 LOC identities: 956 QIDs and
+  305 synthetic IDs**. This prepares the population; it does not assign all
+  geometries.
+- The original ten example mention IDs were preserved. London now uses Q84;
+  Java uses Q3757. No old Ohio or Scottish-village identity is restored by
+  source-cache reuse.
+
+| Original example | Corrected Geography sample result |
+|---|---|
+| London | Q84; accepted original OHM Point at longitude -0.1276474, latitude 51.5073219 |
+| Hoosick Falls | Synthetic; insufficient input identity evidence |
+| Java | Q3757; accepted original OSM MultiPolygon, object R9444963 |
+| Tinian Town | Synthetic; insufficient input identity evidence |
+| Sunharon Bay | Synthetic; insufficient input identity evidence |
+| Piva Yoke | Synthetic; insufficient input identity evidence |
+| Crabbs Peninsula | Synthetic; insufficient input identity evidence |
+| Pocatello Army Air Base | Synthetic; insufficient input identity evidence |
+| Donbaik | Synthetic; insufficient input identity evidence |
+| `.` | Synthetic; empty name after normalization |
+
+The two accepted Shapely objects are saved in the sample's GeoParquet artifact.
+Its Geography data rows contain file/place/checksum pointers; each pointer was
+loaded and the geometry compared exactly. The eight unresolved sample inputs
+remain in the audit with explicit reasons and no geometry pointer. Names alone
+cannot inherit a former QID's external-ID evidence. The sample does not change
+the main model or Daniel matching assignments.
+
+Final evidence under the rebuild bundle:
+
+- `completion_audit.json`: independent input/output checksum, Entity
+  preservation, relation-cap, ten-input identity and geometry-object checks.
+- `model_qid_name/manifest.json` and `verification.json`: completed model.
+- `geography_inputs/report.json`: complete LOC input population.
+- `geography_sample/audit.json`, `geography.json`, `geometries.parquet` and
+  `verification.json`: ten-input results and saved Shapely geometry references.
+
+The earlier `model/`, `model_failure.json` and `stop_checkpoint.json` remain
+unchanged as historical failure evidence. All launched workers have exited.
+Full Geography population, graph export and Agent integration are still
+pending stages, not completed outputs of this correction. Code backup status:
+**Local checkpoint only**. Ignored generated outputs are not protected on GitHub.
