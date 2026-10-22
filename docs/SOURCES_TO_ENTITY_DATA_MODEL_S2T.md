@@ -1401,6 +1401,8 @@ One source assertion produces one base row. Bidirectional graph navigation is su
 
 ## 9. Geography: existing policy and fields
 
+**Current selection rule:** section 9.7 supersedes earlier confidence vetoes and source-first geometry priority. Always select the highest-ranked available valid geometry; uncertainty stays in metadata. Current implementation is verified on twenty inputs only.
+
 Follow the complete [geocoding policy](GEOCODING_HIGH_LEVEL_PROCESS.md), version `geo-object-selection-v0.5.0`; this S2T does not replace its place-type/representation table or acceptance rules.
 
 1. Target every existing `Entities.type=LOC` identity: matched QIDs and unresolved synthetic IDs. Approved extension, 21 October 2026: synthetic LOC rows enter the existing name/alias/date/type/context fallback; they must not be excluded because they lack a QID. Preserve each original `SYN_...` ID separately, even when names repeat. A supported source-object geometry does not establish a Wikidata match: leave entity IDs, types, matching decisions and identity status unchanged. Non-place events are not name-geocoding targets.
@@ -1485,6 +1487,14 @@ This is an experiment, not a production acceptance policy or accuracy estimate. 
 The owner approved testing removal of the name/QID selection veto and use of other agreed-source coordinates on the same twenty inputs. The [comparison report](GEOGRAPHY_RANKING_20_CONTEXT_2026-10-22.md) records eighteen top-candidate proposals versus thirteen previously. This is not eighteen accepted matches: the test produces incorrect US school/post-office choices at zero points, a false country-context match on the alias AS, and source-first replacements by an unsuitable campsite/building. Pocatello does acquire a useful approximate airport polygon containing the historical GeoNames point. Further runs stopped for owner discussion; no filters, identity changes or production assignments were added.
 
 The experiment keeps weights 45/30/15/7/3. GeoNames Point containment supports the existing geographic-context component (maximum ten geographic points), while Wikidata retains the coordinate component (maximum thirty). All source hypotheses and containment checks remain explicit. The test exposes that coordinate containment or a positive score alone does not establish identity, feature compatibility or suitable extent. No general production acceptance rule is inferred from this failed test.
+
+### 9.7 Latest owner rule: select whenever geometry is available — 22 October 2026
+
+For every existing LOC input, if one or more valid nonempty geometries have been retrieved, select the highest-ranked available option. A low or zero score, uncertain name/QID/type/date, or a conflicting candidate does not leave an available geolocation empty. Preserve these facts as uncertainty metadata and keep the original identity and matching status. Ranking chooses between options; it is not an acceptance threshold. Leave geometry unresolved only when no usable geometry has been retrieved. No source geometry, buffer, new entity or QID assignment is invented.
+
+Wikidata Points compete by the same score rather than being forced behind lower-scoring source geometries. Stable score ties prefer a polygon, then source and source-object ID. This instruction supersedes conflicting selection vetoes and source-first/last-resort-only priorities in sections 9, 9.3, 9.5 and 9.6. The known low-score retrieval/ranking problems remain improvement items, not reasons to discard an available location. Prefer a useful nearby approximation over no location; retain evidence and do not claim exact historical extent.
+
+The [verified twenty-input rerun](GEOGRAPHY_RANKING_20_ALWAYS_SELECT_2026-10-22.md) selected geometry for all eighteen inputs with loaded options. Panaon and Sunharon use their Wikidata Points; Pocatello uses its airport polygon. Two inputs have no loaded geometry. Zero inputs with available geometry remain unresolved. No main-model row or ID changed; the rule is implemented in the bounded sample runner, not yet integrated into full model population.
 
 ## 10. Evidence, required checks and explicit exceptions
 

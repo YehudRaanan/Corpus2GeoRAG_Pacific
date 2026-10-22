@@ -31,7 +31,7 @@ from .poc import ROOT, digest, read_json
 from .rebuild_poc import write
 
 PARAMETERS = dict(
-    version="geo-ranking-20-experiment-v2",
+    version="geo-ranking-20-experiment-v3",
     weights=dict(qid=45, coordinate=30, context=15, name=7, feature_type=3),
     candidate_only_qid_points=20,
     distance_bands_m=[[1000, 25], [5000, 15], [20000, 5]],
@@ -40,6 +40,10 @@ PARAMETERS = dict(
     no_production_assignments=True,
     name_or_qid_required_for_selection=False,
     geonames_containment_context_points=10,
+    always_select_available_geometry=True,
+    selection="highest_score_then_polygon_then_stable_source_id",
+    uncertainty_flags_do_not_exclude=True,
+    wikidata_points_compete_by_score=True,
 )
 
 
@@ -205,23 +209,21 @@ def score(place: dict, evidence: dict, candidate: dict, anchors: list[dict]) -> 
         context_matches=matches,
         source_coordinate_context_checks=spatial_checks,
         supplied_dates=supplied_dates,
-        excluded_reasons=reasons,
+        uncertainty_flags=reasons,
         geometry_available=geo is not None,
         ranking_is_not_identity_probability=True,
     )
 
 
 def select_proposal(ranked: list[dict]) -> dict | None:
-    """Owner's twenty-case test: remove the name/QID veto, retain conflicts.
+    """Latest owner rule: an available geometry must never become unresolved.
 
-    This deliberately exposes weak and zero-score selections for assessment;
-    it is not a production acceptance rule. S2T 9.3 keeps P625 Points last.
+    The caller supplies score order with stable ties. Keep low scores and
+    conflicts as uncertainty metadata, not vetoes. P625 Points now compete
+    by score; this explicitly supersedes the earlier source-first fallback.
+    Identity IDs stay unchanged even when the selected location is uncertain.
     """
-    eligible = [
-        c for c in ranked if c["geometry_available"] and not c["excluded_reasons"]
-    ]
-    source_shapes = [c for c in eligible if not c.get("coordinate_fallback")]
-    return (source_shapes or eligible or [None])[0]
+    return next((c for c in ranked if c["geometry_available"]), None)
 
 
 def native_candidate(row: dict, source: str, receipt: str) -> dict:

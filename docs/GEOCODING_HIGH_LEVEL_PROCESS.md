@@ -1,14 +1,22 @@
 # Geocoding High-Level Process
 
-**Synthetic LOC approval - 21 October 2026:** all existing LOC identities enter Geography, including unresolved SYN IDs. QIDs use exact-ID lookup first; SYN IDs use the existing name/alias/date/type/context fallback and keep their original IDs. Supported geometry does not create a Wikidata match. Ambiguous candidates remain unresolved. `Geography.geometry_ref.place_id` can therefore be an existing QID or SYN ID; the reference stays in the model, not graph JSON. This extends target coverage under the existing source and acceptance policy.
+## Current selection rule — owner correction, 22 October 2026
+
+If one or more valid nonempty source geometries have been retrieved for an existing LOC input, select the highest-ranked available geometry. Low or zero score, uncertain identity or conflicting evidence stays in metadata; it does not make an available geolocation unresolved. When no usable geometry has been retrieved, keep the geometry unresolved. Preserve the input QID/SYN ID and Wikidata matching status. Never fabricate an entity or source geometry.
+
+Use the 45/30/15/7/3 QID, Wikidata-coordinate, context, name and feature-type ranking. Stable score ties prefer a polygon, then source and source-object ID. Wikidata Points compete by score; the previous last-resort-only/source-first priority does not override a higher-ranked Point. Retain source evidence, scores and uncertainty, including approximate position and unconfirmed historical extent. A useful nearby approximation is preferred over an empty location.
+
+This rule supersedes conflicting uniqueness, confidence, date/type/name/QID rejection and mandatory-manual-review selection gates in the historical workflow below. It changes geometry selection, not upstream entity matching or the approved source list. Input-local candidate retrieval and valid Shapely storage still apply. The [twenty-input result](GEOGRAPHY_RANKING_20_ALWAYS_SELECT_2026-10-22.md) verifies eighteen selections for eighteen inputs with loaded geometries and zero avoidable unresolved outputs. Full-model integration has not been run.
+
+**Synthetic LOC approval - 21 October 2026:** all existing LOC identities enter Geography, including unresolved SYN IDs. QIDs use exact-ID lookup first; SYN IDs use the existing name/alias/date/type/context fallback and keep their original IDs. Supported geometry does not create a Wikidata match. The current rule above now selects among ambiguous geometry candidates instead of leaving an available location unresolved. `Geography.geometry_ref.place_id` can therefore be an existing QID or SYN ID; the reference stays in the model, not graph JSON. This extends target coverage under the existing source and acceptance policy.
 
 **Geometry pointer correction - 21 October 2026:** `Geography.geometry_ref` belongs to the data model, not final graph JSON. It retains the approved `{file, place_id, sha256}` format and identifies the saved Shapely/WKB object. The existing loader can read this model reference; Agent access to the model still requires integration verification. Earlier graph-node pointer instructions are superseded. No pointer or inline GeoJSON is exported in graph JSON.
 
 ## Purpose
 
-This process seeks one supported geographic object for each existing LOC entity, including synthetic identities without a Wikidata match. The result is designed for model population and Agent testing. Insufficient identity evidence leaves geometry unresolved.
+This process seeks one selected geographic object for each existing LOC entity, including synthetic identities without a Wikidata match. Use the highest-ranked available valid geometry and record uncertainty. Only an input without a retrieved usable geometry stays unresolved.
 
-Policy version: `geo-object-selection-v0.5.0`
+Base retrieval/storage policy: `geo-object-selection-v0.5.0`. Current tested selection rule: `geo-ranking-20-experiment-v3` (22 October 2026).
 
 Approved population extension, 21 October 2026: include synthetic LOC identities in the existing name/alias/date/type/context fallback. Keep each original SYN ID; do not assign a new QID or merge repeated names. This changes target coverage, not the source list or acceptance rules.
 
@@ -27,7 +35,7 @@ the place-selection rules remain unchanged.
 - Wikidata names, aliases, types, parent context, QIDs, and external identifiers can be used as identity evidence.
 - The coordinate reference system must be stored in the geometry table metadata. The Agent contract does not yet define its required CRS.
 
-## Process overview
+## Historical process overview (selection gates superseded above)
 
 ```mermaid
 flowchart TD
@@ -217,7 +225,7 @@ The audit data also keeps all candidates, source attempts, exact-QID counts, WHG
 - Context fields reduce false matches when no source has an exact QID link.
 - One geometry per place gives the Agent a simple and stable interface.
 - Full provenance permits later review, correction, and replacement.
-- An unresolved result is safer than a geometry selected from weak evidence.
+- Current owner rule: select the highest-ranked available valid geometry even when evidence is weak; preserve uncertainty. Only no retrieved usable geometry leaves the location unresolved.
 
 ## Current proof of concept
 

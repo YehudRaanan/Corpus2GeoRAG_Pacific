@@ -1,11 +1,11 @@
-"""Owner ranking: strong source identity, real geometry distance, no road match."""
+"""Owner ranking: select available geometry and keep uncertainty explicit."""
 
 from shapely.geometry import Point, Polygon, mapping
 
 from GG_Data.pipeline.geography_ranking_sample import distance_m, score, select_proposal
 
 
-def test_qid_and_coordinates_dominate_names_without_counting_reverse_road():
+def test_qid_and_coordinates_dominate_names_with_explicit_uncertainty():
     place = dict(name="Example", wikidata_id="Q1", selection_date="1942")
     evidence = dict(
         candidate_qids=[],
@@ -33,16 +33,16 @@ def test_qid_and_coordinates_dominate_names_without_counting_reverse_road():
     )
     assert ranked["total"] == 92
     wrong = score(place, evidence, source | dict(qid="Q2"), [anchor])
-    assert "DIFFERENT_QID_FOR_DIRECT_PLACE" in wrong["excluded_reasons"]
+    assert "DIFFERENT_QID_FOR_DIRECT_PLACE" in wrong["uncertainty_flags"]
     road = score(place, evidence, source | dict(feature_class="highway"), [anchor])
-    assert "REVERSE_ROAD_IS_CONTEXT_NOT_TARGET" in road["excluded_reasons"]
+    assert "REVERSE_ROAD_IS_CONTEXT_NOT_TARGET" in road["uncertainty_flags"]
     assert distance_m(Polygon([(-1, -1), (1, -1), (1, 1), (-1, 1)]), [0, 0]) == 0
     missing = score(place, evidence, source, [])
     assert missing["components"]["coordinate"] == 0
     assert missing["components"]["qid"] == 45
 
 
-def test_source_coordinate_context_and_name_free_selection_keep_conflicts():
+def test_source_coordinate_context_and_always_select_available_geometry():
     place = dict(name="Historical Air Base", wikidata_id=None, selection_date="1942")
     evidence = dict(
         candidate_qids=[],
@@ -69,8 +69,13 @@ def test_source_coordinate_context_and_name_free_selection_keep_conflicts():
     )
     assert ranked["source_coordinate_context_checks"][0]["contained"]
     assert select_proposal([ranked]) == ranked
-    assert select_proposal([ranked | dict(excluded_reasons=["CONFLICT"])]) is None
+    flagged = ranked | dict(uncertainty_flags=["CONFLICT"])
+    assert select_proposal([flagged]) == flagged
     point = score(place, evidence, polygon | dict(geometry=mapping(Point(0, 0))), [])
     assert point["components"]["context"] == 0  # No self-coordinate support.
     fallback = ranked | dict(total=100, coordinate_fallback=True)
-    assert select_proposal([fallback, ranked]) == ranked
+    assert select_proposal([fallback, ranked]) == fallback
+    zero_score = ranked | dict(total=0, uncertainty_flags=["LOW_SUPPORT"])
+    assert select_proposal([zero_score]) == zero_score
+    assert select_proposal([zero_score | dict(geometry_available=False)]) is None
+    assert select_proposal([]) is None
