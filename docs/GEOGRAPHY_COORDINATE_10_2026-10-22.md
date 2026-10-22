@@ -2,11 +2,13 @@
 
 ## Result
 
-The same ten frozen inputs retain **three geometries and seven unresolved
-locations**. There are **no additional accepted geometries** and no selected
-Wikidata Point fallback. The production model, graph and identity assignments
-were not changed. This is a bounded retrieval/context/fallback test, not a
-complete new gazetteer search or a production selector release.
+The corrected run has **five geometries and five unresolved locations**.
+Tinian Town and Sunharon Bay now use their saved Wikidata coordinates as
+unchanged Shapely Points. Both retain synthetic IDs and candidate-only identity
+uncertainty in the audit. The initial run's extra confirmed-input identity gate
+blocked these Points; the owner explicitly instructed its removal for this
+fallback. The production model, graph and identity assignments were not changed.
+This is a bounded ten-input test, not a production selector release.
 
 The three retained objects are London's Point, Java's MultiPolygon and the
 previously approved approximate Hoosick Falls village Polygon.
@@ -34,10 +36,11 @@ Apply population S2T section 9.3 and the dated coordinate approval in
    through existing exact aliases or Wikidata P1566 links. Distances are
    diagnostics, not identity acceptance thresholds. Records can share an
    upstream gazetteer and are not assumed to be independent confirmation.
-6. Use an unchanged `Point(longitude, latitude)` only when input identity is
-   supported and no supported other geometry exists. Existing identity gates
-   remain in force. A candidate's own coordinate cannot prove that Daniel
-   meant that candidate. In this sample no additional input passes this gate.
+6. When no supported other geometry exists, use the available original
+   `Point(longitude, latitude)`. A saved exact-name/alias-linked Wikidata
+   candidate can supply this fallback without a new identity assignment or an
+   extra confirmed-input identity gate. Keep the synthetic ID, source QID and
+   candidate-only uncertainty. Multiple candidate QIDs stop for review.
 
 An existing supported geometry takes priority over the coordinate fallback.
 Thus Hoosick Falls does not require another coordinate retrieval. Candidate
@@ -51,8 +54,8 @@ the test does not establish that other places lack Wikidata coordinates.
 | London | Retain accepted Point | Matched Q84 coordinate retrieved Charing Cross road. The nearest road is not London's geometry. Existing accepted source Point retained. |
 | Hoosick Falls | Retain approximate village Polygon | Supported 3.847 km² local polygon already available. No coordinate fallback needed; SYN ID unchanged. |
 | Java | Retain accepted MultiPolygon | Matched Q3757 coordinate retrieved an unnamed road in Central Java. Existing island geometry retained. |
-| Tinian Town | Unresolved | Candidate Q101003545 has P625 and P1566=4041558. Its coordinate is 16.36 m from the saved GeoNames point. Reverse returned an unnamed road in San Jose (Tinian). The source-record agreement does not supply the missing independent input-parent evidence. |
-| Sunharon Bay | Unresolved | Candidate Q101048967 has P625 and P1566=4041645. Its coordinate is 5.45 m from the linked GeoNames anchorage point. Reverse returned Marpo Heights suburb. Bay/anchorage interpretation and input identity remain unconfirmed; suburb geometry rejected. |
+| Tinian Town | Wikidata Point fallback | Original P625 from candidate Q101003545, retained under SYN_42cf906b118d1567aa031500. Candidate identity uncertainty remains visible. Reverse road geometry is not selected. |
+| Sunharon Bay | Wikidata Point fallback | Original P625 from candidate Q101048967, retained under SYN_8b3229a1addcbdc9c46d8fff. Candidate identity and bay extent remain uncertain. Reverse suburb geometry is not selected. |
 | Piva Yoke | Unresolved | No eligible saved exact-alias Wikidata candidate link. River/settlement candidates do not establish the fighter strip. |
 | Crabbs Peninsula | Unresolved | Existing candidate spelling is Crabs Peninsula. No new fuzzy-name acceptance or parent rule is introduced. |
 | Pocatello Army Air Base | Unresolved | Saved historical Air Field name/type is still not an accepted input match. No eligible saved exact-alias Wikidata coordinate link. |
@@ -68,13 +71,24 @@ The test uses one thread, an identifying User-Agent, cache storage and a
 1.1-second pause after new requests, within the
 [public service policy](https://operations.osmfoundation.org/policies/nominatim/).
 
+The two fallback Points preserve these exact original values and source precision
+(`0.0002777777777777778` degrees); they are positions, not boundaries:
+
+| Input | X: longitude | Y: latitude | Geometry source statement |
+|---|---|---|---|
+| Tinian Town | 145.62444444444444 | 14.96861111111111 | Q101003545$58822498-495f-9dd1-34f2-5033420b4653 |
+| Sunharon Bay | 145.61277777777778 | 14.955277777777777 | Q101048967$09d74a13-4ed1-4530-9a89-a9dede7b1449 |
+
 ## Verification and artifacts
 
 - Initial run: 10 inputs; four new Nominatim requests; three retained geometries;
   seven unresolved; zero new fallback Points.
-- Replay: same decisions and exact geometries; all four responses reused;
-  zero new requests.
-- Nine focused tests passed, including fallback identity/source-priority gates,
+- Initial replay: same initial decisions and exact geometries; all four responses
+  reused; zero new requests. Preserved as historical evidence.
+- Corrected run: five geometries, five unresolved, two new Wikidata Points;
+  zero new requests, four cached responses reused. Original three objects and
+  all ten input IDs/order retained exactly.
+- Nine focused tests passed, including coordinate fallback/source priority,
   exact coordinate preservation, conflicting coordinates, non-Earth rejection,
   existing containment/context checks and frozen-sample behavior. Ruff passed.
 - All 69 protected hashes in the replay and seven output hashes passed readback.
@@ -84,8 +98,10 @@ The test uses one thread, an identifying User-Agent, cache storage and a
 
 Code: `GG_Data/pipeline/geography_coordinate_sample.py` and its focused test.
 Original output: `GG_Data/pipeline/outputs/geography_coordinate_10_20261022/`.
-Final cached replay:
+Initial cached replay:
 `GG_Data/pipeline/outputs/geography_coordinate_10_20261022_cached_replay/`.
+Corrected output:
+`GG_Data/pipeline/outputs/geography_coordinate_10_20261022_points_applied/`.
 Each contains source responses, `audit.json`, `verification.json`, progress and
 `geometries.parquet`. These ignored local outputs are not protected by Git.
 
@@ -97,9 +113,8 @@ C:\Users\User\anaconda3\python.exe -B -m GG_Data.pipeline.geography_coordinate_s
 
 ## Interpretation
 
-Coordinates add useful source/context evidence here, but do not repair the
-unresolved identity matches. The unchanged-Point fallback is implemented and
-code-tested; no real unresolved input qualified for it in these ten examples.
-No new distance, alias, feature-type, parent or identity acceptance rule was
-added. A wider candidate-discovery or identity-policy change requires separate
-agreement before a new run.
+Coordinates now supply two actual fallback geometries. Their candidate-only
+identity status remains visible; this does not convert synthetic entities into
+matched QIDs. No new distance, alias, feature-type or parent rule was added.
+The owner's correction changes geometry acceptance only: uncertainty is
+metadata, not an extra gate blocking these available coordinate Points.

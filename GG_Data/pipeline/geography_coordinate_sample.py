@@ -1,7 +1,7 @@
 """Test population S2T 9.3 on the same ten frozen Geography inputs.
 
-Reuse accepted geometry and pinned Wikidata records. Candidate coordinates may
-guide retrieval but cannot establish their own identity. No model/ID changes.
+Reuse accepted geometry and pinned Wikidata records. Use available candidate
+coordinates as fallback Points without changing input identities or the model.
 Nominatim public policy: single thread, identifying User-Agent, cached requests,
 at least one second between calls. Reverse results are candidates, not truth.
 """
@@ -53,11 +53,13 @@ def coordinate(entity: dict) -> dict | None:
     return dict(qid=entity["id"], statement=claim, xy=[lon, lat], crs="EPSG:4326")
 
 
-def fallback_point(
-    evidence: dict | None, *, identity_supported: bool, has_geometry: bool
-):
-    """S2T 9.3: never replace supported geometry or bypass identity evidence."""
-    if evidence is None or not identity_supported or has_geometry:
+def fallback_point(evidence: dict | None, *, has_geometry: bool) -> Point | None:
+    """S2T 9.3 owner correction: candidate uncertainty does not block a Point.
+
+    Candidate discovery remains restricted to the saved exact-name/alias links.
+    Geometry is not a new identity assignment; retain the original input ID.
+    """
+    if evidence is None or has_geometry:
         return None
     return Point(*evidence["xy"])
 
@@ -145,6 +147,8 @@ def run(
                 else None
             )
             qids = [place["wikidata_id"]] if place["wikidata_id"] else candidates[pid]
+            if geometry is None and len(qids) > 1:
+                raise ValueError(f"Multiple coordinate candidates need review: {pid}")
             for qid in qids:
                 matched = place["wikidata_id"] == qid
                 entity = raw[qid]["entity"] if matched else records[qid]
@@ -236,21 +240,27 @@ def run(
                 check["decision"] = (
                     "RETAIN_EXISTING_GEOMETRY"
                     if geometry is not None
-                    else "CANDIDATE_COORDINATE_CANNOT_PROVE_INPUT_IDENTITY"
+                    else "USE_ORIGINAL_WIKIDATA_POINT_FALLBACK"
                 )
                 point = fallback_point(
                     evidence,
-                    identity_supported=matched,
                     has_geometry=geometry is not None,
                 )
                 if point is not None:
                     geometry = point
                     row.update(
                         result="WIKIDATA_POINT_FALLBACK",
-                        approximate=False,
+                        approximate=not matched,
                         source_dataset="Wikidata",
+                        source_wikidata_id=qid,
                         source_object_id=evidence["statement"]["id"],
-                        decision_reason="Supported input coordinate; no other accepted geometry",
+                        coordinate_identity_status=check["role"],
+                        coordinate_uncertainty=(
+                            "Source coordinate is a position, not a place boundary"
+                            if matched
+                            else "Candidate identity remains unconfirmed; original synthetic ID retained"
+                        ),
+                        decision_reason="Original Wikidata coordinate fallback; no other accepted geometry",
                     )
             if geometry is not None:
                 geometries.append(dict(place_id=pid, geometry=geometry))
