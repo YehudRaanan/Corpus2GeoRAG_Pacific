@@ -1468,6 +1468,12 @@ Keep existing IDs and matching status. The owner's subsequent correction removes
 
 Use the agreed snapshot-first source priority and cached evidence. The [corrected ten-example coordinate test](GEOGRAPHY_COORDINATE_10_2026-10-22.md) retained three geometries and added the unchanged Wikidata Points for Tinian Town and Sunharon Bay: five with geometry and five unresolved, with zero new requests and four cached responses reused. Nine focused tests passed. Both inputs retain synthetic IDs and candidate-only uncertainty in the audit. This supersedes the initial three/seven result blocked by the extra identity gate. Production model/selection, IDs and prior local-polygon outputs remain unchanged.
 
+### 9.4 Five-input context retrieval diagnostic — 22 October 2026
+
+The owner challenged the narrow use of available context. The [five-input diagnostic](GEOGRAPHY_CONTEXT_EVIDENCE_5_2026-10-22.md) uses original mention text, page references, existing same-page LOC rows, candidate aliases and coordinates as labelled retrieval hypotheses. Its separate runner does not require a previously verified parent merely to issue a contextual search. It checked the skipped Crabs Peninsula Q21052107 P625, made eleven saved Nominatim requests and verified a zero-request cached replay. Results include two Done Paik villages, an Antigua address at the Crabs coordinate, a Pocatello airport polygon containing the historical source point, and Torokina/Bougainville context for Piva. The punctuation span is inside `U.S.`.
+
+This is an explicit diagnostic query plan, not a new unattended extractor or acceptance policy. Original IDs and model outputs remain unchanged; no new geometry or identity was assigned. Candidate-derived coordinates/parents and same-page co-occurrence are not silently promoted to independent input evidence. The report preserves actual requests, zero-result searches and ambiguity; no distance threshold, historical alias, type override or broad-area assignment is introduced.
+
 ## 10. Evidence, required checks and explicit exceptions
 
 Supporting manifests, catalogs, page/checkpoint files, query evidence, event-selection reports and geocoding audits are not new business tables. Each release must retain URI/path, checksum, schema/media version and record locator where a row uses an immutable reference. A local cache path alone is not a recoverable off-device artifact. Do not truncate unknown source fields or replace native statement evidence with just a QID pair.
