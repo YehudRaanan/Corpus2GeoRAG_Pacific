@@ -153,6 +153,14 @@ The process does not automatically union, buffer, simplify, or replace a geometr
 
 These rules select the geographic meaning. They do not change the entity identity.
 
+## Approved broader-polygon preference — 22 October 2026
+
+When a precise location cannot be established, prefer a supported broader local polygon over an unresolved geolocation. A country-wide polygon is not an acceptable approximation for a local place. This restriction concerns fallback approximations, not the exact boundary of an entity that is itself a country.
+
+The selected area must be identified as approximate, with its actual source object and supporting evidence retained. It must not be presented as the exact footprint of the input place or as proof that an ambiguous identity has been resolved. Keep the existing entity ID and Wikidata matching status unchanged. Unsupported areas remain unresolved; this preference does not authorize a guessed polygon, buffer, union, or new source.
+
+**Implementation pending:** the maximum permitted extent, the rule for selecting a broader area, and the machine-readable representation of approximation must be agreed before changing the automatic selector. No numerical limit, parent-area rule, or new acceptance status is approved by this preference alone. The current selector and previous sample assignments are unchanged.
+
 ## Decision outcomes
 
 - `ACCEPTED_AUTO`: deterministic identity, date, type, and geometry checks pass.
@@ -160,7 +168,7 @@ These rules select the geographic meaning. They do not change the entity identit
 - `UNRESOLVED`: the available evidence is insufficient.
 - `REJECTED_NOT_PLACE`: the upstream node is not a place and must not receive a geometry.
 
-An uncertain place stays unresolved. It does not receive a guessed geometry.
+An uncertain place does not receive a guessed geometry. The approved broader-polygon preference above permits a supported approximate area in principle; its automatic selection rule is not yet implemented.
 
 ## Output and audit requirements
 

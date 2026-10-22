@@ -1450,6 +1450,14 @@ exact-QID tag candidates whose full geometry was not tested. Production rules
 above remain in force. General structured context and country-code handling
 still require discussion before implementation.
 
+### 9.2 Approved broader-polygon preference — 22 October 2026
+
+The user prefers a supported broader local polygon over unresolved geography when a precise location cannot be established. Country-wide fallback approximations are excluded. This does not exclude the exact boundary of an entity that is itself a country.
+
+Follow the [broader-polygon preference](GEOCODING_HIGH_LEVEL_PROCESS.md#approved-broader-polygon-preference--22-october-2026): make approximation explicit, retain the source object and supporting evidence, and preserve the original entity ID and identity-matching status. A supported broader area does not prove the exact place identity or footprint. Do not introduce guessed shapes, buffers, unions, or new sources.
+
+This is an approved preference, not an implemented selector change. Maximum extent, broader-area selection, and machine-readable approximation metadata require agreement before implementation. No new field, status, area threshold, or parent-selection algorithm is specified here. Existing model outputs and the 40-input diagnostic remain unchanged.
+
 ## 10. Evidence, required checks and explicit exceptions
 
 Supporting manifests, catalogs, page/checkpoint files, query evidence, event-selection reports and geocoding audits are not new business tables. Each release must retain URI/path, checksum, schema/media version and record locator where a row uses an immutable reference. A local cache path alone is not a recoverable off-device artifact. Do not truncate unknown source fields or replace native statement evidence with just a QID pair.
