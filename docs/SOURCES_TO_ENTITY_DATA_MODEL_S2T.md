@@ -1480,6 +1480,12 @@ The owner requested the 45/30/15/7/3 QID, coordinate, context, name and feature-
 
 This is an experiment, not a production acceptance policy or accuracy estimate. The prototype retains a separate QID/name/prior-geometry eligibility gate that blocks the context-supported Pocatello airport candidate; this requires discussion before a wider run. Candidate-derived coordinates are not independent identity evidence. Stated coordinate uncertainty and full feature/context coverage remain incomplete. Raw receipts and experimental GeoParquet remain supporting artifacts, not populated production model rows.
 
+### 9.6 Context-coordinate and no-name-veto test — stopped for discussion, 22 October 2026
+
+The owner approved testing removal of the name/QID selection veto and use of other agreed-source coordinates on the same twenty inputs. The [comparison report](GEOGRAPHY_RANKING_20_CONTEXT_2026-10-22.md) records eighteen top-candidate proposals versus thirteen previously. This is not eighteen accepted matches: the test produces incorrect US school/post-office choices at zero points, a false country-context match on the alias AS, and source-first replacements by an unsuitable campsite/building. Pocatello does acquire a useful approximate airport polygon containing the historical GeoNames point. Further runs stopped for owner discussion; no filters, identity changes or production assignments were added.
+
+The experiment keeps weights 45/30/15/7/3. GeoNames Point containment supports the existing geographic-context component (maximum ten geographic points), while Wikidata retains the coordinate component (maximum thirty). All source hypotheses and containment checks remain explicit. The test exposes that coordinate containment or a positive score alone does not establish identity, feature compatibility or suitable extent. No general production acceptance rule is inferred from this failed test.
+
 ## 10. Evidence, required checks and explicit exceptions
 
 Supporting manifests, catalogs, page/checkpoint files, query evidence, event-selection reports and geocoding audits are not new business tables. Each release must retain URI/path, checksum, schema/media version and record locator where a row uses an immutable reference. A local cache path alone is not a recoverable off-device artifact. Do not truncate unknown source fields or replace native statement evidence with just a QID pair.

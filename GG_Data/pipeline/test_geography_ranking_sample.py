@@ -2,7 +2,7 @@
 
 from shapely.geometry import Point, Polygon, mapping
 
-from GG_Data.pipeline.geography_ranking_sample import distance_m, score
+from GG_Data.pipeline.geography_ranking_sample import distance_m, score, select_proposal
 
 
 def test_qid_and_coordinates_dominate_names_without_counting_reverse_road():
@@ -40,3 +40,37 @@ def test_qid_and_coordinates_dominate_names_without_counting_reverse_road():
     missing = score(place, evidence, source, [])
     assert missing["components"]["coordinate"] == 0
     assert missing["components"]["qid"] == 45
+
+
+def test_source_coordinate_context_and_name_free_selection_keep_conflicts():
+    place = dict(name="Historical Air Base", wikidata_id=None, selection_date="1942")
+    evidence = dict(
+        candidate_qids=[],
+        text="Historical Air Base",
+        source_page="Campaign",
+        start=0,
+        original_name="Historical Air Base",
+        context=dict(features=[]),
+        geonames_coordinate_context=[dict(source="GeoNames", source_id="1", xy=[0, 0])],
+    )
+    polygon = dict(
+        source="OpenStreetMap",
+        source_id="way:1",
+        qid=None,
+        name="Modern Airport",
+        aliases=["Modern Airport"],
+        parents=[],
+        tags={},
+        geometry=mapping(Polygon([(-1, -1), (1, -1), (1, 1), (-1, 1)])),
+    )
+    ranked = score(place, evidence, polygon, [])
+    assert ranked["components"] == dict(
+        qid=0, coordinate=0, context=10, name=0, feature_type=0
+    )
+    assert ranked["source_coordinate_context_checks"][0]["contained"]
+    assert select_proposal([ranked]) == ranked
+    assert select_proposal([ranked | dict(excluded_reasons=["CONFLICT"])]) is None
+    point = score(place, evidence, polygon | dict(geometry=mapping(Point(0, 0))), [])
+    assert point["components"]["context"] == 0  # No self-coordinate support.
+    fallback = ranked | dict(total=100, coordinate_fallback=True)
+    assert select_proposal([fallback, ranked]) == ranked

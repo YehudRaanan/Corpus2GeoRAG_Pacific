@@ -31,13 +31,15 @@ from .poc import ROOT, digest, read_json
 from .rebuild_poc import write
 
 PARAMETERS = dict(
-    version="geo-ranking-20-experiment-v1",
+    version="geo-ranking-20-experiment-v2",
     weights=dict(qid=45, coordinate=30, context=15, name=7, feature_type=3),
     candidate_only_qid_points=20,
     distance_bands_m=[[1000, 25], [5000, 15], [20000, 5]],
     fuzzy_name_minimum=0.8,
     no_universal_minimum_score=True,
     no_production_assignments=True,
+    name_or_qid_required_for_selection=False,
+    geonames_containment_context_points=10,
 )
 
 
@@ -152,6 +154,19 @@ def score(place: dict, evidence: dict, candidate: dict, anchors: list[dict]) -> 
         ),
         default=0,
     )
+    # Owner approval, 22 October: source coordinates can support a containing
+    # local polygon. Reuse the existing geographic-context maximum (10), not
+    # the Wikidata coordinate weight (30). These are retrieval hypotheses,
+    # not independent identity proof, and a Point never validates itself.
+    spatial_checks = []
+    if geo is not None and geo.geom_type in {"Polygon", "MultiPolygon"}:
+        for anchor in evidence.get("geonames_coordinate_context", []):
+            covered = geo.covers(Point(*anchor["xy"]))
+            spatial_checks.append(anchor | dict(contained=covered))
+        if any(c["contained"] for c in spatial_checks):
+            context_points = max(
+                context_points, PARAMETERS["geonames_containment_context_points"]
+            )
     tags = candidate.get("tags", {})
     supplied_dates = {k: tags[k] for k in ("start_date", "end_date") if tags.get(k)}
     temporal_ok = date_eligible(dict(extratags=tags), place["selection_date"])
@@ -188,11 +203,25 @@ def score(place: dict, evidence: dict, candidate: dict, anchors: list[dict]) -> 
         name_similarity=sim,
         coordinate_checks=checks,
         context_matches=matches,
+        source_coordinate_context_checks=spatial_checks,
         supplied_dates=supplied_dates,
         excluded_reasons=reasons,
         geometry_available=geo is not None,
         ranking_is_not_identity_probability=True,
     )
+
+
+def select_proposal(ranked: list[dict]) -> dict | None:
+    """Owner's twenty-case test: remove the name/QID veto, retain conflicts.
+
+    This deliberately exposes weak and zero-score selections for assessment;
+    it is not a production acceptance rule. S2T 9.3 keeps P625 Points last.
+    """
+    eligible = [
+        c for c in ranked if c["geometry_available"] and not c["excluded_reasons"]
+    ]
+    source_shapes = [c for c in eligible if not c.get("coordinate_fallback")]
+    return (source_shapes or eligible or [None])[0]
 
 
 def native_candidate(row: dict, source: str, receipt: str) -> dict:
@@ -238,7 +267,9 @@ def run(output: Path, request_cache: Path | None = None) -> dict:
     cache.mkdir()
     original = read_json(prior / "audit.json")
     protected = dict(original["protected_sha256"])
-    for folder in (prior, comp, diagnostic):
+    for folder in (prior, comp, diagnostic, request_cache):
+        if folder is None:
+            continue
         for p in folder.rglob("*"):
             if p.is_file():
                 protected[str(p)] = digest(p)
@@ -586,6 +617,25 @@ def run(output: Path, request_cache: Path | None = None) -> dict:
                 requests=request_count,
             ),
         )
+    for p in sample:
+        pid = p["place_id"]
+        # Keep input-local source links; never join another input's candidates
+        # by a global name. Preserve all source hypotheses rather than silently
+        # resolving GeoNames identity or replacing a synthetic entity's ID.
+        context_points = {}
+        for c in candidates[pid]:
+            if c["source"] == "GeoNames" and c.get("geometry"):
+                geometry = shape(c["geometry"])
+                if geometry.geom_type == "Point":
+                    context_points[c["source_id"]] = dict(
+                        source="GeoNames",
+                        source_id=c["source_id"],
+                        name=c["name"],
+                        xy=[geometry.x, geometry.y],
+                        receipt=c["receipt"],
+                        identity_status="CANDIDATE_ONLY",
+                    )
+        evidence[pid]["geonames_coordinate_context"] = list(context_points.values())
     write(
         output / "evidence.json",
         {p["place_id"]: evidence[p["place_id"]] for p in sample},
@@ -614,20 +664,7 @@ def run(output: Path, request_cache: Path | None = None) -> dict:
                 c["source_id"],
             ),
         )
-        eligible = [
-            c
-            for c in ranked
-            if c["geometry_available"]
-            and not c["excluded_reasons"]
-            and (
-                c["components"]["qid"]
-                or c["components"]["name"]
-                or c.get("prior_selected_geometry")
-            )
-        ]
-        # S2T 9.3: P625 Point is the last fallback, not a competing footprint.
-        source_shapes = [c for c in eligible if not c.get("coordinate_fallback")]
-        chosen = (source_shapes or eligible or [None])[0]
+        chosen = select_proposal(ranked)
         results.append(
             dict(
                 input=p,
