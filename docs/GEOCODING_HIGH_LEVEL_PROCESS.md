@@ -155,7 +155,7 @@ These rules select the geographic meaning. They do not change the entity identit
 
 ## Approved broader-polygon preference — 22 October 2026
 
-When a precise location cannot be established, prefer a supported broader local polygon over an unresolved geolocation. A country-wide polygon is not an acceptable approximation for a local place. This restriction concerns fallback approximations, not the exact boundary of an entity that is itself a country.
+When a precise location cannot be established, prefer a supported broader local polygon over an unresolved geolocation. Country-wide and larger polygons are not acceptable approximations for a local place. This restriction concerns fallback approximations, not the exact boundary of an entity that is itself a country.
 
 The selected area must be identified as approximate, with its actual source object and supporting evidence retained. It must not be presented as the exact footprint of the input place or as proof that an ambiguous identity has been resolved. Keep the existing entity ID and Wikidata matching status unchanged. Unsupported areas remain unresolved; this preference does not authorize a guessed polygon, buffer, union, or new source.
 

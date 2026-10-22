@@ -1452,7 +1452,7 @@ still require discussion before implementation.
 
 ### 9.2 Approved broader-polygon preference — 22 October 2026
 
-The user prefers a supported broader local polygon over unresolved geography when a precise location cannot be established. Country-wide fallback approximations are excluded. This does not exclude the exact boundary of an entity that is itself a country.
+The user prefers a supported broader local polygon over unresolved geography when a precise location cannot be established. Country-wide and larger fallback approximations are excluded. This does not exclude the exact boundary of an entity that is itself a country.
 
 Follow the [broader-polygon preference](GEOCODING_HIGH_LEVEL_PROCESS.md#approved-broader-polygon-preference--22-october-2026): make approximation explicit, retain the source object and supporting evidence, and preserve the original entity ID and identity-matching status. A supported broader area does not prove the exact place identity or footprint. Do not introduce guessed shapes, buffers, unions, or new sources.
 
