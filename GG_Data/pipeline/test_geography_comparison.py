@@ -5,9 +5,19 @@ import pytest
 from GG_Data.pipeline.geography_comparison import (
     candidate_profile,
     query_for,
+    query_batches,
     sample_targets,
     validate_response,
 )
+
+
+def test_batches_keep_all_queries_without_overlap_or_rewriting():
+    queries = {f"Q{i}": {"query": str(i)} for i in range(101)}
+    batches = query_batches(queries)
+    assert [len(b) for b in batches] == [50, 50, 1]
+    assert [key for b in batches for key in b] == list(queries)
+    assert {key: value for b in batches for key, value in b.items()} == queries
+    assert query_batches({}) == []
 
 
 def test_frozen_sample_keeps_poor_inputs_and_is_order_independent():

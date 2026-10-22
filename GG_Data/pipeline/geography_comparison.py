@@ -240,6 +240,16 @@ def validate_response(payload: object, queries: dict) -> None:
                 raise ValueError(f"Malformed WHG candidate: {key}")
 
 
+def query_batches(queries: dict) -> list[dict]:
+    """Owner-approved retrieval fix: WHG permits at most 50 queries per call.
+
+    Keep original query IDs/contents/order. Cache and validate each response;
+    a partial batch must never become a missing-place result (S2T section 9).
+    """
+    items = list(queries.items())
+    return [dict(items[i : i + 50]) for i in range(0, len(items), 50)]
+
+
 def retrieve(output: Path) -> dict:
     """Cache full native responses. Stop on source failures; no silent retry."""
     from .geography_sample import tools
@@ -268,22 +278,45 @@ def retrieve(output: Path) -> dict:
                 validate_response(saved["response"], batch)
                 progress["reused"] += 1
             else:
-                request = urllib.request.Request(
-                    ENDPOINT,
-                    data=json.dumps({"queries": batch}).encode(),
-                    headers={
-                        "Authorization": f"Bearer {legacy.env_value('WHG_key')}",
-                        "Content-Type": "application/json",
-                        "User-Agent": legacy.USER_AGENT,
-                    },
-                    method="POST",
-                )
-                with urllib.request.urlopen(request, timeout=60) as response:
-                    raw = response.read()
-                # Preserve the response before interpretation; malformed JSON
-                # must remain evidence of a failure, not become an empty cache.
-                path.with_suffix(".response").write_bytes(raw)
-                payload = json.loads(raw)
+                payload = {}
+                for index, part in enumerate(query_batches(batch)):
+                    part_path = path.with_name(f"whg_{arm}_batch_{index:03d}.json")
+                    if part_path.exists():
+                        saved_part = read_json(part_path)
+                        if saved_part["queries"] != part:
+                            raise ValueError("Cached WHG batch differs from query")
+                        response_part = saved_part["response"]
+                        validate_response(response_part, part)
+                        progress["reused"] += 1
+                    else:
+                        request = urllib.request.Request(
+                            ENDPOINT,
+                            data=json.dumps({"queries": part}).encode(),
+                            headers={
+                                "Authorization": f"Bearer {legacy.env_value('WHG_key')}",
+                                "Content-Type": "application/json",
+                                "User-Agent": legacy.USER_AGENT,
+                            },
+                            method="POST",
+                        )
+                        with urllib.request.urlopen(request, timeout=60) as response:
+                            raw = response.read()
+                        part_path.with_suffix(".response").write_bytes(raw)
+                        response_part = json.loads(raw)
+                        validate_response(response_part, part)
+                        write(
+                            part_path,
+                            dict(
+                                queries=part,
+                                response=response_part,
+                                retrieved_at=datetime.now(timezone.utc).isoformat(),
+                            ),
+                        )
+                        progress["requests"] += 1
+                    # Merge requested keys only; metadata cannot overwrite IDs.
+                    payload.update({key: response_part[key] for key in part})
+                    progress.update(current_arm=arm, completed_batches=index + 1)
+                    write(output / "progress.json", progress)
                 validate_response(payload, batch)
                 write(
                     path,
@@ -293,7 +326,6 @@ def retrieve(output: Path) -> dict:
                         retrieved_at=datetime.now(timezone.utc).isoformat(),
                     ),
                 )
-                progress["requests"] += 1
             progress["completed_arms"].append(arm)
             write(output / "progress.json", progress)
         # Reuse the current exact-QID source client in an isolated cache. Its
