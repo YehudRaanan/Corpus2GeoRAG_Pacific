@@ -1,6 +1,8 @@
 """The full runner must reproduce the accepted page-pass decisions."""
 
 import copy
+import csv
+import gzip
 import hashlib
 import os
 from collections import defaultdict
@@ -66,7 +68,12 @@ def test_metadata_batches_reuse_cache_and_keep_unresolved_workflow(
         {
             "input_row_number": 0,
             "mention_id": "mention-example",
-            "raw": {"Source": "Example", "word": "Target", "entity_group": "PER"},
+            "raw": {
+                "Source": "Example",
+                "word": "Target",
+                "entity_group": "PER",
+                "score": 0.77,
+            },
             "attempts": [],
         }
     ]
@@ -118,6 +125,12 @@ def test_metadata_batches_reuse_cache_and_keep_unresolved_workflow(
     result = read(tmp_path / "matches.json.gz")[0]
     assert result["raw"] == rows[0]["raw"]
     assert result["assigned_id"] == "Q2"
+    with gzip.open(
+        tmp_path / "matches.csv.gz", "rt", encoding="utf-8", newline=""
+    ) as stream:
+        exported = next(csv.DictReader(stream))
+    assert float(exported["score"]) == result["score"] == 1.0
+    assert float(exported["ner_score"]) == rows[0]["raw"]["score"] == 0.77
     assert [a["stage"] for a in result["attempts"]] == [
         "PAGE_DIRECT_WIKIDATA",
         "ALREADY_MATCHED",

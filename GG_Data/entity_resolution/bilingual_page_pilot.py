@@ -30,6 +30,7 @@ import requests
 from bs4 import BeautifulSoup
 
 from generate_candidates import NameIndex, normalize, similarity
+from matching_scoring import POLICY, score_candidate
 
 ROOT = Path(__file__).resolve().parents[2]
 PAGES = [
@@ -328,30 +329,47 @@ def choose(
     rng: random.Random,
     *,
     prefer_single_wikidata_type: bool = False,
+    apply_penalties: bool = False,
 ) -> dict:
+    # S2T 3.1: historical pilot replays retain their original score; the
+    # production runner explicitly enables the approved penalties.
+    score_key = "adjusted_similarity" if apply_penalties else "name_similarity"
+    if apply_penalties:
+        candidates = [
+            score_candidate(
+                c,
+                group,
+                categories(metadata[c["entity_id"]], metadata),
+                metadata[c["entity_id"]],
+            )
+            for c in candidates
+        ]
     eligible = [
         c
         for c in candidates
         if group == "ANY" or group in categories(metadata[c["entity_id"]], metadata)
     ]
     if not eligible and candidates and prefer_single_wikidata_type:
-        highest = max(c["name_similarity"] for c in candidates)
+        highest = max(c[score_key] for c in candidates)
         best = [
-            c
-            for c in candidates
-            if math.isclose(c["name_similarity"], highest, abs_tol=1e-12)
+            c for c in candidates if math.isclose(c[score_key], highest, abs_tol=1e-12)
         ]
         types = [categories(metadata[c["entity_id"]], metadata) for c in best]
         if all(len(t) == 1 for t in types) and len(set().union(*types)) == 1:
             eligible = best
+    if apply_penalties and eligible:
+        before_threshold = eligible
+        eligible = [c for c in eligible if c[score_key] >= POLICY["threshold"]]
+        if not eligible:
+            return {
+                "status": "NO_ADJUSTED_SCORE_ABOVE_THRESHOLD",
+                "rejected": before_threshold,
+                "scoring_policy": POLICY["version"],
+            }
     if eligible:
-        highest = max(c["name_similarity"] for c in eligible)
+        highest = max(c[score_key] for c in eligible)
         tied = sorted(
-            [
-                c
-                for c in eligible
-                if math.isclose(c["name_similarity"], highest, abs_tol=1e-12)
-            ],
+            [c for c in eligible if math.isclose(c[score_key], highest, abs_tol=1e-12)],
             key=lambda c: c["entity_id"],
         )
         selected = rng.choice(tied)
@@ -359,9 +377,11 @@ def choose(
         result = {
             "status": "MATCHED",
             **selected,
-            "type_check": "NOT_APPLIED_TO_ARTICLE_PHRASE"
-            if group == "ANY"
-            else "COMPATIBLE_P31_P279",
+            "type_check": (
+                "NOT_APPLIED_TO_ARTICLE_PHRASE"
+                if group == "ANY"
+                else "COMPATIBLE_P31_P279"
+            ),
             "tied_ids": [c["entity_id"] for c in tied],
         }
         if prefer_single_wikidata_type:
@@ -372,9 +392,11 @@ def choose(
                 "original_type": group,
                 "resolved_type": resolved,
                 "type_changed": resolved != group,
-                "type_source": "WIKIDATA_SINGLE_MAPPED_TYPE"
-                if len(types) == 1
-                else "DANIEL_COMPATIBLE_WITH_WIKIDATA",
+                "type_source": (
+                    "WIKIDATA_SINGLE_MAPPED_TYPE"
+                    if len(types) == 1
+                    else "DANIEL_COMPATIBLE_WITH_WIKIDATA"
+                ),
                 "wikidata_mapped_types": types,
                 "wikidata_direct_types": metadata[selected["entity_id"]].get(
                     "direct_types", []
@@ -396,9 +418,7 @@ def synthetic_id(row: dict, reason: str) -> str:
     prefix = (
         "SYN_TYPE_"
         if reason == "TYPE_MISMATCH"
-        else "SYN_TYPE_UNKNOWN_"
-        if reason == "TYPE_UNKNOWN"
-        else "SYN_"
+        else "SYN_TYPE_UNKNOWN_" if reason == "TYPE_UNKNOWN" else "SYN_"
     )
     return prefix + row["mention_id"].removeprefix("mention-")[:24]
 
@@ -856,9 +876,11 @@ def execute(
             reason = (
                 "TYPE_MISMATCH"
                 if "TYPE_MISMATCH" in statuses
-                else "TYPE_UNKNOWN"
-                if "TYPE_UNKNOWN" in statuses
-                else "NO_NAME_ABOVE_THRESHOLD"
+                else (
+                    "TYPE_UNKNOWN"
+                    if "TYPE_UNKNOWN" in statuses
+                    else "NO_NAME_ABOVE_THRESHOLD"
+                )
             )
             row.update(
                 {

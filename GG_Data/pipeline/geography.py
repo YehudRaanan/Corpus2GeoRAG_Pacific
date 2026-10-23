@@ -80,8 +80,8 @@ def prepare(model: Path, output: Path) -> dict:
         if not re.fullmatch(r"Q[1-9][0-9]*|SYN_[A-Za-z0-9_]+", place_id):
             raise ValueError(f"Unexpected location identity: {place_id!r}")
     # Reuse the frozen Daniel input already pinned by the populated model.
-    # Page references are context, not evidence that a place lies in that page's
-    # named area. Do not infer a parent, extract names, or parse paragraph text.
+    # Population S2T 9: use existing Daniel text and page context for ranking.
+    # These are support for this entity, never new extracted entity records.
     mention_paths = [
         Path(name)
         for name in manifest["inputs"]
@@ -106,6 +106,10 @@ def prepare(model: Path, output: Path) -> dict:
                         "Source",
                         "wiki_site",
                         "wiki_page_id",
+                        "Text",
+                        "start",
+                        "end",
+                        "type_metadata",
                     )
                 }
             )
@@ -197,6 +201,27 @@ def prepare(model: Path, output: Path) -> dict:
                         else "EXACT_QID_THEN_NAME_ALIAS_CONTEXT"
                     ),
                     source_context=contexts[qid],
+                    # Native claims already live in Entities.raw_reference.
+                    # Coordinates guide retrieval/ranking and remain a usable
+                    # final Point; missing names must not veto that geometry.
+                    geographic_evidence={
+                        p: row.get("raw_reference", {})
+                        .get("full", {})
+                        .get("entity", {})
+                        .get("claims", {})
+                        .get(p, [])
+                        for p in (
+                            "P625",
+                            "P17",
+                            "P131",
+                            "P361",
+                            "P1566",
+                            "P402",
+                            "P3896",
+                        )
+                    },
+                    relevance=row.get("relevance"),
+                    relevance_status=row.get("relevance_status", "UNMEASURED"),
                     **selection_value(dates[qid], qid),
                 )
             )

@@ -298,7 +298,18 @@ def populate(
         )
     if {(r["entity_id"], r["type"]) for r in result} != set(groups):
         raise ValueError("Entities population differs from existing mention identities")
-    return result
+    # Population S2T 6.1: the selected QID carries the measurements used before
+    # matching. Separate type rows share these counts; synthetic rows stay null.
+    from .entity_relevance import attach
+
+    return attach(
+        result,
+        {
+            qid: r["matching_relevance"]
+            for qid, r in metadata.items()
+            if "matching_relevance" in r
+        },
+    )
 
 
 def run(

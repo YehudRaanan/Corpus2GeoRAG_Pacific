@@ -1,5 +1,11 @@
 # Entity data model and ERD
 
+**Current change, approved 23 October 2026:** store page/entity relevance on each Entity row and apply the approved matching penalties before acceptance. `relevance_en` and `relevance_ja` are distinct-source-page ratios; `relevance` is their highest available value. The full Daniel page scope, snapshot and redirect rules are unchanged. Preserve unknown scores as null with an explicit status; synthetic IDs have no Wikidata page relevance. This is separate from Daniel mention-based `importance` (synthetic importance remains 1). Keep raw similarity, adjusted similarity and penalty evidence in Mentions. The population S2T section 3.1 defines the formula and the 30-case regression gate. New downstream matching/model/Geography results must not be promoted before that gate passes.
+
+**Current Geography rule:** rank and select a usable retrieved geometry whenever one exists, including Wikidata coordinates as Points. Retain uncertainty. The current 45/30/15/7/3 ranking supersedes historical statements below that leave available but ambiguous geometry unresolved. Existing text, page keys, native coordinate/parent claims and external identifiers are model evidence; candidate service responses remain immutable supporting files. No new Daniel entity or paragraph object is created.
+
+**Verified 23 October checkpoint:** all 7,995 baseline Entity rows now have relevance columns in a new model version; an independent comparison found no change to original values and verified all six model output files. The 30-case matching review preserved all prior correct cases, but a new Malaya period mismatch is paused for owner consultation. See [results and exact pending scope](MATCHING_PENALTY_30_REVIEW_2026-10-23.md). This is not a completed recalculated model or Geography run.
+
 **Synthetic LOC approval - 21 October 2026:** all existing LOC identities enter Geography, including unresolved SYN IDs. QIDs use exact-ID lookup first; SYN IDs use the existing name/alias/date/type/context fallback and keep their original IDs. Supported geometry does not create a Wikidata match. Ambiguous candidates remain unresolved. `Geography.geometry_ref.place_id` can therefore be an existing QID or SYN ID; the reference stays in the model, not graph JSON. This extends target coverage under the existing source and acceptance policy.
 
 **Geometry pointer correction - 21 October 2026:** `Geography.geometry_ref` belongs to the data model, not final graph JSON. It retains the approved `{file, place_id, sha256}` format and identifies the saved Shapely/WKB object. The existing loader can read this model reference; Agent access to the model still requires integration verification. Earlier graph-node pointer instructions are superseded. No pointer or inline GeoJSON is exported in graph JSON.
@@ -40,6 +46,10 @@ erDiagram
         json alias_details
         string identity_status
         bigint importance "nullable; Daniel pages times mentions"
+        float relevance_en "nullable; distinct page ratio in English"
+        float relevance_ja "nullable; distinct page ratio in Japanese"
+        float relevance "highest available language ratio"
+        string relevance_status
         json sources
         json attributes
         json raw_reference
@@ -63,6 +73,9 @@ erDiagram
         string assigned_id
         string matched_stage
         float match_score
+        float raw_name_similarity
+        float adjusted_similarity
+        json matching_penalties
         json type_metadata
         json attempts
         json date
@@ -157,6 +170,9 @@ One row per distinct `(entity_id, type)` combination, using the assigned QID or 
 | `alias_details` | JSON array | Each supplied `{label, kind, provider, record_id}` plus `language` where known; kind can be alias, nickname, hull_number, codename. Unknown language stays null. |
 | `identity_status`, `review_status` | string | QID_MATCHED / SYNTHETIC_UNRESOLVED; separate review state such as NOT_REVIEWED. A score does not imply manual verification. |
 | `importance` | integer, nullable | Approved distinct Daniel source pages multiplied by total original mentions for the assigned identity in the declared input population. QID-level values are shared by separate typed rows, without multiplying counts. Each existing per-mention synthetic ID also has one mention on one page and therefore scores 1. This is separate from Wikidata Event importance. |
+| `relevance_en`, `relevance_ja` | float, nullable | Distinct canonical Wikipedia pages linking to the QID within the full Daniel page scope divided by all distinct linking pages, separately per language and approved snapshot. Synthetic IDs remain null. |
+| `relevance`, `relevance_status` | float nullable / string | Highest available language ratio and explicit scored/unavailable/synthetic/unmeasured status. Not a match confidence or Daniel mention-frequency score. |
+| `attributes.relevance_basis` | JSON | Per-language numerator/denominator, snapshot, status, winning language and evidence report/checksum. Same QID values copied to every separate type row. |
 | `attributes.importance_basis` | JSON | Policy, frozen Mentions SHA-256, distinct source-page count, total mention count and score status. All scored Entity identities, including synthetic IDs, use `SCORED`; identity resolution status remains separate. The frozen 10K POC is the scoring population. |
 | `sources` | JSON array | Provenance objects described below. |
 | `text` | string, legacy optional field | Not exported in the current S2T. No paragraph object, passage assembly or paragraph-level text processing is in scope. |
@@ -194,7 +210,9 @@ Exactly one row per original Daniel input row, in the original order. No row is 
 | `raw` | JSON | Original row, with exact original names: `entity_group`, `score`, `word`, `start`, `end`, `Source`, `Index`, `Text`, `subtype`; retain new page fields when provided. |
 | `assigned_id` | string | Exact saved matching output, including QID, SYN ID or DATE value. |
 | `matched_stage`, `matched_name` | string / nullable string | Saved decision stage and selected reference name. |
-| `match_score` | float, nullable | Saved output `score`: highest character-trigram Dice similarity, threshold >=0.80 under the agreed rules. |
+| `match_score` | float, nullable | Accepted adjusted similarity under population S2T 3.1, threshold >=0.80. Historical outputs retain their original unpenalized score and policy. |
+| `raw_name_similarity`, `adjusted_similarity` | float, nullable | Original trigram Dice and the result after approved type/relevance factors. No replacement of original NER confidence. |
+| `matching_penalties` | JSON, nullable | Type conflict, applied factors, candidate relevance/status/evidence and policy version; full rejected candidates remain in `attempts`. |
 | `type_metadata` | JSON | Preserve `original_type`, `resolved_type`, `type_changed`, `type_source`, `wikidata_mapped_types`, `wikidata_direct_types`, including explicit nulls and all added fields. |
 | `attempts` | JSON array | All stages, comparisons, rejected candidates, reasons, type checks and ties; do not keep only the winning score. |
 | `unresolved_reason` | string, nullable | Preserve name, type mismatch, missing type, date errors and future distinct failure reasons. Does not mean no Wikidata item exists. |
@@ -252,7 +270,7 @@ Existing Parquet columns are preserved in a compatibility export: `place_id`, `n
 
 Audit retention includes the entire `{policy_version, generated_at, input, summary, results}` document, with each result's `input_rank`, `qid`, `name`, `description`, `p31`, `place_type`, `related_dates`, `selection_date`, `exact_qid_count`, `source_attempts`, `whg`, selected candidates, validation and decisions. Keep nested source object dates/tags and WHG evidence without truncation. Unaccepted results remain in this audit artifact even though Geography has no selected row for them.
 
-CRS is table metadata. Geography holds the approved file/place/checksum pointer. Graph export omits it and does not transform coordinates. `GG_Data/pipeline/graph_contract.py` implements `load_geometry(pointer, artifact_root)`; Agent integration and spatial CRS compatibility remain pending. No `valid_from`, `valid_to`, or redundant `geometry_type` column is added. Wikidata coordinates/shapes remain identity context, not selected geometry. Older OSM snapshot age is accepted; retain the snapshot and historical suitability evidence. No new non-place geometry policy is authorized.
+CRS is table metadata. Geography holds the approved file/place/checksum pointer. Graph export omits it and does not transform coordinates. `GG_Data/pipeline/graph_contract.py` implements `load_geometry(pointer, artifact_root)`; Agent integration and spatial CRS compatibility remain pending. No `valid_from`, `valid_to`, or redundant `geometry_type` column is added. Wikidata coordinates guide retrieval/ranking and can be selected as unchanged Shapely Points under the current ranking rule. Wikidata shapes are not approved geometry sources. Older OSM snapshot age is accepted; retain the snapshot and historical suitability evidence. No new non-place geometry policy is authorized.
 
 ## 5. Events
 

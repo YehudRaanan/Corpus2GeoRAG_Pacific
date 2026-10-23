@@ -44,6 +44,7 @@ from direct_wikidata_pilot import (
     page_find,
 )
 from generate_candidates import NameIndex
+from matching_scoring import POLICY, require_measurements
 from prepare_examples import ROOT, URL
 
 HERE = Path(__file__).resolve().parent
@@ -95,13 +96,21 @@ def page_indexes(pool: set[str], metadata: dict) -> tuple:
     return NameIndex(sorted(pool), metadata), NameIndex(sorted(pool), normalized), maps
 
 
-def assign(row: dict, candidates: list, metadata: dict, stage: str) -> None:
+def assign(
+    row: dict,
+    candidates: list,
+    metadata: dict,
+    stage: str,
+    *,
+    apply_penalties: bool = False,
+) -> None:
     decision = choose(
         candidates,
         row["raw"]["entity_group"],
         metadata,
         random.Random(f"{SEED}:{stage}:{row['mention_id']}"),
         prefer_single_wikidata_type=True,
+        apply_penalties=apply_penalties,
     )
     row["attempts"].append({"stage": stage, **decision})
     if decision["status"] == "MATCHED":
@@ -109,12 +118,35 @@ def assign(row: dict, candidates: list, metadata: dict, stage: str) -> None:
             assigned_id=decision["entity_id"],
             matched_stage=stage,
             matched_name=decision["matched_name"],
-            score=decision["name_similarity"],
+            score=decision.get("adjusted_similarity", decision["name_similarity"]),
             type_metadata=decision["type_metadata"],
         )
+        if apply_penalties:
+            row.update(
+                raw_name_similarity=decision["raw_name_similarity"],
+                adjusted_similarity=decision["adjusted_similarity"],
+                matching_penalties={
+                    k: decision[k]
+                    for k in (
+                        "type_factor",
+                        "type_conflict",
+                        "relevance_factor",
+                        "relevance",
+                        "relevance_status",
+                        "relevance_evidence",
+                        "scoring_policy",
+                    )
+                },
+            )
 
 
-def match_page(source: str, rows: list[dict], pool: set[str], metadata: dict) -> tuple:
+def match_page(
+    source: str,
+    rows: list[dict],
+    pool: set[str],
+    metadata: dict,
+    apply_penalties: bool = False,
+) -> tuple:
     """Match original mentions only; workers perform no retrieval or file writes."""
     original, cleaned, maps = page_indexes(pool, metadata)
     cached = {}
@@ -123,7 +155,13 @@ def match_page(source: str, rows: list[dict], pool: set[str], metadata: dict) ->
             word = row["raw"]["word"]
             if word not in cached:
                 cached[word] = page_find(original, cleaned, word, maps)
-            assign(row, cached[word], metadata, "PAGE_DIRECT_WIKIDATA")
+            assign(
+                row,
+                cached[word],
+                metadata,
+                "PAGE_DIRECT_WIKIDATA",
+                apply_penalties=apply_penalties,
+            )
     return source, os.getpid(), rows
 
 
@@ -132,13 +170,16 @@ def match_pages(
     pools: dict[str, set[str]],
     metadata: dict,
     workers: int,
+    apply_penalties: bool = False,
 ) -> Iterator[tuple[str, int, list[dict]]]:
     """Keep the same page decisions, including type ancestry and seeded ties."""
     if workers < 1:
         raise ValueError("Page worker count must be positive")
     if workers == 1:
         for source in sorted(by_page):
-            yield match_page(source, by_page[source], pools[source], metadata)
+            yield match_page(
+                source, by_page[source], pools[source], metadata, apply_penalties
+            )
         return
     with ProcessPoolExecutor(max_workers=workers) as executor:
         pending = []
@@ -151,7 +192,9 @@ def match_pages(
             # Send this page's candidates and full type closure, not the whole cache.
             subset = {q: metadata[q] for q in pool | types if q in metadata}
             pending.append(
-                executor.submit(match_page, source, by_page[source], pool, subset)
+                executor.submit(
+                    match_page, source, by_page[source], pool, subset, apply_penalties
+                )
             )
         for future in as_completed(pending):
             yield future.result()
@@ -182,8 +225,24 @@ def run(output: Path, api: LiveData | None = None, page_workers: int = 2) -> dic
     if page_workers < 1:
         raise ValueError("Page worker count must be positive")
     output.mkdir(parents=True, exist_ok=True)
+    relevance_path = output / "matching_relevance.json.gz"
+    apply_penalties = relevance_path.exists()
+    if apply_penalties:
+        receipt_path = output / "scoring_receipt.json"
+        receipt = {"policy": POLICY, "relevance_sha256": digest(relevance_path)}
+        if receipt_path.exists():
+            if read(receipt_path) != receipt:
+                raise ValueError("Scoring inputs changed; use a new output directory")
+        else:
+            if (output / "page_matches.json.gz").exists():
+                raise ValueError(
+                    "Cannot apply penalties to a historical page checkpoint"
+                )
+            save(receipt_path, receipt)
     if (output / "manifest.json").exists():
         manifest = read(output / "manifest.json")
+        if manifest.get("scoring_policy") != (POLICY if apply_penalties else None):
+            raise ValueError("Scoring policy differs; use a new output directory")
         if manifest.get("page_candidate_scope") != PAGE_CANDIDATE_SCOPE:
             raise ValueError(
                 "Historical matching scope is invalid; use a new output directory"
@@ -204,6 +263,16 @@ def run(output: Path, api: LiveData | None = None, page_workers: int = 2) -> dic
         else HERE
         / "runs/direct_wikidata_single_type_20261018_v2/entity_metadata.json.gz"
     )
+    measured = read(relevance_path) if apply_penalties else {}
+
+    def attach_relevance(qids: set[str]) -> None:
+        # S2T 3.1: a missing measurement is an incomplete run, not unknown
+        # relevance. A completed measurement may explicitly return null.
+        if apply_penalties:
+            require_measurements(measured, qids)
+            for qid in qids:
+                api.entities[qid]["matching_relevance"] = measured[qid]
+
     progress_path = output / "progress.json"
 
     def progress(stage: str, **counts: object) -> None:
@@ -326,6 +395,7 @@ def run(output: Path, api: LiveData | None = None, page_workers: int = 2) -> dic
             total=len(ids),
         )
     api.hierarchy(all_page_ids)
+    attach_relevance(all_page_ids)
     save(metadata_path, api.entities)
 
     page_checkpoint = output / "page_matches.json.gz"
@@ -349,7 +419,7 @@ def run(output: Path, api: LiveData | None = None, page_workers: int = 2) -> dic
                     )
         worker_pids = set()
         for number, (source, worker_pid, matched) in enumerate(
-            match_pages(by_page, pools, api.entities, page_workers)
+            match_pages(by_page, pools, api.entities, page_workers, apply_penalties)
         ):
             for row in matched:
                 rows[row["input_row_number"]] = row
@@ -378,7 +448,13 @@ def run(output: Path, api: LiveData | None = None, page_workers: int = 2) -> dic
             word = row["raw"]["word"]
             if word not in cached:
                 cached[word] = index.find(word, "MISC", 0.8)
-            assign(row, cached[word], api.entities, "ALREADY_MATCHED")
+            assign(
+                row,
+                cached[word],
+                api.entities,
+                "ALREADY_MATCHED",
+                apply_penalties=apply_penalties,
+            )
         if number % 10000 == 0:
             progress("ALREADY_MATCHED", completed=number, total=len(rows))
     del index, cached
@@ -409,14 +485,29 @@ def run(output: Path, api: LiveData | None = None, page_workers: int = 2) -> dic
             "FRESH_WWII_METADATA", completed=min(offset + 500, len(ids)), total=len(ids)
         )
     api.hierarchy(needed)
+    attach_relevance(needed)
     save(metadata_path, api.entities)
     for row in rows:
         if "assigned_id" not in row:
-            assign(row, cached[row["raw"]["word"]], api.entities, "FRESH_WWII")
+            assign(
+                row,
+                cached[row["raw"]["word"]],
+                api.entities,
+                "FRESH_WWII",
+                apply_penalties=apply_penalties,
+            )
         if "assigned_id" not in row:
             statuses = {a["status"] for a in row["attempts"]}
             reason = next(
-                (s for s in ["TYPE_MISMATCH", "TYPE_UNKNOWN"] if s in statuses),
+                (
+                    s
+                    for s in [
+                        "TYPE_MISMATCH",
+                        "TYPE_UNKNOWN",
+                        "NO_ADJUSTED_SCORE_ABOVE_THRESHOLD",
+                    ]
+                    if s in statuses
+                ),
                 "NO_NAME_ABOVE_THRESHOLD",
             )
             row.update(
@@ -481,6 +572,7 @@ def run(output: Path, api: LiveData | None = None, page_workers: int = 2) -> dic
         "frozen_page_matched_qids": len(frozen),
         "article_name_extraction": False,
         "threshold": 0.8,
+        "scoring_policy": POLICY if apply_penalties else None,
         "type_changes": sum(r["type_metadata"]["type_changed"] for r in rows),
         "by_type": {
             t: dict(
@@ -517,6 +609,9 @@ def run(output: Path, api: LiveData | None = None, page_workers: int = 2) -> dic
             "type_changed",
             "type_source",
             "wikidata_direct_types",
+            "ner_score",
+            "raw_name_similarity",
+            "adjusted_similarity",
         ]
         writer = csv.DictWriter(stream, fields)
         writer.writeheader()
@@ -524,6 +619,10 @@ def run(output: Path, api: LiveData | None = None, page_workers: int = 2) -> dic
             writer.writerow(
                 {k: row["raw"].get(k, row.get(k, "")) for k in fields}
                 | {
+                    # Canonical output similarity must never resolve to the
+                    # same-named raw NER confidence (population S2T 3.1/4).
+                    "score": row.get("score", ""),
+                    "ner_score": row["raw"].get("score", ""),
                     "date_value": row.get("date", {}).get("value", ""),
                     "date_precision": row.get("date", {}).get("precision", ""),
                     **{
@@ -542,6 +641,7 @@ def run(output: Path, api: LiveData | None = None, page_workers: int = 2) -> dic
             "input_url": URL,
             "input_sha256": INPUT_SHA256,
             "threshold": 0.8,
+            "scoring_policy": POLICY if apply_penalties else None,
             "seed": SEED,
             "page_candidate_scope": PAGE_CANDIDATE_SCOPE,
             "execution": {"page_workers": page_workers},
@@ -552,6 +652,7 @@ def run(output: Path, api: LiveData | None = None, page_workers: int = 2) -> dic
                     HERE / "direct_wikidata_pilot.py",
                     HERE / "bilingual_page_pilot.py",
                     HERE / "generate_candidates.py",
+                    HERE / "matching_scoring.py",
                 ]
             },
             "fresh_wwii_snapshot": str(world_path),

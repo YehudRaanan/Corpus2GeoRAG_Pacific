@@ -103,6 +103,10 @@ def event_rows(record: dict, source: dict, decision: dict) -> tuple[dict, dict]:
         text=None,
         embedding=None,
         importance=None,
+        relevance_en=None,
+        relevance_ja=None,
+        relevance=None,
+        relevance_status="UNMEASURED_EVENT",
         attributes=dict(name_selection=name, mention_ids=[], event_selection=decision),
         direct_types=[
             s.get("mainsnak", {}).get("datavalue", {}).get("value")

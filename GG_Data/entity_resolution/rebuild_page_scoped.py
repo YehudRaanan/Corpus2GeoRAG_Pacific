@@ -16,6 +16,7 @@ from pathlib import Path
 
 from bilingual_page_pilot import LiveData, digest, read
 from full_direct_wikidata import INPUT_SHA256, run, save
+from matching_scoring import POLICY
 
 
 class SavedData(LiveData):
@@ -34,10 +35,20 @@ class SavedData(LiveData):
         )
 
 
-def prepare(source: Path, output: Path) -> None:
+def prepare(source: Path, output: Path, relevance: Path, gate: Path) -> None:
     """Verify all reusable inputs before creating a fresh, isolated output."""
     if output.exists():
         raise ValueError("Rebuild requires a new output directory")
+    evaluation = read(gate)
+    if (
+        not evaluation.get("full_matching_authorized_by_gate")
+        or evaluation.get("scoring_policy") != POLICY
+    ):
+        raise ValueError("The matching regression gate has not passed this policy")
+    measurement_report = relevance.parent / "report.json"
+    receipt = read(measurement_report)
+    if receipt["outputs"].get(relevance.name) != digest(relevance):
+        raise ValueError("Candidate relevance checksum differs")
     manifest = read(source / "manifest.json")
     if manifest["input_sha256"] != INPUT_SHA256:
         raise ValueError("Source cache belongs to a different Daniel version")
@@ -51,6 +62,7 @@ def prepare(source: Path, output: Path) -> None:
     (output / "pages").mkdir()
     for path in files:
         shutil.copyfile(source / path, output / path)
+    shutil.copyfile(relevance, output / "matching_relevance.json.gz")
     save(
         output / "rebuild_source_manifest.json",
         {
@@ -58,6 +70,10 @@ def prepare(source: Path, output: Path) -> None:
             "source_manifest_sha256": digest(source / "manifest.json"),
             "reused_files": {str(p): h for p, h in files.items()},
             "previous_decisions_reused": False,
+            "scoring_policy": POLICY,
+            "scoring_inputs": {
+                str(p): digest(p) for p in (relevance, measurement_report, gate)
+            },
         },
     )
 
@@ -100,9 +116,11 @@ if __name__ == "__main__":
     parser.add_argument("--source", type=Path, required=True)
     parser.add_argument("--output", type=Path, required=True)
     parser.add_argument("--page-workers", type=int, default=2)
+    parser.add_argument("--relevance", type=Path, required=True)
+    parser.add_argument("--gate", type=Path, required=True)
     args = parser.parse_args()
     logging.basicConfig(level=logging.INFO, format="%(asctime)s %(message)s")
-    prepare(args.source, args.output)
+    prepare(args.source, args.output, args.relevance, args.gate)
     try:
         result = run(args.output, api=SavedData(), page_workers=args.page_workers)
         validate_london(args.output)

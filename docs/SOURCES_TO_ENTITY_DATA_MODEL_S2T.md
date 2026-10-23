@@ -1,5 +1,9 @@
 # Source-to-target: approved sources to the six-table data model
 
+**Current approval, 23 October 2026:** implement the matching penalties and Entity relevance columns in section 3.1. Reuse existing sources and the same full Daniel page scope. Evaluate 30 previously reviewed good/wrong cases before a new full matching run. Only if no prior correct case degrades and the wrong count does not increase may the fixed 10K POC continue through the latest Geography workflow. Old outputs remain unchanged. A changed QID without a reviewed outcome is a consultation hold, not an assumed improvement. The code and column migration can be verified separately; they do not prove that the regression gate passed.
+
+**Verified checkpoint, 23 October 2026:** the 30-case source review has 18 correct, four wrong and eight unresolved QIDs, with no previously correct case lost. A changed Malaya assignment identifies a post-1948 federation in 1941 context; the full run is paused under the owner's unexpected-case rule. [Test and model migration report](MATCHING_PENALTY_30_REVIEW_2026-10-23.md). Relevance columns were populated on a separate 7,995-row baseline model version with all original values unchanged; 49 tests and Ruff passed. No new full matching/10K Geography result is claimed.
+
 **Synthetic LOC approval - 21 October 2026:** all existing LOC identities enter Geography, including unresolved SYN IDs. QIDs use exact-ID lookup first; SYN IDs use the existing name/alias/date/type/context fallback and keep their original IDs. Supported geometry does not create a Wikidata match. Ambiguous candidates remain unresolved. `Geography.geometry_ref.place_id` can therefore be an existing QID or SYN ID; the reference stays in the model, not graph JSON. This extends target coverage under the existing source and acceptance policy.
 
 **Geometry pointer correction - 21 October 2026:** `Geography.geometry_ref` belongs to the data model, not final graph JSON. It retains the approved `{file, place_id, sha256}` format and identifies the saved Shapely/WKB object. The existing loader can read this model reference; Agent access to the model still requires integration verification. Earlier graph-node pointer instructions are superseded. No pointer or inline GeoJSON is exported in graph JSON.
@@ -809,6 +813,42 @@ matching rows first because the already-matched pool depends on all page passes.
 
 The existing code and saved attempts are the implementation evidence: [bilingual matching](../GG_Data/entity_resolution/bilingual_page_pilot.py), [direct matching](../GG_Data/entity_resolution/direct_wikidata_pilot.py). No candidate name becomes a new Daniel mention.
 
+### 3.1 Approved matching score and model relevance — 23 October 2026
+
+Apply this formula separately to each existing candidate, in all three matching stages:
+
+`adjusted_similarity = raw_trigram_Dice * type_factor * relevance_factor`
+
+| Parameter | Approved value / rule |
+|---|---|
+| Raw name retrieval | Existing character-trigram Dice >=0.80. Penalties never increase a score, so this candidate retrieval bound remains valid. |
+| Conflicting known type | `type_factor=0.90`; otherwise 1. Unknown type is not automatically a conflict. Retain existing compatibility and single-Wikidata-type override rules and their metadata. |
+| Low page/entity relevance | `relevance_factor=0.95` if the highest available EN/JA relevance is strictly below 0.01; otherwise 1. Exactly 1% is not penalized. |
+| Missing relevance | Factor 1, with a visible unavailable status. This is not a zero relevance value. A missing measurement file/entry is incomplete processing and stops a new production rebuild. |
+| Acceptance | Highest eligible adjusted score >=0.80; retain the recorded seeded random tie rule. A rejected page candidate can proceed to the existing already-matched and WWII stages. No new mention extraction, candidate source or identity rule is added. |
+| Dates | Existing DATE parser and precision/error logic; no name-matching penalty on calendar normalization. |
+
+Relevance is calculated **before matching** for the candidate QIDs. For each language, use distinct canonical source pages linking to the QID within the **full Daniel dataset's page scope**, divided by all distinct canonical pages linking to it in that language. Reuse the approved snapshot and article/redirect rules in section 6.1. Do not use raw mention counts, the 10K subset, sitelink count, pooled language counts, or synthetic entity occurrences in this ratio. Source page resolution and EN/JA pools remain exactly as defined in section 3. Recompute the frozen already-matched pool after all new page passes complete in a production rebuild.
+
+Implementation: [matching_scoring.py](../GG_Data/entity_resolution/matching_scoring.py) holds the parameter table; [entity_relevance.py](../GG_Data/pipeline/entity_relevance.py) reuses verified measurements or measures missing candidate QIDs from saved Wikipedia dumps. Reused and new measurements must identify the same snapshot and page scope. [rebuild_page_scoped.py](../GG_Data/entity_resolution/rebuild_page_scoped.py) requires the passed gate and a checksummed candidate relevance receipt. Historical pilot replay remains explicitly unpenalized; it must not be mistaken for the new production policy.
+
+Persist these columns on every Entities row, including separate type rows for one QID:
+
+| Column | Source / meaning |
+|---|---|
+| `relevance_en`, `relevance_ja` | Each language's verified distinct-page ratio, or null with retained reason. |
+| `relevance` | Maximum of available EN/JA ratios; null if neither is available. |
+| `relevance_status` | `SCORED`, `UNAVAILABLE_BOTH_LANGUAGES`, `NOT_APPLICABLE_SYNTHETIC`, or visible `UNMEASURED`/`UNMEASURED_EVENT` until measurement is supplied. Unmeasured candidate status cannot satisfy production matching preflight. |
+| `attributes.relevance_basis` | Snapshot, language counts, per-language failure status, winning language and immutable report references/checksums. |
+
+Synthetic rows keep null relevance and their original identity/type; their Daniel-based importance remains 1. Added Event-only Entity rows do not borrow a linked entity's score as their own relevance. Event selection still uses the approved maximum **linked-entity** relevance >=2%, missing contributing zero. The separate MISC Event-retrieval filter remains 5%; the new 1% penalty does not replace it.
+
+Mentions retains `raw_name_similarity`, `adjusted_similarity`, and `matching_penalties` (type conflict, factors, QID relevance/status/evidence and scoring policy). `match_score` is the accepted adjusted score; `ner_score` remains Daniel's original extraction confidence. Preserve rejected candidates and every stage attempt. No output may silently replace one kind of score with another.
+
+The frozen regression test uses all 13 known wrong QIDs and 17 supported good matches from the existing 100-case review, including four good fuzzy matches at or near 80%. First reproduce all 30 baseline decisions from the same saved source pools. Compare both formulas with those pools fixed to isolate the score change. This diagnostic is not a population accuracy estimate and does not reuse the historical frozen pool for the subsequent production run. Stop for consultation if a good case becomes wrong/unresolved, the wrong count rises, or a changed QID has not been checked. Store the evidence and gate result under `GG_Data/pipeline/outputs/matching_penalty_poc_20261023/`.
+
+Model migration writes a new version with relevance columns while preserving old identities and all other tables. Its status explicitly states `BASELINE_IDENTITIES_UNCHANGED`; it is not the recalculated pipeline result. This supersedes earlier statements in section 6.1 that relevance exists only in a supporting report/CSV.
+
 ## 4. Mentions: source-to-column mapping
 
 Join original rows to saved matching rows by the existing `input_row_number` and validate the saved `mention_id` and raw input. Do not join by name alone.
@@ -823,13 +863,14 @@ Join original rows to saved matching rows by the existing `input_row_number` and
 | `entity_id` | QID/SYN assignment; null for successful `DATE_NORMALIZED`. An unresolved DATE retains its existing SYN placeholder. |
 | `entity_type` | Saved `type_metadata.resolved_type`, paired with `entity_id` as the Entities foreign key. For synthetic rows whose saved resolved type is null, use Daniel's original `entity_group` (explicitly approved 19 October 2026); retain the original null in saved metadata. Null when `entity_id` is null. No new type inference. |
 | `matched_stage`, `matched_name`, `match_score` | Saved matching fields; `match_score` is output `score`. |
+| `raw_name_similarity`, `adjusted_similarity`, `matching_penalties` | Section 3.1 raw trigram evidence, adjusted accepted score and both factors/relevance evidence. Missing on historical unpenalized results; do not manufacture a recalculated score for those rows. |
 | `type_metadata` | Complete saved `original_type`, `resolved_type`, `type_changed`, `type_source`, `wikidata_mapped_types`, `wikidata_direct_types` and extra fields. |
 | `attempts`, `unresolved_reason`, `date` | Full nested attempts/rejections/ties, exact reason, and structured date `{value, precision, qualifier, error}`. Retain explicit nulls and unknown fields. |
 | `wiki_site`, `wiki_page_id` | Future supplied page key when verified; current run uses saved article lookup. Both present or both null. |
 | `page_id_source`, `page_resolution` | `INPUT` or `LOOKUP` according to actual origin; retain source resolution, redirects, status, failures and lookup version. Do not silently resolve a future input/lookup conflict. |
 | `resolution_run_id` | Reference to the pinned manifest containing decision parameters, code hashes and snapshots. |
 
-All existing nested attempt fields and the exact 16-column matching CSV compatibility view in the ERD remain covered. No name/type correction is applied during this copy.
+All existing nested attempt fields and the legacy 16 matching CSV columns in the ERD remain covered. New exports append `ner_score`, `raw_name_similarity`, and `adjusted_similarity`; CSV `score` is the matching output, never the same-named raw NER input. The JSON model keeps the complete penalty and relevance evidence. No name/type correction is applied during this copy.
 
 ## 5. Wiki Pages: source-to-column mapping
 
@@ -860,6 +901,7 @@ Retain retrieved Japanese pages even without Daniel mentions. A missing source p
 | `importance` | User-approved Daniel-population measure: distinct original `raw.Source` pages times original mention count, grouped by assigned QID or existing synthetic ID. Copy the QID value onto every existing type row without adding mentions or entities. Each separate per-mention synthetic identity scores 1 (one page times one mention), including synthetic DATE errors; successful normalized dates have no Entity row. Events.importance remains governed by its separate native-source rule. |
 | `attributes.importance_basis` | Policy, frozen Mentions SHA-256, distinct source-page count, total mention count and `SCORED` status for QID and synthetic rows alike. Unresolved identity status does not prevent calculating this input-based score. Full original source-page lists remain in the supporting score artifact. |
 | `direct_types`, `parents` | Saved P31/P279 evidence, retaining its version/provenance. Hierarchy traversal does not imply an entity population expansion. |
+| `relevance_en`, `relevance_ja`, `relevance`, `relevance_status`, `attributes.relevance_basis` | Section 3.1/6.1 distinct-page concentration, calculated before matching for candidate QIDs and copied onto selected Entity/type rows. Separate from `importance`; synthetic values are null with an explicit status. |
 | `revision`, `modified`, `missing`, `reference_source` | Saved reference version/state/provider; `missing` means retrieval missing, not proof of Wikidata absence. |
 | `sources`, `raw_reference` | Complete original metadata/entity envelope or immutable artifact reference, including requested QID, full claims, ranks, qualifiers, references and unknown fields. |
 | `attributes` | Only supplied values/evidence: kind/country/scale, P879 hull numbers, P729/P730 commissioning/decommissioning dates, and other already-supplied attributes. No new inferred values. |

@@ -52,6 +52,7 @@ def test_prepare_includes_separate_synthetic_locations_and_source_context(tmp_pa
         )
     ]
     mentions = tmp_path / "mentions.json.gz"
+
     def write(path, rows):
         with gzip.open(path, "wt", encoding="utf-8") as stream:
             json.dump(rows, stream)
@@ -94,7 +95,11 @@ def test_prepare_includes_separate_synthetic_locations_and_source_context(tmp_pa
             assert row["identity_status"] == "SYNTHETIC_UNRESOLVED"
         assert row["selection_date"] == "1941-12-07"
         assert row["source_context"][0]["wiki_page_id"] == 42
-        assert "Text" not in row["source_context"][0]
+        assert (
+            row["source_context"][0]["Text"]
+            == "Do not extract or copy paragraph content"
+        )
+        assert "P625" in row["geographic_evidence"]
     assert before == {p.name: digest(p) for p in model.iterdir()}
     with pytest.raises(ValueError, match="already exists"):
         prepare(model, output)
