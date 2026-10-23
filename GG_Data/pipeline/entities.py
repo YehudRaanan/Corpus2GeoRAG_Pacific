@@ -122,6 +122,7 @@ def acquire_missing(
     *,
     prefix: str = "Q",
     available_records: dict[str, list[tuple[dict, dict]]] | None = None,
+    allow_missing: bool = False,
 ) -> tuple[dict, dict]:
     """S2T 1/T02: full `item`, not the legacy P31/P279-only projection.
 
@@ -179,6 +180,11 @@ def acquire_missing(
     missing = sorted(qids - records.keys())
     if missing and available_records is not None:
         for qid in missing:
+            # Geography candidate-only records may fall back to current Wikidata
+            # (owner approval, 23 October). Entity population remains strict.
+            if allow_missing and not available_records.get(qid):
+                provenance[qid] = {**source, "record_id": qid, "status": "MISSING"}
+                continue
             records[qid], provenance[qid] = select_reference(
                 qid, None, available_records.get(qid, [])
             )

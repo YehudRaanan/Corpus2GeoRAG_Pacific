@@ -4,8 +4,10 @@ import gzip
 import json
 
 import geopandas as gpd
+import pytest
 from shapely.geometry import Point
 
+from GG_Data.pipeline import geography_population as population
 from GG_Data.pipeline.geography_comparison import prepare
 from GG_Data.pipeline.geography_population import populate
 from GG_Data.pipeline.geography_ranking_sample import wide_approximation
@@ -17,6 +19,61 @@ def write(path, value):
     opener = gzip.open if path.name.endswith(".gz") else open
     with opener(path, "wt", encoding="utf-8") as stream:
         json.dump(value, stream)
+
+
+@pytest.mark.parametrize("missing", [False, True])
+def test_candidate_coordinates_use_current_only_after_snapshot_missing(
+    tmp_path, monkeypatch, missing
+):
+    base, comparison = tmp_path / "base", tmp_path / "comparison"
+    write(comparison / "progress.json", {"status": "RETRIEVED"})
+    inputs = [{"place_id": "SYN_1", "wikidata_id": None, "name": "Place"}]
+    write(comparison / "sample.json", inputs)
+    for arm in ("native", "existing_dated"):
+        write(
+            comparison / f"sources/whg_{arm}.json",
+            {
+                "response": {
+                    "SYN_1": {
+                        "result": [
+                            {"id": "place:wd:Q1", "name": "Place", "alt_names": []}
+                        ]
+                    }
+                }
+            },
+        )
+    write(base / "entities/full_records.json.gz", {})
+    write(base / "matching/reference_manifest.json", {})
+    monkeypatch.setattr(population, "ROOT", tmp_path)
+    monkeypatch.setattr(population, "full_records", lambda *args: ({}, {}))
+    calls = []
+
+    def snapshot(qids, store, reference, **kwargs):
+        assert qids == {"Q1"} and kwargs["allow_missing"]
+        calls.append("snapshot")
+        return {}, {"Q1": {"status": "MISSING"}}
+
+    native = dict(id="Q1", type="item", claims={}, lastrevid=1, modified="2026-10-23")
+
+    def current(store, url, params):
+        assert params == {"action": "wbgetentities", "ids": "Q1", "format": "json"}
+        calls.append("current")
+        return {
+            "entities": {"Q1": {"id": "Q1", "missing": ""} if missing else native}
+        }, {"cache": "receipt"}
+
+    monkeypatch.setattr(population, "acquire_missing", snapshot)
+    monkeypatch.setattr(population.events, "cached_json", current)
+    result = population.candidate_records(base, comparison)
+    assert calls == ["snapshot", "current"]
+    assert result["identities_added"] == 0
+    assert result["missing_coordinate_records"] == (["Q1"] if missing else [])
+    assert result["available_records"] == (0 if missing else 1)
+    saved = read_json(comparison / "candidate_records.json.gz")
+    assert saved == (
+        {} if missing else {"Q1": {"requested_qid": "Q1", "entity": native}}
+    )
+    assert read_json(comparison / "sample.json") == inputs
 
 
 def test_population_queries_use_new_model_only_and_keep_synthetic(tmp_path):

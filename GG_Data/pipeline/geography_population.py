@@ -17,7 +17,7 @@ from pathlib import Path
 
 import geopandas as gpd
 
-from . import geography_comparison, geography_ranking_sample, osm_bigquery
+from . import events, geography_comparison, geography_ranking_sample, osm_bigquery
 from .entities import acquire_missing, full_records
 from .poc import ROOT, digest, read_json
 from .rebuild_poc import write
@@ -60,6 +60,7 @@ def candidate_records(base: Path, comparison: Path) -> dict:
     records = {q: own[q] for q in wanted & own.keys()}
     missing = wanted - records.keys()
     provenance = {}
+    unavailable = []
     if missing:
         archive = ROOT / "Data/external/wwii_task_force/wikidata_entities.jsonl.gz"
         archived, sources = full_records(missing, archive)
@@ -70,9 +71,27 @@ def candidate_records(base: Path, comparison: Path) -> dict:
             ROOT / "GG_Data/pipeline/outputs/wikidata_full_cache",
             reference,
             available_records=available,
+            allow_missing=True,
         )
         records.update(acquired)
-    if set(records) != wanted:
+    # S2T 9.7, owner approval 23 October: candidate-only coordinate evidence
+    # can use current Wikidata when snapshot/archive records are absent. An
+    # explicitly missing record removes no Entity and vetoes no other geometry.
+    for qid in sorted(wanted - records.keys()):
+        data, receipt = events.cached_json(
+            ROOT / "GG_Data/pipeline/outputs/wikidata_current_cache",
+            "https://www.wikidata.org/w/api.php",
+            {"action": "wbgetentities", "ids": qid, "format": "json"},
+        )
+        returned = data.get("entities", {})
+        if set(returned) == {qid} and "missing" in returned[qid]:
+            unavailable.append(qid)
+            provenance[qid] = dict(status="MISSING_CURRENT_RECORD", source=receipt)
+            continue
+        native = events.native_records(data, [qid], receipt)[qid]
+        records[qid] = dict(requested_qid=qid, entity=native)
+        provenance[qid] = dict(provider="CURRENT_WIKIDATA", source=receipt)
+    if set(records) | set(unavailable) != wanted:
         raise ValueError("Candidate coordinate records do not cover requested QIDs")
     path = comparison / "candidate_records.json.gz"
     with gzip.open(path, "wt", encoding="utf-8") as stream:
@@ -80,6 +99,8 @@ def candidate_records(base: Path, comparison: Path) -> dict:
     report = dict(
         status="SNAPSHOT_FIRST_GEOGRAPHY_CANDIDATE_RECORDS",
         candidate_qids=len(wanted),
+        available_records=len(records),
+        missing_coordinate_records=unavailable,
         identities_added=0,
         provenance=provenance,
         inputs={

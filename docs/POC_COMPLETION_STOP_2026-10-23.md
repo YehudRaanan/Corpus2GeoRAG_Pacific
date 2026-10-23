@@ -1,6 +1,29 @@
 # Fixed 10K POC completion: consultation checkpoint
 
-Date: 23 October 2026. Status: **STOPPED_FOR_CONSULTATION**.
+Date: 23 October 2026. Status: **RESUMED_AFTER_DOCUMENT_RECONCILIATION**.
+
+Subsequent owner replies approved both proposals below: current Wikidata
+fallback for missing candidate-coordinate records, and earliest Event start /
+latest Event end without a 1900 floor. Two further questions were marked
+"Discuss first". Audit then confirmed that reverse-view delivery/category
+preservation and partial/coarse date selection were already defined; these
+must not be reopened as new business decisions. The graph S2T has been
+reconciled with the existing reverse contract. General calendar conversion
+and a new JSON date-object interface were not approved. Existing native
+calendar/precision preservation and limited Julian-year rules remain in force.
+
+Saved candidate-record continuation code and the geometry batch-loader change
+passed 24 focused existing/new tests; the candidate continuation also passed
+Ruff. Candidate acquisition resumed on 23 October at 13:36 Asia/Jerusalem.
+Agent integration continues independently. Full Geography ranking, final model
+and graph/Agent integration have not completed at this checkpoint.
+
+The implementation can retain scalar native time strings in the existing graph
+fields and read precision/calendar from Events and Relations through the same
+model directory used for Geography. This avoids a new JSON date-object format.
+Event joins use the existing QID; relation joins use the assertion ID, including
+`source_edge_id` for reverse views. Calendar-sensitive cases outside the approved
+comparison rules must raise an explicit error rather than assume Gregorian dates.
 
 The owner approved completion of Geography for all 1,272 LOC targets, model
 verification, graph JSON export and Agent integration, with independent work in
@@ -33,7 +56,7 @@ ID. The failure does not establish that current Wikidata lacks the record.
 The query response remains cached. No completed candidate-record artifact or
 final Geography model was written.
 
-Proposed decision: use the agreed current Wikidata source for missing
+Approved decision: use the agreed current Wikidata source for missing
 candidate-only records, with cache reuse. If no record is available there,
 record the missing coordinate evidence and continue with other retrieved
 geometry candidates. Do not invent coordinates or change entity identities.
@@ -65,7 +88,7 @@ minimum/maximum rule is documented for Relations, not Events. The population
 S2T section 7 preserves Event dates without preferred-value selection; the graph
 S2T requires consultation on incompatible or multiple values.
 
-Proposed decision: for graph Event bounds only, use earliest supplied start and
+Approved decision: for graph Event bounds only, use earliest supplied start and
 latest supplied end, without a 1900 floor. Preserve every original date and its
 evidence in the model. For example, the Eastern Front graph end would be
 1955-01-21 rather than 1945-05-07. No Event date selection has been made.
@@ -78,5 +101,5 @@ assertion identity for reverse views. Inspection is complete; no Agent code was
 changed. Optional Event kind can be omitted under the existing graph contract.
 Graph release metadata must be supplied explicitly when export is run.
 
-All workers reached a safe pause. No source IDs, matching assignments, ranking
-weights, model rows or source geometries were changed by this continuation.
+Workers first reached a safe pause for consultation, then resumed under the
+approved rules. No source IDs, matching assignments or ranking weights change.

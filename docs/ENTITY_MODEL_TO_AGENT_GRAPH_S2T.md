@@ -1,5 +1,23 @@
 # Source-to-target: six-table model to final Agent graph JSON
 
+**23 October 2026 reconciliation:** the v2.1 reverse-direction contract is
+already approved. A reverse view preserves the original assertion and its
+existing Level 1 category; it does not require a newly classified inverse
+category. An unassigned category remains unassigned. The exact reverse ID and
+label come from the pinned direction lookup. Source-mapping entries are copied
+only where explicitly supplied; a lookup-only inverse can have an empty
+`source_predicates` list, without a fabricated direction mapping.
+
+The owner approved earliest supplied Event start and latest supplied Event end
+for graph export, without a 1900 floor, on 23 October. All source dates remain
+in the model. This supersedes the earlier instruction below to stop merely
+because explicit Event bounds have several values. It does not authorize a
+calendar conversion. Partial and coarse date comparison rules already exist
+in population S2T section 8; their original precision/calendar must remain
+recoverable. The Agent representation adapter remains implementation work;
+no new JSON date-object interface or general calendar conversion was approved
+by the subsequent consultation questions.
+
 **23 October 2026 model support fields:** Entity language relevance columns and Mentions raw/adjusted matching scores and penalty evidence remain in the data model/supporting files. They do not add graph JSON fields or change the Agent contract. Geography references also remain in the model; the graph JSON contains neither the geometry pointer nor inline GeoJSON. The latest approved Geography ranking selects a usable retrieved geometry whenever one is available and retains uncertainty; historical ambiguity rejection statements below are superseded.
 
 **Synthetic LOC approval - 21 October 2026:** all existing LOC identities enter Geography, including unresolved SYN IDs. QIDs use exact-ID lookup first; SYN IDs use the existing name/alias/date/type/context fallback and keep their original IDs. Supported geometry does not create a Wikidata match. Ambiguous candidates remain unresolved. `Geography.geometry_ref.place_id` can therefore be an existing QID or SYN ID; the reference stays in the model, not graph JSON. This extends target coverage under the existing source and acceptance policy.
@@ -41,7 +59,7 @@ Type interface approved on 19 October 2026: the source Entities key is `(entity_
 - Include retained mapped Wikidata assertions between Daniel's matched QIDs, included-event/Daniel links and direct links between included Events. Require both endpoints in included nodes. Event links are uncapped; non-event assertions follow the approved mutual-top-20 selection in population S2T section 8. Deliver both directions through the pinned mapping version (currently v2.1.1, preserving the v2.1 direction contract). Preserve different predicates and source assertions as distinct selection units.
 - Omit node/edge `sources` from this export for now. Supporting provenance remains in the source model and audit artifacts. This omission does not remove edge endpoint `source` or the required reverse-view link `source_edge_id`.
 - Do not create page nodes, mention nodes, paragraph objects or paragraph relations. Omit node `text`; do not assemble or process paragraph text. Do not export paragraph indexes, extraction spans or raw matching attempts.
-- No internal event classification, inferred event level, date ranking or conflict resolution is authorized. Use Wikidata values as supplied. Highlight incompatible/multiple values before changing or choosing them.
+- No internal event classification or inferred event level is authorized. For graph Event bounds, use the earliest supplied start and latest supplied end, without a 1900 floor (owner approval, 23 October). Preserve original values, precision and calendar in the model. Do not add calendar conversion or a new date-object JSON interface.
 - No Entity Participants or other seventh business table is required.
 
 ## 2. Source populations, joins and filters
@@ -118,9 +136,9 @@ Paths refer to `nodes[]`.
 | Type representation — included Wikidata event | Membership in authoritative Events table | Preserve `event` alongside any other existing types for the same QID. This labels an existing event input; it is not a classifier over Daniel entities. |
 | `aliases` | `Entities.aliases` | Copy existing supplied strings. No generated nicknames, romanizations or combined names. Missing aliases may remain an empty array. |
 | Omitted: `geometry_ref` | Geography model reference only | `{file, place_id, sha256}`; file is the GeoParquet artifact, place_id the original place QID or SYN ID, sha256 the whole artifact checksum. This is a model-only field and is omitted from nodes. No accepted geometry -> no accepted Geography row; model reference lookup returns null. Broken reference, duplicate/missing place, invalid/empty geometry or missing CRS -> explicit error. No inline geometry. |
-| `attributes.start_date` | `Events.start_date` | Copy the supplied single target-compatible Wikidata value; preserve precision. Null/absent source -> omit. Multiple or incompatible values -> highlight before export, without selecting one. |
-| `attributes.end_date` | `Events.end_date` | Same rule as start_date. |
-| `attributes.point_date` | `Events.point_date` | Same rule as start_date; do not manufacture an interval or infer a point from another value. |
+| `attributes.start_date` | `Events.start_date` | Earliest supplied start, without a 1900 floor. Preserve native precision/calendar in supporting model evidence; do not invent an exact day. Null/absent source -> omit. |
+| `attributes.end_date` | `Events.end_date` | Latest supplied end, without a 1900 floor. Preserve native precision/calendar in supporting model evidence. Null/absent source -> omit. |
+| `attributes.point_date` | `Events.point_date` | Copy a supplied target-compatible point value. Reuse only the existing approved derived ranges for multiple point dates; do not infer a point from a start/end bound. Retain all native values in the model. |
 | `attributes.kind` | `Events.kind` | Copy only an existing source-supplied, target-compatible value. Do not infer battle/campaign/war from names or a new mapping. A Wikidata class QID is not silently translated into a kind label. |
 
 Event values can be kept as full raw statements in the source model even when they do not fit a scalar target field. That preservation does not authorize silently omitting a conflict from the export report or treating it as resolved. Event level, importance, country, scale, aliases with added meanings, hull numbers and other optional enrichments have no new derivation rule in this S2T; do not generate them.
@@ -177,7 +195,7 @@ Join the base `type` plus the actual mapping version to its matching direction l
 | `derived_direction` | REVERSE. |
 | `source_edge_id` | Base `id` / `observation_id`. |
 | `count`, `start_date`, `end_date`, `point_date` | Same assertion's values, unchanged. The count is shared evidence, not independent support. |
-| `relation_family` | The versioned family's explicit reverse definition where provided. No family is inferred from a reverse name; a missing/conflicting definition is highlighted. |
+| `relation_family` | Preserve the same assertion's existing applied Level 1 category, including its unassigned state. Reversing a view does not classify a new category. Highlight a conflict with an explicitly supplied catalog definition. |
 
 For a non-self assertion, deliver both directions. For a symmetric relation, swap endpoints and retain the lookup's same predicate. For a self-loop, keep one view. Different base assertions between the same two nodes stay separate, including when their directional outputs happen to have equal endpoints/predicates.
 
@@ -194,7 +212,7 @@ The Agent reads a relation definition's label, family, source predicate, directi
 | `level1_families` | Existing applied `level1_family` values; native fallback entries remain unassigned (`UNRESOLVED`), with no family inference. Consistency with relation rows must be checked. Conflicting families need a decision before export. |
 | `source_predicates[].source` | Existing mapping `source`. Retain supplied source mappings. |
 | `source_predicates[].predicate` | Existing mapping `source_predicate`. |
-| `source_predicates[].direction` | Existing `direction_to_level2` for the base predicate. A reverse predicate needs an explicit catalog definition; do not copy a base direction or invent a conversion. |
+| `source_predicates[].direction` | Existing `direction_to_level2` for explicitly supplied source mappings. For a lookup-only reverse predicate, retain its exact ID/label and an empty source-mapping list; do not copy a base direction or invent a conversion. |
 | `review_statuses` | Existing catalog review/status values, if supplied; otherwise omit this optional field. No new review decision is made by export. |
 | Direction-pair audit fields | Retain `direction_pair_id`, `reverse_resolution_type` and endpoint action in supporting direction artifacts. The current Agent catalog adapter does not consume them; reverse edges carry their defined view fields. |
 
@@ -207,7 +225,7 @@ An export report is a supporting release artifact, not a seventh business table.
 | Check | Required response |
 |---|---|
 | A QID has multiple saved types | Preserve every distinct QID/type pair. Verify Agent loading and type filters retain all types, with QID-level edges. This is an integration check, not a canonical-type decision. MISC is not an open classification question. |
-| Wikidata event classification or dates cannot fit target scalar fields | Show the event QID, exact claims/values and target fields. No ranking, precision invention, label translation or conflict selection. |
+| Wikidata event classification or dates cannot fit target scalar fields | Show the event QID, exact claims/values and target fields. Apply the approved earliest-start/latest-end rule; preserve original precision/calendar in the model. Do not invent precision, translate a class label, or add calendar conversion/new JSON date objects. |
 | Missing names, endpoints, mapping definitions or direction keys | Show exact records and counts. Do not invent required values or rely on Agent endpoint dropping. |
 | Missing geometry vs invalid geometry/unknown CRS | Report separately. No accepted geometry -> no accepted Geography row; lookup returns null. Broken model reference or invalid object/unknown CRS -> explicit error. No fabricated pointer or geometry. |
 | Geometry pointer and Agent loader | Verify the approved file/place/checksum pointer resolves to the selected valid Shapely object. Verify Agent integration and spatial CRS compatibility. Neither the model pointer nor inline GeoJSON enters graph JSON. |

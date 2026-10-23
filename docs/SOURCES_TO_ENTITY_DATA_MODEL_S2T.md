@@ -1,5 +1,13 @@
 # Source-to-target: approved sources to the six-table data model
 
+**23 October 2026 candidate-coordinate continuation approval:** for Geography
+candidate-only QIDs absent from the agreed snapshot and saved records, check
+current Wikidata with verified cache reuse. An explicitly missing current
+record is recorded as missing coordinate evidence; continue with other
+retrieved geometry options. Preserve Daniel's identity and all existing
+ranking rules. This exception does not relax strict Entity population or
+source integrity checks.
+
 **Current approval, 23 October 2026:** implement the matching penalties and Entity relevance columns in section 3.1. Reuse existing sources and the same full Daniel page scope. Evaluate 30 previously reviewed good/wrong cases before a new full matching run. Only if no prior correct case degrades and the wrong count does not increase may the fixed 10K POC continue through the latest Geography workflow. Old outputs remain unchanged. A changed QID without a reviewed outcome is a consultation hold, not an assumed improvement. The code and column migration can be verified separately; they do not prove that the regression gate passed.
 
 **Verified checkpoint, 23 October 2026:** the 30-case source review has 18 correct, four wrong and eight unresolved QIDs, with no previously correct case lost. The owner approved continuation with the agreed formula, retaining the four known failures, including Malaya's period mismatch. [Test and model migration report](MATCHING_PENALTY_30_REVIEW_2026-10-23.md). Relevance columns were populated on a separate 7,995-row baseline model version with all original values unchanged. The new candidate measurements and full matching are not yet complete. The fixed 10K rebuild reuses verified candidate relevance rows for its accepted QIDs; it does not repeat the same full-scope dump measurement or change the formula.
