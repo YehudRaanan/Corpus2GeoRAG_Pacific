@@ -47,7 +47,12 @@ def test_bigquery_query_reuses_saved_rows_and_checks_complete_result(
     def cli(self, args, sql=None):
         calls.append(args)
         if args == ["show", "bigquery-public-data:wikipedia.wikidata"]:
-            return json.dumps({"lastModifiedTime": "123"})
+            return json.dumps(
+                {
+                    "id": "bigquery-public-data:wikipedia.wikidata",
+                    "lastModifiedTime": "123",
+                }
+            )
         if "--dry_run" in args:
             return "Query validated"
         if args[0] == "query":
@@ -86,7 +91,11 @@ def test_bigquery_query_reuses_saved_rows_and_checks_complete_result(
 
 def test_missing_bigquery_ids_are_explicit_and_persisted(tmp_path, monkeypatch):
     monkeypatch.setattr(
-        BigQueryData, "cli", lambda *args: json.dumps({"lastModifiedTime": "123"})
+        BigQueryData,
+        "cli",
+        lambda *args: json.dumps(
+            {"id": "bigquery-public-data:wikipedia.wikidata", "lastModifiedTime": "123"}
+        ),
     )
     monkeypatch.setattr(BigQueryData, "query", lambda *args: [])
     api = BigQueryData("handover-480513", tmp_path)
@@ -101,7 +110,9 @@ def test_cli_load_uses_project_colon_dataset_table(tmp_path, monkeypatch):
 
     def cli(self, args, sql=None):
         calls.append(args)
-        return json.dumps({"lastModifiedTime": "123"})
+        return json.dumps(
+            {"id": "bigquery-public-data:wikipedia.wikidata", "lastModifiedTime": "123"}
+        )
 
     monkeypatch.setattr(BigQueryData, "cli", cli)
     api = BigQueryData("handover-480513", tmp_path)

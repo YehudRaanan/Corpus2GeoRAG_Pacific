@@ -722,9 +722,19 @@ def run(
 
     # Existing exact-QID source inventory; one native lookup for all new OSM
     # objects. Full geometry remains required; tag centres are never shapes.
-    inventory = read_json(comp / "sources/first_50_openstreetmap.json")["response"][
-        "elements"
-    ]
+    from . import osm_bigquery
+
+    bq_path = comp / "sources" / osm_bigquery.NAME
+    if bq_path.exists():
+        protected[str(bq_path)] = digest(bq_path)
+        qids = [p["wikidata_id"] for p in sample if p["wikidata_id"]]
+        for candidate in osm_bigquery.load(bq_path, qids):
+            candidates[candidate["qid"]].append(candidate)
+        inventory = []  # Full BQ shapes need no duplicate Nominatim lookup.
+    else:
+        inventory = read_json(comp / "sources/first_50_openstreetmap.json")["response"][
+            "elements"
+        ]
     fresh_sample = sample if comparison else sample[10:]
     new_ids = {p["place_id"] for p in fresh_sample}
     objects = [e for e in inventory if e.get("tags", {}).get("wikidata") in new_ids]

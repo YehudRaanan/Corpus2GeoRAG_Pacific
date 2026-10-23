@@ -17,7 +17,7 @@ from pathlib import Path
 
 import geopandas as gpd
 
-from . import geography_comparison, geography_ranking_sample
+from . import geography_comparison, geography_ranking_sample, osm_bigquery
 from .entities import acquire_missing, full_records
 from .poc import ROOT, digest, read_json
 from .rebuild_poc import write
@@ -279,6 +279,8 @@ def run(phase: str, base: Path) -> dict:
         )
     if phase == "retrieve":
         return geography_comparison.retrieve(comparison)
+    if phase == "osm-bigquery":
+        return osm_bigquery.retrieve(base)
     if phase == "records":
         return candidate_records(base, comparison)
     if phase == "rank":
@@ -293,7 +295,8 @@ def run(phase: str, base: Path) -> dict:
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument(
-        "phase", choices=("prepare", "retrieve", "records", "rank", "populate")
+        "phase",
+        choices=("prepare", "osm-bigquery", "retrieve", "records", "rank", "populate"),
     )
     parser.add_argument("--base", type=Path, required=True)
     args = parser.parse_args()

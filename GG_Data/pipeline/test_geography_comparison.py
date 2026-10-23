@@ -87,6 +87,38 @@ def test_batches_keep_all_queries_without_overlap_or_rewriting():
     assert query_batches({}) == []
 
 
+def test_complete_bigquery_cache_skips_overpass(tmp_path, monkeypatch):
+    import sys
+    from types import SimpleNamespace
+
+    from GG_Data.pipeline import geography_comparison, geography_sample, osm_bigquery
+    from GG_Data.pipeline.rebuild_poc import write
+
+    write(tmp_path / "plan.json", dict(outputs={}))
+    write(tmp_path / "queries.json", {})
+    write(tmp_path / "sample.json", [dict(wikidata_id="Q84")])
+    (tmp_path / "sources").mkdir()
+    write(
+        tmp_path / "sources" / osm_bigquery.NAME,
+        dict(qids=["Q84"], candidates=[], inputs={}),
+    )
+    monkeypatch.setattr(
+        geography_sample,
+        "tools",
+        lambda: SimpleNamespace(OVERPASS={"OpenStreetMap": "unused"}),
+    )
+    monkeypatch.setitem(sys.modules, "GEO_OBJECT_EXTRACTION_POC", SimpleNamespace())
+    monkeypatch.setattr(
+        geography_comparison.urllib.request,
+        "urlopen",
+        lambda *a, **k: pytest.fail("Duplicate Overpass query"),
+    )
+    result = geography_comparison.retrieve(tmp_path)
+    assert result["status"] == "RETRIEVED"
+    assert result["completed_arms"] == ["OpenStreetMap"]
+    assert result["reused"] == 1
+
+
 def test_frozen_sample_keeps_poor_inputs_and_is_order_independent():
     originals = [dict(place_id=f"Q{i}", name=".") for i in range(1, 11)]
     targets = originals + [dict(place_id=f"Q{i}") for i in range(11, 61)]

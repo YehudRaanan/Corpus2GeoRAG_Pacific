@@ -63,10 +63,12 @@ def project_entity(row: dict) -> dict:
 
 
 class BigQueryData(LiveData):
-    def __init__(self, project: str, store: Path) -> None:
+    def __init__(self, project: str, store: Path, *, table: str = TABLE) -> None:
         super().__init__(Path.home() / ".cache/geoai_bilingual_pilot_20261018")
         if not re.fullmatch(r"[a-z][a-z0-9-]{4,61}[a-z0-9]", project):
             raise ValueError("Invalid GCP project ID")
+        if not re.fullmatch(r"[\w-]+\.\w+\.\w+", table):
+            raise ValueError("Invalid BigQuery table ID")
         self.project, self.store = project, store
         store.mkdir(parents=True, exist_ok=True)
         self.bq = shutil.which("bq.cmd")
@@ -74,7 +76,7 @@ class BigQueryData(LiveData):
             raise RuntimeError("Install the GCP CLI bq component first")
         snapshot = store / "table_snapshot.json"
         if not snapshot.exists():
-            metadata = json.loads(self.cli(["show", TABLE.replace(".", ":", 1)]))
+            metadata = json.loads(self.cli(["show", table.replace(".", ":", 1)]))
             save(
                 snapshot,
                 {
@@ -83,7 +85,9 @@ class BigQueryData(LiveData):
                 },
             )
         self.snapshot = read(snapshot)
-        self.source = f"`{TABLE}` AS w FOR SYSTEM_TIME AS OF TIMESTAMP '{self.snapshot['snapshot_at']}'"
+        if self.snapshot["table"]["id"] != table.replace(".", ":", 1):
+            raise ValueError("Cached snapshot belongs to a different table")
+        self.source = f"`{table}` AS w FOR SYSTEM_TIME AS OF TIMESTAMP '{self.snapshot['snapshot_at']}'"
         self.metadata_path = store / "entity_metadata.json.gz"
         self.entities = read(self.metadata_path) if self.metadata_path.exists() else {}
 

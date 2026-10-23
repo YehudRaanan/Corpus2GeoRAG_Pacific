@@ -363,6 +363,17 @@ def retrieve(output: Path) -> dict:
         qids = sorted(p["wikidata_id"] for p in sample if p["wikidata_id"])
         client.CACHE = output / "sources"
         for source in client.OVERPASS:
+            # S2T 9.7: the approved BQ OSM table supplies full native shapes.
+            # Keep WHG/OHM receipts; do not issue duplicate Overpass requests.
+            from . import osm_bigquery
+
+            bq_path = client.CACHE / osm_bigquery.NAME
+            if source == "OpenStreetMap" and bq_path.exists():
+                osm_bigquery.load(bq_path, qids)
+                progress["reused"] += 1
+                progress["completed_arms"].append(source)
+                write(output / "progress.json", progress)
+                continue
             path = client.CACHE / f"first_50_{source.casefold()}.json"
             existed = path.exists()
             if existed:
