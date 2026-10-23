@@ -94,6 +94,52 @@ def attach(entities: list[dict], measured: dict[str, dict]) -> list[dict]:
     return result
 
 
+def reuse_languages(measured_path: Path, qids: set[str], output: Path) -> list[dict]:
+    """S2T 3.1/6.1: project verified candidate counts onto the new POC IDs.
+
+    Scope and snapshot do not depend on which candidates matching accepted.
+    Reuse original per-language rows verbatim, including unavailable results;
+    never substitute mention counts or rerun the same multi-GB dump scan.
+    """
+    receipt = read_json(measured_path.parent / "report.json")
+    if digest(measured_path) != receipt["outputs"][measured_path.name]:
+        raise ValueError("Candidate relevance artifact changed")
+    measured = read_json(measured_path)
+    if missing := qids - measured.keys():
+        raise ValueError(f"Matched QIDs lack candidate relevance: {sorted(missing)}")
+    sources = {
+        path: sha
+        for q in qids
+        for path, sha in measured[q]["evidence"]["reports"].items()
+    }
+    for path, sha in sources.items():
+        if digest(Path(path)) != sha:
+            raise ValueError(f"Candidate language report changed: {path}")
+    reports = []
+    for wiki in ("enwiki", "jawiki"):
+        rows = [measured[q]["evidence"]["languages"][wiki] for q in sorted(qids)]
+        dates = {measured[q]["evidence"]["dump_date"] for q in qids}
+        if len(dates) != 1 or any(r["wiki"] != wiki for r in rows):
+            raise ValueError("Candidate language/snapshot evidence differs")
+        report = dict(
+            status="VERIFIED_CANDIDATE_COUNTS_REUSED",
+            wiki=wiki,
+            dump_date=dates.pop(),
+            selected_qids=len(rows),
+            rows=rows,
+            network_requests=0,
+            inputs={str(measured_path): digest(measured_path), **sources},
+            outputs={},
+        )
+        folder = output / wiki
+        folder.mkdir()
+        (folder / "report.json").write_text(
+            json.dumps(report, ensure_ascii=False, indent=2), encoding="utf-8"
+        )
+        reports.append(report)
+    return reports
+
+
 def measure_missing(
     selection: Path, output: Path, english: Path, japanese: Path
 ) -> dict:

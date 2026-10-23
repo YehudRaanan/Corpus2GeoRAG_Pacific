@@ -61,7 +61,7 @@ def geography_sample_inputs(base: Path, original_sample: Path) -> list[dict]:
     return sample
 
 
-def relevance(base: Path) -> dict:
+def relevance(base: Path, measured_relevance: Path | None = None) -> dict:
     """S2T 6.1: measure corrected QIDs against the unchanged full page scope.
 
     Measure every matched QID once per language, then use the same source
@@ -100,10 +100,15 @@ def relevance(base: Path) -> dict:
             outputs={"selection.json": digest(output / "selection.json")},
         ),
     )
-    languages = [
-        measure(wiki, True, output / wiki, output / "selection.json")
-        for wiki in ("enwiki", "jawiki")
-    ]
+    if measured_relevance:
+        from .entity_relevance import reuse_languages
+
+        languages = reuse_languages(measured_relevance, set(names), output)
+    else:
+        languages = [
+            measure(wiki, True, output / wiki, output / "selection.json")
+            for wiki in ("enwiki", "jawiki")
+        ]
     combined = combine_language_rows(languages[0]["rows"], languages[1]["rows"])
     if {r["qid"] for r in combined} != names.keys():
         raise ValueError("Language measurements do not cover corrected Daniel QIDs")
@@ -148,7 +153,13 @@ def relevance(base: Path) -> dict:
     return report
 
 
-def run(stage: str, base: Path, *, model_dir: Path | None = None) -> dict:
+def run(
+    stage: str,
+    base: Path,
+    *,
+    model_dir: Path | None = None,
+    measured_relevance: Path | None = None,
+) -> dict:
     """Explicit stage paths prevent fallback to the historical POC outputs."""
     if not base.resolve().is_relative_to(ROOT / "GG_Data/pipeline/outputs"):
         raise ValueError("Use the approved local pipeline output directory")
@@ -169,7 +180,7 @@ def run(stage: str, base: Path, *, model_dir: Path | None = None) -> dict:
         raise ValueError("London validation failed; stop downstream population")
     try:
         if stage == "relevance":
-            return relevance(base)
+            return relevance(base, measured_relevance)
         if stage == "events":
             return event_population.run(
                 base / "events",
@@ -248,11 +259,18 @@ if __name__ == "__main__":
     )
     parser.add_argument("--base", type=Path, required=True)
     parser.add_argument("--model-dir", type=Path)
+    parser.add_argument("--measured-relevance", type=Path)
     args = parser.parse_args()
     logging.basicConfig(level=logging.INFO, format="%(asctime)s %(message)s")
     logging.info(
         "%s",
         json.dumps(
-            run(args.stage, args.base, model_dir=args.model_dir), ensure_ascii=True
+            run(
+                args.stage,
+                args.base,
+                model_dir=args.model_dir,
+                measured_relevance=args.measured_relevance,
+            ),
+            ensure_ascii=True,
         ),
     )

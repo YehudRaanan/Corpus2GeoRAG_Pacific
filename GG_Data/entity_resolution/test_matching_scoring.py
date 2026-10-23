@@ -78,7 +78,10 @@ def test_invalid_scores_stop(field, value):
 
 def test_adjusted_ranking_and_conflicting_single_type_override():
     metadata = {
-        "Q1": {"direct_types": ["Q5"], "matching_relevance": {"relevance": 0.001}},
+        "Q1": {
+            "direct_types": ["Q5"],
+            "matching_relevance": {"relevance": 0.001, "relevance_status": "SCORED"},
+        },
         "Q2": {"direct_types": ["Q5"], "matching_relevance": {"relevance": 0.1}},
         "Q5": {"parents": []},
     }
@@ -143,3 +146,68 @@ def test_ties_remain_seeded_and_legacy_replay_is_explicit():
     assert first["tied_ids"] == ["Q1", "Q2"]
     legacy = choose(candidates, "PER", metadata, random.Random(42))
     assert "adjusted_similarity" not in legacy
+
+
+def test_unmeasured_real_candidate_stops_before_decision():
+    row = {"mention_id": "mention-x", "raw": {"entity_group": "LOC"}, "attempts": []}
+    with pytest.raises(ValueError):
+        assign(
+            row,
+            [{"entity_id": "Q1", "name_similarity": 1}],
+            {"Q1": {"direct_types": []}},
+            "PAGE_DIRECT_WIKIDATA",
+            apply_penalties=True,
+        )
+    assert not row["attempts"]
+
+
+def test_review_gate_preserves_automatic_report_and_requires_exact_qid(tmp_path):
+    import json
+    from bilingual_page_pilot import digest
+    from evaluate_matching_penalties import accept_review
+    from matching_scoring import POLICY
+
+    source = tmp_path / "source.json"
+    source.write_text("{}", encoding="utf-8")
+    report_file = tmp_path / "report.json"
+    report_file.write_text(
+        json.dumps(
+            dict(
+                scoring_policy=POLICY,
+                baseline={"wrong": 1},
+                rows=[
+                    dict(
+                        index=1,
+                        outcome="CORRECT",
+                        expected_baseline="CORRECT",
+                        updated={"assigned_id": "Q1"},
+                    ),
+                    dict(
+                        index=2,
+                        outcome="CHANGED_QID_REQUIRES_REVIEW",
+                        expected_baseline="WRONG",
+                        updated={"assigned_id": "Q2"},
+                    ),
+                ],
+            )
+        ),
+        encoding="utf-8",
+    )
+    original = digest(report_file)
+    review = dict(
+        automatic_report_sha256=original,
+        source_records=str(source),
+        source_records_sha256=digest(source),
+        reviewed_counts={"CORRECT": 1, "WRONG": 1},
+        cases=[dict(index=2, assigned_id="Q3", outcome="WRONG")],
+    )
+    path = tmp_path / "case_review.json"
+    path.write_text(json.dumps(review), encoding="utf-8")
+    with pytest.raises(ValueError, match="changes an assignment"):
+        accept_review(tmp_path, path)
+    review["cases"][0]["assigned_id"] = "Q2"
+    path.write_text(json.dumps(review), encoding="utf-8")
+    gate = accept_review(tmp_path, path)
+    assert gate["full_matching_authorized_by_gate"]
+    assert gate["known_wrong_case_indices"] == [2]
+    assert digest(report_file) == original

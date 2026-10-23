@@ -1,6 +1,6 @@
 # Matching penalties: frozen 30-case review, 23 October 2026
 
-Status: **PAUSED FOR OWNER CONSULTATION**. No full matching run, new 10K identity population, or new Geography assignment was started. The preliminary automated gate remains `STOPPED_FOR_CONSULTATION`; its original report is preserved.
+Status: **CONTINUATION APPROVED; CANDIDATE RELEVANCE PREPARATION RUNNING**. On 23 October the owner answered “Continue with the approved formula”. The four known wrong diagnostic cases remain recorded. No manual identity correction or temporal matching rule is added. The original preliminary automated report remains unchanged; `evaluation/reviewed_report.json` closes the gate after checksummed source review and this owner decision. The full matching decisions and downstream 10K rebuild are not complete.
 
 The owner approved type/relevance penalties, model relevance columns, a 20–30-case comparison and continuation only without degradation. The earlier POC instruction requires consultation for new unexpected cases. The test preserved every previously correct match, but review of two changed QIDs exposed a new wrong historical identity for Malaya. No new temporal matching rule or manual QID correction has been applied.
 
@@ -56,4 +56,4 @@ Verification: **49 tests passed** across scoring, baseline replay, page scope, m
 - Saved records used for the two changed-QID checks: `GG_Data/pipeline/outputs/rebuild_page_scope_20261022/entities/full_records.json.gz` (SHA-256 `d2e7387545dbe47152330a65951f7d95c00b7dfa753ad223ac74425b734722e8`). Input context comes unchanged from the frozen cases and the prior 100-case review.
 - Migrated model receipt and independent table checks: `model_relevance_baseline/manifest.json` and `verification.json` in the new bundle.
 
-Pending owner decision: continue with the current formula and retain these known diagnostic failures for later work, or discuss the new Malaya period mismatch before continuation. No temporal entity-matching rule is implemented or proposed as an automatic change.
+Owner decision received: **continue with the current formula**, retaining the four known diagnostic failures for later work. No temporal entity-matching rule is implemented. The measurement selection is a superset of raw >=80% candidates over all Daniel inputs, before penalties. It includes page candidates, possible already-matched candidates and WWII candidates; it makes no identity assignment and does not broaden the actual first-stage page pool. Every candidate used by matching must have a completed relevance measurement, including explicit unavailable results.

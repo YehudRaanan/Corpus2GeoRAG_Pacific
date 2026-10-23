@@ -1,10 +1,13 @@
 """Entity columns reuse page/QID counts; synthetic importance is separate."""
 
 import copy
+import gzip
+import json
 
 import pytest
 
-from GG_Data.pipeline.entity_relevance import attach, records
+from GG_Data.pipeline.entity_relevance import attach, records, reuse_languages
+from GG_Data.pipeline.poc import digest
 
 
 def report(wiki, numerator, denominator):
@@ -53,3 +56,30 @@ def test_unmeasured_is_visible_and_snapshot_mismatch_stops():
     japanese["dump_date"] = "other"
     with pytest.raises(ValueError, match="different snapshots"):
         records(report("enwiki", 1, 100), japanese, {})
+
+
+def test_reuse_counts_preserves_rows_and_rejects_changed_evidence(tmp_path):
+    source = tmp_path / "source.json"
+    source.write_text("{}", encoding="utf-8")
+    measured = records(
+        report("enwiki", 1, 100),
+        report("jawiki", 2, 10),
+        {str(source): digest(source)},
+    )
+    path = tmp_path / "matching_relevance.json.gz"
+    with gzip.open(path, "wt", encoding="utf-8") as stream:
+        json.dump(measured, stream)
+    (tmp_path / "report.json").write_text(
+        json.dumps({"outputs": {path.name: digest(path)}}), encoding="utf-8"
+    )
+    output = tmp_path / "reused"
+    output.mkdir()
+    result = reuse_languages(path, {"Q1"}, output)
+    assert result[0]["rows"] == report("enwiki", 1, 100)["rows"]
+    assert result[1]["rows"] == report("jawiki", 2, 10)["rows"]
+    assert all(r["network_requests"] == 0 for r in result)
+    with pytest.raises(ValueError, match="lack candidate relevance"):
+        reuse_languages(path, {"Q2"}, output)
+    source.write_text('{"changed":true}', encoding="utf-8")
+    with pytest.raises(ValueError, match="language report changed"):
+        reuse_languages(path, {"Q1"}, output)

@@ -228,9 +228,75 @@ def evaluate(output: Path, relevance_file: Path) -> dict:
     return {k: v for k, v in report.items() if k != "rows"}
 
 
+def accept_review(output: Path, review_file: Path) -> dict:
+    """Close the diagnostic gate after source review and owner consultation.
+
+    This records the owner's 23 October instruction to continue with the
+    approved formula and four known failures. It changes no QID or gold case.
+    Preserve the original automatic report and the separate source review.
+    """
+    target = output / "reviewed_report.json"
+    if target.exists():
+        raise ValueError("Preserve earlier reviewed gate")
+    report_file = output / "report.json"
+    report, review = read(report_file), read(review_file)
+    if review["automatic_report_sha256"] != digest(report_file):
+        raise ValueError("Review belongs to a different automatic result")
+    source = Path(review["source_records"])
+    if digest(source) != review["source_records_sha256"]:
+        raise ValueError("Reviewed source records changed")
+    changed = {
+        r["index"]: r
+        for r in report["rows"]
+        if r["outcome"] == "CHANGED_QID_REQUIRES_REVIEW"
+    }
+    reviewed = {r["index"]: r for r in review["cases"]}
+    if set(reviewed) != set(changed) or len(reviewed) != len(review["cases"]):
+        raise ValueError("Changed QID review is incomplete or duplicated")
+    rows = []
+    for row in report["rows"]:
+        decision = reviewed.get(row["index"])
+        if decision:
+            if decision["assigned_id"] != row["updated"]["assigned_id"] or decision[
+                "outcome"
+            ] not in {"CORRECT", "WRONG"}:
+                raise ValueError("Review changes an assignment or has no outcome")
+            row = {**row, "outcome": decision["outcome"], "source_review": decision}
+        rows.append(row)
+    counts = dict(Counter(r["outcome"] for r in rows))
+    regressions = [
+        r["index"]
+        for r in rows
+        if r["expected_baseline"] == "CORRECT" and r["outcome"] != "CORRECT"
+    ]
+    if (
+        regressions
+        or counts != review["reviewed_counts"]
+        or counts.get("WRONG", 0) > report["baseline"]["wrong"]
+    ):
+        raise ValueError("Source-reviewed gate has degradation or differing counts")
+    result = {
+        **report,
+        "rows": rows,
+        "updated_counts": counts,
+        "status": "GATE_PASSED_AFTER_SOURCE_REVIEW_AND_OWNER_APPROVAL",
+        "full_matching_authorized_by_gate": True,
+        "regression_case_indices": regressions,
+        "owner_decision": "Continue with the approved formula",
+        "known_wrong_case_indices": [
+            r["index"] for r in rows if r["outcome"] == "WRONG"
+        ],
+        "review_inputs": {
+            str(p): digest(p) for p in (report_file, review_file, source)
+        },
+    }
+    save(target, result)
+    return {k: v for k, v in result.items() if k != "rows"}
+
+
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(description=__doc__)
-    parser.add_argument("phase", choices=("prepare", "evaluate"))
+    parser.add_argument("phase", choices=("prepare", "evaluate", "accept-review"))
     parser.add_argument("--source", type=Path)
     parser.add_argument("--review", type=Path)
     parser.add_argument("--relevance", type=Path)
@@ -239,6 +305,10 @@ if __name__ == "__main__":
     result = (
         prepare(args.source, args.review, args.output)
         if args.phase == "prepare"
-        else evaluate(args.output, args.relevance)
+        else (
+            accept_review(args.output, args.review)
+            if args.phase == "accept-review"
+            else evaluate(args.output, args.relevance)
+        )
     )
     print(json.dumps(result, indent=2))

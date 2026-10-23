@@ -104,6 +104,14 @@ def assign(
     *,
     apply_penalties: bool = False,
 ) -> None:
+    if apply_penalties:
+        require_measurements(
+            {
+                q: metadata[q].get("matching_relevance", {})
+                for q in {c["entity_id"] for c in candidates}
+            },
+            {c["entity_id"] for c in candidates},
+        )
     decision = choose(
         candidates,
         row["raw"]["entity_group"],
@@ -265,10 +273,15 @@ def run(output: Path, api: LiveData | None = None, page_workers: int = 2) -> dic
     )
     measured = read(relevance_path) if apply_penalties else {}
 
-    def attach_relevance(qids: set[str]) -> None:
+    def attach_relevance(qids: set[str], *, candidates_only: bool = False) -> None:
         # S2T 3.1: a missing measurement is an incomplete run, not unknown
         # relevance. A completed measurement may explicitly return null.
         if apply_penalties:
+            if candidates_only:
+                # A linked page QID with no >=80% name candidate cannot affect
+                # a decision. assign() still requires a completed measurement
+                # for EVERY actual candidate, including rejected candidates.
+                qids = qids & measured.keys()
             require_measurements(measured, qids)
             for qid in qids:
                 api.entities[qid]["matching_relevance"] = measured[qid]
@@ -395,7 +408,7 @@ def run(output: Path, api: LiveData | None = None, page_workers: int = 2) -> dic
             total=len(ids),
         )
     api.hierarchy(all_page_ids)
-    attach_relevance(all_page_ids)
+    attach_relevance(all_page_ids, candidates_only=True)
     save(metadata_path, api.entities)
 
     page_checkpoint = output / "page_matches.json.gz"
