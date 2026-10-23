@@ -1,5 +1,7 @@
 # Same 100 Geography examples: rerun and evidence review — 23 October 2026
 
+**Owner acceptance, 23 October 2026:** after reviewing the Tunis and Brisbane findings, the owner said, “I can live with that.” Both are accepted limitations for the current POC and do not block the next Geography population step. Preserve their identity and geometry evidence; do not silently correct or merge entities. This is not approval to remove the general country-wide/larger approximation restriction. The measured results and the original machine-readable evaluation remain unchanged; this note records the subsequent owner decision.
+
 ## Result
 
 The same 100 original Daniel mentions were traced through the updated matching outputs and the approved Geography ranking. There are 96 current LOC targets. Of these, 94 received a native source geometry and two did not. Four mentions now have only non-LOC target types; all four remain in the original 100-row denominator. The main model and entity assignments were not changed by this test.
@@ -23,7 +25,7 @@ On the same currently eligible 96 mentions, the previous run had 68 supported ou
 
 ## Explicit findings: do not treat these as hidden passes
 
-- **Tunis, row 69:** the selected OHM shape is the French protectorate of Tunisia, a country-wide polygon. It has a real connection to Tunis, so it passes the user’s geographic-connection criterion. It violates the approved rule against country-wide approximations for a city. The changed QID now identifies the protectorate; the Geography check treats that QID as the entity itself. No rule change or corrective reassignment was made. Counting only supported outputs that also satisfy this known size restriction gives **71/94 = 75.5%**, or 71/100 original-row coverage. A wider run must not be represented as policy-compliant until this is discussed.
+- **Tunis, row 69:** the selected OHM shape is the French protectorate of Tunisia, a country-wide polygon. It has a real connection to Tunis, so it passes the user’s geographic-connection criterion. It violates the approved rule against country-wide approximations for a city. The changed QID now identifies the protectorate; the Geography check treats that QID as the entity itself. No rule change or corrective reassignment was made. Counting only supported outputs that also satisfy this known size restriction gives **71/94 = 75.5%**, or 71/100 original-row coverage. The owner subsequently accepted this known POC limitation; retain the policy flag rather than reporting the result as fully compliant with the size rule.
 - **Brisbane, row 100:** the new QID and shape identify Brisbane Airport. The saved source explicitly places it in Brisbane, so geography is connected. Exact city identity has regressed from the previous city QID.
 - **Malaya, row 55:** the new point is in Kuala Lumpur, so the previous Himalayan error is removed geographically. The Federation of Malaya remains the wrong historical identity for the 1941 sentence; its establishment in 1948 was already a known, owner-approved matching limitation.
 - **Ukraine, row 3:** the OHM geometry remains geographically connected; its existing OUTSIDE_SELECTION_DATE warning remains visible. This review does not certify exact historical borders.
@@ -64,6 +66,12 @@ Focused verification: **19 tests passed** across the cohort adapter, Geography r
 - The preparation-only folder without `_v2` is superseded. No ranking was run there.
 
 Use `python -m GG_Data.pipeline.geography_review_rerun` in phase order `prepare`, `records`, `rank`, `compare`. `prepare` requires a fresh output folder; `records` refuses to overwrite saved candidate records. Supply `--base`, `--output`, `--previous-review` for preparation/comparison and `--request-cache` for ranking as applicable. Comparison leaves changed cases as REVIEW_REQUIRED until evidence review; it never converts a ranking score into a correctness label.
+
+## Next pipeline step
+
+Complete Geography for all **1,272 existing LOC targets** in the fixed 10K POC: **925 QID targets and 347 synthetic targets**. The full native/dated WHG, OHM and OSM retrieval is cached with status `RETRIEVED`. Candidate-only coordinate record acquisition, full-target ranking and model Geography population remain pending. Reuse the current sources, matching assignments, ranking and model-only Shapely references. Do not extrapolate the 100-example precision to the full population or count a connected geometry as proof of a correct QID.
+
+After Geography population, verify the target/selected/unresolved counts, exact geometry serialization, file checksums and model references. Verify that the existing Entities, Mentions, Wiki Pages, Events and Relations are unchanged. Then proceed to graph JSON export and Agent integration checks under the separate model-to-graph S2T. This documentation update does not run these stages or extend downstream processing beyond the fixed 10K POC.
 
 ## All original examples
 
