@@ -166,8 +166,8 @@ def populate(base: Path, ranked: Path, output: Path) -> dict:
             raise ValueError(f"Invalid selected geometry: {pid}")
         # Preserve original request time where supplied, not this export time.
         receipt = Path(chosen["receipt"])
-        retrieved_at = None
-        if receipt.is_file() and receipt.suffix == ".json":
+        retrieved_at = chosen.get("retrieved_at")
+        if retrieved_at is None and receipt.is_file() and receipt.suffix == ".json":
             retrieved_at = read_json(receipt).get("retrieved_at")
         reason = json.dumps(
             dict(

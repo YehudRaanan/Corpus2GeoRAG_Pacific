@@ -90,6 +90,7 @@ def test_model_population_keeps_zero_score_geometry_and_all_existing_tables(tmp_
         source_id="Q1$coord",
         qid="Q1",
         receipt="not_a_file",
+        retrieved_at="2026-10-23T07:38:31+00:00",
         components=dict(qid=0),
         uncertainty_flags=["LOW_SUPPORT"],
     )
@@ -114,6 +115,7 @@ def test_model_population_keeps_zero_score_geometry_and_all_existing_tables(tmp_
     assert read_json(output / "entities.json.gz") == entities
     assert all(digest(output / n) == sha for n, sha in hashes.items())
     row = read_json(output / "geography.json.gz")[0]
+    assert row["retrieved_at"] == chosen["retrieved_at"]
     assert row["geometry_ref"]["place_id"] == "Q1"
     assert row["geometry_ref"]["sha256"] == digest(output / "geometries.parquet")
     assert len(gpd.read_parquet(output / "geometries.parquet").columns) == 13

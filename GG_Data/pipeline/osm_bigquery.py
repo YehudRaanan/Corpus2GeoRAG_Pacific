@@ -82,6 +82,18 @@ def load(path: Path, qids: list[str]) -> list[dict]:
             raise ValueError(f"Changed OSM BigQuery receipt: {name}")
     if any(c["qid"] not in qids for c in saved["candidates"]):
         raise ValueError("OSM BigQuery candidate is outside the target population")
+    # Project the actual cloud retrieval time without reopening the large raw
+    # result separately for each selected geometry (S2T Geography provenance).
+    retrieved_at = next(
+        (
+            r["retrieved_at"]
+            for r in saved.get("query_evidence", [])
+            if r.get("retrieved_at")
+        ),
+        None,
+    )
+    for candidate in saved["candidates"]:
+        candidate["retrieved_at"] = retrieved_at
     return saved["candidates"]
 
 

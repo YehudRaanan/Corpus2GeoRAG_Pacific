@@ -55,11 +55,14 @@ def test_cache_reuse_checks_targets_and_source_receipts(tmp_path):
                 qids=["Q84"],
                 candidates=[dict(qid="Q84")],
                 inputs={str(raw): digest(raw)},
+                query_evidence=[dict(retrieved_at="2026-10-23T07:38:31+00:00")],
             )
         ),
         encoding="utf-8",
     )
-    assert load(path, ["Q84", "Q84"]) == [dict(qid="Q84")]
+    assert load(path, ["Q84", "Q84"]) == [
+        dict(qid="Q84", retrieved_at="2026-10-23T07:38:31+00:00")
+    ]
     with pytest.raises(ValueError, match="different targets"):
         load(path, ["Q1"])
     raw.write_text("changed", encoding="utf-8")
