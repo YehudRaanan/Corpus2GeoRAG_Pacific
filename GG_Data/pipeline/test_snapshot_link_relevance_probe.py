@@ -3,6 +3,7 @@
 import gzip
 import hashlib
 import json
+import re
 
 import pyarrow as pa
 import pyarrow.parquet as pq
@@ -167,3 +168,40 @@ def test_population_filter_exceeds_windows_command_limit():
         b"(300,1,100000000),\n(400,0,100009000),\n(500,0,1000000000);\n"
     ]
     assert dict(linked_pages(blocks, targets)) == {"1": {100, 200}}
+
+
+def test_selected_row_lookup_matches_original_expression():
+    targets = {0: "Q0", 10: "Q1", 11: "Q1", 123456789: "Q2"}
+    original = re.compile(
+        rb"^\((\d+),0,("
+        + b"|".join(str(t).encode() for t in sorted(targets))
+        + rb")\)[,;]$",
+        re.MULTILINE,
+    )
+    rows = [
+        b"(100,0,10),\n",
+        b"(100,0,11);\n",
+        b"(00100,0,10),\n",
+        b"(200,0,123456789),\n",
+        b"(0,0,0);\n",
+        b"(100,0,010),\n",
+        b"(100,0,00),\n",
+        b"(100,0,12),\n",
+        b"(100,1,10),\n",
+        b"(100,0,10)\n",
+        b" (100,0,10),\n",
+        b"(100,0,10),\r\n",
+        b"(100,0,10),\nextra",
+        b"garbage\n",
+    ]
+    accepted = []
+    expected = {}
+    for row in rows:
+        match = original.fullmatch(row.rstrip(b"\n"))
+        if match is None:
+            with pytest.raises(ValueError, match="unexpected row"):
+                probe.selected_pages([row], targets)
+        else:
+            accepted.append(row)
+            expected.setdefault(targets[int(match[2])], set()).add(int(match[1]))
+    assert dict(probe.selected_pages(accepted, targets)) == expected

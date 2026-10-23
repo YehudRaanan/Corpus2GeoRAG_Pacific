@@ -236,6 +236,23 @@ def link_targets(blocks, title_qids: dict[str, str]) -> dict[int, str]:
     return result
 
 
+def selected_pages(lines, targets: dict[int, str]) -> dict[str, set[int]]:
+    """S2T 6.1: validate selected rows without a per-row target alternation.
+
+    Exact ASCII keys preserve the original target syntax (including rejecting
+    zero-padded target IDs). Source-page deduplication remains unchanged.
+    """
+    row_pattern = re.compile(rb"^\((\d+),0,(\d+)\)[,;]$")
+    encoded_targets = {str(t).encode(): q for t, q in targets.items()}
+    pages = defaultdict(set)
+    for line in lines:
+        match = row_pattern.fullmatch(line.rstrip(b"\n"))
+        if match is None or match[2] not in encoded_targets:
+            raise ValueError("Native file filter returned an unexpected row")
+        pages[encoded_targets[match[2]]].add(int(match[1]))
+    return pages
+
+
 def linked_pages(blocks, targets: dict[int, str]) -> dict[str, set[int]]:
     """Union canonical and redirect targets, counting each source page once."""
     if not targets:
@@ -252,7 +269,6 @@ def linked_pages(blocks, targets: dict[int, str]) -> dict[str, set[int]]:
     rg = shutil.which("rg")
     if rg is None:
         raise ValueError("The installed rg file-search tool is required")
-    pages = defaultdict(set)
     with (
         tempfile.TemporaryDirectory() as pattern_dir,
         tempfile.TemporaryFile() as selected,
@@ -295,12 +311,7 @@ def linked_pages(blocks, targets: dict[int, str]) -> dict[str, set[int]]:
                 process.kill()
                 raise
         selected.seek(0)
-        for line in selected:
-            match = pattern.fullmatch(line.rstrip(b"\n"))
-            if match is None:
-                raise ValueError("Native file filter returned an unexpected row")
-            pages[targets[int(match[2])]].add(int(match[1]))
-    return pages
+        return selected_pages(selected, targets)
 
 
 def run(
