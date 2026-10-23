@@ -65,35 +65,69 @@ def load_geometry(pointer: dict | None, artifact_root: Path) -> BaseGeometry | N
     """
     if pointer is None:
         return None
-    if set(pointer) != {"file", "place_id", "sha256"}:
-        raise ValueError("Geometry pointer requires file, place_id and sha256")
-    if not all(isinstance(v, str) and v for v in pointer.values()):
-        raise ValueError("Geometry pointer fields must be nonempty strings")
-    # Population S2T 9.1: geocoding may resolve a synthetic LOC to a source
-    # object without resolving its Wikidata identity or changing its model ID.
-    if not re.fullmatch(r"Q[1-9][0-9]*|SYN_[A-Za-z0-9_]+", pointer["place_id"]):
-        raise ValueError("Geometry place_id must be a QID or existing SYN ID")
-    if not re.fullmatch(r"[0-9a-f]{64}", pointer["sha256"]):
-        raise ValueError("Geometry checksum must be a SHA-256 hex digest")
+    return load_geometries([pointer], artifact_root)[pointer["place_id"]]
+
+
+def load_geometries(
+    pointers: list[dict], artifact_root: Path, *, required_crs: str | None = None
+) -> dict[str, BaseGeometry]:
+    """Load model references once per file without changing stored geometries.
+
+    Graph S2T section 4: Agent spatial functions require longitude/latitude
+    degrees. A caller can require that CRS; incompatible objects fail instead
+    of being transformed. All single-object reference checks remain in force.
+    """
+    from pyproj import CRS
+
     root = artifact_root.resolve()
-    path = (root / pointer["file"]).resolve()
-    if not path.is_relative_to(root):
-        raise ValueError("Geometry pointer leaves the artifact directory")
-    if digest(path) != pointer["sha256"]:
-        raise ValueError(f"Geometry artifact checksum differs: {path}")
-    frame = gpd.read_parquet(path)
-    if frame.crs is None:
-        raise ValueError(f"Geometry artifact has no CRS metadata: {path}")
-    selected = frame.loc[frame["place_id"] == pointer["place_id"]]
-    if len(selected) != 1:
-        raise ValueError(
-            f"Expected one geometry for {pointer['place_id']}; found {len(selected)}"
-        )
-    geometry = selected.geometry.iloc[0]
-    if (
-        not isinstance(geometry, BaseGeometry)
-        or geometry.is_empty
-        or not geometry.is_valid
-    ):
-        raise ValueError(f"Invalid/empty stored geometry: {pointer['place_id']}")
-    return geometry
+    files = {}
+    result = {}
+    for pointer in pointers:
+        if not isinstance(pointer, dict) or set(pointer) != {
+            "file",
+            "place_id",
+            "sha256",
+        }:
+            raise ValueError("Geometry pointer requires file, place_id and sha256")
+        if not all(isinstance(v, str) and v for v in pointer.values()):
+            raise ValueError("Geometry pointer fields must be nonempty strings")
+        if not re.fullmatch(r"Q[1-9][0-9]*|SYN_[A-Za-z0-9_]+", pointer["place_id"]):
+            raise ValueError("Geometry place_id must be a QID or existing SYN ID")
+        if not re.fullmatch(r"[0-9a-f]{64}", pointer["sha256"]):
+            raise ValueError("Geometry checksum must be a SHA-256 hex digest")
+        if pointer["place_id"] in result:
+            raise ValueError(f"Duplicate geometry reference: {pointer['place_id']}")
+        path = (root / pointer["file"]).resolve()
+        if not path.is_relative_to(root):
+            raise ValueError("Geometry pointer leaves the artifact directory")
+        if path not in files:
+            sha = digest(path)
+            if sha != pointer["sha256"]:
+                raise ValueError(f"Geometry artifact checksum differs: {path}")
+            frame = gpd.read_parquet(path)
+            if frame.crs is None:
+                raise ValueError(f"Geometry artifact has no CRS metadata: {path}")
+            if required_crs and not frame.crs.equals(
+                CRS(required_crs), ignore_axis_order=True
+            ):
+                raise ValueError(
+                    f"Geometry CRS is incompatible with {required_crs}: {path}"
+                )
+            files[path] = (sha, frame)
+        sha, frame = files[path]
+        if sha != pointer["sha256"]:
+            raise ValueError(f"Geometry artifact checksum differs: {path}")
+        selected = frame.loc[frame["place_id"] == pointer["place_id"]]
+        if len(selected) != 1:
+            raise ValueError(
+                f"Expected one geometry for {pointer['place_id']}; found {len(selected)}"
+            )
+        geometry = selected.geometry.iloc[0]
+        if (
+            not isinstance(geometry, BaseGeometry)
+            or geometry.is_empty
+            or not geometry.is_valid
+        ):
+            raise ValueError(f"Invalid/empty stored geometry: {pointer['place_id']}")
+        result[pointer["place_id"]] = geometry
+    return result

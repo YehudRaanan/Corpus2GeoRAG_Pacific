@@ -35,7 +35,7 @@ uv run geo-agent --trace last      # timeline of the last run (see "Debugging a 
 7. **Answer and context are separate.** The model returns `answer_ids` (what answers the question, e.g. the attackers) and `context_ids` (the place, defenders, commanders). With one flat list, a defender the answer mentions looked exactly like a wrong attacker. The roles come from the question, so nothing extra is needed in the graph. Telling attackers from defenders does need typed relations (`ATTACKED` vs `DEFENDED`), as "who attacked X" always did.
 8. **Visible name resolution.** Every name match has a quality (`clear`/`uncertain`). On an uncertain match the agent asks a short clarification question instead of guessing; when a name was read differently from how it was typed, `interpretation` says so in plain words. A question year outside the resolved event's dates is flagged, never silently corrected.
 9. **Pure query layer.** All logic lives in `GraphStore`, so it can be tested without an LLM. A future MCP server or REST API for the UI can wrap the same methods.
-10. **Tolerant input schema.** Pydantic models allow extra fields, and node/edge types are open strings. Edges that point to unknown nodes are dropped, not fatal.
+10. **Tolerant input schema.** Pydantic models allow extra fields, and node/edge types are open strings. Edges that point to unknown nodes fail validation.
 11. **Spatial semantics.** Distance is great-circle km from the query point to the *nearest point* of a geometry (0 if inside). A point on Guadalcanal therefore matches the island polygon and the Solomon Islands. Distances wrap correctly across the 180° meridian (Kiska to Adak is ~396 km, not ~40,000). A bounding box with `min_lon > max_lon` crosses the meridian: `170 … -170` is the strip around the date line.
 12. **Dates.** Partial ISO dates are allowed (`1942`, `1942-06`). Date filters use interval overlap, and undated edges are excluded when a filter is set.
 13. **Sub-locations.** `find_relations` expands a location through `LOCATED_IN` by default. "Who attacked Guadalcanal" therefore includes attacks on Henderson Field.
@@ -44,6 +44,27 @@ uv run geo-agent --trace last      # timeline of the last run (see "Debugging a 
 16. **Errors are returned as data.** `ask()` never raises for model, tool, step-limit or post-processing failures; it returns `error: {type, message, stage}` so the UI always gets a reply and the trace says where the run stopped.
 
 ## Input schema (for the knowledge-graph builder)
+
+### Populated-model graph (23 October 2026)
+
+The approved pipeline contract is [ENTITY_MODEL_TO_AGENT_GRAPH_S2T.md](../docs/ENTITY_MODEL_TO_AGENT_GRAPH_S2T.md). The sample schema below remains supported for older fixtures. The populated-model graph uses these additional interfaces:
+
+- Separate typed node IDs such as `Q1::LOC` and `Q1::ORG`, both with `wikidata_id="Q1"`. Edges keep their original QID endpoints. The store indexes the same edge objects for all corresponding typed rows; it does not copy assertions or select a canonical type.
+- Tool relation endpoints expose `{"id":"Q1","entities":[...]}` with every corresponding typed entity. Exact native relation IDs such as `wd:P17` are retained. Reverse views carry their base `source_edge_id`; tool output exposes the shared `assertion_id`, and evidence collection counts that identity once.
+- `graph_schema` exposes the exported `relation_catalog` unchanged, including its exact labels and categories.
+- Geometry references remain only in the separate Geography model. Graph JSON contains neither geometry nor geometry pointers. Use the repository Python environment with the existing pipeline/GeoParquet dependencies available:
+
+  ```python
+  store = GraphStore.from_json("graph.json", model_dir="path/to/model_geography")
+  agent = await GeoAgent.create(graph_path="graph.json", model_dir="path/to/model_geography")
+  ```
+
+  `GEO_AGENT_MODEL_DIR` supplies the same model directory for the CLI and trace replay. `geography.json.gz` references are checked for path confinement, whole-file checksum, unique place ID, valid nonempty Shapely geometry and longitude/latitude CRS compatibility. Each GeoParquet file is read once per load. Unknown CRS is an error; coordinates are not transformed. Missing accepted Geography rows remain without geometry. Spatial functions use the restored Shapely objects; only the existing UI response converts them to GeoJSON.
+- Native scalar Wikidata dates are checked against `relations.json.gz` and `events.json.gz` in the same model directory. Precision and calendar remain in that model. Date queries use approved partial/coarse possible overlap. The Julian year shortcut applies only to clearly outside years for 1941–1945 queries; unsupported calendar-sensitive queries fail explicitly. No calendar conversion or new date JSON object is introduced.
+- Unknown edge endpoints, duplicate graph IDs and broken reverse references fail explicitly. They are not silently dropped. No live source retrieval or LLM call is needed for model loading and deterministic tool checks.
+
+### Legacy sample graph
+
 The agent reads **one JSON file**, set by `GRAPH_PATH` (default `data/sample_graph.json`). It holds two arrays:
 
 ```text
@@ -69,7 +90,7 @@ The agent reads **one JSON file**, set by `GRAPH_PATH` (default `data/sample_gra
 | Field | Type | Required | Meaning |
 |---|---|---|---|
 | `source` | string | **yes** | Node `id` of the subject (the attacker, the event, the person). |
-| `target` | string | **yes** | Node `id` of the object (the place attacked, the event's location). An edge whose `source` or `target` doesn't exist is dropped at load time. |
+| `target` | string | **yes** | Node `id` of the object (the place attacked, the event's location). An edge whose `source` or `target` doesn't exist fails validation. |
 | `type` | string | **yes** | Relation type in UPPER_SNAKE_CASE. See the vocabulary below. |
 | `count` | integer ≥ 1 | no (default 1) | Number of mentions supporting the edge. Higher means better supported. |
 | `start_date`, `end_date` | string or `null` | no, but important | When the relation held, as ISO dates. Partial dates are fine: `"1942"`, `"1942-06"`, `"1942-06-04"`. |

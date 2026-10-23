@@ -229,18 +229,36 @@ def select_proposal(ranked: list[dict]) -> dict | None:
     return next((c for c in ranked if c["geometry_available"]), None)
 
 
-def coordinate_candidates(entity: dict) -> list[dict]:
+def coordinate_candidates(
+    entity: dict, *, unusable: list[dict] | None = None
+) -> list[dict]:
     """Owner approval, 22 October: retain every non-deprecated P625 candidate.
 
     Keep rank and precision in each original statement. The existing ranking
     and stable assertion-ID tie rule select among them; no coordinate average
-    or replacement identity is created. Existing Earth/value checks still apply.
+    or replacement identity is created. S2T 9.7, 23 October: non-Earth values
+    are unusable for Earth Geography; preserve their statements in the audit
+    and continue other candidates. All other representation checks still apply.
     """
-    return [
-        coordinate(entity | {"claims": {"P625": [claim]}})
-        for claim in entity.get("claims", {}).get("P625", [])
-        if claim.get("rank") != "deprecated"
-    ]
+    result = []
+    for claim in entity.get("claims", {}).get("P625", []):
+        if claim.get("rank") == "deprecated":
+            continue
+        globe = (
+            claim.get("mainsnak", {}).get("datavalue", {}).get("value", {}).get("globe")
+        )
+        if globe and globe != "http://www.wikidata.org/entity/Q2":
+            if unusable is not None:
+                unusable.append(
+                    dict(
+                        qid=entity["id"],
+                        statement=claim,
+                        reason="NON_EARTH_COORDINATE",
+                    )
+                )
+            continue
+        result.append(coordinate(entity | {"claims": {"P625": [claim]}}))
+    return result
 
 
 def native_candidate(row: dict, source: str, receipt: str) -> dict:
@@ -463,7 +481,10 @@ def run(
             available = (
                 [anchors_extra[q]]
                 if q in anchors_extra
-                else coordinate_candidates(records.get(q, {}))
+                else coordinate_candidates(
+                    records.get(q, {}),
+                    unusable=ev.setdefault("unusable_coordinates", []),
+                )
             )
             for a in available:
                 anchors[pid].append(

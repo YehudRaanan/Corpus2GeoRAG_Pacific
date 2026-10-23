@@ -35,7 +35,8 @@ def build_tools(store: GraphStore) -> list[BaseTool]:
 
     @tool
     def graph_schema() -> str:
-        """Describe the knowledge graph: node types, relation types (with counts),
+        """Describe the knowledge graph: node types, relation types (with counts
+        and the exported labels/categories when supplied),
         date range and geographic bounding box. Call this first when unsure which
         entity or relation types exist."""
         return _json(store.schema())

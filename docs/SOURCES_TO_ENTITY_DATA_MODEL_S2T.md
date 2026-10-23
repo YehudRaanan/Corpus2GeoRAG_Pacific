@@ -1,5 +1,14 @@
 # Source-to-target: approved sources to the six-table data model
 
+**23 October 2026 non-Earth coordinate approval (section 9.7):** when a
+Wikidata P625 statement explicitly uses a globe other than Earth (Q2), retain
+the original statement and mark that coordinate `NON_EARTH_COORDINATE` in the
+Geography evidence. It cannot supply an Earth Point, a search anchor or a
+distance score. Continue with other available coordinates/geometries. Keep
+entity IDs, ranking weights and all other coordinate validation unchanged.
+The first observed case was candidate Q1684191, whose statement names Q405
+as its globe. This exception does not discard or repair source evidence.
+
 **23 October 2026 candidate-coordinate continuation approval:** for Geography
 candidate-only QIDs absent from the agreed snapshot and saved records, check
 current Wikidata with verified cache reuse. An explicitly missing current

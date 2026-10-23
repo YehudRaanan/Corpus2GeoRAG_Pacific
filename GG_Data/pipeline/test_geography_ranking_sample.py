@@ -1,5 +1,6 @@
 """Owner ranking: select available geometry and keep uncertainty explicit."""
 
+import pytest
 from shapely.geometry import Point, Polygon, mapping
 
 from GG_Data.pipeline.geography_ranking_sample import (
@@ -107,3 +108,43 @@ def test_multiple_coordinates_keep_native_values_and_skip_deprecated():
     assert all(r["xy"] == [2, 1] for r in result)
     assert len(entity["claims"]["P625"]) == 3
     assert coordinate_candidates(dict(id="Q2")) == []
+
+
+def test_non_earth_coordinates_keep_evidence_and_other_candidates():
+    def statement(globe, latitude=1):
+        return dict(
+            id=f"Q1${globe.rsplit('/', 1)[-1]}",
+            rank="normal",
+            mainsnak=dict(
+                snaktype="value",
+                datavalue=dict(
+                    value=dict(
+                        latitude=latitude, longitude=2, altitude=None, globe=globe
+                    )
+                ),
+            ),
+        )
+
+    earth = statement("http://www.wikidata.org/entity/Q2")
+    other = statement("http://www.wikidata.org/entity/Q405")
+    entity = dict(id="Q1", claims=dict(P625=[other, earth]))
+    unusable = []
+    result = coordinate_candidates(entity, unusable=unusable)
+    assert [r["xy"] for r in result] == [[2, 1]]
+    assert unusable == [dict(qid="Q1", statement=other, reason="NON_EARTH_COORDINATE")]
+    assert entity["claims"]["P625"] == [other, earth]
+    # Only the approved non-Earth exception changes; malformed Earth data stops.
+    with pytest.raises(ValueError, match="Unsupported coordinate representation"):
+        coordinate_candidates(
+            dict(
+                id="Q1",
+                claims=dict(
+                    P625=[
+                        statement(
+                            earth["mainsnak"]["datavalue"]["value"]["globe"],
+                            latitude=91,
+                        )
+                    ]
+                ),
+            )
+        )

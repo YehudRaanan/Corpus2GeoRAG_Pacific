@@ -7,7 +7,8 @@ Design decisions:
 - Pydantic models with `extra="allow"`: the graph JSON is produced by another
   team and will evolve. Unknown fields are kept instead of rejected, and node and
   edge `type` are open strings (location/person/org/event today, time later).
-- Geometry is GeoJSON in (lon, lat) order. Distances are great-circle km,
+- Geometry is Shapely loaded from the separate Geography model, or legacy
+  inline GeoJSON, in (lon, lat) order. Distances are great-circle km,
   measured from the query point to the nearest point of the geometry, so
   polygons (e.g. an island) match when the query point is inside or near them.
 - Dates are ISO strings that may be partial ("1942", "1942-06", "1942-06-04").
@@ -35,7 +36,7 @@ from typing import Any
 from pydantic import BaseModel, ConfigDict, Field
 from rank_bm25 import BM25Okapi
 from rapidfuzz import fuzz, process
-from shapely.geometry import Point, box, shape
+from shapely.geometry import Point, box, mapping, shape
 from shapely.geometry.base import BaseGeometry
 from shapely.ops import nearest_points
 
@@ -64,6 +65,7 @@ class Node(BaseModel):
 
     model_config = ConfigDict(extra="allow")
     id: str
+    wikidata_id: str | None = None
     name: str
     type: str
     aliases: list[str] = Field(default_factory=list)
@@ -81,9 +83,12 @@ class Edge(BaseModel):
     source: str
     target: str
     type: str
+    id: str | None = None
+    source_edge_id: str | None = None
     count: int = 1  # number of supporting mentions in the corpus
     start_date: str | None = None
     end_date: str | None = None
+    point_date: str | None = None
     sources: list[Source] = Field(default_factory=list)
     attributes: dict[str, Any] = Field(default_factory=dict)
     embedding: list[float] | None = None
@@ -130,19 +135,76 @@ def _tokenize(text: str) -> list[str]:
 class GraphStore:
     """Loads the graph JSON and exposes the query primitives used by the tools."""
 
-    def __init__(self, nodes: list[Node], edges: list[Edge]):
+    def __init__(
+        self,
+        nodes: list[Node],
+        edges: list[Edge],
+        *,
+        geometries: dict[str, BaseGeometry] | None = None,
+    ):
         self.nodes: dict[str, Node] = {n.id: n for n in nodes}
-        # Drop edges pointing at unknown nodes instead of failing the whole load.
-        self.edges: list[Edge] = [e for e in edges if e.source in self.nodes and e.target in self.nodes]
+        if len(self.nodes) != len(nodes):
+            raise ValueError("Duplicate graph node IDs")
+        # Graph S2T 4-6: retain every typed row and index the same assertion
+        # objects under their QID and typed IDs, without copying assertions.
+        self.by_qid: dict[str, list[str]] = defaultdict(list)
+        for n in nodes:
+            if n.wikidata_id:
+                if not re.fullmatch(
+                    r"Q[1-9][0-9]*", n.wikidata_id
+                ) or not n.id.startswith(n.wikidata_id + "::"):
+                    raise ValueError(f"Invalid typed graph identity: {n.id}")
+                self.by_qid[n.wikidata_id].append(n.id)
+        self.edges = edges
+        edge_ids = [e.id for e in edges if e.id is not None]
+        if len(edge_ids) != len(set(edge_ids)):
+            raise ValueError("Duplicate graph edge IDs")
+        by_edge_id = {e.id: e for e in edges if e.id is not None}
         self.out_edges: dict[str, list[Edge]] = defaultdict(list)
         self.in_edges: dict[str, list[Edge]] = defaultdict(list)
         for e in self.edges:
-            self.out_edges[e.source].append(e)
-            self.in_edges[e.target].append(e)
+            for endpoint in (e.source, e.target):
+                if not self.resolve_ids(endpoint):
+                    raise ValueError(f"Unknown graph edge endpoint: {endpoint}")
+            if e.source_edge_id:
+                base = by_edge_id.get(e.source_edge_id)
+                if (
+                    base is None
+                    or base.source_edge_id
+                    or (e.source, e.target) != (base.target, base.source)
+                ):
+                    raise ValueError(f"Invalid reverse assertion reference: {e.id}")
+                if (e.count, e.start_date, e.end_date, e.point_date) != (
+                    base.count,
+                    base.start_date,
+                    base.end_date,
+                    base.point_date,
+                ):
+                    raise ValueError(f"Reverse assertion evidence differs: {e.id}")
+            for endpoint, index in (
+                (e.source, self.out_edges),
+                (e.target, self.in_edges),
+            ):
+                for key in dict.fromkeys([endpoint, *self.resolve_ids(endpoint)]):
+                    index[key].append(e)
 
         self.geoms: dict[str, BaseGeometry] = {
             n.id: shape(n.geometry) for n in nodes if n.geometry
         }
+        for node_id, geometry in (geometries or {}).items():
+            if node_id not in self.nodes or self.nodes[node_id].type != "location":
+                raise ValueError(f"Geometry has no location entity: {node_id}")
+            if (
+                not isinstance(geometry, BaseGeometry)
+                or geometry.is_empty
+                or not geometry.is_valid
+            ):
+                raise ValueError(f"Invalid/empty stored geometry: {node_id}")
+            self.geoms[node_id] = geometry
+        self.relation_types = {e.type for e in edges}
+        self.relation_catalog: dict | None = None
+        self.model_edge_dates: dict[int, dict] = {}
+        self.model_node_dates: dict[str, dict] = {}
 
         # Name index for fuzzy lookup: one entry per name/alias, compared in
         # normalized form; the original label is kept for display.
@@ -169,13 +231,84 @@ class GraphStore:
         self._bm25 = BM25Okapi([_tokenize(t) for _, t in self._chunks]) if self._chunks else None
 
     @classmethod
-    def from_json(cls, path: str | Path) -> "GraphStore":
+    def from_json(
+        cls, path: str | Path, *, model_dir: str | Path | None = None
+    ) -> "GraphStore":
         """Load a graph from a JSON file shaped like {"nodes": [...], "edges": [...]}."""
         data = json.loads(Path(path).read_text(encoding="utf-8"))
-        return cls(
+        store = cls(
             [Node.model_validate(n) for n in data.get("nodes", [])],
             [Edge.model_validate(e) for e in data.get("edges", [])],
         )
+        if "relation_catalog" in data:
+            if not isinstance(data["relation_catalog"], dict):
+                raise ValueError("Graph relation_catalog must be an object")
+            # Keep the applied mapping exactly as exported: labels and Level 1
+            # families are data, not a new Agent classification.
+            store.relation_catalog = data["relation_catalog"]
+        if model_dir is not None:
+            # Graph S2T 4: references belong to Geography, never graph JSON.
+            # Import only when using that model; legacy sample loading stays local.
+            from GG_Data.pipeline.graph_contract import load_geometries
+            from GG_Data.pipeline.poc import read_json
+
+            root = Path(model_dir)
+            rows = read_json(root / "geography.json.gz")
+            seen = set()
+            pointers = []
+            for row in rows:
+                place_id = row["place_id"]
+                if place_id in seen:
+                    raise ValueError(f"Duplicate Geography place: {place_id}")
+                seen.add(place_id)
+                pointer = row.get("geometry_ref")
+                if pointer is not None:
+                    if pointer.get("place_id") != place_id:
+                        raise ValueError(
+                            f"Geography pointer identity differs: {place_id}"
+                        )
+                    pointers.append(pointer)
+            geometries = load_geometries(pointers, root, required_crs="EPSG:4326")
+            for place_id, geometry in geometries.items():
+                targets = [
+                    n
+                    for n in store.resolve_ids(place_id)
+                    if store.nodes[n].type == "location"
+                ]
+                if not targets:
+                    raise ValueError(f"Geography has no graph location: {place_id}")
+                for node_id in targets:
+                    store.geoms[node_id] = geometry
+            from geo_agent.model_dates import load_model_dates
+
+            store.model_edge_dates, store.model_node_dates = load_model_dates(root, store.nodes, store.edges)
+        return store
+
+    def resolve_ids(self, endpoint: str) -> list[str]:
+        """All separate typed entities for a QID; no type winner or new node."""
+        return self.by_qid.get(endpoint, [endpoint] if endpoint in self.nodes else [])
+
+    def endpoint_id(self, node_id: str) -> str:
+        node = self.nodes.get(node_id)
+        return node.wikidata_id or node_id if node is not None else node_id
+
+    def summarize_endpoint(
+        self, endpoint: str, type: str | None = None
+    ) -> dict[str, Any]:
+        ids = [
+            n
+            for n in self.resolve_ids(endpoint)
+            if type is None or self.nodes[n].type == type
+        ]
+        if endpoint in self.nodes:
+            return self.summarize_node(endpoint)
+        # QID endpoints keep all typed rows visible. They are query references,
+        # not extra canonical entities in the graph.
+        return {"id": endpoint, "entities": [self.summarize_node(n) for n in ids]}
+
+    def relation_id(self, relation: str) -> str:
+        """Preserve exact native IDs; retain legacy lowercase ATTACKED queries."""
+        return relation if relation in self.relation_types else relation.upper()
 
     # ------------------------------------------------------------ serialization
 
@@ -191,13 +324,20 @@ class GraphStore:
     def summarize_edge(self, e: Edge) -> dict[str, Any]:
         """Edge view with both endpoints resolved to names, plus dates and sources."""
         out: dict[str, Any] = {
-            "source": {"id": e.source, "name": self.nodes[e.source].name, "type": self.nodes[e.source].type},
+            "source": self.summarize_endpoint(e.source),
             "relation": e.type,
-            "target": {"id": e.target, "name": self.nodes[e.target].name, "type": self.nodes[e.target].type},
+            "target": self.summarize_endpoint(e.target),
             "count": e.count,
         }
+        if e.id is not None:
+            out["id"] = e.id
+            out["assertion_id"] = e.source_edge_id or e.id
+        if e.source_edge_id is not None:
+            out["source_edge_id"] = e.source_edge_id
         if e.start_date or e.end_date:
             out["start_date"], out["end_date"] = e.start_date, e.end_date
+        if e.point_date:
+            out["point_date"] = e.point_date
         if e.sources:
             out["sources"] = [s.page for s in e.sources]
         return out
@@ -214,8 +354,12 @@ class GraphStore:
         return {
             "node_count": len(self.nodes),
             "edge_count": len(self.edges),
+            "assertion_count": len(
+                {e.source_edge_id or e.id or id(e) for e in self.edges}
+            ),
             "node_types": dict(Counter(n.type for n in self.nodes.values())),
             "relation_types": dict(Counter(e.type for e in self.edges)),
+            **({"relation_catalog": self.relation_catalog} if self.relation_catalog is not None else {}),
             "date_range": [dates[0], dates[-1]] if dates else None,
             "bbox": bounds,
         }
@@ -254,10 +398,19 @@ class GraphStore:
             r["quality"] = "clear" if clear else "uncertain"
         return results
 
-    def get_entity(self, entity_id: str, text_chars: int = 1500) -> dict[str, Any] | None:
+    def get_entity(
+        self, entity_id: str, text_chars: int = 1500
+    ) -> dict[str, Any] | None:
         """Full node details, with the raw text truncated to `text_chars`."""
         n = self.nodes.get(entity_id)
         if n is None:
+            if entity_id in self.by_qid:
+                return {
+                    "id": entity_id,
+                    "entities": [
+                        self.get_entity(n, text_chars) for n in self.by_qid[entity_id]
+                    ],
+                }
             return None
         return {
             **self.summarize_node(entity_id),
@@ -269,10 +422,18 @@ class GraphStore:
             "degree": len(self.out_edges[entity_id]) + len(self.in_edges[entity_id]),
         }
 
-    def edge_in_range(self, e: Edge, date_from: str | None, date_to: str | None) -> bool:
+    def edge_in_range(
+        self, e: Edge, date_from: str | None, date_to: str | None
+    ) -> bool:
         """True if the edge's [start, end] interval overlaps [date_from, date_to]."""
         if not date_from and not date_to:
             return True
+        if id(e) in self.model_edge_dates:
+            from geo_agent.model_dates import in_range
+
+            return in_range(self.model_edge_dates[id(e)], date_from, date_to)
+        if any(v and v.startswith(("+", "-")) for v in (e.start_date, e.end_date, e.point_date)):
+            raise ValueError("Native graph date queries require the separate model_dir")
         start = _date_bounds(e.start_date or e.end_date, end=False)
         end = _date_bounds(e.end_date or e.start_date, end=True)
         if start is None:
@@ -281,8 +442,15 @@ class GraphStore:
         q_to = _date_bounds(date_to, end=True) or "9999"
         return start <= q_to and end >= q_from
 
+    def model_event_in_range(self, node_id: str, date_from: str | None, date_to: str | None) -> bool:
+        """Compare native Event dates with their original model precision."""
+        from geo_agent.model_dates import in_range
+
+        return in_range(self.model_node_dates[node_id], date_from, date_to)
+
     def sublocations(self, location_id: str) -> set[str]:
         """The location plus everything transitively LOCATED_IN it."""
+        location_id = self.endpoint_id(location_id)
         found, stack = {location_id}, [location_id]
         while stack:
             for e in self.in_edges[stack.pop()]:
@@ -306,15 +474,16 @@ class GraphStore:
         When `include_sublocations` is set, a location endpoint also matches places
         LOCATED_IN it (e.g. Henderson Field for Guadalcanal).
         """
+
         def expand(node_id: str | None) -> set[str] | None:
             if node_id is None:
                 return None
             if include_sublocations and node_id in self.nodes and self.nodes[node_id].type == "location":
                 return self.sublocations(node_id)
-            return {node_id}
+            return {self.endpoint_id(node_id)}
 
         sources, targets = expand(source_id), expand(target_id)
-        rel = relation_type.upper() if relation_type else None
+        rel = self.relation_id(relation_type) if relation_type else None
         candidates = (
             [e for t in targets for e in self.in_edges[t]] if targets
             else [e for s in sources for e in self.out_edges[s]] if sources
@@ -327,6 +496,7 @@ class GraphStore:
             and (rel is None or e.type == rel)
             and self.edge_in_range(e, date_from, date_to)
         ]
+        hits = list({id(e): e for e in hits}.values())
         hits.sort(key=lambda e: -e.count)
         return [self.summarize_edge(e) for e in hits[:limit]]
 
@@ -341,17 +511,25 @@ class GraphStore:
         limit: int = 50,
     ) -> list[dict[str, Any]]:
         """One-hop neighborhood. `direction` is "out", "in" or "both"."""
-        rels = {r.upper() for r in relation_types} if relation_types else None
+        rels = {self.relation_id(r) for r in relation_types} if relation_types else None
         edges = []
         if direction in ("out", "both"):
             edges += [(e, e.target) for e in self.out_edges[entity_id]]
         if direction in ("in", "both"):
             edges += [(e, e.source) for e in self.in_edges[entity_id]]
         results = [
-            {**self.summarize_edge(e), "neighbor": self.summarize_node(other)}
+            {
+                **self.summarize_edge(e),
+                "neighbor": self.summarize_endpoint(other, neighbor_type),
+            }
             for e, other in edges
             if (rels is None or e.type in rels)
-            and (neighbor_type is None or self.nodes[other].type == neighbor_type)
+            and (
+                neighbor_type is None
+                or any(
+                    self.nodes[n].type == neighbor_type for n in self.resolve_ids(other)
+                )
+            )
             and self.edge_in_range(e, date_from, date_to)
         ]
         results.sort(key=lambda r: -r["count"])
@@ -365,16 +543,34 @@ class GraphStore:
         geometry are returned, since the point is to show them on a map.
         """
         n = self.nodes.get(entity_id)
-        if n is None:
+        if n is None and entity_id not in self.by_qid:
             return []
-        if n.type == "location" and entity_id in self.geoms:
+        if n is not None and n.type == "location" and entity_id in self.geoms:
             return [{**self.summarize_node(entity_id), "relations": ["SELF"]}]
         by_loc: dict[str, dict[str, Any]] = {}
-        for e, other in [(e, e.target) for e in self.out_edges[entity_id]] + [(e, e.source) for e in self.in_edges[entity_id]]:
-            if self.nodes[other].type != "location" or other not in self.geoms:
-                continue
-            entry = by_loc.setdefault(other, {**self.summarize_node(other), "relations": []})
-            entry["relations"].append({"type": e.type, "start_date": e.start_date, "end_date": e.end_date})
+        for node_id in self.resolve_ids(entity_id):
+            if self.nodes[node_id].type == "location" and node_id in self.geoms:
+                by_loc[node_id] = {
+                    **self.summarize_node(node_id),
+                    "relations": ["SELF"],
+                }
+        for e, other in [(e, e.target) for e in self.out_edges[entity_id]] + [
+            (e, e.source) for e in self.in_edges[entity_id]
+        ]:
+            for node_id in self.resolve_ids(other):
+                if self.nodes[node_id].type != "location" or node_id not in self.geoms:
+                    continue
+                entry = by_loc.setdefault(
+                    node_id, {**self.summarize_node(node_id), "relations": []}
+                )
+                relation = {
+                    "type": e.type,
+                    "start_date": e.start_date,
+                    "end_date": e.end_date,
+                }
+                if e.id is not None:
+                    relation["assertion_id"] = e.source_edge_id or e.id
+                entry["relations"].append(relation)
         return list(by_loc.values())
 
     def distance_km(self, node_id: str, lat: float, lon: float) -> float:
@@ -415,7 +611,9 @@ class GraphStore:
             if g.intersects(region) and (type is None or self.nodes[i].type == type)
         ][:limit]
 
-    def what_happened_at(self, lat: float, lon: float, radius_km: float = 50, text_chars: int = 400) -> dict[str, Any]:
+    def what_happened_at(
+        self, lat: float, lon: float, radius_km: float = 50, text_chars: int = 400
+    ) -> dict[str, Any]:
         """Composite point query: nearby places, then their events and relations.
 
         Steps:
@@ -427,8 +625,14 @@ class GraphStore:
         places = self.near(lat, lon, radius_km, type="location")
         place_ids = {p["id"] for p in places}
         edges = [e for pid in place_ids for e in self.in_edges[pid] + self.out_edges[pid]]
-        event_ids = {e.source for e in edges if self.nodes[e.source].type == "event"}
-        edges += [e for ev in event_ids for e in self.in_edges[ev]]
+        event_ids = {
+            nid
+            for e in edges
+            for endpoint in (e.source, e.target)
+            for nid in self.resolve_ids(endpoint)
+            if self.nodes[nid].type == "event"
+        }
+        edges += [e for ev in event_ids for e in self.in_edges[ev] + self.out_edges[ev]]
         unique = list({id(e): e for e in edges}.values())
         unique.sort(key=lambda e: (e.start_date or "9999", -e.count))
         events = sorted(
@@ -468,7 +672,9 @@ class GraphStore:
             })
         return out
 
-    def to_geojson(self, entity_ids: list[str], restrict_to: set[str] | None = None) -> dict[str, Any]:
+    def to_geojson(
+        self, entity_ids: list[str], restrict_to: set[str] | None = None
+    ) -> dict[str, Any]:
         """FeatureCollection for the map UI.
 
         Entities without geometry (events, people, orgs) are drawn at the
@@ -487,10 +693,17 @@ class GraphStore:
             props = {"id": n.id, "name": n.name, "type": n.type}
             if via:
                 props["related_to"] = via
-            features.append({"type": "Feature", "geometry": n.geometry, "properties": props})
+            # UI response conversion only; graph JSON and model Shapely stay native.
+            features.append(
+                {
+                    "type": "Feature",
+                    "geometry": mapping(self.geoms[loc_id]),
+                    "properties": props,
+                }
+            )
 
         for eid in entity_ids:
-            if eid not in self.nodes:
+            if eid not in self.nodes and eid not in self.by_qid:
                 continue
             if eid in self.geoms:
                 add(eid)

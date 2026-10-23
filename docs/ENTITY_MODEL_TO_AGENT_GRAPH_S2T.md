@@ -1,5 +1,13 @@
 # Source-to-target: six-table model to final Agent graph JSON
 
+**23 October 2026 point-date approval:** when an Event has explicit start/end
+bounds and several distinct point dates, export the approved selected bounds
+and omit the optional scalar `attributes.point_date`. Keep every point date
+and its precision/calendar in the model and show the omission in the export
+report. Do not derive a replacement interval from these points. First cases:
+Q115861680 and Q17193309. Multiple point dates without explicit bounds still
+use only the already-approved derived-range rule.
+
 **23 October 2026 reconciliation:** the v2.1 reverse-direction contract is
 already approved. A reverse view preserves the original assertion and its
 existing Level 1 category; it does not require a newly classified inverse
@@ -138,7 +146,7 @@ Paths refer to `nodes[]`.
 | Omitted: `geometry_ref` | Geography model reference only | `{file, place_id, sha256}`; file is the GeoParquet artifact, place_id the original place QID or SYN ID, sha256 the whole artifact checksum. This is a model-only field and is omitted from nodes. No accepted geometry -> no accepted Geography row; model reference lookup returns null. Broken reference, duplicate/missing place, invalid/empty geometry or missing CRS -> explicit error. No inline geometry. |
 | `attributes.start_date` | `Events.start_date` | Earliest supplied start, without a 1900 floor. Preserve native precision/calendar in supporting model evidence; do not invent an exact day. Null/absent source -> omit. |
 | `attributes.end_date` | `Events.end_date` | Latest supplied end, without a 1900 floor. Preserve native precision/calendar in supporting model evidence. Null/absent source -> omit. |
-| `attributes.point_date` | `Events.point_date` | Copy a supplied target-compatible point value. Reuse only the existing approved derived ranges for multiple point dates; do not infer a point from a start/end bound. Retain all native values in the model. |
+| `attributes.point_date` | `Events.point_date` | Copy a supplied target-compatible single point value. With several distinct points and explicit bounds, omit this optional graph field and keep the selected bounds; report the omission and retain all native points in the model (23 October approval). Without explicit bounds, reuse only the existing approved derived-range rule. Do not infer a point from a bound. |
 | `attributes.kind` | `Events.kind` | Copy only an existing source-supplied, target-compatible value. Do not infer battle/campaign/war from names or a new mapping. A Wikidata class QID is not silently translated into a kind label. |
 
 Event values can be kept as full raw statements in the source model even when they do not fit a scalar target field. That preservation does not authorize silently omitting a conflict from the export report or treating it as resolved. Event level, importance, country, scale, aliases with added meanings, hull numbers and other optional enrichments have no new derivation rule in this S2T; do not generate them.
@@ -209,14 +217,16 @@ The Agent reads a relation definition's label, family, source predicate, directi
 |---|---|
 | `id` | Exact exported base or reverse predicate ID; also the catalog dictionary key. |
 | `labels` | Existing label strings from applied `level2_relation_label`, or the lookup's exact reverse label. Highlight conflicting meanings rather than relying on the loader's first-label selection. |
-| `level1_families` | Existing applied `level1_family` values; native fallback entries remain unassigned (`UNRESOLVED`), with no family inference. Consistency with relation rows must be checked. Conflicting families need a decision before export. |
+| `level1_families` | Reuse the existing draft builder's sorted distinct-value list. Include the existing applied values from base/reverse views; native fallback entries remain unassigned (`UNRESOLVED`). An assigned value plus `UNRESOLVED` preserves classification and missing-classification evidence, without assigning that value to an unassigned edge. Competing assigned categories or conflicting labels still require discussion. |
 | `source_predicates[].source` | Existing mapping `source`. Retain supplied source mappings. |
 | `source_predicates[].predicate` | Existing mapping `source_predicate`. |
 | `source_predicates[].direction` | Existing `direction_to_level2` for explicitly supplied source mappings. For a lookup-only reverse predicate, retain its exact ID/label and an empty source-mapping list; do not copy a base direction or invent a conversion. |
 | `review_statuses` | Existing catalog review/status values, if supplied; otherwise omit this optional field. No new review decision is made by export. |
 | Direction-pair audit fields | Retain `direction_pair_id`, `reverse_resolution_type` and endpoint action in supporting direction artifacts. The current Agent catalog adapter does not consume them; reverse edges carry their defined view fields. |
 
-The population S2T section 8 now permits adding exact native Wikidata properties to a new mapping version when a source key is missing. This exporter consumes that pinned result; it does not discover or invent relations. Every exported base or reverse predicate must be present in the exported catalog. If several source mapping rows disagree on one relation's family/meaning, highlight the exact rows. Do not solve that disagreement through a new aggregation or a label guess. Catalog inclusion does not create entity nodes or source assertions.
+The population S2T section 8 now permits adding exact native Wikidata properties to a new mapping version when a source key is missing. This exporter consumes that pinned result; it does not discover or invent relations. Every exported base or reverse predicate must be present in the exported catalog. Reuse only the mapping keys applied to this Wikidata-only population; do not import an unused provider's classification. Highlight competing assigned categories or label meanings rather than resolving them through a new aggregation or guess. Catalog inclusion does not create entity nodes or source assertions.
+
+23 October implementation reconciliation: the existing [draft builder](../GG_Data/agent_export/BUILD_WWII_AGENT_GRAPH_DRAFT.ipynb) already collects all nonempty supplied Level 1 values into a set and sorts it into `level1_families`. Applied P131/P150 views yield `SPATIAL` plus `UNRESOLVED`; no predicate has two competing assigned categories in the checked model. Preserve both supplied states in the catalog and each assertion's original family on its views. This is existing serialization, not a new classification rule. An unused EventKG P10661 category also does not replace the applied Wikidata `UNRESOLVED` value; list that unused definition in the supporting report.
 
 ## 8. Visible exceptions and release checks
 

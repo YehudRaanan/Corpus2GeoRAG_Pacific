@@ -1,6 +1,33 @@
 # Fixed 10K POC completion: consultation checkpoint
 
-Date: 23 October 2026. Status: **RESUMED_AFTER_DOCUMENT_RECONCILIATION**.
+Date: 23 October 2026. Status: **GEOGRAPHY_RUNNING_GRAPH_WRITTEN_AGENT_CHECK_PENDING**.
+
+## Current continuation checkpoint
+
+Verified on 23 October at 14:01 Asia/Jerusalem:
+
+- All 391 candidate coordinate records are cached; no identity was added.
+- Owner approval excludes only explicit non-Earth P625 coordinates from Earth
+  geometry candidates and search anchors. Original statements remain in evidence
+  with reason `NON_EARTH_COORDINATE`; IDs and ranking weights are unchanged.
+- Geography ranking restarted in `geography_ranked_v2`, preserving the earlier
+  stopped directory. All 1,272 inputs remain in scope. Final Geography population
+  has not completed.
+- Draft graph `graph_export_20261023/graph.json` has 7,710 nodes, 16,466 source
+  assertions and 32,899 directional views. Readback verification passed. Its
+  SHA-256 is `70be8618fbb7a5333af15564032f02c3977cc97fd02aa4271a64a0fe47316bc4`.
+- Events Q115861680 and Q17193309 retain explicit earliest-start/latest-end
+  bounds and omit the optional scalar point date, as approved. All original
+  point dates remain in the model. No new range is inferred from them.
+- Existing catalog serialization keeps both an assigned category and the
+  `UNRESOLVED` state when directional views share a predicate. Each assertion
+  retains its original category. No Level 1 category is inferred.
+- Focused verification: 11 Geography tests and 17 graph-export tests pass.
+  Agent validation against the actual draft graph is in progress. Full
+  model-backed Geography integration remains pending.
+
+These are intermediate results, not completion of the fixed 10K POC. The
+sections below preserve the earlier consultation context.
 
 Subsequent owner replies approved both proposals below: current Wikidata
 fallback for missing candidate-coordinate records, and earliest Event start /
@@ -37,7 +64,7 @@ or rule problems require consultation before continuation.
 - Geography target denominator: 1,272 (925 QID and 347 synthetic identities).
 - All four prior Geography retrieval arms are cached. Final Geography ranking
   and population have not run for this denominator.
-- No graph JSON or Agent integration was completed in this continuation.
+- At this starting checkpoint, graph JSON and Agent integration were pending.
 
 ## Geography stop
 
@@ -91,14 +118,20 @@ S2T requires consultation on incompatible or multiple values.
 Approved decision: for graph Event bounds only, use earliest supplied start and
 latest supplied end, without a 1900 floor. Preserve every original date and its
 evidence in the model. For example, the Eastern Front graph end would be
-1955-01-21 rather than 1945-05-07. No Event date selection has been made.
+1955-01-21 rather than 1945-05-07. This rule is now implemented in the draft
+graph described in the current checkpoint above.
 
 ## Parallel Agent inspection
 
 The current loader requires the already-approved QID-to-typed-node endpoint
 index, model-backed Shapely access, exact native relation IDs and shared
-assertion identity for reverse views. Inspection is complete; no Agent code was
-changed. Optional Event kind can be omitted under the existing graph contract.
+assertion identity for reverse views. These interfaces are now implemented.
+Validation against the draft graph and all model date joins passed: 7,710 nodes,
+2,717 Events, 32,899 views and 16,466 distinct assertions, with zero failures.
+The saved report is `graph_export_20261023/agent_integration_report_20261023.json`
+under the run directory. Its focused suite passed 174 tests, with three existing
+expected failures; this does not yet verify the unfinished Geography model.
+Optional Event kind can be omitted under the existing graph contract.
 Graph release metadata must be supplied explicitly when export is run.
 
 Workers first reached a safe pause for consultation, then resumed under the

@@ -8,6 +8,7 @@ Configuration (environment or .env):
     OPENROUTER_API_KEY   required
     GEO_AGENT_MODEL      OpenRouter model slug (default below)
     GRAPH_PATH           graph JSON (default data/sample_graph.json)
+    GEO_AGENT_MODEL_DIR   separate populated model directory (optional)
     MCP_CONFIG_PATH      MCP allowlist (default mcp_servers.json)
     GEO_AGENT_MAX_STEPS  LangGraph recursion limit per run (default 25)
     GEO_AGENT_TIMEOUT    seconds per model request before it fails (default 60)
@@ -334,9 +335,38 @@ def collect_evidence(results: list[tuple[str, Any]]) -> dict[str, Any]:
                     numbers.append(float(d[key]))
             if "coordinates" in d:
                 numbers.extend(_numbers(d["coordinates"]))
-            if isinstance(d.get("source"), dict) and isinstance(d.get("target"), dict) and "relation" in d:
-                edges.append({"source": d["source"].get("id"), "target": d["target"].get("id"), "count": d.get("count", 1)})
-    return {"ids": ids, "pages": pages, "numbers": numbers, "edges": edges}
+            if (
+                isinstance(d.get("source"), dict)
+                and isinstance(d.get("target"), dict)
+                and "relation" in d
+            ):
+                edge = {
+                    "source": d["source"].get("id"),
+                    "target": d["target"].get("id"),
+                    "count": d.get("count", 1),
+                }
+                # Graph S2T 5-6: expose typed endpoints without treating their
+                # views, or a reverse directional view, as new source evidence.
+                endpoint_ids = [
+                    n.get("id")
+                    for key in ("source", "target")
+                    for n in d[key].get("entities", [])
+                ]
+                if endpoint_ids:
+                    edge["entity_ids"] = endpoint_ids
+                if d.get("assertion_id"):
+                    edge["assertion_id"] = d["assertion_id"]
+                edges.append(edge)
+    unique_edges = {}
+    for i, edge in enumerate(edges):
+        key = edge.get("assertion_id", ("legacy", i))
+        unique_edges.setdefault(key, edge)
+    return {
+        "ids": ids,
+        "pages": pages,
+        "numbers": numbers,
+        "edges": list(unique_edges.values()),
+    }
 
 
 def coordinates_in_text(text: str) -> list[float]:
@@ -430,7 +460,13 @@ def resolution_records(store: GraphStore, kept_ids: list[str], turn: list[Any], 
             "model_rewritten_query": bool(typed) and fuzz.partial_ratio(normalize_name(typed), norm_question) < REWRITE_RATIO,
         }
         start, end = node.attributes.get("start_date"), node.attributes.get("end_date")
-        if node.type == "event" and start and end:
+        if node.type == "event" and store.model_node_dates.get(node_id):
+            outside = [y for y in years if not store.model_event_in_range(node_id, str(y), str(y))]
+            if outside:
+                rec["context_mismatch"] = {"question_year": outside[0], "start_date": start, "end_date": end}
+        elif node.type == "event" and start and end:
+            if years and any(str(v).startswith(("+", "-")) for v in (start, end)):
+                raise ValueError("Native graph date queries require the separate model_dir")
             outside = [y for y in years if not int(str(start)[:4]) <= y <= int(str(end)[:4])]
             if outside:
                 rec["context_mismatch"] = {"question_year": outside[0], "start_date": start, "end_date": end}
@@ -438,7 +474,12 @@ def resolution_records(store: GraphStore, kept_ids: list[str], turn: list[Any], 
     return records
 
 
-def confidence(kept_ids: list[str], sources: list[str], edges: list[dict[str, Any]], uncertain_match_used: bool) -> dict[str, Any]:
+def confidence(
+    kept_ids: list[str],
+    sources: list[str],
+    edges: list[dict[str, Any]],
+    uncertain_match_used: bool,
+) -> dict[str, Any]:
     """Heuristic support level of an answer (spec R9).
 
     Supporting edges are relations seen in this turn's tool results that touch a
@@ -448,7 +489,13 @@ def confidence(kept_ids: list[str], sources: list[str], edges: list[dict[str, An
     - low: otherwise, or whenever an uncertain name match was used
     Thresholds are starting values (spec C5): show it as a label, never as a probability.
     """
-    support = [e["count"] for e in edges if e["source"] in kept_ids or e["target"] in kept_ids]
+    support = [
+        e["count"]
+        for e in edges
+        if e["source"] in kept_ids
+        or e["target"] in kept_ids
+        or set(e.get("entity_ids", [])) & set(kept_ids)
+    ]
     max_count = max(support, default=0)
     n_pages = len(set(sources))
     if uncertain_match_used:
@@ -463,7 +510,9 @@ def confidence(kept_ids: list[str], sources: list[str], edges: list[dict[str, An
                                       "uncertain_match_used": uncertain_match_used}}
 
 
-def finalize_answer(store: GraphStore, parsed: AgentAnswer, messages: list[Any]) -> dict[str, Any]:
+def finalize_answer(
+    store: GraphStore, parsed: AgentAnswer, messages: list[Any]
+) -> dict[str, Any]:
     """Turn the model's parsed answer and this run's messages into the UI output.
 
     Pure function: no I/O, no LLM. Only this turn's tool results count as
@@ -490,14 +539,19 @@ def finalize_answer(store: GraphStore, parsed: AgentAnswer, messages: list[Any])
     warnings: list[str] = []
 
     kept, dropped = [], []
-    for i in parsed.entity_ids:  # answer ids first, then context ids, deduped
-        if i not in store.nodes:
+    for i in parsed.entity_ids:  # QID references retain every typed row, no winner.
+        resolved = store.resolve_ids(i)
+        if not resolved:
             dropped.append({"id": i, "reason": "unknown"})
         elif i not in evidence["ids"]:
             dropped.append({"id": i, "reason": "not_in_tool_output"})
         else:
-            kept.append(i)
-    answer_ids = [i for i in dict.fromkeys(parsed.answer_ids) if i in kept]
+            kept.extend(n for n in resolved if n in evidence["ids"] and n not in kept)
+    answer_ids = list(
+        dict.fromkeys(
+            n for i in parsed.answer_ids for n in store.resolve_ids(i) if n in kept
+        )
+    )
     context_ids = [i for i in kept if i not in answer_ids]
 
     sources = [p for p in dict.fromkeys(parsed.sources) if p in evidence["pages"]]
@@ -628,13 +682,16 @@ class GeoAgent:
         graph_path: str | Path | None = None,
         mcp_config: str | Path | None = None,
         llm: BaseChatModel | None = None,
+        model_dir: str | Path | None = None,
     ) -> "GeoAgent":
         """Build the agent. `llm` overrides the OpenRouter model (tests pass a fake one)."""
         load_dotenv()
         graph_path = Path(graph_path or os.getenv("GRAPH_PATH", ROOT / "data" / "sample_graph.json"))
         mcp_config = Path(mcp_config or os.getenv("MCP_CONFIG_PATH", ROOT / "mcp_servers.json"))
 
-        store = GraphStore.from_json(graph_path)
+        store = GraphStore.from_json(
+            graph_path, model_dir=model_dir or os.getenv("GEO_AGENT_MODEL_DIR")
+        )
         tools = build_tools(store)
         builtin = [t.name for t in tools]
         skipped: list[str] = []
@@ -822,7 +879,7 @@ def _debug_command(argv: list[str]) -> int:
 
     # --replay
     graph_path = Path(os.getenv("GRAPH_PATH", ROOT / "data" / "sample_graph.json"))
-    store = GraphStore.from_json(graph_path)
+    store = GraphStore.from_json(graph_path, model_dir=os.getenv("GEO_AGENT_MODEL_DIR"))
     recorded = next((e.get("graph", {}).get("sha256") for e in run if e["event"] == "run_start"), None)
     print(f"Replaying run {run[0]['run_id']}: graph sha recorded {recorded}, current {short_hash(graph_path.read_bytes())}")
     rows = replay(run, {t.name: t for t in build_tools(store)})
