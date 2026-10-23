@@ -95,38 +95,58 @@ def query_for(place: dict, countries: list[str], dated: bool) -> dict:
     return result
 
 
-def prepare(base: Path, output: Path, frozen_sample: Path | None = None) -> dict:
+def prepare(
+    base: Path,
+    output: Path,
+    frozen_sample: Path | None = None,
+    *,
+    all_targets: bool = False,
+    model_dir: Path | None = None,
+) -> dict:
+    """Reuse the approved query arms for a test or all existing LOC targets.
+
+    Population S2T 9/9.7: population mode changes only the input denominator.
+    It has no dependency on old sample identities or old geometry decisions.
+    """
     if output.exists():
         raise ValueError("Preserve prior comparison; use a new output directory")
+    model = model_dir or base / "model_qid_name"
     files = [
         base / "geography_inputs/targets.json",
         base / "geography_inputs/report.json",
-        base / "geography_sample/sample.json",
-        base / "geography_context_parent_checked/verification.json",
-        base / "geography_context_parent_checked/audit.json",
-        base / "model_qid_name/entities.json.gz",
-        base / "model_qid_name/manifest.json",
+        model / "entities.json.gz",
+        model / "manifest.json",
         base / "mentions_pages/mentions.json.gz",
     ]
+    if not all_targets:
+        files += [
+            base / "geography_sample/sample.json",
+            base / "geography_context_parent_checked/verification.json",
+            base / "geography_context_parent_checked/audit.json",
+        ]
     inputs = {str(p): digest(p) for p in files}
-    original_dir = base / "geography_context_parent_checked"
-    verification = read_json(original_dir / "verification.json")
-    for name, expected in verification["outputs"].items():
-        path = original_dir / name
-        if digest(path) != expected:
-            raise ValueError(f"Changed original sample: {path}")
-        inputs[str(path)] = expected
-    manifest = read_json(base / "model_qid_name/manifest.json")
-    if (
-        digest(base / "model_qid_name/entities.json.gz")
-        != manifest["outputs"]["entities.json.gz"]
-    ):
+    if not all_targets:
+        original_dir = base / "geography_context_parent_checked"
+        verification = read_json(original_dir / "verification.json")
+        for name, expected in verification["outputs"].items():
+            path = original_dir / name
+            if digest(path) != expected:
+                raise ValueError(f"Changed original sample: {path}")
+            inputs[str(path)] = expected
+    manifest = read_json(model / "manifest.json")
+    if digest(model / "entities.json.gz") != manifest["outputs"]["entities.json.gz"]:
         raise ValueError("Model entities differ from the saved manifest")
     targets = read_json(files[0])
     sample = (
-        read_json(frozen_sample)
-        if frozen_sample
-        else sample_targets(targets, read_json(files[2]))
+        targets
+        if all_targets
+        else (
+            read_json(frozen_sample)
+            if frozen_sample
+            else sample_targets(
+                targets, read_json(base / "geography_sample/sample.json")
+            )
+        )
     )
     if frozen_sample:
         # S2T 9: a wider test uses existing LOC rows, never invented identities.
@@ -138,7 +158,7 @@ def prepare(base: Path, output: Path, frozen_sample: Path | None = None) -> dict
             raise ValueError("Frozen sample differs from the existing LOC targets")
     entities = {
         e["entity_id"]: e
-        for e in read_json(base / "model_qid_name/entities.json.gz")
+        for e in read_json(model / "entities.json.gz")
         if e["type"] == "LOC"
     }
     mentions = {
@@ -201,7 +221,7 @@ def prepare(base: Path, output: Path, frozen_sample: Path | None = None) -> dict
     plan = dict(
         status="PREPARED",
         created_at=datetime.now(timezone.utc).isoformat(),
-        seed=None if frozen_sample else SEED,
+        seed=None if frozen_sample or all_targets else SEED,
         input_count=len(sample),
         population_count=len(targets),
         cohorts=dict(Counter(p.get("cohort", "new_random") for p in sample)),
@@ -212,6 +232,7 @@ def prepare(base: Path, output: Path, frozen_sample: Path | None = None) -> dict
         identities_changed=False,
         model_population=False,
         geometry_population=False,
+        all_existing_loc_targets=all_targets,
         documents=["docs/SOURCES_TO_ENTITY_DATA_MODEL_S2T.md section 9", DOC],
         inputs=inputs,
         outputs={

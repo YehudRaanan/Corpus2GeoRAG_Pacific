@@ -1,5 +1,34 @@
 # Daniel pipeline POC
 
+### Approved matching penalties and complete 10K Geography - 23 October 2026
+
+The owner approved continuation after source review of 30 prior examples:
+18 correct, four wrong and eight unresolved, with no previously correct match
+lost. Keep the four known failures visible; no temporal identity rule or manual
+QID repair is added. New outputs are isolated in
+`outputs/matching_penalty_poc_20261023/`. Full matching covers all 309,864 rows;
+downstream processing remains the same fixed 10K source positions.
+
+`collect_matching_relevance.py` selects every raw >=80% candidate that could
+affect the approved penalized score, without assigning identities. Verified
+same-snapshot EN/JA page-link counts are reused; missing candidates are measured
+once from saved dumps. Matching requires a completed measurement, including an
+explicit unavailable result. `rebuild_poc relevance --measured-relevance <file>`
+projects these exact language rows onto the newly accepted 10K QIDs. The full
+Daniel page scope and redirect rules do not change.
+
+`geography_population.py` runs explicit `prepare`, `retrieve`, `records`, `rank`
+and `populate` phases against the new model. It reuses the approved source and
+ranking implementations, includes every LOC and synthetic LOC target, and stops
+on source/data errors before the next phase. Native request receipts are cached
+by complete endpoint/parameters. The adapter does not import old sample decisions.
+The final `model_geography/` version preserves existing tables and adds Geography
+with a 13-column GeoParquet view and model-only geometry references. Graph export
+and Agent integration remain later phases. No completed new run is claimed here.
+
+See population S2T 3.1/6.1/9.7 and the ERD. Current run progress is in the
+new bundle; old results below are historical evidence.
+
 ### Page-scope correction and rebuild - 22 October 2026
 
 The historical first matching stage incorrectly included global name-search

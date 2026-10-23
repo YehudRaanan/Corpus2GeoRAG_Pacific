@@ -9,6 +9,7 @@ from __future__ import annotations
 
 import argparse
 import csv
+import hashlib
 import importlib
 import json
 import re
@@ -257,6 +258,7 @@ def native_candidate(row: dict, source: str, receipt: str) -> dict:
         qid=tags.get("wikidata"),
         feature_code=row.get("type"),
         feature_class=row.get("category", row.get("class")),
+        address_type=row.get("addresstype"),
         parents=[
             v
             for k, v in (row.get("address") or {}).items()
@@ -268,18 +270,59 @@ def native_candidate(row: dict, source: str, receipt: str) -> dict:
     )
 
 
+def wide_approximation(place: dict, candidate: dict) -> bool:
+    """S2T 9.2: exclude country/larger substitutes, not country entities.
+
+    Use explicit native scope metadata only. Do not introduce an area/radius
+    cutoff. A source identifying the target itself is not an approximation.
+    """
+    level = str(candidate.get("tags", {}).get("admin_level", ""))
+    wide = (
+        candidate.get("feature_code")
+        in {
+            "country",
+            "continent",
+            "PCLI",
+            "PCL",
+            "PCLD",
+            "PCLF",
+            "PCLH",
+            "PCLIX",
+            "PCLS",
+            "CONT",
+        }
+        or candidate.get("address_type") in {"country", "continent"}
+        or (level.isdigit() and int(level) <= 2)
+    )
+    same_target = bool(
+        place["wikidata_id"] and candidate.get("qid") == place["wikidata_id"]
+    ) or exact_alias(place["name"], candidate.get("aliases", []))
+    return bool(wide and not same_target)
+
+
 def run(
     output: Path,
     request_cache: Path | None = None,
     comparison: Path | None = None,
+    *,
+    base_dir: Path | None = None,
 ) -> dict:
-    """Rank the fixed twenty, or every row of a frozen wider comparison."""
+    """Rank fixed tests, or new-model LOC targets with the same S2T 9.7 rule.
+
+    Population mode has no dependency on hand-reviewed sample candidates.
+    It uses the freshly prepared source queries and snapshot candidate records.
+    """
     started = time.perf_counter()
     root = ROOT / "GG_Data/pipeline/outputs"
     base, comp = (
         root / "rebuild_page_scope_20261022",
         root / "geography_comparison_40_20261022",
     )
+    population = base_dir is not None
+    if population:
+        if comparison is None:
+            raise ValueError("New-model ranking requires its own source comparison")
+        base = base_dir
     if comparison:
         comp = comparison
         if read_json(comp / "progress.json")["status"] != "RETRIEVED":
@@ -294,9 +337,15 @@ def run(
     output.mkdir(parents=True)
     cache = output / "sources"
     cache.mkdir()
-    original = read_json(prior / "audit.json")
+    original = (
+        read_json(prior / "audit.json") if not population else {"protected_sha256": {}}
+    )
     protected = dict(original["protected_sha256"])
-    for folder in (prior, comp, diagnostic, request_cache):
+    for folder in (
+        (comp, request_cache)
+        if population
+        else (prior, comp, diagnostic, request_cache)
+    ):
         if folder is None:
             continue
         for p in folder.rglob("*"):
@@ -311,23 +360,49 @@ def run(
     if len({p["place_id"] for p in sample}) != len(sample):
         raise ValueError("Expected distinct preserved identities")
     write(output / "sample.json", sample)
-    write(output / "parameters.json", PARAMETERS)
+    write(
+        output / "parameters.json",
+        PARAMETERS | {"no_production_assignments": not population},
+    )
     evidence = read_json(comp / "evidence.json")
     # Use the full native snapshot records already selected by the pipeline.
     raw_path = base / "entities/full_records.json.gz"
     protected[str(raw_path)] = digest(raw_path)
     records = {q: r["entity"] for q, r in read_json(raw_path).items()}
     candidate_cache = (
-        root
-        / "wikidata_full_cache/1c8841ce530789458d059e9f8b92254f0fb0835e46a32301852d69b8aa00a8ce.json.gz"
+        comp / "candidate_records.json.gz"
+        if population
+        else (
+            root
+            / "wikidata_full_cache/1c8841ce530789458d059e9f8b92254f0fb0835e46a32301852d69b8aa00a8ce.json.gz"
+        )
     )
     protected[str(candidate_cache)] = digest(candidate_cache)
-    for r in read_json(candidate_cache)["rows"]:
-        records.setdefault(r["id"], json.loads(r["item"].rstrip(",\r\n ")))
-    crabs = read_json(diagnostic / "crabs_wikidata_coordinate.json")
-    saved_crabs = crabs["coordinate"]
-    anchors_extra = {saved_crabs["qid"]: saved_crabs}
-    analysis = read_json(base / "geography_candidate_analysis/candidate_review.json")
+    if population:
+        if (
+            digest(candidate_cache)
+            != read_json(comp / "candidate_records_report.json")["outputs"][
+                candidate_cache.name
+            ]
+        ):
+            raise ValueError("Geography candidate coordinate records changed")
+        for qid, r in read_json(candidate_cache).items():
+            records.setdefault(qid, r["entity"])
+    else:
+        for r in read_json(candidate_cache)["rows"]:
+            records.setdefault(r["id"], json.loads(r["item"].rstrip(",\r\n ")))
+    crabs = (
+        read_json(diagnostic / "crabs_wikidata_coordinate.json")
+        if not population
+        else {}
+    )
+    saved_crabs = crabs.get("coordinate", {})
+    anchors_extra = {saved_crabs["qid"]: saved_crabs} if saved_crabs else {}
+    analysis = (
+        read_json(base / "geography_candidate_analysis/candidate_review.json")
+        if not population
+        else {"reviews": []}
+    )
     reviews = {r["place_id"]: r for r in analysis["reviews"]}
     for p in sample:
         if p["place_id"] in reviews:
@@ -404,7 +479,7 @@ def run(
                     for rows in native.get("aliases", {}).values()
                     for a in rows
                 ]
-                if q == saved_crabs["qid"]:
+                if q == saved_crabs.get("qid"):
                     labels += [v["value"] for v in crabs["labels"].values()]
                 parents = [
                     v["value"]
@@ -469,52 +544,53 @@ def run(
                         receipt=str(comp / "sources"),
                     )
                 )
-    # Reuse all original per-input Nominatim results, including zero-result
-    # searches, reverse evidence and the wider-context diagnostic. No global
-    # cache name join is allowed to associate a result with a different input.
-    old = read_json(base / "geography_sample/audit.json")
-    for row in old["results"]:
-        pid = row["input"]["place_id"]
-        if pid not in candidates:
-            continue
-        for filename in row.get("name_source_files", []):
-            path = Path(filename)
-            if not path.is_absolute():
-                path = ROOT / path
-            data = read_json(path)
-            protected[str(path)] = digest(path)
-            for r in data["rows"]:
+    if not population:
+        # Reuse all original per-input Nominatim results, including zero-result
+        # searches, reverse evidence and the wider-context diagnostic. No global
+        # cache name join is allowed to associate a result with a different input.
+        old = read_json(base / "geography_sample/audit.json")
+        for row in old["results"]:
+            pid = row["input"]["place_id"]
+            if pid not in candidates:
+                continue
+            for filename in row.get("name_source_files", []):
+                path = Path(filename)
+                if not path.is_absolute():
+                    path = ROOT / path
+                data = read_json(path)
+                protected[str(path)] = digest(path)
+                for r in data["rows"]:
+                    candidates[pid].append(
+                        native_candidate(r, data.get("source", "Nominatim"), str(path))
+                    )
+        for row in read_json(diagnostic / "retrieval.json")["results"]:
+            if row["place_id"] not in candidates:
+                continue
+            for r in row["rows"]:
+                if r.get("osm_id"):
+                    candidates[row["place_id"]].append(
+                        native_candidate(r, "OpenStreetMap", row["source_file"])
+                    )
+        for row in original["results"]:
+            pid = row["input"]["place_id"]
+            if pid not in candidates:
+                continue
+            if row.get("geometry_ref"):
+                geo = load_geometry(row["geometry_ref"], prior)
                 candidates[pid].append(
-                    native_candidate(r, data.get("source", "Nominatim"), str(path))
+                    dict(
+                        source=row["source_dataset"],
+                        source_id=row["source_object_id"],
+                        name=row["input"]["name"],
+                        aliases=[row["input"]["name"]],
+                        qid=row["input"]["wikidata_id"],
+                        geometry=mapping(geo),
+                        parents=[],
+                        tags={},
+                        receipt=str(prior / "audit.json"),
+                        prior_selected_geometry=True,
+                    )
                 )
-    for row in read_json(diagnostic / "retrieval.json")["results"]:
-        if row["place_id"] not in candidates:
-            continue
-        for r in row["rows"]:
-            if r.get("osm_id"):
-                candidates[row["place_id"]].append(
-                    native_candidate(r, "OpenStreetMap", row["source_file"])
-                )
-    for row in original["results"]:
-        pid = row["input"]["place_id"]
-        if pid not in candidates:
-            continue
-        if row.get("geometry_ref"):
-            geo = load_geometry(row["geometry_ref"], prior)
-            candidates[pid].append(
-                dict(
-                    source=row["source_dataset"],
-                    source_id=row["source_object_id"],
-                    name=row["input"]["name"],
-                    aliases=[row["input"]["name"]],
-                    qid=row["input"]["wikidata_id"],
-                    geometry=mapping(geo),
-                    parents=[],
-                    tags={},
-                    receipt=str(prior / "audit.json"),
-                    prior_selected_geometry=True,
-                )
-            )
     # Reuse original GN records, not WHG representative points as geometry.
     wanted_gn = {
         c["source_id"].split(":")[-1]
@@ -578,6 +654,24 @@ def run(
     client = tools()
     request_count = 0
     reused_requests = 0
+    # S2T 9: reuse a receipt only when the complete endpoint and parameters
+    # agree. This is request reuse, never an identity/name join across inputs.
+    request_index = {}
+    if population:
+        folders = sorted(root.glob("geography_ranking*"))
+        if request_cache:
+            folders.append(request_cache)
+        for folder in folders:
+            for path in sorted(folder.rglob("*.json")):
+                if path.parent.name != "sources":
+                    continue
+                saved = read_json(path)
+                if (
+                    isinstance(saved, dict)
+                    and {"url", "params", "response"} <= saved.keys()
+                ):
+                    key = json.dumps([saved["url"], saved["params"]], sort_keys=True)
+                    request_index.setdefault(key, path)
 
     def fetch(
         kind: str, params: dict, source: str = "OpenStreetMap"
@@ -596,6 +690,10 @@ def run(
         path = cache / f"{request_count:02d}_{kind}.json"
         url = client.NOMINATIM[source] + "/" + kind
         previous = request_cache / path.name if request_cache else None
+        if population:
+            key = json.dumps([url, params], sort_keys=True)
+            path = cache / (hashlib.sha256(key.encode()).hexdigest() + ".json")
+            previous = request_index.get(key)
         if previous and previous.exists():
             saved = read_json(previous)
             if saved["url"] != url or saved["params"] != params:
@@ -613,6 +711,8 @@ def run(
             )
             time.sleep(1.1)
         write(path, saved)
+        if population:
+            request_index[key] = path
         request_count += 1
         if kind == "reverse" and isinstance(payload, dict):
             return ([payload] if payload.get("osm_id") else []), str(path)
@@ -659,6 +759,7 @@ def run(
             dict(
                 status="RETRIEVING",
                 completed_new_inputs=index,
+                total_inputs=len(fresh_sample),
                 requests=request_count,
             ),
         )
@@ -716,6 +817,13 @@ def run(
     for p in sample:
         pid = p["place_id"]
         ranked = [score(p, evidence[pid], c, anchors[pid]) for c in candidates[pid]]
+        if population:
+            for c in ranked:
+                if wide_approximation(p, c):
+                    c["geometry_available"] = False
+                    c["uncertainty_flags"].append(
+                        "COUNTRY_OR_LARGER_APPROXIMATION_EXCLUDED"
+                    )
         # Deduplicate by source/object while preserving the richest observation.
         unique = {}
         for c in ranked:
