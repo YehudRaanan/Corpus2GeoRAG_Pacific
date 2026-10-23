@@ -159,6 +159,17 @@ def test_actual_links_count_each_page_once_across_aliases(tmp_path):
         list(dump_blocks(path, "pagelinks", lambda **v: None, block_size=17))
 
 
+def test_double_quoted_title_uses_native_dump_encoding():
+    # Q1081449: the saved resolver linked this exact main title from two pages.
+    title = 'Medal_"For_the_Victory_over_Japan"'
+    row = b"(1412570,0,'Medal_\\\"For_the_Victory_over_Japan\\\"'),\n"
+    targets = link_targets([row], {title: "4406312"})
+    assert targets == {1412570: "4406312"}
+    assert dict(
+        linked_pages([b"(38888,0,1412570),\n(1404204,0,1412570);\n"], targets)
+    ) == {"4406312": {38888, 1404204}}
+
+
 def test_population_filter_exceeds_windows_command_limit():
     # Regression for WinError 206: realistic target count and ID lengths.
     targets = {100000000 + i: "1" for i in range(9000)}

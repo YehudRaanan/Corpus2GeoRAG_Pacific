@@ -45,6 +45,7 @@ def sql_string(value: str) -> bytes:
     escapes = {
         "\\": "\\\\",
         "'": "\\'",
+        '"': '\\"',  # Saved MySQL dump escapes double quotes in titles too.
         "\0": "\\0",
         "\n": "\\n",
         "\r": "\\r",
