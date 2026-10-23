@@ -3,10 +3,69 @@
 import json
 
 import pytest
-from shapely.geometry import Point, shape
+from shapely import union_all
+from shapely.geometry import MultiPolygon, Point, Polygon, box, shape
 
-from GG_Data.pipeline.osm_bigquery import TABLE, load, project
+from GG_Data.pipeline.osm_bigquery import (
+    TABLE,
+    continuous_longitudes,
+    dateline_geometry,
+    load,
+    project,
+)
 from GG_Data.pipeline.poc import digest
+
+
+@pytest.mark.parametrize("with_hole", [False, True])
+def test_dateline_conversion_preserves_rejoined_footprint(with_hole):
+    shell = [(179, -1), (-179, -1), (-179, 1), (179, 1)]
+    hole = [(179.2, -0.2), (179.5, -0.2), (179.5, 0.2), (179.2, 0.2)]
+    raw = MultiPolygon(
+        [
+            Polygon(shell, holes=[hole] if with_hole else []),
+            box(178.3, -0.2, 178.6, 0.2),
+        ]
+    )
+    raw_wkb = raw.wkb
+    assert not raw.is_valid
+    converted, audit = dateline_geometry(raw)
+    assert converted.is_valid and len(converted.geoms) == 3
+    assert -180 <= converted.bounds[0] <= converted.bounds[2] <= 180
+    assert raw.wkb == raw_wkb  # Source evidence was not edited.
+    rejoined = union_all([continuous_longitudes(p) for p in converted.geoms])
+    assert continuous_longitudes(raw).equals(rejoined)
+    assert audit["rejoined_footprint_equal"] is True
+    assert audit["method"] == "ANTIMERIDIAN_SPLIT_V1"
+
+
+def test_dateline_conversion_does_not_repair_genuine_defects_or_change_valid_shape():
+    valid = box(178, -1, 179, 1)
+    converted, audit = dateline_geometry(valid)
+    assert converted.wkb == valid.wkb and audit is None
+    invalid = Polygon([(1, 1), (2, 2), (1, 2), (2, 1), (1, 1)])
+    row = dict(
+        feature_type="multipolygons",
+        osm_id="12",
+        osm_way_id=None,
+        geometry_wkb=invalid.wkb_hex,
+        all_tags=[dict(key="wikidata", value="Q84")],
+    )
+    with pytest.raises(ValueError, match="Invalid native OSM geometry"):
+        project(row, {"Q84"}, "receipt")
+
+
+def test_dateline_conversion_rejects_changed_footprint(monkeypatch):
+    import GG_Data.pipeline.osm_bigquery as module
+
+    raw = MultiPolygon(
+        [
+            Polygon([(179, -1), (-179, -1), (-179, 1), (179, 1)]),
+            box(178.3, -0.2, 178.6, 0.2),
+        ]
+    )
+    monkeypatch.setattr(module, "union_all", lambda _: box(0, 0, 1, 1))
+    with pytest.raises(ValueError, match="footprint verification"):
+        dateline_geometry(raw)
 
 
 @pytest.mark.parametrize(

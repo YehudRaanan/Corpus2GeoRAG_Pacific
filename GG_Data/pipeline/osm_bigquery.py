@@ -11,14 +11,69 @@ import re
 import sys
 from pathlib import Path
 
-from shapely import from_wkb
-from shapely.geometry import mapping
+import numpy as np
+from shapely import from_wkb, union_all
+from shapely.affinity import translate
+from shapely.geometry import LineString, MultiPolygon, mapping
+from shapely.geometry.base import BaseGeometry
+from shapely.ops import split, transform
+from shapely.validation import explain_validity
 
 from .poc import ROOT, digest, read_json
 from .rebuild_poc import write
 
 TABLE = "bigquery-public-data.geo_openstreetmap.planet_features"
 NAME = "osm_bigquery_candidates.json"
+
+
+def continuous_longitudes(geometry: BaseGeometry) -> BaseGeometry:
+    """Equivalent longitudes in [0, 360), used only for boundary verification."""
+    return transform(
+        lambda x, y: (np.where(np.asarray(x) < 0, np.asarray(x) + 360, x), y),
+        geometry,
+    )
+
+
+def dateline_geometry(geometry: BaseGeometry) -> tuple[BaseGeometry, dict | None]:
+    """S2T 9.7: split a verified longitude-wrap defect, never repair topology.
+
+    Keep valid source objects unchanged. For an invalid polygon, require a
+    crossing edge and a valid, unambiguous continuous-longitude footprint.
+    Rejoining the exported parts must equal that footprint exactly in GEOS.
+    A genuine defect or failed conversion remains a consultation stop.
+    """
+    if geometry.is_valid or geometry.geom_type not in {"Polygon", "MultiPolygon"}:
+        return geometry, None
+    polygons = [geometry] if geometry.geom_type == "Polygon" else geometry.geoms
+    if not any(
+        np.any(np.abs(np.diff(np.asarray(ring.coords)[:, 0])) > 180)
+        for polygon in polygons
+        for ring in [polygon.exterior, *polygon.interiors]
+    ):
+        return geometry, None
+    continuous = continuous_longitudes(geometry)
+    if not continuous.is_valid or continuous.bounds[2] - continuous.bounds[0] >= 180:
+        return geometry, None
+    parts = split(continuous, LineString([(180, -90), (180, 90)])).geoms
+    converted = MultiPolygon(
+        [translate(p, xoff=-360) if p.bounds[0] >= 180 else p for p in parts]
+    )
+    rejoined = union_all([continuous_longitudes(p) for p in converted.geoms])
+    if (
+        converted.is_empty
+        or not converted.is_valid
+        or converted.bounds[0] < -180
+        or converted.bounds[2] > 180
+        or not continuous.equals(rejoined)
+    ):
+        raise ValueError("Longitude-boundary conversion failed footprint verification")
+    return converted, dict(
+        method="ANTIMERIDIAN_SPLIT_V1",
+        source_validation_reason=explain_validity(geometry),
+        source_geometry_preserved_in_receipt=True,
+        rejoined_footprint_equal=True,
+        output_parts=len(converted.geoms),
+    )
 
 
 def project(row: dict, qids: set[str], receipt: str) -> dict:
@@ -41,6 +96,7 @@ def project(row: dict, qids: set[str], receipt: str) -> dict:
     if not re.fullmatch(r"[1-9]\d*", str(number)):
         raise ValueError("Missing or invalid native OSM object ID")
     geometry = from_wkb(bytes.fromhex(row["geometry_wkb"]))
+    geometry, conversion = dateline_geometry(geometry)
     if geometry.is_empty or not geometry.is_valid:
         raise ValueError(f"Invalid native OSM geometry: {kind}:{number}")
     aliases = [
@@ -66,6 +122,7 @@ def project(row: dict, qids: set[str], receipt: str) -> dict:
         ],
         tags=tags,
         geometry=mapping(geometry),
+        geometry_conversion=conversion,
         receipt=receipt,
         osm_version=row.get("osm_version"),
         osm_timestamp=row.get("osm_timestamp"),

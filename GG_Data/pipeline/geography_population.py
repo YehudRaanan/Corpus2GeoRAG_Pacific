@@ -174,6 +174,7 @@ def populate(base: Path, ranked: Path, output: Path) -> dict:
                 components=chosen["components"],
                 uncertainty_flags=chosen["uncertainty_flags"],
                 source_receipt=chosen["receipt"],
+                geometry_conversion=chosen.get("geometry_conversion"),
                 identity_assignments_changed=False,
             ),
             ensure_ascii=False,
