@@ -1,6 +1,9 @@
 """Owner ranking: select available geometry and keep uncertainty explicit."""
 
 import pytest
+import errno
+import urllib.error
+from types import SimpleNamespace
 from shapely.geometry import Point, Polygon, mapping
 
 from GG_Data.pipeline.geography_ranking_sample import (
@@ -8,7 +11,80 @@ from GG_Data.pipeline.geography_ranking_sample import (
     distance_m,
     score,
     select_proposal,
+    nominatim_request,
 )
+
+
+def test_nominatim_connection_budget_is_preserved_on_resume(tmp_path, monkeypatch):
+    from GG_Data.pipeline import geography_ranking_sample as ranking
+
+    waits, calls = [], []
+    monkeypatch.setattr(ranking.time, "sleep", waits.append)
+
+    def fail(*args, **kwargs):
+        calls.append(1)
+        raise urllib.error.URLError(OSError(errno.EHOSTUNREACH, "unreachable"))
+
+    ledger = tmp_path / "attempts.json"
+    client = SimpleNamespace(request_json=fail)
+    with pytest.raises(urllib.error.URLError):
+        nominatim_request(
+            client,
+            "https://example.test/reverse",
+            {},
+            ledger,
+            prior={"file": "old-stop"},
+        )
+    assert len(calls) == 2  # The approved earlier failed request counts as attempt 1.
+    assert waits == [10, 30]
+    with pytest.raises(ValueError, match="budget exhausted"):
+        nominatim_request(client, "https://example.test/reverse", {}, ledger)
+    assert len(calls) == 2
+
+
+@pytest.mark.parametrize(
+    "error",
+    [
+        TimeoutError("timeout"),
+        urllib.error.HTTPError("url", 429, "limited", {}, None),
+        ValueError("bad JSON"),
+    ],
+)
+def test_nominatim_other_errors_stop_without_retry(tmp_path, monkeypatch, error):
+    from GG_Data.pipeline import geography_ranking_sample as ranking
+
+    waits = []
+    monkeypatch.setattr(ranking.time, "sleep", waits.append)
+
+    def fail(*args, **kwargs):
+        raise error
+
+    with pytest.raises(type(error)):
+        nominatim_request(
+            SimpleNamespace(request_json=fail), "url", {}, tmp_path / "attempts.json"
+        )
+    assert waits == []
+
+
+def test_nominatim_recovers_from_connection_failure(tmp_path, monkeypatch):
+    from GG_Data.pipeline import geography_ranking_sample as ranking
+
+    waits = []
+    monkeypatch.setattr(ranking.time, "sleep", waits.append)
+    outcomes = iter(
+        [urllib.error.URLError(ConnectionResetError("reset")), [dict(osm_id=1)]]
+    )
+
+    def request(*args, **kwargs):
+        value = next(outcomes)
+        if isinstance(value, Exception):
+            raise value
+        return value
+
+    assert nominatim_request(
+        SimpleNamespace(request_json=request), "url", {}, tmp_path / "attempts.json"
+    ) == [dict(osm_id=1)]
+    assert waits == [10]
 
 
 def test_qid_and_coordinates_dominate_names_with_explicit_uncertainty():

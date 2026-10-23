@@ -9,12 +9,16 @@ from __future__ import annotations
 
 import argparse
 import csv
+import errno
 import hashlib
 import importlib
 import json
 import re
+import socket
+import ssl
 import sys
 import time
+import urllib.error
 import zipfile
 from collections import Counter
 from datetime import datetime, timezone
@@ -48,6 +52,63 @@ PARAMETERS = dict(
     uncertainty_flags_do_not_exclude=True,
     wikidata_points_compete_by_score=True,
 )
+
+
+def nominatim_request(client, url: str, params: dict, ledger: Path, *, prior=None):
+    """S2T 9: three connection attempts, 10/30s waits, persistent budget.
+
+    HTTP, TLS, timeout and data errors still stop. An interrupted request has
+    an unknown outcome and must not be duplicated automatically. The original
+    pre-policy stop did not save request parameters: conservatively charge its
+    failure to the first uncached request during deterministic replay.
+    """
+    state = (
+        read_json(ledger)
+        if ledger.exists()
+        else dict(url=url, params=params, attempts=[])
+    )
+    if state["url"] != url or state["params"] != params:
+        raise ValueError("Nominatim retry request mismatch")
+    if prior and not state["attempts"]:
+        state["attempts"].append(dict(status="CONNECTION_FAILED", prior_stop=prior))
+        write(ledger, state)
+    while len(state["attempts"]) < 3:
+        if state["attempts"]:
+            if state["attempts"][-1]["status"] != "CONNECTION_FAILED":
+                raise ValueError("Nominatim previous attempt requires consultation")
+            time.sleep((10, 30)[len(state["attempts"]) - 1])
+        attempt = dict(
+            status="STARTED", requested_at=datetime.now(timezone.utc).isoformat()
+        )
+        state["attempts"].append(attempt)
+        write(ledger, state)
+        try:
+            payload = client.request_json(url, params=params)
+        except Exception as exc:
+            reason = exc.reason if isinstance(exc, urllib.error.URLError) else exc
+            connection = (
+                not isinstance(exc, urllib.error.HTTPError)
+                and not isinstance(reason, (TimeoutError, ssl.SSLError))
+                and (
+                    isinstance(reason, (ConnectionError, socket.gaierror))
+                    or isinstance(reason, OSError)
+                    and (
+                        reason.errno in {errno.ENETUNREACH, errno.EHOSTUNREACH}
+                        or getattr(reason, "winerror", None) in {10051, 10065}
+                    )
+                )
+            )
+            attempt.update(
+                status="CONNECTION_FAILED" if connection else "STOPPED", error=repr(exc)
+            )
+            write(ledger, state)
+            if not connection or len(state["attempts"]) == 3:
+                raise
+        else:
+            attempt["status"] = "OK"
+            write(ledger, state)
+            return payload
+    raise ValueError("Nominatim three-attempt budget exhausted")
 
 
 def similarity(left: str, right: str) -> float:
@@ -678,6 +739,19 @@ def run(
     # S2T 9: reuse a receipt only when the complete endpoint and parameters
     # agree. This is request reuse, never an identity/name join across inputs.
     request_index = {}
+    retry_dir = output / "nominatim_attempts"
+    retry_dir.mkdir()
+    prior_stop = None
+    if request_cache and (request_cache / "failure.json").exists():
+        failure = read_json(request_cache / "failure.json")
+        if (
+            failure.get("error", "").find("10065") >= 0
+            and failure.get("retry_applied") is False
+        ):
+            prior_stop = dict(
+                file=str(request_cache / "failure.json"),
+                sha256=digest(request_cache / "failure.json"),
+            )
     if population:
         folders = sorted(root.glob("geography_ranking*"))
         if request_cache:
@@ -697,7 +771,7 @@ def run(
     def fetch(
         kind: str, params: dict, source: str = "OpenStreetMap"
     ) -> tuple[list[dict], str]:
-        nonlocal request_count, reused_requests
+        nonlocal request_count, reused_requests, prior_stop
         params = (
             dict(
                 format="jsonv2",
@@ -723,7 +797,17 @@ def run(
             payload = saved["response"]
             reused_requests += 1
         else:
-            payload = client.request_json(url, params=params)
+            ledger = retry_dir / (path.stem + ".json")
+            old_ledger = (
+                request_cache / "nominatim_attempts" / ledger.name
+                if request_cache
+                else None
+            )
+            if old_ledger and old_ledger.exists() and not ledger.exists():
+                ledger.write_bytes(old_ledger.read_bytes())
+                protected[str(old_ledger)] = digest(old_ledger)
+            payload = nominatim_request(client, url, params, ledger, prior=prior_stop)
+            prior_stop = None
             saved = dict(
                 url=url,
                 params=params,

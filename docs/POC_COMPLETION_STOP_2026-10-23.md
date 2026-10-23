@@ -1,6 +1,23 @@
 # Fixed 10K POC completion: consultation checkpoint
 
-Date: 23 October 2026. Status: **GEOGRAPHY_CONNECTION_STOP_GRAPH_AND_AGENT_DATES_VERIFIED**.
+Date: 23 October 2026. Status: **GEOGRAPHY_RESUMED_GRAPH_AND_AGENT_DATES_VERIFIED**.
+
+## Approved continuation: 15:36 Asia/Jerusalem
+
+The owner approved Nominatim connection retries and the revised 90–120 minute
+remaining estimate. Approval was received after the earlier proposed checkpoint;
+the verified continuation clock was 15:28 on 23 October. The updated target is
+17:30, with the next status checkpoint at 15:45, Asia/Jerusalem (UTC+03).
+
+`geography_ranked_v3` started at 15:36, reusing the exact URL/parameter receipts
+from `geography_ranked_v2`. The older output and failure evidence are unchanged.
+Retry attempts are saved before each request; connection failures alone allow
+three total attempts with 10/30-second waits. The earlier pre-policy connection
+failure counts conservatively against the first uncached request during replay,
+because that older stop did not record its exact parameters. A timeout, HTTP
+error, invalid data or interrupted attempt still requires consultation. Nine
+focused tests and Ruff passed before launch. No identity or ranking rule changed.
+Final Geography/model population and spatial checks remain pending.
 
 ## Latest safe pause: 14:14 Asia/Jerusalem
 

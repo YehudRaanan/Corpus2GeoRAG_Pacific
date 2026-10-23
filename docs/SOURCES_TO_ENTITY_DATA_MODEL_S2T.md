@@ -1,5 +1,16 @@
 # Source-to-target: approved sources to the six-table data model
 
+**23 October 2026 Nominatim connection-retry approval (section 9):** reuse exact
+saved endpoint/parameter responses. Allow at most three total attempts for
+connection failures, with waits of 10 and 30 seconds. Persist each attempt before
+sending; a restart does not reset the budget. HTTP errors, timeouts, TLS errors,
+malformed data and an interrupted request with unknown outcome still stop for
+consultation. Preserve all earlier receipts. The pre-policy WinError 10065 stop
+did not record request parameters: conservatively charge that failure against
+the first uncached request during deterministic replay, citing the old failure
+file and checksum. Do not claim those parameters were present in the old evidence.
+This approval changes retrieval only; sources, IDs and ranking stay unchanged.
+
 **23 October 2026 non-Earth coordinate approval (section 9.7):** when a
 Wikidata P625 statement explicitly uses a globe other than Earth (Q2), retain
 the original statement and mark that coordinate `NON_EARTH_COORDINATE` in the
