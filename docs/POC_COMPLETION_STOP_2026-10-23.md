@@ -1,6 +1,23 @@
 # Fixed 10K POC completion: consultation checkpoint
 
-Date: 23 October 2026. Status: **GEOGRAPHY_RUNNING_GRAPH_WRITTEN_AGENT_CHECK_PENDING**.
+Date: 23 October 2026. Status: **GEOGRAPHY_CONNECTION_STOP_GRAPH_AND_AGENT_DATES_VERIFIED**.
+
+## Latest safe pause: 14:14 Asia/Jerusalem
+
+The Geography worker exited with code 1 during a Nominatim reverse lookup:
+`urllib.error.URLError: <urlopen error [WinError 10065] A socket operation was
+attempted to an unreachable host>`. The last completed-input checkpoint is
+162/1,272; 327 response files remain saved. This Nominatim code path does not
+apply the existing connection retry policy. No retry or replacement-source
+request was started after this stop. Evidence is in
+`geography_ranked_v2/failure.json` and `geography_ranking_v2.log` under the run.
+
+No data/ranking exception was established. Final Geography/model population and
+full spatial integration remain pending. The graph and model-date Agent checks
+below are complete. Revised continuation estimate: 90–120 minutes remaining,
+approximately three hours total for this completion task; proposed completion
+23 October at 16:15 Asia/Jerusalem, next checkpoint 14:45. Owner approval is
+required for the revised estimate before continuation.
 
 ## Current continuation checkpoint
 
