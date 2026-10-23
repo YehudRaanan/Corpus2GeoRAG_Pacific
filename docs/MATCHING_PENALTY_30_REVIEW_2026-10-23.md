@@ -81,3 +81,8 @@ Verification: **49 tests passed** across scoring, baseline replay, page scope, m
 - Migrated model receipt and independent table checks: `model_relevance_baseline/manifest.json` and `verification.json` in the new bundle.
 
 Owner decision received: **continue with the current formula**, retaining the four known diagnostic failures for later work. No temporal entity-matching rule is implemented. The measurement selection is a superset of raw >=80% candidates over all Daniel inputs, before penalties. It includes page candidates, possible already-matched candidates and WWII candidates; it makes no identity assignment and does not broaden the actual first-stage page pool. Every candidate used by matching must have a completed relevance measurement, including explicit unavailable results.
+
+
+## Approved table download resume — 23 October, 11:03 Asia/Jerusalem
+
+The owner approved download of the same completed OSM query destination with `bq head --table`, complete row validation and Geography continuation. The cloud query is not resubmitted. The transport correction passed 29 focused tests and Ruff. The table download is running; native geometry projection, ranking and final Geography population are not yet complete. Next checkpoint: 11:15; completion target: 12:35. Evidence: `osm_table_download_approval.json` and `osm_table_download_run.log` in the current output bundle.

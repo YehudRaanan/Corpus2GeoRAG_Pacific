@@ -126,7 +126,14 @@ def retrieve(base: Path) -> dict:
  FROM {client.source}
  WHERE EXISTS(SELECT 1 FROM UNNEST(all_tags) t
  WHERE t.key='wikidata' AND t.value IN ({selected}))"""
-    rows = client.query(sql)
+    key = hashlib.sha256(sql.encode()).hexdigest()
+    job_path = store / (key + ".job.json")
+    completed = store / "completed_cloud_job.json"
+    if completed.exists() and not job_path.exists():
+        # The approved recovery reuses the completed cloud result. query()
+        # verifies its SQL, project, job ID and success before any table read.
+        write(job_path, read_json(completed))
+    rows = client.query(sql, table_read=True)
     receipt = store / (hashlib.sha256(sql.encode()).hexdigest() + ".json.gz")
     candidates = [project(row, set(qids), str(receipt)) for row in rows]
     report = dict(

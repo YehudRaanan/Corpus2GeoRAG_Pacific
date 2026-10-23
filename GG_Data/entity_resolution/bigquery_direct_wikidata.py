@@ -117,7 +117,7 @@ class BigQueryData(LiveData):
             )
         return result.stdout
 
-    def query(self, sql: str) -> list[dict]:
+    def query(self, sql: str, *, table_read: bool = False) -> list[dict]:
         key = hashlib.sha256(sql.encode()).hexdigest()
         path = self.store / (key + ".json.gz")
         if path.exists():
@@ -125,26 +125,58 @@ class BigQueryData(LiveData):
             self.requests.append({k: v for k, v in saved.items() if k != "rows"})
             return saved["rows"]
         (self.store / (key + ".sql")).write_text(sql, encoding="utf-8")
-        dry = self.cli(["query", "--use_legacy_sql=false", "--dry_run"], sql)
-        (self.store / (key + ".dry_run.txt")).write_text(dry, encoding="utf-8")
-        LOG.info("BigQuery dry run: %s", dry.strip())
         job = "geoai_" + key[:32]
-        rows = json.loads(
-            self.cli(
-                [
-                    "query",
-                    "--use_legacy_sql=false",
-                    f"--maximum_bytes_billed={MAX_BYTES}",
-                    "--max_rows=3000000",
-                    f"--job_id={job}",
-                ],
-                sql,
+        job_path = self.store / (key + ".job.json")
+        rows = []
+        if table_read and job_path.exists():
+            stats = read(job_path)
+        else:
+            dry = self.cli(["query", "--use_legacy_sql=false", "--dry_run"], sql)
+            (self.store / (key + ".dry_run.txt")).write_text(dry, encoding="utf-8")
+            LOG.info("BigQuery dry run: %s", dry.strip())
+            rows = json.loads(
+                self.cli(
+                    [
+                        "query",
+                        "--use_legacy_sql=false",
+                        f"--maximum_bytes_billed={MAX_BYTES}",
+                        f"--max_rows={0 if table_read else 3000000}",
+                        f"--job_id={job}",
+                    ],
+                    sql,
+                )
             )
-        )
-        stats = json.loads(self.cli(["show", "--job=true", job]))
+            stats = json.loads(self.cli(["show", "--job=true", job]))
+        if table_read:
+            # S2T 9.7: tabledata.list permits larger native geometry rows than
+            # jobs.getQueryResults. Reuse the completed job; never resubmit it.
+            if (
+                stats.get("jobReference", {}).get("jobId") != job
+                or stats.get("jobReference", {}).get("projectId") != self.project
+                or stats.get("configuration", {}).get("query", {}).get("query") != sql
+                or stats.get("status", {}).get("state") != "DONE"
+                or stats.get("status", {}).get("errorResult")
+            ):
+                raise ValueError("Completed BigQuery job does not match this query")
+            save(job_path, stats)
         destination = stats["configuration"]["query"]["destinationTable"]
         result_table = f"{destination['projectId']}:{destination['datasetId']}.{destination['tableId']}"
         result_info = json.loads(self.cli(["show", result_table]))
+        if table_read:
+            rows = (
+                json.loads(
+                    self.cli(
+                        [
+                            "head",
+                            "--table",
+                            f"--max_rows={result_info['numRows']}",
+                            result_table,
+                        ]
+                    )
+                )
+                if int(result_info["numRows"])
+                else []
+            )
         if int(result_info["numRows"]) != len(rows):
             raise ValueError("BigQuery result was truncated")
         saved = {
@@ -154,6 +186,9 @@ class BigQueryData(LiveData):
             "sql_sha256": key,
             "retrieved_at": datetime.now(timezone.utc).isoformat(),
             "statistics": stats.get("statistics", {}),
+            "download_method": (
+                "tabledata.list" if table_read else "jobs.getQueryResults"
+            ),
             "rows": rows,
         }
         save(path, saved)

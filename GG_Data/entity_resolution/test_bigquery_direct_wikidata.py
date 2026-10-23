@@ -1,11 +1,67 @@
 """Offline checks for the BigQuery reference path, not a new matching method."""
 
 import json
+import hashlib
 
 import pytest
 
 from bigquery_direct_wikidata import BigQueryData, project_entity
 from bilingual_page_pilot import read
+
+
+@pytest.mark.parametrize("case", ["complete", "truncated", "wrong_sql"])
+def test_table_download_resumes_exact_completed_job(tmp_path, monkeypatch, case):
+    sql = "SELECT 'Q84' AS qid"
+    key = hashlib.sha256(sql.encode()).hexdigest()
+    job = {
+        "jobReference": {"jobId": "geoai_" + key[:32], "projectId": "geo-hagai-ndvi"},
+        "configuration": {
+            "query": {
+                "query": sql if case != "wrong_sql" else "SELECT 2",
+                "destinationTable": {
+                    "projectId": "p",
+                    "datasetId": "d",
+                    "tableId": "t",
+                },
+            }
+        },
+        "status": {"state": "DONE"},
+    }
+    (tmp_path / (key + ".job.json")).write_text(json.dumps(job))
+    (tmp_path / "table_snapshot.json").write_text(
+        json.dumps(
+            {
+                "table": {"id": "bigquery-public-data:wikipedia.wikidata"},
+                "snapshot_at": "2026-10-23",
+            }
+        )
+    )
+    calls = []
+
+    def cli(self, args, sql=None):
+        calls.append(args)
+        if args[0] == "show":
+            return json.dumps({"numRows": "2" if case == "truncated" else "1"})
+        assert args[0:2] == ["head", "--table"]
+        # Same native WKB is preserved; the table route does not shorten rows.
+        return json.dumps([{"qid": "Q84", "geometry_wkb": "ABCDEF"}])
+
+    monkeypatch.setattr(BigQueryData, "cli", cli)
+    client = BigQueryData("geo-hagai-ndvi", tmp_path)
+    if case == "wrong_sql":
+        with pytest.raises(ValueError, match="does not match"):
+            client.query(sql, table_read=True)
+        assert not calls
+    elif case == "truncated":
+        with pytest.raises(ValueError, match="truncated"):
+            client.query(sql, table_read=True)
+        assert not (tmp_path / (key + ".json.gz")).exists()
+    else:
+        assert client.query(sql, table_read=True)[0]["geometry_wkb"] == "ABCDEF"
+        assert not any(c[0] == "query" for c in calls)
+        count = len(calls)
+        assert client.query(sql, table_read=True)[0]["qid"] == "Q84"
+        assert len(calls) == count
 
 
 @pytest.fixture(autouse=True)
