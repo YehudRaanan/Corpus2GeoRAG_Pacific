@@ -271,6 +271,14 @@ def query_batches(queries: dict) -> list[dict]:
     return [dict(items[i : i + 50]) for i in range(0, len(items), 50)]
 
 
+def validate_overpass(response: dict, qids: list[str], source: str) -> None:
+    """S2T 9.7: incomplete responses never establish zero source candidates."""
+    if response.get("remark") or not isinstance(response.get("elements"), list):
+        raise ValueError(f"Incomplete exact-QID response: {source}")
+    if any(e.get("tags", {}).get("wikidata") not in qids for e in response["elements"]):
+        raise ValueError("Exact-QID query returned an out-of-scope object")
+
+
 def retrieve(output: Path) -> dict:
     """Cache full native responses. Stop on source failures; no silent retry."""
     from .geography_sample import tools
@@ -363,34 +371,61 @@ def retrieve(output: Path) -> dict:
                     raise ValueError("Exact-QID cache has different targets")
                 response = saved["response"]
             else:
-                # Same batch query as cached_overpass, but retain the complete
-                # source response: a timeout 'remark' must not become zero hits.
-                pattern = "|".join(qids)
-                query = f'[out:json][timeout:45];nwr["wikidata"~"^({pattern})$"];out tags center;'
-                request = urllib.request.Request(
-                    client.OVERPASS[source],
-                    data=urlencode({"data": query}).encode(),
-                    headers={"User-Agent": legacy.USER_AGENT},
-                )
-                with urllib.request.urlopen(request, timeout=60) as handle:
-                    raw = handle.read()
-                path.with_suffix(".response").write_bytes(raw)
-                response = json.loads(raw)
+                # Owner-approved OSM timeout correction (23 October), S2T 9.7:
+                # preserve all IDs; cache each <=50-ID response before continuing.
+                # Completed OHM/OSM inventories retain their original receipts.
+                size = 50 if source == "OpenStreetMap" else max(len(qids), 1)
+                elements, batches = [], {}
+                for index, offset in enumerate(range(0, len(qids), size)):
+                    part = qids[offset : offset + size]
+                    part_path = path.with_name(f"{path.stem}_batch_{index:03d}.json")
+                    if part_path.exists():
+                        saved = read_json(part_path)
+                        if saved["qids"] != part:
+                            raise ValueError("Exact-QID batch has different targets")
+                        payload = saved["response"]
+                        progress["reused"] += 1
+                    else:
+                        pattern = "|".join(part)
+                        query = f'[out:json][timeout:45];nwr["wikidata"~"^({pattern})$"];out tags center;'
+                        request = urllib.request.Request(
+                            client.OVERPASS[source],
+                            data=urlencode({"data": query}).encode(),
+                            headers={"User-Agent": legacy.USER_AGENT},
+                        )
+                        with urllib.request.urlopen(request, timeout=60) as handle:
+                            raw = handle.read()
+                        part_path.with_suffix(".response").write_bytes(raw)
+                        payload = json.loads(raw)
+                        validate_overpass(payload, part, source)
+                        write(
+                            part_path,
+                            dict(
+                                qids=part,
+                                query=query,
+                                response=payload,
+                                retrieved_at=datetime.now(timezone.utc).isoformat(),
+                            ),
+                        )
+                        progress["requests"] += 1
+                    validate_overpass(payload, part, source)
+                    elements.extend(payload["elements"])
+                    batches[part_path.name] = digest(part_path)
+                    progress.update(current_arm=source, completed_batches=index + 1)
+                    write(output / "progress.json", progress)
+                response = dict(elements=elements)
                 write(
                     path,
                     dict(
                         qids=qids,
-                        query=query,
+                        batches=batches,
                         response=response,
                         retrieved_at=datetime.now(timezone.utc).isoformat(),
                     ),
                 )
-            if response.get("remark") or not isinstance(response.get("elements"), list):
-                raise ValueError(f"Incomplete exact-QID response: {source}")
-            elements = response["elements"]
-            if any(e.get("tags", {}).get("wikidata") not in qids for e in elements):
-                raise ValueError("Exact-QID query returned an out-of-scope object")
-            progress["reused" if existed else "requests"] += 1
+            validate_overpass(response, qids, source)
+            if existed:
+                progress["reused"] += 1
             progress["completed_arms"].append(source)
             write(output / "progress.json", progress)
         progress["status"] = "RETRIEVED"

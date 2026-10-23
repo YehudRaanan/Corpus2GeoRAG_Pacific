@@ -1,7 +1,15 @@
 """The comparison cannot change its population or count broken responses as misses."""
 
+import io
+import json
+import re
+import sys
+from types import SimpleNamespace
+from urllib.parse import parse_qs
+
 import pytest
 
+from GG_Data.pipeline import geography_comparison, geography_sample
 from GG_Data.pipeline.geography_comparison import (
     candidate_profile,
     query_for,
@@ -9,6 +17,65 @@ from GG_Data.pipeline.geography_comparison import (
     sample_targets,
     validate_response,
 )
+from GG_Data.pipeline.poc import read_json
+from GG_Data.pipeline.rebuild_poc import write
+
+
+@pytest.mark.parametrize("failure", ["timeout", "remark", "outside"])
+def test_osm_batches_resume_without_losing_ids_or_accepting_failed_batches(
+    tmp_path, monkeypatch, failure
+):
+    qids = sorted(f"Q{i}" for i in range(1, 102))
+    (tmp_path / "sources").mkdir()
+    write(tmp_path / "plan.json", dict(outputs={}))
+    write(tmp_path / "queries.json", {})
+    write(tmp_path / "sample.json", [dict(wikidata_id=q) for q in qids])
+    monkeypatch.setattr(
+        geography_sample,
+        "tools",
+        lambda: SimpleNamespace(OVERPASS={"OpenStreetMap": "https://example.test"}),
+    )
+    monkeypatch.setitem(
+        sys.modules, "GEO_OBJECT_EXTRACTION_POC", SimpleNamespace(USER_AGENT="test")
+    )
+    calls = []
+
+    def fetch(request, timeout):
+        assert timeout == 60
+        query = parse_qs(request.data.decode())["data"][0]
+        part = re.findall(r"Q\d+", query)
+        calls.append(part)
+        if len(calls) == 2:
+            if failure == "timeout":
+                raise TimeoutError("test source timeout")
+            if failure == "remark":
+                return io.BytesIO(
+                    json.dumps(dict(elements=[], remark="timeout")).encode()
+                )
+            part = ["Q999999"]
+        return io.BytesIO(
+            json.dumps(
+                dict(elements=[dict(tags=dict(wikidata=q)) for q in part])
+            ).encode()
+        )
+
+    monkeypatch.setattr(geography_comparison.urllib.request, "urlopen", fetch)
+    stopped = geography_comparison.retrieve(tmp_path)
+    assert stopped["status"] == "STOPPED_FOR_CONSULTATION"
+    aggregate = tmp_path / "sources/first_50_openstreetmap.json"
+    assert not aggregate.exists()
+    assert len(list((tmp_path / "sources").glob("*_batch_*.json"))) == 1
+    completed = geography_comparison.retrieve(tmp_path)
+    assert completed["status"] == "RETRIEVED"
+    assert completed["reused"] == 1
+    assert [len(p) for p in calls] == [50, 50, 50, 1]
+    saved = read_json(aggregate)
+    assert saved["qids"] == qids
+    assert [e["tags"]["wikidata"] for e in saved["response"]["elements"]] == qids
+    assert len(saved["batches"]) == 3
+    calls.clear()
+    assert geography_comparison.retrieve(tmp_path)["status"] == "RETRIEVED"
+    assert calls == []
 
 
 def test_batches_keep_all_queries_without_overlap_or_rewriting():
