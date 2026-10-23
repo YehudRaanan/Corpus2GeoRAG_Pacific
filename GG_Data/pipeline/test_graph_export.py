@@ -1,10 +1,14 @@
 """Focused contract tests for model -> final graph; no source acquisition."""
 
+import csv
+import gzip
+import json
 from copy import deepcopy
 
 import pytest
 
-from GG_Data.pipeline.graph_export import build_graph, event_date_attributes
+from GG_Data.pipeline.graph_export import build_graph, event_date_attributes, run
+from GG_Data.pipeline.poc import digest, read_json
 
 
 META = dict(
@@ -292,3 +296,39 @@ def test_required_contract_failures(change, message: str) -> None:
     change(source)
     with pytest.raises(ValueError, match=message):
         build_graph(**source)
+
+
+def test_export_consumes_nested_mapping_hashes_and_rejects_tampering(tmp_path) -> None:
+    source = fixture()
+    model = tmp_path / "model"
+    (model / "mapping").mkdir(parents=True)
+    hashes = {}
+    for name in ("entities", "events", "relations"):
+        path = model / (name + ".json.gz")
+        with gzip.open(path, "wt", encoding="utf-8") as stream:
+            json.dump(source[name], stream)
+        hashes[path.name] = digest(path)
+    for prefix, key in (
+        ("RELATION_MAPPING_TABLE", "mapping"),
+        ("RELATION_DIRECTION_LOOKUP", "directions"),
+    ):
+        path = model / "mapping" / (prefix + "_v2.1.2.csv")
+        with path.open("w", newline="", encoding="utf-8") as stream:
+            writer = csv.DictWriter(stream, fieldnames=list(source[key][0]))
+            writer.writeheader()
+            writer.writerows(source[key])
+        hashes[path.relative_to(model).as_posix()] = digest(path)
+    (model / "manifest.json").write_text(
+        json.dumps(dict(inputs={}, outputs=hashes)), encoding="utf-8"
+    )
+    output = tmp_path / "graph"
+    report = run(model, source["metadata"], output)
+    expected, _ = build_graph(**source)
+    assert read_json(output / "graph.json") == expected
+    assert report["graph_readback_verified"]
+    assert report["graph_sha256"] == digest(output / "graph.json")
+    assert all(report["inputs"][name] == sha for name, sha in hashes.items())
+    with path.open("a", encoding="utf-8") as stream:
+        stream.write("changed")
+    with pytest.raises(ValueError, match="Mapping checksum differs"):
+        run(model, source["metadata"], tmp_path / "invalid_graph")

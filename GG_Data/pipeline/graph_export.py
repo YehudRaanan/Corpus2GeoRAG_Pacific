@@ -318,7 +318,7 @@ def run(
         # event_model extends these generated catalogs after reading its pinned
         # historical inputs. Pin the actual generated files at export, rather
         # than confusing those input hashes with generated-output checksums.
-        relative = str(path.relative_to(model_dir))
+        relative = path.relative_to(model_dir).as_posix()
         expected = manifest["outputs"].get(relative)
         if expected is not None and expected != sha:
             raise ValueError(f"Mapping checksum differs: {path.name}")

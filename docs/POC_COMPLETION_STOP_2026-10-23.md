@@ -23,8 +23,15 @@ Verified on 23 October at 14:01 Asia/Jerusalem:
   `UNRESOLVED` state when directional views share a predicate. Each assertion
   retains its original category. No Level 1 category is inferred.
 - Focused verification: 11 Geography tests and 17 graph-export tests pass.
-  Agent validation against the actual draft graph is in progress. Full
-  model-backed Geography integration remains pending.
+  Agent validation against the actual draft graph and model dates has passed.
+  Full model-backed Geography integration remains pending.
+- The final Geography package now retains the existing generated `mapping/`
+  files byte for byte and records their relative file hashes. This fixes a
+  packaging omission; it does not regenerate mappings or change graph content.
+  The combined Agent, pipeline, Geography and export suite passed 187 tests,
+  with three existing expected failures, at 14:07 Asia/Jerusalem. The command
+  uses Anaconda Python with the existing Agent `.venv/Lib/site-packages`
+  appended to `sys.path`; no dependencies were installed.
 
 These are intermediate results, not completion of the fixed 10K POC. The
 sections below preserve the earlier consultation context.

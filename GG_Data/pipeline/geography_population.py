@@ -153,6 +153,14 @@ def populate(base: Path, ranked: Path, output: Path) -> dict:
             raise ValueError(f"Ranked Geography output changed: {name}")
     model = base / "model"
     manifest = read_json(model / "manifest.json")
+    # Graph S2T 3/6/7 consumes the generated mapping package too. Older model
+    # manifests list only JSON tables; preserve the existing catalogs and pin
+    # their bytes here rather than regenerating any mapping or inverse rule.
+    mapping_hashes = {
+        p.relative_to(model).as_posix(): digest(p)
+        for p in (model / "mapping").rglob("*")
+        if p.is_file()
+    }
     for name, sha in manifest["outputs"].items():
         if digest(model / name) != sha:
             raise ValueError(f"Model table changed: {name}")
@@ -251,8 +259,12 @@ def populate(base: Path, ranked: Path, output: Path) -> dict:
         row["geometry_ref"] = dict(file=path.name, place_id=row["place_id"], sha256=sha)
     with gzip.open(output / "geography.json.gz", "wt", encoding="utf-8") as stream:
         json.dump(rows, stream, ensure_ascii=False, allow_nan=False)
-    for name in manifest["outputs"]:
+    preserved = {**manifest["outputs"], **mapping_hashes}
+    for name in preserved:
+        (output / name).parent.mkdir(parents=True, exist_ok=True)
         shutil.copyfile(model / name, output / name)
+    if any(digest(output / name) != sha for name, sha in preserved.items()):
+        raise ValueError("Copied model artifact differs from its source")
     report = dict(
         **{
             k: v
@@ -272,7 +284,11 @@ def populate(base: Path, ranked: Path, output: Path) -> dict:
             str(model / "manifest.json"): digest(model / "manifest.json"),
             str(ranked / "verification.json"): digest(ranked / "verification.json"),
         },
-        outputs={p.name: digest(p) for p in output.iterdir() if p.is_file()},
+        outputs={
+            p.relative_to(output).as_posix(): digest(p)
+            for p in output.rglob("*")
+            if p.is_file()
+        },
     )
     write(output / "manifest.json", report)
     write(
@@ -288,6 +304,8 @@ def populate(base: Path, ranked: Path, output: Path) -> dict:
                 for name, sha in manifest["outputs"].items()
             ),
             pointers_in_model_only=True,
+            mapping_artifacts=mapping_hashes,
+            mapping_artifacts_unchanged=True,
         ),
     )
     return report

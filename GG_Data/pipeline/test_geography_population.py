@@ -134,7 +134,10 @@ def test_wide_substitute_is_excluded_but_country_entity_and_local_geometry_remai
     assert not wide_approximation(place, country | dict(feature_code="village"))
 
 
-def test_model_population_keeps_zero_score_geometry_and_all_existing_tables(tmp_path):
+@pytest.mark.parametrize("with_mapping", [False, True])
+def test_model_population_keeps_zero_score_geometry_and_all_existing_tables(
+    tmp_path, with_mapping
+):
     base, ranked, output = tmp_path / "base", tmp_path / "ranked", tmp_path / "final"
     model = base / "model"
     entities = [dict(entity_id=q, type="LOC", relevance=0.01) for q in ("Q1", "SYN_1")]
@@ -142,6 +145,18 @@ def test_model_population_keeps_zero_score_geometry_and_all_existing_tables(tmp_
     write(model / "mentions.json.gz", [dict(entity_id="Q1")])
     hashes = {p.name: digest(p) for p in model.iterdir()}
     write(model / "manifest.json", dict(inputs={}, outputs=hashes))
+    mapping_hashes = {}
+    if with_mapping:
+        # Generated catalogs were absent from the old table-only manifest.
+        for name in (
+            "RELATION_MAPPING_TABLE_v2.1.2.csv",
+            "RELATION_DIRECTION_LOOKUP_v2.1.2.csv",
+            "native_mapping_evidence.json",
+        ):
+            path = model / "mapping" / name
+            path.parent.mkdir(exist_ok=True)
+            path.write_bytes(b"original mapping bytes\r\n")
+            mapping_hashes["mapping/" + name] = digest(path)
     chosen = dict(
         source="Wikidata",
         source_id="Q1$coord",
@@ -182,3 +197,10 @@ def test_model_population_keeps_zero_score_geometry_and_all_existing_tables(tmp_
     assert row["geometry_ref"]["sha256"] == digest(output / "geometries.parquet")
     assert len(gpd.read_parquet(output / "geometries.parquet").columns) == 13
     assert read_json(output / "verification.json")["all_previous_tables_unchanged"]
+    assert all(
+        digest(output / name) == sha == result["outputs"][name]
+        for name, sha in mapping_hashes.items()
+    )
+    verification = read_json(output / "verification.json")
+    assert verification["mapping_artifacts"] == mapping_hashes
+    assert verification["mapping_artifacts_unchanged"]
