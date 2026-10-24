@@ -163,6 +163,69 @@ def test_source_coordinate_context_and_always_select_available_geometry():
     assert select_proposal([]) is None
 
 
+@pytest.mark.parametrize(
+    "tags,unknown,outside,context_points",
+    [
+        ({"start_date": value}, True, False, 0)
+        for value in (
+            "~1571",
+            "985",
+            "-2000",
+            "-0600",
+            "-0106",
+            "-3200",
+            "482",
+            "-0320",
+            "-0063",
+            "887",
+            "2022-04-21 00:00:00",
+            "~65500000 BC",
+            "~1600",
+            "Y-75E7S3",
+            "2021-01-01 00:00:03",
+            "January 9th, 1788",
+            "756",
+        )
+    ]
+    + [
+        ({"end_date": "-0064"}, True, False, 0),
+        ({"start_date": "~1571", "end_date": "1940"}, True, True, 0),
+        ({"start_date": "1943", "end_date": "~1945"}, True, True, 0),
+        ({"start_date": "1941", "end_date": "1945"}, False, False, 5),
+        ({"start_date": "1943"}, False, True, 0),
+    ],
+)
+def test_uncertain_source_dates_do_not_veto_available_geometry(
+    tags, unknown, outside, context_points
+):
+    # S2T 9.7 supersedes date vetoes; unknown evidence supplies no support.
+    place = dict(name="Example", wikidata_id="Q1", selection_date="1942")
+    evidence = dict(
+        candidate_qids=[],
+        text="",
+        source_page="",
+        start=0,
+        original_name="Example",
+        context=dict(features=[]),
+    )
+    candidate = dict(
+        source="OpenStreetMap",
+        source_id="node:1",
+        qid="Q1",
+        aliases=[],
+        parents=[],
+        tags=tags,
+        geometry=mapping(Point(0, 0)),
+    )
+    ranked = score(place, evidence, candidate, [])
+    assert ranked["supplied_dates"] == tags
+    assert ("UNSUPPORTED_SOURCE_DATE" in ranked["uncertainty_flags"]) is unknown
+    assert ("OUTSIDE_SELECTION_DATE" in ranked["uncertainty_flags"]) is outside
+    assert ranked["components"]["context"] == context_points
+    assert select_proposal([ranked])["source_id"] == "node:1"
+    assert candidate["tags"] == tags
+
+
 def test_multiple_coordinates_keep_native_values_and_skip_deprecated():
     value = dict(
         latitude=1,

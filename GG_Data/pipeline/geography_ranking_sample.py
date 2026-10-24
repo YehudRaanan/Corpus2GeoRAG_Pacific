@@ -237,8 +237,22 @@ def score(place: dict, evidence: dict, candidate: dict, anchors: list[dict]) -> 
             )
     tags = candidate.get("tags", {})
     supplied_dates = {k: tags[k] for k in ("start_date", "end_date") if tags.get(k)}
-    temporal_ok = date_eligible(dict(extratags=tags), place["selection_date"])
-    historical_points = 5 if supplied_dates and temporal_ok else 0
+    # S2T 9.7 supersedes the old sample's date veto: retain unreadable source
+    # evidence as uncertainty, not a run failure or invented historical support.
+    supported_dates = {
+        k: v
+        for k, v in supplied_dates.items()
+        if re.fullmatch(r"\d{4}(?:-\d{2}){0,2}", v)
+    }
+    unsupported_dates = {
+        k: v for k, v in supplied_dates.items() if k not in supported_dates
+    }
+    temporal_ok = date_eligible(
+        dict(extratags=supported_dates), place["selection_date"]
+    )
+    historical_points = (
+        5 if supplied_dates and not unsupported_dates and temporal_ok else 0
+    )
     kinds = {f["value"] for f in evidence["context"]["features"]}
     type_points = 3 if any(compatible(k, candidate) for k in kinds) else 0
     if (
@@ -255,6 +269,8 @@ def score(place: dict, evidence: dict, candidate: dict, anchors: list[dict]) -> 
         feature_type=type_points,
     )
     reasons = []
+    if unsupported_dates:
+        reasons.append("UNSUPPORTED_SOURCE_DATE")
     if not temporal_ok:
         reasons.append("OUTSIDE_SELECTION_DATE")
     if place["wikidata_id"] and qid and qid != place["wikidata_id"]:
@@ -273,6 +289,7 @@ def score(place: dict, evidence: dict, candidate: dict, anchors: list[dict]) -> 
         context_matches=matches,
         source_coordinate_context_checks=spatial_checks,
         supplied_dates=supplied_dates,
+        unsupported_source_dates=unsupported_dates,
         uncertainty_flags=reasons,
         geometry_available=geo is not None,
         ranking_is_not_identity_probability=True,
