@@ -1,5 +1,21 @@
 # Fixed 10K POC completion: consultation checkpoint
 
+Updated: 24 October 2026, 22:21 Asia/Jerusalem. Status: **COMPLETE**.
+
+The owner approved continuation from the saved stop. The fixed-10K POC now has
+1,246 verified Geography rows for 1,272 targets; 26 remain unresolved. All
+1,246 exact geometry pointers and zero self-distances passed. The final graph
+contains 7,710 nodes, 32,899 views and 16,466 assertions and is byte-identical
+to the approved pre-Geography graph. Spatial-event traversal and dateline tests
+passed. The run made zero new source requests and recorded no failures.
+
+The final model, graph and completion evidence are under
+`GG_Data/pipeline/outputs/matching_penalty_poc_20261023/`. See
+[the final recovery record](POC_RECOVERY_CHECKPOINT_2026-10-24.md) for paths,
+hashes, limits and protection status. Protection remains **Local checkpoint
+only** because generated ignored outputs have no verified off-device backup.
+The stopped-state record below is historical and is superseded.
+
 Updated: 24 October 2026. Status: **STOPPED_AT_OWNER_REQUEST**.
 
 ## Final saved checkpoint: 24 October

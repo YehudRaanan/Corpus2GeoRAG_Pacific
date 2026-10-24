@@ -1,5 +1,32 @@
 # Fixed 10K POC recovery: 24 October 2026
 
+Status: **COMPLETE** at 22:21:05 on 24 October 2026, Asia/Jerusalem
+(UTC+03). The owner approved continuation from the saved checkpoint. The
+offline recovery completed with status
+`PASSED_FIXED_10K_MODEL_GRAPH_AND_SPATIAL_INTEGRATION` and no recorded failure.
+
+All 1,272 Geography targets were processed. The final model contains 1,246
+native geometry rows; 26 locations remain explicitly unresolved. Every one of
+the 1,246 model pointers, exact shapes and zero self-distances passed the final
+read-back. The final graph has 7,710 nodes, 32,899 views and 16,466 assertions.
+The spatial-event traversal examples, dateline bounding-box check and composite
+queries passed. The approved pre-Geography graph stayed byte-identical, with
+SHA-256 `70be8618fbb7a5333af15564032f02c3977cc97fd02aa4271a64a0fe47316bc4`.
+
+The final run made zero new source requests and blocked network connections.
+All previous model tables and mapping artifacts stayed byte-identical. The
+final model is `model_geography/`; the final graph is
+`graph_export_20261024/graph.json`; the complete read-back evidence is
+`recovery_20261024_workflow_v2/completion_report.json`. Its SHA-256 is
+`f54a21a0f1a41178cfefdffa6cf5afffbd9e77cd5f7ff1f809c5d6a83a2c8817`.
+
+The generated output remains an evidence-backed POC. Contract, file and spatial
+integration checks do not prove historical identity or boundary accuracy. The
+26 unresolved locations and existing ranking uncertainty remain visible.
+Protection: **Local checkpoint only**. Generated ignored artifacts have no
+verified off-device backup. The stopped-state record below is retained as
+historical evidence and is superseded by this completion record.
+
 Status: **STOPPED_AT_OWNER_REQUEST** on 24 October 2026, Asia/Jerusalem (UTC+03).
 The owner declined a further 25–40-minute continuation and directed saving this
 checkpoint. No recovery worker is running. Geography and final spatial
