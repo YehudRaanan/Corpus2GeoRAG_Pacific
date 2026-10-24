@@ -9,6 +9,29 @@ from GG_Data.pipeline import rebuild_poc
 from GG_Data.pipeline.poc import digest, read_json
 
 
+def test_write_streams_json_and_preserves_existing_file_on_failure(
+    tmp_path, monkeypatch
+):
+    value = {"name": "ירושלים", "coordinates": [[35.2, 31.8]] * 1000}
+    expected = json.dumps(value, ensure_ascii=False, indent=2, allow_nan=False)
+    path = tmp_path / "large.json"
+
+    def no_whole_document(*args, **kwargs):
+        raise AssertionError("Do not allocate the complete JSON text")
+
+    monkeypatch.setattr(json, "dumps", no_whole_document)
+    rebuild_poc.write(path, value)
+    assert path.read_text(encoding="utf-8") == expected
+    rebuild_poc.write(path, value, compact=True)
+    assert read_json(path) == value
+    assert path.stat().st_size < len(expected.encode("utf-8"))
+    before = path.read_bytes()
+    with pytest.raises(ValueError, match="Out of range float"):
+        rebuild_poc.write(path, {"invalid": float("nan")})
+    assert path.read_bytes() == before
+    assert list(tmp_path.iterdir()) == [path]
+
+
 def test_geography_sample_follows_original_mentions_to_corrected_ids(tmp_path):
     (tmp_path / "mentions_pages").mkdir()
     (tmp_path / "geography_inputs").mkdir()

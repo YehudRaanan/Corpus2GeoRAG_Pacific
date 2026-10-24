@@ -1,7 +1,9 @@
 """New-model population reuses the approved selector and preserves identities."""
 
 import gzip
+import hashlib
 import json
+from types import SimpleNamespace
 
 import geopandas as gpd
 import pytest
@@ -19,6 +21,128 @@ def write(path, value):
     opener = gzip.open if path.name.endswith(".gz") else open
     with opener(path, "wt", encoding="utf-8") as stream:
         json.dump(value, stream)
+
+
+@pytest.mark.parametrize("cached", [False, True])
+def test_cache_only_ranking_stops_on_miss_and_reuses_receipts_in_place(
+    tmp_path, monkeypatch, cached
+):
+    ranking = population.geography_ranking_sample
+    base, comparison, cache = (tmp_path / n for n in ("base", "comparison", "cache"))
+    cache.mkdir()
+    target = dict(place_id="Q1", wikidata_id="Q1", name="Place", selection_date="1942")
+    write(comparison / "sample.json", [target])
+    write(comparison / "plan.json", dict(inputs={}))
+    write(comparison / "progress.json", dict(status="RETRIEVED"))
+    write(
+        comparison / "evidence.json",
+        {
+            "Q1": dict(
+                mention_id="m1",
+                original_name="Place",
+                text="Place",
+                source_page="Page",
+                context=dict(features=[]),
+            )
+        },
+    )
+    write(base / "entities/full_records.json.gz", {})
+    write(comparison / "candidate_records.json.gz", {})
+    write(
+        comparison / "candidate_records_report.json",
+        dict(
+            outputs={
+                "candidate_records.json.gz": digest(
+                    comparison / "candidate_records.json.gz"
+                )
+            }
+        ),
+    )
+    write(
+        base / "mentions_pages/mentions.json.gz",
+        [
+            dict(
+                mention_id="m1",
+                start=0,
+                word="Place",
+                entity_group="LOC",
+                wiki_site="enwiki",
+                wiki_page_id=1,
+            )
+        ],
+    )
+    for arm in ("native", "existing_dated"):
+        write(comparison / f"sources/whg_{arm}.json", dict(response={}))
+    write(
+        comparison / "sources/first_50_openhistoricalmap.json",
+        dict(response=dict(elements=[])),
+    )
+    write(comparison / "sources" / population.osm_bigquery.NAME, {})
+    monkeypatch.setattr(population.osm_bigquery, "load", lambda *args: [])
+    monkeypatch.setattr(ranking, "ROOT", tmp_path)
+    monkeypatch.setattr(ranking, "similarity", lambda left, right: float(left == right))
+
+    def no_network(*args, **kwargs):
+        raise AssertionError("Cache-only recovery must never call a source")
+
+    url = "https://example.test/search"
+    monkeypatch.setattr(
+        ranking,
+        "tools",
+        lambda: SimpleNamespace(
+            NOMINATIM={"OpenStreetMap": "https://example.test"}, request_json=no_network
+        ),
+    )
+    params = dict(
+        format="jsonv2",
+        polygon_geojson="1",
+        extratags="1",
+        namedetails="1",
+        addressdetails="1",
+        q="Place",
+        limit="10",
+    )
+    receipt = (
+        cache
+        / "sources"
+        / (
+            hashlib.sha256(
+                json.dumps([url, params], sort_keys=True).encode()
+            ).hexdigest()
+            + ".json"
+        )
+    )
+    if cached:
+        write(
+            receipt,
+            dict(
+                url=url,
+                params=params,
+                response=[
+                    dict(
+                        osm_type="node",
+                        osm_id=7,
+                        name="Place",
+                        geojson=dict(type="Point", coordinates=[35, 32]),
+                    )
+                ],
+            ),
+        )
+    before = {p: digest(p) for p in cache.rglob("*") if p.is_file()}
+    output = tmp_path / "ranked"
+    if not cached:
+        with pytest.raises(ValueError, match="no saved request"):
+            ranking.run(output, cache, comparison, base_dir=base, cache_only=True)
+    else:
+        result = ranking.run(output, cache, comparison, base_dir=base, cache_only=True)
+        assert result["new_requests"] == 0 and result["reused_requests"] == 1
+        assert result["inputs"] == result["geometry_proposals"] == 1
+        assert read_json(output / "audit.json")["results"][0]["proposed"][
+            "receipt"
+        ] == str(receipt)
+        assert not list((output / "sources").iterdir())
+        assert read_json(output / "verification.json")["geometry_roundtrip_exact"]
+    assert {p: digest(p) for p in cache.rglob("*") if p.is_file()} == before
 
 
 @pytest.mark.parametrize("missing", [False, True])

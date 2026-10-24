@@ -10,6 +10,7 @@ from __future__ import annotations
 import argparse
 import json
 import logging
+import tempfile
 from pathlib import Path
 from time import perf_counter
 
@@ -20,11 +21,26 @@ from GG_Data.pipeline.scope_concentration_filter import combine_language_rows
 from GG_Data.pipeline.snapshot_link_relevance_probe import run as measure
 
 
-def write(path: Path, value: object) -> None:
-    path.write_text(
-        json.dumps(value, ensure_ascii=False, indent=2, allow_nan=False),
-        encoding="utf-8",
-    )
+def write(path: Path, value: object, *, compact: bool = False) -> None:
+    """Stream large evidence files; publish only a complete JSON document."""
+    temporary = None
+    try:
+        with tempfile.NamedTemporaryFile(
+            mode="w", encoding="utf-8", dir=path.parent, delete=False
+        ) as stream:
+            temporary = Path(stream.name)
+            json.dump(
+                value,
+                stream,
+                ensure_ascii=False,
+                indent=None if compact else 2,
+                separators=(",", ":") if compact else None,
+                allow_nan=False,
+            )
+        temporary.replace(path)
+    finally:
+        if temporary is not None:
+            temporary.unlink(missing_ok=True)
 
 
 def geography_sample_inputs(base: Path, original_sample: Path) -> list[dict]:

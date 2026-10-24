@@ -385,6 +385,7 @@ def run(
     comparison: Path | None = None,
     *,
     base_dir: Path | None = None,
+    cache_only: bool = False,
 ) -> dict:
     """Rank fixed tests, or new-model LOC targets with the same S2T 9.7 rule.
 
@@ -398,6 +399,8 @@ def run(
         root / "geography_comparison_40_20261022",
     )
     population = base_dir is not None
+    if cache_only and (not population or request_cache is None):
+        raise ValueError("Cache-only recovery requires a model and request cache")
     if population:
         if comparison is None:
             raise ValueError("New-model ranking requires its own source comparison")
@@ -753,7 +756,7 @@ def run(
                 sha256=digest(request_cache / "failure.json"),
             )
     if population:
-        folders = sorted(root.glob("geography_ranking*"))
+        folders = [] if cache_only else sorted(root.glob("geography_ranking*"))
         if request_cache:
             folders.append(request_cache)
         for folder in folders:
@@ -796,7 +799,13 @@ def run(
             protected[str(previous)] = digest(previous)
             payload = saved["response"]
             reused_requests += 1
+            if cache_only:
+                path = previous
         else:
+            if cache_only:
+                raise ValueError(
+                    f"Cache-only recovery has no saved request: {url} {params}"
+                )
             ledger = retry_dir / (path.stem + ".json")
             old_ledger = (
                 request_cache / "nominatim_attempts" / ledger.name
@@ -815,7 +824,8 @@ def run(
                 retrieved_at=datetime.now(timezone.utc).isoformat(),
             )
             time.sleep(1.1)
-        write(path, saved)
+        if not cache_only:
+            write(path, saved)
         if population:
             request_index[key] = path
         request_count += 1
@@ -927,9 +937,13 @@ def run(
         {p["place_id"]: evidence[p["place_id"]] for p in sample},
     )
     write(output / "coordinates.json", anchors)
-    write(output / "candidates.json", candidates)
+    write(
+        output / "progress.json",
+        dict(status="WRITING_CANDIDATES", total_inputs=len(sample)),
+    )
+    write(output / "candidates.json", candidates, compact=population)
     results, proposals = [], []
-    for p in sample:
+    for index, p in enumerate(sample, 1):
         pid = p["place_id"]
         ranked = [score(p, evidence[pid], c, anchors[pid]) for c in candidates[pid]]
         if population:
@@ -978,6 +992,10 @@ def run(
                     geometry=shape(chosen["geometry"]),
                 )
             )
+        write(
+            output / "progress.json",
+            dict(status="RANKING", completed_inputs=index, total_inputs=len(sample)),
+        )
     path = output / "proposed_geometries.parquet"
     frame = gpd.GeoDataFrame(proposals, geometry="geometry", crs="EPSG:4326")
     frame.to_parquet(path, index=False)
@@ -1069,6 +1087,11 @@ def run(
     write(
         output / "audit.json",
         dict(summary=summary, results=results, protected_sha256=protected),
+        compact=population,
+    )
+    write(
+        output / "progress.json",
+        dict(status="COMPLETE", completed_inputs=len(sample), total_inputs=len(sample)),
     )
     write(
         output / "verification.json",
