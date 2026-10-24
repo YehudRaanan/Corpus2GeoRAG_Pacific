@@ -32,6 +32,39 @@ def test_write_streams_json_and_preserves_existing_file_on_failure(
     assert list(tmp_path.iterdir()) == [path]
 
 
+@pytest.mark.parametrize("failures,winerror", [(2, 5), (3, 32), (1, None)])
+def test_atomic_write_bounds_windows_file_lock_retry(
+    tmp_path, monkeypatch, failures, winerror
+):
+    path = tmp_path / "progress.json"
+    path.write_text("old", encoding="utf-8")
+    replace = type(path).replace
+    calls, waits = [], []
+
+    def locked(temporary, target):
+        calls.append(1)
+        if len(calls) <= failures:
+            assert target.read_text(encoding="utf-8") == "old"
+            error = PermissionError(13, "Access is denied")
+            if winerror is not None:
+                error.winerror = winerror
+            raise error
+        return replace(temporary, target)
+
+    monkeypatch.setattr(type(path), "replace", locked)
+    monkeypatch.setattr(rebuild_poc, "sleep", waits.append, raising=False)
+    if failures == 2:
+        rebuild_poc.write(path, {"completed": 72})
+        assert read_json(path) == {"completed": 72}
+    else:
+        with pytest.raises(PermissionError):
+            rebuild_poc.write(path, {"completed": 72})
+        assert path.read_text(encoding="utf-8") == "old"
+    assert len(calls) == (3 if winerror is not None else 1)
+    assert waits == ([0.05, 0.1] if winerror is not None else [])
+    assert list(tmp_path.iterdir()) == [path]
+
+
 def test_geography_sample_follows_original_mentions_to_corrected_ids(tmp_path):
     (tmp_path / "mentions_pages").mkdir()
     (tmp_path / "geography_inputs").mkdir()

@@ -12,7 +12,7 @@ import json
 import logging
 import tempfile
 from pathlib import Path
-from time import perf_counter
+from time import perf_counter, sleep
 
 from GG_Data.pipeline import event_model, event_population, geography
 from GG_Data.pipeline.event_selection import prepare
@@ -37,7 +37,15 @@ def write(path: Path, value: object, *, compact: bool = False) -> None:
                 separators=(",", ":") if compact else None,
                 allow_nan=False,
             )
-        temporary.replace(path)
+        for attempt in range(3):
+            try:
+                temporary.replace(path)
+                break
+            except PermissionError as error:
+                # Windows readers can briefly prevent atomic replacement.
+                if getattr(error, "winerror", None) not in {5, 32, 33} or attempt == 2:
+                    raise
+                sleep(0.05 * (attempt + 1))
     finally:
         if temporary is not None:
             temporary.unlink(missing_ok=True)
