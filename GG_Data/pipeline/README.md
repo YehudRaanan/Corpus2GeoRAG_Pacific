@@ -1,5 +1,17 @@
 # Daniel pipeline POC
 
+### Offline recovery checkpoint - 24 October 2026
+
+The locked run acquired all 1,272 inputs but failed during JSON serialization.
+Recovery code in local checkpoint `c83ca2e` streams atomic JSON output and reuses
+exact saved responses without network access. The new `geography_ranked_v4`
+saved the candidate file, then stopped after 37/1,272 ranked inputs on the
+unsupported source date `~1571`. Final ranking, model Geography and spatial
+integration remain pending; no source-date policy was changed. Validation:
+197 passed, three existing expected failures. See
+[the recovery record](../../docs/POC_RECOVERY_CHECKPOINT_2026-10-24.md) and
+[the current consultation checkpoint](../../docs/POC_COMPLETION_STOP_2026-10-23.md).
+
 ### Approved matching penalties and complete 10K Geography - 23 October 2026
 
 The owner approved continuation after source review of 30 prior examples:

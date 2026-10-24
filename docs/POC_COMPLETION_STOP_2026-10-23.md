@@ -1,6 +1,29 @@
 # Fixed 10K POC completion: consultation checkpoint
 
-Date: 23 October 2026. Status: **GEOGRAPHY_RESUMED_GRAPH_AND_AGENT_DATES_VERIFIED**.
+Updated: 24 October 2026. Status: **STOPPED_UNSUPPORTED_SOURCE_DATE**.
+
+## Current safe pause: 24 October, 19:51 Asia/Jerusalem (UTC+03)
+
+The owner approved a 45–90 minute offline recovery on 24 October. The previous
+worker had acquired all 1,272 inputs but failed while serializing candidate
+evidence with a `MemoryError`; this was not a completed Geography ranking run.
+The recovery uses streaming atomic JSON writes and exact saved-response reuse,
+with network connections blocked. The original `geography_ranked_v3` is unchanged.
+
+The new `geography_ranked_v4` saved the complete candidate JSON, then stopped
+after 37/1,272 ranked inputs. The next input is Psel (`Q1133871`), selection date
+`1941-12-07`. One retrieved reverse-geocoding candidate is Kremenchuk, OSM node
+`265058149`, QID `Q156724`, with raw `start_date="~1571"`. The existing temporal
+validator raises `ValueError: Unsupported source date: ~1571`. No interpretation,
+candidate exclusion, rule change, retry, or new request was made after this stop.
+
+Final ranking, model Geography population and complete spatial integration are
+still pending. The prepared final integration worker was not launched. Recovery
+code passed 197 tests, with three existing expected failures. Code checkpoint:
+`c83ca2e` (local only). See [the recovery record](POC_RECOVERY_CHECKPOINT_2026-10-24.md)
+for evidence, remaining work, and the required source-date decision.
+
+The earlier 23 October checkpoints below are historical.
 
 ## Approved continuation: 15:36 Asia/Jerusalem
 
