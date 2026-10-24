@@ -1,8 +1,41 @@
 # Fixed 10K POC recovery: 24 October 2026
 
-Status: **STOPPED_UNSUPPORTED_SOURCE_DATE**. Worker stopped at 19:51:25
-Asia/Jerusalem (UTC+03). This is not completion of Geography or final spatial
-integration. The original 23 October 17:30 target was missed in the locked session.
+Status: **RUNNING_DOCUMENTED_GEOGRAPHY_WORKFLOW**. The offline worker restarted
+at 19:59:40 on 24 October, Asia/Jerusalem (UTC+03). This is not completion of
+Geography or final spatial integration. The original 23 October 17:30 target
+was missed in the locked session. The stopped-worker evidence below is retained.
+
+## Correction of the consultation request
+
+The owner directed use of the existing agreed workflow. The current geocoding
+policy explicitly supersedes historical date rejection gates, and population
+S2T section 9.7 says an uncertain date cannot leave an available geometry
+unresolved. The old sample helper's exception was an implementation mismatch,
+not a new business-policy decision. The earlier consultation request was
+incorrect. Upstream selection-date precision and calendar safeguards remain
+separate and unchanged.
+
+Local commit `34d394b` aligns the ranking caller with that rule. Original source
+dates stay unchanged in `supplied_dates` and `tags`; unreadable bounds are also
+recorded in `unsupported_source_dates` with `UNSUPPORTED_SOURCE_DATE`. Readable
+bounds still supply the existing outside-period warning. Unknown temporal
+evidence supplies no historical bonus, and all other score weights, tie rules
+and geometry-availability rules remain unchanged. No new date interpretation
+or normalization is performed.
+
+Verification: 44 focused tests passed; 219 wider tests passed with the same
+three expected failures; Ruff passed. A regression reproduced the original
+`~1571` failure before the correction and now covers every observed date form,
+mixed readable/unreadable bounds, readable outside dates, raw evidence
+preservation and continued selection. No dependencies were installed.
+
+New isolated worker and evidence: `recovery_20261024_workflow/` within the
+original bundle. Ranking output: `recovery_20261024_workflow/geography_ranked_v5/`.
+The v3 and v4 output directories and their launch/failure evidence are preserved.
+The new parent directory uses lossless NTFS compression from the start. Network
+connections remain blocked; exact saved request receipts are reused in place.
+Remaining estimate at restart: 35–60 minutes, target 21:00 on 24 October,
+Asia/Jerusalem; next checkpoint 20:15. Final model and spatial checks are pending.
 
 ## Scope and authorization
 
@@ -51,10 +84,10 @@ before selection, so this candidate stops the run even though it has another
 QID. Failure evidence is `recovery_20261024/rank_failure.json`; last progress is
 `geography_ranked_v4/progress.json`. The worker exited and was not restarted.
 
-The owner must decide how unsupported source dates affect eligibility and
-historical support. Do not silently remove `~`, replace the date, drop the
-candidate, or change its score. Preserve the raw value and its receipt under
-any approved policy.
+At the initial pause a new owner decision was requested. That request is
+superseded by the workflow reconciliation above. Do not remove `~`, replace
+the raw date or drop the candidate. Preserve its receipt and uncertainty under
+the existing approved rule.
 
 A read-only scan of `start_date` and `end_date` in all saved v3 receipt responses
 found 20 unsupported field occurrences. This counts receipt fields, not unique
@@ -83,23 +116,12 @@ establish that every occurrence blocks this population.
 | start `January 9th, 1788` | 1 |
 | start `756` | 1 |
 
-Proposed policy, **not approved or implemented**: preserve raw unsupported
-values and receipts; record unknown temporal evidence explicitly; award no
-historical-support points when a supplied bound is unsupported; keep applying
-any independently readable bound and all other existing candidate checks.
-Do not silently treat an approximate value as an exact year. An alternative
-is to approve explicit date-format support first. These policies have different
-effects on temporal evidence and require an owner decision before another run.
-
-At this stop, continuation is estimated at 35–60 minutes after a bounded
-source-date decision, including implementation, tests, offline ranking and final
-checks. The prior 21:00 target is conditional on that decision and successful
-checks; it is not a completed or guaranteed delivery time.
+No new date-format parser was authorized or needed. Unreadable temporal values
+remain evidence with uncertainty under the current geometry-selection rule.
 
 ## Remaining work and protection
 
-After a source-date decision: implement only that policy, test it, finish
-ranking without source requests, populate model Geography, and run full graph,
+Finish ranking without source requests, populate model Geography, and run full graph,
 date-join and spatial checks. The previously verified graph has 7,710 nodes,
 16,466 assertions and 32,899 directional views, SHA-256
 `70be8618fbb7a5333af15564032f02c3977cc97fd02aa4271a64a0fe47316bc4`.

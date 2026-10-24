@@ -1,8 +1,31 @@
 # Fixed 10K POC completion: consultation checkpoint
 
-Updated: 24 October 2026. Status: **STOPPED_UNSUPPORTED_SOURCE_DATE**.
+Updated: 24 October 2026. Status: **RUNNING_DOCUMENTED_GEOGRAPHY_WORKFLOW**.
 
-## Current safe pause: 24 October, 19:51 Asia/Jerusalem (UTC+03)
+## Workflow reconciliation and restart: 24 October, 19:59 Asia/Jerusalem
+
+The owner directed use of the already documented workflow. Review confirmed
+that population S2T section 9.7 and the current geocoding policy supersede the
+older source-date veto: uncertain dates stay in metadata and cannot stop
+selection of available valid geometry. Asking for a new policy decision was
+incorrect. The selection-date/calendar safeguards for upstream Event/Relation
+evidence are separate and remain unchanged.
+
+Code checkpoint `34d394b` corrects the ranking caller: retain raw unreadable
+source bounds with `UNSUPPORTED_SOURCE_DATE`, keep comparing readable bounds,
+and award no unsupported historical evidence points. No new parser, inferred
+date, source, identity assignment or selection threshold is introduced. The
+focused suite passed 44 tests; the wider suite passed 219 with three existing
+expected failures. Ruff passed.
+
+The offline worker restarted at 19:59:40 in
+`recovery_20261024_workflow/geography_ranked_v5` under the same run bundle,
+reusing v3 exact request receipts with network connections blocked. All prior
+outputs and failure receipts remain unchanged. Remaining estimate at restart:
+35–60 minutes, target 21:00 on 24 October, Asia/Jerusalem (UTC+03), next status
+checkpoint 20:15. Final model and spatial integration are still pending.
+
+## Superseded safe pause: 24 October, 19:51 Asia/Jerusalem (UTC+03)
 
 The owner approved a 45–90 minute offline recovery on 24 October. The previous
 worker had acquired all 1,272 inputs but failed while serializing candidate
@@ -21,7 +44,7 @@ Final ranking, model Geography population and complete spatial integration are
 still pending. The prepared final integration worker was not launched. Recovery
 code passed 197 tests, with three existing expected failures. Code checkpoint:
 `c83ca2e` (local only). See [the recovery record](POC_RECOVERY_CHECKPOINT_2026-10-24.md)
-for evidence, remaining work, and the required source-date decision.
+for evidence and the subsequent reconciliation with the already approved rule.
 
 The earlier 23 October checkpoints below are historical.
 

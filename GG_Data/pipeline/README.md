@@ -5,10 +5,14 @@
 The locked run acquired all 1,272 inputs but failed during JSON serialization.
 Recovery code in local checkpoint `c83ca2e` streams atomic JSON output and reuses
 exact saved responses without network access. The new `geography_ranked_v4`
-saved the candidate file, then stopped after 37/1,272 ranked inputs on the
-unsupported source date `~1571`. Final ranking, model Geography and spatial
-integration remain pending; no source-date policy was changed. Validation:
-197 passed, three existing expected failures. See
+saved the candidate file, then stopped after 37/1,272 ranked inputs on `~1571`.
+Owner-directed review confirmed that this old parser veto conflicts with the
+already approved S2T 9.7 date-uncertainty rule. Local commit `34d394b` corrects
+the ranking caller while preserving source dates, uncertainty and existing
+weights. The offline run restarted in
+`recovery_20261024_workflow/geography_ranked_v5/`. Final ranking, model Geography
+and spatial integration remain pending. Validation: 219 passed, three existing
+expected failures. See
 [the recovery record](../../docs/POC_RECOVERY_CHECKPOINT_2026-10-24.md) and
 [the current consultation checkpoint](../../docs/POC_COMPLETION_STOP_2026-10-23.md).
 
