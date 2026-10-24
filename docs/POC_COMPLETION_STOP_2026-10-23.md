@@ -1,6 +1,57 @@
 # Fixed 10K POC completion: consultation checkpoint
 
-Updated: 24 October 2026. Status: **RUNNING_DOCUMENTED_GEOGRAPHY_WORKFLOW**.
+Updated: 24 October 2026. Status: **STOPPED_AT_OWNER_REQUEST**.
+
+## Final saved checkpoint: 24 October
+
+The owner declined the proposed 25–40-minute extension and directed saving this
+checkpoint. No recovery worker is running and no new run was started.
+All 1,272 inputs were ranked: 1,246 geometry proposals and 26 unresolved rows.
+The worker exited during its protected-input hash check; the incomplete traceback
+does not establish an exit cause. Final ranking audit/verification, populated
+Geography and final spatial integration remain incomplete. Both saved candidate
+files match the original SHA-256 baseline. D: had 1.28 GB free at that check.
+The proposed 21:10 target was not approved; no completion deadline is active.
+See [the final recovery record](POC_RECOVERY_CHECKPOINT_2026-10-24.md) for exact
+files, counts, uncertainty, storage operations and continuation requirements.
+Protection: **Local checkpoint only**; ignored outputs are not backed up on
+GitHub. The running-status entries below are retained as historical evidence.
+
+## 20:15 checkpoint: disk space recovered, same worker resumed
+
+The current worker was suspended before D: filled during candidate serialization.
+No process was terminated and no file was deleted. Lossless NTFS compression of
+the 2,597 saved v3 JSON receipt files reduced physical storage from
+6,363,675,860 logical bytes to 1,457,011,420 stored bytes. This changes storage
+attributes, not JSON content, request parameters or source dates. The running
+worker's protected-input SHA-256 checks remain the final content verification.
+
+The same PID 7312 resumed at 20:15:03 with 5,107,908,608 bytes free on D:.
+Evidence: `recovery_20261024_workflow_v2/storage_recovery.json`. Candidate writing,
+ranking and final model/spatial integration continue. Scope unchanged; estimated
+remaining 25–40 minutes, target 21:00 on 24 October, Asia/Jerusalem (UTC+03),
+next checkpoint 20:30. The previous v3 content and all stopped-run evidence
+remain preserved; its receipt files now have compressed storage attributes.
+
+## Current local-write recovery: 24 October, 20:04 Asia/Jerusalem
+
+The 19:59 worker stopped after 71 cached inputs on `WinError 5` while atomically
+replacing its local `progress.json`. No source acquisition or ranking decision
+failed. The file ACL allows modification; a native Windows probe reproduced
+the same error with an ordinary reader holding the destination open and
+confirmed success after that reader closed. The exact original lock owner is
+not known. No permission or access-control setting was changed.
+
+Local checkpoint `36f3069` bounds retries of only Windows local replacement
+errors 5/32/33 to three attempts, with 0.05/0.1-second waits. Persistent failure
+still raises and retains the original destination. The source HTTP retry policy
+is unchanged. Validation: 47 focused tests, 222 wider tests passed with the same
+three expected failures, and Ruff passed. Native probe evidence is retained.
+
+The new offline worker started at 20:04:03 under
+`recovery_20261024_workflow_v2/geography_ranked_v6/`. All preceding attempts are
+preserved. It uses the same v3 saved responses and blocked-network contract.
+The 21:00 target and 20:15 checkpoint remain unchanged; final outputs are pending.
 
 ## Workflow reconciliation and restart: 24 October, 19:59 Asia/Jerusalem
 

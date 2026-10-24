@@ -1,5 +1,17 @@
 # Daniel pipeline POC
 
+### Owner-directed stop - 24 October 2026
+
+The owner declined a further recovery extension and requested a saved checkpoint.
+The current worker exited during the protected-input hash check after ranking
+all 1,272 LOC inputs: 1,246 proposals and 26 unresolved. Its exit cause is not
+confirmed. Ranking audit/verification, final Geography model and spatial checks
+remain incomplete; no replacement worker was launched. The v4/v6 candidate
+files match the saved SHA-256 baseline. The documented S2T 9.7 date rule is
+implemented; no new policy decision is pending. See
+[the final saved checkpoint](../../docs/POC_RECOVERY_CHECKPOINT_2026-10-24.md).
+Protection: **Local checkpoint only**. The earlier running notes below are history.
+
 ### Offline recovery checkpoint - 24 October 2026
 
 The locked run acquired all 1,272 inputs but failed during JSON serialization.
@@ -10,8 +22,9 @@ Owner-directed review confirmed that this old parser veto conflicts with the
 already approved S2T 9.7 date-uncertainty rule. Local commit `34d394b` corrects
 the ranking caller while preserving source dates, uncertainty and existing
 weights. The offline run restarted in
-`recovery_20261024_workflow/geography_ranked_v5/`. Final ranking, model Geography
-and spatial integration remain pending. Validation: 219 passed, three existing
+`recovery_20261024_workflow_v2/geography_ranked_v6/` after a bounded Windows
+atomic-write correction (`36f3069`); prior attempts are preserved. Final ranking,
+model Geography and spatial integration remain pending. Validation: 222 passed, three existing
 expected failures. See
 [the recovery record](../../docs/POC_RECOVERY_CHECKPOINT_2026-10-24.md) and
 [the current consultation checkpoint](../../docs/POC_COMPLETION_STOP_2026-10-23.md).
