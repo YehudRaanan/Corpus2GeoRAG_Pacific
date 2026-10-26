@@ -190,22 +190,26 @@ class WikiClient:
 
 def fetch_page(client: WikiClient, source: str, texts: list[str], path: Path) -> dict:
     if path.exists():
-        return read_json(path)
-    response, evidence = client.query(
-        {
-            "action": "query",
-            "titles": source,
-            "redirects": 1,
-            "prop": "extracts|info|pageprops",
-            "explaintext": 1,
-            "inprop": "url",
-        }
-    )
-    page = resolve_page(source, response)
-    page["request_evidence"] = [evidence]
-    page["_normalized_extract"] = normalize(page.get("extract", ""))
-    if page["status"] == "ARTICLE" and any(
-        match_text(text, page)[0] is None for text in texts
+        page = read_json(path)
+    else:
+        response, evidence = client.query(
+            {
+                "action": "query",
+                "titles": source,
+                "redirects": 1,
+                "prop": "extracts|info|pageprops",
+                "explaintext": 1,
+                "inprop": "url",
+            }
+        )
+        page = resolve_page(source, response)
+        page["request_evidence"] = [evidence]
+        page["_normalized_extract"] = normalize(page.get("extract", ""))
+    if (
+        page["status"] == "ARTICLE"
+        and not page.get("rendered")
+        and not page.get("render_error")
+        and any(match_text(text, page)[0] is None for text in texts)
     ):
         try:
             rendered, evidence = client.query(
@@ -344,12 +348,9 @@ def recover_missing(frame: pd.DataFrame, output: Path) -> None:
         )
 
 
-def export(input_path: Path, output: Path) -> dict:
-    target = output / (input_path.stem + "_with_wiki_page_id.parquet")
-    if target.exists():
-        raise FileExistsError(f"Preserve existing output: {target}")
-    table = pq.read_table(input_path)
-    frame = table.select(["Source", "Text"]).to_pandas()
+def make_decisions(
+    frame: pd.DataFrame, output: Path, include_text_search: bool = True
+) -> dict:
     decisions = {}
     for source in sorted(frame.Source.unique()):
         path = (
@@ -381,6 +382,7 @@ def export(input_path: Path, output: Path) -> dict:
                         (name, candidate)
                         for name, candidate in candidates_by_path.items()
                         if candidate.get("pageid") == pageid
+                        and match_text(text, candidate)[0] == pageid
                     )
             decisions[(source, text)] = {
                 "wiki_page_id": pageid,
@@ -394,6 +396,156 @@ def export(input_path: Path, output: Path) -> dict:
                     str(search_path.relative_to(output)) if search_record else None
                 ),
             }
+            text_search_path = (
+                output
+                / "text_search"
+                / (hashlib.sha256(text.encode()).hexdigest() + ".json")
+            )
+            if include_text_search and pageid is None and text_search_path.exists():
+                result = read_json(text_search_path)
+                decisions[(source, text)].update(
+                    {
+                        k: result.get(k)
+                        for k in [
+                            "wiki_page_id",
+                            "status",
+                            "page_evidence",
+                            "canonical_title",
+                            "revision_id",
+                        ]
+                    }
+                )
+                decisions[(source, text)]["search_evidence"] = str(
+                    text_search_path.relative_to(output)
+                )
+    if include_text_search:
+        pages = {
+            str(path.relative_to(output)): read_json(path)
+            for base in ["pages", "candidate_pages"]
+            for path in sorted((output / base).glob("*.json.gz"))
+        }
+        for (_, text), decision in decisions.items():
+            if decision["status"].startswith("VERIFIED_SEARCH_"):
+                decision.update(choose_evidence(text, pages))
+                decision["candidate_page_id"] = decision["wiki_page_id"]
+    return decisions
+
+
+def choose_evidence(text: str, pages: dict[str, dict]) -> dict:
+    pageid, status = search_decision(text, list(pages.values()))
+    result = {
+        "wiki_page_id": pageid,
+        "status": status,
+        "page_evidence": None,
+        "canonical_title": None,
+        "revision_id": None,
+    }
+    if pageid is not None:
+        name, page = next(
+            (name, p)
+            for name, p in pages.items()
+            if p.get("pageid") == pageid and match_text(text, p)[0] == pageid
+        )
+        result.update(
+            page_evidence=name,
+            canonical_title=page.get("title"),
+            revision_id=page.get("lastrevid"),
+        )
+    return result
+
+
+def search_remaining(frame: pd.DataFrame, output: Path) -> None:
+    decisions = make_decisions(frame, output, include_text_search=False)
+    pending = sorted(
+        {
+            text
+            for (_, text), result in decisions.items()
+            if result["wiki_page_id"] is None
+        }
+    )
+    directory = output / "text_search"
+    directory.mkdir(exist_ok=True)
+    candidate_dir = output / "candidate_pages"
+    candidate_dir.mkdir(exist_ok=True)
+    pages = {
+        str(path.relative_to(output)): read_json(path)
+        for base in ["pages", "candidate_pages"]
+        for path in sorted((output / base).glob("*.json.gz"))
+    }
+    client = WikiClient(output)
+    for number, text in enumerate(pending, 1):
+        key = hashlib.sha256(text.encode()).hexdigest()
+        path = directory / f"{key}.json"
+        if path.exists():
+            continue
+        record = {
+            "text_sha256": key,
+            "Text": text,
+            "search_evidence": [],
+            "candidate_pages": [],
+            "errors": [],
+        }
+        result = choose_evidence(text, pages)
+        if result["status"] == "TEXT_NOT_FOUND":
+            phrase = " ".join(text.split()[:12]).replace('"', " ")
+            try:
+                response, evidence = client.query(
+                    {
+                        "action": "query",
+                        "list": "search",
+                        "srsearch": f'"{phrase}"',
+                        "srnamespace": 0,
+                        "srlimit": 5,
+                    }
+                )
+                record["search_evidence"].append(evidence)
+                for item in response.get("query", {}).get("search", []):
+                    title = item["title"]
+                    page_path = candidate_dir / (
+                        hashlib.sha256(title.encode()).hexdigest() + ".json.gz"
+                    )
+                    try:
+                        page = fetch_page(client, title, [text], page_path)
+                        name = str(page_path.relative_to(output))
+                        pages[name] = page
+                        record["candidate_pages"].append(name)
+                    except RuntimeError as error:
+                        record["errors"].append(str(error))
+            except RuntimeError as error:
+                record["errors"].append(str(error))
+            result = choose_evidence(text, pages)
+        record.update(result)
+        save_json(path, record)
+        LOG.info(
+            "Passage search %d/%d status=%s pageid=%s",
+            number,
+            len(pending),
+            result["status"],
+            result["wiki_page_id"],
+        )
+        save_json(
+            output / "text_search_progress.json",
+            {
+                "completed_texts": number,
+                "total_texts": len(pending),
+                "updated_utc": datetime.now(timezone.utc).isoformat(),
+            },
+        )
+    # Recheck against the final pool so later candidates cannot conceal ambiguity.
+    for text in pending:
+        path = directory / (hashlib.sha256(text.encode()).hexdigest() + ".json")
+        record = read_json(path)
+        record.update(choose_evidence(text, pages))
+        save_json(path, record)
+
+
+def export(input_path: Path, output: Path) -> dict:
+    target = output / (input_path.stem + "_with_wiki_page_id.parquet")
+    if target.exists():
+        raise FileExistsError(f"Preserve existing output: {target}")
+    table = pq.read_table(input_path)
+    frame = table.select(["Source", "Text"]).to_pandas()
+    decisions = make_decisions(frame, output)
     enriched = append_ids(table, decisions)
     temporary = target.with_suffix(".parquet.tmp")
     pq.write_table(enriched, temporary, compression="zstd")
@@ -488,7 +640,7 @@ def main() -> None:
     parser.add_argument("--input", required=True, type=Path)
     parser.add_argument("--output", required=True, type=Path)
     parser.add_argument(
-        "--phase", required=True, choices=["collect", "recover", "export"]
+        "--phase", required=True, choices=["collect", "recover", "search", "export"]
     )
     parser.add_argument("--limit", type=int)
     args = parser.parse_args()
@@ -498,12 +650,14 @@ def main() -> None:
     logging.getLogger().addHandler(
         logging.FileHandler(args.output / "run.log", encoding="utf-8")
     )
-    if args.phase in {"collect", "recover"}:
+    if args.phase in {"collect", "recover", "search"}:
         frame = pd.read_parquet(args.input, columns=["Source", "Text"])
         if args.phase == "collect":
             collect(frame, args.output, args.limit)
-        else:
+        elif args.phase == "recover":
             recover_missing(frame, args.output)
+        else:
+            search_remaining(frame, args.output)
     else:
         LOG.info("%s", json.dumps(export(args.input, args.output)))
 

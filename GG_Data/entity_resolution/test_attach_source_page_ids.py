@@ -1,6 +1,7 @@
 """Protect source attribution and raw-row preservation."""
 
 import attach_source_page_ids as subject
+import pandas as pd
 import pyarrow as pa
 
 
@@ -77,6 +78,41 @@ def test_missing_decision_is_an_error():
         pass
     else:
         raise AssertionError("Missing evidence must stop export")
+
+
+def test_recovered_source_is_rechecked_against_final_candidate_pool(tmp_path):
+    text = "This is a sufficiently long copied passage with eight distinct words."
+    source = "Missing source"
+    key = subject.hashlib.sha256(source.encode()).hexdigest()
+    for directory in ["pages", "candidate_pages", "search_candidates"]:
+        (tmp_path / directory).mkdir()
+    subject.save_json(tmp_path / "pages" / f"{key}.json.gz", {"status": "MISSING_PAGE"})
+    for number in [1, 2]:
+        subject.save_json(
+            tmp_path / "candidate_pages" / f"{number}.json.gz",
+            {"status": "ARTICLE", "pageid": number, "extract": text},
+        )
+    subject.save_json(
+        tmp_path / "search_candidates" / f"{key}.json",
+        {"candidate_pages": ["candidate_pages/1.json.gz"]},
+    )
+    result = subject.make_decisions(
+        pd.DataFrame({"Source": [source], "Text": [text]}), tmp_path
+    )
+    assert result[(source, text)]["wiki_page_id"] is None
+    assert result[(source, text)]["status"] == "AMBIGUOUS_TEXT_MATCH"
+
+
+def test_text_search_evidence_must_be_the_page_that_contains_the_passage():
+    text = "This is a sufficiently long copied passage with eight distinct words."
+    pages = {
+        "one": {"status": "ARTICLE", "pageid": 8, "extract": "Other text"},
+        "two": {"status": "ARTICLE", "pageid": 8, "extract": text},
+    }
+    result = subject.choose_evidence(text, pages)
+    assert result["wiki_page_id"] == 8 and result["page_evidence"] == "two"
+    pages["three"] = {"status": "ARTICLE", "pageid": 9, "extract": text}
+    assert subject.choose_evidence(text, pages)["wiki_page_id"] is None
 
 
 def test_text_search_accepts_only_one_full_passage_and_rejects_short_text():
