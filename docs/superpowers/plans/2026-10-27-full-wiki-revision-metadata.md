@@ -14,6 +14,8 @@ Ruling: apply the 2,707 already verified historical rows immediately, with no ne
 
 Completed outputs: V1 page-ID303942/revision2707; V2 page-ID303942/revision303942;5922nullrows,414unresolvedpairs. Nine metadata calls,3.969 summed seconds. No original raw Parquet read or text matching. Baseline2138andpilot38manifestfiles checked;12focused/regressionchecks, Ruff/Black/isort pass. Reviewer found missing baseline manifest guard; failing test -> guard -> passing test; review confirmed fix. Current output provenance independently reconciled without overwriting either file.
 
+Completion clock22:26:43: verified elapsed471seconds (7m51), not active work. Epoch accepted an approximate0.128h actual before this final clock (7m40.8); exact correction0.130833h was rejected because only one actual per estimate is allowed. Retain the verified clock-derived duration here; do not treat the approximate stored value as exact. Code/docs checkpoint7095ff7; ignored data unprotected.
+
 Checkpoint 22:28, upper estimate 22:36:52. Outputs `Data/external/source_page_versions_staged_20261027/`, distinct `_v1_historical_recovery.parquet` and `_v2_revision_metadata.parquet` filenames. Original inputs and V1 remain unchanged. No original-file processing, new history sampling, remote writes, installation, graph changes or cleanup.
 
 ### Pending continuation — history only, not started
