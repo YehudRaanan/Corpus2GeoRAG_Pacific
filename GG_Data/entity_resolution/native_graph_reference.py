@@ -271,7 +271,8 @@ def collect_wikidata(output: Path) -> dict[str, Any]:
 
 def iter_quads(path: Path):
     """Parse the finite standard N-Quads form used by the saved EventKG files."""
-    with gzip.open(path, "rt", encoding="utf-8") as stream:
+    opener = gzip.open if path.suffix == ".gz" else open
+    with opener(path, "rt", encoding="utf-8") as stream:
         for number, line in enumerate(stream, 1):
             match = NQUAD.fullmatch(line)
             if not match:
@@ -440,6 +441,20 @@ def collect_eventkg(output: Path) -> dict[str, Any]:
         "complete_corpus_coverage": full_scan or not bool(qids - prior_scope),
         "full_official_archive_scanned": full_scan,
     }
+    type_uris = {row[2] for row in rows if row[1] == RDF_TYPE and row[3] == "uri"}
+    type_label_rows = []
+    for name in ["type_labels_wikidata.nq", "type_labels_dbpedia.nq"]:
+        path = EVENTKG / "metadata" / name
+        for s, p, o, kind, language, graph in iter_quads(path):
+            if s in type_uris and p == RDFS_LABEL and language == "en":
+                type_label_rows.append((s, o, graph, str(path.resolve())))
+        source_files.append({"path": str(path.resolve()), "sha256": sha256(path)})
+    export_frame(
+        pd.DataFrame(
+            type_label_rows, columns=["type", "type_label", "source_graph", "evidence"]
+        ),
+        output / "eventkg_type_labels.parquet",
+    )
     for name in ["graphs.ttl", "schema.ttl", "void.ttl"]:
         path = EVENTKG / "metadata" / name
         source_files.append({"path": str(path.resolve()), "sha256": sha256(path)})
@@ -502,6 +517,8 @@ def build_a(output: Path) -> dict[str, Any]:
             )
     quads = pd.read_parquet(output / "eventkg_corpus_assertions.parquet")
     resource_qids = pd.read_parquet(output / "eventkg_resource_qids.parquet")
+    event_type_labels = pd.read_parquet(output / "eventkg_type_labels.parquet")
+    event_type_labels = event_type_labels.groupby("type").type_label.first().to_dict()
     labels = quads.loc[quads.predicate.eq(PREF_LABEL) & quads.language.eq("en")]
     fallback_labels = quads.loc[
         quads.predicate.eq(RDFS_LABEL) & quads.language.eq("en")
@@ -522,7 +539,9 @@ def build_a(output: Path) -> dict[str, Any]:
                     "qid": row.qid,
                     "name": name,
                     "type": row.object,
-                    "type_label": selected.get(type_id, {}).get("label") or type_id,
+                    "type_label": event_type_labels.get(row.object)
+                    or selected.get(type_id, {}).get("label")
+                    or type_id,
                     "source": "EVENTKG",
                     "type_source_graph": row.source_graph,
                     "resource": row.resource,

@@ -10,7 +10,7 @@ from pathlib import Path
 import numpy as np
 import pandas as pd
 import pyarrow.parquet as pq
-from attach_source_page_ids import save_json, sha256
+from attach_source_page_ids import read_json, save_json, sha256
 from native_corpus_graphs import INPUT, INPUT_HASH, OUTPUT
 
 LOG = logging.getLogger(__name__)
@@ -137,6 +137,123 @@ def verify_b(output: Path) -> dict:
     return result
 
 
+def verify_a(output: Path) -> dict:
+    """Verify that every native type and page/revision membership has source evidence."""
+    path = output / "graph_a"
+    links = pd.read_parquet(output / "wiki_link_occurrences.parquet")
+    mapping = pd.read_parquet(output / "title_qid_mapping.parquet")
+    metadata = pd.read_parquet(path / "native_entity_types.parquet")
+    entities = read_json(output / "wikidata_corpus_metadata.json.gz")
+    quads = pd.read_parquet(output / "eventkg_corpus_assertions.parquet")
+    event_types = set(
+        zip(
+            quads.loc[
+                quads.predicate.eq("http://www.w3.org/1999/02/22-rdf-syntax-ns#type"),
+                "resource",
+            ],
+            quads.loc[
+                quads.predicate.eq("http://www.w3.org/1999/02/22-rdf-syntax-ns#type"),
+                "object",
+            ],
+            quads.loc[
+                quads.predicate.eq("http://www.w3.org/1999/02/22-rdf-syntax-ns#type"),
+                "source_graph",
+            ],
+        )
+    )
+    resource_qids = set(
+        map(tuple, pd.read_parquet(output / "eventkg_resource_qids.parquet").to_numpy())
+    )
+    linked_names = (
+        links.merge(mapping[["target_title", "qid"]], on="target_title")
+        .dropna(subset=["qid"])
+        .groupby("qid")
+        .target_title.agg(set)
+        .to_dict()
+    )
+    event_names = (
+        quads.loc[
+            quads.language.eq("en")
+            & quads.predicate.isin(
+                [
+                    "http://www.w3.org/2004/02/skos/core#prefLabel",
+                    "http://www.w3.org/2000/01/rdf-schema#label",
+                ]
+            )
+        ]
+        .groupby("resource")
+        .object.agg(set)
+        .to_dict()
+    )
+    for row in metadata.itertuples(index=False):
+        if row.source == "WIKIDATA":
+            if row.type not in {
+                "http://www.wikidata.org/entity/" + t
+                for t in entities[row.qid].get("direct_types", [])
+            }:
+                raise ValueError("Graph A contains an unsupported Wikidata type")
+            if row.name not in (
+                {entities[row.qid]["label"]}
+                if entities[row.qid].get("label")
+                else linked_names[row.qid]
+            ):
+                raise ValueError("Graph A contains an unsupported Wikidata name")
+        elif row.source == "EVENTKG":
+            if (row.resource, row.type, row.type_source_graph) not in event_types or (
+                row.resource,
+                row.qid,
+            ) not in resource_qids:
+                raise ValueError("Graph A contains an unsupported EventKG type/QID")
+            if row.name not in event_names.get(row.resource, linked_names[row.qid]):
+                raise ValueError("Graph A contains an unsupported EventKG name")
+        else:
+            raise ValueError("Unknown graph A type source")
+    presence = (
+        links.merge(
+            mapping[["target_title", "qid"]], on="target_title", validate="many_to_one"
+        )
+        .dropna(subset=["qid"])[["qid", "wiki_page_id", "wiki_revision_id"]]
+        .drop_duplicates()
+    )
+    nodes = pd.read_parquet(path / "nodes.parquet")
+    if set(zip(nodes.name, nodes.type)) != set(zip(metadata.name, metadata.type)):
+        raise ValueError("Graph A node identities differ from native assertions")
+    expected = (
+        presence.merge(metadata[["qid", "name", "type"]].drop_duplicates(), on="qid")
+        .merge(
+            nodes[["node_id", "name", "type"]],
+            on=["name", "type"],
+            validate="many_to_one",
+        )[["node_id", "wiki_page_id", "wiki_revision_id"]]
+        .drop_duplicates()
+    )
+    actual = pd.read_parquet(path / "node_revision_presence.parquet")
+    pd.testing.assert_frame_equal(
+        actual.sort_values(list(actual.columns)).reset_index(drop=True),
+        expected.sort_values(list(actual.columns)).reset_index(drop=True),
+        check_dtype=False,
+    )
+    inventory = pd.read_parquet(output / "corpus_revisions.parquet")
+    audit = pd.read_parquet(output / "wiki_revision_audit.parquet")
+    wanted = set(zip(inventory.wiki_page_id, inventory.wiki_revision_id))
+    if (
+        wanted != set(zip(audit.wiki_page_id, audit.wiki_revision_id))
+        or len(audit) != 571
+        or audit.status.str.contains("FAIL").any()
+    ):
+        raise ValueError("Incomplete exact-revision source evidence")
+    if set(actual.wiki_page_id) != set(inventory.wiki_page_id):
+        raise ValueError("Graph A does not cover all corpus pages")
+    result = verify_graph(path)
+    result.update(
+        native_type_assertions_checked=len(metadata),
+        all_revision_memberships_supported_by_explicit_qid_links=True,
+        exact_revision_evidence_records=len(audit),
+        corpus_page_coverage=425,
+    )
+    return result
+
+
 def main() -> None:
     parser = argparse.ArgumentParser(__doc__)
     parser.add_argument("graph", choices=["a", "b"])
@@ -145,11 +262,7 @@ def main() -> None:
     logging.basicConfig(
         level=logging.INFO, format="%(asctime)s %(levelname)s %(message)s"
     )
-    result = (
-        verify_b(args.output)
-        if args.graph == "b"
-        else verify_graph(args.output / "graph_a")
-    )
+    result = verify_b(args.output) if args.graph == "b" else verify_a(args.output)
     if args.graph == "a":
         save_json(args.output / "graph_a/verification.json", result)
     LOG.info("Verified: %s", json.dumps(result))

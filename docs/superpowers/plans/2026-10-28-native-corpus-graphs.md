@@ -51,7 +51,7 @@ Ponytail full: reuse data and helpers; no frameworks or dependencies. Superpower
 ### 3. Reference collection and graph A (depends on 1, owner /root)
 
 - [x] Index all saved parse responses by exact page/revision; fetch only missing revisions; preserve request evidence.
-- [ ] Collect article hyperlink titles/anchors; attach QIDs and native direct types from cached BigQuery and explicit API responses where needed. Keep unresolved targets and missing types as separate audit records.
+- [x] Collect article hyperlink titles/anchors; attach QIDs and native direct types from cached BigQuery and explicit API responses where needed. Keep unresolved targets and missing types as separate audit records.
 - [ ] Filter cached EventKG resources/types/provenance to corpus QIDs and audit filter scope. Try corpus-scoped endpoint queries for out-of-cache coverage if available; save failure evidence and exact limits without silently treating missing cache entries as absent in EventKG.
 - [ ] Export A graph using same page weighting and native labels/types, with EVENT only in A. Keep source-specific nodes and QID associations.
 - Outcome: graph A artifacts plus explicit source coverage, version semantics and any exact external blocker.
@@ -85,3 +85,5 @@ Ponytail full: reuse data and helpers; no frameworks or dependencies. Superpower
 - Next status checkpoint: 01:30 28/10/2026 Asia/Jerusalem UTC+02. Graph B complete; A reference collection and archive transfer pending. No source-page matching rerun.
 - 01:29 Wikidata collection finished: 71,098 corpus QIDs, all with saved metadata; 8,039 lack direct P31 and remain explicitly audited. Title statuses: 63,417 accepted BigQuery exact sitelinks, 15,764 explicit Wikipedia QIDs, 169 disambiguation targets, 14 no QID, 3 missing/non-article. Zero fetch failures. 1,819 new Wikidata entity records and 59 type-label requests completed.
 - 01:30 checkpoint: B and all revision parsing complete. A waiting on EventKG transfer. Official archive download 6.9% at 01:29:21. Next checkpoint 01:40 Asia/Jerusalem. Review of fallback confirmed two-pass source ordering; added an archive rehash gate and selected-output hashes to prevent reuse after byte changes. Focused tests: 18 passed including existing source-page tests.
+- 01:31 Local code checkpoint 6f041ff. No push; all graph data remains local and ignored. 59,035 corpus QIDs are outside the old EventKG filter; 12,063 are inside, so the full-archive fallback is necessary.
+- 01:36 Download 24.1% at 01:35:43, no reported failures. The N-Quads parser successfully read all 811,820 existing filtered native metadata assertions across six sources; manifests passed. This is parser/cache verification, not a substitute for the new full corpus scan. Prepared independent A native-name/type/QID and revision-membership verification, native type-label retention, and a portable ZIP packager. These A/package steps have not run yet. Estimate and 01:40 checkpoint unchanged.
