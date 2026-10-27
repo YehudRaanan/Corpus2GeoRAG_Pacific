@@ -1,6 +1,6 @@
 # Full Wikipedia revision metadata — execution plan
 
-Status: superseded in part by OWNER's staged-output instruction. The broad historical search below remains pending approval; first create immutable V1 using already verified pilot recovery, then V2 by copying saved baseline revision evidence. Do not rematch the resolved 301,235 rows.
+Status: V1/V2 complete and immutable. OWNER approved the incremental history continuation below. Search only the remaining 414 pairs / 5,922 rows; do not rematch accepted rows. Older broad-plan sections are retained as superseded context.
 
 ## Staged execution amendment — 27/10/2026 22:18:52 Asia/Jerusalem UTC+02
 
@@ -22,13 +22,15 @@ Checkpoint 22:28, upper estimate 22:36:52. Outputs `Data/external/source_page_ve
 
 OWNER approved in chat. Actual start27/10/2026 22:29:30 Asia/Jerusalem UTC+02; completion window27/10 23:29:30–28/10 00:59:30; firstcheckpoint22:39:30. Prior scope/dependency/estimate agreement retained, no new estimation cycle. Root exclusively owns API, progress and output. Output `Data/external/source_page_versions_history_20261027/` with new `_v3_historical_continuation.parquet`; staged V1/V2 remain immutable. Approval_wait ends at this start; earlier wait not separately measured.
 
-- [ ] Prepare only414pendingpairs; reusebaseline/pilotparsedrevisioncaches; test accepted-row immutability and ambiguous/small-text rules.
+- [x] Prepare only414pendingpairs; reusebaseline/pilotparsedrevisioncaches; test accepted-row immutability and ambiguous/small-text rules.
 - [ ] Search bounded dated revisions for remaining contexts, checkpoint after each attempt; no accepted-passage rematching.
 - [ ] Export V3, reconcile original fields and every accepted V2row, audit newly accepted evidence, save unresolved reasons/manifest/report, independent review and local checkpoint.
 
 Process only the 414 remaining unresolved Source/Text pairs (5,922 rows); preserve all 303,942 accepted page/revision assignments and append results into another new Parquet. A cache/context/progress preparation (15–20min) -> B bounded historical matching only on unresolved (35–110min) -> C incremental export/audit (10–20min), root exclusive owner. Model-derived estimate60–150elapsedminutes,mostlikely90,PERTpoint95; Epoch `a5dc98a4-0388-4d62-927e-fe524192d542`. Superpowers decomposition and Epoch share identical scope, dependency order, elapsed-hour basis and limits, one exchange. Generic0.5hreference-class suggestion excludes measured historical parsing/network work and is not used. Do not infer empirical P80 calibration.
 
-Approval wait begins only when the explicit OWNER question is sent; active_work and environment_wait currently zero for this unstarted phase. Same collection ceilings:2200newAPIcalls/120minretrieval/3GiB, no failed-call retries. Initial coverage of all remaining contexts precedes deeper sampling; nulls/statuses are valid outputs and historical absence cannot be proved by a bounded sweep. With approval/start at27/10/2026 22:30 Asia/Jerusalem UTC+02, expected completion27/10 23:30–28/10 01:00; firstcheckpoint27/10 22:40, adjusted to actual approval time. Explicit OWNER approval is required under supplied AGENTS.md for this >20min phase. No extraction or rematching of previously accepted rows.
+Approval was received before execution. Same collection ceilings:2200newAPIcalls/120minretrieval/3GiB, no failed-call retries. Initial coverage of all remaining contexts precedes deeper sampling; nulls/statuses are valid outputs and historical absence cannot be proved by a bounded sweep. Actual start/completion window and first checkpoint are recorded above. No extraction or rematching of previously accepted rows.
+
+Execution evidence: code/tests committed at `6aebca1`; 15 focused/regression checks passed, plus Ruff/Black/isort. Read-only review found no material issue and verified that all 137 source contexts have exactly one page candidate (four use an already corroborated alternate source). Collection launched 27/10/2026 22:34:22 Asia/Jerusalem UTC+02, session40762. All three input manifests passed before collection. At22:36:21:14newpairs/234rows matched,89newAPIcalls,zeroerrors; process active. Root retains exclusive ownership of API/progress/output. First formal checkpoint22:39:30 remains due. Preparation elapsed is measured as part of the overall run; focused active work and environment wait are not separately measured.
 
 ## Scope and acceptance
 
