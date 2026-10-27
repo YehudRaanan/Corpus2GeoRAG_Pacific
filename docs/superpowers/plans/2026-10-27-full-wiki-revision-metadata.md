@@ -18,7 +18,13 @@ Completion clock22:26:43: verified elapsed471seconds (7m51), not active work. Ep
 
 Checkpoint 22:28, upper estimate 22:36:52. Outputs `Data/external/source_page_versions_staged_20261027/`, distinct `_v1_historical_recovery.parquet` and `_v2_revision_metadata.parquet` filenames. Original inputs and V1 remain unchanged. No original-file processing, new history sampling, remote writes, installation, graph changes or cleanup.
 
-### Pending continuation — history only, not started
+### Approved continuation — history only
+
+OWNER approved in chat. Actual start27/10/2026 22:29:30 Asia/Jerusalem UTC+02; completion window27/10 23:29:30–28/10 00:59:30; firstcheckpoint22:39:30. Prior scope/dependency/estimate agreement retained, no new estimation cycle. Root exclusively owns API, progress and output. Output `Data/external/source_page_versions_history_20261027/` with new `_v3_historical_continuation.parquet`; staged V1/V2 remain immutable. Approval_wait ends at this start; earlier wait not separately measured.
+
+- [ ] Prepare only414pendingpairs; reusebaseline/pilotparsedrevisioncaches; test accepted-row immutability and ambiguous/small-text rules.
+- [ ] Search bounded dated revisions for remaining contexts, checkpoint after each attempt; no accepted-passage rematching.
+- [ ] Export V3, reconcile original fields and every accepted V2row, audit newly accepted evidence, save unresolved reasons/manifest/report, independent review and local checkpoint.
 
 Process only the 414 remaining unresolved Source/Text pairs (5,922 rows); preserve all 303,942 accepted page/revision assignments and append results into another new Parquet. A cache/context/progress preparation (15–20min) -> B bounded historical matching only on unresolved (35–110min) -> C incremental export/audit (10–20min), root exclusive owner. Model-derived estimate60–150elapsedminutes,mostlikely90,PERTpoint95; Epoch `a5dc98a4-0388-4d62-927e-fe524192d542`. Superpowers decomposition and Epoch share identical scope, dependency order, elapsed-hour basis and limits, one exchange. Generic0.5hreference-class suggestion excludes measured historical parsing/network work and is not used. Do not infer empirical P80 calibration.
 
