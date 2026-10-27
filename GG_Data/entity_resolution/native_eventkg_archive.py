@@ -11,7 +11,6 @@ import tarfile
 import time
 from concurrent.futures import ThreadPoolExecutor, as_completed
 from pathlib import Path
-from typing import BinaryIO, Iterator
 
 import pandas as pd
 import requests
@@ -120,20 +119,6 @@ def download(output: Path) -> None:
     LOG.info("Archive downloaded and checksum verified")
 
 
-def groups(stream: BinaryIO) -> Iterator[tuple[bytes, list[bytes]]]:
-    subject = None
-    lines: list[bytes] = []
-    for line in stream:
-        current = line.split(b" ", 1)[0]
-        if current != subject:
-            if lines:
-                yield subject, lines
-            subject, lines = current, []
-        lines.append(line)
-    if lines:
-        yield subject, lines
-
-
 def matching_qids(lines: list[bytes], qids: set[bytes]) -> set[bytes]:
     return {
         qid for line in lines if b"owl#sameAs>" in line for qid in QID_RE.findall(line)
@@ -174,11 +159,7 @@ def filter_archive(output: Path) -> None:
                 name = Path(member.name).name
                 if phase == 1:
                     stats["members"].append({"name": member.name, "bytes": member.size})
-                wanted = (
-                    {"events.nq", "entities.nq"}
-                    if phase == 1
-                    else SOURCES - {"events.nq", "entities.nq"}
-                )
+                wanted = {"events.nq", "entities.nq"} if phase == 1 else SOURCES
                 if name not in wanted:
                     continue
                 LOG.info(
@@ -188,20 +169,28 @@ def filter_archive(output: Path) -> None:
                 source = tar.extractfile(member)
                 if source is None:
                     raise ValueError(f"Missing archive member data: {member.name}")
-                with source, gzip.open(selected / (name + ".gz"), "xb") as target:
-                    if phase == 1:
-                        for subject, lines in groups(source):
-                            found = matching_qids(lines, qids)
+                if phase == 1:
+                    with source:
+                        for line in source:
+                            if b"owl#sameAs>" not in line:
+                                continue
+                            found = matching_qids([line], qids)
                             if found:
+                                subject = line.split(b" ", 1)[0]
                                 resources.setdefault(subject, set()).update(found)
-                                target.writelines(lines)
-                                count += len(lines)
-                    else:
+                                count += 1
+                    LOG.info(
+                        "Archive identity scan matched %s QID assertions in %s",
+                        count,
+                        name,
+                    )
+                else:
+                    with source, gzip.open(selected / (name + ".gz"), "xb") as target:
                         for line in source:
                             if line.split(b" ", 1)[0] in resources:
                                 target.write(line)
                                 count += 1
-                LOG.info("Archive filter saved %s assertions from %s", count, name)
+                    LOG.info("Archive filter saved %s assertions from %s", count, name)
         if phase == 1:
             with (selected / "resource_qids.tsv").open("x", encoding="ascii") as stream:
                 for resource, ids in sorted(resources.items()):

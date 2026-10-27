@@ -117,16 +117,13 @@ def test_incomplete_eventkg_scan_cannot_claim_absence(tmp_path):
 
 
 def test_archive_rejects_wrong_range_and_keeps_only_requested_qids():
-    import io
-
     with pytest.raises(ValueError, match="Unexpected archive range"):
         archive.check_range(200, None, 0, 9, 10)
     archive.check_range(206, "bytes 0-9/10", 0, 9, 10)
     data = b'<r1> <label> "A" <g> .\n<r1> <http://www.w3.org/2002/07/owl#sameAs> <http://www.wikidata.org/entity/Q1> <g> .\n<r2> <http://www.w3.org/2002/07/owl#sameAs> <http://www.wikidata.org/entity/Q2> <g> .\n'
-    groups = list(archive.groups(io.BytesIO(data)))
-    assert len(groups) == 2
-    assert archive.matching_qids(groups[0][1], {b"Q1"}) == {b"Q1"}
-    assert not archive.matching_qids(groups[1][1], {b"Q1"})
+    lines = data.splitlines()
+    assert archive.matching_qids(lines[:2], {b"Q1"}) == {b"Q1"}
+    assert not archive.matching_qids(lines[2:], {b"Q1"})
 
 
 def test_archive_two_pass_filter_keeps_types_before_entity_mapping(
@@ -147,6 +144,8 @@ def test_archive_two_pass_filter_keeps_types_before_entity_mapping(
                 data = b'<r1> <label> "A" <g> .\n<r1> <http://www.w3.org/2002/07/owl#sameAs> <http://www.wikidata.org/entity/Q1> <g> .\n<r2> <http://www.w3.org/2002/07/owl#sameAs> <http://www.wikidata.org/entity/Q2> <g> .\n'
             if name == "events.nq":
                 data = b""
+            if name == "entities.nq":
+                data += b'<r1> <label> "Later noncontiguous label" <g> .\n'
             member = tarfile.TarInfo("output/" + name)
             member.size = len(data)
             tar.addfile(member, io.BytesIO(data))
@@ -167,7 +166,9 @@ def test_archive_two_pass_filter_keeps_types_before_entity_mapping(
     with gzip.open(folder / "corpus/types.nq.gz", "rb") as stream:
         assert stream.read() == b"<r1> <type> <T> <g> .\n"
     with gzip.open(folder / "corpus/entities.nq.gz", "rb") as stream:
-        assert b'"A"' in stream.read()
+        content = stream.read()
+        assert b'"A"' in content
+        assert b'"Later noncontiguous label"' in content
     path = folder / "eventkg_v3_2_output.tar.gz"
     original = path.read_bytes()
     path.write_bytes(original[:-1] + bytes([original[-1] ^ 1]))
