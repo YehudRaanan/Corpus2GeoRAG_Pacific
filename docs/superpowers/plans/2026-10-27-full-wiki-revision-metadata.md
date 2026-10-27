@@ -1,6 +1,26 @@
 # Full Wikipedia revision metadata — execution plan
 
-Status: preflight complete; awaiting explicit OWNER approval for a task longer than 20 minutes. No full-run code or network collection started.
+Status: superseded in part by OWNER's staged-output instruction. The broad historical search below remains pending approval; first create immutable V1 using already verified pilot recovery, then V2 by copying saved baseline revision evidence. Do not rematch the resolved 301,235 rows.
+
+## Staged execution amendment — 27/10/2026 22:18:52 Asia/Jerusalem UTC+02
+
+Owner root; exclusive worktree/API/output ownership. New first-step estimate v1: 8–18 elapsed minutes, model-derived, point about 12; Epoch `230f2504-c512-4470-8f26-38175f9a47b4`. Superpowers breakdown A (V1) -> B (V2) -> C (audit/report) and Epoch use the same scope, dependencies, elapsed-hour units and time basis; agreement after one iteration. Approval wait zero for authorized short staged export; active_work/environment_wait separately unknown; measure elapsed and request time.
+
+Ruling: apply the 2,707 already verified historical rows immediately, with no new history search, to provide the requested starting file. Backfill prior resolved revision metadata by 34,254 saved passage decisions / 425 unique revision IDs, not entity extraction or full-passage rematching. Reading/copying rows for export and integrity checks is required and is not a matching rerun. The 5,922 other unresolved rows remain pending historical search under the earlier long-run approval gate; this amendment does not cancel that objective or claim it complete.
+
+- [x] A: small tested staged exporter; V1 has only newly recovered IDs and their complete revision metadata. Preserve existing IDs; metadata on earlier accepted rows remains pending.
+- [x] B: query timestamps for the 425 saved revision IDs in batches, validate page/revision identity, backfill V2 metadata for the 301,235 earlier accepted rows. No matching calls.
+- [x] C: verify original values/order, immutable baseline IDs, V1->V2 IDs and recovered metadata, full counts and input/evidence hashes; independent review; local checkpoint/report.
+
+Completed outputs: V1 page-ID303942/revision2707; V2 page-ID303942/revision303942;5922nullrows,414unresolvedpairs. Nine metadata calls,3.969 summed seconds. No original raw Parquet read or text matching. Baseline2138andpilot38manifestfiles checked;12focused/regressionchecks, Ruff/Black/isort pass. Reviewer found missing baseline manifest guard; failing test -> guard -> passing test; review confirmed fix. Current output provenance independently reconciled without overwriting either file.
+
+Checkpoint 22:28, upper estimate 22:36:52. Outputs `Data/external/source_page_versions_staged_20261027/`, distinct `_v1_historical_recovery.parquet` and `_v2_revision_metadata.parquet` filenames. Original inputs and V1 remain unchanged. No original-file processing, new history sampling, remote writes, installation, graph changes or cleanup.
+
+### Pending continuation — history only, not started
+
+Process only the 414 remaining unresolved Source/Text pairs (5,922 rows); preserve all 303,942 accepted page/revision assignments and append results into another new Parquet. A cache/context/progress preparation (15–20min) -> B bounded historical matching only on unresolved (35–110min) -> C incremental export/audit (10–20min), root exclusive owner. Model-derived estimate60–150elapsedminutes,mostlikely90,PERTpoint95; Epoch `a5dc98a4-0388-4d62-927e-fe524192d542`. Superpowers decomposition and Epoch share identical scope, dependency order, elapsed-hour basis and limits, one exchange. Generic0.5hreference-class suggestion excludes measured historical parsing/network work and is not used. Do not infer empirical P80 calibration.
+
+Approval wait begins only when the explicit OWNER question is sent; active_work and environment_wait currently zero for this unstarted phase. Same collection ceilings:2200newAPIcalls/120minretrieval/3GiB, no failed-call retries. Initial coverage of all remaining contexts precedes deeper sampling; nulls/statuses are valid outputs and historical absence cannot be proved by a bounded sweep. With approval/start at27/10/2026 22:30 Asia/Jerusalem UTC+02, expected completion27/10 23:30–28/10 01:00; firstcheckpoint27/10 22:40, adjusted to actual approval time. Explicit OWNER approval is required under supplied AGENTS.md for this >20min phase. No extraction or rematching of previously accepted rows.
 
 ## Scope and acceptance
 
