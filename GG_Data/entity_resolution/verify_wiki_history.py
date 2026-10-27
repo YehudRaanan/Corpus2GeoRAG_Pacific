@@ -3,6 +3,7 @@
 from __future__ import annotations
 
 import argparse
+import csv
 import hashlib
 import json
 from collections import Counter
@@ -40,6 +41,8 @@ def main() -> None:
     assert old.filter(accepted).equals(new.filter(accepted), check_metadata=True)
     raw = [name for name in old.column_names if not name.startswith("wiki_")]
     assert old.select(raw).equals(new.select(raw), check_metadata=True)
+    for name in ["wiki_text_sha256", "wiki_baseline_status"]:
+        assert old[name].equals(new[name])
     previous, current = old.to_pydict(), new.to_pydict()
     pending = {(x["Source"], x["Text"]): x for x in read_json(output / "pending.json")}
     matches = {(x["Source"], x["Text"]): x for x in read_json(output / "matches.json")}
@@ -83,6 +86,7 @@ def main() -> None:
         assert len(bound) == 1
         page, rev = bound[0]
         assert page["pageid"] == match["pageid"] and page["ns"] == 0
+        assert page["title"] == match["title"]
         assert rev["timestamp"] == match["timestamp"]
         for index in item["raw_row_indices"]:
             assert current["wiki_page_id"][index] == match["pageid"]
@@ -96,6 +100,9 @@ def main() -> None:
             )
             assert current["wiki_match_status"][index] == (
                 "VERIFIED_HISTORICAL_NEW_EVIDENCE"
+            )
+            assert current["wiki_match_method"][index] == (
+                "VERIFIED_FULL_NORMALIZED_RENDERED"
             )
             refs = json.loads(current["wiki_revision_evidence"][index])
             assert refs["page_or_parse_evidence"] == match["evidence"]
@@ -120,6 +127,21 @@ def main() -> None:
         if previous["wiki_page_id"][index] is None:
             assert (pageid is not None) == (index in changed_rows)
     assert len(changed_rows) == summary["newly_resolved_rows"]
+    assert len(matches) == summary["newly_resolved_pairs"]
+    with (output / "unresolved_rows.csv").open(encoding="utf-8", newline="") as stream:
+        unresolved = list(csv.DictReader(stream))
+    null_indices = {
+        i for i, pageid in enumerate(current["wiki_page_id"]) if pageid is None
+    }
+    assert len(unresolved) == len(null_indices)
+    assert {int(row["row_index"]) for row in unresolved} == null_indices
+    for row in unresolved:
+        index = int(row["row_index"])
+        assert (row["Source"], row["Text"]) == (
+            current["Source"][index],
+            current["Text"][index],
+        )
+        assert row["status"] == current["wiki_match_status"][index]
     entities = set(zip(current["word"], current["entity_group"]))
     assert len(entities) == 74339
     records = [read_json(path) for path in (output / "requests").glob("*.gz")]
@@ -134,7 +156,7 @@ def main() -> None:
         "remaining_pairs": len(pending) - len(matches),
         "remaining_rows": new["wiki_page_id"].null_count,
         "distinct_entity_name_type_pairs": len(entities),
-        "entity_types": dict(Counter(kind for _, kind in entities)),
+        "entity_types": dict(sorted(Counter(kind for _, kind in entities).items())),
         "saved_new_requests": len(records),
         "failed_new_requests": sum(not x["ok"] for x in records),
         "summed_new_request_seconds": sum(x["elapsed_seconds"] for x in records),
