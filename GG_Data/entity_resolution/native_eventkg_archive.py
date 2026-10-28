@@ -120,9 +120,14 @@ def download(output: Path) -> None:
 
 
 def matching_qids(lines: list[bytes], qids: set[bytes]) -> set[bytes]:
-    return {
-        qid for line in lines if b"owl#sameAs>" in line for qid in QID_RE.findall(line)
-    } & qids
+    found = set()
+    for line in lines:
+        parts = line.split(None, 3)
+        if len(parts) >= 3 and parts[1] == b"<http://www.w3.org/2002/07/owl#sameAs>":
+            match = QID_RE.fullmatch(parts[2])
+            if match and match[1] in qids:
+                found.add(match[1])
+    return found
 
 
 def filter_archive(output: Path) -> None:

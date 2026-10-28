@@ -4,8 +4,10 @@ import native_corpus_graphs as subject
 import native_eventkg_archive as archive
 import native_graph_reference as reference
 import numpy as np
+import package_native_corpus_graphs as packaging
 import pandas as pd
 import pytest
+import verify_native_corpus_graphs as verification
 
 
 def test_exact_identity_page_deduplication_and_unresolved_nodes(tmp_path):
@@ -124,6 +126,12 @@ def test_archive_rejects_wrong_range_and_keeps_only_requested_qids():
     lines = data.splitlines()
     assert archive.matching_qids(lines[:2], {b"Q1"}) == {b"Q1"}
     assert not archive.matching_qids(lines[2:], {b"Q1"})
+    assert not archive.matching_qids(
+        [
+            b'<r> <http://www.w3.org/2004/02/skos/core#prefLabel> "owl#sameAs> <http://www.wikidata.org/entity/Q1>"@en <g> .'
+        ],
+        {b"Q1"},
+    )
 
 
 def test_archive_two_pass_filter_keeps_types_before_entity_mapping(
@@ -174,3 +182,57 @@ def test_archive_two_pass_filter_keeps_types_before_entity_mapping(
     path.write_bytes(original[:-1] + bytes([original[-1] ^ 1]))
     with pytest.raises(ValueError, match="Missing verified official archive"):
         archive.filter_archive(tmp_path)
+
+
+def test_native_verification_rejects_omitted_type_and_wrong_node_qid():
+    columns = ["qid", "name", "type", "source", "type_source_graph", "resource"]
+    assertion = ("Q1", "Name", "Q5", "WIKIDATA", "P31", "Q1")
+    metadata = pd.DataFrame([assertion], columns=columns).assign(type_label="human")
+    nodes = pd.DataFrame(
+        [
+            {
+                "name": "Name",
+                "type": "Q5",
+                "qids": ["Q999"],
+                "sources": ["WIKIDATA"],
+                "resources": ["Q1"],
+                "type_labels": ["human"],
+            }
+        ]
+    )
+    with pytest.raises(ValueError, match="assertion set is incomplete"):
+        verification.check_native_assertions(
+            metadata, nodes, {assertion, ("Q1", "Name", "Q9", "WIKIDATA", "P31", "Q1")}
+        )
+    with pytest.raises(ValueError, match="node qids differ"):
+        verification.check_native_assertions(metadata, nodes, {assertion})
+    nodes.at[0, "qids"] = ["Q1"]
+    verification.check_native_assertions(metadata, nodes, {assertion})
+
+
+def test_packaging_rejects_stale_counts_and_changed_files(tmp_path):
+    path = tmp_path / "nodes.parquet"
+    path.write_bytes(b"original")
+    summary = {
+        "nodes": 2,
+        "node_page_pairs": 2,
+        "edges": 1,
+        "weight_sum": 1,
+        "max_weight": 1,
+    }
+    report = {
+        "every_weight_verified_by_independent_page_set_intersection": True,
+        "nodes": 0,
+        "node_page_pairs": 2,
+        "edges_verified_individually": 1,
+        "weight_sum": 1,
+        "max_weight": 1,
+        "verified_files_sha256": {"nodes.parquet": packaging.sha256(path)},
+    }
+    with pytest.raises(ValueError, match="counts differ"):
+        packaging.check_graph_package(tmp_path, summary, report)
+    report["nodes"] = 2
+    packaging.check_graph_package(tmp_path, summary, report)
+    path.write_bytes(b"changed")
+    with pytest.raises(ValueError, match="files changed"):
+        packaging.check_graph_package(tmp_path, summary, report)

@@ -105,6 +105,11 @@ def verify_graph(path: Path) -> dict:
         "max_weight": max_weight,
         "unique_edges": True,
         "every_weight_verified_by_independent_page_set_intersection": True,
+        "verified_files_sha256": {
+            p.relative_to(path).as_posix(): sha256(p)
+            for p in sorted(path.rglob("*"))
+            if p.is_file() and p.name != "verification.json"
+        },
     }
 
 
@@ -135,6 +140,30 @@ def verify_b(output: Path) -> dict:
     )
     save_json(output / "graph_b/verification.json", result)
     return result
+
+
+def check_native_assertions(
+    metadata: pd.DataFrame, nodes: pd.DataFrame, expected: set[tuple]
+) -> None:
+    columns = ["qid", "name", "type", "source", "type_source_graph", "resource"]
+    if set(metadata[columns].itertuples(index=False, name=None)) != expected:
+        raise ValueError("Native source assertion set is incomplete or changed")
+    extras = (
+        metadata.groupby(["name", "type"])
+        .agg(
+            qids=("qid", set),
+            sources=("source", set),
+            resources=("resource", set),
+            type_labels=("type_label", set),
+        )
+        .to_dict("index")
+    )
+    if set(zip(nodes.name, nodes.type)) != set(extras):
+        raise ValueError("Graph A node identities differ from native assertions")
+    for row in nodes.itertuples(index=False):
+        for field in ["qids", "sources", "resources", "type_labels"]:
+            if set(getattr(row, field)) != extras[(row.name, row.type)][field]:
+                raise ValueError(f"Graph A node {field} differ from native assertions")
 
 
 def verify_a(output: Path) -> dict:
@@ -216,8 +245,33 @@ def verify_a(output: Path) -> dict:
         .drop_duplicates()
     )
     nodes = pd.read_parquet(path / "nodes.parquet")
-    if set(zip(nodes.name, nodes.type)) != set(zip(metadata.name, metadata.type)):
-        raise ValueError("Graph A node identities differ from native assertions")
+    fallback = (
+        links.merge(mapping[["target_title", "qid"]], on="target_title")
+        .dropna(subset=["qid"])
+        .groupby("qid")
+        .target_title.first()
+        .to_dict()
+    )
+    expected_native = {
+        (
+            qid,
+            entities[qid].get("label") or fallback[qid],
+            "http://www.wikidata.org/entity/" + t,
+            "WIKIDATA",
+            "P31",
+            qid,
+        )
+        for qid in linked_names
+        for t in entities[qid].get("direct_types", [])
+    }
+    resource_ids = {}
+    for resource, qid in resource_qids:
+        resource_ids.setdefault(resource, set()).add(qid)
+    for resource, type_uri, graph in event_types:
+        for qid in resource_ids.get(resource, set()):
+            for name in event_names.get(resource, {fallback[qid]}):
+                expected_native.add((qid, name, type_uri, "EVENTKG", graph, resource))
+    check_native_assertions(metadata, nodes, expected_native)
     expected = (
         presence.merge(metadata[["qid", "name", "type"]].drop_duplicates(), on="qid")
         .merge(

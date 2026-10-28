@@ -13,13 +13,37 @@ from pathlib import Path
 import pandas as pd
 from attach_source_page_ids import read_json, save_json, sha256
 from native_corpus_graphs import INPUT, INPUT_HASH, OUTPUT, export_frame
-from native_graph_reference import EVENTKG
+from native_graph_reference import BQ, EVENTKG
 
 LOG = logging.getLogger(__name__)
 ORIGINAL = Path(
     "D:/Projects/entity_count_20261026_8pj6qtu2/georag_selected_v2_full_n36335_r345732948_20261024.parquet"
 )
 ORIGINAL_HASH = "dcd51dfa237b63378279ced4f9739a45d8cf8ce3991579f20848295448f83f16"
+
+
+def check_graph_package(path: Path, summary: dict, result: dict) -> None:
+    if not result["every_weight_verified_by_independent_page_set_intersection"]:
+        raise ValueError("Finish independent graph verification before packaging")
+    for source, target in [
+        ("nodes", "nodes"),
+        ("node_page_pairs", "node_page_pairs"),
+        ("edges_verified_individually", "edges"),
+        ("weight_sum", "weight_sum"),
+        ("max_weight", "max_weight"),
+    ]:
+        if result[source] != summary[target]:
+            raise ValueError("Graph verification counts differ from summary")
+    paths = {
+        p.relative_to(path).as_posix(): p
+        for p in path.rglob("*")
+        if p.is_file() and p.name != "verification.json"
+    }
+    hashes = result["verified_files_sha256"]
+    if set(paths) != set(hashes) or any(
+        sha256(p) != hashes[name] for name, p in paths.items()
+    ):
+        raise ValueError("Graph files changed after independent verification")
 
 
 def package(output: Path) -> dict:
@@ -30,8 +54,7 @@ def package(output: Path) -> dict:
     }
     for graph in ["a", "b"]:
         result = read_json(output / f"graph_{graph}/verification.json")
-        if not result["every_weight_verified_by_independent_page_set_intersection"]:
-            raise ValueError("Finish independent graph verification before packaging")
+        check_graph_package(output / f"graph_{graph}", summaries[graph], result)
     if not summaries["a"]["eventkg_complete_corpus_coverage"]:
         raise ValueError("Do not publish an incomplete EventKG graph as complete")
     evidence_dir = output / "evidence/wiki_exact"
@@ -51,16 +74,62 @@ def package(output: Path) -> dict:
                 "sha256": digest,
             }
         )
-    export_frame(
-        pd.DataFrame(evidence_rows), output / "portable_evidence_index.parquet"
-    )
     inputs = output / "inputs"
     inputs.mkdir(exist_ok=True)
     shutil.copy2(INPUT, inputs / "corpus_v3.parquet")
     source_metadata = output / "evidence/eventkg_metadata"
     source_metadata.mkdir(exist_ok=True)
-    for name in ["graphs.ttl", "schema.ttl", "void.ttl", "manifest.json"]:
-        shutil.copy2(EVENTKG / "metadata" / name, source_metadata / name)
+    for name in [
+        "graphs.ttl",
+        "schema.ttl",
+        "void.ttl",
+        "manifest.json",
+        "type_labels_wikidata.nq",
+        "type_labels_dbpedia.nq",
+    ]:
+        source, target = EVENTKG / "metadata" / name, source_metadata / name
+        shutil.copy2(source, target)
+        evidence_rows.append(
+            {
+                "original_path": str(source.resolve()),
+                "portable_path": target.relative_to(output).as_posix(),
+                "sha256": sha256(target),
+            }
+        )
+    bq_metadata = output / "evidence/bigquery"
+    bq_metadata.mkdir(exist_ok=True)
+    for name in ["entity_metadata.json.gz", "table_snapshot.json"]:
+        source, target = BQ / name, bq_metadata / name
+        shutil.copy2(source, target)
+        evidence_rows.append(
+            {
+                "original_path": str(source.resolve()),
+                "portable_path": target.relative_to(output).as_posix(),
+                "sha256": sha256(target),
+            }
+        )
+    for path in sorted(output.rglob("*.json.gz")):
+        evidence_rows.append(
+            {
+                "original_path": str(path.resolve()),
+                "portable_path": path.relative_to(output).as_posix(),
+                "sha256": sha256(path),
+            }
+        )
+    for item in read_json(output / "eventkg_source_files.json"):
+        path = Path(item["path"])
+        if path.is_relative_to(output):
+            evidence_rows.append(
+                {
+                    "original_path": str(path.resolve()),
+                    "portable_path": path.relative_to(output).as_posix(),
+                    "sha256": sha256(path),
+                }
+            )
+    export_frame(
+        pd.DataFrame(evidence_rows).drop_duplicates("original_path"),
+        output / "portable_evidence_index.parquet",
+    )
     run = {
         "created_utc": datetime.now(timezone.utc).isoformat(),
         "input_v3_sha256": INPUT_HASH,
