@@ -55,6 +55,15 @@ def test_budget_guard_rejects_expired_or_invalid_limits():
     assert not runtime_allowed(0, math.nan, 8, .71, 2, 15)
 
 
+def test_sha256_supports_cloud_python310(tmp_path, monkeypatch):
+    import hashlib
+    from data import sha256
+    monkeypatch.delattr(hashlib, "file_digest", raising=False)
+    path = tmp_path / "input.txt"
+    path.write_bytes(b"pilot")
+    assert sha256(path) == hashlib.sha256(b"pilot").hexdigest()
+
+
 def test_variable_group_loss_and_candidate_permutation():
     import torch
     from model import grouped_loss, group_predictions
@@ -97,3 +106,46 @@ def test_frozen_encoder_unchanged_then_updates_with_tiny_luke():
     torch.nn.functional.cross_entropy(model(**inputs)[None], torch.tensor([1])).backward()
     opt.step()
     assert any(not torch.equal(v, before[k]) for k, v in encoder.state_dict().items())
+
+
+def test_frozen_checkpoint_restores_original_encoder_after_full_training(tmp_path, monkeypatch):
+    import copy
+    from types import SimpleNamespace
+    import torch
+    from model import CandidateScorer
+    from train import Runner
+    original = torch.nn.Linear(2, 2)
+    original.config = SimpleNamespace(hidden_size=2)
+    runner = Runner.__new__(Runner)
+    runner.args = SimpleNamespace(output=tmp_path)
+    runner.device = torch.device("cpu")
+    runner.model = CandidateScorer(copy.deepcopy(original))
+    runner.encoder_pristine = False
+    runner.model.freeze_encoder(True)
+    with torch.no_grad():
+        runner.model.encoder.weight.add_(1.)
+    torch.save({"model": runner.model.scorer.state_dict(), "head_only": True}, tmp_path / "frozen_best.pt")
+    monkeypatch.setattr("train.AutoModel.from_pretrained", lambda *a, **k: copy.deepcopy(original))
+    runner.load("frozen_best")
+    assert torch.equal(runner.model.encoder.weight, original.weight)
+
+def test_baseline_join_and_verified_breakdowns():
+    from evaluate import baseline_predictions, compare_systems, wilson
+    sample = [
+        {"id": "a", "wiki_page_id": 1, "wiki_revision_id": 2, "mention": "Alias", "type": "PER", "candidates": [{"id": "Q1", "name": "Name"}]},
+        {"id": "b", "wiki_page_id": 1, "wiki_revision_id": 2, "mention": "Absent", "type": "LOC", "candidates": [{"id": "Q1", "name": "Name"}]},
+        {"id": "c", "wiki_page_id": 1, "wiki_revision_id": 2, "mention": "Unknown", "type": "MISC", "candidates": [{"id": "Q1", "name": "Name"}]},
+    ]
+    records = [{"wiki_page_id": "1", "wiki_revision_id": "2", "source_name": x["mention"], "source_type": x["type"], "target_qid": "Q1", "status": "exact_name_unique" if x["id"] == "a" else "no_close_name", "top_score": "0.2"} for x in sample]
+    top, accepted = baseline_predictions(sample, records)
+    refs = [{"id": "a", "target": "Q1", "verified": True}, {"id": "b", "target": None, "verified": True}, {"id": "c", "target": None, "verified": False}]
+    result = compare_systems(sample, refs, {"forced": top, "accepted": accepted})
+    assert result["systems"]["accepted"]["overall"]["accuracy"] == 1.0
+    assert result["systems"]["forced"]["overall"]["accuracy"] == .5
+    assert result["systems"]["accepted"]["by_type"]["MISC"]["verified"] == 0
+    assert result["systems"]["accepted"]["overall"]["candidate_mrr_linked"] is None
+    assert result["candidate_reference_counts"] == {"total": 3, "verified_linked_in_pool": 1, "verified_none": 1, "unverified": 1}
+    assert wilson(0, 0) is None
+    assert wilson(9, 10)[0] < .9 < wilson(9, 10)[1]
+    with pytest.raises(ValueError):
+        baseline_predictions(sample, records[:-1])

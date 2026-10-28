@@ -35,6 +35,7 @@ class Runner:
         args.output.mkdir(parents=True, exist_ok=True)
         self.tokenizer = AutoTokenizer.from_pretrained(MODEL, revision=REVISION)
         self.model = CandidateScorer(AutoModel.from_pretrained(MODEL, revision=REVISION)).to(self.device)
+        self.encoder_pristine = True
         self.history = []
         self.save_json("hardware.json", {"torch": torch.__version__, "cuda": torch.version.cuda,
             "device": torch.cuda.get_device_name(), "gpu_memory": torch.cuda.get_device_properties(0).total_memory,
@@ -127,14 +128,16 @@ class Runner:
     def load(self, name):
         ck = torch.load(self.args.output/f"{name}.pt", map_location=self.device, weights_only=True)
         if ck["head_only"]:
-            if not self.model.frozen:
+            if not self.encoder_pristine:
                 # Restore the original encoder if a full-stage run did not improve.
                 original = AutoModel.from_pretrained(MODEL, revision=REVISION)
                 self.model.encoder.load_state_dict(original.state_dict())
                 del original
+                self.encoder_pristine = True
             self.model.scorer.load_state_dict(ck["model"])
         else:
             self.model.load_state_dict(ck["model"])
+            self.encoder_pristine = False
 
     def train(self):
         train = read_jsonl(self.args.inputs/"train.jsonl")
@@ -192,6 +195,7 @@ class Runner:
             del tc, vc
             torch.cuda.empty_cache()
             self.model.freeze_encoder(False)
+            self.encoder_pristine = False
             self.model.encoder.gradient_checkpointing_enable()
             opt = torch.optim.AdamW([
                 {"params": self.model.encoder.parameters(), "lr": 1e-5},
@@ -250,12 +254,16 @@ class Runner:
         frozen = json.loads((self.args.inputs/"reference_freeze.json").read_text())
         if sha256(references_path) != frozen["sha256"]:
             raise ValueError("Reference labels changed after freeze")
-        self.load(complete["final_checkpoint"])
         rows = read_jsonl(self.args.inputs/"sample.jsonl")
         self.model.freeze_encoder(True)
+        self.load("frozen_best")
+        _, frozen_predictions = self.evaluate(rows)
+        write_jsonl(self.args.output/"frozen_sample_predictions.jsonl", frozen_predictions)
+        refs = read_jsonl(references_path)
+        self.save_json("frozen_sample_metrics.json", metric_summary(refs, frozen_predictions))
+        self.load(complete["final_checkpoint"])
         metrics, predictions = self.evaluate(rows)
         write_jsonl(self.args.output/"sample_predictions.jsonl", predictions)
-        refs = read_jsonl(references_path)
         result = metric_summary(refs, predictions)
         result["reference_sha256"] = frozen["sha256"]
         result["test_records"] = len(rows)
