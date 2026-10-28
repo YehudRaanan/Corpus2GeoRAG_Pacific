@@ -21,7 +21,7 @@
 - Read the 309,864 existing rows for aggregation only. Do not repeat extraction or source-page matching. Input V3 SHA256 is 5378e8124979f04be6eca62a62a7f104fb2fdb88d5c0ba378ebf8d3db86f5bb7.
 - Keep all 545 unresolved rows unchanged; exclude them from page weights. Keep their name/type nodes and identify unresolved-only isolates.
 - Include EVENT in A only, as a native source type; do not infer or extract EVENT for B.
-- Keep all EventKG source provenance available in the corpus subset. Existing EventKG files were filtered to 53,857 WWII QIDs; do not claim coverage outside that scope without a successful source query.
+- Keep all EventKG source provenance available in the corpus subset. The old 53,857-QID WWII filter is insufficient; the completed official full-archive scan supplies final corpus coverage.
 - No graph comparison, cloud infrastructure, paid queries, model inference, overwrite, deletion, push or merge. Cached BigQuery is preferred. No new chargeable query without explicit bounded-cost approval.
 
 ## Resources and approval
@@ -45,22 +45,22 @@ Ponytail full: reuse data and helpers; no frameworks or dependencies. Superpower
 ### 2. Graph B (depends on 1, owner /root)
 
 - [x] Aggregate V3 rows; export nodes, node_page_presence, node_revision_presence, edges and unchanged unresolved rows with source row index.
-- [x] Verify 74,339 nodes, 147,548 node/page pairs, 43,449,334 page-pair contributions, 425 pages and 545 unresolved input rows. Reconcile weights to sparse membership and sampled explicit page intersections.
+- [x] Verify 74,339 nodes, 147,548 node/page pairs, 43,449,334 page-pair contributions, 425 pages and 545 unresolved input rows. Reconcile every edge to independent page-set intersections.
 - Outcome: full graph B files and verified statistics.
 
 ### 3. Reference collection and graph A (depends on 1, owner /root)
 
 - [x] Index all saved parse responses by exact page/revision; fetch only missing revisions; preserve request evidence.
 - [x] Collect article hyperlink titles/anchors; attach QIDs and native direct types from cached BigQuery and explicit API responses where needed. Keep unresolved targets and missing types as separate audit records.
-- [ ] Filter cached EventKG resources/types/provenance to corpus QIDs and audit filter scope. Try corpus-scoped endpoint queries for out-of-cache coverage if available; save failure evidence and exact limits without silently treating missing cache entries as absent in EventKG.
-- [ ] Export A graph using same page weighting and native labels/types, with EVENT only in A. Keep source-specific nodes and QID associations.
+- [x] Filter the full official EventKG archive to corpus QIDs, keeping all six native metadata sources and provenance. Save bounded endpoint failure evidence and explicit full-archive coverage per QID.
+- [x] Export A graph using same page weighting and native labels/types, with EVENT only in A. Keep source-specific nodes and QID associations.
 - Outcome: graph A artifacts plus explicit source coverage, version semantics and any exact external blocker.
 
 ### 4. Independent verification and handoff (depends on 2/3, owner /root)
 
-- [ ] Verify original/V3 hashes unchanged, graph denominators, edge counts and all membership/weight invariants; inspect final changed files.
-- [ ] Save manifest hashes, README, run summary and recovery metadata. Code/docs local checkpoint only; no push authorization requested unless needed at handoff.
-- [ ] Final review, focused reruns only for findings, report exact outputs, limits and backup state.
+- [x] Verify original/V3 hashes unchanged, graph denominators, edge counts and all membership/weight invariants; inspect final changed files.
+- [x] Save manifest hashes, README, run summary and recovery metadata. Code/docs local checkpoint only; no push authorization requested unless needed at handoff.
+- [x] Final review, focused reruns only for findings, report exact outputs, limits and backup state.
 
 ## Review focus
 
@@ -95,3 +95,12 @@ Ponytail full: reuse data and helpers; no frameworks or dependencies. Superpower
 - 02:11 checkpoint (after resume): EventKG archive assembled and published MD5 verified; SHA256 9c8b9929182f6e6026d4834d98cac8a0c2d8c39853811d578d7de900ffca6845. Download plus assembly elapsed 2662.407 seconds, overlapping other work. Started two-pass corpus filter. Remaining estimate 15-35 elapsed minutes; next checkpoint 02:20 28/10/2026 Asia/Jerusalem UTC+02. Scope and owner unchanged; no paid queries or matching rerun.
 - 02:20 checkpoint: archive identity scan is CPU-active but slower than estimated. Stdlib inspection shows a 4 MiB compressed stream buffer becomes a large decompressed remainder copied on each line-buffer read. Root owns a bounded two-minute read-only 16 MiB identical-content benchmark comparing this setting with the stdlib default before any fix. Remaining estimate 25-60 elapsed minutes; next checkpoint 02:30 Asia/Jerusalem. Scope unchanged, all graph inputs and completed B outputs remain immutable.
 - 02:22 Bounded buffer probe confirmed identical 16,777,331 bytes / 85,285 lines / SHA256 0c61043e4a53129bf50bba136ab07f3d8d9091c2596d5111f400a0d5234b0272: 4 MiB compressed tar buffer took 35.875 seconds; stdlib default took 6.5 and 7.5 seconds. Removed the custom buffer size. All 11 native tests and Ruff pass. Confirmed process 38072 command and empty corpus output directory before stopping its read-only scan; no output was overwritten. Resume with a new log, existing verified archive, unchanged QID input, and same scope.
+- 02:30 checkpoint: full identity pass completed at 02:29:05 with 53,416 explicit-QID EventKG resources (46,088 entity assertions, 7,328 event assertions). Second pass started at 02:29:08 and is saving all six native metadata sources. Remaining estimate 15-30 elapsed minutes; next checkpoint 02:40 Asia/Jerusalem. No scope change. The preceding buffer-fix log timestamp marked 02:22 is approximate; the verified corrected scan actually started at 02:21:16, first source at 02:21:26.
+- 02:34 Full archive filtering completed at 02:34:04. All six required native metadata members found and selected-file hashes saved. Explicit-QID scope: 71,098 corpus QIDs checked, 53,416 found resources/QIDs, 17,682 absent from full event/entity identity scan. Loading selected native quads, then build A and verify every weight. No use of old WWII filter as coverage boundary.
+- 02:40 checkpoint: full archive filter complete; selected N-Quads parser active, no reported error. Metadata parsing is CPU-bound (about 1.1 GB process memory at 02:39). A build, independent every-edge verification and package remain. Remaining estimate 15-30 elapsed minutes; next checkpoint 02:50 Asia/Jerusalem. Same approved scope and root ownership. Current elapsed since 01:12 reference is about 88 minutes; active work and approval wait remain unmeasured.
+- 02:41 EventKG collection completed at 02:40:17: 1,638,717 source assertions, 53,416 found / 17,682 absent corpus QIDs; full official archive coverage true. Saved bounded endpoint probe HTTP 500 without automatic retry; archive is the successful fallback. A construction started after confirming a new graph_a output and available disk. No B rebuild.
+- 02:44 Graph A built at 02:44:10: 323,100 nodes, 9,486 native types, 1,515,753,534 edges, weight sum 2,355,447,402, max weight 378; 1,106,751 node/page pairs over all 425 pages. 542,465 native name/type/QID/source assertions, 65,425 QIDs with typed nodes, 9,233 sem:Event name/type nodes, 1,976 name/type identities with multiple retained QIDs. Started independent A source/membership/every-edge verification. Graph B remains unchanged.
+- 02:48 A verification completed at 02:48:16: all 1,515,753,534 edges independently checked, complete native assertion set and QID/source metadata checked, all 571 revisions and 425 pages supported; graph files SHA256-bound. Final read-only agent review found no blocking issue. Added explicit package disclosure of 5,673 linked QIDs without usable native type (audits retained), with no graph mutation. Latest 11 native tests, Ruff and Black checks pass. Packaging started; global archive/range copies remain local and outside corpus ZIP.
+- 02:50 checkpoint: both graph verifications complete; corpus ZIP written (about 3.21 GB) and package integrity/hash checks still pending. Final package checks and local Git checkpoint remain; estimated 2-5 elapsed minutes, next checkpoint 02:55 Asia/Jerusalem. No scope change; no push; ignored data local only.
+- 02:51 Final package complete: 2,052 ZIP files, 3,208,205,487 bytes, SHA256 8f29c6747d6a5a7eb29b0c2d3d1954a462d1b2f18fc9c1474f3f952b205e7996. ZIP CRC passed. Independent reading of every ZIP entry verified all 2,051 manifest SHA256 values and exact file inventory, input-copy hash and no-rerun/no-alignment flags. Both full graph weight proofs passed. Final README reviewed; 5,673 no-native-type QIDs explicitly disclosed. No required work remains apart from saving this closing local checkpoint and handoff.
+- Actual basis: 99.2833 elapsed minutes through full package verification at 28/10/2026 02:51:17 Asia/Jerusalem UTC+02, from the documented approximate 01:12 start reference. Epoch actual recorded against final accepted estimate af7541ae-986f-4b05-b8d5-19c5ffc15ff8 with auto_wallclock provenance; first iteration superseded. Active_work and approval_wait unmeasured; archive transfer/assembly 2662.407 seconds overlapped work. Closing commit/handoff time excluded from that package-verification actual. Estimate was model-derived 90-180 elapsed minutes, not empirically calibrated P80. All processes started for graph work have completed or were explicitly stopped at the documented safe read-only boundary. Backup status: Local checkpoint only; ignored dataset/archive/ZIP remain local and unprotected on GitHub.

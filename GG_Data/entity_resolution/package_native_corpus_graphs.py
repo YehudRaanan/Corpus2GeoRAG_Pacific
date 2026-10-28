@@ -162,6 +162,10 @@ def package(output: Path) -> dict:
         },
         "backup_status": "Local checkpoint only; ignored graph data is local and is not protected on GitHub",
     }
+    run["corpus_qids_without_native_type"] = (
+        run["wikidata_collection"]["corpus_qids"]
+        - summaries["a"]["qids_with_typed_nodes"]
+    )
     save_json(output / "run_summary.json", run)
     a, b = summaries["a"], summaries["b"]
     text = f"""# Native corpus graphs — 28 October 2026
@@ -185,7 +189,7 @@ Graph A uses internal article hyperlinks and the article heading from each exact
 
 All 571 page/revision identities were checked. A saved revision is a text-matching revision from the earlier run, not proof of the original extraction date. HTML was rendered when its recorded request was made; transcluded templates can reflect later state. Wikipedia source revision time and HTML retrieval time are separate fields in wiki_revision_audit.parquet.
 
-Wikidata metadata uses the saved BigQuery snapshot captured 18 October 2026 plus explicit API records collected in this run. The table snapshot, per-item revision/modified fields, API evidence and QID audit are included. Types and target QID associations are not reconstructed as of each historical Wikipedia revision. The {run['wikidata_collection']['corpus_qids_without_direct_type']:,} QIDs without direct P31 are audited; no MISC type was invented. EventKG types can still supply nodes for these QIDs.
+Wikidata metadata uses the saved BigQuery snapshot captured 18 October 2026 plus explicit API records collected in this run. The table snapshot, per-item revision/modified fields, API evidence and QID audit are included. Types and target QID associations are not reconstructed as of each historical Wikipedia revision. The {run['wikidata_collection']['corpus_qids_without_direct_type']:,} QIDs without direct P31 are audited; no MISC type was invented. EventKG types supply nodes for some of these QIDs. Across both native sources, {run['corpus_qids_without_native_type']:,} linked corpus QIDs have no usable type and therefore no name/type graph node; their QID audit and link records are retained.
 
 EventKG release 3.2 is sourced from the official full N-Quads archive. The archive's published MD5 and current SHA256 were verified. All event/entity identity records were scanned for the corpus QIDs, followed by all native metadata records in events, entities, types, types_dbpedia, types_wikidata and preferred_labels. All named source graphs in these records are retained. Coverage means all corpus QIDs were checked for explicit EventKG owl:sameAs identity; it does not mean EventKG contains every QID, that every source entity has a QID, or that EventKG has these Wikipedia revisions. No fuzzy association of EventKG resources without an explicit QID was attempted. The earlier WWII filter was not used as the final coverage boundary. Global EventKG co-mention counts were not used as corpus weights.
 
