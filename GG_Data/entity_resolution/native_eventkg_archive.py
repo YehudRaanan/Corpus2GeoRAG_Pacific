@@ -159,7 +159,7 @@ def filter_archive(output: Path) -> None:
         "title_qid_mapping_sha256": sha256(output / "title_qid_mapping.parquet"),
     }
     for phase in [1, 2]:
-        with tarfile.open(archive, "r|gz", bufsize=4 * 1024 * 1024) as tar:
+        with tarfile.open(archive, "r|gz") as tar:
             for member in tar:
                 name = Path(member.name).name
                 if phase == 1:
