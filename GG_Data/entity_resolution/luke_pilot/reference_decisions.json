@@ -1,0 +1,87 @@
+{
+  "policy": "Source-context review before any model predictions. Accept reviewed exact saved anchor targets. Resolve clear aliases and coreference from source context. NONE means no correct identity in the entire same-page A pool. Entity types do not constrain identity. Related entities and parent works are not identical. Ambiguous fragments, event/place ambiguity and uncertain demonyms remain unverified. This is an assistant source review, not a second human annotation.",
+  "pages": {
+    "45244145": {
+      "reviewed_indices": [545,641],
+      "accept_reviewed_direct_anchors": true,
+      "links": {"562":"Q5142004","563":"Q102079207","600":"Q102079204","601":"Q102079204","604":"Q102079209","606":"Q1895804","614":"Q24039587","615":"Q24039587","618":"Q7597768","620":"Q102079207","622":"Q19564460","623":"Q100330147"},
+      "unverified": [564,565,568,570,572,575,579,581,582,586,587,590,592,598,599,602,605,607,608,612,616,619,627,630,631,632,633,634,637,640],
+      "remaining_reviewed_are_none": true,
+      "notes": "Distinctive shortened book titles, Toll, Colby Award and named people have clear identities. Samuel Eliot Morison Award combines the literature award and a museum award in two contexts, so no single gold identity is assigned. Place names inside campaigns/attacks, generic subtitles and fragments remain unverified. New York before Lieutenant Governor is the state, not NYC. Dates, missing libraries/publishers/people/places and generic word spans are NONE."
+    },
+    "781032": {
+      "reviewed_indices": [179,315],
+      "accept_reviewed_direct_anchors": true,
+      "reject_direct_indices": [219,221,292],
+      "links": {"213":"Q81863","273":"Q219712","275":"Q935282","287":"Q484950","298":"Q129465"},
+      "unverified": [179,217,219,220,221,223,242,249,258,269,277,286,288,299],
+      "remaining_reviewed_are_none": true,
+      "notes": "Akita prefecture, Tohoku region, Nishimura, Seventh Fleet and Japanese Navy have clear coreference. Southern Force is a military unit, not the Battle of Leyte Gulf despite the saved link; its identity is absent. The book/website battle-title mentions, isolated event/place spans and operation shorthand remain unverified. Specific destroyer groups are not generic squadron/division nodes. Bibliographic people/works/publishers, dates and absent ships are NONE."
+    },
+    "1365004": {
+      "reviewed_indices": [331,401],
+      "accept_reviewed_direct_anchors": true,
+      "reject_direct_indices": [339,400],
+      "links": {"363":"Q140196790","370":"Q21707256","375":"Q2342011","380":"Q40949","385":"Q7440075","386":"Q7440075","390":"Q1648084"},
+      "unverified": [339,346,372,374,383,384,387,388,394,397,400],
+      "remaining_reviewed_are_none": true,
+      "notes": "NSR and SLOC are explicitly expanded. Spykman's full name and String of Pearls are clear. Indo-Pacific Maritime Surveillance is a distinctive partial name of the Collaboration. Revolution refers to the American Revolutionary War. Allies covers both world wars; Navy can vary by context; demonym fragments and route-versus-canal, Navy-versus-historical-Navy, Yorktown-place-versus-siege distinctions remain unverified. Absent continents/countries/places, dates, book and CGHR route are NONE."
+    },
+    "23680822": {
+      "reviewed_indices": [485,531],
+      "accept_reviewed_direct_anchors": true,
+      "links": {"488":"Q1328822","493":"Q43056","511":"Q1328822"},
+      "unverified": [487,496,506,507,508,512,516,518,525,526],
+      "remaining_reviewed_are_none": true,
+      "notes": "A-29 Hudson is the Lockheed Hudson aircraft. Axis names the Axis powers. Peter Iredale is the ship despite Daniel's PER type. Incomplete submarine/event spans, locations within event names, Endicott era versus board, national adjective and whole-US versus contiguous-US scope remain unverified. Named officers/locations not in pool, WWI, generic bibliography fragments and dates are NONE."
+    },
+    "14065577": {
+      "reviewed_indices": [402,484],
+      "accept_reviewed_direct_anchors": true,
+      "links": {"418":"Q686392","423":"Q408","428":"Q43056","429":"Q43056","432":"Q686392","440":"Q133536","450":"Q17","458":"Q672805","460":"Q5630414","466":"Q1443945","469":"Q530560","470":"Q3393349","471":"Q36074","472":"Q172771","473":"Q362","482":"Q362"},
+      "unverified": [405,424,427,442,446,451,475,476,478],
+      "remaining_reviewed_are_none": true,
+      "notes": "Centaur/AHS Centaur, Kuttabul and the named locations/territories are clear contextual identities. New Guinea and Papua occur after Territory of, so refer to the territories in the pool. Sydney harbour place is distinct from the attack. Australian/Japanese national terms, ship-prefix fragments and Territory shared by two territories remain unverified. Dates, absent people/publishers/journal/memorial/places and generic officer have no identical candidate."
+    },
+    "307082": {
+      "reviewed_indices": [0,44],
+      "accept_reviewed_direct_anchors": true,
+      "links": {"12":"Q1632248","13":"Q211377","15":"Q173665","25":"Q1356563","39":"Q935282"},
+      "unverified": [2,32,37],
+      "remaining_reviewed_are_none": true,
+      "notes": "Kipot ng Surigaw names the strait. Leyte island and Liloan are explicit locations; officer names with ranks refer to the same people. Surigao in the etymology can mean settlement or strait. Battle of and T are incomplete spans. Remaining entities include dates, absent places/people/units, national adjectives without matching pool identities, and generic people."
+    },
+    "324617": {
+      "reviewed_indices": [45,139],
+      "accept_reviewed_direct_anchors": true,
+      "links": {"72":"Q982883","80":"Q5867005","91":"Q552959","104":"Q982883","106":"Q13974","107":"Q3550750","108":"Q11220","119":"Q982883","121":"Q362"},
+      "unverified": [79,115,124,133,134],
+      "remaining_reviewed_are_none": true,
+      "notes": "Morison, Dr. Morison and inverted bibliographic given names refer to Samuel Eliot Morison. Broadcasting Corporation and Company refer to NBC. Little, Brown names the publisher. Individual series volumes are not the whole series. Navy Department is a department distinct from the Navy service. Pearl Harbor as place versus attack and incomplete series/country spans remain unverified. Remaining dates, locations, individuals and volume titles have no identical candidate."
+    },
+    "528638": {
+      "reviewed_indices": [140,178],
+      "accept_reviewed_direct_anchors": true,
+      "links": {"154":"Q1576377","155":"Q187698"},
+      "unverified": [144,145,148,164],
+      "remaining_reviewed_are_none": true,
+      "notes": "Kipot ng San Bernardino is the article's explicit Filipino strait name. Admiral Kurita refers to Takeo Kurita. North Pacific follows the saved source link to Pacific Ocean. Filipinas has a narrower historical referent in this passage; Philippine is an adjective; battle-name fragments remain unverified. Ship San Juan de Letran, named people, Northern Samar, dates and other national adjectives have no identical candidate."
+    },
+    "880906": {
+      "reviewed_indices": [316,330],
+      "accept_reviewed_direct_anchors": true,
+      "links": {},
+      "unverified": [316,323],
+      "remaining_reviewed_are_none": true,
+      "notes": "Short carrier names resolve through explicit saved anchors even when Daniel marks them LOC. Battle of is incomplete; Leyte Gulf occurs only inside an event name and cannot safely choose event versus location. Japanese has no matching national identity in this pool."
+    },
+    "29607850": {
+      "reviewed_indices": [532,544],
+      "accept_reviewed_direct_anchors": true,
+      "links": {"532":"Q4596490","537":"Q219712","544":"Q362"},
+      "unverified": [535,536,540],
+      "remaining_reviewed_are_none": true,
+      "notes": "The fleet, Imperial Japanese Navy and World War II are explicit. Dai, Ichi and Kido are fragments of the romanised fleet name, not independently reliable identities. Staff titles, Japan and bibliography publishers/series have no matching candidate in the three-entity pool."
+    }
+  }
+}
