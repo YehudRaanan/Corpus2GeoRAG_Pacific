@@ -101,11 +101,26 @@ def export(
     import pyarrow as pa
     import pyarrow.parquet as pq
 
+    summary_path = matching / "matching_summary.json"
+    manifest_path = inference / "inference_inputs.json"
+    if not summary_path.exists() or not manifest_path.exists():
+        raise ValueError("Export requires matching and inference input lineage")
+    matching_summary = json.loads(summary_path.read_text(encoding="utf-8"))
+    input_hashes = {
+        Path(path).resolve(): digest
+        for path, digest in matching_summary.get("input_hashes", {}).items()
+    }
+    if input_hashes.get(mentions_path.resolve()) != sha256(mentions_path):
+        raise ValueError("Matching mentions input hash does not match export")
+    manifest = json.loads(manifest_path.read_text(encoding="utf-8"))
+    if manifest.get("jobs_sha256") != sha256(matching / "jobs.jsonl"):
+        raise ValueError("Inference jobs input hash does not match matching")
     mentions = pq.read_table(mentions_path)
     if passages_path:
-        passages = {
-            r["passage_id"]: r for r in pq.read_table(passages_path).to_pylist()
-        }
+        passage_rows = pq.read_table(passages_path).to_pylist()
+        passages = {r["passage_id"]: r for r in passage_rows}
+        if len(passages) != len(passage_rows):
+            raise ValueError("Duplicate passage IDs")
         for source, name in [
             ("revision_timestamp", "wiki_revision_timestamp"),
             ("revision_url", "wiki_revision_url"),
@@ -124,8 +139,50 @@ def export(
                 ),
             )
     groups = read_jsonl(matching / "groups.jsonl")
+    group_by_id = {g["id"]: g for g in groups}
+    if len(group_by_id) != len(groups):
+        raise ValueError("Duplicate group IDs")
+    source_rows = mentions.to_pylist()
+    source_by_id = {r["source_row_index"]: r for r in source_rows}
+    if len(source_by_id) != len(source_rows):
+        raise ValueError("Duplicate source row indices")
+    by_row = {}
+    for group in groups:
+        expected = (group["page_id"], group["revision_id"], group["name"], group["type"])
+        if group["id"] != identity(list(expected)):
+            raise ValueError("Group ID does not match its source identity")
+        if not group["source_row_indices"]:
+            raise ValueError("Group has no source rows")
+        for index in group["source_row_indices"]:
+            if index in by_row or index not in source_by_id:
+                raise ValueError("Duplicate or unknown group source row reference")
+            row = source_by_id[index]
+            actual = (row["page_id"], row["revision_id"], row["word"], row["entity_group"])
+            if actual != expected:
+                raise ValueError("Group source row identity does not match export")
+            by_row[index] = group
+    if any(r.get("page_id") is not None and r.get("revision_id") is not None
+           and r["source_row_index"] not in by_row for r in source_rows):
+        raise ValueError("Resolved source row is missing its matching group")
+    jobs = read_jsonl(matching / "jobs.jsonl")
+    job_by_id = {j["id"]: j for j in jobs}
+    query_keys = {(j["page_id"], j["revision_id"], j["qid"]) for j in jobs}
+    if len(job_by_id) != len(jobs) or len(query_keys) != len(jobs):
+        raise ValueError("Duplicate matching job IDs or query identities")
+    for job in jobs:
+        candidate_ids = [candidate["id"] for candidate in job["candidates"]]
+        if len(set(candidate_ids)) != len(candidate_ids):
+            raise ValueError("Duplicate matching candidate IDs")
+        for candidate in job["candidates"]:
+            group = group_by_id.get(candidate["id"])
+            if group is None or (group["page_id"], group["revision_id"], group["type"]) != (
+                job["page_id"], job["revision_id"], candidate.get("type")
+            ):
+                raise ValueError("Candidate references an unknown group/revision/type")
     exact = pq.read_table(matching / "exact_pairs.parquet").to_pylist()
     model = read_jsonl(inference / "model_pairs.jsonl")
+    if any(p["method"] != "exact" for p in exact) or any(p["method"] != "model" for p in model):
+        raise ValueError("Pair method does not match its evidence file")
     pairs = exact + model
     keys = [(p["page_id"], p["revision_id"], p["group_id"], p["qid"]) for p in pairs]
     if len(keys) != len(set(keys)):
@@ -133,11 +190,25 @@ def export(
     by_group = defaultdict(set)
     methods = defaultdict(set)
     for pair in pairs:
+        group = group_by_id.get(pair["group_id"])
+        if group is None:
+            raise ValueError("Pair references an unknown group")
+        if (pair["page_id"], pair["revision_id"], pair["entity_group"]) != (
+            group["page_id"], group["revision_id"], group["type"]
+        ):
+            raise ValueError("Pair revision/type does not match its group")
+        if (pair["page_id"], pair["revision_id"], pair["qid"]) not in query_keys:
+            raise ValueError("Pair references an unknown entity query")
+        if pair["method"] == "model":
+            job = job_by_id.get(pair.get("id"))
+            if job is None or (job["page_id"], job["revision_id"], job["qid"]) != (
+                pair["page_id"], pair["revision_id"], pair["qid"]
+            ) or pair["group_id"] not in {c["id"] for c in job["candidates"]}:
+                raise ValueError("Model pair references an unknown job/candidate")
         by_group[pair["group_id"]].add(pair["qid"])
         methods[pair["group_id"]].add(pair["method"])
-    by_row = {row: g for g in groups for row in g["source_row_indices"]}
     qids, statuses, row_methods = [], [], []
-    for row in mentions.to_pylist():
+    for row in source_rows:
         group = by_row.get(row["source_row_index"])
         matched = sorted(by_group[group["id"]]) if group else []
         qids.append(matched)
@@ -156,6 +227,13 @@ def export(
     )
     if not enriched.select(mentions.column_names).equals(mentions):
         raise ValueError("Original selected rows changed during export")
+    reference = read_jsonl(references)
+    for pair in reference:
+        group = group_by_id.get(pair["group_id"])
+        if group is None or (pair["page_id"], pair["revision_id"], pair["entity_group"]) != (
+            group["page_id"], group["revision_id"], group["type"]
+        ):
+            raise ValueError("Reference pair does not match a current source group")
     output.mkdir(parents=True, exist_ok=False)
     pq.write_table(enriched, output / "matched_mentions.parquet", compression="zstd")
     unresolved = enriched.filter(pa.array([status != "MATCHED" for status in statuses]))
@@ -176,7 +254,6 @@ def export(
         pa.Table.from_pylist(pairs, schema=pair_schema),
         output / "matched_pairs.parquet",
     )
-    reference = read_jsonl(references)
     summary = {
         "selected_rows": mentions.num_rows,
         "exported_rows": enriched.num_rows,

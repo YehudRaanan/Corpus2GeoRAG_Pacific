@@ -35,7 +35,7 @@ BQ = Path.home() / ".cache/geoai_bigquery_20261018"
 WIKI = "https://en.wikipedia.org/w/api.php"
 WD = "https://www.wikidata.org/w/api.php"
 USER_AGENT = "Corpus2GeoRAG-Pacific-pilot/0.1 (https://github.com/EtzionR/Corpus2GeoRAG_Pacific)"
-PROTECTED = re.compile(r"<!--[\s\S]*?(?:-->|$)|<(nowiki|pre|source|syntaxhighlight|math)\b[^>]*>[\s\S]*?(?:</\1\s*>|$)|<nowiki\s*/>", re.I)
+PROTECTED = re.compile(r"<!--[\s\S]*?(?:-->|$)|<(?:nowiki|pre|source|syntaxhighlight|math)\b[^>]*/\s*>|<(nowiki|pre|source|syntaxhighlight|math)\b[^>]*>[\s\S]*?(?:</\1\s*>|$)", re.I)
 LINK = re.compile(r"\[\[([^\[\]]+)\]\]")
 HEADING = re.compile(r"^={1,6}\s*(.*?)\s*={1,6}\s*$", re.M)
 
@@ -434,6 +434,13 @@ def test_raw_links_keep_all_sections_and_offsets() -> None:
     assert all(text[row["raw_start"]:row["raw_end"]].startswith("[[") for row in links)
     assert all(text[row["anchor_start"]:row["anchor_end"]] == row["anchor_text"] for row in links)
     assert links[1]["section_heading"] == "Sources"
+
+
+def test_self_closing_protection_does_not_hide_later_links() -> None:
+    for tag in ("<nowiki/>", "<nowiki />", "<NOWIKI/>", "<source/>"):
+        assert [row["target_title"] for row in raw_links(f"[[Before]] {tag} [[After]]")] == ["Before", "After"]
+    text = "[[Before]] <nowiki/> [[After]] <nowiki>[[Hidden]]</nowiki> [[End]]"
+    assert [row["target_title"] for row in raw_links(text)] == ["Before", "After", "End"]
 
 
 def test_metadata_missing_qid_and_p31_remain_explicit() -> None:

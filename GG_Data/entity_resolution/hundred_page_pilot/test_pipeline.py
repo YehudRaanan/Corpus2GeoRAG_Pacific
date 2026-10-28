@@ -175,7 +175,9 @@ def test_export_preserves_rows_and_many_to_many_lists(tmp_path):
     import pyarrow as pa
     import pyarrow.parquet as pq
 
+    from GG_Data.entity_resolution.hundred_page_pilot.match import identity
     from GG_Data.entity_resolution.hundred_page_pilot.report import export
+    from GG_Data.entity_resolution.luke_pilot.data import sha256
 
     rows = [mention(), mention(row=1)]
     groups = group_mentions(rows)
@@ -195,12 +197,37 @@ def test_export_preserves_rows_and_many_to_many_lists(tmp_path):
         "method": "exact",
     }
     pq.write_table(pa.Table.from_pylist([pair]), matching / "exact_pairs.parquet")
-    other = {**pair, "qid": "Q999", "method": "model"}
+    job_id = identity([1, 11, "Q999"])
+    other = {**pair, "id": job_id, "qid": "Q999", "method": "model"}
     (inference / "model_pairs.jsonl").write_text(
         json.dumps(other) + "\n", encoding="utf-8"
     )
     mentions_path = tmp_path / "mentions.parquet"
     pq.write_table(pa.Table.from_pylist(rows), mentions_path)
+    jobs = [
+        {
+            "id": identity([1, 11, "Q17"]),
+            "page_id": 1,
+            "revision_id": 11,
+            "qid": "Q17",
+            "candidates": [],
+        },
+        {
+            "id": job_id,
+            "page_id": 1,
+            "revision_id": 11,
+            "qid": "Q999",
+            "candidates": [{"id": group, "type": "LOC"}],
+        },
+    ]
+    jobs_path = matching / "jobs.jsonl"
+    jobs_path.write_text("".join(json.dumps(j) + "\n" for j in jobs))
+    (matching / "matching_summary.json").write_text(
+        json.dumps({"input_hashes": {str(mentions_path): sha256(mentions_path)}})
+    )
+    (inference / "inference_inputs.json").write_text(
+        json.dumps({"jobs_sha256": sha256(jobs_path)})
+    )
     ref = tmp_path / "reference.jsonl"
     ref.write_text("", encoding="utf-8")
     summary = export(mentions_path, matching, inference, ref, tmp_path / "final")
@@ -208,3 +235,163 @@ def test_export_preserves_rows_and_many_to_many_lists(tmp_path):
     assert summary["exported_rows"] == 2
     assert result["matched_qids"].to_pylist() == [["Q17", "Q999"], ["Q17", "Q999"]]
     assert result.select(list(rows[0])).equals(pq.read_table(mentions_path))
+    # A new hash alone must not permit stale groups to join a new revision.
+    changed = [{**r, "revision_id": 12} for r in rows]
+    pq.write_table(pa.Table.from_pylist(changed), mentions_path)
+    (matching / "matching_summary.json").write_text(
+        json.dumps({"input_hashes": {str(mentions_path): sha256(mentions_path)}})
+    )
+    with pytest.raises(ValueError):
+        export(mentions_path, matching, inference, ref, tmp_path / "stale_final")
+
+
+def test_every_positive_gets_a_singleton_state_to_prevent_early_stop():
+    import torch
+
+    from GG_Data.entity_resolution.hundred_page_pilot.model import (
+        marginal_set_loss, pair_texts)
+    from GG_Data.entity_resolution.hundred_page_pilot.prepare_training import \
+        removal_states
+
+    base = {
+        "id": "q",
+        "entity": {"name": "E"},
+        "candidates": [{"id": k, "name": k, "context": ""} for k in ("a", "b", "n")],
+        "positive_ids": ["a", "b"],
+    }
+    states = removal_states(base)
+    assert {s["positive_ids"][0] for s in states if len(s["positive_ids"]) == 1} == {
+        "a",
+        "b",
+    }
+    signatures = [tuple(c["id"] for c in s["candidates"]) for s in states]
+    assert len(signatures) == len(set(signatures))
+    sequential = [s for s in states if s["state_kind"] == "sequential_removal"]
+    last = sequential[-2]["positive_ids"][0]
+
+    def loss(row):
+        values = [20.0 if c["id"] == last else -20.0 for c in row["candidates"]] + [0.0]
+        return marginal_set_loss(
+            torch.tensor(values), [len(values)], [pair_texts(row)[2]]
+        )
+
+    assert torch.stack([loss(s) for s in sequential]).mean() < 1e-6
+    assert torch.stack([loss(s) for s in states]).mean() > 4.0
+
+
+def test_failed_cache_save_keeps_previous_complete_file(tmp_path, monkeypatch):
+    import torch
+
+    from GG_Data.entity_resolution.hundred_page_pilot.train import \
+        atomic_torch_save
+
+    path = tmp_path / "cache.pt"
+    torch.save({"old": 1}, path)
+    original = path.read_bytes()
+
+    def failed_save(value, destination):
+        from pathlib import Path
+
+        Path(destination).write_bytes(b"partial")
+        raise OSError("interrupted")
+
+    with monkeypatch.context() as patch:
+        patch.setattr(torch, "save", failed_save)
+        with pytest.raises(OSError, match="interrupted"):
+            atomic_torch_save({"new": 2}, path)
+    assert path.read_bytes() == original
+    atomic_torch_save({"new": 2}, path)
+    assert torch.load(path, weights_only=True) == {"new": 2}
+
+
+def test_score_tail_recovery_preserves_evidence_and_rejects_interior(tmp_path):
+    import json
+
+    from GG_Data.entity_resolution.hundred_page_pilot.match import \
+        read_score_records
+
+    path = tmp_path / "scores.jsonl"
+    valid = json.dumps({"id": "one", "options": []}) + "\n"
+    original = (valid + '{"id":').encode()
+    path.write_bytes(original)
+    assert read_score_records(path) == [{"id": "one", "options": []}]
+    assert path.read_text() == valid
+    assert any(p.read_bytes() == original for p in tmp_path.iterdir() if p != path)
+    path.write_text(valid + "broken\n" + valid)
+    with pytest.raises(ValueError):
+        read_score_records(path)
+
+
+def test_export_rejects_missing_input_lineage(tmp_path):
+    import json
+
+    import pyarrow as pa
+    import pyarrow.parquet as pq
+
+    from GG_Data.entity_resolution.hundred_page_pilot.report import export
+
+    matching, inference = tmp_path / "matching", tmp_path / "inference"
+    matching.mkdir()
+    inference.mkdir()
+    rows = [mention()]
+    groups = group_mentions(rows)
+    (matching / "groups.jsonl").write_text(json.dumps(groups[0]) + "\n")
+    pair = {
+        "page_id": 1,
+        "revision_id": 11,
+        "group_id": groups[0]["id"],
+        "qid": "Q17",
+        "entity_group": "LOC",
+        "method": "exact",
+    }
+    pq.write_table(pa.Table.from_pylist([pair]), matching / "exact_pairs.parquet")
+    (inference / "model_pairs.jsonl").write_text("")
+    source = tmp_path / "mentions.parquet"
+    pq.write_table(pa.Table.from_pylist(rows), source)
+    ref = tmp_path / "ref.jsonl"
+    ref.write_text("")
+    with pytest.raises((ValueError, FileNotFoundError)):
+        export(source, matching, inference, ref, tmp_path / "final")
+
+
+def test_resumed_inference_counts_new_and_cached_pairs(tmp_path, monkeypatch):
+    import json
+
+    from GG_Data.entity_resolution.hundred_page_pilot import model
+    from GG_Data.entity_resolution.hundred_page_pilot.match import infer
+
+    jobs = [
+        {
+            "id": k,
+            "page_id": 1,
+            "revision_id": 11,
+            "qid": "Q" + k,
+            "candidates": [{"id": "g", "type": "LOC"}],
+            "excluded_count": 0,
+        }
+        for k in ("1", "2")
+    ]
+    source = tmp_path / "jobs.jsonl"
+    source.write_text("".join(json.dumps(j) + "\n" for j in jobs))
+    checkpoint = tmp_path / "model.pt"
+    checkpoint.write_bytes(b"mock model")
+    monkeypatch.setattr(model, "load_scorer", lambda *a: (None, None, {}))
+    calls = []
+
+    def score(*args, **kwargs):
+        calls.append(args[2]["id"])
+        if len(calls) == 2:
+            raise RuntimeError("interrupted scoring")
+        return {"g": 1.0, None: 0.0}
+
+    monkeypatch.setattr(model, "score_record", score)
+    output = tmp_path / "inference"
+    with pytest.raises(RuntimeError, match="interrupted scoring"):
+        infer(source, checkpoint, output, 1, 8, "cpu")
+    result = infer(source, checkpoint, output, 1, 8, "cpu")
+    assert calls == ["1", "2", "2"]
+    assert result["pair_evaluations"] == 2
+    assert result["cached_pair_evaluations"] == 2
+    assert result["total_pair_evaluations"] == 4
+    assert result["cumulative_elapsed_seconds"] >= result["elapsed_seconds"]
+    assert result["selected_pairs"] == 2

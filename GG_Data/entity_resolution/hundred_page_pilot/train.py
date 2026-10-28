@@ -35,6 +35,13 @@ from GG_Data.entity_resolution.luke_pilot.data import read_jsonl, sha256, stable
 LOG = logging.getLogger(__name__)
 
 
+def atomic_torch_save(value, path: Path) -> None:
+    """Keep the prior artifact valid until the replacement is fully written."""
+    temporary = path.with_suffix(path.suffix + ".tmp")
+    torch.save(value, temporary)
+    temporary.replace(path)
+
+
 def rng_state() -> dict:
     return {
         "python": random.getstate(),
@@ -292,10 +299,7 @@ class Runner:
         payload = checkpoint_payload(
             self.model, self.optimizer, self.progress, self.hashes
         )
-        target = self.args.output / name
-        temporary = target.with_suffix(".tmp")
-        torch.save(payload, temporary)
-        temporary.replace(target)
+        atomic_torch_save(payload, self.args.output / name)
 
     def tokens(self, first, second):
         encoded = self.tokenizer(
@@ -375,7 +379,7 @@ class Runner:
             "fingerprint": fingerprint,
             "elapsed_seconds": time.monotonic() - started,
         }
-        torch.save(cached, path)
+        atomic_torch_save(cached, path)
         return cached
 
     def cached_batch(self, cache, indices):
@@ -486,6 +490,26 @@ class Runner:
             first[: self.args.pair_batch_size],
             second[: self.args.pair_batch_size],
         )
+        # This command has an isolated model and saves no trained checkpoint.
+        # Allocate real full-stage AdamW moments before any memory measurement.
+        self.model.freeze_encoder(False)
+        self.model.encoder.gradient_checkpointing_enable()
+        self.model.train()
+        benchmark_optimizer = self.make_optimizer("full")
+        warmup_logits = self.encode_pairs(first, second).float()
+        warmup_logits.square().mean().backward()
+        benchmark_optimizer.step()
+        benchmark_optimizer.zero_grad(set_to_none=True)
+        torch.cuda.synchronize()
+        optimizer_state_bytes = sum(
+            value.numel() * value.element_size()
+            for state in benchmark_optimizer.state.values()
+            for value in state.values()
+            if isinstance(value, torch.Tensor)
+        )
+        if not optimizer_state_bytes:
+            raise RuntimeError("Full-stage benchmark did not allocate AdamW state")
+        del warmup_logits
         timings = {}
         for frozen in (True, False):
             self.model.freeze_encoder(frozen)
@@ -537,6 +561,9 @@ class Runner:
             {
                 "timings": timings,
                 "peak_gpu_bytes": torch.cuda.max_memory_allocated(),
+                "optimizer_state_bytes": optimizer_state_bytes,
+                "full_optimizer_steps_before_measurement": 1,
+                "benchmark_weights_are_discarded": True,
                 "basis": "two measured batches after one warmup; throughput forecast, not complete training time",
             },
         )

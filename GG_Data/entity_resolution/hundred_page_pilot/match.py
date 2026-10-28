@@ -17,6 +17,7 @@ import math
 import re
 import time
 import unicodedata
+import uuid
 from collections import defaultdict
 from datetime import datetime, timezone
 from pathlib import Path
@@ -240,6 +241,38 @@ def prepare(mentions: Path, entity_path: Path, output: Path, count: int) -> dict
     }
 
 
+def read_score_records(path: Path) -> list[dict]:
+    """Recover only a torn final record; retain the complete original as evidence."""
+    if not path.exists():
+        return []
+    data = path.read_bytes()
+    lines = data.splitlines(keepends=True)
+    rows, valid_bytes = [], 0
+    for index, line in enumerate(lines):
+        try:
+            row = json.loads(line)
+        except (json.JSONDecodeError, UnicodeDecodeError):
+            if index != len(lines) - 1 or line.endswith((b"\n", b"\r")):
+                raise ValueError("Malformed completed score record") from None
+            evidence = path.with_name(f"{path.name}.interrupted-{uuid.uuid4().hex}")
+            with evidence.open("xb") as stream:
+                stream.write(data)
+            repaired = path.with_name(f"{path.name}.repair-{uuid.uuid4().hex}")
+            repaired.write_bytes(data[:valid_bytes])
+            repaired.replace(path)
+            LOG.warning("Recovered incomplete final score; original: %s", evidence)
+            break
+        if not isinstance(row, dict):
+            raise ValueError("Score record must be an object")
+        rows.append(row)
+        valid_bytes += len(line)
+    else:
+        if data and not data.endswith(b"\n"):
+            with path.open("ab") as stream:
+                stream.write(b"\n")
+    return rows
+
+
 def infer(
     jobs_path: Path,
     checkpoint: Path,
@@ -265,7 +298,7 @@ def infer(
     else:
         manifest.write_text(json.dumps(signature, indent=2), encoding="utf-8")
     score_path = output / "scores.jsonl"
-    saved = read_jsonl(score_path) if score_path.exists() else []
+    saved = read_score_records(score_path)
     scores_by_id = {r["id"]: r for r in saved}
     if len(scores_by_id) != len(saved):
         raise ValueError("Duplicate completed inference IDs")
@@ -273,58 +306,97 @@ def infer(
     job_ids = {j["id"] for j in jobs}
     if len(job_ids) != len(jobs) or not scores_by_id.keys() <= job_ids:
         raise ValueError("Saved scores do not match unique current jobs")
-    model, tokenizer, metadata = load_scorer(checkpoint, device)
-    with score_path.open("a", encoding="utf-8") as stream:
-        for i, job in enumerate(jobs):
-            if job["id"] in scores_by_id:
-                continue
-            if time.monotonic() - started >= max_hours * 3600:
-                raise TimeoutError(
-                    "Inference time allowance reached; completed scores preserved"
-                )
-            scores = score_record(
-                model, tokenizer, job, device=device, pair_batch_size=pair_batch_size
-            )
-            if not all(math.isfinite(v) for v in scores.values()):
-                raise ValueError("Nonfinite model score")
-            row = {
-                "id": job["id"],
-                "options": [{"id": k, "score": v} for k, v in scores.items()],
-            }
-            stream.write(json.dumps(row, ensure_ascii=False) + "\n")
+    total_pairs = sum(len(j["candidates"]) + 1 for j in jobs)
+    cached_pairs = sum(len(j["candidates"]) + 1 for j in jobs if j["id"] in scores_by_id)
+    runtime_path = output / "inference_runtime.jsonl"
+    previous_runs = read_score_records(runtime_path)
+    starts = {r["run_id"] for r in previous_runs if r["event"] == "start"}
+    ends = {r["run_id"] for r in previous_runs if r["event"] == "end"}
+    incomplete_runs = len(starts - ends)
+    unmeasured_history = bool(cached_pairs and not starts) or any(
+        r.get("unmeasured_cached_history", False) for r in previous_runs
+    )
+    measured_previous = sum(r["elapsed_seconds"] for r in previous_runs if r["event"] == "end")
+    run_id, new_pairs = uuid.uuid4().hex, 0
+
+    def record_runtime(row: dict) -> None:
+        with runtime_path.open("a", encoding="utf-8") as stream:
+            stream.write(json.dumps({"run_id": run_id, **row}) + "\n")
             stream.flush()
-            scores_by_id[row["id"]] = row
-            if i % 50 == 0:
-                LOG.info("Scored %d/%d entity/revision questions", i + 1, len(jobs))
-    pairs, traces = [], []
-    for job in jobs:
-        scores = {v["id"]: v["score"] for v in scores_by_id[job["id"]]["options"]}
-        expected = {c["id"] for c in job["candidates"]} | {None}
-        if scores.keys() != expected:
-            raise ValueError("Option scores do not match this question")
-        selected, trace = select_loop(
-            {k: v for k, v in scores.items() if k is not None}, scores[None]
-        )
-        key = {k: job[k] for k in ("id", "page_id", "revision_id", "qid")}
-        types = {c["id"]: c.get("type") for c in job["candidates"]}
-        pairs.extend(
-            {**key, "group_id": g, "entity_group": types[g], "method": "model"}
-            for g in selected
-        )
-        traces.extend(
-            {**key, **step, "excluded_count": job["excluded_count"]} for step in trace
-        )
-    # Derived files can be rebuilt from the append-only score evidence after interruption.
-    for name, rows in (("model_pairs.jsonl", pairs), ("decisions.jsonl", traces)):
-        with (output / name).open("w", encoding="utf-8") as stream:
-            for row in rows:
+
+    record_runtime({"event": "start", "started_utc": datetime.now(timezone.utc).isoformat(),
+                    "unmeasured_cached_history": unmeasured_history})
+    outcome = "failed"
+    try:
+        model, tokenizer, metadata = load_scorer(checkpoint, device)
+        with score_path.open("a", encoding="utf-8") as stream:
+            for i, job in enumerate(jobs):
+                if job["id"] in scores_by_id:
+                    continue
+                if time.monotonic() - started >= max_hours * 3600:
+                    raise TimeoutError(
+                        "Inference time allowance reached; completed scores preserved"
+                    )
+                scores = score_record(
+                    model, tokenizer, job, device=device, pair_batch_size=pair_batch_size
+                )
+                if not all(math.isfinite(v) for v in scores.values()):
+                    raise ValueError("Nonfinite model score")
+                row = {
+                    "id": job["id"],
+                    "options": [{"id": k, "score": v} for k, v in scores.items()],
+                }
                 stream.write(json.dumps(row, ensure_ascii=False) + "\n")
+                stream.flush()
+                scores_by_id[row["id"]] = row
+                new_pairs += len(job["candidates"]) + 1
+                if i % 50 == 0:
+                    LOG.info("Scored %d/%d entity/revision questions", i + 1, len(jobs))
+        pairs, traces = [], []
+        for job in jobs:
+            options = scores_by_id[job["id"]]["options"]
+            scores = {v["id"]: v["score"] for v in options}
+            expected = {c["id"] for c in job["candidates"]} | {None}
+            if len(scores) != len(options) or scores.keys() != expected:
+                raise ValueError("Option scores do not match this question")
+            selected, trace = select_loop(
+                {k: v for k, v in scores.items() if k is not None}, scores[None]
+            )
+            key = {k: job[k] for k in ("id", "page_id", "revision_id", "qid")}
+            types = {c["id"]: c.get("type") for c in job["candidates"]}
+            pairs.extend(
+                {**key, "group_id": g, "entity_group": types[g], "method": "model"}
+                for g in selected
+            )
+            traces.extend(
+                {**key, **step, "excluded_count": job["excluded_count"]} for step in trace
+            )
+        # Derived files can be rebuilt from completed score evidence after interruption.
+        for name, rows in (("model_pairs.jsonl", pairs), ("decisions.jsonl", traces)):
+            destination = output / name
+            temporary = output / f"{name}.{run_id}.tmp"
+            with temporary.open("x", encoding="utf-8") as stream:
+                for row in rows:
+                    stream.write(json.dumps(row, ensure_ascii=False) + "\n")
+            temporary.replace(destination)
+        outcome = "completed"
+    finally:
+        elapsed = time.monotonic() - started
+        record_runtime({"event": "end", "elapsed_seconds": elapsed,
+                        "pair_evaluations": new_pairs, "outcome": outcome,
+                        "active_work_seconds": None})
     return {
         "questions": len(jobs),
         "selected_pairs": len(pairs),
         "decisions": len(traces),
-        "pair_evaluations": sum(len(j["candidates"]) + 1 for j in jobs),
-        "elapsed_seconds": time.monotonic() - started,
+        "pair_evaluations": new_pairs,
+        "cached_pair_evaluations": cached_pairs,
+        "total_pair_evaluations": total_pairs,
+        "elapsed_seconds": elapsed,
+        "measured_cumulative_elapsed_seconds": measured_previous + elapsed,
+        "cumulative_elapsed_seconds": None if incomplete_runs or unmeasured_history else measured_previous + elapsed,
+        "unmeasured_interrupted_runs": incomplete_runs,
+        "unmeasured_cached_history": unmeasured_history,
         "active_work_seconds": None,
         "checkpoint": metadata,
         **signature,

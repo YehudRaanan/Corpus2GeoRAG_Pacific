@@ -110,7 +110,7 @@ def make_groups(document: dict) -> tuple[list[dict], dict[str, set[str]]]:
 
 
 def removal_states(base: dict, seed: int = SEED) -> list[dict]:
-    """Keep all valid alternatives; remove one labelled positive per state."""
+    """Keep removal sequences and require every labelled positive to beat stop."""
     candidates = base["candidates"]
     ids = [candidate["id"] for candidate in candidates]
     positive = set(base["positive_ids"])
@@ -127,6 +127,7 @@ def removal_states(base: dict, seed: int = SEED) -> list[dict]:
                 "id": f"{base['id']}:state:{index}",
                 "base_id": base["id"],
                 "removal_index": index,
+                "state_kind": "sequential_removal",
                 "candidates": [c for c in candidates if c["id"] not in removed],
                 "positive_ids": sorted(remaining),
                 "removed_ids": sorted(removed),
@@ -137,6 +138,31 @@ def removal_states(base: dict, seed: int = SEED) -> list[dict]:
         )
         if index < len(order):
             removed.add(order[index])
+    # Marginal set loss alone lets one positive hide earlier positives in a
+    # fixed removal order. Each singleton directly trains its positive above
+    # stop. Retain negatives and deduplicate states already in the sequence.
+    signatures = {tuple(state["removed_ids"]) for state in states}
+    for identity in sorted(positive):
+        removed = positive - {identity}
+        signature = tuple(sorted(removed))
+        if signature in signatures:
+            continue
+        states.append(
+            {
+                **base,
+                "id": f"{base['id']}:singleton:{identity}",
+                "base_id": base["id"],
+                "removal_index": len(removed),
+                "state_kind": "singleton_positive_coverage",
+                "candidates": [c for c in candidates if c["id"] not in removed],
+                "positive_ids": [identity],
+                "removed_ids": sorted(removed),
+                "synthetic_stop": False,
+                "label_scope": "remaining_public_labelled_positive_groups_only",
+                "public_annotations_incomplete": True,
+            }
+        )
+        signatures.add(signature)
     return states
 
 
@@ -197,6 +223,7 @@ def prepare(
         )
     output: dict[str, list[dict]] = {"train": [], "validation": [], "public_test": []}
     limits = dict(zip(output, (train_limit, validation_limit, test_limit)))
+    sequential_counts = dict.fromkeys(output, 0)
     counters: Counter = Counter()
     needed = set()
     questions_by_page: Counter = Counter()
@@ -217,7 +244,7 @@ def prepare(
                     counters["documents_excluded_selected_page"] += 1
                     continue
                 split = document_split(page)
-                if len(output[split]) >= limits[split]:
+                if sequential_counts[split] >= limits[split]:
                     continue
                 if questions_by_page[page] >= questions_per_page:
                     continue
@@ -244,7 +271,7 @@ def prepare(
                 )
                 for title in entity_titles:
                     if (
-                        len(output[split]) >= limits[split]
+                        sequential_counts[split] >= limits[split]
                         or questions_by_page[page] >= questions_per_page
                     ):
                         break
@@ -322,10 +349,14 @@ def prepare(
                         "candidate_source": "all_labelled_literal_groups_in_public_source_section",
                         "type_status": "native_Daniel_type_not_available_in_public_annotations",
                     }
-                    output[split].extend(removal_states(base))
+                    states = removal_states(base)
+                    output[split].extend(states)
+                    sequential_counts[split] += sum(
+                        s["state_kind"] == "sequential_removal" for s in states
+                    )
                     needed.add(title)
                     questions_by_page[page] += 1
-                if all(len(output[key]) >= limits[key] for key in output):
+                if all(sequential_counts[key] >= limits[key] for key in output):
                     break
         descriptions = {}
         with zipped.open("zelda/other/entity_descriptions.jsonl") as stream:
@@ -374,6 +405,8 @@ def prepare(
         "source_page_split_before_states": True,
         "source_pages_disjoint": True,
         "annotations_incomplete": True,
+        "singleton_positive_coverage": "Every retained labelled positive has a singleton-positive state; original removal sequences retained",
+        "state_limits": "Limits count original sequential states; extra singleton states preserve the same base questions as v1",
         "candidate_count_limit": candidate_count,
         "questions_per_source_page_limit": questions_per_page,
         "adaptation": "Bound public trigram pools and source-page questions after full pools exceeded measured workload; preserve natural validation/test retrieval and label training gold injection",
@@ -395,6 +428,9 @@ def prepare(
             "questions": len({r["base_id"] for r in rows}),
             "synthetic_stop_states": sum(r["synthetic_stop"] for r in rows),
             "multiple_positive_states": sum(len(r["positive_ids"]) > 1 for r in rows),
+            "added_singleton_states": sum(
+                r["state_kind"] == "singleton_positive_coverage" for r in rows
+            ),
             "gold_injected_questions": sum(
                 bool(r["gold_injected_ids"]) for r in rows if r["removal_index"] == 0
             ),
