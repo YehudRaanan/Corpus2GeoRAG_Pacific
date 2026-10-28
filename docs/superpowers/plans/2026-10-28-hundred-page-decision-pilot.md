@@ -32,8 +32,8 @@
 - Use existing local data first. Use BigQuery for supported missing sitelink/QID/metadata data after a dry run and byte cap. Do not assume BigQuery has arbitrary historical article text; fill revision-content gaps from Wikimedia APIs, and entity metadata gaps from Wikidata.
 - Historical Wikipedia text and current/cached Wikidata metadata are different timestamps. Save both revision provenance and metadata retrieval/snapshot time; do not label QID/types historical without evidence.
 - Daniel identity remains literal `(word, entity_group)`. Occurrence context is retained separately. A group may link to several QIDs, and one QID may link to several groups. No global one-to-one constraint.
-- Exact acceptance requires identical name AND comparable identical entity type AND exactly one distinct QID on the same page/revision. Aliases, case folding, substring similarity and ambiguous identities do not count as this exact rule.
-- Native Wikidata P31 classes do not literally equal Daniel's five NER types. Pending OWNER decision: retain native types and skip exact acceptance when type equality cannot be established, or approve a separate mapping before automatic exact matching. Do not silently reuse an old mapping or inherit Daniel's type onto a candidate to manufacture equality.
+- Approved exact acceptance: identical literal name; only one Daniel entity_group for that name on this page/revision; and only one QID with that identical official name on the page/revision. Both source-side and QID-side uniqueness are required. Aliases, case folding and substring similarity are not exact acceptance.
+- OWNER clarification: keep the previously agreed exact rules with uniqueness on both Daniel and Wiki QID sides. Native P31 metadata remain separate; do not invent an NER mapping or treat entity_group and subtype as identical.
 - Exclude an accepted exact pair only from that QID's later decisions. Keep the group available to other QIDs, and other groups available to the same QID.
 - Final identity key: `(QID, Daniel entity_group)`, retaining source group and occurrence lineage. A group unresolved on one page may be resolved on another.
 
@@ -70,12 +70,24 @@ New stage files under `GG_Data/entity_resolution/hundred_page_pilot/`; keep the 
 
 ## Task ownership, dependencies and verification
 
-1. **Input worker — prepare_pages.py.** Depends on approved sample policy. Freeze selection, read selected rows, join old evidence by exact Source/Text/hash, then recover missing raw revisions iteratively. Preserve attempted dates, API requests, IDs, timestamps, URLs, match method, hashes, section scope and explicit failure reason. Start with one 20-minute evidence check on three selected pages, inside this task's 2h elapsed cap. Stop new recovery requests at the cap, preserve explicit pending/unresolved outcomes and report a revised plan if more work is needed. Do not silently extend the overall window. Test raw markup offsets, damaged text, two revisions per page and unresolved preservation. Deliver pages/mentions/revision manifest. Model-derived stage estimate 1–2h elapsed including the evidence check and external recovery; exhaustive history is not promised.
-2. **Collection worker — collect_entities.py.** Depends on selected revision inventory. Reuse local HTML/wikitext, QIDs and metadata, then supported BQ gaps and API fallback. Extract links from the source material actually present, retaining section evidence. Mark API/page failures and unlinked-entity limits. Test exact revision binding, missing QID/P31 and link-scope parity. Deliver entity occurrence and native metadata tables. Estimate 0.5–1.5h elapsed after inventory.
-3. **Model worker — prepare_training.py, model.py, train.py.** May start after selected source exclusion inventory is frozen; independent of collection. Build variable-size pools and multiple-positive removal states. Test set-valued loss, source split, stop states, freeze/unfreeze and complete checkpoint restoration. Deliver hash-frozen training inputs, tested code and workload forecast. Estimate 0.75–1.75h local elapsed; root alone starts GPU after local checks.
-4. **Matching worker — match.py.** Develop against the table contract in parallel; actual data run follows tasks 1/2 and checkpoint availability. Test strict exact name/type uniqueness, local pair removal, many-to-many links, stop ties, no duplicate selection and cached/repeated-score equivalence. Record ranked candidates and every choice/stop. Estimate 0.5–1h code elapsed plus 5–30min typical GPU inference, workload dependent.
-5. **Root — train and integrate.** Exclusive GPU ownership; frozen warmup then full tuning. Benchmark a small batch before committing the remaining compute. Keep frozen/full validation and checkpoints. Candidate-size trials use validation only. Provisional 1.5–3h GPU at the previous workload; hard aggregate new-run GPU ceiling 6h, including setup, tests and inference.
-6. **Root + fresh reviewer — report and verify.** Freeze a prediction-independent reference sample spanning the selected pages, or mark unsupported cases unverified. Do not infer complete reverse gold by blindly inverting old single-target labels. Report coverage over all selected data, and accuracy only over verified labels with explicit denominators. Report pair precision/recall, stop precision/recall, early/late stops, exact/model/unresolved counts, type/page breakdown, examples, runtime/cost and outstanding gaps. Verify original bytes/row preservation, output references, stopped VM and all hashes. Estimate 0.5–1.5h elapsed.
+### Task 1
+
+**Input worker — prepare_pages.py.** Depends on approved sample policy. Freeze selection, read selected rows, join old evidence by exact Source/Text/hash, then recover missing raw revisions iteratively. Preserve attempted dates, API requests, IDs, timestamps, URLs, match method, hashes, section scope and explicit failure reason. Start with one 20-minute evidence check on three selected pages, inside this task's 2h elapsed cap. Stop new recovery requests at the cap, preserve explicit pending/unresolved outcomes and report a revised plan if more work is needed. Do not silently extend the overall window. Test raw markup offsets, damaged text, two revisions per page and unresolved preservation. Deliver pages/mentions/revision manifest. Model-derived stage estimate 1–2h elapsed including the evidence check and external recovery; exhaustive history is not promised.
+### Task 2
+
+**Collection worker — collect_entities.py.** Depends on selected revision inventory. Reuse local HTML/wikitext, QIDs and metadata, then supported BQ gaps and API fallback. Extract links from the source material actually present, retaining section evidence. Mark API/page failures and unlinked-entity limits. Test exact revision binding, missing QID/P31 and link-scope parity. Deliver entity occurrence and native metadata tables. Estimate 0.5–1.5h elapsed after inventory.
+### Task 3
+
+**Model worker — prepare_training.py, model.py, train.py.** May start after selected source exclusion inventory is frozen; independent of collection. Build variable-size pools and multiple-positive removal states. Test set-valued loss, source split, stop states, freeze/unfreeze and complete checkpoint restoration. Deliver hash-frozen training inputs, tested code and workload forecast. Estimate 0.75–1.75h local elapsed; root alone starts GPU after local checks.
+### Task 4
+
+**Matching worker — match.py.** Develop against the table contract in parallel; actual data run follows tasks 1/2 and checkpoint availability. Test strict exact name/type uniqueness, local pair removal, many-to-many links, stop ties, no duplicate selection and cached/repeated-score equivalence. Record ranked candidates and every choice/stop. Estimate 0.5–1h code elapsed plus 5–30min typical GPU inference, workload dependent.
+### Task 5
+
+**Root — train and integrate.** Exclusive GPU ownership; frozen warmup then full tuning. Benchmark a small batch before committing the remaining compute. Keep frozen/full validation and checkpoints. Candidate-size trials use validation only. Provisional 1.5–3h GPU at the previous workload; hard aggregate new-run GPU ceiling 6h, including setup, tests and inference.
+### Task 6
+
+**Root + fresh reviewer — report and verify.** Freeze a prediction-independent reference sample spanning the selected pages, or mark unsupported cases unverified. Do not infer complete reverse gold by blindly inverting old single-target labels. Report coverage over all selected data, and accuracy only over verified labels with explicit denominators. Report pair precision/recall, stop precision/recall, early/late stops, exact/model/unresolved counts, type/page breakdown, examples, runtime/cost and outstanding gaps. Verify original bytes/row preservation, output references, stopped VM and all hashes. Estimate 0.5–1.5h elapsed.
 
 Parallel workers own separate files; root owns the shared test file and integration, preventing concurrent edits. Collection, public training preparation and matching development overlap when dependencies permit. Do not launch multiple GPU trainers for speed: quota, budget and one-machine ownership govern execution.
 
@@ -102,11 +114,12 @@ Completion artifacts: enriched selected-input Parquet; page/revision and QID met
 
 Backup state: local planning files and ignored input only; no GitHub push approved. Create reviewed local commits at implementation milestones. Report `Local checkpoint only` after a commit, and disclose ignored datasets/checkpoints separately.
 
-## Pending OWNER decisions
+## OWNER approvals received
 
-1. Approve the 5–12h total elapsed execution window within the already approved US$10 ceiling.
-2. For exact name+type acceptance: approve a Wikidata-to-NER mapping, or retain native types and send cases lacking comparable type evidence to the model. Recommended for this first pilot: retain native types, with no guessed automatic exact match.
-3. Confirm whether linked QID entities are the requested collection scope, as in the saved graph work. Exhaustive unlinked entity recognition would require an added extraction/linking stage and a revised plan.
+- 2026-10-28: execute the saved 5–12-hour plan within US$10, including definite encoder tuning after frozen warmup.
+- Linked QID entities approved; no added unlinked extraction.
+- Exact rule clarified: identical name and uniqueness on both source sides, including one Daniel type on the page. Preserve native types separately.
+- Execution resumed 2026-10-28 23:15 Asia/Jerusalem (UTC+02). First execution checkpoint 23:25; expected completion 2026-10-29 04:15–11:15, excluding approval and unavailable-GPU waits.
 
 ## Primary sources
 
