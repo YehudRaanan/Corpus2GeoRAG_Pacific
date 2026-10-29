@@ -54,6 +54,36 @@ def test_repaired_groups_keep_original_context_and_cannot_exact_match():
     assert not exact_pairs(groups, entities)
 
 
+def test_unchanged_original_literal_keeps_independent_exact_proof():
+    groups = group_mentions(
+        [
+            row(
+                0,
+                "Complete Name",
+                word_original="Complete Name",
+                repair_status="source_supported_unchanged",
+                repair_qid_guided=True,
+                source_candidate_qids=["Q9"],
+            )
+        ]
+    )
+    entities = [dict(page_id=1, revision_id=11, qid="Q9", label="Complete Name")]
+    assert len(exact_pairs(groups, entities)) == 1
+    assert not exact_pairs(groups, [*entities, {**entities[0], "qid": "Q8"}])
+    changed = group_mentions(
+        [
+            row(
+                0,
+                "Complete Name",
+                word_original="Name",
+                repair_status="repaired",
+                repair_qid_guided=True,
+            )
+        ]
+    )
+    assert not exact_pairs(changed, entities)
+
+
 def test_source_candidates_are_union_with_top_k_and_date_exclusion_is_explicit(
     tmp_path,
 ):

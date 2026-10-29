@@ -106,11 +106,7 @@ def exact_pairs(groups: list[dict], entities: list[dict]) -> list[dict]:
     result = []
     for g in groups:
         key = (g["page_id"], g["revision_id"], g["name"])
-        if (
-            g.get("repaired_source_row_indices")
-            or g.get("repair_qid_guided")
-            or g.get("source_review_statuses")
-        ):
+        if g.get("repaired_source_row_indices") or g.get("source_review_statuses"):
             continue
         if len(names[key]) == len(qids[key]) == 1:
             result.append(
