@@ -156,3 +156,10 @@ Use new versioned output directories and atomic stage completion. Do not overwri
 - Model readiness is NOT verified by this planning review. Local status was last verified at 07:36:34 Asia/Jerusalem on 29 October and records unfinished training/inference; remote state was not checked.
 - OWNER confirmed Geography belongs last within the first three-page delivery.
 - No training, inference, cloud mutation or data population was started by this update.
+
+## Approved execution amendments, 29 October 2026
+
+- OWNER approved using the three old titles present in the new frozen sample, then adding seven pages from the saved sample in its original order. The 100-page membership is unchanged. Three pages contain 535 original mentions and four used revisions; ten contain 3,785 mentions and 13 revisions; 100 contain 40,070 mentions and 132 revisions.
+- The selected tuned checkpoint passed candidate selection, 551/608 (90.625%), but stop precision, 278/311 (89.389%), missed the 90% target. OWNER approved an experimental THREE-page run with this fixed model. Keep quality status failed, preserve all evidence, and do not extend this exception to ten or 100 pages or retrain without approval.
+- Full-native BigQuery retrieval was dry-run only: the 1.56 TB estimate would cost approximately US$8.88 before free allowance, which is unverified. The query was not executed. The 32 missing corpus records were obtained with the Wikidata API; 22 whole cached records were reused. Per-record source, revision and retrieval metadata records this mixed temporal basis.
+- Public SPARQL is a bounded alternative for incoming Event discovery; retain exact query/response bytes and failures. Include all native corpus outgoing targets locally, apply the accepted pinned occurrence class list, then verify full-record eligibility. Do not claim a common snapshot across old cache, API and SPARQL observations.
