@@ -49,7 +49,7 @@ Files: this plan; existing readiness/export helpers; new run manifests under the
 - [x] Verify worktree, Git state, free space, source counts and existing output locations.
 - [x] Inspect original model checkpoint and saved quality/runtime/cost evidence in parallel with source-template inspection.
 - [x] Save the current source/checkpoint/reference hashes and selected page/revision manifest before transformations.
-- [ ] Verify current GCP stopped state, pinned encoder/tokenizer cache, remaining compute allowance and estimated cost before any VM start.
+- [x] Verify current GCP stopped state, pinned encoder/tokenizer cache, remaining compute allowance and estimated cost before any VM start.
 - [x] Record OWNER duration approval before implementation or inference.
 
 Outcome: immutable input manifest, experimental scope receipt, exact resource limits or a named blocker.
@@ -58,13 +58,13 @@ Outcome: immutable input manifest, experimental scope receipt, exact resource li
 
 Depends on task 1 approval. Exclusive files: `hundred_page_pilot/recover_page_qids.py`, new `hundred_page_pilot/prepare_mentions.py`, focused tests.
 
-- [ ] Add focused tests for ordinary links, USS/Ship/Jsub/Sclass targets, nihongo names, split citation authors, nested infobox fields, ambiguous/repeated placements and normalized offsets.
-- [ ] Reuse `validate_revision`, `raw_links`, cache/title resolution and metadata conversion. Replace the hard-coded three-page guard with explicit manifest-bound scope; preserve the three-page replay path.
-- [ ] Inventory actual template families on all used revisions; implement source-supported rules in priority order, and report unsupported families rather than guessing them.
-- [ ] Write `prepare_mentions.py` as one readable stage: raw rows and source evidence in; corrected Parquet, recovered spans, original-mention bridge and correction summary out.
-- [ ] Keep non-name template parameters distinct. Citation author reconstruction does not itself create an absent QID.
-- [ ] Merge newly verified page QIDs with the existing inventory in a new version. Preserve native metadata, current lookup times and historical source evidence separately.
-- [ ] Run focused tests and verify all original IDs/columns, including DATE, survive unchanged except explicitly corrected `word` and added provenance.
+- [x] Add focused tests for ordinary links, USS/Ship/Jsub/Sclass targets, nihongo names, split citation authors, nested infobox fields, ambiguous/repeated placements and normalized offsets.
+- [x] Reuse `validate_revision`, `raw_links`, cache/title resolution and metadata conversion. Replace the hard-coded three-page guard with explicit manifest-bound scope; preserve the three-page replay path.
+- [x] Inventory actual template families on all used revisions; implement source-supported rules in priority order, and report unsupported families rather than guessing them.
+- [x] Write `prepare_mentions.py` as one readable stage: raw rows and source evidence in; corrected Parquet, recovered spans, original-mention bridge and correction summary out.
+- [x] Keep non-name template parameters distinct. Citation author reconstruction does not itself create an absent QID.
+- [x] Merge newly verified page QIDs with the existing inventory in a new version. Preserve native metadata, current lookup times and historical source evidence separately.
+- [x] Run focused tests and verify all original IDs/columns, including DATE, survive unchanged except explicitly corrected `word` and added provenance.
 
 Outcome: row-preserving corrected data, expanded verified inventory and an exact workload-ready evidence set.
 
@@ -72,13 +72,13 @@ Outcome: row-preserving corrected data, expanded verified inventory and an exact
 
 Runs in parallel with task 2 after task 1 approval. Exclusive files: `prepare_candidates.py`, `readiness.py`, `report.py` and their focused tests. Coordinate the corrected-row/evidence interface before edits.
 
-- [ ] Extend preparation to retain source-supported candidates in addition to top-80 trigram options. Keep strict original exact matches separate from QID-guided repairs.
-- [ ] Produce original baseline jobs from saved data; preserve or safely reuse previous scores only when query/option bytes, checkpoint and scoring settings are identical.
-- [ ] Extend the experimental approval gate to exact manifest-bound 3/10/100 subsets without weakening technical checks or rewriting the old exception.
-- [ ] Rebind current loader/source evidence explicitly; perform an actual restore smoke test before recording a new restore receipt.
-- [ ] Keep existing input formatting identical on both arms. Record the earlier training/inference preprocessing gap as deferred to a matched training version; do not present this experiment as fixing that model gap.
-- [ ] Adapt exports/comparison to stable original row IDs and original reference evidence. Repaired labels or new group IDs cannot redefine the gold positives.
-- [ ] Test many-to-many joins, incomplete/partial inference refusal, scope/hash mismatches and unchanged original-row export.
+- [x] Extend preparation to retain source-supported candidates in addition to top-80 trigram options. Keep strict original exact matches separate from QID-guided repairs.
+- [x] Produce original baseline jobs from saved data; preserve or safely reuse previous scores only when query/option bytes, checkpoint and scoring settings are identical.
+- [x] Extend the experimental approval gate to exact manifest-bound 3/10/100 subsets without weakening technical checks or rewriting the old exception.
+- [x] Rebind current loader/source evidence explicitly; perform an actual restore smoke test before recording a new restore receipt.
+- [x] Keep existing input formatting identical on both arms. Record the earlier training/inference preprocessing gap as deferred to a matched training version; do not present this experiment as fixing that model gap.
+- [x] Adapt exports/comparison to stable original row IDs and original reference evidence. Repaired labels or new group IDs cannot redefine the gold positives.
+- [x] Test many-to-many joins, incomplete/partial inference refusal, scope/hash mismatches and unchanged original-row export.
 
 Outcome: two comparable job sets, valid technical receipts and an audit-safe comparison path.
 
@@ -86,12 +86,12 @@ Outcome: two comparable job sets, valid technical receipts and an audit-safe com
 
 Depends on tasks 2 and 3.
 
-- [ ] Complete CPU candidate preparation for all 100 before GPU startup to avoid paid idle preparation.
-- [ ] Calculate exact pair counts and forecast both arms with the saved 279.43 pairs/second observation, plus setup and reserve. If the bound exceeds money/time limits, report before changing scope or candidate limits.
-- [ ] Freeze a prediction-independent review sample of corrected/ambiguous cases. Treat source-positive reference coverage separately from verified accuracy.
-- [ ] Run the original three pages end to end on both arms. Check original-row preservation, unchanged DATE, repairs and matching changes.
-- [ ] Report completed work, before/after counts, examples, remaining questions, elapsed/runtime/cost evidence and the next step.
-- [ ] Expand to ten saved pages and repeat the same checks. Do not silently adjust thresholds, model or candidate limit.
+- [x] Complete CPU candidate preparation for all 100 before GPU startup to avoid paid idle preparation.
+- [x] Calculate exact pair counts and forecast both arms with the saved 279.43 pairs/second observation, plus setup and reserve. If the bound exceeds money/time limits, report before changing scope or candidate limits.
+- [x] Freeze a prediction-independent review sample of corrected/ambiguous cases. Treat source-positive reference coverage separately from verified accuracy.
+- [x] Run the original three pages end to end on both arms. Check original-row preservation, unchanged DATE, repairs and matching changes.
+- [x] Report completed work, before/after counts, examples, remaining questions, elapsed/runtime/cost evidence and the next step.
+- [x] Expand to ten saved pages and repeat the same checks. Do not silently adjust thresholds, model or candidate limit.
 
 Outcome: two small complete deliveries with safe restartable outputs.
 
@@ -139,3 +139,29 @@ Outcome: short plain-English report, detailed case files, reproduction commands 
 **Current status:** EXECUTING. OWNER approved the saved plan; three implementation workers active. Input hashes frozen. Live VM verified TERMINATED. No new paid run started.
 
 | 2026-10-29 13:34 | OWNER approved execution; 2–6h estimate, existing US$10 total, 3 additional GPU hours | First checkpoint13:44; prepare all CPU inputs before GPU start |
+
+
+## Execution log and current state
+
+**EXECUTING.** CPU preparation, fixed-sample source review, actual model restore and paired three-page row-level exports are complete. Ten-page inference is active. Group-summary count correction is in progress; original-row/QID comparisons are unaffected.
+
+| Time Asia/Jerusalem UTC+02, 29 October 2026 | Verified state | Next |
+|---|---|---|
+|13:34|OWNER approved2-6h execution within existingUS$10; newGPUcap3h|13:44checkpoint|
+|13:44|Baseline100 candidate prep47.953s,754445pairs|Source recovery|
+|13:55|Recovery126requests; cached correction0newcalls;1099addedpage-revision-QIDs|Mention prep and review|
+|14:04|First prepared artifact failed source-role review; no inference on it|One affected-task replan, source guards|
+|14:12|Whole-file rerun stopped before output on wiki-format Tag parser case|Regression fix and same100 rerun|
+|14:17|About6min coordination delay: send_message did not restart completed worker|followup_task resumed worker|
+|14:24|V2 prep215.922s,1815repairs; all40070rows/7372DATE preserved; same139-IDsample reviewed|Freeze candidates|
+|14:27|135testsPASS;6arms1723240pairs; forecast122.78-142.78min;VM3hSTOP verified|VM started14:27:49.863|
+|14:31|First restore failed because existing cache path was not set; no inference; offlineHF_HOME fix passed actual restore|3page paired run|
+|14:35|3pages complete:535rows,90DATE;matched166to183,new17,lost0;sourcepositive83/90both|10page PID2041 started14:35:31;next14:45|
+
+Affected-task estimatev3: source guards, same100CPU rerun and independent fixed sample review. O15/M30/P51minutes elapsed execution excluding waits; Epoch point0.52h,feedback3f2f8e6b-8cd8-4c2c-8406-1c7706d73a31. One replan, overall2-6h unchanged. Recorded actual20.45min elapsed, including about6min coordination delay; active work unknown. Source-worker15-30min plus measured prep/runtime and parallel review aligned with this breakdown.
+
+Cache-location check occurred after VM startup, contrary to intended preflight order. Existing pinned cache /home/User/luke-pilot/hf-cache was used via HF_HOME; no new weights, data or formatter change. Failure log retained.
+
+A local plan write using the Windows default encoding failed on an arrow character. The plan was restored from the tracked checkpoint and this execution log using explicit UTF-8. No input data or code was affected.
+
+|14:44|10pages complete:3785rows,811DATE;matched1290to1426,140new/4lostpairs;positive611/763both|100pagePID2571started14:44:25;independentloss/candidatecoverageauditsparallel;next14:55|
