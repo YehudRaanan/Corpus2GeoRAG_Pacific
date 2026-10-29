@@ -128,6 +128,67 @@ def _stage(directory: Path) -> dict:
     return receipt
 
 
+def _historical_source(source: dict, envelope: dict) -> None:
+    from GG_Data.pipeline.post_qid_native import historical_record, historical_selection
+
+    qid = source["record_id"]
+    _pin(Path(source["file"]), source["sha256"])
+    _pin(Path(source["request_file"]), source["request_sha256"])
+    request = read_json(Path(source["request_file"]))
+    params = request.get("params", {})
+    if (
+        request.get("status") != 200
+        or request.get("sha256") != source["sha256"]
+        or request.get("endpoint") != "https://www.wikidata.org/w/api.php"
+        or params
+        != dict(
+            action="query",
+            format="json",
+            formatversion=2,
+            prop="revisions",
+            titles=qid,
+            rvslots="main",
+            rvprop="ids|timestamp|content|contentmodel",
+            rvlimit=5,
+        )
+        or any(
+            request.get(k) != source.get(k)
+            for k in ("endpoint", "params", "retrieved_at")
+        )
+        or source.get("snapshot_at") is not None
+    ):
+        raise ValueError("Historical request/source evidence differs")
+    raw = read_json(Path(source["file"]))
+    if historical_record(raw, qid) != envelope:
+        raise ValueError("Historical envelope differs from selected source revision")
+    for key, expected in historical_selection(raw, qid).items():
+        if source.get(key) != expected:
+            raise ValueError(f"Historical selection metadata differs: {key}")
+
+
+def _acquisition_inputs(receipt: dict) -> dict:
+    """Pin saved acquisition ancestry, including incomplete stage outputs."""
+    evidence, pending = {}, list(receipt.get("inputs", {}).items())
+    while pending:
+        filename, expected = pending.pop()
+        path = Path(filename).resolve()
+        key = str(path)
+        if key in evidence:
+            if evidence[key] != expected:
+                raise ValueError("Conflicting acquisition input hash")
+            continue
+        _pin(path, expected)
+        evidence[key] = expected
+        if path.name == "receipt.json":
+            ancestor = _stage(path.parent)
+            pending.extend(ancestor.get("inputs", {}).items())
+            pending.extend(
+                (str(path.parent / name), sha)
+                for name, sha in ancestor["outputs"].items()
+            )
+    return evidence
+
+
 def _consolidated_stage(directory: Path) -> dict:
     """Require the source-bound whole-record consolidation, not an API receipt."""
     receipt = _stage(directory)
@@ -138,7 +199,8 @@ def _consolidated_stage(directory: Path) -> dict:
     for section in ("inputs", "source_files"):
         for filename, expected in receipt[section].items():
             _pin(Path(filename), expected)
-    for source in read_json(directory / "sources.json").values():
+    records = read_json(directory / "full_records.json.gz")
+    for qid, source in read_json(directory / "sources.json").items():
         if (
             receipt["source_files"].get(str(Path(source["file"]).resolve()))
             != source["sha256"]
@@ -146,6 +208,13 @@ def _consolidated_stage(directory: Path) -> dict:
             raise ValueError("Consolidation source hash binding differs")
         if source.get("sql_file"):
             _pin(Path(source["sql_file"]), source["sql_sha256"])
+        if source.get("provider") == "WIKIDATA_API_HISTORICAL":
+            if (
+                receipt["source_files"].get(str(Path(source["request_file"]).resolve()))
+                != source["request_sha256"]
+            ):
+                raise ValueError("Consolidation historical request binding differs")
+            _historical_source(source, records[qid])
     return receipt
 
 
@@ -177,6 +246,7 @@ def consolidate_native(
         raise ValueError("Reuse inventory differs from exact required scope")
     api_receipt_sha = digest(api_dir / "receipt.json")
     acquired = _stage(api_dir)
+    acquisition_inputs = _acquisition_inputs(acquired)
     requested = acquired.get("requested_ids", [])
     if (
         acquired.get("status") != "REQUIRED_NATIVE_RECORDS_AVAILABLE"
@@ -223,7 +293,13 @@ def consolidate_native(
     sources = {**sources, **api_sources}
     grouped = {}
     for qid, source in sources.items():
-        grouped.setdefault(source["file"], set()).add(qid)
+        if source.get("provider") == "WIKIDATA_API_HISTORICAL":
+            _historical_source(source, records[qid])
+            source_files[str(Path(source["request_file"]).resolve())] = source[
+                "request_sha256"
+            ]
+        else:
+            grouped.setdefault(source["file"], set()).add(qid)
         if source.get("sql_file"):
             _pin(Path(source["sql_file"]), source["sql_sha256"])
         entity = native_record(records[qid], qid)
@@ -276,6 +352,7 @@ def consolidate_native(
         counts=counts,
         source_files=source_files,
         inputs={
+            **acquisition_inputs,
             str(reuse_inventory.resolve()): inventory_sha,
             str((api_dir / "receipt.json").resolve()): api_receipt_sha,
         },
@@ -558,6 +635,163 @@ def apply_public_events(
             differing_overlap_qids=overlaps,
             temporal_basis="MIXED_WHOLE_RECORD_VERSIONS_NO_COMMON_SNAPSHOT",
             event_discovery_completeness="SPARQL_OBSERVATION_AND_LOCAL_OUTGOING_UNION_ONLY",
+            relation_policy=relations["policy_version"],
+            acquisition_executed=False,
+        ),
+    )
+
+
+def restrict_events_to_articles(
+    core_dir: Path,
+    event_dir: Path,
+    link_table: Path,
+    collection_manifest: Path,
+    mapping_dir: Path,
+    mapping_manifest: Path,
+    mapping_manifest_sha256: str,
+    output: Path,
+) -> dict:
+    """Keep accepted corpus Events and Events directly linked in used revisions.
+
+    Raw revision presence is verified. Saved cached/current title-QID assignments
+    remain observations; this does not establish historical title-QID identity.
+    """
+    import pyarrow.parquet as pq
+    from GG_Data.entity_resolution.hundred_page_pilot.collect_entities import raw_links
+
+    if output.exists():
+        raise FileExistsError(output)
+    core, broad = read_json(core_dir / "manifest.json"), _stage(event_dir)
+    if core["scope"] != "3" or broad["scope"] != "3":
+        raise ValueError("Article boundary is approved for scope 3 only")
+    for name in ("entities.json.gz", "wiki_pages.json.gz"):
+        _pin(core_dir / name, core["outputs"][name])
+    for filename, expected in broad.get("inputs", {}).items():
+        _pin(Path(filename), expected)
+    collection = read_json(collection_manifest)
+    _pin(link_table, _manifest_hash(collection, "outputs", link_table.name))
+    entity_scope = [
+        r
+        for r in read_json(core_dir / "entities.json.gz")
+        if re.fullmatch(r"Q[1-9]\d*", r["entity_id"])
+    ]
+    corpus = {r["entity_id"] for r in entity_scope}
+    pages = {
+        (r["wiki_page_id"], r["revision_id"]): r
+        for r in read_json(core_dir / "wiki_pages.json.gz")
+    }
+    parsed, raw_inputs = {}, {}
+    for key, page in pages.items():
+        raw = page["raw_reference"]
+        path = Path(raw["wikitext_path"])
+        _pin(path, raw["sha256"])
+        raw_inputs[str(path.resolve())] = raw["sha256"]
+        parsed[key] = raw_links(path.read_text(encoding="utf-8"))
+    rows = pq.read_table(
+        link_table, filters=[("page_id", "in", sorted({k[0] for k in pages}))]
+    ).to_pylist()
+    presence = []
+    for row in rows:
+        key = row["page_id"], row["revision_id"]
+        if key not in pages or row["link_origin"] != "RAW_DIRECT_LINK":
+            continue
+        raw = pages[key]["raw_reference"]
+        if (
+            Path(row["raw_evidence_path"]).resolve()
+            != Path(raw["wikitext_path"]).resolve()
+            or row["raw_sha256"] != raw["sha256"]
+        ):
+            raise ValueError("Article raw link source differs from core revision")
+        matches = [
+            link
+            for link in parsed[key]
+            if all(row.get(field) == value for field, value in link.items())
+        ]
+        if len(matches) != 1:
+            raise ValueError("Saved raw link offsets/target metadata differ")
+        if row.get("qid") and re.fullmatch(r"Q[1-9]\d*", row["qid"]):
+            presence.append(row)
+    linked = {r["qid"] for r in presence}
+    events = read_json(event_dir / "events.json.gz")
+    broad_qids = {r["event_id"] for r in events}
+    retained = broad_qids & (corpus | linked)
+    decisions = []
+    for original in read_json(event_dir / "event_decisions.json"):
+        decision = dict(original)
+        qid = decision["qid"]
+        decision["broad_keep_event"] = original["keep_event"]
+        decision["keep_event"] = qid in retained
+        decision["article_presence_reason"] = (
+            "ACCEPTED_CORPUS_QID"
+            if qid in corpus
+            else (
+                "RAW_DIRECT_LINK_IN_USED_REVISION"
+                if qid in linked
+                else "NO_DIRECT_LINK_IN_USED_REVISIONS"
+            )
+        )
+        decisions.append(decision)
+    envelopes = read_json(event_dir / "full_records.json.gz")
+    sources = read_json(event_dir / "sources.json")
+    records = {q: native_record(value, q) for q, value in envelopes.items()}
+    mapping, directions = _mapping(
+        mapping_dir, mapping_manifest, mapping_manifest_sha256
+    )
+    relations = build_relations(
+        records,
+        entity_scope + [dict(entity_id=q, type="event") for q in sorted(retained)],
+        mapping,
+        directions,
+        sources={q: [source] for q, source in sources.items()},
+    )
+    edges = export_stored_relations(relations["relations"])
+    inputs = [
+        core_dir / "manifest.json",
+        event_dir / "receipt.json",
+        link_table,
+        collection_manifest,
+        mapping_manifest,
+    ]
+    return _write_stage(
+        output,
+        {
+            "full_records.json.gz": envelopes,
+            "sources.json": sources,
+            "article_presence_evidence.json": presence,
+            "event_decisions.json": decisions,
+            "events.json.gz": [e for e in events if e["event_id"] in retained],
+            "event_entities.json.gz": [
+                e
+                for e in read_json(event_dir / "event_entities.json.gz")
+                if e["entity_id"] in retained
+            ],
+            "relations.json.gz": relations["relations"],
+            "excluded_relations.json.gz": relations["excluded"],
+            "unknown_predicates.json.gz": relations["unknown_predicates"],
+            "graph_edges.json.gz": edges,
+        },
+        dict(
+            status="NATIVE_EVENT_RELATIONS_READY",
+            phase="ARTICLE_EVENT_BOUNDARY",
+            scope="3",
+            counts=dict(
+                corpus_qids=len(corpus),
+                broad_events=len(broad_qids),
+                events=len(retained),
+                corpus_events=len(retained & corpus),
+                added_events=len(retained - corpus),
+                excluded_broad_events=len(broad_qids - retained),
+                verified_raw_link_rows=len(presence),
+                relation_base_assertions=relations["counts"]["base_assertions"],
+                stored_directed_rows=len(relations["relations"]),
+                exported_edges=len(edges),
+            ),
+            inputs={**raw_inputs, **{str(p.resolve()): digest(p) for p in inputs}},
+            article_policy="ACCEPTED_CORPUS_OR_RAW_DIRECT_LINK_IN_EXACT_USED_REVISIONS",
+            qid_mapping_temporal_basis="SAVED_CACHED_OR_CURRENT_ASSIGNMENTS_NOT_HISTORICAL_IDENTITY_PROOF",
+            temporal_basis=broad["temporal_basis"],
+            sparql_observed_at=broad.get("sparql_observed_at"),
+            event_discovery_completeness="BROAD_NATIVE_ELIGIBILITY_RESTRICTED_TO_VERIFIED_ARTICLE_PRESENCE",
             relation_policy=relations["policy_version"],
             acquisition_executed=False,
         ),

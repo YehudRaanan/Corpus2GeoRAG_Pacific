@@ -2,10 +2,176 @@
 
 import gzip
 import json
+from copy import deepcopy
 
 import pytest
 
 from GG_Data.pipeline import post_qid_native as api
+
+
+def history(qid="Q1"):
+    def revision(number, content):
+        return dict(
+            revid=number,
+            timestamp=f"2026-01-0{number}T00:00:00Z",
+            slots={
+                "main": dict(
+                    contentmodel="wikibase-item",
+                    contentformat="application/json",
+                    content=json.dumps(content),
+                )
+            },
+        )
+
+    full = dict(
+        id=qid,
+        type="item",
+        claims={"P31": []},
+        labels={},
+        descriptions={},
+        aliases={},
+        sitelinks={},
+    )
+    return {
+        "query": {
+            "pages": [
+                dict(
+                    title=qid,
+                    ns=0,
+                    revisions=[
+                        revision(3, dict(entity=qid, redirect="Q999")),
+                        revision(2, {**full, "claims": {}}),
+                        revision(1, full),
+                    ],
+                )
+            ]
+        }
+    }
+
+
+def test_historical_record_selects_full_original_and_derives_info():
+    raw = history()
+    before = deepcopy(raw)
+    result = api.historical_record(raw, "Q1")
+    assert result["entity"]["id"] == "Q1"
+    assert result["entity"]["lastrevid"] == 1
+    assert result["entity"]["modified"] == "2026-01-01T00:00:00Z"
+    assert raw == before
+
+
+def test_historical_record_skips_mediawiki_empty_array_merge_content():
+    raw = history()
+    cleared = dict(
+        id="Q1",
+        type="item",
+        **{k: [] for k in ("claims", "labels", "descriptions", "aliases", "sitelinks")},
+    )
+    raw["query"]["pages"][0]["revisions"][1]["slots"]["main"]["content"] = json.dumps(
+        cleared
+    )
+    assert api.historical_record(raw, "Q1")["entity"]["lastrevid"] == 1
+
+
+@pytest.mark.parametrize(
+    "damage",
+    ["title", "duplicate", "order", "wrong_id", "missing_field", "redirect_only"],
+)
+def test_historical_record_rejects_malformed_evidence(damage):
+    raw = history()
+    page = raw["query"]["pages"][0]
+    if damage == "title":
+        page["title"] = "Q2"
+    elif damage == "duplicate":
+        page["revisions"][1]["revid"] = 3
+    elif damage == "order":
+        page["revisions"].reverse()
+    elif damage == "redirect_only":
+        page["revisions"] = page["revisions"][:1]
+    else:
+        slot = page["revisions"][-1]["slots"]["main"]
+        content = json.loads(slot["content"])
+        if damage == "wrong_id":
+            content["id"] = "Q2"
+        else:
+            del content["labels"]
+        slot["content"] = json.dumps(content)
+    with pytest.raises(ValueError):
+        api.historical_record(raw, "Q1")
+
+
+def completion_fixture(tmp_path):
+    api_dir, history_dir = tmp_path / "api", tmp_path / "history"
+    api.acquire_api(
+        {"Q1", "Q2"},
+        api_dir,
+        session=Session([Response({"entities": {"Q1": full_entity("Q1")}})]),
+    )
+    history_dir.mkdir()
+    raw = history_dir / "Q2.response.body"
+    raw.write_text(json.dumps(history("Q2")), encoding="utf-8")
+    request = dict(
+        endpoint="https://www.wikidata.org/w/api.php",
+        params=dict(
+            action="query",
+            format="json",
+            formatversion=2,
+            prop="revisions",
+            titles="Q2",
+            rvslots="main",
+            rvprop="ids|timestamp|content|contentmodel",
+            rvlimit=5,
+        ),
+        retrieved_at="2026-10-29T00:00:00Z",
+        status=200,
+        sha256=api.digest(raw),
+    )
+    (history_dir / "Q2.request.json").write_text(json.dumps(request), encoding="utf-8")
+    return api_dir, history_dir
+
+
+def test_complete_api_history_preserves_current_and_failed_evidence(tmp_path):
+    api_dir, history_dir = completion_fixture(tmp_path)
+    original = (api_dir / "receipt.json").read_bytes()
+    before = json.load(
+        gzip.open(api_dir / "full_records.json.gz", "rt", encoding="utf-8")
+    )
+    out = tmp_path / "completed"
+    result = api.complete_api_history(api_dir, history_dir, out)
+    records = json.load(gzip.open(out / "full_records.json.gz", "rt", encoding="utf-8"))
+    assert records["Q1"] == before["Q1"]
+    assert records["Q2"] == api.historical_record(history("Q2"), "Q2")
+    assert result["counts"] == dict(required=2, acquired=2, missing=0)
+    assert result["missing"] == result["failures"] == []
+    assert result["resolved_failures"][0]["original_failure"]["qid"] == "Q2"
+    assert (api_dir / "receipt.json").read_bytes() == original
+    source = json.loads((out / "sources.json").read_text())["Q2"]
+    assert source["provider"] == "WIKIDATA_API_HISTORICAL"
+    assert [v["reason"] for v in source["skipped_newer_revisions"]] == [
+        "REDIRECT",
+        "EMPTY_CLAIMS",
+    ]
+    assert result["inputs"][source["request_file"]] == source["request_sha256"]
+
+
+@pytest.mark.parametrize(
+    "damage", ["history_raw", "history_request", "current_raw", "output"]
+)
+def test_complete_api_history_rejects_changed_evidence_before_output(tmp_path, damage):
+    api_dir, history_dir = completion_fixture(tmp_path)
+    if damage == "history_raw":
+        (history_dir / "Q2.response.body").write_text("{}")
+    elif damage == "history_request":
+        path = history_dir / "Q2.request.json"
+        request = json.loads(path.read_text())
+        request["params"]["titles"] = "Q3"
+        path.write_text(json.dumps(request))
+    elif damage == "current_raw":
+        next(api_dir.glob("*.response.body")).write_text("{}")
+    else:
+        (api_dir / "sources.json").write_text("{}")
+    with pytest.raises(ValueError):
+        api.complete_api_history(api_dir, history_dir, tmp_path / "completed")
+    assert not (tmp_path / "completed").exists()
 
 
 def envelope(qid):

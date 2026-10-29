@@ -356,6 +356,259 @@ def acquire_api(
     return receipt
 
 
+def _history(raw: dict, qid: str) -> tuple[dict, dict]:
+    """Validate the complete saved window before selecting one original record."""
+    try:
+        if not re.fullmatch(r"Q[1-9]\d*", qid) or raw.get("error"):
+            raise ValueError("Invalid history identity or API error")
+        pages = raw["query"]["pages"]
+        if len(pages) != 1 or pages[0]["title"] != qid or pages[0]["ns"] != 0:
+            raise ValueError("History page differs from requested original QID")
+        revisions = pages[0]["revisions"]
+        if not isinstance(revisions, list) or not 1 <= len(revisions) <= 5:
+            raise ValueError("Missing history revisions")
+        previous_id, previous_time = None, None
+        selected, skipped = None, []
+        for revision in revisions:
+            number, timestamp = revision["revid"], revision["timestamp"]
+            instant = datetime.fromisoformat(timestamp.replace("Z", "+00:00"))
+            if (
+                type(number) is not int
+                or number <= 0
+                or instant.tzinfo is None
+                or (previous_id is not None and number >= previous_id)
+                or (previous_time is not None and instant > previous_time)
+            ):
+                raise ValueError("History revision order or metadata is invalid")
+            previous_id, previous_time = number, instant
+            slot = revision["slots"]["main"]
+            if (
+                slot["contentmodel"] != "wikibase-item"
+                or slot["contentformat"] != "application/json"
+            ):
+                raise ValueError("Expected full Wikibase JSON history content")
+            entity = json.loads(slot["content"])
+            if "redirect" in entity:
+                if (
+                    entity.get("entity") != qid
+                    or not re.fullmatch(r"Q[1-9]\d*", entity["redirect"])
+                    or entity["redirect"] == qid
+                ):
+                    raise ValueError("Invalid original-QID redirect evidence")
+                reason = "REDIRECT"
+            else:
+                if (
+                    entity.get("id") != qid
+                    or entity.get("type") != "item"
+                    or "missing" in entity
+                ):
+                    raise ValueError(
+                        "History content has a different original identity"
+                    )
+                for field in (
+                    "claims",
+                    "labels",
+                    "descriptions",
+                    "aliases",
+                    "sitelinks",
+                ):
+                    # MediaWiki serializes cleared merge maps as []. Such
+                    # rows may be skipped, but never selected as full data.
+                    if not isinstance(entity.get(field), dict) and not (
+                        entity.get("claims") == [] and entity.get(field) == []
+                    ):
+                        raise ValueError(f"Missing full historical {field}")
+                reason = "EMPTY_CLAIMS" if not entity["claims"] else None
+            if selected is None:
+                if reason:
+                    skipped.append(
+                        dict(revid=number, timestamp=timestamp, reason=reason)
+                    )
+                else:
+                    entity = dict(entity, lastrevid=number, modified=timestamp)
+                    selected = dict(requested_qid=qid, entity=entity)
+        if selected is None:
+            raise ValueError("No full nonempty original entity in saved history")
+        return selected, dict(
+            native_revision=selected["entity"]["lastrevid"],
+            native_modified=selected["entity"]["modified"],
+            derived_info_fields={
+                "lastrevid": "MediaWiki.revid",
+                "modified": "MediaWiki.timestamp",
+            },
+            selection_policy="LATEST_NONEMPTY_ORIGINAL_ENTITY_BEFORE_REDIRECT_OR_MERGE",
+            skipped_newer_revisions=skipped,
+        )
+    except (KeyError, TypeError, AttributeError, IndexError) as exc:
+        raise ValueError("Malformed or missing full history evidence") from exc
+
+
+def historical_record(raw: dict, qid: str) -> dict:
+    """Return the latest full original entity in a saved newest-first window."""
+    return _history(raw, qid)[0]
+
+
+def historical_selection(raw: dict, qid: str) -> dict:
+    """Return explicit revision derivation and skipped newer history evidence."""
+    return _history(raw, qid)[1]
+
+
+def complete_api_history(api_dir: Path, history_dir: Path, output: Path) -> dict:
+    """Complete a failed acquisition from saved history only; never fetch."""
+    if output.exists():
+        raise FileExistsError(output)
+
+    def read(path: Path) -> dict:
+        return json.loads(path.read_text(encoding="utf-8"))
+
+    receipt_path = api_dir / "receipt.json"
+    receipt_sha = digest(receipt_path)
+    receipt = read(receipt_path)
+    for filename, expected in receipt.get("inputs", {}).items():
+        if digest(Path(filename)) != expected:
+            raise ValueError("Original acquisition input hash differs")
+    for name, expected in receipt["outputs"].items():
+        if Path(name).name != name or digest(api_dir / name) != expected:
+            raise ValueError("Acquisition output hash differs")
+    with gzip.open(api_dir / "full_records.json.gz", "rt", encoding="utf-8") as stream:
+        records = json.load(stream)
+    sources = read(api_dir / "sources.json")
+    requested, missing = receipt["requested_ids"], receipt["missing"]
+    failures = {r["qid"]: r for r in receipt["failures"]}
+    if (
+        receipt["status"] != "MISSING_NATIVE_RECORDS"
+        or not missing
+        or len(set(requested)) != len(requested)
+        or len(set(missing)) != len(missing)
+        or len(failures) != len(receipt["failures"])
+        or set(failures) != set(missing)
+        or records.keys() != sources.keys()
+        or records.keys() & set(missing)
+        or records.keys() | set(missing) != set(requested)
+        or receipt["counts"]
+        != dict(required=len(requested), acquired=len(records), missing=len(missing))
+    ):
+        raise ValueError("Failed acquisition scope or failure accounting differs")
+    inputs = {**receipt.get("inputs", {}), str(receipt_path.resolve()): receipt_sha}
+    # Bind every unchanged current record to its saved raw API response/request.
+    raw_cache, request_cache, raw_hashes = {}, {}, {}
+    for qid, envelope in records.items():
+        native_record(envelope, qid)
+        source = sources[qid]
+        raw_path = Path(source["file"])
+        request_path = raw_path.with_name(
+            raw_path.name.replace(".response.body", ".request.json")
+        )
+        key = str(raw_path.resolve())
+        if key not in raw_hashes:
+            raw_hashes[key] = digest(raw_path)
+            raw_cache[key] = read(raw_path)
+            request_cache[key] = read(request_path)
+            inputs[str(request_path.resolve())] = digest(request_path)
+        if raw_hashes[key] != source["sha256"]:
+            raise ValueError("Current raw response hash differs")
+        request = request_cache[key]
+        if (
+            request.get("sha256") != source["sha256"]
+            or request.get("http_status") != 200
+            or qid not in request["requested_ids"]
+            or Path(request["raw_file"]).resolve() != raw_path.resolve()
+            or request.get("params") != source.get("params")
+        ):
+            raise ValueError("Current request evidence differs")
+        if raw_cache[key]["entities"].get(qid) != envelope["entity"]:
+            raise ValueError("Current envelope differs from raw source")
+        inputs[str(raw_path.resolve())] = source["sha256"]
+    resolved = []
+    for qid in missing:
+        raw_path, request_path = (
+            history_dir / f"{qid}.response.body",
+            history_dir / f"{qid}.request.json",
+        )
+        request = read(request_path)
+        raw_sha = digest(raw_path)
+        params = request.get("params", {})
+        expected_params = dict(
+            action="query",
+            format="json",
+            formatversion=2,
+            prop="revisions",
+            titles=qid,
+            rvslots="main",
+            rvprop="ids|timestamp|content|contentmodel",
+            rvlimit=5,
+        )
+        if (
+            params != expected_params
+            or request.get("sha256") != raw_sha
+            or request.get("status") != 200
+            or request.get("endpoint") != "https://www.wikidata.org/w/api.php"
+            or datetime.fromisoformat(
+                request["retrieved_at"].replace("Z", "+00:00")
+            ).tzinfo
+            is None
+        ):
+            raise ValueError("Historical request or raw response hash differs")
+        raw = read(raw_path)
+        records[qid] = historical_record(raw, qid)
+        sources[qid] = dict(
+            provider="WIKIDATA_API_HISTORICAL",
+            record_id=qid,
+            file=str(raw_path.resolve()),
+            sha256=raw_sha,
+            request_file=str(request_path.resolve()),
+            request_sha256=digest(request_path),
+            endpoint=request["endpoint"],
+            params=params,
+            retrieved_at=request["retrieved_at"],
+            snapshot_at=None,
+            temporal_basis="HISTORICAL_ORIGINAL_BEFORE_MERGE_NOT_CURRENT_API",
+            **historical_selection(raw, qid),
+        )
+        inputs[str(raw_path.resolve())], inputs[str(request_path.resolve())] = (
+            raw_sha,
+            digest(request_path),
+        )
+        resolved.append(
+            dict(
+                original_failure=failures[qid],
+                resolution="SAVED_FULL_ORIGINAL_HISTORY",
+                native_revision=sources[qid]["native_revision"],
+            )
+        )
+    if digest(receipt_path) != receipt_sha:
+        raise ValueError("Original failed receipt changed")
+    output.mkdir(parents=True, exist_ok=False)
+    with gzip.open(output / "full_records.json.gz", "wt", encoding="utf-8") as stream:
+        json.dump(records, stream, ensure_ascii=False, allow_nan=False)
+    (output / "sources.json").write_text(
+        json.dumps(sources, indent=2, ensure_ascii=False), encoding="utf-8"
+    )
+    completed = dict(
+        status="REQUIRED_NATIVE_RECORDS_AVAILABLE",
+        requested_ids=requested,
+        missing=[],
+        failures=[],
+        counts=dict(required=len(requested), acquired=len(records), missing=0),
+        inputs=inputs,
+        original_failed_receipt=dict(
+            file=str(receipt_path.resolve()), sha256=receipt_sha
+        ),
+        original_input_bindings=receipt.get("inputs", {}),
+        resolved_failures=resolved,
+        selection_policy="UNCHANGED_CURRENT_API_PLUS_HISTORICAL_ORIGINAL_QIDS_NO_MERGE",
+        event_discovery_completeness="NOT_ESTABLISHED",
+        outputs={
+            name: digest(output / name)
+            for name in ("full_records.json.gz", "sources.json")
+        },
+    )
+    (output / "receipt.json").write_text(
+        json.dumps(completed, indent=2), encoding="utf-8"
+    )
+    return completed
+
+
 def main(argv: list[str] | None = None) -> None:
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--required-ids", type=Path, required=True)

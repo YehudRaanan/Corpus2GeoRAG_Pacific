@@ -163,3 +163,21 @@ Use new versioned output directories and atomic stage completion. Do not overwri
 - The selected tuned checkpoint passed candidate selection, 551/608 (90.625%), but stop precision, 278/311 (89.389%), missed the 90% target. OWNER approved an experimental THREE-page run with this fixed model. Keep quality status failed, preserve all evidence, and do not extend this exception to ten or 100 pages or retrain without approval.
 - Full-native BigQuery retrieval was dry-run only: the 1.56 TB estimate would cost approximately US$8.88 before free allowance, which is unverified. The query was not executed. The 32 missing corpus records were obtained with the Wikidata API; 22 whole cached records were reused. Per-record source, revision and retrieval metadata records this mixed temporal basis.
 - Public SPARQL is a bounded alternative for incoming Event discovery; retain exact query/response bytes and failures. Include all native corpus outgoing targets locally, apply the accepted pinned occurrence class list, then verify full-record eligibility. Do not claim a common snapshot across old cache, API and SPARQL observations.
+
+## Historical lookup recovery approval, 29 October 2026
+
+OWNER approved using the last full original-QID record before each merge, with explicit revision metadata, for three redirected Event lookup IDs. Retain original QIDs and all failed acquisition evidence. The saved five-revision windows select Q7699410/revision2498684180 (2026-05-28T11:30:02Z), Q13107770/revision2421525115 (2025-10-25T00:06:01Z), and Q13196750/revision2453815519 (2026-01-11T01:31:14Z). Revision info fields are derived from MediaWiki revision metadata and labelled as such. This does not change Daniel assignments or establish a common snapshot.
+
+Geography remains discussion-only. OWNER requested discussion of sufficient evidence before deciding. The proposed same-place acceptance rule is not yet approved; no geometry population is authorised.
+
+## Approved Event boundary refinement, 29 October 2026
+
+OWNER chose to require presence in a saved article revision for added Events. Preserve all existing matched corpus QIDs. An added Event must have RAW_DIRECT_LINK evidence on an exact revision used by the current slice, checked against its saved wikitext and collection output hash. Page-own presence alone does not add an Event outside the matched corpus. The existing native occurrence/type and at-least-two-corpus-QID rules remain required; article presence is an additional condition. Rebuild closed-endpoint Relations after filtering. Keep the broad637-Event result separately for provenance. Current/cached title-to-QID mapping remains labelled as such; the linked text is revision-pinned, but the QID mapping is not a historical snapshot. No matching rerun or paid collection is needed.
+
+On conflicting relations, preserve separate source assertions, raw qualifiers, revision/source metadata and dates; do not silently select one or combine evidence across versions. Generated reverse rows remain directions of the same assertion, not independent support. This discussion adds no new conflict-resolution scoring policy. Geography acceptance remains pending discussion.
+
+## Verified three-page checkpoint after Event boundary refinement
+
+Historical recovery is complete with original QIDs/revisions retained. The new article-bound stage retains11Events:9already accepted corpusQIDs and2added direct-linkedEvents (Q217145Guadalcanal campaign, Q263142BattleoftheJavaSea).626broadEvents are excluded. Recomputed Relations contain120sourceassertions and239stored/exporteddirectedrows, includingone selfassertion. Rawpresence, sourcehashes, closedendpoints andexportdirections passed independent checks.
+
+Combined local tables contain4page/revisionrows on3pages,317typedEntityrows,535originalMentions,536bridges,11Events and239Relations. Geography and final acceptance remain pending. Experimental model quality status remainsfailed; source/DQcoverage does not establish matchingaccuracy. Rawlinks234total:191mappedQIDoccurrences,43unmapped. Current/cachedtitle-QIDmapping is not historicalidentityproof. Broadandnarrowversions bothremainavailable. No paidcollection/GPU restart was used for these changes.

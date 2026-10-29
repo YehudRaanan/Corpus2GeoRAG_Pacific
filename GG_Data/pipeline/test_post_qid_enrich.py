@@ -339,3 +339,223 @@ def test_consolidated_boundary_rejects_direct_api_and_changed_inputs(tmp_path):
     inventory.write_text("changed")
     with pytest.raises(ValueError, match="hash differs"):
         api._consolidated_stage(out)
+
+
+def historical_inputs(tmp_path):
+    from GG_Data.pipeline.post_qid_native import historical_record, historical_selection
+
+    inventory, api_dir, _, _ = consolidation_inputs(tmp_path)
+    entity = {
+        "id": "Q2",
+        "type": "item",
+        "labels": {},
+        "descriptions": {},
+        "aliases": {},
+        "sitelinks": {},
+        "claims": {"P17": [claim("Q2", "P17", "Q1", "historic")]},
+    }
+    raw = write(
+        tmp_path / "history.response.json",
+        {
+            "query": {
+                "pages": [
+                    {
+                        "title": "Q2",
+                        "ns": 0,
+                        "revisions": [
+                            {
+                                "revid": 10,
+                                "timestamp": "2020-01-01T00:00:00Z",
+                                "slots": {
+                                    "main": {
+                                        "contentmodel": "wikibase-item",
+                                        "contentformat": "application/json",
+                                        "content": json.dumps(entity),
+                                    }
+                                },
+                            }
+                        ],
+                    }
+                ]
+            }
+        },
+    )
+    request = write(
+        tmp_path / "history.request.json",
+        {
+            "endpoint": "https://www.wikidata.org/w/api.php",
+            "params": {
+                "action": "query",
+                "format": "json",
+                "formatversion": 2,
+                "prop": "revisions",
+                "titles": "Q2",
+                "rvslots": "main",
+                "rvprop": "ids|timestamp|content|contentmodel",
+                "rvlimit": 5,
+            },
+            "retrieved_at": "2026-10-29T08:00:00Z",
+            "status": 200,
+            "sha256": sha(raw),
+        },
+    )
+    saved = json.loads(request.read_text())
+    source = {
+        "provider": "WIKIDATA_API_HISTORICAL",
+        "record_id": "Q2",
+        "file": str(raw),
+        "sha256": sha(raw),
+        "request_file": str(request),
+        "request_sha256": sha(request),
+        "endpoint": saved["endpoint"],
+        "params": saved["params"],
+        "retrieved_at": saved["retrieved_at"],
+        "snapshot_at": None,
+        **historical_selection(json.loads(raw.read_text()), "Q2"),
+    }
+    with gzip.open(api_dir / "full_records.json.gz", "wt") as stream:
+        json.dump({"Q2": historical_record(json.loads(raw.read_text()), "Q2")}, stream)
+    write(api_dir / "sources.json", {"Q2": source})
+    receipt = json.loads((api_dir / "receipt.json").read_text())
+    receipt["outputs"] = {name: sha(api_dir / name) for name in receipt["outputs"]}
+    write(api_dir / "receipt.json", receipt)
+    return inventory, api_dir, source
+
+
+def test_historical_consolidation_preserves_and_rechecks_source_evidence(tmp_path):
+    inventory, api_dir, source = historical_inputs(tmp_path)
+    out = tmp_path / "historical_complete"
+    receipt = api.consolidate_native(inventory, api_dir, {"Q1", "Q2"}, out)
+    assert (
+        receipt["source_files"][str(Path(source["request_file"]).resolve())]
+        == source["request_sha256"]
+    )
+    assert api._consolidated_stage(out)["phase"] == "NATIVE_CONSOLIDATION"
+    Path(source["request_file"]).write_text("changed")
+    with pytest.raises(ValueError, match="hash differs"):
+        api._consolidated_stage(out)
+
+
+@pytest.mark.parametrize("change", ["metadata", "raw", "request"])
+def test_historical_consolidation_rejects_changed_evidence(tmp_path, change):
+    inventory, api_dir, source = historical_inputs(tmp_path)
+    if change == "metadata":
+        source["derived_info_fields"] = {"lastrevid": "invented"}
+        write(api_dir / "sources.json", {"Q2": source})
+        receipt = json.loads((api_dir / "receipt.json").read_text())
+        receipt["outputs"]["sources.json"] = sha(api_dir / "sources.json")
+        write(api_dir / "receipt.json", receipt)
+    else:
+        Path(source["file" if change == "raw" else "request_file"]).write_text(
+            "changed"
+        )
+    with pytest.raises(ValueError, match="differs"):
+        api.consolidate_native(inventory, api_dir, {"Q1", "Q2"}, tmp_path / "bad")
+
+
+def test_consolidation_pins_original_incomplete_acquisition_outputs(tmp_path):
+    inventory, api_dir, _, _ = consolidation_inputs(tmp_path)
+    original = tmp_path / "original"
+    api._write_stage(original, {"failures.json": ["Q2"]}, {"status": "INCOMPLETE"})
+    receipt = json.loads((api_dir / "receipt.json").read_text())
+    receipt["inputs"] = {str(original / "receipt.json"): sha(original / "receipt.json")}
+    write(api_dir / "receipt.json", receipt)
+    out = tmp_path / "complete"
+    result = api.consolidate_native(inventory, api_dir, {"Q1", "Q2"}, out)
+    assert str((original / "failures.json").resolve()) in result["inputs"]
+    (original / "failures.json").write_text("changed")
+    with pytest.raises(ValueError, match="hash differs"):
+        api._consolidated_stage(out)
+
+
+def test_article_boundary_uses_exact_revision_raw_links_and_keeps_corpus_events(
+    tmp_path, monkeypatch
+):
+    import pyarrow as pa
+    import pyarrow.parquet as pq
+    from GG_Data.entity_resolution.hundred_page_pilot.collect_entities import raw_links
+
+    raw = tmp_path / "article.txt"
+    raw.write_text("[[Linked event]]", encoding="utf-8")
+    core = tmp_path / "core"
+    core.mkdir()
+    for name, value in {
+        "entities.json.gz": [dict(entity_id=q, type="MISC") for q in ("Q1", "Q2")],
+        "wiki_pages.json.gz": [
+            {
+                "wiki_page_id": 10,
+                "revision_id": 20,
+                "raw_reference": {"wikitext_path": str(raw), "sha256": sha(raw)},
+            }
+        ],
+    }.items():
+        with gzip.open(core / name, "wt") as stream:
+            json.dump(value, stream)
+    write(
+        core / "manifest.json",
+        {
+            "scope": "3",
+            "outputs": {
+                name: sha(core / name)
+                for name in ("entities.json.gz", "wiki_pages.json.gz")
+            },
+        },
+    )
+    link = {
+        **raw_links(raw.read_text())[0],
+        "page_id": 10,
+        "revision_id": 20,
+        "raw_evidence_path": str(raw),
+        "raw_sha256": sha(raw),
+        "qid": "Q3",
+        "mapping_temporal_basis": "CURRENT_OR_CACHED",
+    }
+    table = tmp_path / "wiki_link_occurrences.parquet"
+    pq.write_table(
+        pa.Table.from_pylist([link, {**link, "qid": "Q4", "revision_id": 21}]), table
+    )
+    summary = write(
+        tmp_path / "collection_summary.json", {"outputs": {table.name: sha(table)}}
+    )
+    records = {
+        q: {"requested_qid": q, "entity": {"id": q, "claims": {}}}
+        for q in ("Q1", "Q2", "Q3", "Q4")
+    }
+    for q in ("Q3", "Q4"):
+        records[q]["entity"]["claims"] = {
+            "P17": [claim(q, "P17", t, t) for t in ("Q1", "Q2")]
+        }
+    broad = tmp_path / "broad"
+    api._write_stage(
+        broad,
+        {
+            "full_records.json.gz": records,
+            "sources.json": {q: {"provider": "FIXTURE"} for q in records},
+            "events.json.gz": [{"event_id": q} for q in ("Q1", "Q3", "Q4")],
+            "event_entities.json.gz": [{"entity_id": q} for q in ("Q1", "Q3", "Q4")],
+            "event_decisions.json": [
+                {"qid": q, "keep_event": True} for q in ("Q1", "Q3", "Q4")
+            ],
+        },
+        {"scope": "3", "temporal_basis": "MIXED", "sparql_observed_at": None},
+    )
+    monkeypatch.setattr(api, "_mapping", lambda *a: ({}, {}))
+    args = (core, broad, table, summary, tmp_path, summary, sha(summary))
+    out = tmp_path / "restricted"
+    result = api.restrict_events_to_articles(*args, out)
+    assert result["counts"]["events"] == 2
+    assert {e["event_id"] for e in api.read_json(out / "events.json.gz")} == {
+        "Q1",
+        "Q3",
+    }
+    assert result["counts"]["added_events"] == 1
+    assert result["counts"]["stored_directed_rows"] == 4
+    decisions = {d["qid"]: d for d in api.read_json(out / "event_decisions.json")}
+    assert (
+        decisions["Q4"]["article_presence_reason"] == "NO_DIRECT_LINK_IN_USED_REVISIONS"
+    )
+    link["raw_start"] += 1
+    pq.write_table(pa.Table.from_pylist([link]), table)
+    write(summary, {"outputs": {table.name: sha(table)}})
+    with pytest.raises(ValueError, match="raw link"):
+        api.restrict_events_to_articles(*args, tmp_path / "bad")

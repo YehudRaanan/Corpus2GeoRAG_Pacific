@@ -33,3 +33,19 @@ The saved full Geography output covers four of the 16 QIDs: Q184425, Q211377, Q9
 OWNER was asked whether to retain the scores only for ranking, require same-place evidence before geometry acceptance, and retain weak/conflicting/unusable cases as unresolved. Provisional identities would remain provisional. No zero-score or conflicting geometry has been automatically accepted in this run.
 
 The separate Agent `what_happened_at` spatial date-filter issue remains open and outside this task.
+
+## OWNER discussion, 29 October 2026
+
+OWNER requested discussion of evidence before approval. The following are proposals only; Geography has not been populated.
+
+1. Direct identity evidence: source geometry explicitly identifies the same QID. This supports considering that representation, subject to its meaning and suitability; a point is not a boundary.
+2. Supporting evidence: name, object kind, location and page context agree. These can support a source identity, but name or proximity alone is not acceptance evidence. Provisional entities keep their identities.
+3. Insufficient/conflicting evidence: preserve candidate and reason without acceptance. A ship or event coordinate requires its intended meaning to be understood; Daniel LOC alone does not establish fixed-place suitability.
+
+Verified examples from core_3 and native_complete_3:
+
+- Fort Stevens, Q1438734/LOC: native revision2540505757, normal Earth P625 statement q1438734$852D4584-3729-47AC-B092-5FAD562CDB89, latitude46.2019/longitude-123.963, precision0.0001. Original mention source_row_index312923, Wiki page23680822/revision1375594940. This is point evidence; no boundary inference.
+- Battery Russell, provisional LOC PROV_cba1e3146d73a50d6043c9641c6f3ad2744ef3b921d974e239cefc1bc22b90e3: source_row_index312974 on the same page/revision; text places the battery within Fort Stevens. No assigned QID/native record. The fort geometry cannot be copied merely from containment context.
+- Q2065004/LOC is the ship Akitsushima and has P625 evidence. QID+coordinate+Daniel LOC does not establish fixed-place suitability or the intended coordinate meaning.
+
+Pending: eligible object kinds; evidence sufficient for same-place acceptance including provisional cases; point versus boundary handling; retention of every LOC with explicit unresolved reasons. Scores45/30/15/7/3 remain an existing ranking policy, not newly approved identity proof.
