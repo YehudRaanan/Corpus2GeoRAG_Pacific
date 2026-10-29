@@ -63,8 +63,10 @@ rerun data collection, training, inference or table population.
 Training stays in `../decision_model/`. This experiment uses the fixed trained
 checkpoint and does not change its input formatter or stop rule. Run both the
 original and corrected arms with `--exclude-date --candidates 80`. DATE stays in
-the output, with an explicit exclusion status. Repaired, QID-guided and review
-groups cannot supply their own automatic exact-match proof.
+the output, with an explicit exclusion status. Changed names and groups with
+source-review flags cannot supply automatic exact proof. An unchanged original
+name can still use independent literal unique-name/type/QID proof, even when
+QID-guided source evidence is also available.
 
 `prepare_mentions.py` keeps every original row, type, text and offset. The old
 offsets address `word_original`; separate repaired offsets address source
@@ -79,9 +81,10 @@ The source parser is `mwparserfromhell==0.7.2`. The task-local environment is
 a new directory, in this order:
 
 ```powershell
-python -m GG_Data.entity_resolution.hundred_page_pilot.recover_page_qids --all-pilot --mentions INPUT.parquet --revisions REVISIONS.parquet --collection COLLECTION_DIR --output RECOVERY_DIR
-python -m GG_Data.entity_resolution.hundred_page_pilot.prepare_mentions --mentions INPUT.parquet --revisions REVISIONS.parquet --entities RECOVERY_DIR/entities.parquet --evidence RECOVERY_DIR/target_evidence.parquet --output PREPARED_DIR
-python -m GG_Data.entity_resolution.hundred_page_pilot.prepare_candidates --mentions PREPARED_DIR/mentions.parquet --entities RECOVERY_DIR/entities.parquet --exclude-date --candidates 80 --output MATCHING_DIR
+$pilotPython = ".\.venv-template-pilot\Scripts\python.exe"
+& $pilotPython -m GG_Data.entity_resolution.hundred_page_pilot.recover_page_qids --all-pilot --mentions INPUT.parquet --revisions REVISIONS.parquet --collection COLLECTION_DIR --output RECOVERY_DIR
+& $pilotPython -m GG_Data.entity_resolution.hundred_page_pilot.prepare_mentions --mentions INPUT.parquet --revisions REVISIONS.parquet --entities RECOVERY_DIR/entities.parquet --evidence RECOVERY_DIR/target_evidence.parquet --output PREPARED_DIR
+& $pilotPython -m GG_Data.entity_resolution.hundred_page_pilot.prepare_candidates --mentions PREPARED_DIR/mentions.parquet --entities RECOVERY_DIR/entities.parquet --exclude-date --candidates 80 --output MATCHING_DIR
 ```
 
 Recovery is offline unless `--allow-api` is supplied. The approved run limits
@@ -113,7 +116,7 @@ stay under review. Source enclosure is not a correct-identity label.
 Replay the recovery into a new directory without network access:
 
 ```powershell
-python -m GG_Data.entity_resolution.hundred_page_pilot.recover_page_qids --output Data/external/hundred_page_pilot_20261028/qid_recovery_replay --request-cache Data/external/hundred_page_pilot_20261028/qid_recovery_20261029/requests
+& .\.venv-template-pilot\Scripts\python.exe -m GG_Data.entity_resolution.hundred_page_pilot.recover_page_qids --output Data/external/hundred_page_pilot_20261028/qid_recovery_replay --request-cache Data/external/hundred_page_pilot_20261028/qid_recovery_20261029/requests
 ```
 
 The stage refuses an existing output directory. `--allow-api` permits bounded
@@ -124,7 +127,9 @@ Daniel groups use the literal `(word, entity_group)` on each page and revision.
 Repeated occurrences remain in `source_row_indices`; they are never discarded.
 An exact pair needs the identical official English label, exactly one Daniel
 type for that name, and exactly one QID with that label in that page/revision.
-Aliases and case folding help trigram retrieval only. Native Wikidata P31
+Aliases and case folding help trigram retrieval. In the source-name experiment,
+literal label/alias occurrences can also protect candidates and repair token
+cuts; this source evidence does not establish exact identity. Native Wikidata P31
 types are retained separately; they are not guessed into PER/ORG/LOC/DATE/MISC.
 
 Every remaining QID asks which local Daniel groups refer to it. The model picks
@@ -225,7 +230,9 @@ positive pairs. It cannot establish overall precision or stop precision. Other
 predictions remain unverified, not automatically false. The 90% targets cannot
 be claimed for the full pilot from this positive-only reference.
 
-Budget: US$10 for the new task, at most six new GPU hours. Keep an estimated
-cost reserve and verify the VM stops. Forecasts are not a billing-account cap.
+Budget: the existing US$10 aggregate ceiling includes earlier pilot spending.
+The 29 October template/name experiment allows at most three additional GPU
+hours within the six-hour aggregate allowance. Keep an estimated cost reserve
+and verify the VM stops. Forecasts are not a billing-account cap.
 Local commits protect code history only. Ignored data and checkpoints are local;
 no GitHub push is authorised for this pilot.

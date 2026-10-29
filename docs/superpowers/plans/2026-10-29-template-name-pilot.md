@@ -99,10 +99,10 @@ Outcome: two small complete deliveries with safe restartable outputs.
 
 Depends on task 4. CPU analysis can run in parallel under a separate owner; GCP remains root-owned.
 
-- [ ] Finish original and corrected inference across all 100 pages, preserving completed scores and per-state traces. Use one GPU with bounded runtime and verified automatic shutdown.
-- [ ] Export every original row with corrected/original names, all QID matches, source evidence and unresolved reasons.
-- [ ] Verify output completeness before declaring a run complete. Preserve partial results if a limit is reached.
-- [ ] Verify VM stopped and record measured running time; distinguish estimated costs from billing actuals.
+- [x] Finish original and corrected inference across all 100 pages, preserving completed scores and per-state traces. Use one GPU with bounded runtime and verified automatic shutdown.
+- [x] Export every original row with corrected/original names, all QID matches, source evidence and unresolved reasons.
+- [x] Verify output completeness before declaring a run complete. Preserve partial results if a limit is reached.
+- [x] Verify VM stopped and record measured running time; distinguish estimated costs from billing actuals.
 
 Outcome: complete matched/unresolved exports for both arms, or an exact bounded-run blocker with partial results clearly identified.
 
@@ -110,12 +110,12 @@ Outcome: complete matched/unresolved exports for both arms, or an exact bounded-
 
 Depends on task 5 for final statistics; prepare reporting code/document structure earlier without predictions.
 
-- [ ] Report original rows, repaired rows, corrected groups, recovered-only spans, added QIDs, candidate coverage, exact/model matches, unresolved rows and ambiguity by page/type/method.
-- [ ] Compare stable original row-to-QID pairs: newly matched, lost, changed and multiple matches. Show DATE separately and label unverified outcomes.
-- [ ] Evaluate the frozen source-positive reference without calling it overall precision. Show reviewed examples and all evidence limits.
-- [ ] Record automated runtimes, observed elapsed time, known waits, unknown active-work time, issues and adaptations. Never invent an actual for Epoch's wait-excluded basis.
-- [ ] Run focused pytest, existing formatting/lint tools and input/output invariant checks. Review only task-owned diffs; keep unrelated `luke_pilot/evaluate.py` changes.
-- [ ] Commit task-owned code/docs locally. Report `Local checkpoint only`; ignored data/weights remain local and no push is authorized.
+- [x] Report original rows, repaired rows, corrected groups, recovered-only spans, added QIDs, candidate coverage, exact/model matches, unresolved rows and ambiguity by page/type/method.
+- [x] Compare stable original row-to-QID pairs: newly matched, lost, changed and multiple matches. Show DATE separately and label unverified outcomes.
+- [x] Evaluate the frozen source-positive reference without calling it overall precision. Show reviewed examples and all evidence limits.
+- [x] Record automated runtimes, observed elapsed time, known waits, unknown active-work time, issues and adaptations. Never invent an actual for Epoch's wait-excluded basis.
+- [x] Run focused pytest, existing formatting/lint tools and input/output invariant checks. Review only task-owned diffs; keep unrelated `luke_pilot/evaluate.py` changes.
+- [x] Commit task-owned code/docs locally. Report `Local checkpoint only`; ignored data/weights remain local and no push is authorized.
 
 Outcome: short plain-English report, detailed case files, reproduction commands and explicit backup status.
 
@@ -136,14 +136,14 @@ Outcome: short plain-English report, detailed case files, reproduction commands 
 | 2026-10-29 13:27 | Planning/preflight started; no new cloud activity | Inspect saved source/model/resource evidence |
 | 2026-10-29 13:31 | Saved counts, model and costs checked; two read-only reviews complete or finishing | Save plan; request mandatory duration approval before implementation |
 
-**Current status:** EXECUTING. OWNER approved the saved plan; three implementation workers active. Input hashes frozen. Live VM verified TERMINATED. No new paid run started.
+**Current status:** COMPLETE. Paired 3/10/100-page runs, exports and AI source-context reviews are complete. VM confirmed TERMINATED at 16:03:36.423 on 29 October 2026, Asia/Jerusalem. Results remain experimental; no automatic acceptance or production promotion. Input hashes remain frozen.
 
 | 2026-10-29 13:34 | OWNER approved execution; 2–6h estimate, existing US$10 total, 3 additional GPU hours | First checkpoint13:44; prepare all CPU inputs before GPU start |
 
 
 ## Execution log and current state
 
-**EXECUTING.** CPU preparation, fixed-sample source review, actual model restore and paired three-page row-level exports are complete. Ten-page inference is active. Group-summary count correction is in progress; original-row/QID comparisons are unaffected.
+**COMPLETE.** CPU preparation, fixed-sample source review, actual model restore and paired 3/10/100-page exports are complete. Final 136 tests pass; all-row/hash/provenance checks pass. Corrected matches increase by 961 rows, but frozen positive recovery loses 36 pairs and source review finds identity conflicts. Both outputs remain experimental; no assignments, gold, thresholds or model weights were changed after observing results.
 
 | Time Asia/Jerusalem UTC+02, 29 October 2026 | Verified state | Next |
 |---|---|---|
@@ -165,3 +165,9 @@ Cache-location check occurred after VM startup, contrary to intended preflight o
 A local plan write using the Windows default encoding failed on an arrow character. The plan was restored from the tracked checkpoint and this execution log using explicit UTF-8. No input data or code was affected.
 
 |14:44|10pages complete:3785rows,811DATE;matched1290to1426,140new/4lostpairs;positive611/763both|100pagePID2571started14:44:25;independentloss/candidatecoverageauditsparallel;next14:55|
+|15:05|100-page baseline passed 6,551 of 12,342 questions; no reported error. Independent ten-page review and 100-page candidate-coverage audit complete.|GPU forecast about 16:10; next checkpoint 15:15. Root owns cloud; reviewer prepares final local checks.|
+
+|16:03|Both 100-page arms and exports complete; archive SHA checked; VM stopped at16:03:36.423|Local independent review and report|
+|16:12|All40,070 row/source checks and136 tests pass; all166 losses and24 frozen new pairs reviewed by AI agent|Final documentation checkpoint; no push|
+
+Measured new VM runtime5,746.560s; prior+new13,233.644s. Estimated subtotalUS$2.676335; plusUS$2reserveUS$4.676335<US$10. Billing actuals remain unknown. All100 outputs and case evidence are linked in docs/reports/2026-10-29-template-name-pilot.md. Active work time is unknown; post-approval elapsed time is recorded in the existing execution ledger. Full estimate-v2 actual on its preflight-inclusive wait-excluded basis remains unknown, so no numeric Epoch calibration actual is invented.
