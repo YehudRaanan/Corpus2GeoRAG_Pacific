@@ -1,14 +1,12 @@
-"""Offline native consolidation and public Event/Relations apply.
+"""Apply public Event eligibility and exact-revision article boundaries.
 
-Acquisition is a separate root-owned step. Native source versions stay whole;
-public discovery records an observation, never a common source snapshot.
+Native acquisition and source-bound consolidation live in post_qid_native.
+Public discovery records an observation, never a common source snapshot.
 """
 
 from __future__ import annotations
 
 import csv
-import gzip
-import json
 import re
 from copy import deepcopy
 from pathlib import Path
@@ -17,7 +15,13 @@ from GG_Data.pipeline.entities import native_record
 from GG_Data.pipeline.event_model import event_rows
 from GG_Data.pipeline.events import item_links
 from GG_Data.pipeline.poc import digest, read_json
-from GG_Data.pipeline.post_qid_native import _records
+from GG_Data.pipeline.post_qid_native import (
+    _consolidated_stage,
+    _manifest_hash,
+    _pin,
+    _stage,
+    _write_stage,
+)
 from GG_Data.pipeline.post_qid_relations import (
     build_relations,
     export_stored_relations,
@@ -83,292 +87,6 @@ def sparql_incoming_pairs(response: dict, corpus_qids: set[str]) -> list[dict]:
             raise ValueError("Public discovery binding outside corpus scope")
         pairs.add(tuple(qids))
     return [dict(event_qid=e, daniel_qid=d) for e, d in sorted(pairs)]
-
-
-def _pin(path: Path, expected: str) -> None:
-    if digest(path) != expected:
-        raise ValueError(f"Input hash differs: {path}")
-
-
-def _manifest_hash(manifest: dict, section: str, name: str) -> str:
-    matches = [
-        v
-        for k, v in manifest[section].items()
-        if k.replace("\\", "/").split("/")[-1] == name
-    ]
-    if len(matches) != 1:
-        raise ValueError(f"Expected one hash binding: {name}")
-    return matches[0]
-
-
-def _write_stage(output: Path, values: dict, receipt: dict) -> dict:
-    output.mkdir(parents=True, exist_ok=False)
-    for name, value in values.items():
-        if name.endswith(".gz"):
-            with gzip.open(output / name, "wt", encoding="utf-8") as stream:
-                json.dump(value, stream, ensure_ascii=False, allow_nan=False)
-        elif name.endswith(".sql"):
-            (output / name).write_text(value, encoding="utf-8")
-        else:
-            (output / name).write_text(
-                json.dumps(value, ensure_ascii=False, indent=2), encoding="utf-8"
-            )
-    receipt["outputs"] = {name: digest(output / name) for name in values}
-    (output / "receipt.json").write_text(
-        json.dumps(receipt, indent=2), encoding="utf-8"
-    )
-    return receipt
-
-
-def _stage(directory: Path) -> dict:
-    receipt = read_json(directory / "receipt.json")
-    for name, expected in receipt["outputs"].items():
-        if Path(name).name != name or digest(directory / name) != expected:
-            raise ValueError(f"Prepared output changed: {name}")
-    return receipt
-
-
-def _historical_source(source: dict, envelope: dict) -> None:
-    from GG_Data.pipeline.post_qid_native import historical_record, historical_selection
-
-    qid = source["record_id"]
-    _pin(Path(source["file"]), source["sha256"])
-    _pin(Path(source["request_file"]), source["request_sha256"])
-    request = read_json(Path(source["request_file"]))
-    params = request.get("params", {})
-    if (
-        request.get("status") != 200
-        or request.get("sha256") != source["sha256"]
-        or request.get("endpoint") != "https://www.wikidata.org/w/api.php"
-        or params
-        != dict(
-            action="query",
-            format="json",
-            formatversion=2,
-            prop="revisions",
-            titles=qid,
-            rvslots="main",
-            rvprop="ids|timestamp|content|contentmodel",
-            rvlimit=5,
-        )
-        or any(
-            request.get(k) != source.get(k)
-            for k in ("endpoint", "params", "retrieved_at")
-        )
-        or source.get("snapshot_at") is not None
-    ):
-        raise ValueError("Historical request/source evidence differs")
-    raw = read_json(Path(source["file"]))
-    if historical_record(raw, qid) != envelope:
-        raise ValueError("Historical envelope differs from selected source revision")
-    for key, expected in historical_selection(raw, qid).items():
-        if source.get(key) != expected:
-            raise ValueError(f"Historical selection metadata differs: {key}")
-
-
-def _acquisition_inputs(receipt: dict) -> dict:
-    """Pin saved acquisition ancestry, including incomplete stage outputs."""
-    evidence, pending = {}, list(receipt.get("inputs", {}).items())
-    while pending:
-        filename, expected = pending.pop()
-        path = Path(filename).resolve()
-        key = str(path)
-        if key in evidence:
-            if evidence[key] != expected:
-                raise ValueError("Conflicting acquisition input hash")
-            continue
-        _pin(path, expected)
-        evidence[key] = expected
-        if path.name == "receipt.json":
-            ancestor = _stage(path.parent)
-            pending.extend(ancestor.get("inputs", {}).items())
-            pending.extend(
-                (str(path.parent / name), sha)
-                for name, sha in ancestor["outputs"].items()
-            )
-    return evidence
-
-
-def _consolidated_stage(directory: Path) -> dict:
-    """Require the source-bound whole-record consolidation, not an API receipt."""
-    receipt = _stage(directory)
-    if receipt.get("phase") != "NATIVE_CONSOLIDATION":
-        raise ValueError("Expected NATIVE_CONSOLIDATION stage")
-    if not receipt.get("inputs") or not receipt.get("source_files"):
-        raise ValueError("Consolidation source/input evidence is missing")
-    for section in ("inputs", "source_files"):
-        for filename, expected in receipt[section].items():
-            _pin(Path(filename), expected)
-    records = read_json(directory / "full_records.json.gz")
-    for qid, source in read_json(directory / "sources.json").items():
-        if (
-            receipt["source_files"].get(str(Path(source["file"]).resolve()))
-            != source["sha256"]
-        ):
-            raise ValueError("Consolidation source hash binding differs")
-        if source.get("sql_file"):
-            _pin(Path(source["sql_file"]), source["sql_sha256"])
-        if source.get("provider") == "WIKIDATA_API_HISTORICAL":
-            if (
-                receipt["source_files"].get(str(Path(source["request_file"]).resolve()))
-                != source["request_sha256"]
-            ):
-                raise ValueError("Consolidation historical request binding differs")
-            _historical_source(source, records[qid])
-    return receipt
-
-
-def consolidate_native(
-    reuse_inventory: Path, api_dir: Path, required_qids: set[str], output: Path
-) -> dict:
-    """Join disjoint whole cached/API records for the exact accepted QID set.
-
-    Reuse dates and API observation dates remain separate per-record evidence.
-    This does not assert a common source snapshot or Event discovery coverage.
-    """
-    if output.exists():
-        raise FileExistsError(output)
-    if any(not re.fullmatch(r"Q[1-9]\d*", q) for q in required_qids):
-        raise ValueError("Invalid required QID scope")
-    inventory_sha = digest(reuse_inventory)
-    reused = read_json(reuse_inventory)
-    records, sources = reused["records"], reused["sources"]
-    missing = reused["missing"]
-    if (
-        not isinstance(missing, list)
-        or len(set(missing)) != len(missing)
-        or records.keys() != sources.keys()
-        or set(records) & set(missing)
-        or set(records) | set(missing) != required_qids
-        or reused["counts"]
-        != dict(required=len(required_qids), reused=len(records), missing=len(missing))
-    ):
-        raise ValueError("Reuse inventory differs from exact required scope")
-    api_receipt_sha = digest(api_dir / "receipt.json")
-    acquired = _stage(api_dir)
-    acquisition_inputs = _acquisition_inputs(acquired)
-    requested = acquired.get("requested_ids", [])
-    if (
-        acquired.get("status") != "REQUIRED_NATIVE_RECORDS_AVAILABLE"
-        or acquired.get("missing") != []
-        or acquired.get("failures") != []
-        or len(requested) != len(set(requested))
-        or set(requested) != set(missing)
-        or acquired.get("counts")
-        != dict(required=len(missing), acquired=len(missing), missing=0)
-        or not {"full_records.json.gz", "sources.json"} <= acquired["outputs"].keys()
-    ):
-        raise ValueError("API receipt does not complete the exact missing-ID scope")
-    api_records = read_json(api_dir / "full_records.json.gz")
-    api_sources = read_json(api_dir / "sources.json")
-    if (
-        api_records.keys() != set(missing)
-        or api_sources.keys() != set(missing)
-        or records.keys() & api_records.keys()
-    ):
-        raise ValueError("API/native overlap or missing-ID scope differs")
-    # Validate every whole record before combining dictionaries. No field merge.
-    for population, provenance in ((records, sources), (api_records, api_sources)):
-        for qid, envelope in population.items():
-            entity = native_record(envelope, qid)
-            if not isinstance(entity["claims"], dict):
-                raise ValueError(f"Invalid full native claims: {qid}")
-            source = provenance[qid]
-            if (
-                source.get("record_id") != qid
-                or not source.get("file")
-                or not source.get("sha256")
-            ):
-                raise ValueError(f"Incomplete native provenance: {qid}")
-    source_files = {}
-    for source in [*sources.values(), *api_sources.values()]:
-        path, expected = Path(source["file"]), source["sha256"]
-        key = str(path.resolve())
-        if key in source_files and source_files[key] != expected:
-            raise ValueError("Conflicting source hashes")
-        if key not in source_files:
-            _pin(path, expected)
-            source_files[key] = expected
-    records = {**records, **api_records}
-    sources = {**sources, **api_sources}
-    grouped = {}
-    for qid, source in sources.items():
-        if source.get("provider") == "WIKIDATA_API_HISTORICAL":
-            _historical_source(source, records[qid])
-            source_files[str(Path(source["request_file"]).resolve())] = source[
-                "request_sha256"
-            ]
-        else:
-            grouped.setdefault(source["file"], set()).add(qid)
-        if source.get("sql_file"):
-            _pin(Path(source["sql_file"]), source["sql_sha256"])
-        entity = native_record(records[qid], qid)
-        for field, native_field in (
-            ("native_revision", "lastrevid"),
-            ("native_modified", "modified"),
-        ):
-            if field in source and source[field] != entity.get(native_field):
-                raise ValueError(f"Native provenance metadata differs: {qid}")
-    for filename, required in grouped.items():
-        path = Path(filename)
-        if path.name in {"full_records.json", "full_records.json.gz"} or any(
-            sources[q].get("sql_file") for q in required
-        ):
-            found = {}
-            for key, row in _records(path, {}):
-                envelope = (
-                    row
-                    if "entity" in row
-                    else dict(requested_qid=key or row.get("id"), entity=row)
-                )
-                qid = envelope.get("requested_qid")
-                if qid in required:
-                    if qid in found:
-                        raise ValueError(f"Duplicate source native record: {qid}")
-                    found[qid] = envelope
-        else:
-            raw = read_json(path)
-            if "entities" in raw:
-                found = {
-                    q: dict(requested_qid=q, entity=raw["entities"][q])
-                    for q in required
-                    if q in raw["entities"]
-                }
-            else:
-                found = {raw.get("requested_qid"): raw}
-        if any(found.get(q) != records[q] for q in required):
-            raise ValueError("Inventory native envelope differs from source bytes")
-    _pin(reuse_inventory, inventory_sha)
-    _pin(api_dir / "receipt.json", api_receipt_sha)
-    counts = dict(
-        required=len(required_qids),
-        reused=len(reused["records"]),
-        acquired=len(api_records),
-        missing=0,
-    )
-    manifest = dict(
-        status="REQUIRED_NATIVE_RECORDS_AVAILABLE",
-        required_qids=sorted(required_qids),
-        counts=counts,
-        source_files=source_files,
-        inputs={
-            **acquisition_inputs,
-            str(reuse_inventory.resolve()): inventory_sha,
-            str((api_dir / "receipt.json").resolve()): api_receipt_sha,
-        },
-        selection_policy="WHOLE_CACHED_RECORDS_PLUS_API_FOR_EXACT_MISSING_IDS",
-        temporal_basis="PER_RECORD_CACHED_AND_LIVE_API_OBSERVATIONS_NO_COMMON_SNAPSHOT",
-        event_discovery_completeness="NOT_ESTABLISHED",
-    )
-    return _write_stage(
-        output,
-        {
-            "full_records.json.gz": records,
-            "sources.json": sources,
-            "manifest.json": manifest,
-        },
-        dict(manifest, phase="NATIVE_CONSOLIDATION"),
-    )
 
 
 def _mapping(
@@ -657,6 +375,7 @@ def restrict_events_to_articles(
     remain observations; this does not establish historical title-QID identity.
     """
     import pyarrow.parquet as pq
+
     from GG_Data.entity_resolution.hundred_page_pilot.collect_entities import raw_links
 
     if output.exists():

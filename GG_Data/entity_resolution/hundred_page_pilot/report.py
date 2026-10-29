@@ -17,7 +17,7 @@ from collections import Counter, defaultdict
 from datetime import datetime, timezone
 from pathlib import Path
 
-from GG_Data.entity_resolution.hundred_page_pilot.match import identity
+from GG_Data.entity_resolution.hundred_page_pilot.prepare_candidates import identity
 from GG_Data.entity_resolution.luke_pilot.data import read_jsonl, sha256
 
 
@@ -148,7 +148,12 @@ def export(
         raise ValueError("Duplicate source row indices")
     by_row = {}
     for group in groups:
-        expected = (group["page_id"], group["revision_id"], group["name"], group["type"])
+        expected = (
+            group["page_id"],
+            group["revision_id"],
+            group["name"],
+            group["type"],
+        )
         if group["id"] != identity(list(expected)):
             raise ValueError("Group ID does not match its source identity")
         if not group["source_row_indices"]:
@@ -157,12 +162,21 @@ def export(
             if index in by_row or index not in source_by_id:
                 raise ValueError("Duplicate or unknown group source row reference")
             row = source_by_id[index]
-            actual = (row["page_id"], row["revision_id"], row["word"], row["entity_group"])
+            actual = (
+                row["page_id"],
+                row["revision_id"],
+                row["word"],
+                row["entity_group"],
+            )
             if actual != expected:
                 raise ValueError("Group source row identity does not match export")
             by_row[index] = group
-    if any(r.get("page_id") is not None and r.get("revision_id") is not None
-           and r["source_row_index"] not in by_row for r in source_rows):
+    if any(
+        r.get("page_id") is not None
+        and r.get("revision_id") is not None
+        and r["source_row_index"] not in by_row
+        for r in source_rows
+    ):
         raise ValueError("Resolved source row is missing its matching group")
     jobs = read_jsonl(matching / "jobs.jsonl")
     job_by_id = {j["id"]: j for j in jobs}
@@ -175,13 +189,17 @@ def export(
             raise ValueError("Duplicate matching candidate IDs")
         for candidate in job["candidates"]:
             group = group_by_id.get(candidate["id"])
-            if group is None or (group["page_id"], group["revision_id"], group["type"]) != (
-                job["page_id"], job["revision_id"], candidate.get("type")
-            ):
+            if group is None or (
+                group["page_id"],
+                group["revision_id"],
+                group["type"],
+            ) != (job["page_id"], job["revision_id"], candidate.get("type")):
                 raise ValueError("Candidate references an unknown group/revision/type")
     exact = pq.read_table(matching / "exact_pairs.parquet").to_pylist()
     model = read_jsonl(inference / "model_pairs.jsonl")
-    if any(p["method"] != "exact" for p in exact) or any(p["method"] != "model" for p in model):
+    if any(p["method"] != "exact" for p in exact) or any(
+        p["method"] != "model" for p in model
+    ):
         raise ValueError("Pair method does not match its evidence file")
     pairs = exact + model
     keys = [(p["page_id"], p["revision_id"], p["group_id"], p["qid"]) for p in pairs]
@@ -194,16 +212,21 @@ def export(
         if group is None:
             raise ValueError("Pair references an unknown group")
         if (pair["page_id"], pair["revision_id"], pair["entity_group"]) != (
-            group["page_id"], group["revision_id"], group["type"]
+            group["page_id"],
+            group["revision_id"],
+            group["type"],
         ):
             raise ValueError("Pair revision/type does not match its group")
         if (pair["page_id"], pair["revision_id"], pair["qid"]) not in query_keys:
             raise ValueError("Pair references an unknown entity query")
         if pair["method"] == "model":
             job = job_by_id.get(pair.get("id"))
-            if job is None or (job["page_id"], job["revision_id"], job["qid"]) != (
-                pair["page_id"], pair["revision_id"], pair["qid"]
-            ) or pair["group_id"] not in {c["id"] for c in job["candidates"]}:
+            if (
+                job is None
+                or (job["page_id"], job["revision_id"], job["qid"])
+                != (pair["page_id"], pair["revision_id"], pair["qid"])
+                or pair["group_id"] not in {c["id"] for c in job["candidates"]}
+            ):
                 raise ValueError("Model pair references an unknown job/candidate")
         by_group[pair["group_id"]].add(pair["qid"])
         methods[pair["group_id"]].add(pair["method"])
@@ -230,9 +253,11 @@ def export(
     reference = read_jsonl(references)
     for pair in reference:
         group = group_by_id.get(pair["group_id"])
-        if group is None or (pair["page_id"], pair["revision_id"], pair["entity_group"]) != (
-            group["page_id"], group["revision_id"], group["type"]
-        ):
+        if group is None or (
+            pair["page_id"],
+            pair["revision_id"],
+            pair["entity_group"],
+        ) != (group["page_id"], group["revision_id"], group["type"]):
             raise ValueError("Reference pair does not match a current source group")
     output.mkdir(parents=True, exist_ok=False)
     pq.write_table(enriched, output / "matched_mentions.parquet", compression="zstd")

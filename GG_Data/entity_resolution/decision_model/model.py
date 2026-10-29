@@ -1,4 +1,4 @@
-"""Score an entity question against mention groups with the existing LUKE head.
+"""Score an entity question against mention groups with the canonical LUKE head.
 
 Inputs are entity names, aliases and descriptions plus literal mention groups
 and context. QIDs remain metadata. Each option has an independent score, so
@@ -11,8 +11,7 @@ from contextlib import nullcontext
 from pathlib import Path
 
 import torch
-
-from GG_Data.entity_resolution.luke_pilot.model import CandidateScorer
+from torch import nn
 
 MODEL = "studio-ousia/luke-base"
 REVISION = "7438924defd9f3c2018d63c16073bf4bcb6a70aa"
@@ -20,6 +19,37 @@ STOP_SENTENCE = "None of the remaining mention groups refers to this entity."
 QUERY_ALIASES_MAX = 12
 QUERY_ALIASES_CHARACTERS = 600
 QUERY_DESCRIPTION_CHARACTERS = 600
+
+
+class CandidateScorer(nn.Module):
+    def __init__(self, encoder: nn.Module):
+        super().__init__()
+        self.encoder = encoder
+        d = encoder.config.hidden_size
+        self.scorer = nn.Sequential(
+            nn.LayerNorm(d), nn.Linear(d, d), nn.GELU(), nn.Linear(d, 1)
+        )
+        self.frozen = False
+
+    def freeze_encoder(self, frozen: bool = True) -> None:
+        self.frozen = frozen
+        self.encoder.requires_grad_(not frozen)
+        self.encoder.eval() if frozen else self.encoder.train(self.training)
+
+    def train(self, mode: bool = True):
+        super().train(mode)
+        if self.frozen:
+            self.encoder.eval()
+        return self
+
+    def encode(self, **inputs) -> torch.Tensor:
+        if self.frozen:
+            with torch.no_grad():
+                return self.encoder(**inputs).last_hidden_state[:, 0]
+        return self.encoder(**inputs).last_hidden_state[:, 0]
+
+    def forward(self, **inputs) -> torch.Tensor:
+        return self.scorer(self.encode(**inputs).float()).squeeze(-1)
 
 
 def pair_texts(row: dict) -> tuple[list[str], list[str], list[int]]:

@@ -2,8 +2,12 @@
 
 import pytest
 
-from GG_Data.entity_resolution.hundred_page_pilot.match import (
-    exact_pairs, group_mentions, rank_candidates, select_loop)
+from GG_Data.entity_resolution.hundred_page_pilot.prepare_candidates import (
+    exact_pairs,
+    group_mentions,
+)
+from GG_Data.entity_resolution.hundred_page_pilot.resolve_entities import select_loop
+from GG_Data.entity_resolution.trigram import rank_candidates
 
 
 def mention(name="Japan", kind="LOC", revision=11, row=0):
@@ -71,7 +75,9 @@ def test_candidates_are_page_and_revision_local_and_keep_many_to_many():
 
 def test_raw_markup_and_damage_are_not_silently_repaired():
     from GG_Data.entity_resolution.hundred_page_pilot.prepare_pages import (
-        match_method, passage_id)
+        match_method,
+        passage_id,
+    )
 
     assert match_method("[[A]]", "x [[A]] y") == "EXACT_RAW_CONTAINMENT"
     assert match_method("[[A]]", "x A y") is None
@@ -82,8 +88,11 @@ def test_raw_markup_and_damage_are_not_silently_repaired():
 def test_reverse_pairs_and_set_loss_keep_multiple_correct_answers():
     import torch
 
-    from GG_Data.entity_resolution.hundred_page_pilot.model import (
-        STOP_SENTENCE, marginal_set_loss, pair_texts)
+    from GG_Data.entity_resolution.decision_model.model import (
+        STOP_SENTENCE,
+        marginal_set_loss,
+        pair_texts,
+    )
 
     row = {
         "entity": {"name": "Japan", "qid": "Q17"},
@@ -113,8 +122,7 @@ def test_freezing_encoder_controls_gradients_and_dropout():
 
     import torch
 
-    from GG_Data.entity_resolution.hundred_page_pilot.model import \
-        CandidateScorer
+    from GG_Data.entity_resolution.decision_model.model import CandidateScorer
 
     class Encoder(torch.nn.Module):
         def __init__(self):
@@ -143,7 +151,9 @@ def test_freezing_encoder_controls_gradients_and_dropout():
 
 def test_reference_uses_whole_anchor_and_unique_passage_placement(tmp_path):
     from GG_Data.entity_resolution.hundred_page_pilot.report import (
-        freeze_reference, source_positive_metrics)
+        freeze_reference,
+        source_positive_metrics,
+    )
 
     raw = "A [[Japan]] sailed."
     path = tmp_path / "raw.txt"
@@ -175,7 +185,7 @@ def test_export_preserves_rows_and_many_to_many_lists(tmp_path):
     import pyarrow as pa
     import pyarrow.parquet as pq
 
-    from GG_Data.entity_resolution.hundred_page_pilot.match import identity
+    from GG_Data.entity_resolution.hundred_page_pilot.prepare_candidates import identity
     from GG_Data.entity_resolution.hundred_page_pilot.report import export
     from GG_Data.entity_resolution.luke_pilot.data import sha256
 
@@ -248,10 +258,11 @@ def test_export_preserves_rows_and_many_to_many_lists(tmp_path):
 def test_every_positive_gets_a_singleton_state_to_prevent_early_stop():
     import torch
 
-    from GG_Data.entity_resolution.hundred_page_pilot.model import (
-        marginal_set_loss, pair_texts)
-    from GG_Data.entity_resolution.hundred_page_pilot.prepare_training import \
-        removal_states
+    from GG_Data.entity_resolution.decision_model.model import (
+        marginal_set_loss,
+        pair_texts,
+    )
+    from GG_Data.entity_resolution.decision_model.prepare_training import removal_states
 
     base = {
         "id": "q",
@@ -282,8 +293,7 @@ def test_every_positive_gets_a_singleton_state_to_prevent_early_stop():
 def test_failed_cache_save_keeps_previous_complete_file(tmp_path, monkeypatch):
     import torch
 
-    from GG_Data.entity_resolution.hundred_page_pilot.train import \
-        atomic_torch_save
+    from GG_Data.entity_resolution.decision_model.train import atomic_torch_save
 
     path = tmp_path / "cache.pt"
     torch.save({"old": 1}, path)
@@ -307,8 +317,9 @@ def test_failed_cache_save_keeps_previous_complete_file(tmp_path, monkeypatch):
 def test_score_tail_recovery_preserves_evidence_and_rejects_interior(tmp_path):
     import json
 
-    from GG_Data.entity_resolution.hundred_page_pilot.match import \
-        read_score_records
+    from GG_Data.entity_resolution.hundred_page_pilot.resolve_entities import (
+        read_score_records,
+    )
 
     path = tmp_path / "scores.jsonl"
     valid = json.dumps({"id": "one", "options": []}) + "\n"
@@ -357,8 +368,8 @@ def test_export_rejects_missing_input_lineage(tmp_path):
 def test_resumed_inference_counts_new_and_cached_pairs(tmp_path, monkeypatch):
     import json
 
-    from GG_Data.entity_resolution.hundred_page_pilot import model
-    from GG_Data.entity_resolution.hundred_page_pilot.match import infer
+    from GG_Data.entity_resolution.decision_model import model
+    from GG_Data.entity_resolution.hundred_page_pilot.resolve_entities import infer
 
     jobs = [
         {
@@ -366,10 +377,10 @@ def test_resumed_inference_counts_new_and_cached_pairs(tmp_path, monkeypatch):
             "page_id": 1,
             "revision_id": 11,
             "qid": "Q" + k,
-            "candidates": [{"id": "g", "type": "LOC"}],
+            "candidates": [{"id": group, "type": "LOC"} for group in ("g", "g2", "g3")],
             "excluded_count": 0,
         }
-        for k in ("1", "2")
+        for k in ("1", "2", "3")
     ]
     source = tmp_path / "jobs.jsonl"
     source.write_text("".join(json.dumps(j) + "\n" for j in jobs))
@@ -382,16 +393,23 @@ def test_resumed_inference_counts_new_and_cached_pairs(tmp_path, monkeypatch):
         calls.append(args[2]["id"])
         if len(calls) == 2:
             raise RuntimeError("interrupted scoring")
-        return {"g": 1.0, None: 0.0}
+        return {"g": 3.0, "g2": 2.0, "g3": 1.0, None: 0.0}
 
     monkeypatch.setattr(model, "score_record", score)
     output = tmp_path / "inference"
     with pytest.raises(RuntimeError, match="interrupted scoring"):
         infer(source, checkpoint, output, 1, 8, "cpu")
     result = infer(source, checkpoint, output, 1, 8, "cpu")
-    assert calls == ["1", "2", "2"]
-    assert result["pair_evaluations"] == 2
-    assert result["cached_pair_evaluations"] == 2
-    assert result["total_pair_evaluations"] == 4
+    assert calls == ["1", "2", "2", "3"]
+    assert result["pair_evaluations"] == 8
+    assert result["cached_pair_evaluations"] == 4
+    assert result["total_pair_evaluations"] == 12
     assert result["cumulative_elapsed_seconds"] >= result["elapsed_seconds"]
-    assert result["selected_pairs"] == 2
+    assert result["selected_pairs"] == 9
+    pairs = [
+        json.loads(line)
+        for line in (output / "model_pairs.jsonl").read_text().splitlines()
+    ]
+    assert {(pair["qid"], pair["group_id"]) for pair in pairs} == {
+        (qid, group) for qid in ("Q1", "Q2", "Q3") for group in ("g", "g2", "g3")
+    }

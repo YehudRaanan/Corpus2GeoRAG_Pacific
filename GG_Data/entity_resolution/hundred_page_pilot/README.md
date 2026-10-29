@@ -10,15 +10,49 @@ The full corpus is not rerun. All paths below are relative to the project root.
 |---|---|---|
 | `prepare_pages.py` | Selects 100 source titles, reuses exact local passage evidence, checks dated raw Wikipedia revisions until each copied passage matches or the recovery limit is reached. | Original rows with page/revision IDs; raw text, API evidence, hashes and explicit unresolved reasons. |
 | `collect_entities.py` | Reads only the used revisions. Extracts direct article links, including links inside the supplied references, tables and template arguments. Reuses local metadata, accepts a selected-QID BigQuery export, then fills API gaps. | Linked QIDs, page's own QID, official English labels, aliases, descriptions, native P31 types and provenance. |
-| `prepare_training.py` | Reads cached ZELDA. Excludes pilot pages and detectable copied passages, splits by source page, builds reverse questions and variable candidate pools. | Frozen train/validation/diagnostic JSONL with removal and singleton-positive states. |
-| `model.py` | Reuses the existing LUKE scorer. Converts an official entity and each mention alternative into a text pair. | One shared scalar score per option, including the stop sentence. |
-| `train.py` | Checks input hashes; benchmarks real optimizer memory; trains the head with a frozen encoder until stable, then tunes encoder and head. | Restartable checkpoints, validation history, public diagnostic results and timing. |
-| `match.py` | Groups literal names and Daniel types; accepts strict exact pairs; ranks remaining local alternatives by trigram; scores and removes alternatives until stop wins. | Exact pairs, ranked jobs, scores and the complete local decision trace. |
+| `prepare_candidates.py` | Groups literal names and Daniel types; accepts strict exact pairs; ranks remaining local alternatives with shared trigram retrieval. Does not load the model. | Exact pairs, ranked jobs, source row groups and workload counts. |
+| `resolve_entities.py` | Checks readiness, loads the canonical decision model only for inference, then selects and removes alternatives until stop wins. | Restartable scores, model pairs and complete local decision traces. |
+| `readiness.py` | Checks checkpoint, training inputs/code and evaluation evidence before inference. | Explicit technical and quality gates; historical evidence is not rewritten by this refactor. |
 | `report.py` | Freezes source-link positive evidence before predictions. Checks input lineage, exports all matches back to the original rows and calculates supported metrics. | Matched/unresolved Parquet and a results summary. |
-| `test_pipeline.py` | Small CPU regression tests for identity, many-to-many decisions, loss, restart safety and source preservation. | Reproducible checks without GPU access. |
+| `test_pipeline.py`, `test_pipeline_layout.py` | Small CPU regression tests for identity, unrestricted many-to-many decisions, loss, restart safety, source preservation and separate lazy CLIs. | Reproducible checks without GPU access. |
 
 These are ordinary functions and command-line scripts, not a new execution
-framework. Shared helpers come from the existing `luke_pilot` package.
+framework. Pure trigram retrieval is shared with training through
+`../trigram.py`; JSONL and hash helpers come from `luke_pilot.data`.
+Training and the canonical scorer live in
+[`../decision_model/`](../decision_model/README.md): `prepare_training.py`,
+`model.py` and `train.py`. There are no forwarding wrappers for the removed
+combined `match.py` or relocated training modules.
+
+## Complete pipeline
+
+1. `prepare_pages.py` preserves original Daniel rows and binds passages to saved
+   historical Wikipedia page/revision evidence.
+2. `collect_entities.py` reads those revisions and collects linked QIDs and native
+   metadata. `report.py --freeze-reference` freezes supported source-link positive
+   evidence before any predictions.
+3. Separately, `decision_model.prepare_training` freezes public inputs;
+   `decision_model.train` trains and evaluates the canonical model. `readiness.py`
+   checks the saved evidence. Candidate preparation does not require this model.
+4. `prepare_candidates.py` writes literal groups, strict exact pairs and local
+   candidate jobs. `resolve_entities.py` reads jobs and the readiness-bound
+   checkpoint, then writes scores, selected pairs and stop decisions.
+5. `report.py` joins exact and model pairs to every original row and exports
+   matched/unresolved mentions with source lineage and positive-only metrics.
+6. `GG_Data/pipeline/post_qid_run.py` freezes page scopes or builds core tables
+   from verified saved decisions. It uses `post_qid_pages.py`,
+   `post_qid_entities.py` and `post_qid_mentions.py` for used revisions, typed
+   entities, original mentions and their many-to-many bridge.
+7. `post_qid_native.py` owns full native-record acquisition/reuse and source-bound
+   consolidation. `post_qid_events.py` applies Event eligibility and exact-revision
+   article boundaries. `post_qid_relations.py` preserves native assertions and
+   explicitly derived reverse rows. `post_qid_eda.py` checks coverage and optional
+   page co-occurrence separately from native relation weights.
+
+Core population does not imply Events, Relations, Geography or seven-table
+acceptance. Geography remains pending. The open `what_happened_at` spatial
+date-filter issue remains a separate acceptance concern. This refactor does not
+rerun data collection, training, inference or table population.
 
 ## Identity and matching rules
 
@@ -31,7 +65,8 @@ types are retained separately; they are not guessed into PER/ORG/LOC/DATE/MISC.
 
 Every remaining QID asks which local Daniel groups refer to it. The model picks
 one option, records the pair, removes that option for this QID only, and repeats.
-A group can therefore match several QIDs, and a QID can match several groups.
+A group can therefore match any number of QIDs, and a QID can match any number
+of groups. An observed two-QID result is not a schema or loop limit.
 The final entity key is `(QID, Daniel entity_group)`.
 
 The stop option is exactly:
@@ -44,26 +79,10 @@ scores are computed once and reused in the loop. Candidate count is variable;
 there is no fixed architectural maximum. A truncated pool's stop applies only
 to the evaluated pool. `excluded_count` records candidates that were not tested.
 
-## Training
+## Training boundary
 
-Encoder: `studio-ousia/luke-base`, pinned revision
-`7438924defd9f3c2018d63c16073bf4bcb6a70aa`.
-The CLS vector enters LayerNorm, Linear, GELU and a shared scalar Linear head.
-This is a JEV-inspired independent decision scorer, not a reproduction of a
-proprietary JEV model. QID strings are metadata, not answer tokens.
-
-The frozen encoder stays in evaluation mode. Its deterministic features are
-cached once. The head must have at least four validation observations and three
-successive relative loss changes no greater than 1%, within 40 warmup epochs.
-Then the encoder is tuned at learning rate 1e-5 and the head at 1e-4. The planned
-run uses two full epochs. If stability or budget limits prevent this transition,
-the output must report that the requested training is incomplete.
-
-Marginal set loss allows any remaining labelled positive to win a single
-decision. Additional singleton-positive states teach every known positive to
-beat stop; a fixed removal order alone does not ensure this. Public annotations
-are incomplete. A synthetic terminal state means no labelled positive remains,
-which is weaker than exhaustive negative truth.
+Training code and commands are in [`../decision_model/`](../decision_model/README.md).
+The pipeline imports only its scoring functions for model decisions.
 
 ## Saved pilot data
 
@@ -91,23 +110,42 @@ Unlinked names and dates are not added in this approved linked-QID pilot.
 Run from the project root. Use a new output directory for a new run. For example:
 
 ```powershell
-python -m pytest GG_Data/entity_resolution/hundred_page_pilot/test_pipeline.py -q
-python -m GG_Data.entity_resolution.hundred_page_pilot.match --mentions Data/external/hundred_page_pilot_20261028/selected_mentions.parquet --entities Data/external/hundred_page_pilot_20261028/collection_v2/entities.parquet --output NEW_MATCHING_DIR --candidates 80
+python -m pytest GG_Data/entity_resolution/hundred_page_pilot/test_pipeline.py GG_Data/entity_resolution/hundred_page_pilot/test_pipeline_layout.py -q
+python -m GG_Data.entity_resolution.hundred_page_pilot.prepare_candidates --mentions Data/external/hundred_page_pilot_20261028/selected_mentions.parquet --entities Data/external/hundred_page_pilot_20261028/collection_v2/entities.parquet --output NEW_MATCHING_DIR --candidates 80
 ```
 
 On the approved GPU, with the saved public inputs copied into the same package
 layout and the existing Hugging Face cache available:
 
 ```bash
-python -m GG_Data.entity_resolution.hundred_page_pilot.train benchmark --inputs INPUTS --output NEW_BENCHMARK_DIR --max-hours .25 --pair-batch-size 8
-python -m GG_Data.entity_resolution.hundred_page_pilot.train train --inputs INPUTS --output NEW_TRAIN_DIR --max-hours REMAINING_ALLOWANCE --pair-batch-size 8 --full-epochs 2 --checkpoint-steps 500
-python -m GG_Data.entity_resolution.hundred_page_pilot.match --jobs JOBS --checkpoint CHECKPOINT --output NEW_INFERENCE_DIR --device cuda --max-hours REMAINING_ALLOWANCE
+python -m GG_Data.entity_resolution.hundred_page_pilot.resolve_entities --jobs JOBS --checkpoint CHECKPOINT --readiness READINESS_JSON --output NEW_INFERENCE_DIR --device cuda --max-hours REMAINING_ALLOWANCE
 ```
+
+The readiness gate runs before output writes or model loading. Quality that
+fails or is unknown requires the exact existing OWNER experimental disposition;
+`--experimental-approval` supplies that evidence when applicable. The explicit
+`--legacy-without-readiness` compatibility option is not for post-QID delivery.
+Saved readiness manifests and archived source hashes can be stale after a code
+move; a changed module path does not make an old checkpoint newly qualified.
+
+For source reference and final exports, with frozen input paths:
+
+```powershell
+python -m GG_Data.entity_resolution.hundred_page_pilot.report --freeze-reference --mentions MENTIONS --revisions REVISIONS --links LINKS --output NEW_REFERENCE_JSONL
+python -m GG_Data.entity_resolution.hundred_page_pilot.report --mentions MENTIONS --passages PASSAGES --matching MATCHING_DIR --inference INFERENCE_DIR --references REFERENCE_JSONL --output NEW_FINAL_DIR
+python -m GG_Data.pipeline.post_qid_run --input-dir INPUT_DIR --output NEW_SCOPE_DIR
+python -m GG_Data.pipeline.post_qid_run --input-dir INPUT_DIR --scope-dir SCOPE_DIR --inference-dir INFERENCE_DIR --native-dir NATIVE_DIR --model-dir MODEL_DIR --scope 3 --output NEW_CORE_DIR
+```
+
+The reference command belongs before inference. The post-QID core command checks
+its frozen scopes, inputs and saved decision evidence; larger scopes retain their
+existing acceptance gates. These examples document interfaces, not permission to
+start a new run.
 
 The operator must subtract setup, benchmark and earlier GPU runs from the
 six-hour aggregate allowance. A per-command limit does not replace that ledger.
-Training resumes with `--resume PATH_TO_LATEST_PT`; inputs and training config
-must match. Inference resumes from completed score records in its output folder.
+Training commands and restart rules are in the training README. Inference resumes
+from completed score records in its output folder.
 A torn final score record is preserved as evidence before prefix recovery.
 
 ## Evaluation and limits

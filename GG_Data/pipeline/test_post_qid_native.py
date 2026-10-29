@@ -1,8 +1,10 @@
 """Explicit local full-record sources, with no hidden acquisition."""
 
 import gzip
+import hashlib
 import json
 from copy import deepcopy
+from pathlib import Path
 
 import pytest
 
@@ -446,3 +448,273 @@ def test_api_invalid_request_stops_before_output(tmp_path, ids, size):
     with pytest.raises(ValueError):
         api.acquire_api(ids, tmp_path / "api", batch_size=size, session=client)
     assert not (tmp_path / "api").exists() and not client.calls
+
+
+def write(path, value):
+    path.parent.mkdir(parents=True, exist_ok=True)
+    path.write_text(json.dumps(value), encoding="utf-8")
+    return path
+
+
+def sha(path):
+    return hashlib.sha256(path.read_bytes()).hexdigest()
+
+
+def claim(qid, prop, target, sid):
+    return {
+        "id": qid + "$" + sid,
+        "rank": "normal",
+        "mainsnak": {
+            "property": prop,
+            "snaktype": "value",
+            "datatype": "wikibase-item",
+            "datavalue": {
+                "value": {
+                    "entity-type": "item",
+                    "id": target,
+                    "numeric-id": int(target[1:]),
+                }
+            },
+        },
+    }
+
+
+def consolidation_inputs(tmp_path):
+    one = {"requested_qid": "Q1", "entity": {"id": "Q1", "claims": {}, "lastrevid": 1}}
+    two = {"requested_qid": "Q2", "entity": {"id": "Q2", "claims": {}, "lastrevid": 2}}
+    old_raw = write(tmp_path / "old_record.json", one)
+    live_raw = write(
+        tmp_path / "live_response.json", {"entities": {"Q2": two["entity"]}}
+    )
+    old_source = {
+        "file": str(old_raw),
+        "sha256": sha(old_raw),
+        "record_id": "Q1",
+        "snapshot_at": "2026-10-18",
+    }
+    live_source = {
+        "provider": "WIKIDATA_API",
+        "file": str(live_raw),
+        "sha256": sha(live_raw),
+        "record_id": "Q2",
+        "retrieved_at": "2026-10-29T00:00:00Z",
+        "snapshot_at": None,
+    }
+    inventory = write(
+        tmp_path / "reuse.json",
+        {
+            "records": {"Q1": one},
+            "sources": {"Q1": old_source},
+            "missing": ["Q2"],
+            "counts": {"required": 2, "reused": 1, "missing": 1},
+        },
+    )
+    api_dir = tmp_path / "api"
+    api_dir.mkdir()
+    with gzip.open(api_dir / "full_records.json.gz", "wt", encoding="utf-8") as stream:
+        json.dump({"Q2": two}, stream)
+    write(api_dir / "sources.json", {"Q2": live_source})
+    write(
+        api_dir / "receipt.json",
+        {
+            "status": "REQUIRED_NATIVE_RECORDS_AVAILABLE",
+            "requested_ids": ["Q2"],
+            "missing": [],
+            "failures": [],
+            "counts": {"required": 1, "acquired": 1, "missing": 0},
+            "outputs": {
+                name: sha(api_dir / name)
+                for name in ("full_records.json.gz", "sources.json")
+            },
+        },
+    )
+    return inventory, api_dir, one, two
+
+
+def test_consolidation_preserves_whole_versions_and_exact_source_provenance(tmp_path):
+    inventory, api_dir, one, two = consolidation_inputs(tmp_path)
+    out = tmp_path / "native_complete"
+    receipt = api.consolidate_native(inventory, api_dir, {"Q1", "Q2"}, out)
+    assert receipt["counts"] == {
+        "required": 2,
+        "reused": 1,
+        "acquired": 1,
+        "missing": 0,
+    }
+    with gzip.open(out / "full_records.json.gz", "rt", encoding="utf-8") as stream:
+        assert json.load(stream) == {"Q1": one, "Q2": two}
+    assert json.loads((out / "sources.json").read_text())["Q2"]["snapshot_at"] is None
+    assert receipt["event_discovery_completeness"] == "NOT_ESTABLISHED"
+    assert (out / "manifest.json").is_file()
+
+
+def test_consolidation_rejects_changed_output_wrong_scope_and_source_mutation(tmp_path):
+    inventory, api_dir, _, _ = consolidation_inputs(tmp_path)
+    with pytest.raises(ValueError, match="scope"):
+        api.consolidate_native(
+            inventory, api_dir, {"Q1", "Q2", "Q3"}, tmp_path / "wrong"
+        )
+    source = json.loads((api_dir / "sources.json").read_text())["Q2"]
+    Path(source["file"]).write_text("changed")
+    with pytest.raises(ValueError, match="hash differs"):
+        api.consolidate_native(inventory, api_dir, {"Q1", "Q2"}, tmp_path / "changed")
+
+
+def test_consolidation_rejects_inventory_tamper_and_changed_sql(tmp_path):
+    inventory, api_dir, _, _ = consolidation_inputs(tmp_path)
+    data = json.loads(inventory.read_text())
+    data["records"]["Q1"]["entity"]["claims"] = {
+        "P17": [claim("Q1", "P17", "Q2", "invented")]
+    }
+    write(inventory, data)
+    with pytest.raises(ValueError, match="differs from source bytes"):
+        api.consolidate_native(inventory, api_dir, {"Q1", "Q2"}, tmp_path / "tampered")
+    data["records"]["Q1"]["entity"]["claims"] = {}
+    sql = tmp_path / "source.sql"
+    sql.write_text("SELECT id,item FROM source")
+    data["sources"]["Q1"].update(sql_file=str(sql), sql_sha256=sha(sql))
+    write(inventory, data)
+    sql.write_text("changed")
+    with pytest.raises(ValueError, match="hash differs"):
+        api.consolidate_native(
+            inventory, api_dir, {"Q1", "Q2"}, tmp_path / "sql_changed"
+        )
+
+
+def test_consolidated_boundary_rejects_direct_api_and_changed_inputs(tmp_path):
+    inventory, api_dir, _, _ = consolidation_inputs(tmp_path)
+    with pytest.raises(ValueError, match="NATIVE_CONSOLIDATION"):
+        api._consolidated_stage(api_dir)
+    out = tmp_path / "consolidated"
+    api.consolidate_native(inventory, api_dir, {"Q1", "Q2"}, out)
+    assert api._consolidated_stage(out)["phase"] == "NATIVE_CONSOLIDATION"
+    inventory.write_text("changed")
+    with pytest.raises(ValueError, match="hash differs"):
+        api._consolidated_stage(out)
+
+
+def historical_inputs(tmp_path):
+    from GG_Data.pipeline.post_qid_native import historical_record, historical_selection
+
+    inventory, api_dir, _, _ = consolidation_inputs(tmp_path)
+    entity = {
+        "id": "Q2",
+        "type": "item",
+        "labels": {},
+        "descriptions": {},
+        "aliases": {},
+        "sitelinks": {},
+        "claims": {"P17": [claim("Q2", "P17", "Q1", "historic")]},
+    }
+    raw = write(
+        tmp_path / "history.response.json",
+        {
+            "query": {
+                "pages": [
+                    {
+                        "title": "Q2",
+                        "ns": 0,
+                        "revisions": [
+                            {
+                                "revid": 10,
+                                "timestamp": "2020-01-01T00:00:00Z",
+                                "slots": {
+                                    "main": {
+                                        "contentmodel": "wikibase-item",
+                                        "contentformat": "application/json",
+                                        "content": json.dumps(entity),
+                                    }
+                                },
+                            }
+                        ],
+                    }
+                ]
+            }
+        },
+    )
+    request = write(
+        tmp_path / "history.request.json",
+        {
+            "endpoint": "https://www.wikidata.org/w/api.php",
+            "params": {
+                "action": "query",
+                "format": "json",
+                "formatversion": 2,
+                "prop": "revisions",
+                "titles": "Q2",
+                "rvslots": "main",
+                "rvprop": "ids|timestamp|content|contentmodel",
+                "rvlimit": 5,
+            },
+            "retrieved_at": "2026-10-29T08:00:00Z",
+            "status": 200,
+            "sha256": sha(raw),
+        },
+    )
+    saved = json.loads(request.read_text())
+    source = {
+        "provider": "WIKIDATA_API_HISTORICAL",
+        "record_id": "Q2",
+        "file": str(raw),
+        "sha256": sha(raw),
+        "request_file": str(request),
+        "request_sha256": sha(request),
+        "endpoint": saved["endpoint"],
+        "params": saved["params"],
+        "retrieved_at": saved["retrieved_at"],
+        "snapshot_at": None,
+        **historical_selection(json.loads(raw.read_text()), "Q2"),
+    }
+    with gzip.open(api_dir / "full_records.json.gz", "wt") as stream:
+        json.dump({"Q2": historical_record(json.loads(raw.read_text()), "Q2")}, stream)
+    write(api_dir / "sources.json", {"Q2": source})
+    receipt = json.loads((api_dir / "receipt.json").read_text())
+    receipt["outputs"] = {name: sha(api_dir / name) for name in receipt["outputs"]}
+    write(api_dir / "receipt.json", receipt)
+    return inventory, api_dir, source
+
+
+def test_historical_consolidation_preserves_and_rechecks_source_evidence(tmp_path):
+    inventory, api_dir, source = historical_inputs(tmp_path)
+    out = tmp_path / "historical_complete"
+    receipt = api.consolidate_native(inventory, api_dir, {"Q1", "Q2"}, out)
+    assert (
+        receipt["source_files"][str(Path(source["request_file"]).resolve())]
+        == source["request_sha256"]
+    )
+    assert api._consolidated_stage(out)["phase"] == "NATIVE_CONSOLIDATION"
+    Path(source["request_file"]).write_text("changed")
+    with pytest.raises(ValueError, match="hash differs"):
+        api._consolidated_stage(out)
+
+
+@pytest.mark.parametrize("change", ["metadata", "raw", "request"])
+def test_historical_consolidation_rejects_changed_evidence(tmp_path, change):
+    inventory, api_dir, source = historical_inputs(tmp_path)
+    if change == "metadata":
+        source["derived_info_fields"] = {"lastrevid": "invented"}
+        write(api_dir / "sources.json", {"Q2": source})
+        receipt = json.loads((api_dir / "receipt.json").read_text())
+        receipt["outputs"]["sources.json"] = sha(api_dir / "sources.json")
+        write(api_dir / "receipt.json", receipt)
+    else:
+        Path(source["file" if change == "raw" else "request_file"]).write_text(
+            "changed"
+        )
+    with pytest.raises(ValueError, match="differs"):
+        api.consolidate_native(inventory, api_dir, {"Q1", "Q2"}, tmp_path / "bad")
+
+
+def test_consolidation_pins_original_incomplete_acquisition_outputs(tmp_path):
+    inventory, api_dir, _, _ = consolidation_inputs(tmp_path)
+    original = tmp_path / "original"
+    api._write_stage(original, {"failures.json": ["Q2"]}, {"status": "INCOMPLETE"})
+    receipt = json.loads((api_dir / "receipt.json").read_text())
+    receipt["inputs"] = {str(original / "receipt.json"): sha(original / "receipt.json")}
+    write(api_dir / "receipt.json", receipt)
+    out = tmp_path / "complete"
+    result = api.consolidate_native(inventory, api_dir, {"Q1", "Q2"}, out)
+    assert str((original / "failures.json").resolve()) in result["inputs"]
+    (original / "failures.json").write_text("changed")
+    with pytest.raises(ValueError, match="hash differs"):
+        api._consolidated_stage(out)

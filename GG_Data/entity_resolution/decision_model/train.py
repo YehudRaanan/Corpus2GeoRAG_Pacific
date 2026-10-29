@@ -20,7 +20,7 @@ from pathlib import Path
 import numpy as np
 import torch
 
-from GG_Data.entity_resolution.hundred_page_pilot.model import (
+from GG_Data.entity_resolution.decision_model.model import (
     MODEL,
     QUERY_ALIASES_CHARACTERS,
     QUERY_ALIASES_MAX,
@@ -93,7 +93,7 @@ def restore_checkpoint(
 
 def candidate_recall(rows: list[dict], counts=(10, 20, 40, 80, 0)) -> dict:
     """Validation-only trigram retrieval coverage over initial labelled pools."""
-    from GG_Data.entity_resolution.hundred_page_pilot.match import rank_candidates
+    from GG_Data.entity_resolution.trigram import rank_candidates
 
     initial = [row for row in rows if row["removal_index"] == 0]
     results = {}

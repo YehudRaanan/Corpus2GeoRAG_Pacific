@@ -180,7 +180,7 @@ def prepare(
 ) -> dict:
     import pyarrow.parquet as pq
 
-    from GG_Data.entity_resolution.hundred_page_pilot.match import rank_candidates
+    from GG_Data.entity_resolution.trigram import rank_candidates
 
     started, started_utc = time.monotonic(), datetime.now(timezone.utc).isoformat()
     if (

@@ -5,6 +5,21 @@ import pytest
 from GG_Data.pipeline.post_qid_run import freeze_scopes
 
 
+def test_legacy_gate_uses_archived_model_and_restores_imports(tmp_path):
+    import sys
+
+    from GG_Data.pipeline.post_qid_run import archived_readiness
+
+    name = "GG_Data.entity_resolution.hundred_page_pilot.model"
+    previous = sys.modules.get(name)
+    model = tmp_path / "model.py"
+    model.write_text('STOP_SENTENCE = "archived stop text"\n')
+    gate = tmp_path / "readiness.py"
+    gate.write_text(f"from {name} import STOP_SENTENCE\n")
+    assert archived_readiness(gate, model)["STOP_SENTENCE"] == "archived stop text"
+    assert sys.modules.get(name) is previous
+
+
 @pytest.fixture
 def core_inputs(tmp_path):
     import json
@@ -124,7 +139,7 @@ def core_inputs(tmp_path):
     archive.mkdir()
     for role, name in {
         "training_code": "train.py",
-        "inference_code": "match.py",
+        "inference_code": "resolve_entities.py",
         "model_code": "model.py",
         "readiness_code": "readiness.py",
     }.items():
@@ -331,7 +346,7 @@ def test_core_rejects_missing_bindings_and_partial_questions(core_inputs, corrup
         del d["inputs"]["selected_mentions.parquet"]
         p.write_text(json.dumps(d))
     elif corruption == "changed_code_archive":
-        (scope / "code_archive/match.py").write_text("changed")
+        (scope / "code_archive/resolve_entities.py").write_text("changed")
     elif corruption == "failed_technical":
         p = model / "readiness.json"
         d = json.loads(p.read_text())

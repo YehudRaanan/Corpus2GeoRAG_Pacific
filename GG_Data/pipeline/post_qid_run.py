@@ -11,12 +11,34 @@ import gzip
 import hashlib
 import json
 import runpy
+import sys
 import tempfile
 from collections import defaultdict
 from pathlib import Path
+from types import ModuleType
 
 from GG_Data.entity_resolution.luke_pilot.data import sha256
 from GG_Data.pipeline.poc import read_json
+
+
+def archived_readiness(gate: Path, model: Path) -> dict:
+    """Load a verified historical gate without restoring removed live modules.
+
+    Only the caller's hash-checked archived model supplies the old import. The
+    temporary alias is removed after loading; no old receipt or code is edited.
+    """
+    old_name = "GG_Data.entity_resolution.hundred_page_pilot.model"
+    previous = sys.modules.get(old_name)
+    archived_model = ModuleType(old_name)
+    archived_model.__dict__.update(runpy.run_path(str(model)))
+    sys.modules[old_name] = archived_model
+    try:
+        return runpy.run_path(str(gate))
+    finally:
+        if previous is None:
+            sys.modules.pop(old_name, None)
+        else:
+            sys.modules[old_name] = previous
 
 
 def freeze_scopes(
@@ -130,8 +152,10 @@ def build_core(
     """Verify archived decisions, then write the four core tables; no inference."""
     import pyarrow.parquet as pq
 
-    from GG_Data.entity_resolution.hundred_page_pilot.match import select_loop
     from GG_Data.entity_resolution.hundred_page_pilot.readiness import REQUIRED_FILES
+    from GG_Data.entity_resolution.hundred_page_pilot.resolve_entities import (
+        select_loop,
+    )
     from GG_Data.pipeline.post_qid_entities import populate as entities_populate
     from GG_Data.pipeline.post_qid_mentions import populate as mentions_populate
     from GG_Data.pipeline.post_qid_pages import run as pages_run
@@ -191,6 +215,11 @@ def build_core(
         "model_code": "model.py",
         "readiness_code": "readiness.py",
     }
+    # Old runs used match.py; newly separated runs archive resolve_entities.py.
+    inference_name = Path(readiness["files"]["inference_code"]["path"]).name
+    if inference_name not in {"match.py", "resolve_entities.py"}:
+        raise ValueError("Unknown archived inference entry")
+    code_names["inference_code"] = inference_name
     local_paths = {}
     for role, name in code_names.items():
         binding = readiness.get("files", {}).get(role)
@@ -213,7 +242,9 @@ def build_core(
             local_paths[role] = local
     # Run only the hash-verified, archived gate used by this inference. Its
     # build step inspects metadata and hashes; it neither restores nor scores.
-    archived_gate = runpy.run_path(str(local_paths["readiness_code"]))
+    archived_gate = archived_readiness(
+        local_paths["readiness_code"], local_paths["model_code"]
+    )
     observed = archived_gate["build_readiness"](
         model_dir / "full_best.pt", local_paths, training_dir
     )

@@ -81,6 +81,23 @@ def populate(rows, groups, pairs):
     )
 
 
+def test_one_mention_can_link_to_more_than_two_qids():
+    rows, groups, pairs = inputs()
+    for qid in ("Q3", "Q4"):
+        pair = copy.deepcopy(pairs[0])
+        pair["qid"] = qid
+        pair["decision_reference"]["record_id"] = f"a:{qid}:0"
+        pairs.append(pair)
+    result = populate(rows, groups, pairs)
+    first = result["mentions"][0]["mention_id"]
+    assert {
+        link["entity_id"]
+        for link in result["mention_entity_links"]
+        if link["mention_id"] == first
+    } == {"Q1", "Q2", "Q3", "Q4"}
+    assert len(result["mentions"]) == len(rows)
+
+
 def test_original_rows_many_to_many_and_global_unresolved_identity():
     rows, groups, pairs = inputs()
     original = copy.deepcopy((rows, groups, pairs))
