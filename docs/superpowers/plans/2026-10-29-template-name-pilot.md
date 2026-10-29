@@ -48,9 +48,9 @@ Files: this plan; existing readiness/export helpers; new run manifests under the
 
 - [x] Verify worktree, Git state, free space, source counts and existing output locations.
 - [x] Inspect original model checkpoint and saved quality/runtime/cost evidence in parallel with source-template inspection.
-- [ ] Save the current source/checkpoint/reference hashes and selected page/revision manifest before transformations.
+- [x] Save the current source/checkpoint/reference hashes and selected page/revision manifest before transformations.
 - [ ] Verify current GCP stopped state, pinned encoder/tokenizer cache, remaining compute allowance and estimated cost before any VM start.
-- [ ] Record OWNER duration approval before implementation or inference.
+- [x] Record OWNER duration approval before implementation or inference.
 
 Outcome: immutable input manifest, experimental scope receipt, exact resource limits or a named blocker.
 
@@ -136,4 +136,6 @@ Outcome: short plain-English report, detailed case files, reproduction commands 
 | 2026-10-29 13:27 | Planning/preflight started; no new cloud activity | Inspect saved source/model/resource evidence |
 | 2026-10-29 13:31 | Saved counts, model and costs checked; two read-only reviews complete or finishing | Save plan; request mandatory duration approval before implementation |
 
-**Current status:** PLAN_READY_PENDING_OWNER_DURATION_APPROVAL. Implementation, inference and cloud starts have not begun.
+**Current status:** EXECUTING. OWNER approved the saved plan; three implementation workers active. Input hashes frozen. Live VM verified TERMINATED. No new paid run started.
+
+| 2026-10-29 13:34 | OWNER approved execution; 2–6h estimate, existing US$10 total, 3 additional GPU hours | First checkpoint13:44; prepare all CPU inputs before GPU start |

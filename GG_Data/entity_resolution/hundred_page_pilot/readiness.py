@@ -256,6 +256,72 @@ def build_readiness(
     }
 
 
+def validate_experimental_scope(
+    approval: dict, checkpoint: Path, jobs_path: Path
+) -> None:
+    """Validate an OWNER receipt; an experiment receipt never changes quality."""
+    jobs = [
+        json.loads(line)
+        for line in jobs_path.read_text(encoding="utf-8").splitlines()
+        if line.strip()
+    ]
+    pages = {job["page_id"] for job in jobs}
+    approved_pages = approval.get("page_ids", [])
+    common = (
+        approval.get("approved_by") == "OWNER"
+        and approval.get("checkpoint_sha256") == sha256(checkpoint)
+        and approval.get("jobs_sha256") == sha256(jobs_path)
+        and isinstance(approved_pages, list)
+        and all(type(p) is int for p in approved_pages)
+        and len(approved_pages) == len(pages)
+        and pages == set(approved_pages)
+    )
+    legacy = (
+        approval.get("scope") == "experimental_three_pages"
+        and approval.get("decision")
+        == "Allow the experimental three-page run with this model"
+        and len(pages) == 3
+    )
+    pilot = False
+    if approval.get("scope") == "experimental_source_name_pilot":
+        binding = approval.get("manifest", {})
+        manifest_path = Path(binding.get("path", ""))
+        if manifest_path.is_file() and sha256(manifest_path) == binding.get("sha256"):
+            manifest = _json(manifest_path)
+            manifest_pages = manifest.get("page_ids", [])
+            manifest_revisions = manifest.get("page_revisions", [])
+            allowed_scopes = {
+                (row.get("page_id"), row.get("revision_id"))
+                for row in manifest_revisions
+                if isinstance(row, dict)
+            }
+            job_scopes = {(job["page_id"], job.get("revision_id")) for job in jobs}
+            pilot = (
+                approval.get("decision")
+                == "Allow the exploratory source-name pilot with this model"
+                and isinstance(approval.get("approval_evidence"), str)
+                and bool(approval["approval_evidence"].strip())
+                and len(pages) in (3, 10, 100)
+                and isinstance(manifest_pages, list)
+                and all(type(p) is int for p in manifest_pages)
+                and len(manifest_pages) == len(set(manifest_pages))
+                and len(manifest_pages) == 100
+                and pages <= set(manifest_pages)
+                and all(type(p) is int and type(r) is int for p, r in job_scopes)
+                and job_scopes <= allowed_scopes
+                and all(
+                    isinstance(manifest.get(role), str)
+                    and len(manifest[role]) == 64
+                    and set(manifest[role]) <= set("0123456789abcdef")
+                    for role in ("original_mentions_sha256", "source_reference_sha256")
+                )
+            )
+    if not common or not (legacy or pilot):
+        raise ValueError(
+            "Experimental approval does not cover this checkpoint and exact manifest-bound input"
+        )
+
+
 def validate_readiness(
     path: Path | None,
     checkpoint: Path,
@@ -291,22 +357,5 @@ def validate_readiness(
                 "Quality readiness failed or unknown; OWNER disposition is required"
             )
         approval = _json(experimental_approval)
-        pages = {
-            json.loads(line)["page_id"]
-            for line in jobs_path.read_text(encoding="utf-8").splitlines()
-            if line.strip()
-        }
-        if not (
-            approval.get("approved_by") == "OWNER"
-            and approval.get("scope") == "experimental_three_pages"
-            and approval.get("decision")
-            == "Allow the experimental three-page run with this model"
-            and approval.get("checkpoint_sha256") == sha256(checkpoint)
-            and approval.get("jobs_sha256") == sha256(jobs_path)
-            and len(pages) == 3
-            and pages == set(approval.get("page_ids", []))
-        ):
-            raise ValueError(
-                "Experimental approval does not cover this checkpoint and three-page input"
-            )
+        validate_experimental_scope(approval, checkpoint, jobs_path)
     return current

@@ -19,16 +19,26 @@ from GG_Data.entity_resolution.luke_pilot.data import sha256, write_jsonl
 from GG_Data.entity_resolution.trigram import rank_candidates
 
 LOG = logging.getLogger(__name__)
+SOURCE_REVIEW_STATUSES = {
+    "source_target_review",
+    "source_context_review",
+    "source_type_review",
+    "ambiguous_surface",
+    "partial_source_overlap",
+    "invalid_original_offsets",
+}
 
 
 def identity(parts: list) -> str:
     return hashlib.sha256(json.dumps(parts, ensure_ascii=False).encode()).hexdigest()
 
 
-def group_mentions(rows: list[dict]) -> list[dict]:
+def group_mentions(rows: list[dict], *, exclude_date: bool = False) -> list[dict]:
     """Keep literal name/type identity and every occurrence, per revision."""
     grouped = {}
     for row in rows:
+        if exclude_date and row["entity_group"] == "DATE":
+            continue
         if row.get("page_id") is None or row.get("revision_id") is None:
             continue
         key = (
@@ -46,9 +56,32 @@ def group_mentions(rows: list[dict]) -> list[dict]:
                 "type": key[3],
                 "source_row_indices": [],
                 "contexts": [],
+                "source_candidate_qids": [],
+                "repaired_source_row_indices": [],
+                "repair_methods": [],
+                "repair_qid_guided": False,
+                "source_review_statuses": [],
             }
         group = grouped[key]
         group["source_row_indices"].append(int(row["source_row_index"]))
+        group["source_candidate_qids"] = sorted(
+            set(group["source_candidate_qids"])
+            | set(row.get("source_candidate_qids") or [])
+        )
+        if (
+            row.get("word_original", row["word"]) != row["word"]
+            or row.get("repair_status") == "repaired"
+        ):
+            group["repaired_source_row_indices"].append(int(row["source_row_index"]))
+        if row.get("repair_method"):
+            group["repair_methods"] = sorted(
+                set(group["repair_methods"]) | {row["repair_method"]}
+            )
+        group["repair_qid_guided"] |= bool(row.get("repair_qid_guided"))
+        if row.get("repair_status") in SOURCE_REVIEW_STATUSES:
+            group["source_review_statuses"] = sorted(
+                set(group["source_review_statuses"]) | {row["repair_status"]}
+            )
         text = row["Text"] or ""
         start, end = int(row["start"]), int(row["end"])
         context = text[max(0, start - 160) : min(len(text), end + 160)]
@@ -73,6 +106,12 @@ def exact_pairs(groups: list[dict], entities: list[dict]) -> list[dict]:
     result = []
     for g in groups:
         key = (g["page_id"], g["revision_id"], g["name"])
+        if (
+            g.get("repaired_source_row_indices")
+            or g.get("repair_qid_guided")
+            or g.get("source_review_statuses")
+        ):
+            continue
         if len(names[key]) == len(qids[key]) == 1:
             result.append(
                 {
@@ -88,11 +127,21 @@ def exact_pairs(groups: list[dict], entities: list[dict]) -> list[dict]:
     return result
 
 
-def prepare(mentions: Path, entity_path: Path, output: Path, count: int) -> dict:
+def prepare(
+    mentions: Path,
+    entity_path: Path,
+    output: Path,
+    count: int,
+    *,
+    exclude_date: bool = False,
+) -> dict:
     import pyarrow as pa
     import pyarrow.parquet as pq
 
-    groups = group_mentions(pq.read_table(mentions).to_pylist())
+    if count < 0:
+        raise ValueError("Candidate count must be zero (all) or positive")
+    rows = pq.read_table(mentions).to_pylist()
+    groups = group_mentions(rows, exclude_date=exclude_date)
     entities = pq.read_table(entity_path).to_pylist()
     keys = [(e["page_id"], e["revision_id"], e["qid"]) for e in entities]
     if len(set(keys)) != len(keys):
@@ -117,7 +166,10 @@ def prepare(mentions: Path, entity_path: Path, output: Path, count: int) -> dict
         ranked = rank_candidates(entity, local)
         for k in counts:
             counts[k] += min(int(k), len(ranked)) + 1 if int(k) else len(ranked) + 1
-        candidates = ranked[:count] if count else ranked
+        top = ranked[:count] if count else ranked
+        top_ids = {g["id"] for g in top}
+        protected = {g["id"] for g in ranked if key[2] in g["source_candidate_qids"]}
+        candidates = [g for g in ranked if g["id"] in top_ids | protected]
         jobs.append(
             {
                 "id": identity(list(key)),
@@ -135,6 +187,9 @@ def prepare(mentions: Path, entity_path: Path, output: Path, count: int) -> dict
                 ],
                 "total_local_candidates": len(ranked),
                 "excluded_count": len(ranked) - len(candidates),
+                "protected_candidate_count": len(protected),
+                "protected_candidates_added": len(protected - top_ids),
+                "top_trigram_candidate_count": len(top),
             }
         )
     output.mkdir(parents=True, exist_ok=True)
@@ -161,6 +216,17 @@ def prepare(mentions: Path, entity_path: Path, output: Path, count: int) -> dict
         "exact_pairs": len(exact),
         "model_questions": len(jobs),
         "candidate_limit": count,
+        "exclude_date": exclude_date,
+        "excluded_date_rows": (
+            sum(r["entity_group"] == "DATE" for r in rows) if exclude_date else 0
+        ),
+        "candidate_union_pairs_including_stop": sum(
+            len(j["candidates"]) + 1 for j in jobs
+        ),
+        "protected_candidate_pairs": sum(j["protected_candidate_count"] for j in jobs),
+        "protected_candidate_pairs_added": sum(
+            j["protected_candidates_added"] for j in jobs
+        ),
         "pair_counts_by_k_zero_means_all": counts,
         "input_hashes": {str(p): sha256(p) for p in (mentions, entity_path)},
     }
@@ -172,13 +238,24 @@ def main() -> None:
     parser.add_argument("--entities", type=Path, required=True)
     parser.add_argument("--output", type=Path, required=True)
     parser.add_argument(
+        "--exclude-date",
+        action="store_true",
+        help="Preserve DATE rows outside this matching experiment",
+    )
+    parser.add_argument(
         "--candidates", type=int, default=0, help="0 evaluates all local groups"
     )
     args = parser.parse_args()
     if args.output.exists() and any(args.output.iterdir()):
         parser.error("Use a new output directory; existing outputs are preserved")
     started, utc = time.monotonic(), datetime.now(timezone.utc).isoformat()
-    summary = prepare(args.mentions, args.entities, args.output, args.candidates)
+    summary = prepare(
+        args.mentions,
+        args.entities,
+        args.output,
+        args.candidates,
+        exclude_date=args.exclude_date,
+    )
     summary.update(
         started_utc=utc,
         elapsed_seconds=time.monotonic() - started,

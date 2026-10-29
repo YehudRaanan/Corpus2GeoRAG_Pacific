@@ -10,8 +10,9 @@ The full corpus is not rerun. All paths below are relative to the project root.
 |---|---|---|
 | `prepare_pages.py` | Selects 100 source titles, reuses exact local passage evidence, checks dated raw Wikipedia revisions until each copied passage matches or the recovery limit is reached. | Original rows with page/revision IDs; raw text, API evidence, hashes and explicit unresolved reasons. |
 | `collect_entities.py` | Reads only the used revisions. Extracts direct article links, including links inside the supplied references, tables and template arguments. Reuses local metadata, accepts a selected-QID BigQuery export, then fills API gaps. | Linked QIDs, page's own QID, official English labels, aliases, descriptions, native P31 types and provenance. |
-| `recover_page_qids.py` | Checks the three saved unresolved revisions; reconstructs flat Ship-template targets, checks failed article links and preserves current lookup evidence separately. | A separate expanded candidate inventory and all 369 case reports; no mention assignments. |
-| `prepare_candidates.py` | Groups literal names and Daniel types; accepts strict exact pairs; ranks remaining local alternatives with shared trigram retrieval. Does not load the model. | Exact pairs, ranked jobs, source row groups and workload counts. |
+| `recover_page_qids.py` | Replays the original three-page recovery, or reads an explicit pilot manifest with `--all-pilot`. Checks supported ship-template targets and raw links, using cache-first bounded title/QID lookups. | A new candidate inventory, source spans and current lookup evidence; no mention assignments. |
+| `prepare_mentions.py` | Reads the original rows, exact raw revisions and recovered targets. Uses visible name fields, link anchors and same-revision QID names to recover complete names. Keeps competing or weak source evidence under review. | Row-preserving corrected `word`, `word_original`, recovered spans, a mention/span bridge and repair reasons. |
+| `prepare_candidates.py` | Groups names and Daniel types; accepts strict original exact pairs; ranks local alternatives with trigram and retains source-supported candidates. Does not load the model. | Exact pairs, ranked jobs, source row groups and workload counts. |
 | `resolve_entities.py` | Checks readiness, loads the canonical decision model only for inference, then selects and removes alternatives until stop wins. | Restartable scores, model pairs and complete local decision traces. |
 | `readiness.py` | Checks checkpoint, training inputs/code and evaluation evidence before inference. | Explicit technical and quality gates; historical evidence is not rewritten by this refactor. |
 | `report.py` | Freezes source-link positive evidence before predictions. Checks input lineage, exports all matches back to the original rows and calculates supported metrics. | Matched/unresolved Parquet and a results summary. |
@@ -56,6 +57,48 @@ date-filter issue remains a separate acceptance concern. This refactor does not
 rerun data collection, training, inference or table population.
 
 ## Identity and matching rules
+
+### Source-name experiment on the saved 100 pages
+
+Training stays in `../decision_model/`. This experiment uses the fixed trained
+checkpoint and does not change its input formatter or stop rule. Run both the
+original and corrected arms with `--exclude-date --candidates 80`. DATE stays in
+the output, with an explicit exclusion status. Repaired, QID-guided and review
+groups cannot supply their own automatic exact-match proof.
+
+`prepare_mentions.py` keeps every original row, type, text and offset. The old
+offsets address `word_original`; separate repaired offsets address source
+evidence. A reconstructed template title need not be a literal text substring.
+The span ledger records this distinction. Unknown templates, competing names,
+repeated passages and unverified normalized positions stay unchanged with a
+reason. Full spans without an overlapping original mention remain separate
+evidence and do not create Daniel rows.
+
+The source parser is `mwparserfromhell==0.7.2`. The task-local environment is
+`.venv-template-pilot`; the global environment is unchanged. Run each stage into
+a new directory, in this order:
+
+```powershell
+python -m GG_Data.entity_resolution.hundred_page_pilot.recover_page_qids --all-pilot --mentions INPUT.parquet --revisions REVISIONS.parquet --collection COLLECTION_DIR --output RECOVERY_DIR
+python -m GG_Data.entity_resolution.hundred_page_pilot.prepare_mentions --mentions INPUT.parquet --revisions REVISIONS.parquet --entities RECOVERY_DIR/entities.parquet --evidence RECOVERY_DIR/target_evidence.parquet --output PREPARED_DIR
+python -m GG_Data.entity_resolution.hundred_page_pilot.prepare_candidates --mentions PREPARED_DIR/mentions.parquet --entities RECOVERY_DIR/entities.parquet --exclude-date --candidates 80 --output MATCHING_DIR
+```
+
+Recovery is offline unless `--allow-api` is supplied. The approved run limits
+new requests to 200 and recovery time to 1,800 seconds. Current title/QID
+metadata remains separate from historical article evidence. Japanese metadata
+can corroborate an identity; it does not import more Japanese article entities.
+
+Inference still requires actual restore evidence and a separate hash-bound
+experimental approval for the exact jobs. This approval does not change the
+model's failed held-out stop-precision gate. `report.py` refuses partial scores,
+preserves all row-to-QID matches, and compares the two arms by original row IDs.
+Use `--compare-baseline EXPORT_DIR --compare-corrected EXPORT_DIR --output DIR`.
+The original frozen positive reference stays unchanged; it cannot establish
+overall accuracy or precision.
+
+Plan and execution record:
+[`2026-10-29-template-name-pilot.md`](../../../docs/superpowers/plans/2026-10-29-template-name-pilot.md).
 
 ### Optional missing-QID recovery
 

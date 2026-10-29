@@ -236,7 +236,22 @@ def test_export_preserves_rows_and_many_to_many_lists(tmp_path):
         json.dumps({"input_hashes": {str(mentions_path): sha256(mentions_path)}})
     )
     (inference / "inference_inputs.json").write_text(
-        json.dumps({"jobs_sha256": sha256(jobs_path)})
+        json.dumps({"jobs_sha256": sha256(jobs_path), "checkpoint_sha256": "a" * 64})
+    )
+    (inference / "scores.jsonl").write_text(
+        "".join(
+            json.dumps(
+                {
+                    "id": job["id"],
+                    "options": (
+                        [{"id": group, "score": 1.0}] if job["id"] == job_id else []
+                    )
+                    + [{"id": None, "score": 0.0}],
+                }
+            )
+            + "\n"
+            for job in jobs
+        )
     )
     ref = tmp_path / "reference.jsonl"
     ref.write_text("", encoding="utf-8")

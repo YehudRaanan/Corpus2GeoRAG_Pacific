@@ -1,8 +1,8 @@
 """Recover linked QID candidates from saved revisions, never mention assignments.
 
-This separate stage reads the unresolved audit and original collection. It adds
-flat Ship-template targets and retries failed article links in a new directory.
-Historical raw evidence and current title/QID metadata remain separate.
+The legacy mode replays the original three-page audit. The manifest-bound mode
+adds documented ship targets across the saved pilot. Historical raw evidence
+and current title/QID metadata remain separate.
 """
 
 from __future__ import annotations
@@ -31,6 +31,7 @@ from GG_Data.entity_resolution.hundred_page_pilot.collect_entities import (
     WIKI,
     EvidenceClient,
     metadata_row,
+    raw_links,
     title_response,
     utc_now,
     validate_revision,
@@ -42,7 +43,7 @@ SHIP = re.compile(r"\{\{\s*ship\s*\|([^{}]*)\}\}", re.I)
 RULE = "https://en.wikipedia.org/wiki/Template:Ship/doc#Basic_usage"
 
 
-def template_targets(text: str) -> list[dict[str, Any]]:
+def _legacy_template_targets(text: str) -> list[dict[str, Any]]:
     """Read flat Ship parameters only; unsupported syntax is never guessed.
 
     The fourth parameter changes display, not the title or its year. This is a
@@ -92,6 +93,156 @@ def template_targets(text: str) -> list[dict[str, Any]]:
             )
         )
     return rows
+
+
+PREFIXES = {
+    "uss": "USS",
+    "united states ship": "USS",
+    "jsub": "Japanese submarine",
+    "japanese submarine": "Japanese submarine",
+    "hms": "HMS",
+    "hmas": "HMAS",
+    "ss": "SS",
+    "usns": "USNS",
+    "usat": "USAT",
+    "hmcs": "HMCS",
+}
+
+
+def template_targets(
+    text: str, *, include_unsupported: bool = False
+) -> list[dict[str, Any]]:
+    """Extract documented targets with literal name offsets, without rendering.
+
+    A standard parser handles nesting and pipes. Only the listed ship families
+    are expanded. Current rules do not prove historical template behavior.
+    """
+    import mwparserfromhell
+
+    masked = PROTECTED.sub(lambda match: " " * len(match.group()), text)
+    rows, cursors = [], {}
+    for node in mwparserfromhell.parse(masked).filter_templates(recursive=True):
+        literal = str(node)
+        start = masked.find(literal, cursors.get(literal, 0))
+        if start < 0:
+            raise ValueError("Parsed template cannot be bound to literal source")
+        cursors[literal] = start + len(literal)
+        family = str(node.name).strip().replace("_", " ").lower()
+        supported = (
+            family == "ship" or family in PREFIXES or family in {"sclass", "sclass2"}
+        )
+        if not supported and not include_unsupported:
+            continue
+        params, spans, duplicate = {}, {}, False
+        offset = start + 2 + len(str(node.name))
+        for param in node.params:
+            key, value = str(param.name).strip().lower(), str(param.value)
+            duplicate |= key in params
+            params[key] = value.strip()
+            value_start = (
+                offset + 1 + (len(str(param.name)) + 1 if param.showkey else 0)
+            )
+            trimmed_start = value_start + len(value) - len(value.lstrip())
+            spans[key] = (trimmed_start, trimmed_start + len(params[key]))
+            offset += 1 + len(str(param))
+        status, title, display = "REVIEW_UNSUPPORTED_TEMPLATE", None, None
+        name_key = "2" if family == "ship" else "1"
+        name = params.get(name_key)
+        rule = None
+        if supported:
+            rule_family = (
+                "Ship"
+                if family == "ship"
+                else "Sclass"
+                if family.startswith("sclass")
+                else "Japanese_submarine"
+                if PREFIXES[family] == "Japanese submarine"
+                else "USS"
+                if PREFIXES[family] == "USS"
+                else family.upper()
+            )
+            rule = f"https://en.wikipedia.org/wiki/Template:{rule_family}/doc"
+            is_class = family.startswith("sclass")
+            maximum = 5 if is_class else 4 if family == "ship" else 3
+            allowed = {str(i) for i in range(1, maximum + 1)} | (
+                {"wl", "up"} if not is_class else set()
+            )
+            status = "SUPPORTED_DOCUMENTED_SHIP_TARGET"
+            if duplicate:
+                status = "REVIEW_DUPLICATE_PARAMETER"
+            elif params.keys() - allowed:
+                status = "REVIEW_UNSUPPORTED_PARAMETERS"
+            elif any(any(c in value for c in "{}[]<>#:") for value in params.values()):
+                status = "REVIEW_NESTED_OR_MARKUP_PARAMETER"
+            elif not name:
+                status = "REVIEW_UNSUPPORTED_TARGET"
+            elif params.get("wl", "").lower() in {"no", "n", "false", "0"}:
+                status = "UNLINKED_TEMPLATE"
+            elif params.get("wl", "").lower() not in {"", "yes"} or params.get(
+                "up", ""
+            ).lower() not in {"", "yes", "no"}:
+                status = "REVIEW_UNSUPPORTED_PARAMETERS"
+            if status == "SUPPORTED_DOCUMENTED_SHIP_TARGET":
+                if is_class:
+                    kind, control = params.get("2", ""), params.get("3", "")
+                    if not kind:
+                        status = "REVIEW_UNSUPPORTED_TARGET"
+                    elif control not in {"", "0", "1", "2", "3", "4", "5"}:
+                        status = "REVIEW_UNSUPPORTED_DISPLAY"
+                    else:
+                        title = f"{name}-class {kind}"
+                        if params.get("5"):
+                            title += f" ({params['5']})"
+                        display = (
+                            name
+                            if control == "5"
+                            else f"{name} class"
+                            if control == "4"
+                            else f"{name}-class"
+                        )
+                        if control in {"", "1", "2", "3"}:
+                            display += f" {kind}"
+                else:
+                    prefix = (
+                        params.get("1", "") if family == "ship" else PREFIXES[family]
+                    )
+                    identifier = params.get("3" if family == "ship" else "2", "")
+                    control = params.get("4" if family == "ship" else "3", "")
+                    if control not in {"", "1", "2", "3", "5", "6"}:
+                        status = "REVIEW_UNSUPPORTED_DISPLAY"
+                    else:
+                        title = " ".join(value for value in (prefix, name) if value)
+                        suffix = f" ({identifier})" if identifier else ""
+                        title += suffix
+                        display = {
+                            "": title,
+                            "1": identifier,
+                            "2": name,
+                            "3": name + suffix,
+                            "5": " ".join(
+                                value for value in (prefix, identifier) if value
+                            ),
+                            "6": " ".join(value for value in (prefix, name) if value),
+                        }[control]
+        name_start, name_end = spans.get(name_key, (None, None))
+        rows.append(
+            dict(
+                target_title=title,
+                raw_start=start,
+                raw_end=start + len(literal),
+                raw_text=text[start : start + len(literal)],
+                link_origin=f"RAW_{family.upper().replace(' ', '_')}_TEMPLATE",
+                template_name=family,
+                template_status=status,
+                name=name,
+                name_start=name_start,
+                name_end=name_end,
+                display_name=display,
+                target_rule=rule,
+                target_rule_temporal_basis="DOCUMENTED_RULE_NOT_HISTORICAL_TEMPLATE_SNAPSHOT",
+            )
+        )
+    return sorted(rows, key=lambda row: (row["raw_start"], row["raw_end"]))
 
 
 def checked_title(title: str, data: dict, path: str, retrieved: str) -> dict:
@@ -144,7 +295,17 @@ def checked_metadata(qid: str, entity: dict) -> dict:
         and not {"missing", "invalid"} & entity.keys()
         and {"labels", "claims"} <= entity.keys()
     )
-    return metadata_row(qid, entity if valid else None)
+    row = metadata_row(qid, entity if valid else None)
+    row.update(
+        label_ja=entity.get("labels", {}).get("ja", {}).get("value") if valid else None,
+        aliases_ja=[item["value"] for item in entity.get("aliases", {}).get("ja", [])]
+        if valid
+        else [],
+        jawiki_title=entity.get("sitelinks", {}).get("jawiki", {}).get("title")
+        if valid
+        else None,
+    )
+    return row
 
 
 def recover(
@@ -198,7 +359,7 @@ def recover(
         raw = validate_revision(revision)
         scope = revision["page_id"], revision["revision_id"]
         source[scope] = raw
-        for row in template_targets(raw):
+        for row in _legacy_template_targets(raw):
             row.update(
                 page_id=scope[0],
                 revision_id=scope[1],
@@ -532,22 +693,449 @@ def recover(
     return summary
 
 
+def recover_inventory(
+    mentions_path: Path,
+    revisions_path: Path,
+    collection: Path,
+    output: Path,
+    *,
+    allow_api: bool = False,
+    max_requests: int = 200,
+    max_seconds: float = 1800,
+    request_cache: Path | None = None,
+) -> dict:
+    """Build a source-bound inventory without changing mentions or old outputs."""
+    started, start = utc_now(), time.monotonic()
+    if not 0 <= max_requests <= 200 or not 0 < max_seconds <= 1800:
+        raise ValueError("Recovery requires at most 200 requests and 1800 seconds")
+    if output.exists():
+        raise FileExistsError(f"Preserve output: {output}")
+    protected = {}
+
+    def read_rows(path: Path) -> list[dict]:
+        protected[str(path.resolve())] = sha256(path)
+        return pq.read_table(path).to_pylist()
+
+    mentions = read_rows(mentions_path)
+    if not mentions or any(
+        r.get("page_id") is None or r.get("revision_id") is None for r in mentions
+    ):
+        raise ValueError("Every pilot mention requires an exact page/revision")
+    scopes = {(int(r["page_id"]), int(r["revision_id"])) for r in mentions}
+    revisions = [
+        r
+        for r in read_rows(revisions_path)
+        if (r["page_id"], r["revision_id"]) in scopes
+    ]
+    keys = [(r["page_id"], r["revision_id"]) for r in revisions]
+    if len(keys) != len(set(keys)) or set(keys) != scopes:
+        raise ValueError("Missing or duplicate exact source revision")
+    original = read_rows(collection / "entities.parquet")
+    native = {r["qid"]: r for r in read_rows(collection / "native_metadata.parquet")}
+    targets = []
+    for revision in revisions:
+        raw = validate_revision(revision)
+        for filename in ("wikitext_path", "evidence_path"):
+            path = Path(revision[filename])
+            protected[str(path.resolve())] = sha256(path)
+        found = template_targets(raw, include_unsupported=True)
+        for link in raw_links(raw):
+            link.update(
+                raw_text=raw[link["raw_start"] : link["raw_end"]],
+                name=link["anchor_text"],
+                name_start=link["anchor_start"],
+                name_end=link["anchor_end"],
+                template_status="ORDINARY_RAW_LINK",
+            )
+            found.append(link)
+        for row in found:
+            row.update(
+                page_id=revision["page_id"],
+                revision_id=revision["revision_id"],
+                wiki_title=revision["wiki_title"],
+                revision_timestamp=revision["revision_timestamp"],
+                raw_evidence_path=revision["wikitext_path"],
+                raw_sha256=revision["sha256"],
+                revision_binding_evidence=revision["evidence_path"],
+            )
+        targets.extend(found)
+    titles = sorted(
+        {
+            r["target_title"]
+            for r in targets
+            if r.get("target_title") and ":" not in r["target_title"]
+        }
+    )
+    title_set, mapping = set(titles), {}
+    mapping_file = collection / "title_qid_mapping.parquet"
+    if mapping_file.exists():
+        mapping.update(
+            {
+                r["target_title"]: r
+                for r in read_rows(mapping_file)
+                if r["target_title"] in title_set
+            }
+        )
+    cache_dirs = {
+        collection / "collection_requests",
+        collection.parent / "collection_requests",
+        collection.parent / "collection_title_cache",
+        collection.parent / "collection_titles_final",
+    }
+    if request_cache is not None:
+        cache_dirs.add(request_cache)
+    reuse = collection.parent / "qid_recovery_20261029_v2"
+    reused = []
+    if (reuse / "summary.json").exists() and reuse != collection:
+        summary_path = reuse / "summary.json"
+        summary = read_json(summary_path)
+        protected[str(summary_path.resolve())] = sha256(summary_path)
+        if summary.get("protected_input_hashes_unchanged") is not True:
+            raise ValueError(
+                "Previous recovery has no verified input-preservation receipt"
+            )
+        for filename in (
+            "added_entities.parquet",
+            "native_metadata.parquet",
+            "target_evidence.parquet",
+        ):
+            path = reuse / filename
+            if summary.get("output_sha256", {}).get(filename) != sha256(path):
+                raise ValueError(f"Previous recovery output hash mismatch: {path}")
+            rows = read_rows(path)
+            if filename == "added_entities.parquet":
+                reused = [r for r in rows if (r["page_id"], r["revision_id"]) in scopes]
+            elif filename == "native_metadata.parquet":
+                native.update({r["qid"]: r for r in rows})
+            else:
+                mapping.update(
+                    {
+                        r["target_title"]: r
+                        for r in rows
+                        if r.get("target_title") in title_set
+                        and r.get("disambiguation_checked")
+                    }
+                )
+        if summary.get("request_cache"):
+            cache_dirs.add(Path(summary["request_cache"]))
+    for directory in sorted(cache_dirs):
+        for path in sorted(directory.glob("*.json.gz")):
+            saved = read_json(path)
+            if not saved.get("ok") or saved.get("endpoint") not in {WIKI, WD}:
+                continue
+            protected[str(path.resolve())] = sha256(path)
+            data = json.loads(saved["response_text"])
+            if saved["endpoint"] == WIKI:
+                params = saved.get("params", {})
+                if "disambiguation" not in params.get("ppprop", ""):
+                    continue
+                for title in set(params.get("titles", "").split("|")) & title_set:
+                    row = checked_title(
+                        title, data, str(path.resolve()), saved["retrieved_utc"]
+                    )
+                    previous = mapping.get(title, {})
+                    if (
+                        previous.get("qid")
+                        and row.get("qid")
+                        and previous["qid"] != row["qid"]
+                    ):
+                        row.update(
+                            qid=None, qid_status="QID_CHANGED_SINCE_CACHE_REVIEW"
+                        )
+                    if previous.get("qid_status") in {
+                        "QID_CHANGED_SINCE_CACHE_REVIEW",
+                        "DISAMBIGUATION_PAGE_REVIEW",
+                        "SECTION_REDIRECT_REVIEW",
+                        "IDENTIFIER_YEAR_CHANGED_REVIEW",
+                    }:
+                        row = previous
+                    mapping[title] = row
+            else:
+                for qid, entity in data.get("entities", {}).items():
+                    row = checked_metadata(qid, entity)
+                    if row["metadata_status"] == "AVAILABLE":
+                        row.update(
+                            metadata_source="WIKIDATA_API",
+                            metadata_path=str(path.resolve()),
+                            metadata_retrieval_utc=saved["retrieved_utc"],
+                            metadata_snapshot_utc=saved["retrieved_utc"],
+                        )
+                        previous = native.get(qid, {})
+                        if previous.get("metadata_status") == "AVAILABLE":
+                            if (
+                                row.get("label_ja")
+                                or row.get("aliases_ja")
+                                or row.get("jawiki_title")
+                            ):
+                                previous.update(
+                                    {
+                                        key: row[key]
+                                        for key in (
+                                            "label_ja",
+                                            "aliases_ja",
+                                            "jawiki_title",
+                                        )
+                                    }
+                                )
+                                previous.update(
+                                    japanese_metadata_path=str(path.resolve()),
+                                    japanese_metadata_retrieval_utc=saved[
+                                        "retrieved_utc"
+                                    ],
+                                )
+                        else:
+                            native[qid] = row
+    output.mkdir(parents=True, exist_ok=False)
+    client = EvidenceClient(
+        request_cache or output / "requests",
+        allow_api,
+        max_requests,
+        start + max_seconds,
+    )
+    pending = [
+        title
+        for title in titles
+        if not mapping.get(title, {}).get("disambiguation_checked")
+    ]
+    for offset in range(0, len(pending), 50):
+        batch = pending[offset : offset + 50]
+        try:
+            data, evidence, retrieved = client.query(
+                WIKI,
+                dict(
+                    action="query",
+                    prop="pageprops",
+                    ppprop="wikibase_item|disambiguation",
+                    redirects=1,
+                    titles="|".join(batch),
+                ),
+            )
+            for title in batch:
+                row = checked_title(title, data, evidence, retrieved)
+                previous = mapping.get(title, {})
+                if (
+                    previous.get("qid")
+                    and row.get("qid")
+                    and previous["qid"] != row["qid"]
+                ):
+                    row.update(qid=None, qid_status="QID_CHANGED_SINCE_CACHE_REVIEW")
+                mapping[title] = row
+        except RuntimeError as error:
+            client.failures.append(dict(titles=batch, error=str(error)))
+            for title in batch:
+                mapping.setdefault(
+                    title,
+                    dict(
+                        target_title=title,
+                        qid=None,
+                        qid_status="CURRENT_CHECK_UNAVAILABLE_REVIEW",
+                    ),
+                )
+    needed = sorted(
+        {r["qid"] for r in mapping.values() if r.get("qid")}
+        - {
+            qid
+            for qid, row in native.items()
+            if row.get("metadata_status") == "AVAILABLE"
+        }
+    )
+    for offset in range(0, len(needed), 50):
+        batch = needed[offset : offset + 50]
+        try:
+            data, evidence, retrieved = client.query(
+                WD,
+                dict(
+                    action="wbgetentities",
+                    ids="|".join(batch),
+                    props="labels|aliases|descriptions|claims|info|sitelinks",
+                    languages="en|ja",
+                ),
+            )
+            for qid in batch:
+                row = checked_metadata(qid, data.get("entities", {}).get(qid, {}))
+                row.update(
+                    metadata_source="WIKIDATA_API",
+                    metadata_path=evidence,
+                    metadata_retrieval_utc=retrieved,
+                    metadata_snapshot_utc=retrieved,
+                )
+                native[qid] = row
+        except RuntimeError as error:
+            client.failures.append(dict(qids=batch, error=str(error)))
+    existing = {(r["page_id"], r["revision_id"], r["qid"]): r for r in original}
+    if len(existing) != len(original):
+        raise ValueError("Duplicate existing page/revision/QID inventory")
+    # Reuse supplies cached evidence, never exemption from current source checks.
+    added = {}
+    for target in targets:
+        result = mapping.get(target.get("target_title"), {})
+        target.update(
+            {
+                key: value
+                for key, value in result.items()
+                if key not in target or key in {"qid", "qid_status"}
+            }
+        )
+        qid = target.get("qid")
+        info = native.get(qid, {})
+        key = (target["page_id"], target["revision_id"], qid)
+        usable = bool(
+            qid
+            and info.get("metadata_status") == "AVAILABLE"
+            and "Q4167410" not in info.get("native_types", [])
+            and (result.get("disambiguation_checked") or key in existing)
+        )
+        if not usable:
+            target["qid"] = None
+        target["recovery_status"] = (
+            "SUPPORTED_CURRENT_QID_CANDIDATE" if usable else "REVIEW_OR_NO_QID"
+        )
+        target["already_in_page_inventory"] = key in existing
+        target["status"] = target["recovery_status"]
+        for field in (
+            "template_name",
+            "display_name",
+            "target_rule",
+            "target_rule_temporal_basis",
+            "anchor_text",
+            "anchor_start",
+            "anchor_end",
+            "qid_status",
+            "mapping_evidence",
+            "mapping_retrieval_utc",
+        ):
+            target.setdefault(field, None)
+        if not usable or key in existing:
+            continue
+        if key not in added:
+            added[key] = dict(
+                info,
+                page_id=key[0],
+                revision_id=key[1],
+                wiki_title=target["wiki_title"],
+                revision_timestamp=target["revision_timestamp"],
+                link_origin=[],
+                link_evidence=[],
+                linked_titles=[],
+                raw_link_occurrences=0,
+                collection_status="RECOVERED_SOURCE_TARGET_CURRENT_MAPPING",
+                unlinked_entity_coverage="NOT_ENUMERATED",
+                rendered_expansion_coverage="SOURCE_PARAMETERS_ONLY_NO_CURRENT_NAVIGATION_EXPANSION",
+            )
+        row = added[key]
+        for column, value in (
+            ("link_origin", target["link_origin"]),
+            ("link_evidence", target["raw_evidence_path"]),
+            ("linked_titles", target["target_title"]),
+        ):
+            row[column] = sorted(set(row.get(column, [])) | {value})
+        row["raw_link_occurrences"] = row.get("raw_link_occurrences", 0) + int(
+            target["link_origin"] == "RAW_DIRECT_LINK"
+        )
+    verify_hashes(protected)
+    entity_schema = pq.read_schema(collection / "entities.parquet")
+    merged = [*original, *added.values()]
+    write_table(merged, output / "entities.parquet", entity_schema)
+    write_table(list(added.values()), output / "added_entities.parquet", entity_schema)
+    inventory_qids = {row["qid"] for row in merged}
+    for row in native.values():
+        row.setdefault("label_ja", None)
+        row.setdefault("aliases_ja", [])
+        row.setdefault("jawiki_title", None)
+    write_table(
+        [row for qid, row in native.items() if qid in inventory_qids],
+        output / "native_metadata.parquet",
+    )
+    write_table(targets, output / "target_evidence.parquet")
+    write_table(list(mapping.values()), output / "title_qid_mapping.parquet")
+    summary = dict(
+        status="COMPLETE_CANDIDATE_RECOVERY_NOT_MENTION_RESOLUTION",
+        started_utc=started,
+        completed_utc=utc_now(),
+        elapsed_seconds=time.monotonic() - start,
+        active_work_seconds=None,
+        approval_wait_seconds=None,
+        environment_wait_seconds=None,
+        page_revisions=len(scopes),
+        pages=len({p for p, _ in scopes}),
+        original_mentions=len(mentions),
+        original_entity_page_revision_rows=len(original),
+        reused_entity_page_revision_rows=len(reused),
+        added_entity_page_revision_rows=len(added),
+        merged_entity_page_revision_rows=len(merged),
+        added_distinct_qids=len({r["qid"] for r in added.values()}),
+        target_titles=len(titles),
+        target_occurrences=len(targets),
+        template_families=dict(
+            Counter(r["template_name"] for r in targets if r.get("template_name"))
+        ),
+        template_statuses=dict(Counter(r["template_status"] for r in targets)),
+        target_statuses=dict(Counter(r["recovery_status"] for r in targets)),
+        lookup_statuses=dict(
+            Counter(r.get("qid_status", "NO_TARGET") for r in targets)
+        ),
+        api_requests=client.requests,
+        request_cache=str(client.directory.resolve()),
+        failures=client.failures,
+        max_requests=max_requests,
+        max_seconds=max_seconds,
+        assignment_changes=0,
+        inference_runs=0,
+        protected_input_hashes=protected,
+        protected_input_hashes_unchanged=True,
+        script_sha256=sha256(Path(__file__)),
+        output_sha256={p.name: sha256(p) for p in output.glob("*.parquet")},
+        issues=[
+            "Current title mappings are candidate evidence, not historical identity gold",
+            "Unsupported templates remain review cases",
+            "Sclass ship-type secondary links are not expanded; class target only",
+            "Japanese enrichment reuses available records and fetches only missing QID metadata",
+            "Japanese metadata stays separate and never adds Japanese article entities",
+        ],
+    )
+    save_json(output / "summary.json", summary)
+    return summary
+
+
 def main() -> None:
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--base", type=Path, default=DATA)
     parser.add_argument("--output", type=Path, default=DATA / "qid_recovery_20261029")
     parser.add_argument("--allow-api", action="store_true")
-    parser.add_argument("--max-api-requests", type=int, default=20)
+    parser.add_argument("--max-api-requests", type=int)
     parser.add_argument("--request-cache", type=Path)
+    parser.add_argument("--all-pilot", action="store_true")
+    parser.add_argument("--mentions", type=Path)
+    parser.add_argument("--revisions", type=Path)
+    parser.add_argument("--collection", type=Path)
+    parser.add_argument("--max-seconds", type=float, default=1800)
     args = parser.parse_args()
     logging.basicConfig(
         level=logging.INFO, format="%(asctime)s %(levelname)s %(message)s"
     )
+    if args.all_pilot:
+        if not all((args.mentions, args.revisions, args.collection)):
+            parser.error(
+                "--all-pilot requires --mentions, --revisions and --collection"
+            )
+        recover_inventory(
+            args.mentions,
+            args.revisions,
+            args.collection,
+            args.output,
+            allow_api=args.allow_api,
+            max_requests=args.max_api_requests
+            if args.max_api_requests is not None
+            else 200,
+            max_seconds=args.max_seconds,
+            request_cache=args.request_cache,
+        )
+        return
     recover(
         args.base,
         args.output,
         args.allow_api,
-        args.max_api_requests,
+        args.max_api_requests if args.max_api_requests is not None else 20,
         args.request_cache,
     )
 
