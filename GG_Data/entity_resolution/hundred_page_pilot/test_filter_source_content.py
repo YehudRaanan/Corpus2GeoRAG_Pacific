@@ -79,6 +79,20 @@ def test_visible_escaped_category_label_and_nested_citation_priority():
     assert classify(raw, "Japan", occurrence=1)["reason"] == "citation"
 
 
+@pytest.mark.parametrize(
+    "raw,word",
+    [
+        ("{{nihongo|Tokyo|東京|Tōkyō}}", "東京"),
+        ("{{nihongo|Tokyo|東京|Tōkyō}}", "Tōkyō"),
+        ("{{blockquote|Japan|James Forrestal|Navy}}", "James Forrestal"),
+        ("{{quote box|quote=Japan|author=Halsey|title=Pacific}}", "Halsey"),
+        ("{{quote box|quote=Japan|author=Halsey|title=Pacific}}", "Pacific"),
+    ],
+)
+def test_name_and_quote_display_fields_are_eligible(raw, word):
+    assert classify(raw, word)["status"] == "KEEP"
+
+
 def test_partial_hidden_target_overlap_does_not_become_prose():
     assert classify("[[Japan|Japan]]", "Japan|Japan")["status"] == "REVIEW"
 
@@ -269,7 +283,7 @@ def test_empty_input_has_clear_error(tmp_path):
         (
             "{{Quote box|quote=Japan|title=Unknown source|width=30%}}",
             "Unknown",
-            "REVIEW",
+            "KEEP",
         ),
         ("{{Quote box|quote=Japan|align=right}}", "right", "EXCLUDE"),
         ("{{plainlist|* Japan\n* France|class=Japan}}", "France", "KEEP"),

@@ -36,9 +36,11 @@ from GG_Data.entity_resolution.hundred_page_pilot.filter_source_content import (
     NOTES,
     RELATED,
     REVIEW_ROLES,
+    TEMPLATE_TEXT_GROUPS,
     normal,
     section_path,
     source_intervals,
+    template_text_fields,
 )
 from GG_Data.entity_resolution.hundred_page_pilot.prepare_mentions import positions
 from GG_Data.entity_resolution.hundred_page_pilot.recover_page_qids import (
@@ -48,7 +50,7 @@ from GG_Data.entity_resolution.hundred_page_pilot.recover_page_qids import (
 from GG_Data.entity_resolution.luke_pilot.data import sha256
 
 LOG = logging.getLogger(__name__)
-POLICY_VERSION = "source-text-v2"
+POLICY_VERSION = "source-text-v3"
 
 
 @dataclass
@@ -140,22 +142,30 @@ def clean_text(
             # In this ship template, class names the vessel class, not CSS styling.
             if family == "infobox ship/characteristics":
                 display.add("class")
-        elif family in {"nowrap", "nobr", "nobreak", "small", "big", "lang", "nihongo", "nihongo2"}:
+        elif family in {"nowrap", "nobr", "nobreak", "small", "big", "lang"}:
             display = {"2"} if family == "lang" else {"1"}
             allowed = {"1", "2", "3", "4", "5", "help", "lead", "extra", "extra2"}
         elif family in LIST_TEMPLATES:
             display = {key for key in keys if key.isdigit()}
             allowed = display | DISPLAY_STYLES | {"start", "type", "horizontal"}
-        elif family in {"blockquote", "quote", "quotation", "cquote", "quote box"}:
-            display = {"quote"} if family == "quote box" else {"1", "text"}
-            allowed = display | DISPLAY_STYLES | {"author", "source", "2", "3", "4"}
+        elif family in TEMPLATE_TEXT_GROUPS:
+            selection = template_text_fields(node)
+            if selection is None:
+                unknown(literal, start)
+                return
+            display, controls = selection
+            allowed = display | controls
         elif family == "font color":
             display = {"3"} if "3" in keys else {"2"}
             allowed = {"1", "2", "3"}
         if display is not None and display & set(keys) and not set(keys) - allowed:
             for key, value, left in params:
                 if key in display:
-                    if family.startswith("infobox") or family in LIST_TEMPLATES:
+                    if (
+                        family.startswith("infobox")
+                        or family in LIST_TEMPLATES
+                        or family in TEMPLATE_TEXT_GROUPS
+                    ):
                         separator(left)
                     visit(value, left)
             return

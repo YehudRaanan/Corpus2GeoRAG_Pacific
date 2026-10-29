@@ -131,6 +131,85 @@ def test_generic_infobox_class_remains_a_formatting_control():
     assert "hidden-layout" not in cleaned.text
 
 
+@pytest.mark.parametrize(
+    "raw,words",
+    [
+        ("{{nihongo|Tokyo|東京|Tōkyō|extra=Japan}}", ["Tokyo", "東京", "Tōkyō", "Japan"]),
+        (
+            "{{blockquote|Japan fought.|James Forrestal|Navy|1945}}",
+            ["Japan", "James Forrestal", "Navy", "1945"],
+        ),
+        (
+            "{{quote|author=William F. Halsey|text=South Pacific Forces}}",
+            ["William F. Halsey", "South Pacific Forces"],
+        ),
+        (
+            "{{Quote box|title=Pacific|quote=Japan|author=Halsey|source=Navy|width=30%}}",
+            ["Pacific", "Japan", "Halsey", "Navy"],
+        ),
+    ],
+)
+def test_names_and_quote_attribution_keep_source_positions(raw, words):
+    from GG_Data.entity_resolution.hundred_page_pilot.clean_source_text import _clean_page
+
+    cleaned = _clean_page(raw)
+    starts = [a for a, _ in cleaned.origins]
+    assert starts == sorted(starts)
+    for word in words:
+        start = raw.index(word)
+        result = map_mention(cleaned, start, start + len(word))
+        assert result["status"] == "mapped", (word, result)
+        assert cleaned.text[result["start"] : result["end"]] == word
+    assert "Tokyo東京" not in cleaned.text
+    assert "JapanHalsey" not in cleaned.text
+    assert "30%" not in cleaned.text
+
+
+def test_name_fields_have_boundaries_and_nihongo2_keeps_its_own_rule():
+    assert clean_text("{{nihongo|Tokyo|東京|Tōkyō}}").text == "Tokyo\n東京\nTōkyō"
+    assert_visible("{{nihongo2|東京|help=no}}", "東京")
+
+
+@pytest.mark.parametrize(
+    "raw,word",
+    [
+        ("{{nihongo|Tokyo|東京|mystery=Japan}}", "Japan"),
+        ("{{nihongo2|東京|Tokyo}}", "Tokyo"),
+        ("{{nihongo|Tokyo}}", "Tokyo"),
+        ("{{quote|text=Japan|1=France|author=Halsey}}", "France"),
+        ("{{blockquote|Japan|mystery=Halsey}}", "Halsey"),
+        ("{{blockquote|Japan|character=Halsey}}", "Halsey"),
+        ("{{cquote|Japan|30|40|Halsey}}", "Halsey"),
+    ],
+)
+def test_ambiguous_or_unsupported_fields_stay_literal_for_review(raw, word):
+    from GG_Data.entity_resolution.hundred_page_pilot.clean_source_text import _clean_page
+
+    cleaned = _clean_page(raw)
+    assert word in cleaned.text
+    start = raw.index(word)
+    assert map_mention(cleaned, start, start + len(word))["status"] == "uncertain"
+
+
+def test_restored_attribution_does_not_restore_nested_citation():
+    from GG_Data.entity_resolution.hundred_page_pilot.clean_source_text import _clean_page
+
+    raw = "{{blockquote|Japan|Halsey<ref>{{cite book|author=Smith}}</ref>}}"
+    cleaned = _clean_page(raw)
+    assert "Halsey" in cleaned.text
+    assert "Smith" not in cleaned.text
+
+
+def test_quote_box_style_keys_with_underscores_are_not_content():
+    from GG_Data.entity_resolution.hundred_page_pilot.clean_source_text import _clean_page
+
+    raw = "{{quote box|quote=Japan|author=Halsey|title_bg=red|title_fnt=blue}}"
+    cleaned = _clean_page(raw)
+    start = raw.index("Halsey")
+    assert map_mention(cleaned, start, start + 6)["status"] == "mapped"
+    assert "red" not in cleaned.text and "blue" not in cleaned.text
+
+
 def test_unknown_template_remains_uncertain():
     raw = "Before {{mystery|Japan}} after."
     cleaned, result = mapped(raw, "Japan")

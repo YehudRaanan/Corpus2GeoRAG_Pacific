@@ -31,8 +31,8 @@ from GG_Data.entity_resolution.hundred_page_pilot.recover_page_qids import (
 from GG_Data.entity_resolution.luke_pilot.data import sha256
 
 LOG = logging.getLogger(__name__)
-POLICY_VERSION = "article-source-v2"
-SUPPORTED_POLICIES = ("article-source-v1", POLICY_VERSION)
+POLICY_VERSION = "article-source-v3"
+SUPPORTED_POLICIES = ("article-source-v1", "article-source-v2", POLICY_VERSION)
 LEGACY_POLICY = "LEGACY_UNFILTERED"
 CITATION = {
     "citation",
@@ -114,6 +114,26 @@ DISPLAY_STYLES = {
     "color",
     "clear",
 }
+# Shared by classification and cleaning. Alternative keys in one slot can shadow
+# each other; ambiguous supplied aliases stay literal for review, never guessed.
+QUOTE_GROUPS = (
+    ("text", "content", "quotetext", "quote", "1"),
+    ("sign", "cite", "author", "by", "personquoted", "2"),
+    ("title", "publication", "ts", "quotesource", "3"),
+    ("source", "4"),
+    ("char", "character", "5"),
+)
+TEMPLATE_TEXT_GROUPS = {
+    "nihongo": (("1",), ("2",), ("3",), ("extra", "4"), ("extra2", "5")),
+    "nihongo2": (("1",),),
+    **{name: QUOTE_GROUPS for name in ("blockquote", "quote", "quotation")},
+    "quote box": (
+        ("text", "content", "quotetext", "quote", "1"),
+        ("author", "2"),
+        ("source", "3"),
+        ("title",),
+    ),
+}
 LIST_TEMPLATES = {
     "plainlist",
     "plain list",
@@ -170,6 +190,53 @@ BOUNDARY_ROLES = (
 
 def normal(value: object) -> str:
     return " ".join(str(value).replace("_", " ").split()).casefold()
+
+
+def template_text_fields(node: object) -> tuple[set[str], set[str]] | None:
+    """Return supported display/control keys, or preserve the template for review.
+
+    These rules follow the documented fields, not arbitrary historical rendering.
+    Source order is retained for monotonic character origins. Cquote is deliberately
+    unsupported here: its positional meanings depend on namespace/template version.
+    """
+    family = normal(node.name)
+    groups = TEMPLATE_TEXT_GROUPS[family]
+    values = {normal(p.name): str(p.value).strip() for p in node.params}
+    keys = set(values)
+    fields = set().union(*map(set, groups))
+    controls = (
+        {"lead"}
+        if family == "nihongo"
+        else {"help"} if family == "nihongo2" else DISPLAY_STYLES | {"multiline"}
+    )
+    if family == "quote box":
+        controls |= {
+            "halign",
+            "qalign",
+            "quoted",
+            "tclass",
+            "qclass",
+            "tstyle",
+            "qstyle",
+            "sstyle",
+            "title bg",
+            "title fnt",
+        }
+    if keys - fields - controls or any(len(keys & set(group)) > 1 for group in groups):
+        return None
+    if family == "nihongo" and not (values.get("2") or values.get("3")):
+        return None
+    if family in {"blockquote", "quote", "quotation", "quote box"}:
+        if not any(values.get(key) for key in groups[0]):
+            return None
+        # Blockquote shows a character/speaker only with another attribution.
+        if (
+            family != "quote box"
+            and keys & set(groups[4])
+            and not any(values.get(key) for group in groups[1:4] for key in group)
+        ):
+            return None
+    return keys & fields, controls
 
 
 def citation_only_ref(contents: object) -> bool:
@@ -322,15 +389,13 @@ def source_intervals(raw: str) -> tuple[list[tuple], list[tuple]]:
                         "small",
                         "big",
                         "lang",
-                        "nihongo",
-                        "nihongo2",
                     }:
                         display = {"2"} if family == "lang" else {"1"}
                         controls = {"1"} if family == "lang" else set()
-                    elif family in {"blockquote", "quote", "quotation", "cquote"}:
-                        display = {"1", "text"}
-                    elif family == "quote box":
-                        display, controls = {"quote"}, DISPLAY_STYLES
+                    elif family in TEMPLATE_TEXT_GROUPS:
+                        selection = template_text_fields(node)
+                        if selection is not None:
+                            display, controls = selection
                     elif family in LIST_TEMPLATES:
                         display = (
                             {"1"}
