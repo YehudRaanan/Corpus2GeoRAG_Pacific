@@ -1,5 +1,58 @@
 # Daniel pipeline POC
 
+## Revised 100-page local pipeline — 30 October 2026
+
+The new Source-QID run is isolated under
+`Data/external/revised_pipeline_20261030/`. Its current interfaces are described
+in the [100-page pipeline README](../entity_resolution/hundred_page_pilot/README.md#revised-source-qid-run--30-october-2026)
+and the [approved implementation plan](../../docs/superpowers/plans/2026-10-30-revised-pipeline-new-daniel-input.md).
+These instructions do not claim completed model execution or final output counts.
+Older checkpoints below remain historical records.
+
+The stage order is input/revision binding → source/name preparation and cleaning
+→ strict exact matching → fixed-model decisions → matching finalization →
+article-bound Events and native Relations. Preparation, exact matching and
+inference live in `../entity_resolution/hundred_page_pilot/`. Training remains
+isolated in `../entity_resolution/decision_model/`; this run reuses its fixed
+checkpoint without retraining.
+
+`post_qid_run.prepare(..., matching_subdir="matching",
+mentions_name="cleaned/mentions.parquet")` freezes `scopes/` from `input/`.
+`write_stage(..., stage="pending")` saves all original mentions first;
+`stage="exact"` saves accepted exact entities and their bridges together.
+`build_core(..., stage="model")` can save model decisions without inventing
+provisional identities. `stage="final"` closes matching and creates provisional
+entities only for eligible unmatched groups. Revised resolved entities use
+QID + Daniel type; mention links remain many-to-many.
+
+Each revised mention retains the nine Daniel source fields in `raw`. Raw
+`Text`/`start`/`end` stay separate from `Text_clean`/`clean_start`/`clean_end` and
+working `word`; original words remain available in `raw_original_word` and
+`word_original`. New `Source` is the **article QID**, not a numeric Wikipedia page
+ID or a mentioned entity assignment. `source_title` supplies the readable title.
+Occurrence identity uses the new input hash and global source row index;
+cross-input comparisons use verified row lineage.
+
+`SOURCE_EXCLUDED`, `SOURCE_REVIEW`, `DEFERRED_DATE` and
+`PAGE_REVISION_UNRESOLVED` retain audit rows without entity links. Mapped spans
+with context-review flags remain under review. Eligible unmatched rows stay
+`PENDING_MATCHING` until finalization. Page/revision, clean-span and source
+eligibility checks apply before groups, exact matching or model candidates.
+
+`post_qid_native.py` preserves full records and source evidence.
+`post_qid_events.apply_cached_events(...)` adds only supported article-bound
+Events and reports missing native-cache records. `post_qid_relations.py` keeps
+directed native rows and explicit derived inverse evidence.
+`post_qid_run.assemble(core_dir, event_dir, output)` requires a final revised
+core, its exact enrichment binding, valid endpoints and EDA checks before writing
+a new local table snapshot. No database load occurs; Geography remains deferred.
+
+The fixed model's 278/311 held-out stop precision misses 90%. A successful CUDA
+restore and exact manifest-bound experimental approval permit the approved
+experiment, not a quality or Daniel accuracy claim. Workflow comparisons report
+changed eligibility denominators and all-row status/QID transitions separately
+from model truth. Root's run report records actual execution and resource use.
+
 ### Owner-directed stop - 24 October 2026
 
 The owner declined a further recovery extension and requested a saved checkpoint.

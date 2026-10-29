@@ -12,8 +12,10 @@ from __future__ import annotations
 
 import argparse
 import csv
+import gzip
 import json
 import math
+import re
 import time
 from collections import Counter, defaultdict
 from datetime import datetime, timezone
@@ -379,7 +381,9 @@ def export(
                 else (
                     "MATCHED"
                     if matched
-                    else "UNRESOLVED_ENTITY" if group else "UNRESOLVED_PAGE_VERSION"
+                    else "UNRESOLVED_ENTITY"
+                    if group
+                    else "UNRESOLVED_PAGE_VERSION"
                 )
             )
         )
@@ -668,6 +672,284 @@ def compare_exports(
                     }
                 )
     (output / "comparison.json").write_text(
+        json.dumps(result, indent=2), encoding="utf-8"
+    )
+    return result
+
+
+def compare_workflows(previous_export: Path, current_core: Path, output: Path) -> dict:
+    """Compare processing outcomes across policies using verified original rows.
+
+    This deliberately separate comparison permits the declared Source title to
+    page-QID change. It does not measure matching accuracy or a model-only gain.
+    """
+    import pyarrow.parquet as pq
+
+    previous_path = previous_export / "matched_mentions.parquet"
+    previous = pq.read_table(previous_path).to_pylist()
+    previous_summary_path = previous_export / "results.json"
+    previous_summary = json.loads(previous_summary_path.read_text(encoding="utf-8"))
+    if previous_summary.get("inference_complete") is not True or previous_summary.get(
+        "exported_rows"
+    ) != len(previous):
+        raise ValueError("Workflow comparison requires a complete previous export")
+    manifest_path = current_core / "manifest.json"
+    manifest = json.loads(manifest_path.read_text(encoding="utf-8"))
+    inputs = {
+        str(path): sha256(path)
+        for path in (previous_path, previous_summary_path, manifest_path)
+    }
+    tables = {}
+    for name in ("mentions", "mention_entity_links", "entities"):
+        path = current_core / f"{name}.json.gz"
+        actual = sha256(path)
+        if manifest.get("outputs", {}).get(path.name) != actual:
+            raise ValueError(f"Current core output hash binding differs: {name}")
+        with gzip.open(path, "rt", encoding="utf-8") as stream:
+            tables[name] = json.load(stream)
+        if manifest.get("counts", {}).get(name) != len(tables[name]):
+            raise ValueError(f"Current core row count differs: {name}")
+        inputs[str(path)] = actual
+    current = tables["mentions"]
+    by_index = [
+        {row["source_row_index"]: row for row in rows} for rows in (previous, current)
+    ]
+    if (
+        any(
+            len(index) != len(rows)
+            for index, rows in zip(by_index, (previous, current))
+        )
+        or by_index[0].keys() != by_index[1].keys()
+        or any(
+            type(row["source_row_index"]) is not int or row["source_row_index"] < 0
+            for rows in (previous, current)
+            for row in rows
+        )
+    ):
+        raise ValueError("Workflow original row lineage differs or is duplicated")
+    by_mid = {row["mention_id"]: row for row in current}
+    entity_keys = {(row["entity_id"], row["type"]) for row in tables["entities"]}
+    if len(by_mid) != len(current) or len(entity_keys) != len(tables["entities"]):
+        raise ValueError("Duplicate current core mention or typed entity identity")
+    qids = defaultdict(set)
+    seen_links = set()
+    accepted_statuses = {"ACCEPTED_EXACT", "ACCEPTED_MODEL"}
+    eligible_statuses = accepted_statuses | {"ENTITY_UNRESOLVED", "PENDING_MATCHING"}
+    audit_statuses = {
+        "SOURCE_EXCLUDED",
+        "SOURCE_REVIEW",
+        "DEFERRED_DATE",
+        "PAGE_REVISION_UNRESOLVED",
+    }
+    for link in tables["mention_entity_links"]:
+        key = link["mention_id"], link["entity_id"], link["entity_type"]
+        mention = by_mid.get(key[0])
+        if (
+            key in seen_links
+            or mention is None
+            or key[1:] not in entity_keys
+            or key[2] != mention["entity_group"]
+            or mention.get("matching_eligible") is not True
+            or mention.get("processing_status")
+            not in accepted_statuses | {"ENTITY_UNRESOLVED"}
+        ):
+            raise ValueError(
+                "Workflow comparison found a broken typed bridge or ineligible link"
+            )
+        seen_links.add(key)
+        if re.fullmatch(r"Q[1-9]\d*", key[1]):
+            qids[key[0]].add(key[1])
+        elif not key[1].startswith("PROV_"):
+            raise ValueError("Invalid current entity identity")
+    cases = []
+    original_fields = (
+        "entity_group",
+        "score",
+        "word",
+        "start",
+        "end",
+        "Source",
+        "Index",
+        "Text",
+        "subtype",
+    )
+    for index in sorted(by_index[0]):
+        before, after = by_index[0][index], by_index[1][index]
+        raw = after.get("raw")
+        if not isinstance(raw, dict) or not set(original_fields) <= raw.keys():
+            raise ValueError(f"Missing original source fields at row {index}")
+        for field in original_fields:
+            if field == "Source":
+                continue
+            old_value = (
+                before.get("word_original", before["word"])
+                if field == "word"
+                else before[field]
+            )
+            if old_value != raw[field] or (
+                field != "word" and after.get(field) != raw[field]
+            ):
+                raise ValueError(
+                    f"Workflow original source field differs: {field}, row {index}"
+                )
+        if after.get("raw_original_word", raw["word"]) != raw["word"]:
+            raise ValueError(f"Workflow original word metadata differs: row {index}")
+        if any(
+            before.get(field) != after.get(field)
+            for field in ("page_id", "revision_id")
+        ):
+            raise ValueError(f"Workflow page/revision lineage differs: row {index}")
+        if (
+            not isinstance(raw["Source"], str)
+            or not re.fullmatch(r"Q[1-9]\d*", raw["Source"])
+            or after.get("Source") != raw["Source"]
+            or after.get("source_page_qid", raw["Source"]) != raw["Source"]
+            or after.get("source_title", before["Source"]) != before["Source"]
+        ):
+            raise ValueError(
+                f"Workflow Source is not the declared page-QID change: row {index}"
+            )
+        status, eligible = (
+            after.get("processing_status"),
+            after.get("matching_eligible"),
+        )
+        if (
+            type(eligible) is not bool
+            or status not in eligible_statuses | audit_statuses
+            or eligible != (status in eligible_statuses)
+        ):
+            raise ValueError(f"Workflow eligibility/status differs: row {index}")
+        old_qids, new_qids = set(before["matched_qids"]), qids[after["mention_id"]]
+        if any(
+            not isinstance(qid, str) or not re.fullmatch(r"Q[1-9]\d*", qid)
+            for qid in old_qids
+        ):
+            raise ValueError("Invalid previous matched QID")
+        if bool(new_qids) != (status in accepted_statuses):
+            raise ValueError(f"Workflow accepted status/QID set differs: row {index}")
+        transition = (
+            "UNCHANGED"
+            if old_qids == new_qids
+            else "NEWLY_MATCHED"
+            if not old_qids
+            else "LOST_ALL_MATCHES"
+            if not new_qids
+            else "CHANGED_QIDS"
+        )
+        cases.append(
+            dict(
+                source_row_index=index,
+                page_id=after.get("page_id"),
+                revision_id=after.get("revision_id"),
+                entity_group=raw["entity_group"],
+                word_original=raw["word"],
+                previous_word=before["word"],
+                current_word=after["word"],
+                previous_Source=before["Source"],
+                current_Source=raw["Source"],
+                previous_status=before["entity_match_status"],
+                current_status=status,
+                currently_eligible=eligible,
+                eligibility_reason=after.get("matching_eligibility_reason"),
+                previous_qids=sorted(old_qids),
+                current_qids=sorted(new_qids),
+                added_qids=sorted(new_qids - old_qids),
+                removed_qids=sorted(old_qids - new_qids),
+                qid_set_transition=transition,
+            )
+        )
+
+    def counts(rows: list[dict]) -> dict:
+        return dict(
+            original_rows=len(rows),
+            previous_matched_rows=sum(bool(row["previous_qids"]) for row in rows),
+            current_matched_rows=sum(bool(row["current_qids"]) for row in rows),
+            previous_row_qid_pairs=sum(len(row["previous_qids"]) for row in rows),
+            current_row_qid_pairs=sum(len(row["current_qids"]) for row in rows),
+            new_row_qid_pairs=sum(len(row["added_qids"]) for row in rows),
+            lost_row_qid_pairs=sum(len(row["removed_qids"]) for row in rows),
+            newly_matched_rows=sum(
+                row["qid_set_transition"] == "NEWLY_MATCHED" for row in rows
+            ),
+            lost_all_matches_rows=sum(
+                row["qid_set_transition"] == "LOST_ALL_MATCHES" for row in rows
+            ),
+            changed_qid_rows=sum(
+                row["qid_set_transition"] == "CHANGED_QIDS" for row in rows
+            ),
+        )
+
+    statuses = Counter(row["current_status"] for row in cases)
+    transitions = Counter(
+        (row["previous_status"], row["current_status"]) for row in cases
+    )
+    eligible_cases = [row for row in cases if row["currently_eligible"]]
+    result = dict(
+        comparison_kind="WORKFLOW_COMPARISON",
+        original_rows=len(cases),
+        row_lineage_verified=True,
+        source_change_rule="Source article title to page QID; page QID is not a mention identity assignment.",
+        source_changed_rows=sum(
+            row["previous_Source"] != row["current_Source"] for row in cases
+        ),
+        denominators=dict(
+            all_original_rows=len(cases),
+            currently_eligible_rows=len(eligible_cases),
+            source_excluded_rows=statuses["SOURCE_EXCLUDED"],
+            source_review_rows=statuses["SOURCE_REVIEW"],
+            deferred_date_rows=statuses["DEFERRED_DATE"],
+            date_type_rows=sum(row["entity_group"] == "DATE" for row in cases),
+            page_revision_unresolved_rows=statuses["PAGE_REVISION_UNRESOLVED"],
+            pending_rows=statuses["PENDING_MATCHING"],
+        ),
+        all_rows=counts(cases),
+        currently_eligible=counts(eligible_cases),
+        noneligible_previous_matched_rows=sum(
+            not row["currently_eligible"] and bool(row["previous_qids"])
+            for row in cases
+        ),
+        previous_status_counts=dict(Counter(row["previous_status"] for row in cases)),
+        current_status_counts=dict(statuses),
+        status_transitions=[
+            dict(previous_status=before, current_status=after, rows=count)
+            for (before, after), count in sorted(transitions.items())
+        ],
+        qid_set_transition_counts=dict(
+            Counter(row["qid_set_transition"] for row in cases)
+        ),
+        accuracy=None,
+        precision=None,
+        candidate_truth_status="UNKNOWN",
+        model_truth_status="UNKNOWN",
+        limitation="Workflow and eligibility changed. QID changes are processing outcomes, not verified accuracy or model-only gains.",
+        previous_results=previous_summary,
+        current_stage=manifest.get("processing_stage", manifest.get("stage")),
+        input_hashes=inputs,
+    )
+    output.mkdir(parents=True, exist_ok=False)
+    with (output / "workflow_rows.jsonl").open("x", encoding="utf-8") as stream:
+        for case in cases:
+            stream.write(json.dumps(case, ensure_ascii=False) + "\n")
+    with (output / "workflow_rows.csv").open(
+        "x", encoding="utf-8", newline=""
+    ) as stream:
+        fields = list(cases[0]) if cases else ["source_row_index"]
+        writer = csv.DictWriter(stream, fieldnames=fields)
+        writer.writeheader()
+        for case in cases:
+            writer.writerow(
+                {
+                    key: json.dumps(value, ensure_ascii=False)
+                    if isinstance(value, list)
+                    else value
+                    for key, value in case.items()
+                }
+            )
+    result["output_hashes"] = {
+        name: sha256(output / name)
+        for name in ("workflow_rows.jsonl", "workflow_rows.csv")
+    }
+    (output / "workflow_comparison.json").write_text(
         json.dumps(result, indent=2), encoding="utf-8"
     )
     return result

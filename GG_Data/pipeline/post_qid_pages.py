@@ -5,17 +5,24 @@ from __future__ import annotations
 import argparse
 import gzip
 import json
+import re
 from pathlib import Path
 
 from GG_Data.pipeline.poc import digest
 
 
 def populate(
-    revisions: list[dict], page_ids: set[int] | None = None, wiki_site: str = "enwiki"
+    revisions: list[dict],
+    page_ids: set[int] | None = None,
+    wiki_site: str = "enwiki",
+    *,
+    page_qids: dict[int, str] | None = None,
 ) -> list[dict]:
     rows, seen = [], set()
     if wiki_site != "enwiki":
         raise ValueError("The frozen pilot contains enwiki revisions only")
+    if any(not re.fullmatch(r"Q[1-9]\d*", q) for q in (page_qids or {}).values()):
+        raise ValueError("Supplied page QID is invalid")
     for revision in revisions:
         page_id, revision_id = revision["page_id"], revision["revision_id"]
         if page_ids is not None and page_id not in page_ids:
@@ -44,7 +51,14 @@ def populate(
                 revision_metadata_status=revision.get(
                     "revision_metadata_status", "NOT_PROVIDED"
                 ),
-                about_entity_id=None,
+                about_entity_id=(page_qids or {}).get(page_id),
+                **(
+                    {
+                        "about_entity_temporal_basis": "DANIEL_SUPPLIED_PAGE_QID_NOT_HISTORICAL_MAPPING_PROOF"
+                    }
+                    if page_id in (page_qids or {})
+                    else {}
+                ),
                 raw_reference=dict(revision),
                 sources=[
                     dict(
@@ -66,7 +80,22 @@ def run(input_dir: Path, output: Path, page_ids: set[int] | None = None) -> dict
     import pyarrow.parquet as pq
 
     source = input_dir / "revisions.parquet"
-    rows = populate(pq.read_table(source).to_pylist(), page_ids)
+    page_qids = {}
+    mentions_path = input_dir / "selected_mentions.parquet"
+    if (
+        mentions_path.is_file()
+        and "source_page_qid" in pq.read_schema(mentions_path).names
+    ):
+        for mention in pq.read_table(
+            mentions_path, columns=["page_id", "source_page_qid"]
+        ).to_pylist():
+            page, qid = mention["page_id"], mention["source_page_qid"]
+            if page_ids is not None and page not in page_ids:
+                continue
+            if qid:
+                if page_qids.setdefault(page, qid) != qid:
+                    raise ValueError("Conflicting supplied QIDs for one page")
+    rows = populate(pq.read_table(source).to_pylist(), page_ids, page_qids=page_qids)
     for row in rows:
         raw = row["raw_reference"]
         for field in ("wikitext_path", "evidence_path", "metadata_evidence_path"):
@@ -86,6 +115,7 @@ def run(input_dir: Path, output: Path, page_ids: set[int] | None = None) -> dict
         row_count=len(rows),
         page_count=len({r["wiki_page_id"] for r in rows}),
         outputs={"wiki_pages.json.gz": digest(output / "wiki_pages.json.gz")},
+        **({"page_qid_input_sha256": digest(mentions_path)} if page_qids else {}),
     )
     (output / "manifest.json").write_text(
         json.dumps(manifest, indent=2), encoding="utf-8"

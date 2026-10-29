@@ -30,6 +30,122 @@ from GG_Data.pipeline.post_qid_relations import (
 from GG_Data.pipeline.relations import SourceException
 
 
+def _bounded_scope(core: dict, pages: list[dict] | None = None) -> str:
+    scope = core.get("scope")
+    if scope not in {"3", "10", "100"}:
+        raise ValueError("Expected manifest-bounded scope 3, 10 or 100")
+    ids = core.get("page_ids")
+    if ids is None:
+        # Archived three-page fixtures predate explicit page membership.
+        if scope != "3":
+            raise ValueError("Expanded scope requires manifest page_ids")
+        if pages is not None and not 0 < len({p["wiki_page_id"] for p in pages}) <= 3:
+            raise ValueError("Article pages exceed bounded scope")
+    elif (
+        not isinstance(ids, list)
+        or len(ids) != int(scope)
+        or len(set(ids)) != len(ids)
+        or any(type(p) is not int or p <= 0 for p in ids)
+        or (pages is not None and {p["wiki_page_id"] for p in pages} != set(ids))
+    ):
+        raise ValueError("Article pages differ from manifest-bounded scope")
+    return scope
+
+
+def _occurrence_types(
+    hierarchy: Path, approval_sha256: str
+) -> tuple[set[str], list[Path]]:
+    approval_path = hierarchy / "recognition_approval.json"
+    _pin(approval_path, approval_sha256)
+    approval = read_json(approval_path)
+    if (
+        approval["status"] != "RECOGNITION_RULE_ACCEPTED"
+        or approval["root_qid"] != "Q1190554"
+    ):
+        raise ValueError("Expected pinned accepted occurrence recognition")
+    type_path = hierarchy / "parameters/event_types.csv"
+    _pin(type_path, _manifest_hash(approval, "parameter_hashes", "event_types.csv"))
+    with type_path.open(encoding="utf-8-sig", newline="") as stream:
+        types = {r["subtype_qid"] for r in csv.DictReader(stream)}
+    if not types or any(not re.fullmatch(r"Q[1-9]\d*", q) for q in types):
+        raise ValueError("Invalid pinned occurrence types")
+    return types, [approval_path, type_path]
+
+
+def _article_evidence(
+    core_dir: Path, link_table: Path, collection_manifest: Path
+) -> tuple:
+    """Separate verified raw inventories from links that survive source cleaning."""
+    import pyarrow.parquet as pq
+
+    from GG_Data.entity_resolution.hundred_page_pilot.clean_source_text import (
+        _clean_page,
+        _passage,
+        map_mention,
+    )
+    from GG_Data.entity_resolution.hundred_page_pilot.collect_entities import raw_links
+
+    core = read_json(core_dir / "manifest.json")
+    for name in ("entities.json.gz", "wiki_pages.json.gz"):
+        _pin(core_dir / name, core["outputs"][name])
+    page_rows = read_json(core_dir / "wiki_pages.json.gz")
+    _bounded_scope(core, page_rows)
+    entity_scope = [
+        r
+        for r in read_json(core_dir / "entities.json.gz")
+        if re.fullmatch(r"Q[1-9]\d*", r["entity_id"])
+    ]
+    pages = {(r["wiki_page_id"], r["revision_id"]): r for r in page_rows}
+    if len(pages) != len(page_rows):
+        raise ValueError("Duplicate article revision identity")
+    collection = read_json(collection_manifest)
+    _pin(link_table, _manifest_hash(collection, "outputs", link_table.name))
+    parsed, cleaned, starts, raw_inputs = {}, {}, {}, {}
+    for key, page in pages.items():
+        raw = page["raw_reference"]
+        path = Path(raw["wikitext_path"])
+        _pin(path, raw["sha256"])
+        raw_inputs[str(path.resolve())] = raw["sha256"]
+        text = path.read_text(encoding="utf-8")
+        parsed[key] = {(r["raw_start"], r["raw_end"]): r for r in raw_links(text)}
+        cleaned[key] = _clean_page(text)
+        starts[key] = [a for a, _ in cleaned[key].origins]
+    rows = pq.read_table(
+        link_table, filters=[("page_id", "in", sorted({k[0] for k in pages}))]
+    ).to_pylist()
+    presence = []
+    for row in rows:
+        key = row["page_id"], row["revision_id"]
+        if key not in pages or row["link_origin"] != "RAW_DIRECT_LINK":
+            continue
+        raw = pages[key]["raw_reference"]
+        if (
+            Path(row["raw_evidence_path"]).resolve()
+            != Path(raw["wikitext_path"]).resolve()
+            or row["raw_sha256"] != raw["sha256"]
+        ):
+            raise ValueError("Article raw link source differs from core revision")
+        saved_link = parsed[key].get((row.get("raw_start"), row.get("raw_end")))
+        if saved_link is None or any(
+            row.get(field) != value for field, value in saved_link.items()
+        ):
+            raise ValueError("Saved raw link offsets/target metadata differ")
+        if row.get("qid") and re.fullmatch(r"Q[1-9]\d*", row["qid"]):
+            left, right = row["anchor_start"], row["anchor_end"]
+            passage = _passage(cleaned[key], starts[key], left, right)
+            span = map_mention(passage, 0, right - left)
+            presence.append(
+                dict(
+                    row,
+                    retained_content_link=span["status"] == "mapped",
+                    clean_link_status=span["status"],
+                    clean_link_reason=span["reason"],
+                    clean_policy_version="source-text-v3",
+                )
+            )
+    return core, entity_scope, presence, raw_inputs
+
+
 def sparql_incoming_query(
     corpus_qids: set[str], *, live_hierarchy_prefilter: bool = False
 ) -> str:
@@ -57,7 +173,7 @@ PREFIX p: <http://www.wikidata.org/prop/>
 PREFIX ps: <http://www.wikidata.org/prop/statement/>
 PREFIX wikibase: <http://wikiba.se/ontology#>
 SELECT DISTINCT ?event ?corpus WHERE {{
-  VALUES ?corpus {{ {' '.join('wd:' + q for q in sorted(corpus_qids))} }}
+  VALUES ?corpus {{ {" ".join("wd:" + q for q in sorted(corpus_qids))} }}
   ?property wikibase:claim ?claim ; wikibase:statementProperty ?valueProperty ;
             wikibase:propertyType wikibase:WikibaseItem .
   ?event ?claim ?statement .
@@ -199,8 +315,7 @@ def apply_public_events(
     if not types or any(not re.fullmatch(r"Q[1-9]\d*", q) for q in types):
         raise ValueError("Invalid pinned occurrence types")
     core = read_json(core_dir / "manifest.json")
-    if core["scope"] != "3":
-        raise ValueError("Public apply is approved for scope 3 only")
+    scope = _bounded_scope(core)
     _pin(core_dir / "entities.json.gz", core["outputs"]["entities.json.gz"])
     entity_scope = [
         r
@@ -208,8 +323,9 @@ def apply_public_events(
         if re.fullmatch(r"Q[1-9]\d*", r["entity_id"])
     ]
     qids = {r["entity_id"] for r in entity_scope}
-    native, acquired = _consolidated_stage(native_dir), _consolidated_stage(
-        candidate_dir
+    native, acquired = (
+        _consolidated_stage(native_dir),
+        _consolidated_stage(candidate_dir),
     )
     if native["counts"]["missing"] or acquired["counts"]["missing"]:
         raise ValueError("Missing full candidate or corpus records")
@@ -335,7 +451,7 @@ def apply_public_events(
         dict(
             status="NATIVE_EVENT_RELATIONS_READY",
             phase="PUBLIC_APPLY",
-            scope="3",
+            scope=scope,
             counts=dict(
                 corpus_qids=len(qids),
                 outgoing_targets=len(outgoing),
@@ -359,6 +475,146 @@ def apply_public_events(
     )
 
 
+def apply_cached_events(
+    *,
+    core_dir: Path,
+    native_dir: Path,
+    link_table: Path,
+    collection_manifest: Path,
+    hierarchy: Path,
+    approval_sha256: str,
+    mapping_dir: Path,
+    mapping_manifest: Path,
+    mapping_manifest_sha256: str,
+    output: Path,
+) -> dict:
+    """Build article-bound Events and closed native Relations without acquisition.
+
+    Missing corpus or retained-link native records produce a blocked cache-gap
+    receipt, never a complete snapshot. Whole records and historical provenance
+    are reused unchanged from the validated consolidation.
+    """
+    if output.exists():
+        raise FileExistsError(output)
+    core, entity_scope, presence, raw_inputs = _article_evidence(
+        core_dir, link_table, collection_manifest
+    )
+    scope = _bounded_scope(core)
+    _consolidated_stage(native_dir)
+    envelopes = read_json(native_dir / "full_records.json.gz")
+    sources = read_json(native_dir / "sources.json")
+    if envelopes.keys() != sources.keys():
+        raise ValueError("Full record/provenance coverage differs")
+    corpus = {r["entity_id"] for r in entity_scope}
+    linked = {r["qid"] for r in presence if r["retained_content_link"]}
+    missing_corpus = sorted(corpus - envelopes.keys())
+    missing_article = sorted(linked - envelopes.keys())
+    types, recognition_inputs = _occurrence_types(hierarchy, approval_sha256)
+    mapping, directions = _mapping(
+        mapping_dir, mapping_manifest, mapping_manifest_sha256
+    )
+    inputs = [
+        core_dir / "manifest.json",
+        native_dir / "receipt.json",
+        link_table,
+        collection_manifest,
+        mapping_manifest,
+        *recognition_inputs,
+    ]
+    receipt = dict(
+        status="ARTICLE_NATIVE_CACHE_INCOMPLETE"
+        if missing_corpus or missing_article
+        else "NATIVE_EVENT_RELATIONS_READY",
+        phase="CACHED_ARTICLE_EVENT_RELATIONS",
+        scope=scope,
+        missing_corpus_qids=missing_corpus,
+        missing_article_qids=missing_article,
+        inputs={**raw_inputs, **{str(p.resolve()): digest(p) for p in inputs}},
+        article_policy="ACCEPTED_CORPUS_OR_RETAINED_DIRECT_LINK_IN_EXACT_USED_REVISIONS",
+        qid_mapping_temporal_basis="SAVED_CACHED_OR_CURRENT_ASSIGNMENTS_NOT_HISTORICAL_IDENTITY_PROOF",
+        temporal_basis="MIXED_WHOLE_RECORD_VERSIONS_NO_COMMON_SNAPSHOT",
+        event_discovery_completeness="PROVIDED_CACHE_AND_RETAINED_ARTICLE_LINKS_ONLY",
+        acquisition_executed=False,
+    )
+    values = {
+        "article_presence_evidence.json": presence,
+        "native_cache_gaps.json": dict(
+            corpus=missing_corpus, retained_article=missing_article
+        ),
+    }
+    if missing_corpus or missing_article:
+        receipt["counts"] = dict(
+            corpus_qids=len(corpus),
+            retained_link_qids=len(linked),
+            missing=len(set(missing_corpus + missing_article)),
+        )
+        return _write_stage(output, values, receipt)
+    required = corpus | linked
+    records = {q: native_record(envelopes[q], q) for q in sorted(required)}
+    selection = select_events(records, corpus, types, mapping)
+    event_entities, event_table = [], []
+    for decision in selection["decisions"]:
+        qid = decision["qid"]
+        decision["native_neighbour_eligible"] = decision["keep_event"]
+        # Accepted corpus identities already exist; added identities also need
+        # both native eligibility and retained saved-revision article evidence.
+        decision["keep_event"] = qid in corpus or (
+            decision["keep_event"] and qid in linked
+        )
+        decision["article_presence_reason"] = (
+            "ACCEPTED_CORPUS_QID"
+            if qid in corpus
+            else "RETAINED_DIRECT_LINK_IN_USED_REVISION"
+        )
+        if decision["keep_event"]:
+            entity, event = _event_tables(records[qid], sources[qid], decision)
+            entity["article_presence_source"] = (
+                "accepted_corpus_qid" if qid in corpus else "retained_content_link"
+            )
+            event_entities.append(entity)
+            event_table.append(event)
+    selected = {e["event_id"] for e in event_table}
+    relations = build_relations(
+        records,
+        entity_scope + [dict(entity_id=q, type="event") for q in sorted(selected)],
+        mapping,
+        directions,
+        sources={q: [sources[q]] for q in records},
+    )
+    edges = export_stored_relations(relations["relations"])
+    values.update(
+        {
+            "full_records.json.gz": {q: envelopes[q] for q in sorted(required)},
+            "sources.json": {q: sources[q] for q in sorted(required)},
+            "event_decisions.json": selection["decisions"],
+            "events.json.gz": event_table,
+            "event_entities.json.gz": event_entities,
+            "relations.json.gz": relations["relations"],
+            "excluded_relations.json.gz": relations["excluded"],
+            "unknown_predicates.json.gz": relations["unknown_predicates"],
+            "graph_edges.json.gz": edges,
+        }
+    )
+    receipt.update(
+        relation_policy=relations["policy_version"],
+        counts=dict(
+            corpus_qids=len(corpus),
+            retained_link_qids=len(linked),
+            verified_raw_link_rows=len(presence),
+            retained_content_link_rows=sum(
+                r["retained_content_link"] for r in presence
+            ),
+            events=len(selected),
+            corpus_events=len(selected & corpus),
+            added_events=len(selected - corpus),
+            relation_base_assertions=relations["counts"]["base_assertions"],
+            stored_directed_rows=len(relations["relations"]),
+            exported_edges=len(edges),
+        ),
+    )
+    return _write_stage(output, values, receipt)
+
+
 def restrict_events_to_articles(
     core_dir: Path,
     event_dir: Path,
@@ -374,63 +630,19 @@ def restrict_events_to_articles(
     Raw revision presence is verified. Saved cached/current title-QID assignments
     remain observations; this does not establish historical title-QID identity.
     """
-    import pyarrow.parquet as pq
-
-    from GG_Data.entity_resolution.hundred_page_pilot.collect_entities import raw_links
-
     if output.exists():
         raise FileExistsError(output)
-    core, broad = read_json(core_dir / "manifest.json"), _stage(event_dir)
-    if core["scope"] != "3" or broad["scope"] != "3":
-        raise ValueError("Article boundary is approved for scope 3 only")
-    for name in ("entities.json.gz", "wiki_pages.json.gz"):
-        _pin(core_dir / name, core["outputs"][name])
+    core, entity_scope, presence, raw_inputs = _article_evidence(
+        core_dir, link_table, collection_manifest
+    )
+    broad = _stage(event_dir)
+    scope = _bounded_scope(core)
+    if broad["scope"] != scope:
+        raise ValueError("Article and native Event scopes differ")
     for filename, expected in broad.get("inputs", {}).items():
         _pin(Path(filename), expected)
-    collection = read_json(collection_manifest)
-    _pin(link_table, _manifest_hash(collection, "outputs", link_table.name))
-    entity_scope = [
-        r
-        for r in read_json(core_dir / "entities.json.gz")
-        if re.fullmatch(r"Q[1-9]\d*", r["entity_id"])
-    ]
     corpus = {r["entity_id"] for r in entity_scope}
-    pages = {
-        (r["wiki_page_id"], r["revision_id"]): r
-        for r in read_json(core_dir / "wiki_pages.json.gz")
-    }
-    parsed, raw_inputs = {}, {}
-    for key, page in pages.items():
-        raw = page["raw_reference"]
-        path = Path(raw["wikitext_path"])
-        _pin(path, raw["sha256"])
-        raw_inputs[str(path.resolve())] = raw["sha256"]
-        parsed[key] = raw_links(path.read_text(encoding="utf-8"))
-    rows = pq.read_table(
-        link_table, filters=[("page_id", "in", sorted({k[0] for k in pages}))]
-    ).to_pylist()
-    presence = []
-    for row in rows:
-        key = row["page_id"], row["revision_id"]
-        if key not in pages or row["link_origin"] != "RAW_DIRECT_LINK":
-            continue
-        raw = pages[key]["raw_reference"]
-        if (
-            Path(row["raw_evidence_path"]).resolve()
-            != Path(raw["wikitext_path"]).resolve()
-            or row["raw_sha256"] != raw["sha256"]
-        ):
-            raise ValueError("Article raw link source differs from core revision")
-        matches = [
-            link
-            for link in parsed[key]
-            if all(row.get(field) == value for field, value in link.items())
-        ]
-        if len(matches) != 1:
-            raise ValueError("Saved raw link offsets/target metadata differ")
-        if row.get("qid") and re.fullmatch(r"Q[1-9]\d*", row["qid"]):
-            presence.append(row)
-    linked = {r["qid"] for r in presence}
+    linked = {r["qid"] for r in presence if r["retained_content_link"]}
     events = read_json(event_dir / "events.json.gz")
     broad_qids = {r["event_id"] for r in events}
     retained = broad_qids & (corpus | linked)
@@ -444,7 +656,7 @@ def restrict_events_to_articles(
             "ACCEPTED_CORPUS_QID"
             if qid in corpus
             else (
-                "RAW_DIRECT_LINK_IN_USED_REVISION"
+                "RETAINED_DIRECT_LINK_IN_USED_REVISION"
                 if qid in linked
                 else "NO_DIRECT_LINK_IN_USED_REVISIONS"
             )
@@ -492,7 +704,7 @@ def restrict_events_to_articles(
         dict(
             status="NATIVE_EVENT_RELATIONS_READY",
             phase="ARTICLE_EVENT_BOUNDARY",
-            scope="3",
+            scope=scope,
             counts=dict(
                 corpus_qids=len(corpus),
                 broad_events=len(broad_qids),
@@ -501,12 +713,15 @@ def restrict_events_to_articles(
                 added_events=len(retained - corpus),
                 excluded_broad_events=len(broad_qids - retained),
                 verified_raw_link_rows=len(presence),
+                retained_content_link_rows=sum(
+                    r["retained_content_link"] for r in presence
+                ),
                 relation_base_assertions=relations["counts"]["base_assertions"],
                 stored_directed_rows=len(relations["relations"]),
                 exported_edges=len(edges),
             ),
             inputs={**raw_inputs, **{str(p.resolve()): digest(p) for p in inputs}},
-            article_policy="ACCEPTED_CORPUS_OR_RAW_DIRECT_LINK_IN_EXACT_USED_REVISIONS",
+            article_policy="ACCEPTED_CORPUS_OR_RETAINED_DIRECT_LINK_IN_EXACT_USED_REVISIONS",
             qid_mapping_temporal_basis="SAVED_CACHED_OR_CURRENT_ASSIGNMENTS_NOT_HISTORICAL_IDENTITY_PROOF",
             temporal_basis=broad["temporal_basis"],
             sparql_observed_at=broad.get("sparql_observed_at"),

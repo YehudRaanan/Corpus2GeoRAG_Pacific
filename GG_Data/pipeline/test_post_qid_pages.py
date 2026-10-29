@@ -47,3 +47,14 @@ def test_file_stage_checks_content_before_output(tmp_path):
     with pytest.raises(ValueError):
         pages.run(tmp_path, tmp_path / "changed-stage")
     assert not (tmp_path / "changed-stage").exists()
+
+
+def test_supplied_page_qid_is_page_metadata_not_a_mention_assignment():
+    rows = pages.populate([dict(page_id=1, revision_id=10)], page_qids={1: "Q42"})
+    assert rows[0]["about_entity_id"] == "Q42"
+    assert (
+        rows[0]["about_entity_temporal_basis"]
+        == "DANIEL_SUPPLIED_PAGE_QID_NOT_HISTORICAL_MAPPING_PROOF"
+    )
+    with pytest.raises(ValueError, match="QID"):
+        pages.populate([dict(page_id=1, revision_id=10)], page_qids={1: "invalid"})

@@ -47,7 +47,11 @@ def freeze_scopes(
     pages = {int(r["page_id"]) for r in rows}
     ten = set()
     for title in old_ten_titles:
-        found = {int(r["page_id"]) for r in rows if r["Source"] == title}
+        found = {
+            int(r["page_id"])
+            for r in rows
+            if r.get("source_title", r["Source"]) == title
+        }
         if len(found) > 1:
             raise ValueError(f"Prior title must identify one page: {title}")
         ten.update(found)
@@ -68,7 +72,11 @@ def freeze_scopes(
                 "Missing prior pages require the approved saved-title order"
             )
         for title in source_titles:
-            ten.update(int(r["page_id"]) for r in rows if r["Source"] == title)
+            ten.update(
+                int(r["page_id"])
+                for r in rows
+                if r.get("source_title", r["Source"]) == title
+            )
             if len(ten) >= 10:
                 break
     if len(ten) != 10:
@@ -89,7 +97,13 @@ def freeze_scopes(
     }
 
 
-def prepare(input_dir: Path, output: Path) -> dict:
+def prepare(
+    input_dir: Path,
+    output: Path,
+    *,
+    matching_subdir: str = "matching_k80_v2",
+    mentions_name: str = "selected_mentions.parquet",
+) -> dict:
     import pyarrow.parquet as pq
 
     selection = json.loads((input_dir / "selection.json").read_text(encoding="utf-8"))
@@ -103,10 +117,12 @@ def prepare(input_dir: Path, output: Path) -> dict:
         "selection.json",
         "selected_mentions.parquet",
         "revisions.parquet",
-        "matching_k80_v2/groups.jsonl",
-        "matching_k80_v2/jobs.jsonl",
-        "matching_k80_v2/exact_pairs.parquet",
+        f"{matching_subdir}/groups.jsonl",
+        f"{matching_subdir}/jobs.jsonl",
+        f"{matching_subdir}/exact_pairs.parquet",
     ]
+    if mentions_name not in inputs:
+        inputs.append(mentions_name)
     manifest = dict(
         schema_version=1,
         original_input_sha256=selection["input_sha256"],
@@ -114,12 +130,21 @@ def prepare(input_dir: Path, output: Path) -> dict:
         scopes=scopes,
         inputs={name: sha256(input_dir / name) for name in inputs},
     )
+    if (
+        matching_subdir != "matching_k80_v2"
+        or mentions_name != "selected_mentions.parquet"
+    ):
+        manifest.update(
+            schema_version=2,
+            matching_subdir=matching_subdir,
+            mentions_name=mentions_name,
+        )
     output.mkdir(parents=True, exist_ok=False)
     (output / "scope_manifest.json").write_text(
         json.dumps(manifest, indent=2), encoding="utf-8"
     )
     # Subset immutable prepared questions; do not rerank or change candidate pools.
-    source = input_dir / "matching_k80_v2/jobs.jsonl"
+    source = input_dir / matching_subdir / "jobs.jsonl"
     for label, scope in scopes.items():
         selected = set(scope["page_ids"])
         with source.open(encoding="utf-8") as stream, (
@@ -139,6 +164,191 @@ def _jsonl(path: Path) -> list[dict]:
     ]
 
 
+def write_stage(
+    input_dir: Path,
+    scope_dir: Path,
+    output: Path,
+    scope: str,
+    stage: str,
+    *,
+    native_dir: Path | None = None,
+) -> dict:
+    """Save pending or exact tables together, before model decisions exist.
+
+    Read the same frozen inputs as the final build. No provisional identities
+    are created here. Accepted exact identities use full native records.
+    """
+    import pyarrow.parquet as pq
+
+    from GG_Data.pipeline.post_qid_entities import populate as entities_populate
+    from GG_Data.pipeline.post_qid_mentions import populate as mentions_populate
+    from GG_Data.pipeline.post_qid_pages import run as pages_run
+
+    if stage not in {"pending", "exact"}:
+        raise ValueError("Early snapshot must be pending or exact")
+    manifest_path = scope_dir / "scope_manifest.json"
+    manifest = read_json(manifest_path)
+    bindings = {str(manifest_path.resolve()): sha256(manifest_path)}
+    for name, expected in manifest["inputs"].items():
+        path = input_dir / name
+        if sha256(path) != expected:
+            raise ValueError(f"Frozen stage input differs: {path}")
+        bindings[str(path.resolve())] = expected
+    selected = manifest["scopes"][scope]
+    pages = set(selected["page_ids"])
+    rows = [
+        r
+        for r in pq.read_table(
+            input_dir / manifest.get("mentions_name", "selected_mentions.parquet")
+        ).to_pylist()
+        if r["page_id"] in pages
+    ]
+    if len(rows) != selected["original_rows"]:
+        raise ValueError("Early snapshot original row coverage differs")
+    matching = input_dir / manifest.get("matching_subdir", "matching_k80_v2")
+    groups = [g for g in _jsonl(matching / "groups.jsonl") if g["page_id"] in pages]
+    gids = {g["id"] for g in groups}
+    pairs = (
+        [
+            p
+            for p in pq.read_table(matching / "exact_pairs.parquet").to_pylist()
+            if p["group_id"] in gids
+        ]
+        if stage == "exact"
+        else []
+    )
+    records, sources = {}, {}
+    if pairs:
+        if native_dir is None:
+            raise ValueError("Exact snapshot needs full native records")
+        for name in ("full_records.json.gz", "sources.json"):
+            bindings[str((native_dir / name).resolve())] = sha256(native_dir / name)
+        records, sources = read_json(native_dir / "full_records.json.gz"), read_json(
+            native_dir / "sources.json"
+        )
+        if not {p["qid"] for p in pairs} <= records.keys() & sources.keys():
+            raise ValueError("Exact snapshot native acquisition is incomplete")
+    digest = manifest["original_input_sha256"]
+    tables = mentions_populate(
+        rows, groups, pairs, input_sha256=digest, dataset_namespace=digest, stage=stage
+    )
+    tables["entities"] = entities_populate(
+        groups,
+        pairs,
+        input_sha256=digest,
+        dataset_namespace=digest,
+        stage=stage,
+        eligible_group_ids=gids,
+        native_records=records,
+        provenance=sources,
+    )
+    with tempfile.TemporaryDirectory(prefix="geoai-stage-pages-") as directory:
+        pages_run(input_dir, Path(directory) / "pages", pages)
+        tables["wiki_pages"] = read_json(Path(directory) / "pages/wiki_pages.json.gz")
+    return _save_tables(
+        output,
+        tables,
+        dict(
+            status="MATCHING_IN_PROGRESS",
+            scope=scope,
+            processing_stage=stage,
+            page_ids=sorted(pages),
+            run_id=sha256(manifest_path),
+            inputs=bindings,
+            pending=["model", "finalization", "Events", "Relations", "Geography"],
+        ),
+    )
+
+
+def _save_tables(output: Path, tables: dict, result: dict) -> dict:
+    """Publish one complete local snapshot; never overwrite an earlier stage."""
+    if output.exists():
+        raise FileExistsError(output)
+    output.parent.mkdir(parents=True, exist_ok=True)
+    with tempfile.TemporaryDirectory(
+        prefix=output.name + "-staging-", dir=output.parent
+    ) as directory:
+        stage_dir = Path(directory) / "complete"
+        stage_dir.mkdir()
+        for name, data in tables.items():
+            with gzip.open(
+                stage_dir / f"{name}.json.gz", "wt", encoding="utf-8"
+            ) as stream:
+                json.dump(data, stream, ensure_ascii=False)
+        result.update(
+            counts={n: len(t) for n, t in tables.items()},
+            outputs={p.name: sha256(p) for p in stage_dir.glob("*.json.gz")},
+        )
+        (stage_dir / "manifest.json").write_text(
+            json.dumps(result, indent=2), encoding="utf-8"
+        )
+        stage_dir.rename(output)
+    return result
+
+
+def assemble(core_dir: Path, event_dir: Path, output: Path) -> dict:
+    """Join checked core and article-bound enrichment into one local version."""
+    from GG_Data.pipeline.post_qid_eda import CORE_TABLES, summarize
+    from GG_Data.pipeline.post_qid_native import _stage
+
+    core = read_json(core_dir / "manifest.json")
+    if core.get("processing_stage") not in {None, "legacy", "final"}:
+        raise ValueError("Core matching must be final before assembly")
+    for name, expected in core["outputs"].items():
+        if sha256(core_dir / name) != expected:
+            raise ValueError("Core snapshot changed before assembly")
+    receipt = _stage(event_dir)
+    if receipt.get("status") != "NATIVE_EVENT_RELATIONS_READY" or receipt.get(
+        "scope"
+    ) != core.get("scope"):
+        raise ValueError("Event enrichment is incomplete or has a different scope")
+    core_manifest = core_dir / "manifest.json"
+    if receipt.get("inputs", {}).get(str(core_manifest.resolve())) != sha256(
+        core_manifest
+    ):
+        raise ValueError("Event enrichment must bind this exact core manifest")
+    for name, expected in receipt.get("inputs", {}).items():
+        if sha256(Path(name)) != expected:
+            raise ValueError("Enrichment input changed before assembly")
+    tables = {name: read_json(core_dir / f"{name}.json.gz") for name in CORE_TABLES}
+    tables["entities"] += read_json(event_dir / "event_entities.json.gz")
+    tables.update(
+        {
+            name: read_json(event_dir / f"{name}.json.gz")
+            for name in ("events", "relations")
+        }
+    )
+    result = {
+        **core,
+        "status": "ARTICLE_TABLES_COMPLETE_GEOGRAPHY_DEFERRED",
+        "pending": ["Geography"],
+        "counts": {n: len(v) for n, v in tables.items()},
+        "inputs": {
+            **core.get("inputs", {}),
+            str((core_dir / "manifest.json").resolve()): sha256(
+                core_dir / "manifest.json"
+            ),
+            str((event_dir / "receipt.json").resolve()): sha256(
+                event_dir / "receipt.json"
+            ),
+        },
+    }
+    summarize(tables, result)
+    return _save_tables(output, tables, result)
+
+
+def validate_approval_input(manifest_path: Path, scope_path: Path) -> None:
+    """A portable approval must identify this input version and frozen scope."""
+    approved, frozen = read_json(manifest_path), read_json(scope_path)
+    expected = {
+        "scope_manifest_sha256": sha256(scope_path),
+        "original_input_sha256": frozen["original_input_sha256"],
+        "original_mentions_sha256": frozen["inputs"]["selected_mentions.parquet"],
+    }
+    if any(approved.get(key) != value for key, value in expected.items()):
+        raise ValueError("Experimental approval input or frozen scope differs")
+
+
 def build_core(
     input_dir: Path,
     scope_dir: Path,
@@ -148,6 +358,11 @@ def build_core(
     scope: str = "3",
     *,
     model_dir: Path | None = None,
+    training_dir: Path | None = None,
+    readiness_dir: Path | None = None,
+    experimental_approval_path: Path | None = None,
+    approval_manifest_path: Path | None = None,
+    stage: str = "legacy",
 ) -> dict:
     """Verify archived decisions, then write the four core tables; no inference."""
     import pyarrow.parquet as pq
@@ -161,6 +376,8 @@ def build_core(
     from GG_Data.pipeline.post_qid_pages import run as pages_run
 
     model_dir = model_dir or input_dir / "train_20261029"
+    training_dir = training_dir or input_dir / "training_k80_v2"
+    readiness_dir = readiness_dir or model_dir
     bindings = {}
 
     def bind(path: Path, expected: str | None = None) -> str:
@@ -174,13 +391,15 @@ def build_core(
 
     bind(scope_dir / "scope_manifest.json")
     manifest = read_json(scope_dir / "scope_manifest.json")
+    matching = manifest.get("matching_subdir", "matching_k80_v2")
+    mentions_name = manifest.get("mentions_name", "selected_mentions.parquet")
     required_inputs = {
         "selection.json",
-        "selected_mentions.parquet",
+        mentions_name,
         "revisions.parquet",
-        "matching_k80_v2/groups.jsonl",
-        "matching_k80_v2/jobs.jsonl",
-        "matching_k80_v2/exact_pairs.parquet",
+        f"{matching}/groups.jsonl",
+        f"{matching}/jobs.jsonl",
+        f"{matching}/exact_pairs.parquet",
     }
     if not required_inputs <= manifest.get("inputs", {}).keys():
         raise ValueError("Missing frozen scope input bindings")
@@ -198,8 +417,8 @@ def build_core(
     signature = read_json(inference_dir / "inference_inputs.json")
     bind(jobs_path, signature["jobs_sha256"])
     bind(model_dir / "full_best.pt", signature["checkpoint_sha256"])
-    bind(model_dir / "readiness.json", signature["readiness_sha256"])
-    readiness = read_json(model_dir / "readiness.json")
+    bind(readiness_dir / "readiness.json", signature["readiness_sha256"])
+    readiness = read_json(readiness_dir / "readiness.json")
     if (
         readiness.get("technical_status") != "PASS"
         or readiness.get("checkpoint_sha256") != signature["checkpoint_sha256"]
@@ -227,7 +446,6 @@ def build_core(
             raise ValueError(f"Missing executed-code binding: {role}")
         bind(scope_dir / "code_archive" / name, binding["sha256"])
         local_paths[role] = scope_dir / "code_archive" / name
-    training_dir = input_dir / "training_k80_v2"
     for role, binding in readiness["files"].items():
         if role in code_names:
             continue
@@ -235,6 +453,8 @@ def build_core(
             local = training_dir / role.removeprefix("input:")
         elif role == "public_manifest":
             local = training_dir / "public_manifest.json"
+        elif role in {"checkpoint_inspection", "restore_check"}:
+            local = readiness_dir / Path(binding["path"]).name
         else:
             local = model_dir / Path(binding["path"]).name
         bind(local, binding["sha256"])
@@ -265,10 +485,28 @@ def build_core(
             "Local archived readiness validation differs from saved evidence"
         )
     if "experimental_approval_sha256" in signature:
-        approval_path = model_dir / "experimental_three_page_approval.json"
+        approval_path = (
+            experimental_approval_path
+            or model_dir / "experimental_three_page_approval.json"
+        )
         bind(approval_path, signature["experimental_approval_sha256"])
         approval = read_json(approval_path)
-        if not (
+        if stage != "legacy":
+            from GG_Data.entity_resolution.hundred_page_pilot.readiness import (
+                validate_experimental_scope,
+            )
+
+            validate_experimental_scope(
+                approval,
+                model_dir / "full_best.pt",
+                jobs_path,
+                manifest_path=approval_manifest_path,
+            )
+            validate_approval_input(
+                approval_manifest_path or Path(approval["manifest"]["path"]),
+                scope_dir / "scope_manifest.json",
+            )
+        elif not (
             scope == "3"
             and len(pages) == 3
             and approval.get("approved_by") == "OWNER"
@@ -285,7 +523,7 @@ def build_core(
     elif readiness.get("quality_status") != "PASS_PUBLIC_TARGETS":
         raise ValueError("Failed quality has no archived OWNER disposition")
     jobs = _jsonl(jobs_path)
-    all_jobs = _jsonl(input_dir / "matching_k80_v2/jobs.jsonl")
+    all_jobs = _jsonl(input_dir / matching / "jobs.jsonl")
     if jobs != [job for job in all_jobs if job["page_id"] in pages]:
         raise ValueError("Slice jobs differ from frozen candidate questions")
     jobs_by_id = {j["id"]: j for j in jobs}
@@ -359,7 +597,7 @@ def build_core(
         )
     rows = [
         r
-        for r in pq.read_table(input_dir / "selected_mentions.parquet").to_pylist()
+        for r in pq.read_table(input_dir / mentions_name).to_pylist()
         if r["page_id"] in pages
     ]
     if len(rows) != selected["original_rows"] or {r["page_id"] for r in rows} != pages:
@@ -369,10 +607,10 @@ def build_core(
         raise ValueError("Original mention revisions differ from frozen scope")
     groups = [
         g
-        for g in _jsonl(input_dir / "matching_k80_v2/groups.jsonl")
+        for g in _jsonl(input_dir / matching / "groups.jsonl")
         if g["page_id"] in pages
     ]
-    exact_path = input_dir / "matching_k80_v2/exact_pairs.parquet"
+    exact_path = input_dir / matching / "exact_pairs.parquet"
     exact = [
         p
         for p in pq.read_table(exact_path).to_pylist()
@@ -398,6 +636,7 @@ def build_core(
         pairs,
         input_sha256=manifest["original_input_sha256"],
         dataset_namespace=manifest["original_input_sha256"],
+        stage=stage,
     )
     records_path, sources_path = (
         native_dir / "full_records.json.gz",
@@ -418,6 +657,12 @@ def build_core(
         input_sha256=manifest["original_input_sha256"],
         native_records=records,
         provenance=sources,
+        stage=stage,
+        **(
+            {"eligible_group_ids": {g["id"] for g in groups}}
+            if stage != "legacy"
+            else {}
+        ),
     )
     with tempfile.TemporaryDirectory(prefix="geoai-core-pages-") as directory:
         pages_run(input_dir, Path(directory) / "pages", pages)
@@ -430,8 +675,20 @@ def build_core(
         raise ValueError("Pages do not cover exactly the used revisions")
     entity_keys = {(r["entity_id"], r["type"]) for r in tables["entities"]}
     mids = {m["mention_id"] for m in tables["mentions"]}
+
+    def original_values(row: dict) -> dict:
+        if stage == "legacy":
+            return row
+        from GG_Data.pipeline.post_qid_mentions import ORIGINAL_FIELDS
+
+        values = {k: row.get(k) for k in ORIGINAL_FIELDS}
+        values["word"] = row.get(
+            "raw_original_word", row.get("word_original", row["word"])
+        )
+        return values
+
     if len(mids) != len(rows) or any(
-        m["raw"] != raw
+        m["raw"] != original_values(raw)
         or (m["wiki_site"], m["wiki_page_id"], m["revision_id"]) not in page_keys
         for m, raw in zip(tables["mentions"], rows)
     ):
@@ -442,7 +699,8 @@ def build_core(
     }
     if (
         len(link_keys) != len(links)
-        or {link["mention_id"] for link in links} != mids
+        or not {link["mention_id"] for link in links} <= mids
+        or (stage == "legacy" and {link["mention_id"] for link in links} != mids)
         or any(
             (link["entity_id"], link["entity_type"]) not in entity_keys
             for link in links
@@ -470,35 +728,22 @@ def build_core(
         )
         entity["attributes"]["normalized_mention_frequency"] = count / len(rows)
         entity["attributes"]["normalized_mention_frequency_denominator"] = len(rows)
-    if output.exists():
-        raise FileExistsError(output)
-    output.parent.mkdir(parents=True, exist_ok=True)
-    with tempfile.TemporaryDirectory(
-        prefix=output.name + "-staging-", dir=output.parent
-    ) as directory:
-        stage = Path(directory) / "complete"
-        stage.mkdir()
-        for name, data in tables.items():
-            with gzip.open(stage / f"{name}.json.gz", "wt", encoding="utf-8") as stream:
-                json.dump(data, stream, ensure_ascii=False)
-        result = dict(
+    return _save_tables(
+        output,
+        tables,
+        dict(
             status="CORE_COMPLETE_GEOGRAPHY_PENDING",
             scope=scope,
+            processing_stage=stage,
             page_ids=sorted(pages),
             quality_status=readiness["quality_status"],
             locally_observed_readiness=observed,
             experimental_approval=signature.get("experimental_approval_sha256"),
             run_id=run_id,
             inputs=bindings,
-            counts={n: len(t) for n, t in tables.items()},
             pending=["Events", "Relations", "Geography", "seven-table acceptance"],
-            outputs={p.name: sha256(p) for p in stage.glob("*.json.gz")},
-        )
-        (stage / "manifest.json").write_text(
-            json.dumps(result, indent=2), encoding="utf-8"
-        )
-        stage.rename(output)
-    return result
+        ),
+    )
 
 
 def main() -> None:
@@ -506,12 +751,40 @@ def main() -> None:
     parser.add_argument("--input-dir", type=Path, required=True)
     parser.add_argument("--output", type=Path, required=True)
     parser.add_argument("--scope-dir", type=Path)
+    parser.add_argument("--core-dir", type=Path)
+    parser.add_argument("--events-dir", type=Path)
     parser.add_argument("--inference-dir", type=Path)
     parser.add_argument("--native-dir", type=Path)
     parser.add_argument("--model-dir", type=Path)
+    parser.add_argument("--training-dir", type=Path)
+    parser.add_argument("--readiness-dir", type=Path)
+    parser.add_argument("--experimental-approval", type=Path)
+    parser.add_argument("--approval-manifest", type=Path)
+    parser.add_argument("--matching-subdir", default="matching_k80_v2")
+    parser.add_argument("--mentions-name", default="selected_mentions.parquet")
+    parser.add_argument(
+        "--stage",
+        choices=("legacy", "pending", "exact", "model", "final"),
+        default="legacy",
+    )
     parser.add_argument("--scope", default="3", choices=("3", "10", "100"))
     args = parser.parse_args()
-    if args.inference_dir is not None:
+    if args.events_dir is not None:
+        if args.core_dir is None:
+            parser.error("Assembly requires --core-dir")
+        assemble(args.core_dir, args.events_dir, args.output)
+    elif args.stage in {"pending", "exact"}:
+        if args.scope_dir is None:
+            parser.error("Early stage requires --scope-dir")
+        write_stage(
+            args.input_dir,
+            args.scope_dir,
+            args.output,
+            args.scope,
+            args.stage,
+            native_dir=args.native_dir,
+        )
+    elif args.inference_dir is not None:
         if args.scope_dir is None or args.native_dir is None:
             parser.error("Core build requires --scope-dir and --native-dir")
         build_core(
@@ -522,9 +795,19 @@ def main() -> None:
             args.output,
             args.scope,
             model_dir=args.model_dir,
+            training_dir=args.training_dir,
+            readiness_dir=args.readiness_dir,
+            experimental_approval_path=args.experimental_approval,
+            approval_manifest_path=args.approval_manifest,
+            stage=args.stage,
         )
     else:
-        prepare(args.input_dir, args.output)
+        prepare(
+            args.input_dir,
+            args.output,
+            matching_subdir=args.matching_subdir,
+            mentions_name=args.mentions_name,
+        )
 
 
 if __name__ == "__main__":

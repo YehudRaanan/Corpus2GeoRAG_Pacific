@@ -21,6 +21,7 @@ from GG_Data.entity_resolution.hundred_page_pilot.filter_source_content import (
     is_eligible,
     source_policy as validate_source_policy,
 )
+from GG_Data.entity_resolution.hundred_page_pilot.match_exact import EXACT_SCHEMA, exact_pairs
 from GG_Data.entity_resolution.luke_pilot.data import sha256, write_jsonl
 from GG_Data.entity_resolution.trigram import rank_candidates
 
@@ -39,18 +40,45 @@ def identity(parts: list) -> str:
     return hashlib.sha256(json.dumps(parts, ensure_ascii=False).encode()).hexdigest()
 
 
+def matching_eligibility(
+    row: dict, policy: str = LEGACY_POLICY, *, exclude_date: bool = True
+) -> tuple[bool, str]:
+    """Use one source/span decision for matching and table writes."""
+    if not all(type(row.get(key)) is int and row[key] > 0 for key in ("page_id", "revision_id")):
+        return False, "page_revision_unresolved"
+    if row.get("revision_status", "VERIFIED_RAW_CONTENT") != "VERIFIED_RAW_CONTENT":
+        return False, "page_revision_unresolved"
+    if not is_eligible(row, policy):
+        return False, "source_excluded" if row.get("source_scope_status") == "EXCLUDE" else "source_review"
+    if "clean_status" in row or "Text_clean" in row:
+        if row.get("repair_status") in SOURCE_REVIEW_STATUSES:
+            return False, "source_review"
+        if row.get("clean_status") != "mapped":
+            return False, "source_excluded" if row.get("clean_status") == "excluded" else "source_review"
+        if row.get("clean_source_status") != "unique_raw_placement" or not row.get("clean_revision_sha256"):
+            return False, "source_review"
+        if row.get("clean_text_needs_review"):
+            return False, "context_review"
+        text, start, end = row.get("Text_clean"), row.get("clean_start"), row.get("clean_end")
+        if not (isinstance(text, str) and type(start) is int and type(end) is int
+                and 0 <= start < end <= len(text) and text[start:end] == row["word"]):
+            return False, "invalid_clean_span"
+    if exclude_date and row["entity_group"] == "DATE":
+        return False, "deferred_date"
+    return True, "eligible"
+
+
 def group_mentions(
     rows: list[dict], *, exclude_date: bool = False, source_policy: str | None = None
 ) -> list[dict]:
     """Keep literal name/type identity and every occurrence, per revision."""
     policy = validate_source_policy(rows, source_policy)
+    clean_flags = ["clean_status" in row or "Text_clean" in row for row in rows]
+    if any(clean_flags) and not all(clean_flags):
+        raise ValueError("Mixed clean and raw mention rows")
     grouped = {}
     for row in rows:
-        if not is_eligible(row, policy):
-            continue
-        if exclude_date and row["entity_group"] == "DATE":
-            continue
-        if row.get("page_id") is None or row.get("revision_id") is None:
+        if not matching_eligibility(row, policy, exclude_date=exclude_date)[0]:
             continue
         key = (
             int(row["page_id"]),
@@ -72,9 +100,12 @@ def group_mentions(
                 "repair_methods": [],
                 "repair_qid_guided": False,
                 "source_review_statuses": [],
+                "occurrence_ids": [],
             }
         group = grouped[key]
         group["source_row_indices"].append(int(row["source_row_index"]))
+        if row.get("occurrence_id"):
+            group["occurrence_ids"].append(row["occurrence_id"])
         group["source_candidate_qids"] = sorted(
             set(group["source_candidate_qids"])
             | set(row.get("source_candidate_qids") or [])
@@ -93,11 +124,12 @@ def group_mentions(
             group["source_review_statuses"] = sorted(
                 set(group["source_review_statuses"]) | {row["repair_status"]}
             )
-        text = row["Text"] or ""
-        start, end = int(row["start"]), int(row["end"])
+        cleaned = "Text_clean" in row
+        text = (row["Text_clean"] if cleaned else row["Text"]) or ""
+        start, end = (int(row["clean_start"]), int(row["clean_end"])) if cleaned else (int(row["start"]), int(row["end"]))
         context = (
             row["source_scope_context"]
-            if policy != LEGACY_POLICY
+            if policy != LEGACY_POLICY and not cleaned
             else text[max(0, start - 160) : min(len(text), end + 160)]
         )
         if context not in group["contexts"]:
@@ -109,34 +141,6 @@ def group_mentions(
     return sorted(result, key=lambda g: (g["page_id"], g["revision_id"], g["id"]))
 
 
-def exact_pairs(groups: list[dict], entities: list[dict]) -> list[dict]:
-    """Exact means literal label, one Daniel type and one QID on that revision."""
-    names = defaultdict(set)
-    qids = defaultdict(set)
-    for g in groups:
-        names[g["page_id"], g["revision_id"], g["name"]].add(g["type"])
-    for e in entities:
-        if e.get("label") and e.get("qid"):
-            qids[int(e["page_id"]), int(e["revision_id"]), e["label"]].add(e["qid"])
-    result = []
-    for g in groups:
-        key = (g["page_id"], g["revision_id"], g["name"])
-        if g.get("repaired_source_row_indices") or g.get("source_review_statuses"):
-            continue
-        if len(names[key]) == len(qids[key]) == 1:
-            result.append(
-                {
-                    "page_id": g["page_id"],
-                    "revision_id": g["revision_id"],
-                    "group_id": g["id"],
-                    "qid": next(iter(qids[key])),
-                    "name": g["name"],
-                    "entity_group": g["type"],
-                    "method": "exact",
-                }
-            )
-    return result
-
 
 def prepare(
     mentions: Path,
@@ -146,6 +150,7 @@ def prepare(
     *,
     exclude_date: bool = False,
     source_policy: str | None = None,
+    exact_path: Path | None = None,
 ) -> dict:
     import pyarrow as pa
     import pyarrow.parquet as pq
@@ -159,7 +164,10 @@ def prepare(
     keys = [(e["page_id"], e["revision_id"], e["qid"]) for e in entities]
     if len(set(keys)) != len(keys):
         raise ValueError("Entity table must have unique page/revision/QID rows")
-    exact = exact_pairs(groups, entities)
+    computed = exact_pairs(groups, entities)
+    exact = pq.read_table(exact_path).to_pylist() if exact_path is not None else computed
+    if exact != computed:
+        raise ValueError("Exact stage pairs do not match current groups and entities")
     accepted = defaultdict(set)
     for pair in exact:
         accepted[pair["page_id"], pair["revision_id"], pair["qid"]].add(
@@ -208,19 +216,8 @@ def prepare(
     output.mkdir(parents=True, exist_ok=True)
     write_jsonl(output / "groups.jsonl", groups)
     write_jsonl(output / "jobs.jsonl", jobs)
-    schema = pa.schema(
-        [
-            ("page_id", pa.int64()),
-            ("revision_id", pa.int64()),
-            ("group_id", pa.string()),
-            ("qid", pa.string()),
-            ("name", pa.string()),
-            ("entity_group", pa.string()),
-            ("method", pa.string()),
-        ]
-    )
     pq.write_table(
-        pa.Table.from_pylist(exact, schema=schema), output / "exact_pairs.parquet"
+        pa.Table.from_pylist(exact, schema=EXACT_SCHEMA), output / "exact_pairs.parquet"
     )
     return {
         "groups": len(groups),
@@ -235,6 +232,8 @@ def prepare(
             Counter(r.get("source_scope_status", "LEGACY_UNFILTERED") for r in rows)
         ),
         "source_eligible_rows": sum(is_eligible(r, policy) for r in rows),
+        "matching_eligible_rows": sum(matching_eligibility(r, policy, exclude_date=exclude_date)[0] for r in rows),
+        "matching_eligibility_reason_counts": dict(Counter(matching_eligibility(r, policy, exclude_date=exclude_date)[1] for r in rows)),
         "excluded_date_rows": (
             sum(r["entity_group"] == "DATE" and is_eligible(r, policy) for r in rows)
             if exclude_date

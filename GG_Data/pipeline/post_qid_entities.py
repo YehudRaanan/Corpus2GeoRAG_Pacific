@@ -14,6 +14,86 @@ from GG_Data.pipeline.entities import choose_name, native_record
 from GG_Data.pipeline.poc import digest, read_json
 
 
+def finalization(stage: str, finalize: bool | None) -> bool:
+    """Legacy calls close immediately; revised calls close only explicitly."""
+    if stage not in {"legacy", "pending", "exact", "model", "final"}:
+        raise ValueError("Unknown table write stage")
+    if finalize is not None and type(finalize) is not bool:
+        raise ValueError("finalize must be a boolean or None")
+    closed = stage in {"legacy", "final"} if finalize is None else finalize
+    if (stage in {"pending", "exact"} and closed) or (stage == "final" and not closed):
+        raise ValueError("Table stage conflicts with finalization")
+    return closed
+
+
+def accepted_pair_evidence(
+    by_group: dict, pairs: list[dict], *, stage: str = "legacy"
+) -> dict:
+    """Validate one accepted-pair contract for entity and bridge exports."""
+    accepted = defaultdict(lambda: defaultdict(dict))
+    model_identities = set()
+    for pair in pairs:
+        gid, qid = pair["group_id"], pair["qid"]
+        if (
+            gid not in by_group
+            or not isinstance(qid, str)
+            or not re.fullmatch(r"Q[1-9]\d*", qid)
+        ):
+            raise ValueError("Unknown accepted group or invalid QID")
+        group = by_group[gid]
+        expected = dict(
+            page_id=group["page_id"],
+            wiki_page_id=group["page_id"],
+            revision_id=group["revision_id"],
+            entity_group=group["type"],
+            entity_type=group["type"],
+            name=group["name"],
+            wiki_site="enwiki",
+        )
+        if any(
+            pair[field] != value for field, value in expected.items() if field in pair
+        ):
+            raise ValueError(
+                "Accepted pair differs from group literal/type/revision scope"
+            )
+        method = pair.get("method")
+        if method not in {"exact", "model"}:
+            raise ValueError("Accepted pair requires exact or model method")
+        if stage == "pending" or (stage == "exact" and method != "exact"):
+            raise ValueError("Accepted pair method conflicts with write stage")
+        if method == "model":
+            reference = pair.get("decision_reference")
+            if not isinstance(reference, dict):
+                raise ValueError(
+                    "Model pair provenance requires a decision reference object"
+                )
+            texts = [
+                pair.get("run_id"),
+                reference.get("path"),
+                reference.get("record_id"),
+            ]
+            hashes = [
+                pair.get("checkpoint_sha256"),
+                pair.get("readiness_sha256"),
+                reference.get("sha256"),
+            ]
+            if not (
+                all(isinstance(value, str) and value.strip() for value in texts)
+                and all(
+                    isinstance(value, str) and re.fullmatch(r"[0-9a-f]{64}", value)
+                    for value in hashes
+                )
+            ):
+                raise ValueError(
+                    "Model pair provenance requires run, checkpoint, readiness and decision identities"
+                )
+            model_identities.add((pair["checkpoint_sha256"], pair["readiness_sha256"]))
+            if len(model_identities) > 1:
+                raise ValueError("Model pairs mix checkpoint/readiness identities")
+        accepted[gid][qid][json.dumps(pair, sort_keys=True, ensure_ascii=False)] = pair
+    return accepted
+
+
 def provisional_id(word: str, entity_group: str, dataset_namespace: str) -> str:
     if not all(
         isinstance(v, str) and v for v in (word, entity_group, dataset_namespace)
@@ -50,7 +130,13 @@ def populate(
     native_records: dict | None = None,
     metadata: dict | None = None,
     provenance: dict | None = None,
+    stage: str = "legacy",
+    finalize: bool | None = None,
+    eligible_group_ids: set[str] | None = None,
 ) -> list[dict]:
+    closed = finalization(stage, finalize)
+    mention_id(input_sha256, 0)
+    provisional_id("validation", "MISC", dataset_namespace)
     native_records, metadata, provenance = (
         native_records or {},
         metadata or {},
@@ -59,6 +145,29 @@ def populate(
     by_group = {g["id"]: g for g in groups}
     if len(by_group) != len(groups):
         raise ValueError("Duplicate original group identity")
+    if stage != "legacy":
+        if eligible_group_ids is None:
+            if groups:
+                raise ValueError(
+                    "Revised entity writes require explicit eligible group IDs"
+                )
+            eligible_group_ids = set()
+        if not eligible_group_ids <= by_group.keys():
+            raise ValueError("Unknown eligible group identity")
+        for gid in eligible_group_ids:
+            group = by_group[gid]
+            if (
+                group["type"] == "DATE"
+                or group.get("matching_eligible") is False
+                or any(
+                    type(group.get(field)) is not int or group[field] <= 0
+                    for field in ("page_id", "revision_id")
+                )
+            ):
+                raise ValueError("Entity group is not eligible for matching")
+        if any(pair["group_id"] not in eligible_group_ids for pair in accepted_pairs):
+            raise ValueError("Accepted pair refers to an ineligible group")
+        accepted_pair_evidence(by_group, accepted_pairs, stage=stage)
     seen_rows = set()
     for group in groups:
         indices = group["source_row_indices"]
@@ -75,7 +184,11 @@ def populate(
     accepted = defaultdict(set)
     for pair in accepted_pairs:
         gid, qid = pair["group_id"], pair["qid"]
-        if gid not in by_group or not re.fullmatch(r"Q[1-9]\d*", qid):
+        if (
+            gid not in by_group
+            or not isinstance(qid, str)
+            or not re.fullmatch(r"Q[1-9]\d*", qid)
+        ):
             raise ValueError("Unknown accepted group or invalid QID")
         group = by_group[gid]
         for field in ("page_id", "revision_id"):
@@ -84,9 +197,12 @@ def populate(
         accepted[gid].add(qid)
     identities = defaultdict(list)
     for group in groups:
-        for qid in accepted[group["id"]] or {
-            provisional_id(group["name"], group["type"], dataset_namespace)
-        }:
+        if stage != "legacy" and group["id"] not in eligible_group_ids:
+            continue
+        targets = accepted[group["id"]]
+        if not targets and closed:
+            targets = {provisional_id(group["name"], group["type"], dataset_namespace)}
+        for qid in targets:
             identities[qid, group["type"]].append(group)
     result = []
     by_identity = defaultdict(list)
@@ -251,6 +367,9 @@ def run(
     metadata_path: Path | None = None,
     provenance_path: Path | None = None,
     page_ids: set[int] | None = None,
+    stage: str = "legacy",
+    finalize: bool | None = None,
+    eligible_group_ids: set[str] | None = None,
 ) -> dict:
     import pyarrow.parquet as pq
 
@@ -265,9 +384,16 @@ def run(
         else read_json(pairs_path)
     )
     if page_ids is not None:
+        all_group_ids = {g["id"] for g in groups}
+        if any(pair["group_id"] not in all_group_ids for pair in pairs):
+            raise ValueError("Accepted pair has no saved group")
+        if eligible_group_ids is not None and not eligible_group_ids <= all_group_ids:
+            raise ValueError("Unknown eligible group identity")
         groups = [g for g in groups if g["page_id"] in page_ids]
         ids = {g["id"] for g in groups}
         pairs = [p for p in pairs if p["group_id"] in ids]
+        if eligible_group_ids is not None:
+            eligible_group_ids = eligible_group_ids & ids
         if {g["page_id"] for g in groups} != page_ids:
             raise ValueError("Selected page has no original groups")
     rows = populate(
@@ -278,6 +404,9 @@ def run(
         native_records=read_json(native_path) if native_path else None,
         metadata=read_json(metadata_path) if metadata_path else None,
         provenance=read_json(provenance_path) if provenance_path else None,
+        stage=stage,
+        finalize=finalize,
+        eligible_group_ids=eligible_group_ids,
     )
     output.mkdir(parents=True, exist_ok=False)
     with gzip.open(output / "entities.json.gz", "wt", encoding="utf-8") as stream:
@@ -285,6 +414,8 @@ def run(
     manifest = dict(
         dataset_namespace=dataset_namespace,
         original_input_sha256=input_sha256,
+        stage=stage,
+        finalized=finalization(stage, finalize),
         inputs={
             str(p): digest(p)
             for p in (
@@ -314,6 +445,15 @@ def main() -> None:
     parser.add_argument("--dataset-namespace", required=True)
     parser.add_argument("--input-sha256", required=True)
     parser.add_argument("--page-ids", type=int, nargs="+")
+    parser.add_argument(
+        "--stage",
+        choices=("legacy", "pending", "exact", "model", "final"),
+        default="legacy",
+    )
+    parser.add_argument(
+        "--finalize", action=argparse.BooleanOptionalAction, default=None
+    )
+    parser.add_argument("--eligible-group-ids", nargs="*")
     args = parser.parse_args()
     run(
         args.groups,
@@ -325,6 +465,11 @@ def main() -> None:
         metadata_path=args.metadata,
         provenance_path=args.provenance,
         page_ids=set(args.page_ids) if args.page_ids else None,
+        stage=args.stage,
+        finalize=args.finalize,
+        eligible_group_ids=set(args.eligible_group_ids)
+        if args.eligible_group_ids is not None
+        else None,
     )
 
 

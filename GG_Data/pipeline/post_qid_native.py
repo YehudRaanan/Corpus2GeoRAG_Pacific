@@ -99,10 +99,13 @@ def _records(path: Path, source: dict):
         source["retrieved_at"] = next(ijson.items(stream, "retrieved_at"), None)
     with _open(path) as stream:
         for row in ijson.items(stream, "rows.item", use_float=True):
-            yield row["id"], {
-                "requested_qid": row["id"],
-                "entity": json.loads(row["item"].rstrip(",\n\r ")),
-            }
+            yield (
+                row["id"],
+                {
+                    "requested_qid": row["id"],
+                    "entity": json.loads(row["item"].rstrip(",\n\r ")),
+                },
+            )
 
 
 def reuse_native(required_qids: set[str], cache_paths: list[Path]) -> dict:
@@ -116,6 +119,15 @@ def reuse_native(required_qids: set[str], cache_paths: list[Path]) -> dict:
     for priority, raw_path in enumerate(cache_paths):
         path = Path(raw_path)
         source = _source(path)
+        inherited_sources = None
+        receipt_path = path.parent / "receipt.json"
+        if (
+            path.name in {"full_records.json", "full_records.json.gz"}
+            and receipt_path.is_file()
+            and read_json(receipt_path).get("phase") == "NATIVE_CONSOLIDATION"
+        ):
+            _consolidated_stage(path.parent)
+            inherited_sources = read_json(path.parent / "sources.json")
         seen, selected, available = set(), 0, 0
         for key, row in _records(path, source):
             if not isinstance(row, dict):
@@ -139,12 +151,16 @@ def reuse_native(required_qids: set[str], cache_paths: list[Path]) -> dict:
             available += 1
             if qid not in records:
                 records[qid] = envelope
-                sources[qid] = dict(
-                    source,
-                    record_id=qid,
-                    cache_priority=priority,
-                    native_modified=full.get("modified"),
-                    native_revision=full.get("lastrevid"),
+                sources[qid] = (
+                    dict(inherited_sources[qid])
+                    if inherited_sources is not None
+                    else dict(
+                        source,
+                        record_id=qid,
+                        cache_priority=priority,
+                        native_modified=full.get("modified"),
+                        native_revision=full.get("lastrevid"),
+                    )
                 )
                 selected += 1
         inventory.append(
@@ -368,7 +384,7 @@ def _history(raw: dict, qid: str) -> tuple[dict, dict]:
         if not isinstance(revisions, list) or not 1 <= len(revisions) <= 5:
             raise ValueError("Missing history revisions")
         previous_id, previous_time = None, None
-        selected, skipped = None, []
+        selected, skipped, selected_empty_maps = None, [], []
         for revision in revisions:
             number, timestamp = revision["revid"], revision["timestamp"]
             instant = datetime.fromisoformat(timestamp.replace("Z", "+00:00"))
@@ -412,10 +428,11 @@ def _history(raw: dict, qid: str) -> tuple[dict, dict]:
                     "aliases",
                     "sitelinks",
                 ):
-                    # MediaWiki serializes cleared merge maps as []. Such
-                    # rows may be skipped, but never selected as full data.
-                    if not isinstance(entity.get(field), dict) and not (
-                        entity.get("claims") == [] and entity.get(field) == []
+                    # MediaWiki serializes empty maps as []; retain the raw
+                    # bytes and explicitly record any selected map conversion.
+                    if (
+                        not isinstance(entity.get(field), dict)
+                        and entity.get(field) != []
                     ):
                         raise ValueError(f"Missing full historical {field}")
                 reason = "EMPTY_CLAIMS" if not entity["claims"] else None
@@ -426,6 +443,13 @@ def _history(raw: dict, qid: str) -> tuple[dict, dict]:
                     )
                 else:
                     entity = dict(entity, lastrevid=number, modified=timestamp)
+                    selected_empty_maps = [
+                        field
+                        for field in ("labels", "descriptions", "aliases", "sitelinks")
+                        if entity[field] == []
+                    ]
+                    for field in selected_empty_maps:
+                        entity[field] = {}
                     selected = dict(requested_qid=qid, entity=entity)
         if selected is None:
             raise ValueError("No full nonempty original entity in saved history")
@@ -438,6 +462,11 @@ def _history(raw: dict, qid: str) -> tuple[dict, dict]:
             },
             selection_policy="LATEST_NONEMPTY_ORIGINAL_ENTITY_BEFORE_REDIRECT_OR_MERGE",
             skipped_newer_revisions=skipped,
+            **(
+                {"derived_empty_map_fields": selected_empty_maps}
+                if selected_empty_maps
+                else {}
+            ),
         )
     except (KeyError, TypeError, AttributeError, IndexError) as exc:
         raise ValueError("Malformed or missing full history evidence") from exc

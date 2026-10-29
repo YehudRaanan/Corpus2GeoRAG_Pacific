@@ -5,12 +5,56 @@ from __future__ import annotations
 import argparse
 import gzip
 import json
-import re
-from collections import defaultdict
 from pathlib import Path
 
 from GG_Data.pipeline.poc import digest, read_json
-from GG_Data.pipeline.post_qid_entities import mention_id, provisional_id
+from GG_Data.pipeline.post_qid_entities import (
+    accepted_pair_evidence,
+    finalization,
+    mention_id,
+    provisional_id,
+)
+
+ORIGINAL_FIELDS = (
+    "entity_group",
+    "score",
+    "word",
+    "start",
+    "end",
+    "Source",
+    "Index",
+    "Text",
+    "subtype",
+)
+
+
+def _processing_status(row: dict) -> str:
+    """Classify audit-only rows before considering matching outcomes."""
+    if (
+        row.get("page_id") is None
+        or row.get("revision_id") is None
+        or row.get("revision_status", "VERIFIED_RAW_CONTENT") != "VERIFIED_RAW_CONTENT"
+        or row.get("matching_eligibility_reason") == "page_revision_unresolved"
+    ):
+        return "PAGE_REVISION_UNRESOLVED"
+    if (
+        row.get("clean_status") == "excluded"
+        or row.get("source_scope_status") == "EXCLUDE"
+        or row.get("matching_eligibility_reason") == "source_excluded"
+    ):
+        return "SOURCE_EXCLUDED"
+    if (
+        row.get("clean_status") != "mapped"
+        or row.get("source_scope_status") == "REVIEW"
+        or row.get("matching_eligibility_reason")
+        in {"source_review", "invalid_clean_span"}
+    ):
+        return "SOURCE_REVIEW"
+    if row["entity_group"] == "DATE":
+        return "DEFERRED_DATE"
+    if row.get("matching_eligible") is not True:
+        return "SOURCE_REVIEW"
+    return "PENDING_MATCHING"
 
 
 def populate(
@@ -20,10 +64,23 @@ def populate(
     *,
     input_sha256: str,
     dataset_namespace: str,
+    stage: str = "legacy",
+    finalize: bool | None = None,
 ) -> dict:
     """Reject lost or conflicting source rows; never propagate a match to a name."""
     mention_id(input_sha256, 0)
     provisional_id("validation", "MISC", dataset_namespace)
+    closed = finalization(stage, finalize)
+    revised = stage != "legacy"
+    if revised:
+        from GG_Data.entity_resolution.hundred_page_pilot.filter_source_content import (
+            source_policy,
+        )
+        from GG_Data.entity_resolution.hundred_page_pilot.prepare_candidates import (
+            matching_eligibility,
+        )
+
+        policy = source_policy(rows)
     by_index = {}
     for row in rows:
         index = row["source_row_index"]
@@ -31,17 +88,37 @@ def populate(
         if index in by_index:
             raise ValueError("Duplicate original source row index")
         for field in ("page_id", "revision_id"):
-            if type(row[field]) is not int or row[field] <= 0:
+            if (row.get(field) is not None or not revised) and (
+                type(row.get(field)) is not int or row[field] <= 0
+            ):
                 raise ValueError("Original row lacks a valid page/revision identity")
-        if (
-            row.get("wiki_site", "enwiki") != "enwiki"
-            or row.get("wiki_page_id", row["page_id"]) != row["page_id"]
-        ):
+        if row.get("wiki_site", "enwiki") != "enwiki" or row.get(
+            "wiki_page_id", row.get("page_id")
+        ) != row.get("page_id"):
             raise ValueError("Original Wikipedia identity conflicts with enwiki scope")
-        if "raw" in row or (
-            "mention_id" in row and row["mention_id"] != mention_id(input_sha256, index)
+        if (
+            "raw" in row
+            or (
+                "mention_id" in row
+                and row["mention_id"] != mention_id(input_sha256, index)
+            )
+            or (
+                "occurrence_id" in row
+                and row["occurrence_id"] != mention_id(input_sha256, index)
+            )
+            or ("input_sha256" in row and row["input_sha256"] != input_sha256)
         ):
             raise ValueError("Original row conflicts with generated mention fields")
+        if revised and type(row.get("matching_eligible")) is not bool:
+            raise ValueError("Revised row requires explicit matching eligibility")
+        if (
+            revised
+            and row["matching_eligible"]
+            and ("clean_status" not in row or not matching_eligibility(row, policy)[0])
+        ):
+            raise ValueError(
+                "Matching eligibility conflicts with clean/revision evidence"
+            )
         provisional_id(row["word"], row["entity_group"], dataset_namespace)
         by_index[index] = row
     by_group, group_for_row = {}, {}
@@ -62,6 +139,8 @@ def populate(
             if index not in by_index or index in group_for_row:
                 raise ValueError("Unknown or conflicting original group row")
             row = by_index[index]
+            if revised and _processing_status(row) != "PENDING_MATCHING":
+                raise ValueError("Saved group includes a row not eligible for matching")
             if (
                 group["name"],
                 group["type"],
@@ -72,86 +151,59 @@ def populate(
                     "Group literal/type/page/revision differs from original row"
                 )
             group_for_row[index] = gid
-    if group_for_row.keys() != by_index.keys():
+    required = {
+        index
+        for index, row in by_index.items()
+        if not revised
+        or (stage != "pending" and _processing_status(row) == "PENDING_MATCHING")
+    }
+    if not required <= group_for_row.keys():
         raise ValueError("Original mention has no saved group")
-    accepted = defaultdict(lambda: defaultdict(dict))
-    model_identities = set()
-    for pair in pairs:
-        gid, qid = pair["group_id"], pair["qid"]
-        if (
-            gid not in by_group
-            or not isinstance(qid, str)
-            or not re.fullmatch(r"Q[1-9]\d*", qid)
-        ):
-            raise ValueError("Unknown accepted group or invalid QID")
-        group = by_group[gid]
-        expected = dict(
-            page_id=group["page_id"],
-            wiki_page_id=group["page_id"],
-            revision_id=group["revision_id"],
-            entity_group=group["type"],
-            entity_type=group["type"],
-            name=group["name"],
-            wiki_site="enwiki",
-        )
-        if any(
-            pair[field] != value for field, value in expected.items() if field in pair
-        ):
-            raise ValueError(
-                "Accepted pair differs from group literal/type/revision scope"
-            )
-        if pair.get("method") not in {"exact", "model"}:
-            raise ValueError("Accepted pair requires exact or model method")
-        if pair["method"] == "model":
-            reference = pair.get("decision_reference")
-            if not isinstance(reference, dict):
-                raise ValueError(
-                    "Model pair provenance requires a decision reference object"
-                )
-            texts = [
-                pair.get("run_id"),
-                reference.get("path"),
-                reference.get("record_id"),
-            ]
-            hashes = [
-                pair.get("checkpoint_sha256"),
-                pair.get("readiness_sha256"),
-                reference.get("sha256"),
-            ]
-            if not (
-                all(isinstance(value, str) and value.strip() for value in texts)
-                and all(
-                    isinstance(value, str) and re.fullmatch(r"[0-9a-f]{64}", value)
-                    for value in hashes
-                )
-            ):
-                raise ValueError(
-                    "Model pair provenance requires run, checkpoint, readiness and decision identities"
-                )
-            model_identities.add((pair["checkpoint_sha256"], pair["readiness_sha256"]))
-            if len(model_identities) > 1:
-                raise ValueError("Model pairs mix checkpoint/readiness identities")
-        accepted[gid][qid][json.dumps(pair, sort_keys=True, ensure_ascii=False)] = pair
+    accepted = accepted_pair_evidence(by_group, pairs, stage=stage)
     mentions, links = [], []
     for source in rows:
         index = source["source_row_index"]
-        mid, gid = mention_id(input_sha256, index), group_for_row[index]
+        mid, gid = mention_id(input_sha256, index), group_for_row.get(index)
+        status = _processing_status(source) if revised else None
+        targets = accepted[gid] if gid in accepted else {}
+        if revised and targets:
+            status = (
+                "ACCEPTED_MODEL"
+                if any(
+                    pair["method"] == "model"
+                    for evidence in targets.values()
+                    for pair in evidence.values()
+                )
+                else "ACCEPTED_EXACT"
+            )
+        if not targets and closed and (not revised or status == "PENDING_MATCHING"):
+            targets = {
+                provisional_id(
+                    source["word"], source["entity_group"], dataset_namespace
+                ): {}
+            }
+            if revised:
+                status = "ENTITY_UNRESOLVED"
+        raw = dict(source)
+        if revised:
+            raw = {field: source[field] for field in ORIGINAL_FIELDS}
+            raw["word"] = source.get(
+                "raw_original_word", source.get("word_original", source["word"])
+            )
         mentions.append(
             {
                 **source,
                 "mention_id": mid,
                 "wiki_site": "enwiki",
                 "wiki_page_id": source["page_id"],
-                "raw": dict(source),
+                "raw": raw,
+                **(
+                    {"occurrence_id": mid, "processing_status": status}
+                    if revised
+                    else {}
+                ),
             }
         )
-        targets = accepted[gid]
-        if not targets:
-            targets = {
-                provisional_id(
-                    source["word"], source["entity_group"], dataset_namespace
-                ): {}
-            }
         for target, evidence_by_key in sorted(targets.items()):
             evidence = [dict(evidence_by_key[key]) for key in sorted(evidence_by_key)]
             methods = sorted({p["method"] for p in evidence}) or ["unresolved"]
@@ -192,6 +244,8 @@ def run(
     input_sha256: str,
     dataset_namespace: str,
     page_ids: set[int] | None = None,
+    stage: str = "legacy",
+    finalize: bool | None = None,
 ) -> dict:
     rows, groups, pairs = (
         _records(path) for path in (mentions_path, groups_path, pairs_path)
@@ -212,6 +266,8 @@ def run(
         pairs,
         input_sha256=input_sha256,
         dataset_namespace=dataset_namespace,
+        stage=stage,
+        finalize=finalize,
     )
     output.mkdir(parents=True, exist_ok=False)
     for name, records in tables.items():
@@ -220,7 +276,11 @@ def run(
     manifest = dict(
         original_input_sha256=input_sha256,
         dataset_namespace=dataset_namespace,
-        page_ids=sorted({row["page_id"] for row in rows}),
+        page_ids=sorted(
+            {row["page_id"] for row in rows if row.get("page_id") is not None}
+        ),
+        stage=stage,
+        finalized=finalization(stage, finalize),
         inputs={
             str(path): digest(path) for path in (mentions_path, groups_path, pairs_path)
         },
@@ -242,6 +302,14 @@ def main() -> None:
     parser.add_argument("--input-sha256", required=True)
     parser.add_argument("--dataset-namespace", required=True)
     parser.add_argument("--page-ids", type=int, nargs="+")
+    parser.add_argument(
+        "--stage",
+        choices=("legacy", "pending", "exact", "model", "final"),
+        default="legacy",
+    )
+    parser.add_argument(
+        "--finalize", action=argparse.BooleanOptionalAction, default=None
+    )
     args = parser.parse_args()
     run(
         args.mentions,
@@ -251,6 +319,8 @@ def main() -> None:
         input_sha256=args.input_sha256,
         dataset_namespace=args.dataset_namespace,
         page_ids=set(args.page_ids) if args.page_ids else None,
+        stage=args.stage,
+        finalize=args.finalize,
     )
 
 

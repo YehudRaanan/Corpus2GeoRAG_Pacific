@@ -16,6 +16,73 @@ from pathlib import Path
 from GG_Data.pipeline.poc import digest, read_json
 
 CORE_TABLES = ("wiki_pages", "entities", "mentions", "mention_entity_links")
+AUDIT_ONLY = {
+    "PENDING_MATCHING",
+    "DEFERRED_DATE",
+    "SOURCE_EXCLUDED",
+    "SOURCE_REVIEW",
+    "PAGE_REVISION_UNRESOLVED",
+}
+MATCHED = {"ACCEPTED_EXACT", "ACCEPTED_MODEL", "ENTITY_UNRESOLVED"}
+
+
+def _check_mention(mention: dict, page_keys: set) -> tuple:
+    raw = mention.get("raw")
+    revised = "processing_status" in mention
+    required = {"word", "entity_group", "Source", "Text", "start", "end"}
+    required |= (
+        {"score", "Index", "subtype"}
+        if revised
+        else {"source_row_index", "page_id", "revision_id"}
+    )
+    if not isinstance(raw, dict) or not required <= raw.keys():
+        raise ValueError("Original mention fields or revision FK changed")
+    for key, value in raw.items():
+        actual = mention.get(key)
+        if key == "word" and revised:
+            actual = mention.get(
+                "raw_original_word", mention.get("word_original", actual)
+            )
+        if actual != value:
+            raise ValueError("Original mention fields or revision FK changed")
+    key = mention["wiki_site"], mention["wiki_page_id"], mention["revision_id"]
+    if (
+        mention["wiki_site"] != "enwiki"
+        or mention.get("page_id") != mention["wiki_page_id"]
+    ):
+        raise ValueError("Original mention fields or revision FK changed")
+    status = mention.get("processing_status")
+    if revised and status not in AUDIT_ONLY | MATCHED:
+        raise ValueError("Unknown mention processing status")
+    if None in key[1:]:
+        if status != "PAGE_REVISION_UNRESOLVED":
+            raise ValueError("Unexplained missing revision FK")
+        for value in key[1:]:
+            if value is not None and (type(value) is not int or value <= 0):
+                raise ValueError("Invalid revision FK")
+    elif key not in page_keys:
+        raise ValueError("Original mention fields or revision FK changed")
+    if revised and mention.get("matching_eligible"):
+        text, left, right = (
+            mention.get(k) for k in ("Text_clean", "clean_start", "clean_end")
+        )
+        if (
+            status
+            in {
+                "DEFERRED_DATE",
+                "SOURCE_EXCLUDED",
+                "SOURCE_REVIEW",
+                "PAGE_REVISION_UNRESOLVED",
+            }
+            or mention.get("clean_status") != "mapped"
+            or not isinstance(text, str)
+            or type(left) is not int
+            or type(right) is not int
+            or not 0 <= left < right <= len(text)
+            or text[left:right] != mention["word"]
+        ):
+            raise ValueError("Eligible clean mention span or processing status differs")
+    return key
 
 
 def summarize(
@@ -46,35 +113,16 @@ def summarize(
     used_pages = set()
     for mention in mentions:
         raw = mention.get("raw")
-        key = (mention["wiki_site"], mention["wiki_page_id"], mention["revision_id"])
-        if (
-            not isinstance(raw, dict)
-            or not {
-                "source_row_index",
-                "page_id",
-                "revision_id",
-                "word",
-                "entity_group",
-                "Source",
-                "Text",
-                "start",
-                "end",
-            }
-            <= raw.keys()
-            or any(k not in mention or mention[k] != value for k, value in raw.items())
-            or mention["wiki_site"] != "enwiki"
-            or key not in page_keys
-            or mention.get("page_id") != mention["wiki_page_id"]
-        ):
-            raise ValueError("Original mention fields or revision FK changed")
+        key = _check_mention(mention, page_keys)
         if (
             type(mention["source_row_index"]) is not int
             or mention["source_row_index"] < 0
             or not isinstance(raw.get("Source"), str)
             or not raw["Source"]
         ):
-            raise ValueError("Original row identity/source title is missing")
-        used_pages.add(key)
+            raise ValueError("Original row identity/source is missing")
+        if key in page_keys:
+            used_pages.add(key)
     if used_pages != page_keys:
         raise ValueError("Wiki Pages contains unused or missing revision rows")
     linked_mentions, link_keys = set(), set()
@@ -97,6 +145,10 @@ def summarize(
         ):
             raise ValueError("Duplicate bridge key or broken typed mention/entity FK")
         mention = mentions_by_id[mid]
+        if mention.get("processing_status") in AUDIT_ONLY or (
+            "matching_eligible" in mention and not mention["matching_eligible"]
+        ):
+            raise ValueError("Ineligible or pending mention has an entity bridge")
         methods = link.get("methods", [link["method"]])
         if (
             link.get("method") not in {"exact", "model", "unresolved"}
@@ -111,7 +163,11 @@ def summarize(
         linked_mentions.add(mid)
         linked_entities.add((eid, typ))
         identity_mentions[eid].add(mid)
-        identity_sources[eid].add(mention["raw"]["Source"])
+        identity_sources[eid].add(
+            (mention["wiki_site"], mention["wiki_page_id"])
+            if "processing_status" in mention
+            else mention["raw"]["Source"]
+        )
         page_entities[mention["wiki_site"], mention["wiki_page_id"]].add((eid, typ))
         method_links[link["method"]] += 1
         for method in methods:
@@ -120,7 +176,12 @@ def summarize(
             mention_qids[mid].add(eid)
             qid_names[eid].add(mention["word"])
     unlinked = entities_by_key.keys() - linked_entities
-    if linked_mentions != mentions_by_id.keys() or any(
+    required_links = {
+        mid
+        for mid, mention in mentions_by_id.items()
+        if mention.get("processing_status") not in AUDIT_ONLY
+    }
+    if linked_mentions != required_links or any(
         typ not in {"event", "EVENT"} for _, typ in unlinked
     ):
         raise ValueError("Every original mention and core Entity must have a bridge")
@@ -164,6 +225,19 @@ def summarize(
     provisional_rows = [e for e in entities if e["entity_id"].startswith("PROV_")]
     if len(qid_rows) + len(provisional_rows) != len(entities):
         raise ValueError("Unknown core Entity identity namespace")
+    if "relations" in tables:
+        from GG_Data.pipeline.post_qid_relations import validate_stored_relations
+
+        validate_stored_relations(
+            tables["relations"], {e["entity_id"] for e in entities}
+        )
+    if "events" in tables:
+        event_ids = [e["event_id"] for e in tables["events"]]
+        if len(set(event_ids)) != len(event_ids) or any(
+            not any((qid, typ) in entities_by_key for typ in ("event", "EVENT"))
+            for qid in event_ids
+        ):
+            raise ValueError("Duplicate Event or missing typed Event entity endpoint")
     report = {
         "status": "CORE_CONTROLS_PASSED_OPTIONAL_TABLES_NOT_EVALUATED",
         "denominators": dict(
@@ -254,6 +328,11 @@ def summarize(
         "accuracy_status": "NOT_EVALUATED_POSITIVE_ONLY_REFERENCE",
         "accuracy_note": "Population completeness and matching-method counts do not establish precision or stop precision",
         "page_cooccurrence": {"status": "NOT_EVALUATED"},
+        "processing_status_counts": dict(
+            sorted(
+                Counter(m.get("processing_status", "LEGACY") for m in mentions).items()
+            )
+        ),
     }
     report["coverage_by_page"] = [
         dict(

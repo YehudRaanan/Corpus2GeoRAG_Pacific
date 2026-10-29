@@ -12,6 +12,7 @@ import gzip
 import hashlib
 import json
 import logging
+import re
 import shutil
 import time
 from collections import Counter, defaultdict
@@ -162,6 +163,109 @@ def read_selected(input_path: Path, titles: list[str]) -> pa.Table:
             chunks.append(table.filter(selected))
         offset += batch.num_rows
     return pa.concat_tables(chunks)
+
+
+def adapt_frozen_input(
+    input_path: Path, frozen_root: Path, output: Path, receipt_path: Path | None = None
+) -> dict:
+    """Reuse verified global rows and revisions; Source now denotes the page QID."""
+    from GG_Data.entity_resolution.hundred_page_pilot.collect_entities import validate_revision
+    from GG_Data.pipeline.post_qid_entities import mention_id
+
+    if output.exists():
+        raise FileExistsError(f"Preserve existing output: {output}")
+    receipt_path = receipt_path or input_path.parent / "input_comparison_preflight.json"
+    receipt = read_json(receipt_path)
+    digest = sha256(input_path)
+    if digest != receipt["input_sha256"] or not all(
+        receipt.get(key) is True
+        for key in ("non_Source_columns_identical_all_rows", "saved_sample_all_non_Source_values_identical")
+    ):
+        raise ValueError("Input hash or full-row comparison receipt does not permit reuse")
+    frozen = pq.read_table(frozen_root / "selected_mentions.parquet")
+    if len(frozen.column_names) != len(set(frozen.column_names)):
+        raise ValueError("Duplicate frozen metadata columns")
+    indices = frozen["source_row_index"].to_pylist()
+    if not indices or len(set(indices)) != len(indices) or any(type(i) is not int or i < 0 for i in indices):
+        raise ValueError("Frozen global source row indices must be unique nonnegative integers")
+    source = pq.ParquetFile(input_path)
+    if source.schema_arrow.names != ORIGINAL or source.metadata.num_rows != receipt["rows"]:
+        raise ValueError("New input must contain only the nine original columns")
+    wanted, offset, chunks = set(indices), 0, []
+    for batch in source.iter_batches():
+        local = [i - offset for i in indices if offset <= i < offset + batch.num_rows]
+        if local:
+            table = pa.Table.from_batches([batch]).take(pa.array(local, type=pa.int64()))
+            chunks.extend(zip((offset + i for i in local), table.to_pylist()))
+        offset += batch.num_rows
+    by_index = dict(chunks)
+    if set(by_index) != wanted:
+        raise ValueError("Frozen source row indices are not present in new input")
+    new_rows = [by_index[index] for index in indices]
+    old_rows = frozen.to_pylist()
+    for row, old in zip(new_rows, old_rows):
+        if any(row[key] != old[key] for key in ORIGINAL if key != "Source"):
+            raise ValueError("Occurrence lineage differs from frozen original values")
+        if receipt["sample_title_to_new_source"].get(old["Source"]) != row["Source"] or not re.fullmatch(r"Q[1-9][0-9]*", row["Source"]):
+            raise ValueError("Source QID differs from checked source-title mapping")
+    revisions = pq.read_table(frozen_root / "revisions.parquet")
+    revision_rows = revisions.to_pylist()
+    revision_keys = {(r["page_id"], r["revision_id"]) for r in revision_rows}
+    if len(revision_keys) != len(revision_rows):
+        raise ValueError("Duplicate saved page/revision evidence")
+    for revision in revision_rows:
+        validate_revision(revision)
+    if any((r["page_id"], r["revision_id"]) not in revision_keys for r in old_rows if r["revision_id"] is not None):
+        raise ValueError("Selected occurrence lacks saved revision evidence")
+    counts = dict(rows=len(indices), pages=len({r["page_id"] for r in old_rows if r["page_id"] is not None}), revisions=len(revision_keys))
+    if any(counts[key] != receipt[receipt_key] for key, receipt_key in (
+        ("rows", "saved_sample_rows"), ("pages", "saved_sample_pages"), ("revisions", "saved_sample_revisions")
+    )):
+        raise ValueError("Saved sample row/page/revision counts differ from receipt")
+    enriched = pa.Table.from_pylist(new_rows, schema=source.schema_arrow)
+    for key in frozen.column_names:
+        if key not in ORIGINAL:
+            enriched = enriched.append_column(key, frozen[key])
+    additions = dict(
+        source_title=[r["Source"] for r in old_rows],
+        source_page_qid=[r["Source"] for r in new_rows],
+        input_sha256=[digest] * len(indices),
+        occurrence_id=[mention_id(digest, index) for index in indices],
+        raw_original_word=[r["word"] for r in new_rows],
+    )
+    if set(additions) & set(enriched.column_names):
+        raise ValueError("Supplied metadata columns would be duplicated")
+    for key, values in additions.items():
+        enriched = enriched.append_column(key, pa.array(values, type=pa.string()))
+    if sha256(input_path) != digest:
+        raise ValueError("Input changed during adaptation")
+    output.mkdir(parents=True, exist_ok=False)
+    atomic_parquet(enriched, output / "selected_mentions.parquet")
+    atomic_parquet(revisions, output / "revisions.parquet")
+    copied = ["selected_mentions.parquet", "revisions.parquet"]
+    for name in ("passages.parquet", "checked_revisions.parquet", "pages.json", "selected_page_ids.json"):
+        path = frozen_root / name
+        if path.is_file():
+            shutil.copy2(path, output / name)
+            if sha256(path) != sha256(output / name):
+                raise ValueError(f"Copied catalog hash changed: {name}")
+            copied.append(name)
+    frozen_selection = frozen_root / "selection.json"
+    if frozen_selection.is_file():
+        shutil.copy2(frozen_selection, output / "frozen_selection.json")
+        selection = read_json(frozen_selection)
+        selection.update(input_sha256=digest, frozen_input_sha256=selection["input_sha256"],
+                         frozen_selection_sha256=sha256(frozen_selection),
+                         selection_reuse_basis="Verified global source_row_index lineage; no reselection by QID Source")
+        save_json(output / "selection.json", selection)
+        copied.extend(["frozen_selection.json", "selection.json"])
+    summary = counts | dict(input_sha256=digest, receipt_sha256=sha256(receipt_path),
+        frozen_mentions_sha256=sha256(frozen_root / "selected_mentions.parquet"),
+        frozen_revisions_sha256=sha256(frozen_root / "revisions.parquet"),
+        occurrence_identity_basis="post_qid_entities.mention_id(input_sha256, global source_row_index)",
+        output_sha256={name: sha256(output / name) for name in copied})
+    save_json(output / "input_adapter_summary.json", summary)
+    return summary
 
 
 def export_old_exact_joins(passages: list[dict], old_root: Path, output: Path) -> dict:

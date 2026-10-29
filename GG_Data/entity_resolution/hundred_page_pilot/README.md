@@ -8,16 +8,18 @@ The full corpus is not rerun. All paths below are relative to the project root.
 
 | File | What it reads and does | Main result |
 |---|---|---|
-| `prepare_pages.py` | Selects 100 source titles, reuses exact local passage evidence, checks dated raw Wikipedia revisions until each copied passage matches or the recovery limit is reached. | Original rows with page/revision IDs; raw text, API evidence, hashes and explicit unresolved reasons. |
+| `prepare_pages.py` | Selects source titles and checks raw revision evidence for an initial pilot. `adapt_frozen_input(...)` reuses a verified frozen selection for the new Source-QID input. | Original rows with global row indices, page/revision IDs, source hashes and explicit unresolved reasons. |
 | `collect_entities.py` | Reads only the used revisions. Extracts direct article links, including links inside the supplied references, tables and template arguments. Reuses local metadata, accepts a selected-QID BigQuery export, then fills API gaps. | Linked QIDs, page's own QID, official English labels, aliases, descriptions, native P31 types and provenance. |
 | `recover_page_qids.py` | Replays the original three-page recovery, or reads an explicit pilot manifest with `--all-pilot`. Checks supported ship-template targets and raw links, using cache-first bounded title/QID lookups. | A new candidate inventory, source spans and current lookup evidence; no mention assignments. |
 | `prepare_mentions.py` | Reads the original rows, exact raw revisions and recovered targets. Uses visible name fields, link anchors and same-revision QID names to recover complete names. Keeps competing or weak source evidence under review. | Row-preserving corrected `word`, `word_original`, recovered spans, a mention/span bridge and repair reasons. |
 | `filter_source_content.py` | Locates original spans in the exact saved revision and applies source-content rules. | All original rows plus KEEP/EXCLUDE/REVIEW, reason, source ranges, revision hash, policy version and cleaned matching context. |
 | `clean_source_text.py` | Cleans saved raw source, projects each Daniel passage through its character-origin map, then maps each original mention. | All input rows, unchanged original text/offsets, separate `Text_clean`, clean offsets and explicit mapped/excluded/uncertain reasons. |
-| `prepare_candidates.py` | Groups names and Daniel types; accepts strict original exact pairs; ranks local alternatives with trigram and retains source-supported candidates. Does not load the model. | Exact pairs, ranked jobs, source row groups and workload counts. |
+| `match_exact.py` | Applies the literal unique-name/type/QID rule to eligible groups, separately from model preparation. | Auditable groups, exact pairs and input hashes. |
+| `prepare_candidates.py` | Groups eligible names and Daniel types, validates supplied exact-stage pairs, ranks residual local alternatives with trigram and retains source-supported candidates. Does not load the model. | Ranked jobs, occurrence groups and workload counts. |
 | `resolve_entities.py` | Checks readiness, loads the canonical decision model only for inference, then selects and removes alternatives until stop wins. | Restartable scores, model pairs and complete local decision traces. |
+| `run_model.py` | Inspects the fixed checkpoint, executes a real CUDA restore/scoring check, and launches one approved 3/10/100-page scope through `resolve_entities.infer`. | New readiness evidence, scope-bound experimental approval and inference outputs. |
 | `readiness.py` | Checks checkpoint, training inputs/code and evaluation evidence before inference. | Explicit technical and quality gates; historical evidence is not rewritten by this refactor. |
-| `report.py` | Freezes source-link positive evidence before predictions. Checks input lineage, exports all matches back to the original rows and calculates supported metrics. | Matched/unresolved Parquet and a results summary. |
+| `report.py` | Freezes positive source evidence and exports original-row results. `compare_exports(...)` retains strict model-comparison rules; `compare_workflows(...)` separately checks old/new workflow lineage and outcomes. | Parquet exports or all-row CSV/JSONL workflow cases with explicit eligibility denominators; no unsupported accuracy claim. |
 | `test_pipeline.py`, `test_pipeline_layout.py` | Small CPU regression tests for identity, unrestricted many-to-many decisions, loss, restart safety, source preservation and separate lazy CLIs. | Reproducible checks without GPU access. |
 
 These are ordinary functions and command-line scripts, not a new execution
@@ -27,6 +29,100 @@ Training and the canonical scorer live in
 [`../decision_model/`](../decision_model/README.md): `prepare_training.py`,
 `model.py` and `train.py`. There are no forwarding wrappers for the removed
 combined `match.py` or relocated training modules.
+
+## Revised Source-QID run — 30 October 2026
+
+New artifacts belong under `Data/external/revised_pipeline_20261030/`. Earlier
+pilot, training and inference artifacts remain unchanged. The interfaces below
+describe the workflow; they do not establish completed execution or final counts.
+See the [approved revised plan](../../../docs/superpowers/plans/2026-10-30-revised-pipeline-new-daniel-input.md).
+
+1. **Bind the input.** `prepare_pages.adapt_frozen_input(input_path, frozen_root,
+   output, receipt_path=None)` verifies the new input hash, original values and
+   global `source_row_index`, then reuses the saved page/revision evidence.
+   The adapted rows and revisions go to `input/`. New `Source` is the supplied
+   **article QID**, not a numeric Wikipedia page ID or a mention assignment.
+   `source_title` keeps the readable title; `source_page_qid` keeps its QID.
+2. **Prepare and clean.** Existing name preparation and source filtering write
+   `input/prepared/` and `input/filtered/`. `clean_source_text.clean_mentions(...)`
+   writes every row to `input/cleaned/mentions.parquet`. Shared
+   `prepare_candidates.matching_eligibility(...)` supplies
+   `matching_eligible` and `matching_eligibility_reason`.
+3. **Save exact decisions.** `match_exact.prepare(mentions, entities, output, ...)`
+   writes `input/exact/`. Candidate `prepare(..., exact_path=...)` checks those
+   exact pairs against the current groups and writes `input/matching/`.
+   Exact matching needs the identical official name, one Daniel type and one QID
+   for that label on that revision. Repaired names cannot supply exact proof.
+4. **Run fixed-model decisions.** `run_model.setup(...)` creates actual restore
+   evidence in `model_readiness/`; `run_model.run_scope(...)` reads
+   `scopes/jobs_3.jsonl`, `jobs_10.jsonl` or `jobs_100.jsonl`. It saves each
+   `scope_N/experimental_approval.json` and `scope_N/inference/`. The existing
+   stop rule and per-QID removal preserve many-to-many matches.
+5. **Close matching.** `post_qid_run.build_core(..., stage="final")` validates
+   frozen inputs, approval, complete scores and native records. Only this closed
+   stage creates provisional identities for eligible unmatched groups.
+6. **Add article-bound enrichment.** `post_qid_native.py` validates full native
+   records and provenance. `post_qid_events.apply_cached_events(...)` requires
+   retained direct links in the exact used revisions for added Events and
+   reports cache gaps. `post_qid_relations.py` keeps native directed assertions
+   and explicit inverse provenance. `post_qid_run.assemble(...)` checks the exact
+   final core manifest, typed endpoints and table controls before saving a new
+   local snapshot. Geography and database loading remain outside this run.
+
+The nine Daniel fields remain in each revised mention's `raw` dictionary:
+`entity_group`, `score`, `word`, `start`, `end`, `Source`, `Index`, `Text`, `subtype`.
+`raw_original_word` preserves the new input word; `word_original` retains the
+earliest original word through preparation. Working `word` and clean offsets
+address `Text_clean`; raw `start`/`end` still address raw `Text`.
+`occurrence_id` equals the existing `mention_id(input_sha256, source_row_index)`
+and stays fixed across stages. Across different input hashes, compare the
+verified source row lineage, not equal mention IDs.
+
+Eligibility requires verified page/revision evidence, accepted source scope and
+a usable mapped clean span. A mapped mention in a passage with
+`clean_text_needs_review=True` remains `SOURCE_REVIEW`. Excluded, review,
+`PAGE_REVISION_UNRESOLVED` and `DEFERRED_DATE` rows remain in the audit denominator
+and receive no entity bridge. Pending eligible rows use `PENDING_MATCHING`.
+`post_qid_run.write_stage(..., stage="pending")` saves rows before matching;
+`stage="exact"` saves accepted exact entities and links together. A model-stage
+core can save accepted decisions without provisional identities. Final matching
+uses `stage="final"`; resolved entities remain keyed by QID plus Daniel type.
+
+Prepare the immutable scope manifest with the actual cleaned/matching paths:
+
+```powershell
+$pilotPython = ".\.venv-template-pilot\Scripts\python.exe"
+$runRoot = "Data/external/revised_pipeline_20261030"
+& $pilotPython -m GG_Data.pipeline.post_qid_run --input-dir "$runRoot/input" --matching-subdir matching --mentions-name cleaned/mentions.parquet --output "$runRoot/scopes"
+& $pilotPython -m GG_Data.pipeline.post_qid_run --input-dir "$runRoot/input" --scope-dir "$runRoot/scopes" --scope 3 --stage pending --output "$runRoot/pending_3"
+```
+
+Use new output directories. Before GPU execution, the run owner supplies
+`input_manifest.json`, the archived code, fixed checkpoint and hash-bound
+approval evidence. The manifest binds the frozen scope, original input/row file,
+source reference, allowed page/revisions and checkpoint. Revised schema 2 also
+binds each `scope_jobs[N]` file hash and exact frozen page membership; editing a
+question or selecting a different same-sized scope is rejected. On the approved GPU:
+
+```bash
+python -m GG_Data.entity_resolution.hundred_page_pilot.run_model --run-root Data/external/revised_pipeline_20261030 --scope-dir Data/external/revised_pipeline_20261030/scopes --training-root Data/external/hundred_page_pilot_20261028/training_k80_v2 --model-dir outputs/train_20261029 --setup
+python -m GG_Data.entity_resolution.hundred_page_pilot.run_model --run-root Data/external/revised_pipeline_20261030 --scope-dir Data/external/revised_pipeline_20261030/scopes --training-root Data/external/hundred_page_pilot_20261028/training_k80_v2 --model-dir outputs/train_20261029 --scope 3 --max-hours 1.2
+```
+
+Proceed to 10 and 100 only after the preceding scope checks pass. Pair batch size
+is 16; each inference call permits at most 1.2 hours. The approved revised run
+permits at most 90 new GPU minutes within the existing aggregate US$10 and
+six-hour limits, including setup time. Per-call limits do not replace that ledger.
+The fixed model's held-out stop precision is 278/311, below 90%. Actual technical
+restore evidence and an exact run-bound experimental exception do not create a
+quality pass or Daniel accuracy result.
+
+`report.compare_workflows(previous_export, current_core, output)` compares the
+old baseline or corrected export with the new local tables by source row index.
+It requires equal original values except the intentional Source title-to-QID
+change. It reports all-row status/QID transitions, separate eligibility/review/
+exclusion/DATE denominators and eligible gains/losses. Candidate and model truth
+remain unknown. This is separate from the strict model comparator.
 
 ## Complete pipeline
 
@@ -84,11 +180,11 @@ renderer or a new entity-identity decision.
 .\.venv-template-pilot\Scripts\python.exe -m GG_Data.entity_resolution.hundred_page_pilot.clean_source_text --mentions Data/external/hundred_page_pilot_20261028/selected_mentions.parquet --revisions Data/external/hundred_page_pilot_20261028/revisions.parquet --page-id 1120226 --page-id 1365545 --page-id 240395 --output Data/external/hundred_page_pilot_20261028/source_text_cleaner_pilot_20261029/NEW_RUN
 ```
 
-Use a new output directory for each run. The result is a separate pilot
-artifact, not a replacement for matching inputs. Existing matching code still
-uses original `Text` and offsets; it must explicitly adopt the clean fields
-before a future model run. The cleaner's status describes text/source mapping,
-not whether an entity has a QID.
+Use a new output directory for each run. Historical cleaner artifacts remain
+separate. Revised candidate preparation explicitly consumes `Text_clean`, clean
+offsets and shared eligibility when clean annotations are present; it rejects
+mixed raw/clean input. The cleaner's status describes text/source mapping, not
+whether an entity has a QID.
 
 ### Source-name experiment on the saved 100 pages
 

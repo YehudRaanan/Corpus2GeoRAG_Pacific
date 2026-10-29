@@ -257,7 +257,11 @@ def build_readiness(
 
 
 def validate_experimental_scope(
-    approval: dict, checkpoint: Path, jobs_path: Path
+    approval: dict,
+    checkpoint: Path,
+    jobs_path: Path,
+    *,
+    manifest_path: Path | None = None,
 ) -> None:
     """Validate an OWNER receipt; an experiment receipt never changes quality."""
     jobs = [
@@ -285,7 +289,9 @@ def validate_experimental_scope(
     pilot = False
     if approval.get("scope") == "experimental_source_name_pilot":
         binding = approval.get("manifest", {})
-        manifest_path = Path(binding.get("path", ""))
+        # Downloaded receipts retain remote paths. A local copy is usable only
+        # when its bytes have the exact manifest hash bound by that receipt.
+        manifest_path = manifest_path or Path(binding.get("path", ""))
         if manifest_path.is_file() and sha256(manifest_path) == binding.get("sha256"):
             manifest = _json(manifest_path)
             manifest_pages = manifest.get("page_ids", [])

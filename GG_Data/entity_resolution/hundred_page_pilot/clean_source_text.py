@@ -549,7 +549,19 @@ def clean_mentions(
                 and 0 <= start < end <= len(text)
                 and text[start:end] == original_word
             ):
-                outcome = map_mention(cleaned, start, end)
+                projected_start, projected_end = start, end
+                if row.get("repair_status") == "repaired":
+                    projected_start, projected_end = row.get("repaired_start"), row.get("repaired_end")
+                    if not (
+                        type(projected_start) is int and type(projected_end) is int
+                        and 0 <= projected_start < projected_end <= len(text)
+                        and text[projected_start:projected_end] == row["word"]
+                    ):
+                        outcome = dict(status="uncertain", start=None, end=None, reason="unmapped_repaired_source_span")
+                    else:
+                        outcome = map_mention(cleaned, projected_start, projected_end)
+                else:
+                    outcome = map_mention(cleaned, projected_start, projected_end)
                 if source_status != "unique_raw_placement":
                     outcome = dict(status="uncertain", start=None, end=None, reason=source_status)
             if outcome["status"] == "mapped":
@@ -595,6 +607,21 @@ def clean_mentions(
     extra = pa.Table.from_pylist(annotations, schema=schema)
     for column in extra.column_names:
         enriched = enriched.append_column(column, extra[column])
+    from GG_Data.entity_resolution.hundred_page_pilot.prepare_candidates import (
+        matching_eligibility,
+        validate_source_policy,
+    )
+
+    annotated_rows = enriched.to_pylist()
+    policy = validate_source_policy(annotated_rows)
+    eligibility = [matching_eligibility(row, policy) for row in annotated_rows]
+    for column, values, dtype in (
+        ("matching_eligible", [eligible for eligible, _ in eligibility], pa.bool_()),
+        ("matching_eligibility_reason", [reason for _, reason in eligibility], pa.string()),
+    ):
+        if column in enriched.column_names:
+            raise ValueError(f"Input already contains matching annotation: {column}")
+        enriched = enriched.append_column(column, pa.array(values, type=dtype))
     protected = [name for name in original.column_names if name != "word"]
     if not enriched.select(protected).equals(original.select(protected)):
         raise ValueError("Original source columns changed")
@@ -613,6 +640,9 @@ def clean_mentions(
             before != after for before, after in zip(original["word"].to_pylist(), words)
         ),
         context_review_rows=sum(r["clean_text_needs_review"] for r in annotations),
+        mapped_context_review_rows=sum(r["clean_status"] == "mapped" and r["clean_text_needs_review"] for r in annotations),
+        matching_eligible_rows=sum(eligible for eligible, _ in eligibility),
+        matching_eligibility_reason_counts=dict(Counter(reason for _, reason in eligibility)),
         original_columns_preserved_except_working_word=True,
         original_words_preserved=True,
         input_sha256=input_hashes,

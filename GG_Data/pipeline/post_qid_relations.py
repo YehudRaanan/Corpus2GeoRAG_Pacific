@@ -294,18 +294,72 @@ def select_events(
     )
 
 
-def export_stored_relations(relations: list[dict]) -> list[dict]:
-    """Project each stored directed row once; never generate reverse views."""
-    edges, seen = [], set()
+def validate_stored_relations(
+    relations: list[dict], entity_ids: set[str] | None = None
+) -> None:
+    """Reject open endpoints and inverse rows detached from their source row."""
+    by_id = {r["observation_id"]: r for r in relations}
+    if len(by_id) != len(relations):
+        raise SourceException("Duplicate stored directed row")
     for row in relations:
         oid = row["observation_id"]
-        if oid in seen:
-            raise SourceException("Duplicate stored directed row", observation_id=oid)
-        seen.add(oid)
+        if (
+            entity_ids is not None
+            and not {row["subject_entity_id"], row["object_entity_id"]} <= entity_ids
+        ):
+            raise SourceException("Relation endpoint is missing", observation_id=oid)
         if row.get("relation_population_policy") != POLICY:
             raise SourceException(
                 "Expected stored-direction policy", observation_id=oid
             )
+        if row.get("derived") is False:
+            if (
+                row.get("derived_direction") != "FORWARD"
+                or row.get("source_edge_id") is not None
+                or row.get("base_assertion_id") != oid
+            ):
+                raise SourceException(
+                    "Invalid native forward provenance", observation_id=oid
+                )
+        elif row.get("derived") is True:
+            base = by_id.get(row.get("source_edge_id"))
+            direction_fields = {
+                "observation_id",
+                "source_edge_id",
+                "subject_entity_id",
+                "object_entity_id",
+                "level2_relation",
+                "level2_label",
+                "derived",
+                "derived_direction",
+                "synthetic_inverse",
+            }
+            if (
+                not base
+                or base.get("derived") is not False
+                or oid != base["observation_id"] + "::REVERSE"
+                or row.get("derived_direction") != "REVERSE"
+                or row.get("base_assertion_id") != base["observation_id"]
+                or (row["subject_entity_id"], row["object_entity_id"])
+                != (base["object_entity_id"], base["subject_entity_id"])
+                or {k: v for k, v in row.items() if k not in direction_fields}
+                != {k: v for k, v in base.items() if k not in direction_fields}
+            ):
+                raise SourceException(
+                    "Invalid derived inverse provenance", observation_id=oid
+                )
+        else:
+            raise SourceException(
+                "Missing native/derived direction", observation_id=oid
+            )
+
+
+def export_stored_relations(relations: list[dict]) -> list[dict]:
+    """Project each stored directed row once; never generate reverse views."""
+    validate_stored_relations(relations)
+    edges = []
+    for row in relations:
+        oid = row["observation_id"]
         edges.append(
             dict(
                 id=oid,
