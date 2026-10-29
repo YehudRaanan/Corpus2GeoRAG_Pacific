@@ -13,6 +13,7 @@ The full corpus is not rerun. All paths below are relative to the project root.
 | `recover_page_qids.py` | Replays the original three-page recovery, or reads an explicit pilot manifest with `--all-pilot`. Checks supported ship-template targets and raw links, using cache-first bounded title/QID lookups. | A new candidate inventory, source spans and current lookup evidence; no mention assignments. |
 | `prepare_mentions.py` | Reads the original rows, exact raw revisions and recovered targets. Uses visible name fields, link anchors and same-revision QID names to recover complete names. Keeps competing or weak source evidence under review. | Row-preserving corrected `word`, `word_original`, recovered spans, a mention/span bridge and repair reasons. |
 | `filter_source_content.py` | Locates original spans in the exact saved revision and applies source-content rules. | All original rows plus KEEP/EXCLUDE/REVIEW, reason, source ranges, revision hash, policy version and cleaned matching context. |
+| `clean_source_text.py` | Cleans saved raw source, projects each Daniel passage through its character-origin map, then maps each original mention. | All input rows, unchanged original text/offsets, separate `Text_clean`, clean offsets and explicit mapped/excluded/uncertain reasons. |
 | `prepare_candidates.py` | Groups names and Daniel types; accepts strict original exact pairs; ranks local alternatives with trigram and retains source-supported candidates. Does not load the model. | Exact pairs, ranked jobs, source row groups and workload counts. |
 | `resolve_entities.py` | Checks readiness, loads the canonical decision model only for inference, then selects and removes alternatives until stop wins. | Restartable scores, model pairs and complete local decision traces. |
 | `readiness.py` | Checks checkpoint, training inputs/code and evaluation evidence before inference. | Explicit technical and quality gates; historical evidence is not rewritten by this refactor. |
@@ -60,6 +61,34 @@ date-filter issue remains a separate acceptance concern. This refactor does not
 rerun data collection, training, inference or table population.
 
 ## Identity and matching rules
+
+### Separate text-cleaning pilot
+
+`clean_source_text.py` is an independent local step. It reads the original
+page-attached Daniel rows and the saved revision ledger. It does not run the
+model, collect QIDs, or change previous assignments. It uses installed
+`mwparserfromhell` and existing source rules, rather than the full FineWiki
+HTML/dataset framework.
+
+The original `Text`, `start`, `end`, row ID and type remain unchanged.
+`word_original` retains Daniel's original entity text. A supported mapping
+updates working `word` and writes `clean_start`/`clean_end` into `Text_clean`.
+Removed citations and other excluded spans remain as rows with null clean
+offsets. Captions and notes are omitted in this pilot, as agreed. Unsupported
+syntax can remain in `Text_clean`; `clean_text_needs_review` flags affected
+passages even when the mention itself maps. Repeated or nonexact
+revision placements remain uncertain. This is not a historical template
+renderer or a new entity-identity decision.
+
+```powershell
+.\.venv-template-pilot\Scripts\python.exe -m GG_Data.entity_resolution.hundred_page_pilot.clean_source_text --mentions Data/external/hundred_page_pilot_20261028/selected_mentions.parquet --revisions Data/external/hundred_page_pilot_20261028/revisions.parquet --page-id 1120226 --page-id 1365545 --page-id 240395 --output Data/external/hundred_page_pilot_20261028/source_text_cleaner_pilot_20261029/NEW_RUN
+```
+
+Use a new output directory for each run. The result is a separate pilot
+artifact, not a replacement for matching inputs. Existing matching code still
+uses original `Text` and offsets; it must explicitly adopt the clean fields
+before a future model run. The cleaner's status describes text/source mapping,
+not whether an entity has a QID.
 
 ### Source-name experiment on the saved 100 pages
 
