@@ -12,6 +12,7 @@ The full corpus is not rerun. All paths below are relative to the project root.
 | `collect_entities.py` | Reads only the used revisions. Extracts direct article links, including links inside the supplied references, tables and template arguments. Reuses local metadata, accepts a selected-QID BigQuery export, then fills API gaps. | Linked QIDs, page's own QID, official English labels, aliases, descriptions, native P31 types and provenance. |
 | `recover_page_qids.py` | Replays the original three-page recovery, or reads an explicit pilot manifest with `--all-pilot`. Checks supported ship-template targets and raw links, using cache-first bounded title/QID lookups. | A new candidate inventory, source spans and current lookup evidence; no mention assignments. |
 | `prepare_mentions.py` | Reads the original rows, exact raw revisions and recovered targets. Uses visible name fields, link anchors and same-revision QID names to recover complete names. Keeps competing or weak source evidence under review. | Row-preserving corrected `word`, `word_original`, recovered spans, a mention/span bridge and repair reasons. |
+| `filter_source_content.py` | Locates original spans in the exact saved revision and applies source-content rules. | All original rows plus KEEP/EXCLUDE/REVIEW, reason, source ranges, revision hash, policy version and cleaned matching context. |
 | `prepare_candidates.py` | Groups names and Daniel types; accepts strict original exact pairs; ranks local alternatives with trigram and retains source-supported candidates. Does not load the model. | Exact pairs, ranked jobs, source row groups and workload counts. |
 | `resolve_entities.py` | Checks readiness, loads the canonical decision model only for inference, then selects and removes alternatives until stop wins. | Restartable scores, model pairs and complete local decision traces. |
 | `readiness.py` | Checks checkpoint, training inputs/code and evaluation evidence before inference. | Explicit technical and quality gates; historical evidence is not rewritten by this refactor. |
@@ -36,7 +37,9 @@ combined `match.py` or relocated training modules.
 3. Separately, `decision_model.prepare_training` freezes public inputs;
    `decision_model.train` trains and evaluates the canonical model. `readiness.py`
    checks the saved evidence. Candidate preparation does not require this model.
-4. `prepare_candidates.py` writes literal groups, strict exact pairs and local
+4. After optional name preparation, `filter_source_content.py` records source
+   eligibility without deleting rows. `prepare_candidates.py` writes eligible
+   literal groups, strict exact pairs and local
    candidate jobs. `resolve_entities.py` reads jobs and the readiness-bound
    checkpoint, then writes scores, selected pairs and stop decisions.
 5. `report.py` joins exact and model pairs to every original row and exports
@@ -84,8 +87,59 @@ a new directory, in this order:
 $pilotPython = ".\.venv-template-pilot\Scripts\python.exe"
 & $pilotPython -m GG_Data.entity_resolution.hundred_page_pilot.recover_page_qids --all-pilot --mentions INPUT.parquet --revisions REVISIONS.parquet --collection COLLECTION_DIR --output RECOVERY_DIR
 & $pilotPython -m GG_Data.entity_resolution.hundred_page_pilot.prepare_mentions --mentions INPUT.parquet --revisions REVISIONS.parquet --entities RECOVERY_DIR/entities.parquet --evidence RECOVERY_DIR/target_evidence.parquet --output PREPARED_DIR
-& $pilotPython -m GG_Data.entity_resolution.hundred_page_pilot.prepare_candidates --mentions PREPARED_DIR/mentions.parquet --entities RECOVERY_DIR/entities.parquet --exclude-date --candidates 80 --output MATCHING_DIR
+& $pilotPython -m GG_Data.entity_resolution.hundred_page_pilot.filter_source_content --mentions PREPARED_DIR/mentions.parquet --revisions REVISIONS.parquet --output FILTERED_DIR
+& $pilotPython -m GG_Data.entity_resolution.hundred_page_pilot.prepare_candidates --mentions FILTERED_DIR/mentions.parquet --entities RECOVERY_DIR/entities.parquet --source-policy article-source-v1 --exclude-date --candidates 80 --output MATCHING_DIR
 ```
+
+### Source filter for subsequent runs
+
+`article-source-v1` checks each original occurrence, not an entire paragraph or
+every use of the same name. Original `Text`, `word_original`, offsets, type and
+row ID stay unchanged. The raw revision is checked against both its SHA-256 and
+saved page/revision response. Only a unique literal passage placement can KEEP
+an occurrence. Invalid, repeated or nonexact placements remain REVIEW.
+
+KEEP covers article prose, factual infobox values, tables, supported displayed
+names and framed image captions. EXCLUDE covers citations and bibliography,
+hidden categories/link targets, filenames/image options, known navigation and
+maintenance material, parameter keys and tag syntax. A citation inside an
+infobox remains excluded. Known ship helpers reuse the documented recovery
+rules, including hidden prefixes and display modes. Unknown nested templates,
+explanatory notes, inline image labels, galleries and malformed markup remain
+REVIEW. This is a bounded source parser, not a historical Wikipedia renderer or
+a check that a mention names a real entity.
+
+`mentions.parquet` contains **all** input rows. Its `source_scope_*` columns
+store the decision, reason, policy, exact source evidence and cleaned context.
+Only KEEP occurrences enter groups, type uniqueness, protected candidates,
+trigram and model contexts. Citation/control/uncertain source spans are masked
+in the separate context field; the original passage is not edited. DATE
+exclusion applies after source eligibility. The linked-QID inventory is
+unchanged; this stage does not rebuild graph inventories or collect new QIDs.
+
+Candidate preparation detects annotations automatically, but the explicit
+`--source-policy article-source-v1` flag above prevents accidental unfiltered
+input. Unannotated historical inputs remain `LEGACY_UNFILTERED`; mixed,
+unsupported or deliberately bypassed annotations are rejected. Every new
+matching summary records its policy and counts. Use a new output directory.
+
+After a separately authorised model run, `report.py` preserves all input rows
+and emits `EXCLUDED_SOURCE`, `REVIEW_SOURCE`, `EXCLUDED_DATE`, `MATCHED` or an
+explicit unresolved status. `unresolved_mentions.parquet` contains only
+`UNRESOLVED_ENTITY` and `UNRESOLVED_PAGE_VERSION`, including for newly exported
+legacy runs; old export files stay unchanged. Source exclusions/reviews are not
+matching failures. Existing result tables are not accepted as new export
+inputs, to avoid overwriting historical assignments.
+
+Frozen source-link reference bytes stay unchanged. Filtered metrics use only
+KEEP evidence anchors and eligible original rows; they remain incomplete
+positive-only checks. `--compare-baseline/--compare-corrected` requires the same
+source policy, so changing source scope cannot silently appear as a model-only
+effect. Filtering and local candidate preparation do not establish new model
+accuracy or permission to run inference.
+
+Verification report:
+[`2026-10-29-source-content-filter.md`](../../../docs/reports/2026-10-29-source-content-filter.md).
 
 Recovery is offline unless `--allow-api` is supplied. The approved run limits
 new requests to 200 and recovery time to 1,800 seconds. Current title/QID

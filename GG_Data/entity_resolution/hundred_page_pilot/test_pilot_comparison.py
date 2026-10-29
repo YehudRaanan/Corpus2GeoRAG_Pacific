@@ -131,6 +131,12 @@ def test_comparison_uses_original_rows_and_preserves_many_to_many(tmp_path):
     with pytest.raises(ValueError, match="complete"):
         report.compare_exports(baseline, corrected, tmp_path / "incomplete")
     (corrected / "results.json").write_text(json.dumps(saved))
+    (corrected / "results.json").write_text(
+        json.dumps({**saved, "source_policy": "article-source-v1"})
+    )
+    with pytest.raises(ValueError, match="source policies"):
+        report.compare_exports(baseline, corrected, tmp_path / "source_policy_scope")
+    (corrected / "results.json").write_text(json.dumps(saved))
     baseline_saved = json.loads((baseline / "results.json").read_text())
     for folder, summary in ((baseline, baseline_saved), (corrected, saved)):
         (folder / "results.json").write_text(

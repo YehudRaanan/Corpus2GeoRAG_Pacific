@@ -1,7 +1,7 @@
 """Prepare literal groups, strict exact pairs and local trigram candidate jobs.
 
 This step reads saved mention/entity tables and does not load a decision model.
-Every original occurrence remains in groups.jsonl for an auditable join.
+Every eligible occurrence remains in groups.jsonl for an auditable join.
 """
 
 from __future__ import annotations
@@ -11,10 +11,16 @@ import hashlib
 import json
 import logging
 import time
-from collections import defaultdict
+from collections import Counter, defaultdict
 from datetime import datetime, timezone
 from pathlib import Path
 
+from GG_Data.entity_resolution.hundred_page_pilot.filter_source_content import (
+    LEGACY_POLICY,
+    POLICY_VERSION,
+    is_eligible,
+    source_policy as validate_source_policy,
+)
 from GG_Data.entity_resolution.luke_pilot.data import sha256, write_jsonl
 from GG_Data.entity_resolution.trigram import rank_candidates
 
@@ -33,10 +39,15 @@ def identity(parts: list) -> str:
     return hashlib.sha256(json.dumps(parts, ensure_ascii=False).encode()).hexdigest()
 
 
-def group_mentions(rows: list[dict], *, exclude_date: bool = False) -> list[dict]:
+def group_mentions(
+    rows: list[dict], *, exclude_date: bool = False, source_policy: str | None = None
+) -> list[dict]:
     """Keep literal name/type identity and every occurrence, per revision."""
+    policy = validate_source_policy(rows, source_policy)
     grouped = {}
     for row in rows:
+        if not is_eligible(row, policy):
+            continue
         if exclude_date and row["entity_group"] == "DATE":
             continue
         if row.get("page_id") is None or row.get("revision_id") is None:
@@ -84,7 +95,11 @@ def group_mentions(rows: list[dict], *, exclude_date: bool = False) -> list[dict
             )
         text = row["Text"] or ""
         start, end = int(row["start"]), int(row["end"])
-        context = text[max(0, start - 160) : min(len(text), end + 160)]
+        context = (
+            row["source_scope_context"]
+            if policy != LEGACY_POLICY
+            else text[max(0, start - 160) : min(len(text), end + 160)]
+        )
         if context not in group["contexts"]:
             group["contexts"].append(context)
     result = []
@@ -130,6 +145,7 @@ def prepare(
     count: int,
     *,
     exclude_date: bool = False,
+    source_policy: str | None = None,
 ) -> dict:
     import pyarrow as pa
     import pyarrow.parquet as pq
@@ -137,7 +153,8 @@ def prepare(
     if count < 0:
         raise ValueError("Candidate count must be zero (all) or positive")
     rows = pq.read_table(mentions).to_pylist()
-    groups = group_mentions(rows, exclude_date=exclude_date)
+    policy = validate_source_policy(rows, source_policy)
+    groups = group_mentions(rows, exclude_date=exclude_date, source_policy=policy)
     entities = pq.read_table(entity_path).to_pylist()
     keys = [(e["page_id"], e["revision_id"], e["qid"]) for e in entities]
     if len(set(keys)) != len(keys):
@@ -213,8 +230,15 @@ def prepare(
         "model_questions": len(jobs),
         "candidate_limit": count,
         "exclude_date": exclude_date,
+        "source_policy": policy,
+        "source_scope_counts": dict(
+            Counter(r.get("source_scope_status", "LEGACY_UNFILTERED") for r in rows)
+        ),
+        "source_eligible_rows": sum(is_eligible(r, policy) for r in rows),
         "excluded_date_rows": (
-            sum(r["entity_group"] == "DATE" for r in rows) if exclude_date else 0
+            sum(r["entity_group"] == "DATE" and is_eligible(r, policy) for r in rows)
+            if exclude_date
+            else 0
         ),
         "candidate_union_pairs_including_stop": sum(
             len(j["candidates"]) + 1 for j in jobs
@@ -234,6 +258,11 @@ def main() -> None:
     parser.add_argument("--entities", type=Path, required=True)
     parser.add_argument("--output", type=Path, required=True)
     parser.add_argument(
+        "--source-policy",
+        choices=[POLICY_VERSION, LEGACY_POLICY],
+        help="Require this source policy; otherwise detect annotations and reject mixed inputs",
+    )
+    parser.add_argument(
         "--exclude-date",
         action="store_true",
         help="Preserve DATE rows outside this matching experiment",
@@ -251,6 +280,7 @@ def main() -> None:
         args.output,
         args.candidates,
         exclude_date=args.exclude_date,
+        source_policy=args.source_policy,
     )
     summary.update(
         started_utc=utc,

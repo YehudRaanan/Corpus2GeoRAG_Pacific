@@ -19,7 +19,15 @@ from collections import Counter, defaultdict
 from datetime import datetime, timezone
 from pathlib import Path
 
-from GG_Data.entity_resolution.hundred_page_pilot.prepare_candidates import identity
+from GG_Data.entity_resolution.hundred_page_pilot.filter_source_content import (
+    LEGACY_POLICY,
+    is_eligible,
+    source_policy,
+)
+from GG_Data.entity_resolution.hundred_page_pilot.prepare_candidates import (
+    group_mentions,
+    identity,
+)
 from GG_Data.entity_resolution.luke_pilot.data import read_jsonl, sha256
 
 
@@ -203,6 +211,12 @@ def export(
     if manifest.get("jobs_sha256") != sha256(matching / "jobs.jsonl"):
         raise ValueError("Inference jobs input hash does not match matching")
     mentions = pq.read_table(mentions_path)
+    if {"matched_qids", "entity_match_status", "entity_match_methods"} & set(
+        mentions.column_names
+    ):
+        raise ValueError(
+            "Export input already contains matching results; preserve the historical export"
+        )
     if passages_path:
         passage_rows = pq.read_table(passages_path).to_pylist()
         passages = {r["passage_id"]: r for r in passage_rows}
@@ -230,6 +244,19 @@ def export(
     if len(group_by_id) != len(groups):
         raise ValueError("Duplicate group IDs")
     source_rows = mentions.to_pylist()
+    policy = source_policy(
+        source_rows, matching_summary.get("source_policy", LEGACY_POLICY)
+    )
+    scope_counts = dict(
+        Counter(r.get("source_scope_status", LEGACY_POLICY) for r in source_rows)
+    )
+    if policy != LEGACY_POLICY:
+        if matching_summary.get("source_scope_counts") != scope_counts:
+            raise ValueError("Matching source scope counts differ from export")
+        if groups != group_mentions(
+            source_rows, exclude_date=exclude_date, source_policy=policy
+        ):
+            raise ValueError("Matching groups differ from eligible source scope")
     source_by_id = {r["source_row_index"]: r for r in source_rows}
     if len(source_by_id) != len(source_rows):
         raise ValueError("Duplicate source row indices")
@@ -251,6 +278,10 @@ def export(
             if index in by_row or index not in source_by_id:
                 raise ValueError("Duplicate or unknown group source row reference")
             row = source_by_id[index]
+            if not is_eligible(row, policy):
+                raise ValueError(
+                    "Group contains a row outside the declared source scope"
+                )
             actual = (
                 row["page_id"],
                 row["revision_id"],
@@ -264,6 +295,7 @@ def export(
         r.get("page_id") is not None
         and r.get("revision_id") is not None
         and not (exclude_date and r["entity_group"] == "DATE")
+        and is_eligible(r, policy)
         and r["source_row_index"] not in by_row
         for r in source_rows
     ):
@@ -285,6 +317,10 @@ def export(
                 group["type"],
             ) != (job["page_id"], job["revision_id"], candidate.get("type")):
                 raise ValueError("Candidate references an unknown group/revision/type")
+            if policy != LEGACY_POLICY and any(
+                candidate.get(k) != group.get(k) for k in ("name", "context")
+            ):
+                raise ValueError("Candidate text differs from eligible source scope")
     exact = pq.read_table(matching / "exact_pairs.parquet").to_pylist()
     model = read_jsonl(inference / "model_pairs.jsonl")
     expected_model_pairs = _completed_model_pairs(jobs, inference)
@@ -331,12 +367,20 @@ def export(
         matched = sorted(by_group.get(group["id"], ())) if group else []
         qids.append(matched)
         statuses.append(
-            "EXCLUDED_DATE"
-            if exclude_date and row["entity_group"] == "DATE"
+            (
+                "EXCLUDED_SOURCE"
+                if row["source_scope_status"] == "EXCLUDE"
+                else "REVIEW_SOURCE"
+            )
+            if not is_eligible(row, policy)
             else (
-                "MATCHED"
-                if matched
-                else "UNRESOLVED_ENTITY" if group else "UNRESOLVED_PAGE_VERSION"
+                "EXCLUDED_DATE"
+                if exclude_date and row["entity_group"] == "DATE"
+                else (
+                    "MATCHED"
+                    if matched
+                    else "UNRESOLVED_ENTITY" if group else "UNRESOLVED_PAGE_VERSION"
+                )
             )
         )
         row_methods.append(sorted(methods.get(group["id"], ())) if group else [])
@@ -353,18 +397,40 @@ def export(
     # A subset delivery checks only its original page/revision scope. The saved
     # reference bytes stay unchanged for every arm and every subset.
     scope = {(r.get("page_id"), r.get("revision_id")) for r in source_rows}
+    eligible_rows = [
+        r
+        for r in enriched.to_pylist()
+        if is_eligible(r, policy) and not (exclude_date and r["entity_group"] == "DATE")
+    ]
     local_reference = [
         p
         for p in reference
         if (p["page_id"], p["revision_id"]) in scope
         and not (exclude_date and p["entity_group"] == "DATE")
+        and (
+            policy == LEGACY_POLICY
+            or (
+                p.get("source_row_index") in source_by_id
+                and is_eligible(source_by_id[p["source_row_index"]], policy)
+            )
+        )
     ]
-    reference_check = original_row_reference_metrics(
-        local_reference, enriched.to_pylist()
-    )
+    reference_check = original_row_reference_metrics(local_reference, eligible_rows)
+    if policy != LEGACY_POLICY:
+        reference_check["scope"] = (
+            "ELIGIBLE_FROZEN_REFERENCE_SUBSET; original evidence row must be KEEP"
+        )
     output.mkdir(parents=True, exist_ok=False)
     pq.write_table(enriched, output / "matched_mentions.parquet", compression="zstd")
-    unresolved = enriched.filter(pa.array([status != "MATCHED" for status in statuses]))
+    unresolved = enriched.filter(
+        pa.array(
+            [
+                status in {"UNRESOLVED_ENTITY", "UNRESOLVED_PAGE_VERSION"}
+                for status in statuses
+            ],
+            type=pa.bool_(),
+        )
+    )
     pq.write_table(
         unresolved, output / "unresolved_mentions.parquet", compression="zstd"
     )
@@ -386,6 +452,10 @@ def export(
         "selected_rows": mentions.num_rows,
         "exported_rows": enriched.num_rows,
         "row_status_counts": dict(Counter(statuses)),
+        "source_policy": policy,
+        "source_scope_counts": scope_counts,
+        "source_eligible_rows": sum(is_eligible(r, policy) for r in source_rows),
+        "unresolved_rows": unresolved.num_rows,
         "groups": len(groups),
         "matched_groups": len(by_group),
         "unresolved_resolved_page_groups": len(groups) - len(by_group),
@@ -442,6 +512,17 @@ def compare_exports(
         s.get("inference_inputs", {}).get("checkpoint_sha256") for s in summaries
     ]
     date_scopes = [s.get("matching_summary", {}).get("exclude_date") for s in summaries]
+    source_policies = [
+        s.get(
+            "source_policy",
+            s.get("matching_summary", {}).get("source_policy", LEGACY_POLICY),
+        )
+        for s in summaries
+    ]
+    if source_policies[0] != source_policies[1]:
+        raise ValueError(
+            "Comparison requires identical source policies; source filtering is not a model-only change"
+        )
     if (
         not all(type(scope) is bool for scope in date_scopes)
         or date_scopes[0] != date_scopes[1]

@@ -139,3 +139,66 @@ def test_review_status_blocks_exact_without_changing_legacy_groups(status):
     assert len(exact_pairs(legacy, entities)) == 1
     assert reviewed[0]["source_review_statuses"] == [status]
     assert not exact_pairs(reviewed, entities)
+
+
+def scoped_row(index, word, status="KEEP", **extra):
+    return row(
+        index,
+        word,
+        source_scope_status=status,
+        source_scope_policy_version="article-source-v1",
+        source_scope_context="clean context",
+        **extra
+    )
+
+
+def test_source_gate_precedes_type_qid_repair_and_context_aggregation():
+    rows = [
+        scoped_row(0, "Japan"),
+        {
+            **scoped_row(
+                1,
+                "Japan",
+                "EXCLUDE",
+                source_candidate_qids=["Q999"],
+                repair_status="repaired",
+            ),
+            "entity_group": "ORG",
+        },
+        scoped_row(2, "Japan", "REVIEW", source_candidate_qids=["Q998"]),
+    ]
+    groups = group_mentions(rows)
+    assert len(groups) == 1
+    assert groups[0]["source_row_indices"] == [0]
+    assert groups[0]["context"] == "clean context"
+    assert groups[0]["source_candidate_qids"] == []
+    assert groups[0]["repaired_source_row_indices"] == []
+    assert (
+        len(
+            exact_pairs(
+                groups, [dict(page_id=1, revision_id=11, qid="Q17", label="Japan")]
+            )
+        )
+        == 1
+    )
+
+
+@pytest.mark.parametrize(
+    "change",
+    [
+        {"source_scope_status": None},
+        {"source_scope_status": "OTHER"},
+        {"source_scope_policy_version": "unknown"},
+        {"source_scope_context": None},
+    ],
+)
+def test_invalid_scope_annotations_fail_closed(change):
+    with pytest.raises(ValueError, match="source-scope"):
+        group_mentions([{**scoped_row(0, "Japan"), **change}])
+
+
+def test_mixed_or_bypassed_scope_annotations_are_rejected():
+    with pytest.raises(ValueError, match="source-scope"):
+        group_mentions([scoped_row(0, "Japan"), row(1, "Japan")])
+    with pytest.raises(ValueError, match="source policy"):
+        group_mentions([scoped_row(0, "Japan")], source_policy="LEGACY_UNFILTERED")
