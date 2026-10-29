@@ -280,8 +280,19 @@ def infer(
     max_hours: float,
     pair_batch_size: int,
     device: str,
+    *,
+    readiness_path: Path | None = None,
+    require_readiness: bool = False,
+    experimental_approval_path: Path | None = None,
 ) -> dict:
     """Resume only a matching checkpoint/input; append each completed score row."""
+    readiness = None
+    if require_readiness or readiness_path is not None or experimental_approval_path is not None:
+        from GG_Data.entity_resolution.hundred_page_pilot.readiness import validate_readiness
+
+        readiness = validate_readiness(readiness_path, checkpoint,
+                                       experimental_approval=experimental_approval_path,
+                                       jobs_path=jobs_path)
     from GG_Data.entity_resolution.hundred_page_pilot.model import (
         load_scorer, score_record)
 
@@ -291,6 +302,10 @@ def infer(
         "jobs_sha256": sha256(jobs_path),
         "checkpoint_sha256": sha256(checkpoint),
     }
+    if readiness is not None:
+        signature["readiness_sha256"] = sha256(readiness_path)
+        if experimental_approval_path is not None:
+            signature["experimental_approval_sha256"] = sha256(experimental_approval_path)
     manifest = output / "inference_inputs.json"
     if manifest.exists():
         if json.loads(manifest.read_text(encoding="utf-8")) != signature:
@@ -411,6 +426,10 @@ def main() -> None:
         "--jobs", type=Path, help="Existing prepared jobs; enables inference"
     )
     parser.add_argument("--checkpoint", type=Path)
+    parser.add_argument("--readiness", type=Path)
+    parser.add_argument("--experimental-approval", type=Path)
+    parser.add_argument("--legacy-without-readiness", action="store_true",
+                        help="Explicit legacy compatibility only; not for post-QID delivery")
     parser.add_argument("--device", default="cuda")
     parser.add_argument("--max-hours", type=float, default=1.0)
     parser.add_argument("--pair-batch-size", type=int, default=16)
@@ -429,6 +448,9 @@ def main() -> None:
             args.max_hours,
             args.pair_batch_size,
             args.device,
+            readiness_path=args.readiness,
+            require_readiness=not args.legacy_without_readiness,
+            experimental_approval_path=args.experimental_approval,
         )
         (args.output / "inference_summary.json").write_text(
             json.dumps(summary, indent=2), encoding="utf-8"
