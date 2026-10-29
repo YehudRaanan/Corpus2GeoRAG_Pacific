@@ -1,6 +1,6 @@
 # Revised Pipeline and New Daniel Input Implementation Plan
 
-> **For agentic workers:** REQUIRED SUB-SKILL: Use superpowers:subagent-driven-development or superpowers:executing-plans. Implement tasks in order of dependencies, with exclusive file owners. Execution is pending OWNER duration approval.
+> **For agentic workers:** REQUIRED SUB-SKILL: Use superpowers:subagent-driven-development or superpowers:executing-plans. Implement tasks in order of dependencies, with exclusive file owners. Execution approved by OWNER on 30 October 2026; current status is recorded in the SDD progress ledger and versioned run status.
 
 **Goal:** Implement the accepted six-stage pipeline and compare a new experimental run on the same saved 100 pages with the earlier results.
 
@@ -49,12 +49,12 @@ Root owns shared contracts, integration, manifest, Git checkpoints, GPU/cloud ac
 
 **Files:** `hundred_page_pilot/prepare_pages.py`, `prepare_candidates.py`, optional necessary cleaner adapter changes in `clean_source_text.py`; dedicated tests. Paths are under `GG_Data/entity_resolution/`.
 
-- [ ] Add focused failing checks for Source-QID input, frozen global row selection, unchanged raw fields and no duplicate supplied metadata columns.
-- [ ] Reuse the verified saved selection/revisions via an explicit new-input adapter; stop if occurrence lineage or revision evidence differs. No reselection by changed Source values.
-- [ ] Run the existing cleaner on the selected rows. Make candidate grouping consume the explicit cleaned view and common eligibility decision.
-- [ ] Expose strict exact matching as the meaningful stage `match_exact.py`, reusing the existing exact rule rather than copying it. Candidate preparation consumes exact pairs and creates only residual trigram jobs.
-- [ ] Preserve source-supported candidate evidence and original group lineage. Test literal uniqueness, repaired names, same revision, DATE/excluded/review blocking and clean-slice correctness.
-- [ ] Return the stage interfaces, tested fixtures and actual counts. Owner estimate: 40–70 minutes, model-derived.
+- [x] Add focused failing checks for Source-QID input, frozen global row selection, unchanged raw fields and no duplicate supplied metadata columns.
+- [x] Reuse the verified saved selection/revisions via an explicit new-input adapter; stop if occurrence lineage or revision evidence differs. No reselection by changed Source values.
+- [x] Run the existing cleaner on the selected rows. Make candidate grouping consume the explicit cleaned view and common eligibility decision.
+- [x] Expose strict exact matching as the meaningful stage `match_exact.py`, reusing the existing exact rule rather than copying it. Candidate preparation consumes exact pairs and creates only residual trigram jobs.
+- [x] Preserve source-supported candidate evidence and original group lineage. Test literal uniqueness, repaired names, same revision, DATE/excluded/review blocking and clean-slice correctness.
+- [x] Return the stage interfaces, tested fixtures and actual counts. Owner estimate: 40–70 minutes, model-derived.
 
 ### Task B: Mention/entity table write stages
 
@@ -62,11 +62,11 @@ Root owns shared contracts, integration, manifest, Git checkpoints, GPU/cloud ac
 
 **Files:** `GG_Data/pipeline/post_qid_mentions.py`, `post_qid_entities.py`; dedicated tests.
 
-- [ ] Add focused checks for early pending rows, missing page/revision IDs, excluded/review states and zero invented provisional identities before finalization.
-- [ ] Adapt `populate`/`run` through minimal explicit stage/finalization arguments; retain compatible legacy behavior where tests require it.
-- [ ] Keep all original rows, working values and evidence. Commit consistent entity+bridge snapshots and preserve many-to-many links.
-- [ ] Create provisional identities only for final eligible unmatched groups. Validate stable occurrence IDs and all typed endpoint references.
-- [ ] Return tested fixtures and schema changes. Owner estimate: 35–65 minutes, model-derived.
+- [x] Add focused checks for early pending rows, missing page/revision IDs, excluded/review states and zero invented provisional identities before finalization.
+- [x] Adapt `populate`/`run` through minimal explicit stage/finalization arguments; retain compatible legacy behavior where tests require it.
+- [x] Keep all original rows, working values and evidence. Commit consistent entity+bridge snapshots and preserve many-to-many links.
+- [x] Create provisional identities only for final eligible unmatched groups. Validate stable occurrence IDs and all typed endpoint references.
+- [x] Return tested fixtures and schema changes. Owner estimate: 35–65 minutes, model-derived.
 
 ### Task C: Article-bound enrichment and data checks
 
@@ -74,11 +74,11 @@ Root owns shared contracts, integration, manifest, Git checkpoints, GPU/cloud ac
 
 **Files:** `GG_Data/pipeline/post_qid_events.py`, `post_qid_relations.py`, `post_qid_eda.py`; dedicated tests.
 
-- [ ] Test removal of hardcoded three-page assumptions using manifest-bounded 3/10/100 fixtures; do not remove the corpus boundary.
-- [ ] Reuse cached native records and article evidence. Separate raw inventory from retained-content link presence; retain historical Wikidata revisions for approved pre-merge identities.
-- [ ] Keep native relations directed and derived inverses explicit; reject missing endpoints and citation-only added Events.
-- [ ] Update data checks for legitimate missing page IDs and explicit raw-versus-working fields; retain strict unexplained integrity failures.
-- [ ] Return missing-cache evidence and tested enrichment functions. Owner estimate: 35–65 minutes, model-derived.
+- [x] Test removal of hardcoded three-page assumptions using manifest-bounded 3/10/100 fixtures; do not remove the corpus boundary.
+- [x] Reuse cached native records and article evidence. Separate raw inventory from retained-content link presence; retain historical Wikidata revisions for approved pre-merge identities.
+- [x] Keep native relations directed and derived inverses explicit; reject missing endpoints and citation-only added Events.
+- [x] Update data checks for legitimate missing page IDs and explicit raw-versus-working fields; retain strict unexplained integrity failures.
+- [x] Return missing-cache evidence and tested enrichment functions. Owner estimate: 35–65 minutes, model-derived.
 
 ### Task D: Integration, readiness and comparative report
 
@@ -86,10 +86,10 @@ Root owns shared contracts, integration, manifest, Git checkpoints, GPU/cloud ac
 
 **Files:** `GG_Data/pipeline/post_qid_run.py`, `hundred_page_pilot/readiness.py`, `report.py`, integration tests and run documentation. Reuse `resolve_entities.py` unless a demonstrated integration defect requires a narrow fix owned by root.
 
-- [ ] Replace pinned old matching paths with explicit run-scoped stage inputs. Keep orchestration short and reuse stage callables.
-- [ ] Reuse the inference approval validator in the writer; do not implement conflicting quality exceptions. Do not mutate old archived receipts.
-- [ ] Save input, policies, checkpoint, jobs, code hashes and stage status. Fail stale-score reuse and inconsistent snapshots. Record runtime and issues per stage; keep active work separate from waits and mark unmeasured time unknown.
-- [ ] Preserve the old strict model-comparison function. Add a separately labelled workflow comparison that explains changed cleaning and eligibility, matched by verified source row lineage.
+- [x] Replace pinned old matching paths with explicit run-scoped stage inputs. Keep orchestration short and reuse stage callables.
+- [x] Reuse the inference approval validator in the writer; do not implement conflicting quality exceptions. Do not mutate old archived receipts.
+- [x] Save input, policies, checkpoint, jobs, code hashes and stage status. Fail stale-score reuse and inconsistent snapshots. Record runtime and issues per stage; keep active work separate from waits and mark unmeasured time unknown.
+- [x] Preserve the old strict model-comparison function. Add a separately labelled workflow comparison that explains changed cleaning and eligibility, matched by verified source row lineage.
 - [ ] Run focused stage tests, then combined affected tests/lint and one full three-page dry integration before paid execution.
 - [ ] Inspect live resource/budget evidence, install no new services, correct the STOP guard, and start only the existing approved VM after duration/quality approval. Root alone owns cloud actions.
 - [ ] Restore/check checkpoint and tokenizer, record input-format compatibility, run three pages end to end and check outputs. Continue to ten and then all hundred only after the preceding checks pass.
@@ -100,7 +100,7 @@ Root implementation/check estimate: 30–50 minutes, partly concurrent. Combined
 
 ## Delivery and review gates
 
-- [ ] **Three pages:** same saved three retained pages; complete stages 1–6 and table integrity checks before expansion.
+- [x] **Three pages:** same saved three retained pages; complete stages 1–6 and table integrity checks before expansion.
 - [ ] **Ten pages:** same saved ten-page scope; compare candidate/run signatures and status counts.
 - [ ] **Hundred pages:** all 40,070 original occurrence rows represented; no source exclusions hidden as matching improvements. Compare with saved original baseline (13,627 matched; 7,372 DATE; 19,071 entity unresolved) and corrected source-name run (14,588 matched; 7,372 DATE; 18,110 entity unresolved). These old counts are comparison references, not new-run predictions.
 - [ ] Independent review of affected code and saved outputs; focused failures fixed within scope. Do not run new experiments to improve metrics silently.
