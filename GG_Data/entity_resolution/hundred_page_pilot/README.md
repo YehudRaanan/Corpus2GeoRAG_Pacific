@@ -10,6 +10,7 @@ The full corpus is not rerun. All paths below are relative to the project root.
 |---|---|---|
 | `prepare_pages.py` | Selects 100 source titles, reuses exact local passage evidence, checks dated raw Wikipedia revisions until each copied passage matches or the recovery limit is reached. | Original rows with page/revision IDs; raw text, API evidence, hashes and explicit unresolved reasons. |
 | `collect_entities.py` | Reads only the used revisions. Extracts direct article links, including links inside the supplied references, tables and template arguments. Reuses local metadata, accepts a selected-QID BigQuery export, then fills API gaps. | Linked QIDs, page's own QID, official English labels, aliases, descriptions, native P31 types and provenance. |
+| `recover_page_qids.py` | Checks the three saved unresolved revisions; reconstructs flat Ship-template targets, checks failed article links and preserves current lookup evidence separately. | A separate expanded candidate inventory and all 369 case reports; no mention assignments. |
 | `prepare_candidates.py` | Groups literal names and Daniel types; accepts strict exact pairs; ranks remaining local alternatives with shared trigram retrieval. Does not load the model. | Exact pairs, ranked jobs, source row groups and workload counts. |
 | `resolve_entities.py` | Checks readiness, loads the canonical decision model only for inference, then selects and removes alternatives until stop wins. | Restartable scores, model pairs and complete local decision traces. |
 | `readiness.py` | Checks checkpoint, training inputs/code and evaluation evidence before inference. | Explicit technical and quality gates; historical evidence is not rewritten by this refactor. |
@@ -55,6 +56,26 @@ date-filter issue remains a separate acceptance concern. This refactor does not
 rerun data collection, training, inference or table population.
 
 ## Identity and matching rules
+
+### Optional missing-QID recovery
+
+The approved three-page recovery is a separate stage after collection. It does
+not run the matcher or update existing tables. The final reviewed outputs are in
+`Data/external/hundred_page_pilot_20261028/qid_recovery_20261029_v2/`; the earlier
+directory retains the two original API responses. The final inventory has 135
+page/revision/QID rows (112 original + 23 additions), all additions on Nishimura's
+saved revision. Spellings, ship-type conflicts, changed years and missing pages
+stay under review. Source enclosure is not a correct-identity label.
+
+Replay the recovery into a new directory without network access:
+
+```powershell
+python -m GG_Data.entity_resolution.hundred_page_pilot.recover_page_qids --output Data/external/hundred_page_pilot_20261028/qid_recovery_replay --request-cache Data/external/hundred_page_pilot_20261028/qid_recovery_20261029/requests
+```
+
+The stage refuses an existing output directory. `--allow-api` permits bounded
+public lookups only when needed. Full evidence and limitations:
+[`2026-10-29-unresolved-page-qid-recovery.md`](../../../docs/reports/2026-10-29-unresolved-page-qid-recovery.md).
 
 Daniel groups use the literal `(word, entity_group)` on each page and revision.
 Repeated occurrences remain in `source_row_indices`; they are never discarded.
