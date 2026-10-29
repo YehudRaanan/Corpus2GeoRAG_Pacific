@@ -328,7 +328,7 @@ def export(
     qids, statuses, row_methods = [], [], []
     for row in source_rows:
         group = by_row.get(row["source_row_index"])
-        matched = sorted(by_group[group["id"]]) if group else []
+        matched = sorted(by_group.get(group["id"], ())) if group else []
         qids.append(matched)
         statuses.append(
             "EXCLUDED_DATE"
@@ -339,7 +339,7 @@ def export(
                 else "UNRESOLVED_ENTITY" if group else "UNRESOLVED_PAGE_VERSION"
             )
         )
-        row_methods.append(sorted(methods[group["id"]]) if group else [])
+        row_methods.append(sorted(methods.get(group["id"], ())) if group else [])
     enriched = mentions.append_column(
         "matched_qids", pa.array(qids, type=pa.list_(pa.string()))
     )
