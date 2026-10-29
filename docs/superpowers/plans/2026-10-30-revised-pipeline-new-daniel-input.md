@@ -90,21 +90,21 @@ Root owns shared contracts, integration, manifest, Git checkpoints, GPU/cloud ac
 - [x] Reuse the inference approval validator in the writer; do not implement conflicting quality exceptions. Do not mutate old archived receipts.
 - [x] Save input, policies, checkpoint, jobs, code hashes and stage status. Fail stale-score reuse and inconsistent snapshots. Record runtime and issues per stage; keep active work separate from waits and mark unmeasured time unknown.
 - [x] Preserve the old strict model-comparison function. Add a separately labelled workflow comparison that explains changed cleaning and eligibility, matched by verified source row lineage.
-- [ ] Run focused stage tests, then combined affected tests/lint and one full three-page dry integration before paid execution.
-- [ ] Inspect live resource/budget evidence, install no new services, correct the STOP guard, and start only the existing approved VM after duration/quality approval. Root alone owns cloud actions.
-- [ ] Restore/check checkpoint and tokenizer, record input-format compatibility, run three pages end to end and check outputs. Continue to ten and then all hundred only after the preceding checks pass.
-- [ ] Limit total new running time to 90 minutes; reconcile aggregate runtime/cost and stop the VM in cleanup. If GPU availability or cost gate blocks inference, preserve completed local stages and report that exact blocker.
-- [ ] Save final tables, all-row status comparison, candidate/model evidence, enrichment coverage, examples and remaining uncertainty. Report changed eligible denominator separately from genuine matching gains.
+- [x] Run focused stage tests, combined affected tests/lint and pre-GPU synthetic integration plus real three-page pending/exact snapshots. The actual full three-page model delivery ran on CUDA and passed before ten-page expansion; it was not a pre-GPU real-model dry run.
+- [x] Inspect live resource/budget evidence, install no new services, correct the STOP guard, and start only the existing approved VM after duration/quality approval. Root alone owns cloud actions.
+- [x] Restore/check checkpoint and tokenizer, record input-format compatibility, run three pages end to end and check outputs. Continue to ten and then all hundred only after the preceding checks pass.
+- [x] Limit total new running time to 90 minutes; reconcile aggregate runtime/cost and stop the VM in cleanup. If GPU availability or cost gate blocks inference, preserve completed local stages and report that exact blocker.
+- [x] Save final tables, all-row status comparison, candidate/model evidence, enrichment coverage, examples and remaining uncertainty. Report changed eligible denominator separately from genuine matching gains.
 
 Root implementation/check estimate: 30–50 minutes, partly concurrent. Combined implementation critical path: 75–125 minutes. Staged execution/report: 55–90 minutes; prior measured corrected 100-page inference was 2,414.496 seconds for 818,378 pair evaluations. Cleaner took 13.625 seconds. These do not guarantee current GPU speed or availability.
 
 ## Delivery and review gates
 
 - [x] **Three pages:** same saved three retained pages; complete stages 1–6 and table integrity checks before expansion.
-- [ ] **Ten pages:** same saved ten-page scope; compare candidate/run signatures and status counts.
-- [ ] **Hundred pages:** all 40,070 original occurrence rows represented; no source exclusions hidden as matching improvements. Compare with saved original baseline (13,627 matched; 7,372 DATE; 19,071 entity unresolved) and corrected source-name run (14,588 matched; 7,372 DATE; 18,110 entity unresolved). These old counts are comparison references, not new-run predictions.
-- [ ] Independent review of affected code and saved outputs; focused failures fixed within scope. Do not run new experiments to improve metrics silently.
-- [ ] Local Git checkpoint after verified milestones, excluding unrelated pre-existing evaluate.py/report changes and ignored data. No push without standing permission. State local checkpoint status honestly.
+- [x] **Ten pages:** same saved ten-page scope; compare candidate/run signatures and status counts.
+- [x] **Hundred pages:** all 40,070 original occurrence rows represented; no source exclusions hidden as matching improvements. Compare with saved original baseline (13,627 matched; 7,372 DATE; 19,071 entity unresolved) and corrected source-name run (14,588 matched; 7,372 DATE; 18,110 entity unresolved). These old counts are comparison references, not new-run predictions.
+- [x] Independent review of affected code and saved outputs; focused failures fixed within scope. Do not run new experiments to improve metrics silently.
+- [x] Local Git checkpoint after verified milestones, excluding unrelated pre-existing evaluate.py/report changes and ignored data. No push without standing permission. State local checkpoint status honestly.
 
 ## Estimate, approvals and checkpoints
 
@@ -123,3 +123,11 @@ Approval must cover this fixed model's experimental 3/10/100 execution with new 
 - Candidate group identity changes must not detach original occurrence lineage or remove valid many-to-many links.
 - Experimental readiness must bind to the actual new jobs; old approval and inference receipts cannot be reused as authority.
 - Enrichment must obey retained saved-revision content and close all endpoints for the exact same run version.
+
+## Execution close — 30 October 2026
+
+All saved3/10/100 scopes completed; all40070 original rows retained. Final100:7387matched,5852eligibleunresolved,14980sourceexcluded,7918sourcereview,3933deferredDATE. Bothfinalworkflow comparisons passed lineage; corrected-run same-eligible matched7088→7387 (+421new/122lost). Structural/source/hash/typed-endpoint controls passed; scientific accuracy and optional Event/Relation semantics/completeness remain unevaluated. Three Japanese/MISC occurrences each received27QIDs and are explicit review cases, not silently changed.
+
+VM verifiedTERMINATED:00:50:35.329→01:33:49.696Asia/Jerusalem,2594.367newseconds/15828.011aggregateseconds. Aggregate conservative estimate including$2reserve$6.50, actualbillingunknown. TemporaryVMapprovalunused; no temporary resources existed. No paidBQ/training/Geography/database load. Root final verification and63fresh focused tests passed. Report:docs/reports/2026-10-30-revised-pipeline-comparison.md.
+
+Measured execution wallclock is recorded in status.json; full approved task basis includes unmeasured preflight and excluded waits, so full-task actual,activework,approvalwait and critical-path environmentwait remain unknown. No incompatible numeric actual was submitted to Epoch. Local Git checkpoint only; ignored run/model outputs remain unprotected on GitHub.
