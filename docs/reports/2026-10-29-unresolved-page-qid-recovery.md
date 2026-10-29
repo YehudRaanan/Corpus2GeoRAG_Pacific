@@ -148,5 +148,5 @@ changes. The original run's redirect response had no section redirects, so the
 batch guard did not change its counts; its final evidence chains were still
 corrected in the offline replay. Unicode inspection used `python -X utf8`.
 
-Code will have a local Git checkpoint. Ignored data and cached responses remain
-local and are not backed up on GitHub. No push is authorized.
+**Local checkpoint only:** code commit `9db419a`. Ignored data and cached
+responses remain local and are not backed up on GitHub. No push is authorized.

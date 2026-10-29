@@ -1,7 +1,7 @@
 # Recover missing page QIDs for unresolved mentions
 
-**Status:** OWNER approved execution; started 12:41:38 on 29 October 2026,
-Asia/Jerusalem (UTC+02). First execution checkpoint 12:52.
+**Status:** COMPLETE. OWNER-approved execution started 12:41:38 on 29 October
+2026, Asia/Jerusalem (UTC+02). Final data verification completed at 12:56:49.
 
 **Goal:** Add source-supported QID candidates to a new inventory for the three
 saved revisions behind the 369 unresolved mentions. Do not assign mentions.
@@ -105,7 +105,7 @@ on GitHub. No push permission is assumed.
 - [x] Task 2: stage implementation and GREEN; 25 recovery tests pass.
 - [x] Task 4: bounded recovery; two public requests, final offline replay.
 - [x] Task 5: independent result review; 53 assertions and 154 hashes pass.
-- [x] Task 6: report completed; local checkpoint prepared.
+- [x] Task 6: report completed; local code checkpoint `9db419a` created, no push.
 
 Ruling: support flat `Ship` calls only for this census; parameterless `IJN` is
 navigation, not an individual ship. Other template families remain outside the
