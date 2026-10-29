@@ -31,7 +31,8 @@ from GG_Data.entity_resolution.hundred_page_pilot.recover_page_qids import (
 from GG_Data.entity_resolution.luke_pilot.data import sha256
 
 LOG = logging.getLogger(__name__)
-POLICY_VERSION = "article-source-v1"
+POLICY_VERSION = "article-source-v2"
+SUPPORTED_POLICIES = ("article-source-v1", POLICY_VERSION)
 LEGACY_POLICY = "LEGACY_UNFILTERED"
 CITATION = {
     "citation",
@@ -69,6 +70,8 @@ CONTROL = {
     "wikiquote",
     "portal",
     "portal bar",
+    "ribbon devices",
+    "rp",
     "use dmy dates",
     "use mdy dates",
     "use british english",
@@ -87,11 +90,39 @@ CONTROL = {
     "disputed inline",
 }
 NAVIGATION = {
+    "main",
+    "see also",
+    "further",
     "australian commando units of the second world war",
     "australian commando raids of the second world war",
 }
 IMAGE_KEYS = {"image", "image name", "logo", "signature", "image seal"}
 CAPTION_KEYS = {"caption", "image caption", "map caption", "logo caption"}
+DISPLAY_STYLES = {
+    "align",
+    "salign",
+    "width",
+    "style",
+    "class",
+    "liststyle",
+    "itemstyle",
+    "indent",
+    "fontsize",
+    "bgcolor",
+    "border",
+    "padding",
+    "color",
+    "clear",
+}
+LIST_TEMPLATES = {
+    "plainlist",
+    "plain list",
+    "hlist",
+    "ubl",
+    "unbulleted list",
+    "bulleted list",
+    "ordered list",
+}
 EXCLUDE_ROLES = (
     "comment",
     "category_metadata",
@@ -133,11 +164,26 @@ BOUNDARY_ROLES = (
     "infobox",
     "caption",
     "link_construct",
+    "gallery_construct",
 )
 
 
 def normal(value: object) -> str:
     return " ".join(str(value).replace("_", " ").split()).casefold()
+
+
+def citation_only_ref(contents: object) -> bool:
+    """Match a complete short citation, never author/year inside explanatory prose."""
+    text = " ".join(str(contents).replace("''", "").split())
+    return (
+        re.fullmatch(
+            r"[A-ZÀ-ÖØ-Þ][\w’'.-]*(?:\s+(?:[A-ZÀ-ÖØ-Þ][\w’'.-]*|&|and|et|al\.?))*"
+            r"(?:\s*(?:\((?:18|19|20)\d{2}[a-z]?\)|(?:18|19|20)\d{2}[a-z]?),?\s*|\s*,\s*)(?:pp?\.|pages?)\s*"
+            r"[0-9ivxlcdm]+(?:\s*[-–—,]\s*[0-9ivxlcdm]+)*\.?",
+            text,
+        )
+        is not None
+    )
 
 
 def source_intervals(raw: str) -> tuple[list[tuple], list[tuple]]:
@@ -149,6 +195,15 @@ def source_intervals(raw: str) -> tuple[list[tuple], list[tuple]]:
     def add(left: int, right: int, role: str, detail: str = "") -> None:
         if right > left:
             spans.append((left, right, role, detail))
+
+    def gallery_filename(value: str) -> bool:
+        return (
+            re.fullmatch(
+                r"(?is)\s*(?:(?:file|image):)?[^|\n{}<>]+\.(?:jpe?g|png|svg|gif|webp|tiff?)\s*",
+                value,
+            )
+            is not None
+        )
 
     def check_unparsed(wikicode: object, offset: int) -> None:
         # Unclosed constructs become Text nodes; never treat their contents as prose.
@@ -197,6 +252,17 @@ def source_intervals(raw: str) -> tuple[list[tuple], list[tuple]]:
                 elif kind == "template":
                     family = normal(node.name)
                     if family.startswith("cite ") or family in CITATION:
+                        role = "citation"
+                    elif family in {"london gazette", "csr"} and all(
+                        normal(p.name)
+                        in (
+                            {"issue", "date", "page", "pages", "supp"}
+                            if family == "london gazette"
+                            else {"register", "id", "shipname", "access-date"}
+                        )
+                        or not str(p.value).strip()
+                        for p in node.params
+                    ):
                         role = "citation"
                     elif family.startswith("infobox"):
                         role = "infobox"
@@ -263,6 +329,55 @@ def source_intervals(raw: str) -> tuple[list[tuple], list[tuple]]:
                         controls = {"1"} if family == "lang" else set()
                     elif family in {"blockquote", "quote", "quotation", "cquote"}:
                         display = {"1", "text"}
+                    elif family == "quote box":
+                        display, controls = {"quote"}, DISPLAY_STYLES
+                    elif family in LIST_TEMPLATES:
+                        display = (
+                            {"1"}
+                            if family in {"plainlist", "plain list"}
+                            else {
+                                normal(p.name)
+                                for p in node.params
+                                if str(p.name).strip().isdigit()
+                            }
+                        )
+                        controls = DISPLAY_STYLES | {"start", "type", "horizontal"}
+                    elif family == "font color" and node.has("2"):
+                        display = {"3"} if node.has("3") else {"2"}
+                        controls = {"1", "2"} - display
+                    elif family == "gallery":
+                        positional = [
+                            p for p in node.params if str(p.name).strip().isdigit()
+                        ]
+                        if (
+                            positional
+                            and len(positional) % 2 == 0
+                            and all(
+                                str(p.name).strip() == str(i + 1)
+                                and (i % 2 or gallery_filename(str(p.value)))
+                                for i, p in enumerate(positional)
+                            )
+                        ):
+                            display = {str(p.name).strip() for p in positional[1::2]}
+                            controls = (
+                                {str(p.name).strip() for p in positional[::2]}
+                                | DISPLAY_STYLES
+                                | {"noborder", "mode", "height", "whitebg"}
+                            )
+                    elif family == "multiple image":
+                        display = {
+                            normal(p.name)
+                            for p in node.params
+                            if re.fullmatch(r"caption\d*|footer|header", normal(p.name))
+                        }
+                        controls = DISPLAY_STYLES | {
+                            normal(p.name)
+                            for p in node.params
+                            if re.fullmatch(
+                                r"(?:image|alt|width|height|link)\d*|direction|total width|perrow|image gap|caption align|footer align|header align",
+                                normal(p.name),
+                            )
+                        }
                     elif family in {"flag", "flagcountry"}:
                         display = {"name"} if node.has("name") else {"1"}
                         controls = {"2", "size", "image", "variant"} | (
@@ -334,7 +449,11 @@ def source_intervals(raw: str) -> tuple[list[tuple], list[tuple]]:
                         cursor += 1 + len(str(parameter))
                 elif kind == "tag":
                     tag = normal(node.tag)
-                    if node.contents is not None and not node.wiki_markup:
+                    if (
+                        node.contents is not None
+                        and not node.wiki_markup
+                        and tag != "gallery"
+                    ):
                         content_start = literal.find(">") + 1
                         check_unparsed(node.contents, start + content_start)
                     if not node.wiki_markup and literal.startswith("<"):
@@ -361,6 +480,60 @@ def source_intervals(raw: str) -> tuple[list[tuple], list[tuple]]:
                         "syntaxhighlight": "protected_text",
                         "math": "protected_text",
                     }.get(tag)
+                    if tag == "gallery" and node.contents is not None:
+                        # Gallery contents are opaque to the outer parser. Parse each
+                        # supported caption locally and rebase every nested source range.
+                        role = "gallery_construct"
+                        line_start = start + literal.find(">") + 1
+                        for line in str(node.contents).splitlines(keepends=True):
+                            body = line.rstrip("\r\n")
+                            filename, separator, caption = body.partition("|")
+                            if not body.strip():
+                                pass
+                            elif gallery_filename(filename):
+                                add(
+                                    line_start,
+                                    line_start + len(filename),
+                                    "image_filename",
+                                    filename.strip(),
+                                )
+                                if separator and caption:
+                                    caption_start = line_start + len(filename) + 1
+                                    fields = (
+                                        mw.parse("{{media|" + caption + "}}")
+                                        .filter_templates(recursive=False)[0]
+                                        .params
+                                    )
+                                    add(
+                                        caption_start,
+                                        caption_start + len(caption),
+                                        (
+                                            "gallery_review"
+                                            if len(fields) != 1
+                                            else (
+                                                "image_option"
+                                                if re.match(
+                                                    r"(?is)\s*(?:alt|link)\s*=", caption
+                                                )
+                                                else "caption"
+                                            )
+                                        ),
+                                    )
+                                    nested, _ = source_intervals(caption)
+                                    for a, b, nested_role, detail in nested:
+                                        add(
+                                            caption_start + a,
+                                            caption_start + b,
+                                            nested_role,
+                                            detail,
+                                        )
+                            else:
+                                add(
+                                    line_start, line_start + len(body), "gallery_review"
+                                )
+                            line_start += len(line)
+                    if tag == "ref" and citation_only_ref(node.contents):
+                        role = "citation"
                     if role:
                         add(start, end, role, tag)
                 elif kind == "link":
@@ -389,7 +562,8 @@ def source_intervals(raw: str) -> tuple[list[tuple], list[tuple]]:
                                 in {"thumb", "thumbnail", "frame"}
                                 for p in fields
                             )
-                            for i, field in enumerate(fields):
+                            visible_fields = []
+                            for field in fields:
                                 value = str(field)
                                 option = re.fullmatch(
                                     r"(?is)(?:thumb(?:nail)?(?:=.*)?|frame(?:less)?|border|left|right|center|none|baseline|sub|super|top|text-top|middle|bottom|text-bottom|\d*(?:x\d+)?px|upright(?:=.*)?|(?:alt|link|page|class|lang)\s*=.*)",
@@ -398,18 +572,19 @@ def source_intervals(raw: str) -> tuple[list[tuple], list[tuple]]:
                                 add(
                                     left,
                                     left + len(value),
-                                    (
-                                        "image_option"
-                                        if option
-                                        else (
-                                            "caption"
-                                            if framed and i == len(fields) - 1
-                                            else "media_review"
-                                        )
-                                    ),
+                                    "image_option" if option else "media_review",
                                     title,
                                 )
+                                if not option:
+                                    visible_fields.append((left, left + len(value)))
                                 left += len(value) + 1
+                            # Image options may follow the caption. Require one visible field.
+                            if framed and len(visible_fields) == 1:
+                                caption_left, caption_right = visible_fields[0]
+                                spans.remove(
+                                    (caption_left, caption_right, "media_review", title)
+                                )
+                                add(caption_left, caption_right, "caption", title)
                     elif node.text is not None:
                         add(
                             start + 2,
@@ -483,14 +658,19 @@ def source_policy(rows: list[dict], requested: str | None = None) -> str:
     """Reject partial/unknown policy annotations rather than silently bypassing them."""
     annotated = [any(k.startswith("source_scope_") for k in row) for row in rows]
     if any(annotated):
-        if not all(annotated) or any(
-            row.get("source_scope_policy_version") != POLICY_VERSION
-            or row.get("source_scope_status") not in {"KEEP", "EXCLUDE", "REVIEW"}
-            or not isinstance(row.get("source_scope_context"), str)
-            for row in rows
+        policies = {row.get("source_scope_policy_version") for row in rows}
+        if (
+            not all(annotated)
+            or len(policies) != 1
+            or any(
+                row.get("source_scope_policy_version") not in SUPPORTED_POLICIES
+                or row.get("source_scope_status") not in {"KEEP", "EXCLUDE", "REVIEW"}
+                or not isinstance(row.get("source_scope_context"), str)
+                for row in rows
+            )
         ):
             raise ValueError("Invalid or mixed source-scope annotations")
-        policy = POLICY_VERSION
+        policy = next(iter(policies))
     else:
         policy = LEGACY_POLICY
     if requested is not None and requested != policy:

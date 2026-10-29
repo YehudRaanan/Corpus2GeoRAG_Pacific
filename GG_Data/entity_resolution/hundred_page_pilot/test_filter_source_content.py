@@ -63,7 +63,7 @@ def classify(raw, text, occurrence=0):
             "EXCLUDE",
         ),
         ("{|\n! Year !! Country\n|-\n|1944||Japan\n|}", "1944", "KEEP"),
-        ("<gallery>\nJapan.jpg|Japan harbour\n</gallery>", "harbour", "REVIEW"),
+        ("<gallery>\nJapan.jpg|Japan harbour\n</gallery>", "harbour", "KEEP"),
         ("<nowiki>{{ship|Japan}}</nowiki>", "Japan", "REVIEW"),
     ],
 )
@@ -246,3 +246,177 @@ def test_empty_input_has_clear_error(tmp_path):
         scope.filter_mentions(
             mentions, tmp_path / "unused.parquet", tmp_path / "output"
         )
+
+
+@pytest.mark.parametrize(
+    "raw,text,status",
+    [
+        ("<ref>Hallis (2007), p. 15</ref>", "Hallis", "EXCLUDE"),
+        ("<ref>Frank & Shaw (1968), pp. 489–490.</ref>", "Frank", "EXCLUDE"),
+        ("<ref>The 15th Marines was an artillery regiment.</ref>", "Marines", "REVIEW"),
+        (
+            "<ref>They rejoined in China, see Frank & Shaw (1968), p. 490</ref>",
+            "China",
+            "REVIEW",
+        ),
+        ("<ref>Hallis (2007), p. 15, describes Japan.</ref>", "Japan", "REVIEW"),
+        (
+            "{{Quote box|quote=Japan fought here.{{sfn|Smith|2000}}|width=30%}}",
+            "Japan",
+            "KEEP",
+        ),
+        ("{{Quote box|quote=Japan{{sfn|Smith|2000}}|width=30%}}", "Smith", "EXCLUDE"),
+        (
+            "{{Quote box|quote=Japan|title=Unknown source|width=30%}}",
+            "Unknown",
+            "REVIEW",
+        ),
+        ("{{Quote box|quote=Japan|align=right}}", "right", "EXCLUDE"),
+        ("{{plainlist|* Japan\n* France|class=Japan}}", "France", "KEEP"),
+        ("{{plainlist|* France|class=Japan}}", "Japan", "EXCLUDE"),
+        ("{{ubl|{{flag|United States|1912}}|Japan}}", "United States", "KEEP"),
+        ("{{ubl|{{flag|United States|1912}}|Japan}}", "1912", "EXCLUDE"),
+        ("{{bulleted list|{{unknown|Japan}}|France}}", "Japan", "REVIEW"),
+        (
+            "{{hlist|[[Indian Ocean]]|[[Pacific Ocean]]}}",
+            "Indian Ocean]]|[[Pacific",
+            "REVIEW",
+        ),
+        ("[[File:X.jpg|thumb|Japan harbour|left|alt=Tokyo]]", "Japan", "KEEP"),
+        ("[[File:X.jpg|Japan harbour|thumb]]", "Japan", "KEEP"),
+        ("[[File:X.jpg|thumb|Japan harbour|left|alt=Tokyo]]", "Tokyo", "EXCLUDE"),
+        ("[[File:X.jpg|Japan harbour|alt=Tokyo]]", "Japan", "REVIEW"),
+        (
+            "{{multiple image|image1=Japan.jpg|caption1=Tokyo|footer=Osaka|width=200}}",
+            "Tokyo",
+            "KEEP",
+        ),
+        (
+            "{{multiple image|image1=Japan.jpg|caption1=Tokyo|footer=Osaka}}",
+            "Japan",
+            "EXCLUDE",
+        ),
+        (
+            "{{multiple image|image1=X.jpg|caption1=Tokyo{{sfn|Japan|2000}}}}",
+            "Japan",
+            "EXCLUDE",
+        ),
+        ("{{main|Japan}}", "Japan", "EXCLUDE"),
+        (
+            "{{ribbon devices|ribbon=Medal of Honor ribbon.svg|alt=Japan}}",
+            "Japan",
+            "EXCLUDE",
+        ),
+        ("{{font color|red|Japan}}", "Japan", "KEEP"),
+        ("{{font color|red|Japan}}", "red", "EXCLUDE"),
+    ],
+)
+def test_second_pass_source_rules(raw, text, status):
+    assert classify(raw, text)["status"] == status
+
+
+def test_read_old_policy_and_reject_mixed_versions():
+    row = dict(
+        source_scope_policy_version="article-source-v1",
+        source_scope_status="KEEP",
+        source_scope_context="Japan",
+    )
+    assert scope.source_policy([row]) == "article-source-v1"
+    new = dict(row, source_scope_policy_version="article-source-v2")
+    assert scope.source_policy([new]) == "article-source-v2"
+    with pytest.raises(ValueError, match="mixed"):
+        scope.source_policy([row, new])
+
+
+@pytest.mark.parametrize(
+    "raw,text,status",
+    [
+        ("<ref>Stockman, p. 18</ref>", "Stockman", "EXCLUDE"),
+        ("<ref>Schmidt 1982, page 36.</ref>", "Schmidt", "EXCLUDE"),
+        ("<ref>Frank & Shaw (1968), pp. 49–50, 53, 55.</ref>", "Frank", "EXCLUDE"),
+        (
+            "{{London Gazette|issue=35558|date=12 May 1942||page=2111|supp=y}}",
+            "May",
+            "EXCLUDE",
+        ),
+        ("{{London Gazette|date=1942|quote=Japan was involved}}", "Japan", "REVIEW"),
+        (
+            "{{csr|register=MSI|id=6114753|shipname=Barber|access-date=2009}}",
+            "Barber",
+            "EXCLUDE",
+        ),
+        (
+            "{{Gallery|File:Japan.jpg|Japan harbour|File:Tokyo.jpg|Tokyo}}",
+            "harbour",
+            "KEEP",
+        ),
+        ("{{Gallery|File:Japan.jpg|Japan harbour}}", "Japan.jpg", "EXCLUDE"),
+        ("{{Gallery|File:Japan.jpg|Japan{{sfn|Tokyo|2000}}}}", "Tokyo", "EXCLUDE"),
+        ("{{Gallery|Japan harbour|File:Tokyo.jpg|Tokyo}}", "harbour", "REVIEW"),
+        (
+            "<gallery>File:X.jpg|Rome, Georgia.\nFile:Y.jpg|Japan</gallery>",
+            "Rome",
+            "KEEP",
+        ),
+        ("<gallery>File:Japan.jpg|Tokyo</gallery>", "Japan.jpg", "EXCLUDE"),
+        ("<gallery>File:Japan.jpg|Tokyo</gallery>", "JPG|Tokyo", "REVIEW"),
+        (
+            "<gallery>File:X.jpg|{{ship|Japanese submarine|I-25||2}}</gallery>",
+            "I-25",
+            "KEEP",
+        ),
+        (
+            "<gallery>File:X.jpg|{{ship|Japanese submarine|I-25||2}}</gallery>",
+            "Japanese",
+            "EXCLUDE",
+        ),
+        ("<gallery>File:X.jpg|{{unknown|Japan}}</gallery>", "Japan", "REVIEW"),
+    ],
+)
+def test_gallery_and_short_citation_boundaries(raw, text, status):
+    # A boundary example is deliberately case-sensitive, like the original offsets.
+    raw = (
+        raw.replace("Japan.jpg|Tokyo", "Japan.JPG|Tokyo")
+        if text == "JPG|Tokyo"
+        else raw
+    )
+    assert classify(raw, text)["status"] == status
+
+
+def test_gallery_nested_link_and_citation_context():
+    raw = "<gallery>File:X.jpg|[[Tokyo|Japan]] {{cite book|publisher=Kyoto}}</gallery>"
+    assert classify(raw, "Tokyo")["status"] == "EXCLUDE"
+    assert classify(raw, "Japan")["status"] == "KEEP"
+    assert classify(raw, "Kyoto")["status"] == "EXCLUDE"
+    spans, headings = scope.source_intervals(raw)
+    context = scope.masked_source(raw, spans, headings)
+    assert "Japan" in context
+    assert "Tokyo" not in context and "Kyoto" not in context
+    assert "File:X.jpg" not in context
+
+
+def test_displayed_quote_does_not_unmask_citation_context():
+    raw = "{{quote box|quote=Japan{{sfn|Smith|2000}}|width=30%}}"
+    spans, headings = scope.source_intervals(raw)
+    context = scope.masked_source(raw, spans, headings)
+    assert "Japan" in context
+    assert "Smith" not in context and "30%" not in context
+
+
+@pytest.mark.parametrize(
+    "raw,text,status",
+    [
+        ("<gallery>File:X.jpg|alt=Tokyo</gallery>", "Tokyo", "EXCLUDE"),
+        ("<gallery>File:X.jpg|link=Tokyo</gallery>", "Tokyo", "EXCLUDE"),
+        ("{{plainlist|Japan|Tokyo}}", "Tokyo", "REVIEW"),
+        ("{{plain list|Japan|Tokyo}}", "Japan", "KEEP"),
+        ("{{hlist|Japan|Tokyo}}", "Tokyo", "KEEP"),
+        ("<ref>Japan and China pages 12</ref>", "Japan", "REVIEW"),
+    ],
+)
+def test_final_review_hidden_gallery_options_and_list_shape(raw, text, status):
+    assert classify(raw, text)["status"] == status
+    spans, headings = scope.source_intervals(raw)
+    context = scope.masked_source(raw, spans, headings)
+    if status != "KEEP":
+        assert text not in context

@@ -88,12 +88,12 @@ $pilotPython = ".\.venv-template-pilot\Scripts\python.exe"
 & $pilotPython -m GG_Data.entity_resolution.hundred_page_pilot.recover_page_qids --all-pilot --mentions INPUT.parquet --revisions REVISIONS.parquet --collection COLLECTION_DIR --output RECOVERY_DIR
 & $pilotPython -m GG_Data.entity_resolution.hundred_page_pilot.prepare_mentions --mentions INPUT.parquet --revisions REVISIONS.parquet --entities RECOVERY_DIR/entities.parquet --evidence RECOVERY_DIR/target_evidence.parquet --output PREPARED_DIR
 & $pilotPython -m GG_Data.entity_resolution.hundred_page_pilot.filter_source_content --mentions PREPARED_DIR/mentions.parquet --revisions REVISIONS.parquet --output FILTERED_DIR
-& $pilotPython -m GG_Data.entity_resolution.hundred_page_pilot.prepare_candidates --mentions FILTERED_DIR/mentions.parquet --entities RECOVERY_DIR/entities.parquet --source-policy article-source-v1 --exclude-date --candidates 80 --output MATCHING_DIR
+& $pilotPython -m GG_Data.entity_resolution.hundred_page_pilot.prepare_candidates --mentions FILTERED_DIR/mentions.parquet --entities RECOVERY_DIR/entities.parquet --source-policy article-source-v2 --exclude-date --candidates 80 --output MATCHING_DIR
 ```
 
 ### Source filter for subsequent runs
 
-`article-source-v1` checks each original occurrence, not an entire paragraph or
+`article-source-v2` checks each original occurrence, not an entire paragraph or
 every use of the same name. Original `Text`, `word_original`, offsets, type and
 row ID stay unchanged. The raw revision is checked against both its SHA-256 and
 saved page/revision response. Only a unique literal passage placement can KEEP
@@ -105,7 +105,7 @@ hidden categories/link targets, filenames/image options, known navigation and
 maintenance material, parameter keys and tag syntax. A citation inside an
 infobox remains excluded. Known ship helpers reuse the documented recovery
 rules, including hidden prefixes and display modes. Unknown nested templates,
-explanatory notes, inline image labels, galleries and malformed markup remain
+explanatory notes, inline image labels, unsupported galleries and malformed markup remain
 REVIEW. This is a bounded source parser, not a historical Wikipedia renderer or
 a check that a mention names a real entity.
 
@@ -117,8 +117,19 @@ in the separate context field; the original passage is not edited. DATE
 exclusion applies after source eligibility. The linked-QID inventory is
 unchanged; this stage does not rebuild graph inventories or collect new QIDs.
 
+Second-pass rules recognise whole-body short citations, supported quote/list
+fields, captions followed by image options, and explicitly structured gallery
+filenames/captions. Gallery captions are parsed locally so nested citations and
+hidden link targets remain excluded. Explanatory or mixed references stay
+REVIEW. Plainlist uses content parameter 1 only; unknown extra parameters stay
+REVIEW. Unknown quote attribution fields remain REVIEW.
+
+Saved `article-source-v1` annotations remain readable, but a run must contain
+one source policy. New filtering writes `article-source-v2`; old outputs are
+not rewritten.
+
 Candidate preparation detects annotations automatically, but the explicit
-`--source-policy article-source-v1` flag above prevents accidental unfiltered
+`--source-policy article-source-v2` flag above prevents accidental unfiltered
 input. Unannotated historical inputs remain `LEGACY_UNFILTERED`; mixed,
 unsupported or deliberately bypassed annotations are rejected. Every new
 matching summary records its policy and counts. Use a new output directory.
@@ -140,6 +151,8 @@ accuracy or permission to run inference.
 
 Verification report:
 [`2026-10-29-source-content-filter.md`](../../../docs/reports/2026-10-29-source-content-filter.md).
+Second-pass comparison:
+[`2026-10-29-source-filter-second-pass.md`](../../../docs/reports/2026-10-29-source-filter-second-pass.md).
 
 Recovery is offline unless `--allow-api` is supplied. The approved run limits
 new requests to 200 and recovery time to 1,800 seconds. Current title/QID

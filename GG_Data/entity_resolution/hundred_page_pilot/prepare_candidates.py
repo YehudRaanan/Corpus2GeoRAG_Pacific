@@ -17,7 +17,7 @@ from pathlib import Path
 
 from GG_Data.entity_resolution.hundred_page_pilot.filter_source_content import (
     LEGACY_POLICY,
-    POLICY_VERSION,
+    SUPPORTED_POLICIES,
     is_eligible,
     source_policy as validate_source_policy,
 )
@@ -259,7 +259,7 @@ def main() -> None:
     parser.add_argument("--output", type=Path, required=True)
     parser.add_argument(
         "--source-policy",
-        choices=[POLICY_VERSION, LEGACY_POLICY],
+        choices=[*SUPPORTED_POLICIES, LEGACY_POLICY],
         help="Require this source policy; otherwise detect annotations and reject mixed inputs",
     )
     parser.add_argument(
