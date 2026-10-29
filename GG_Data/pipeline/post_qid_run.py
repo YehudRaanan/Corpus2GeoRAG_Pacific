@@ -181,6 +181,7 @@ def write_stage(
     import pyarrow.parquet as pq
 
     from GG_Data.pipeline.post_qid_entities import populate as entities_populate
+    from GG_Data.pipeline.post_qid_eda import summarize
     from GG_Data.pipeline.post_qid_mentions import populate as mentions_populate
     from GG_Data.pipeline.post_qid_pages import run as pages_run
 
@@ -245,6 +246,8 @@ def write_stage(
     with tempfile.TemporaryDirectory(prefix="geoai-stage-pages-") as directory:
         pages_run(input_dir, Path(directory) / "pages", pages)
         tables["wiki_pages"] = read_json(Path(directory) / "pages/wiki_pages.json.gz")
+    _set_importance(tables)
+    summarize(tables)
     return _save_tables(
         output,
         tables,
@@ -284,6 +287,33 @@ def _save_tables(output: Path, tables: dict, result: dict) -> dict:
         )
         stage_dir.rename(output)
     return result
+
+
+def _set_importance(tables: dict) -> None:
+    """Use the same occurrence/page counts in early and final core snapshots."""
+    occurrences, pages = defaultdict(set), defaultdict(set)
+    mentions = {m["mention_id"]: m for m in tables["mentions"]}
+    for link in tables["mention_entity_links"]:
+        identity, mid = link["entity_id"], link["mention_id"]
+        occurrences[identity].add(mid)
+        mention = mentions[mid]
+        pages[identity].add((mention["wiki_site"], mention["wiki_page_id"]))
+    for entity in tables["entities"]:
+        identity = entity["entity_id"]
+        count, source_count = len(occurrences[identity]), len(pages[identity])
+        entity.update(
+            importance=count * source_count,
+            unique_original_mention_count=count,
+            distinct_source_page_count=source_count,
+        )
+        entity["attributes"]["importance_basis"] = dict(
+            total_mentions=count,
+            distinct_source_pages=source_count,
+            formula="unique original mention IDs per identity * distinct original source pages",
+            status="LEGACY_COUNT_PRODUCT_WITH_TYPED_QID_DEDUPLICATION",
+        )
+        entity["attributes"]["normalized_mention_frequency"] = count / len(mentions)
+        entity["attributes"]["normalized_mention_frequency_denominator"] = len(mentions)
 
 
 def assemble(core_dir: Path, event_dir: Path, output: Path) -> dict:
@@ -707,27 +737,7 @@ def build_core(
         )
     ):
         raise ValueError("Mention bridge coverage, unique key or typed FK failed")
-    occurrence_ids, source_pages = defaultdict(set), defaultdict(set)
-    mention_pages = {m["mention_id"]: m["wiki_page_id"] for m in tables["mentions"]}
-    for link in links:
-        occurrence_ids[link["entity_id"]].add(link["mention_id"])
-        source_pages[link["entity_id"]].add(mention_pages[link["mention_id"]])
-    for entity in tables["entities"]:
-        identity = entity["entity_id"]
-        count = len(occurrence_ids[identity])
-        entity.update(
-            importance=count * len(source_pages[identity]),
-            unique_original_mention_count=count,
-            distinct_source_page_count=len(source_pages[identity]),
-        )
-        entity["attributes"]["importance_basis"] = dict(
-            total_mentions=count,
-            distinct_source_pages=len(source_pages[identity]),
-            formula="unique original mention IDs per identity * distinct original source pages",
-            status="LEGACY_COUNT_PRODUCT_WITH_TYPED_QID_DEDUPLICATION",
-        )
-        entity["attributes"]["normalized_mention_frequency"] = count / len(rows)
-        entity["attributes"]["normalized_mention_frequency_denominator"] = len(rows)
+    _set_importance(tables)
     return _save_tables(
         output,
         tables,

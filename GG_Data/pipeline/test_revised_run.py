@@ -203,6 +203,9 @@ def test_pending_and_exact_snapshots_do_not_invent_unresolved_nodes(
         "ACCEPTED_EXACT",
         "PENDING_MATCHING",
     ]
+    from GG_Data.pipeline.post_qid_eda import run as eda
+
+    eda(output / "exact", output / "exact_eda")
 
 
 def test_revised_core_final_keeps_dates_out_of_entity_table(core_inputs):  # noqa: F811
