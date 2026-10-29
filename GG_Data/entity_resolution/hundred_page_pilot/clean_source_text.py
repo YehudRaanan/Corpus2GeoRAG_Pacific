@@ -48,7 +48,7 @@ from GG_Data.entity_resolution.hundred_page_pilot.recover_page_qids import (
 from GG_Data.entity_resolution.luke_pilot.data import sha256
 
 LOG = logging.getLogger(__name__)
-POLICY_VERSION = "source-text-v1"
+POLICY_VERSION = "source-text-v2"
 
 
 @dataclass
@@ -137,6 +137,9 @@ def clean_text(
         allowed: set[str] = set(keys)
         if family.startswith("infobox"):
             display = set(keys) - IMAGE_KEYS - DISPLAY_STYLES
+            # In this ship template, class names the vessel class, not CSS styling.
+            if family == "infobox ship/characteristics":
+                display.add("class")
         elif family in {"nowrap", "nobr", "nobreak", "small", "big", "lang", "nihongo", "nihongo2"}:
             display = {"2"} if family == "lang" else {"1"}
             allowed = {"1", "2", "3", "4", "5", "help", "lead", "extra", "extra2"}

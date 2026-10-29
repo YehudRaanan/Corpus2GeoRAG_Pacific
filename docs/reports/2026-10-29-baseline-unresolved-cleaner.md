@@ -1,5 +1,31 @@
 # Cleaner on the original 100-page unresolved baseline
 
+## Follow-up: ship-class exception
+
+The user requested an exception for the affected template. `source-text-v2`
+retains the factual `class` field only in `Infobox ship/characteristics`;
+ordinary formatting-class fields remain excluded. Three ship-field tests failed
+before the fix and passed afterward; the formatting control check passed in both.
+All 74 cleaner tests, Ruff and Black checks pass.
+
+Fresh `run_2` preserves all 26,443 original rows and assignments. All 16 known
+ship-class mentions now have valid cleaned positions. One previously uncertain
+non-DATE span and two DATE spans also become mapped. Non-DATE outcomes are now
+9,539 mapped, 8,319 excluded, 1,213 uncertain. These remain cleaning outcomes,
+not new QID matches. Script elapsed time: 13.125 seconds; cloud cost US$0.
+`run_2/verification.json` records every changed status, preservation and hash
+checks. Output SHA256: `88fa9bab1cd9edc22ab14247bbd0ccb493b9f57ac65b00768cffe5fe2a6beed1`.
+Earlier run_1 and its analysis remain unchanged for comparison.
+
+Japanese names do not replace the missing source spans. Adding Japanese labels
+and aliases to the same QID could improve candidate coverage, but cannot repair
+cleaned-text offsets or recover quotation attribution. Current fresh Wikidata
+API collection requests English labels/aliases and metadata_row reads English;
+some older cached merged-language records can contain other languages. No new
+language collection or Japanese/quotation cleaning change was performed.
+The run remains experimental and `ready_for_matching=false` until those source
+rules are corrected. The sections below describe the original run_1 results.
+
 ## Result
 
 The cleaner ran on the original, pre-template-repair export. It helps separate

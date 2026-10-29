@@ -36,3 +36,19 @@ Finding: run is experimental and ready_for_matching=false. Sixteen factual
 ship-class mentions are incorrectly removed; Japanese-template and quotation
 attribution cases also require protection/review. No production code changed.
 Next implementation is not silently added to this local run scope.
+
+## User-requested follow-up: class exception
+
+Scope: narrow ship-template exception, regression tests, fresh local cleaner
+run and Japanese-name collection check; no model/cloud/network use.
+Ponytail reuses the existing template branch. Superpowers breakdown: reproduce
+the defect in tests -> fix exact template -> run tests and same baseline ->
+verify all rows and the 16 known spans -> report Japanese-name limitation.
+Owner root, sequential shared code/output writes. Epoch v1 reference
+bf77b046-0642-43d7-95c5-af7ee5bde6ed, O/M/P0.10/0.16/0.25hours; same scope
+and elapsed-time basis, model-derived estimate. Announced6–15minutes including
+inspection; observed start23:19:06, checkpoint23:29 on29October2026
+Asia/JerusalemUTC+02. No approval/environment wait observed; focused active
+work is unmeasured. All steps complete:74tests passed; 16knownclassspans restored;
+run_2 preserves26,443rows. Japanese/quotation rules remain open and no new QID
+matches are claimed. Script elapsed13.125seconds, not session active work.

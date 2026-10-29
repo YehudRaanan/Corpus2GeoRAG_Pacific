@@ -104,6 +104,33 @@ def test_known_visible_values_survive(raw, word):
     assert_visible(raw, word)
 
 
+@pytest.mark.parametrize(
+    "value,word",
+    [
+        ("{{sclass|Charles Lawrence|transport|1}}, after October 1944", "Charles Lawrence"),
+        ("[[Kennebec class oiler|''Mattaponi''-class oiler]]", "Mattaponi"),
+        ("VC2-S-AP3 Victory ship", "VC2-S-AP3"),
+    ],
+)
+def test_ship_characteristics_class_is_factual_content(value, word):
+    from GG_Data.entity_resolution.hundred_page_pilot.clean_source_text import _clean_page
+
+    raw = "{{Infobox ship/characteristics|class=" + value + "|style=color:red}}"
+    cleaned = _clean_page(raw)
+    start = raw.index(word)
+    result = map_mention(cleaned, start, start + len(word))
+    assert result["status"] == "mapped"
+    assert cleaned.text[result["start"] : result["end"]] == word
+    assert "color:red" not in cleaned.text
+
+
+def test_generic_infobox_class_remains_a_formatting_control():
+    raw = "{{Infobox country|name=Japan|class=hidden-layout}}"
+    cleaned = clean_text(raw)
+    assert "Japan" in cleaned.text
+    assert "hidden-layout" not in cleaned.text
+
+
 def test_unknown_template_remains_uncertain():
     raw = "Before {{mystery|Japan}} after."
     cleaned, result = mapped(raw, "Japan")
