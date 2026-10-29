@@ -160,6 +160,67 @@ def readable_name(code: Any) -> str | None:
     return value
 
 
+def prose_mask(raw: str) -> str:
+    """Keep literal article prose coordinates; hide templates and link targets."""
+    visible = [" "] * len(raw)
+
+    def visit(code: Any, offset: int) -> None:
+        cursor = offset
+        for node in mwparserfromhell.parse(str(code)).nodes:
+            literal, kind = str(node), type(node).__name__
+            if kind in {"Text", "HTMLEntity"}:
+                visible[cursor : cursor + len(literal)] = literal
+            elif kind == "Wikilink":
+                # Non-article namespaces contain files/categories, not prose names.
+                title = str(node.title).strip().lstrip(":")
+                if ":" not in title:
+                    value = node.text if node.text is not None else node.title
+                    start = (
+                        cursor
+                        + 2
+                        + (len(str(node.title)) + 1 if node.text is not None else 0)
+                    )
+                    visit(value, start)
+            elif kind == "Tag" and str(node.tag).lower() in {
+                "b",
+                "i",
+                "em",
+                "strong",
+                "span",
+                "small",
+                "big",
+                "sup",
+                "sub",
+                "p",
+                "div",
+                "blockquote",
+                "poem",
+            }:
+                # Only inline/prose wrappers are visible. References and code stay hidden.
+                opening = (
+                    len(node.wiki_markup)
+                    if node.wiki_markup is not None
+                    else literal.find(">") + 1
+                )
+                contents = str(node.contents)
+                if opening and literal[opening : opening + len(contents)] == contents:
+                    visit(node.contents, cursor + opening)
+            cursor += len(literal)
+
+    visit(raw, 0)
+    return "".join(visible)
+
+
+def cuts_lexical_token(row: dict, occurrence: dict) -> bool:
+    """An ordinary source name can expand only an already cut word token."""
+    text = row["Text"]
+    left, right = row["start"], row["end"]
+    return (
+        occurrence["start"] < left
+        and (text[left - 1].isalnum() or text[left - 1] == "-")
+    ) or (right < occurrence["end"] and (text[right].isalnum() or text[right] == "-"))
+
+
 def local_name_fields(raw: str) -> list[dict]:
     """Read supported name fields with parser-preserved parameter positions."""
     protected = [(m.start(), m.end()) for m in PROTECTED.finditer(raw)]
@@ -255,6 +316,7 @@ def source_occurrences(
 ) -> list[dict]:
     """Collect independent source surfaces; never select shortest or longest."""
     result = local_name_fields(raw)
+    masked = prose_mask(raw)
     by_location = defaultdict(list)
     for row in evidence:
         start, end = row.get("raw_start"), row.get("raw_end")
@@ -276,10 +338,30 @@ def source_occurrences(
             for r in evidence_rows
             if r.get("qid") and "REVIEW" not in str(r.get("recovery_status", ""))
         }
+        requires_review = any(
+            "REVIEW" in str(r.get("recovery_status", ""))
+            or "REVIEW" in str(r.get("qid_status", ""))
+            for r in evidence_rows
+        )
         if target["link_origin"] == "RAW_DIRECT_LINK":
             start, end = target["anchor_start"], target["anchor_end"]
             surface = readable_name(target["anchor_text"])
             role = "ordinary_link_anchor"
+            if masked[start:end] != raw[start:end]:
+                # An exact visible link inside a verified name field can still
+                # supply its QID, under that field's separate source role.
+                fields = [
+                    field
+                    for field in result
+                    if field["surface"] == surface
+                    and any(s <= start < end <= e for s, e in field["spans"])
+                ]
+                for field in fields:
+                    for qid in sorted(qids) or [None]:
+                        result.append(
+                            {**field, "qid": qid, "requires_review": requires_review}
+                        )
+                continue
         else:
             start, end = target.get("name_start"), target.get("name_end")
             surface = target.get("target_title")
@@ -301,16 +383,11 @@ def source_occurrences(
                     method=role,
                     source_role=role,
                     target_title=target.get("target_title"),
-                    requires_review=any(
-                        "REVIEW" in str(r.get("recovery_status", ""))
-                        or "REVIEW" in str(r.get("qid_status", ""))
-                        for r in evidence_rows
-                    ),
+                    requires_review=requires_review,
                     source_rule=target.get("target_rule"),
                     documented_display_name=target.get("display_name"),
                 )
             )
-    masked = PROTECTED.sub(lambda match: " " * len(match.group()), raw)
     for entity in entities:
         if not entity.get("qid"):
             continue
@@ -488,8 +565,17 @@ def prepare(
                     repair_alternatives=surfaces,
                     repair_qid_guided=any(o["qid_guided"] for o in matches),
                 )
-                if row["entity_group"] != "PER" and any(
-                    o["source_role"] == "citation_author_fields" for o in matches
+                if (
+                    row["entity_group"] != "PER"
+                    and any(
+                        o["source_role"] == "citation_author_fields" for o in matches
+                    )
+                ) or (
+                    row["entity_group"] in {"PER", "LOC"}
+                    and any(
+                        o["source_role"] == "documented_template_target"
+                        for o in matches
+                    )
                 ):
                     additions["repair_status"] = "source_type_review"
                 elif any(o["requires_review"] for o in matches):
@@ -502,7 +588,16 @@ def prepare(
                     for s, e in o["spans"]
                 ):
                     additions["repair_status"] = "partial_source_overlap"
-                elif any(o["context_review"] for o in matches):
+                elif any(o["context_review"] for o in matches) or (
+                    len(surfaces) == 1
+                    and surfaces[0] != row["word"]
+                    and all(
+                        o["source_role"]
+                        in {"ordinary_link_anchor", "same_revision_inventory_name"}
+                        for o in matches
+                    )
+                    and not any(cuts_lexical_token(row, o) for o in matches)
+                ):
                     additions["repair_status"] = "source_context_review"
                 elif len(surfaces) == 1:
                     additions["repair_status"] = (
@@ -589,7 +684,9 @@ def prepare(
         input_sha256=hashes,
         original_columns_preserved_except_word=True,
         source_qid_support_is_identity_gold=False,
-        type_validation="Citation authors require PER; other Daniel types are preserved without inferred type mapping",
+        type_validation="Citation authors require PER; ship targets with PER/LOC retain original word for review; no global native-type mapping",
+        generic_source_roles="Article prose/visible link labels only, outside all templates, references, comments, hidden targets and non-article namespaces",
+        generic_expansion="Only original lexical-token cuts expand; complete words/phrases retain alternatives and source QIDs for context review",
         normalized_or_repeated_passages="Unchanged; no guessed raw offset maps",
         context_guard_limitation="Adjacent capitalized words can cause false-negative reviews; lowercase longer names are not reliably detected",
         new_api_requests=0,

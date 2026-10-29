@@ -95,7 +95,7 @@ def test_full_literal_name_can_support_several_original_rows(tmp_path):
     rows, output, spans, bridge, summary = run_prepare(
         tmp_path,
         "John Smith met Mary Jones.",
-        [{"word": "John"}, {"word": "Smith"}, {"word": "Mary"}],
+        [{"word": "Jo"}, {"word": "Smi"}, {"word": "Ma"}],
         [ent("John Smith"), ent("Mary Jones", "Q2")],
     )
     assert [r["word"] for r in output] == ["John Smith", "John Smith", "Mary Jones"]
@@ -286,7 +286,10 @@ def test_documented_ship_target_uses_full_name_but_only_name_parameter_overlap(
     _, rows, spans, _, _ = run_prepare(
         tmp_path,
         raw,
-        [{"word": "Johnston"}, {"word": "DD-557", "entity_group": "MISC"}],
+        [
+            {"word": "Johnston", "entity_group": "MISC"},
+            {"word": "DD-557", "entity_group": "MISC"},
+        ],
         [],
         evidence,
     )
@@ -316,7 +319,7 @@ def test_review_template_qid_cannot_trigger_automatic_name_repair(tmp_path):
         }
     ]
     _, rows, spans, _, _ = run_prepare(
-        tmp_path, raw, [{"word": "Asagumo"}], [], evidence
+        tmp_path, raw, [{"word": "Asagumo", "entity_group": "MISC"}], [], evidence
     )
     assert rows[0]["word"] == "Asagumo"
     assert rows[0]["repair_status"] == "source_target_review"
@@ -378,11 +381,11 @@ def test_qid_label_inside_unlisted_longer_proper_name_stays_for_review(tmp_path)
     assert rows[0]["source_candidate_qids"] == ["Q362"]
 
 
-def test_qid_label_in_ordinary_prose_still_repairs_full_name(tmp_path):
+def test_lexically_cut_qid_label_in_ordinary_prose_still_repairs_full_name(tmp_path):
     _, rows, _, _, _ = run_prepare(
         tmp_path,
         "ships served in World War II, then returned.",
-        [{"word": "World War"}],
+        [{"word": "World Wa"}],
         [ent("World War II", "Q362")],
     )
     assert rows[0]["word"] == "World War II"
@@ -401,3 +404,141 @@ def test_comment_inside_name_is_not_support_for_comment_mentions(tmp_path):
     _, rows, _, _, _ = run_prepare(tmp_path, raw, [{"word": "note"}])
     assert rows[0]["word"] == "note"
     assert rows[0]["repair_status"] == "unchanged"
+
+
+@pytest.mark.parametrize(
+    "raw,word,label",
+    [
+        ("{{Main|Landing at Nadzab}}", "Nadzab", "Landing at Nadzab"),
+        (
+            "{{s-ttl|title=[[Army|Commanding General Army]]}}",
+            "Commanding General",
+            "Army",
+        ),
+        ("{{Infobox ship|image=USS Banner at anchor.jpg}}", "USS", "USS Banner"),
+        ("[[Hidden Person|Visible name]]", "Hidden", "Hidden Person"),
+        ("[[File:USS Banner.jpg|USS Banner]]", "USS", "USS Banner"),
+        ("<!-- John Smith -->", "John", "John Smith"),
+    ],
+)
+def test_hidden_or_template_roles_supply_no_generic_identity_evidence(
+    tmp_path, raw, word, label
+):
+    _, rows, spans, _, _ = run_prepare(tmp_path, raw, [{"word": word}], [ent(label)])
+    assert rows[0]["word"] == word
+    assert rows[0]["source_candidate_qids"] == []
+    assert all(
+        not span["source_row_indices"] and not span["qid_guided"] for span in spans
+    )
+
+
+@pytest.mark.parametrize(
+    "raw,word,surface",
+    [
+        (
+            "[[Fort Belvoir|Fort Humphreys, Virginia]]",
+            "Virginia",
+            "Fort Humphreys, Virginia",
+        ),
+        (
+            "[[Treasury bill|U.S. Treasury bills]]",
+            "U.S. Treasury",
+            "U.S. Treasury bills",
+        ),
+        ("[[Battle|Recapture of Guam]]", "Guam", "Recapture of Guam"),
+        (
+            "[[List|List of World War II ships]]",
+            "World War II",
+            "List of World War II ships",
+        ),
+    ],
+)
+def test_complete_phrase_inside_longer_anchor_retains_evidence_without_repair(
+    tmp_path, raw, word, surface
+):
+    _, rows, _, _, _ = run_prepare(tmp_path, raw, [{"word": word}], [ent(surface)])
+    assert rows[0]["word"] == word
+    assert rows[0]["repair_status"] == "source_context_review"
+    assert rows[0]["source_candidate_qids"] == ["Q1"]
+    assert rows[0]["repair_alternatives"] == [surface]
+
+
+@pytest.mark.parametrize(
+    "raw,word,surface",
+    [("I-25 sailed.", "I", "I-25"), ("[[Nadzab]] was occupied.", "Na", "Nadzab")],
+)
+def test_lexically_cut_prose_and_anchor_names_can_still_expand(
+    tmp_path, raw, word, surface
+):
+    _, rows, _, _, _ = run_prepare(tmp_path, raw, [{"word": word}], [ent(surface)])
+    assert rows[0]["word"] == surface
+    assert rows[0]["repair_status"] == "repaired"
+    assert rows[0]["source_candidate_qids"] == ["Q1"]
+
+
+@pytest.mark.parametrize("group", ["PER", "LOC"])
+def test_ship_target_with_incompatible_original_type_retains_source_qid(
+    tmp_path, group
+):
+    raw = "{{USS|Lindsey|DD-771}}"
+    evidence = [
+        {
+            "page_id": 1,
+            "revision_id": 2,
+            "raw_start": 0,
+            "raw_end": len(raw),
+            "raw_text": raw,
+            "target_title": "USS Lindsey (DD-771)",
+            "qid": "Q1",
+        }
+    ]
+    _, rows, _, _, _ = run_prepare(
+        tmp_path, raw, [{"word": "Lindsey", "entity_group": group}], [], evidence
+    )
+    assert rows[0]["word"] == "Lindsey"
+    assert rows[0]["entity_group"] == group
+    assert rows[0]["repair_status"] == "source_type_review"
+    assert rows[0]["source_candidate_qids"] == ["Q1"]
+
+
+def test_review_link_in_verified_name_field_keeps_review_gate(tmp_path):
+    raw = "{{Infobox person|name=[[John Smith]]}}"
+    link = "[[John Smith]]"
+    start = raw.index(link)
+    evidence = [
+        {
+            "page_id": 1,
+            "revision_id": 2,
+            "raw_start": start,
+            "raw_end": start + len(link),
+            "raw_text": link,
+            "target_title": "John Smith",
+            "qid": None,
+            "recovery_status": "REVIEW_OR_NO_QID",
+        }
+    ]
+    _, rows, _, _, _ = run_prepare(tmp_path, raw, [{"word": "John"}], [], evidence)
+    assert rows[0]["word"] == "John"
+    assert rows[0]["repair_status"] == "source_target_review"
+
+
+@pytest.mark.parametrize(
+    "markup",
+    [
+        "''John Smith''",
+        "'''John Smith'''",
+        "'''''John Smith'''''",
+        "<b>John Smith</b>",
+        '<span class="x">John Smith</span>',
+    ],
+)
+def test_visible_formatting_tags_keep_literal_prose_offsets(tmp_path, markup):
+    raw = "served with " + markup + "."
+    _, rows, spans, _, _ = run_prepare(
+        tmp_path, raw, [{"word": "Jo"}], [ent("John Smith")]
+    )
+    assert rows[0]["word"] == "John Smith"
+    assert rows[0]["repair_status"] == "repaired"
+    assert rows[0]["repaired_start"] == raw.index("John Smith")
+    assert rows[0]["repaired_end"] == raw.index("John Smith") + len("John Smith")
+    assert all(raw[s["raw_start"] : s["raw_end"]] == s["raw_text"] for s in spans)
