@@ -9,6 +9,46 @@ import pytest
 from GG_Data.pipeline import post_qid_eda as eda
 
 
+@pytest.mark.parametrize("basis", ["clean", "original"])
+def test_revised_review_context_is_advisory_and_basis_is_checked(basis):
+    from GG_Data.pipeline.test_post_qid_stages import row
+
+    mention = row(
+        source_scope_status="REVIEW",
+        source_scope_policy_version="article-source-v3",
+        source_scope_context="Tokyo review context",
+        repair_status="source_context_review",
+        clean_text_needs_review=True,
+    )
+    if basis == "original":
+        mention.update(clean_status="uncertain", clean_start=None, clean_end=None)
+    mention.update(
+        wiki_site="enwiki",
+        wiki_page_id=1,
+        processing_status="ACCEPTED_MODEL",
+        matching_context_basis=basis,
+        raw={
+            k: mention[k]
+            for k in (
+                "word",
+                "entity_group",
+                "score",
+                "Source",
+                "Index",
+                "Text",
+                "start",
+                "end",
+                "subtype",
+            )
+        },
+    )
+    mention["raw"]["word"] = mention["raw_original_word"]
+    assert eda._check_mention(mention, {("enwiki", 1, 10)}) == ("enwiki", 1, 10)
+    mention["matching_context_basis"] = "original" if basis == "clean" else "clean"
+    with pytest.raises(ValueError, match="context|span"):
+        eda._check_mention(mention, {("enwiki", 1, 10)})
+
+
 @pytest.fixture
 def tables():
     rows = [

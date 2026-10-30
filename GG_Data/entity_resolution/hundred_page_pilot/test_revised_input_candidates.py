@@ -32,8 +32,10 @@ def source_row(index=0, **changes):
 def frozen_fixture(tmp_path):
     old = tmp_path / "old"
     old.mkdir()
-    (old / "selection.json").write_text(json.dumps(dict(input_sha256="a" * 64,
-        source_titles=["Japan article"])), encoding="utf-8")
+    (old / "selection.json").write_text(
+        json.dumps(dict(input_sha256="a" * 64, source_titles=["Japan article"])),
+        encoding="utf-8",
+    )
     rows = [source_row(0), source_row(1, Source="Other article"), source_row(2)]
     new = tmp_path / "new.parquet"
     pq.write_table(
@@ -115,7 +117,9 @@ def test_adapter_uses_frozen_global_indices_and_keeps_new_source(tmp_path):
     assert summary["rows"] == 2 and summary["revisions"] == 1
     selection = json.loads((output / "selection.json").read_text())
     assert selection["input_sha256"] == summary["input_sha256"]
-    assert (output / "frozen_selection.json").read_bytes() == (old / "selection.json").read_bytes()
+    assert (output / "frozen_selection.json").read_bytes() == (
+        old / "selection.json"
+    ).read_bytes()
 
 
 @pytest.mark.parametrize("damage", ["word", "revision", "duplicate_metadata"])
@@ -175,13 +179,9 @@ def test_clean_groups_use_clean_context_and_immutable_occurrences():
     "changes",
     [
         dict(clean_status="excluded"),
-        dict(clean_status="uncertain"),
-        dict(clean_source_status="nonunique_raw_placement"),
         dict(page_id=None),
         dict(revision_id=None),
-        dict(clean_end=4),
         dict(entity_group="DATE"),
-        dict(repair_status="source_target_review"),
     ],
 )
 def test_clean_candidate_groups_reject_ineligible_occurrences(changes):
@@ -278,10 +278,160 @@ def test_cleaner_exports_common_eligibility_without_changing_raw_values(tmp_path
     )
 
 
-def test_mapped_span_with_context_review_cannot_enter_model_groups():
+def test_mapped_span_with_context_review_enters_model_groups():
     row = clean_row(clean_text_needs_review=True)
-    assert prepare_candidates.group_mentions([row], exclude_date=True) == []
-    assert prepare_candidates.matching_eligibility(row) == (False, "context_review")
+    assert prepare_candidates.group_mentions([row], exclude_date=True)
+    assert prepare_candidates.matching_eligibility(row) == (True, "eligible")
+
+
+@pytest.mark.parametrize(
+    "changes",
+    [
+        dict(clean_status="uncertain", clean_start=None, clean_end=None),
+        dict(clean_source_status="nonunique_raw_placement"),
+        dict(clean_end=4),
+        dict(repair_status="source_target_review"),
+    ],
+)
+def test_advisory_review_preserves_original_context_and_flags(changes):
+    row = clean_row(**changes)
+    before = dict(row)
+    assert prepare_candidates.matching_eligibility(row) == (True, "eligible")
+    context = prepare_candidates.matching_context(row)
+    assert context is not None
+    assert context["basis"] in {"clean", "original"}
+    groups = prepare_candidates.group_mentions([row], exclude_date=True)
+    assert groups[0]["review_source_row_indices"] == [0]
+    assert groups[0]["context_sources"][0]["basis"] == context["basis"]
+    assert row == before
+
+
+def test_original_context_validates_original_word_after_repair():
+    row = clean_row(
+        word="Japanese Japan",
+        raw_original_word="Japan",
+        clean_status="uncertain",
+        clean_start=None,
+        clean_end=None,
+        repair_status="repaired",
+    )
+    assert prepare_candidates.matching_context(row) == dict(
+        text="[[Japan]]", start=2, end=7, basis="original"
+    )
+    assert prepare_candidates.matching_eligibility(row) == (True, "eligible")
+    row["raw_original_word"] = "wrong"
+    assert prepare_candidates.matching_context(row) is None
+    assert prepare_candidates.matching_eligibility(row) == (False, "invalid_context")
+
+
+def test_clean_removal_stays_excluded_before_review_and_date():
+    row = clean_row(
+        entity_group="DATE",
+        clean_status="excluded",
+        source_scope_status="REVIEW",
+        source_scope_policy_version="article-source-v3",
+        source_scope_context="uncertain source",
+    )
+    assert prepare_candidates.matching_eligibility(row, "article-source-v3") == (
+        False,
+        "source_excluded",
+    )
+
+
+@pytest.mark.parametrize("inventory", [True, False])
+def test_review_group_coverage_protects_best_same_page_pair_or_reports_blocker(
+    tmp_path, inventory
+):
+    rows = [
+        clean_row(word="Japan", repair_status="source_target_review"),
+        clean_row(1, word="Japon", repair_status="source_target_review"),
+    ]
+    mentions, entities = tmp_path / "mentions.parquet", tmp_path / "entities.parquet"
+    pq.write_table(pa.Table.from_pylist(rows), mentions)
+    records = [dict(page_id=1, revision_id=11, qid="Q17", label="Japan country")]
+    if not inventory:
+        records[0]["revision_id"] = 12
+    pq.write_table(pa.Table.from_pylist(records), entities)
+    result = prepare_candidates.prepare(
+        mentions, entities, tmp_path / "matching", 1, exclude_date=True
+    )
+    jobs = [
+        json.loads(x)
+        for x in (tmp_path / "matching/jobs.jsonl").read_text().splitlines()
+    ]
+    assert result["review_group_coverage"]["groups"] == 2
+    if inventory:
+        assert result["review_group_coverage"]["protected_pairs_added"] == 1
+        assert len(jobs[0]["candidates"]) == 2
+        assert result["review_group_coverage"]["no_inventory_groups"] == []
+    else:
+        assert len(result["review_group_coverage"]["no_inventory_groups"]) == 2
+        assert not jobs[0]["candidates"]
+
+
+def test_review_coverage_uses_highest_trigram_query_without_replacing_top_pool(
+    tmp_path,
+):
+    rows = [
+        clean_row(word="Alpha Bravo Charlie", repair_status="source_target_review"),
+        clean_row(1, word="Omega", repair_status="source_target_review"),
+    ]
+    mentions, entities = tmp_path / "mentions.parquet", tmp_path / "entities.parquet"
+    pq.write_table(pa.Table.from_pylist(rows), mentions)
+    pq.write_table(
+        pa.Table.from_pylist(
+            [
+                dict(
+                    page_id=1,
+                    revision_id=11,
+                    qid="Q17",
+                    label="Alpha Bravo Charlie Omega",
+                ),
+                dict(
+                    page_id=1,
+                    revision_id=11,
+                    qid="Q18",
+                    label="Alpha Bravo Charlie Delta",
+                ),
+            ]
+        ),
+        entities,
+    )
+    result = prepare_candidates.prepare(
+        mentions, entities, tmp_path / "matching", 1, exclude_date=True
+    )
+    assert result["matching_policy_version"] == "review-advisory-v1"
+    assert result["review_group_coverage"]["protected_pairs_added"] == 1
+    assert result["review_group_coverage"]["added_pairs"][0]["qid"] == "Q17"
+    jobs = [
+        json.loads(x)
+        for x in (tmp_path / "matching/jobs.jsonl").read_text().splitlines()
+    ]
+    assert [{c["name"] for c in j["candidates"]} for j in jobs] == [
+        {"Alpha Bravo Charlie", "Omega"},
+        {"Alpha Bravo Charlie"},
+    ]
+
+
+def test_revised_source_review_is_advisory_but_raw_only_legacy_gate_is_preserved():
+    row = clean_row(
+        source_scope_status="REVIEW",
+        source_scope_policy_version="article-source-v3",
+        source_scope_context="original source evidence",
+    )
+    assert prepare_candidates.matching_eligibility(row, "article-source-v3") == (
+        True,
+        "eligible",
+    )
+    raw = {
+        key: value
+        for key, value in row.items()
+        if not key.startswith("clean_") and key != "Text_clean"
+    }
+    assert prepare_candidates.matching_eligibility(raw, "article-source-v3") == (
+        False,
+        "source_review",
+    )
 
 
 def test_candidate_callable_preserves_existing_stage_outputs(tmp_path):

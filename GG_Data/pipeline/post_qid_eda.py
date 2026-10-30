@@ -63,9 +63,15 @@ def _check_mention(mention: dict, page_keys: set) -> tuple:
     elif key not in page_keys:
         raise ValueError("Original mention fields or revision FK changed")
     if revised and mention.get("matching_eligible"):
-        text, left, right = (
-            mention.get(k) for k in ("Text_clean", "clean_start", "clean_end")
+        from GG_Data.entity_resolution.hundred_page_pilot.filter_source_content import (
+            source_policy,
         )
+        from GG_Data.entity_resolution.hundred_page_pilot.prepare_candidates import (
+            matching_context,
+            matching_eligibility,
+        )
+
+        context = matching_context(mention)
         if (
             status
             in {
@@ -74,14 +80,12 @@ def _check_mention(mention: dict, page_keys: set) -> tuple:
                 "SOURCE_REVIEW",
                 "PAGE_REVISION_UNRESOLVED",
             }
-            or mention.get("clean_status") != "mapped"
-            or not isinstance(text, str)
-            or type(left) is not int
-            or type(right) is not int
-            or not 0 <= left < right <= len(text)
-            or text[left:right] != mention["word"]
+            or not matching_eligibility(mention, source_policy([mention]))[0]
+            or context is None
+            or mention.get("matching_context_basis", context["basis"])
+            != context["basis"]
         ):
-            raise ValueError("Eligible clean mention span or processing status differs")
+            raise ValueError("Eligible matching context or processing status differs")
     return key
 
 

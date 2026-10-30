@@ -43,13 +43,6 @@ def _processing_status(row: dict) -> str:
         or row.get("matching_eligibility_reason") == "source_excluded"
     ):
         return "SOURCE_EXCLUDED"
-    if (
-        row.get("clean_status") != "mapped"
-        or row.get("source_scope_status") == "REVIEW"
-        or row.get("matching_eligibility_reason")
-        in {"source_review", "invalid_clean_span"}
-    ):
-        return "SOURCE_REVIEW"
     if row["entity_group"] == "DATE":
         return "DEFERRED_DATE"
     if row.get("matching_eligible") is not True:
@@ -77,6 +70,7 @@ def populate(
             source_policy,
         )
         from GG_Data.entity_resolution.hundred_page_pilot.prepare_candidates import (
+            matching_context,
             matching_eligibility,
         )
 
@@ -114,7 +108,7 @@ def populate(
         if (
             revised
             and row["matching_eligible"]
-            and ("clean_status" not in row or not matching_eligibility(row, policy)[0])
+            and not matching_eligibility(row, policy)[0]
         ):
             raise ValueError(
                 "Matching eligibility conflicts with clean/revision evidence"
@@ -198,7 +192,15 @@ def populate(
                 "wiki_page_id": source["page_id"],
                 "raw": raw,
                 **(
-                    {"occurrence_id": mid, "processing_status": status}
+                    {
+                        "occurrence_id": mid,
+                        "processing_status": status,
+                        "matching_context_basis": (
+                            matching_context(source)["basis"]
+                            if source["matching_eligible"]
+                            else None
+                        ),
+                    }
                     if revised
                     else {}
                 ),

@@ -254,10 +254,10 @@ def test_model_phase_requires_accepted_pair_provenance_in_both_tables():
 @pytest.mark.parametrize(
     "changes",
     [
-        {"clean_status": "uncertain"},
-        {"clean_source_status": "nonunique_raw_placement"},
-        {"clean_end": 4},
-        {"clean_revision_sha256": None},
+        {"clean_status": "uncertain", "start": None},
+        {"clean_source_status": "nonunique_raw_placement", "end": 99},
+        {"clean_end": 4, "raw_original_word": "missing"},
+        {"clean_revision_sha256": None, "Text": "invalid"},
         {"revision_status": "FAILED_RAW_CONTENT"},
     ],
 )
@@ -281,7 +281,7 @@ def test_failed_revision_with_nonnull_ids_is_page_failure_not_source_review():
     assert result["mention_entity_links"] == []
 
 
-def test_source_review_date_retains_source_reason_before_date_deferral():
+def test_source_review_date_stays_deferred_with_review_metadata():
     result = mention_rows(
         [
             row(
@@ -293,7 +293,52 @@ def test_source_review_date_retains_source_reason_before_date_deferral():
         ],
         stage="final",
     )
-    assert result["mentions"][0]["processing_status"] == "SOURCE_REVIEW"
+    assert result["mentions"][0]["processing_status"] == "DEFERRED_DATE"
+
+
+@pytest.mark.parametrize("basis", ["clean", "original"])
+@pytest.mark.parametrize(
+    "stage,method,status",
+    [
+        ("pending", None, "PENDING_MATCHING"),
+        ("exact", "exact", "ACCEPTED_EXACT"),
+        ("model", "model", "ACCEPTED_MODEL"),
+        ("final", None, "ENTITY_UNRESOLVED"),
+    ],
+)
+def test_advisory_review_survives_matching_outcomes(basis, stage, method, status):
+    source = row(
+        source_scope_status="REVIEW",
+        source_scope_policy_version="article-source-v3",
+        source_scope_context="Tokyo review context",
+        repair_status="source_context_review",
+        clean_text_needs_review=True,
+    )
+    if basis == "original":
+        source.update(clean_status="uncertain", clean_start=None, clean_end=None)
+    pairs = []
+    if method:
+        pairs = [dict(group_id="g", qid="Q1", method=method)]
+        if method == "model":
+            pairs[0].update(
+                run_id="run",
+                checkpoint_sha256=HASH,
+                readiness_sha256=HASH,
+                decision_reference=dict(
+                    path="decisions.jsonl", sha256=HASH, record_id="g"
+                ),
+            )
+    result = mention_rows([source], [group()], pairs, stage)
+    saved = result["mentions"][0]
+    assert saved["processing_status"] == status
+    assert saved["matching_context_basis"] == basis
+    assert saved["source_scope_status"] == "REVIEW"
+    assert saved["repair_status"] == "source_context_review"
+    assert saved["clean_text_needs_review"] is True
+    assert saved["raw"]["word"] == "[[Tokyo]]"
+    assert (saved["clean_start"], saved["clean_end"]) == (
+        (0, 5) if basis == "clean" else (None, None)
+    )
 
 
 def test_pending_file_write_keeps_null_ids_and_binds_stage(tmp_path):

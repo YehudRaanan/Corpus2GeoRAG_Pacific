@@ -428,3 +428,19 @@ hours within the six-hour aggregate allowance. Keep an estimated cost reserve
 and verify the VM stops. Forecasts are not a billing-account cap.
 Local commits protect code history only. Ignored data and checkpoints are local;
 no GitHub push is authorised for this pilot.
+
+## Advisory source review
+
+Source-review flags are retained as evidence, but do not block non-DATE
+mentions from candidate preparation. Explicit source exclusions and unverified
+page/revision identities still block matching; DATE remains deferred.
+The context helper uses a verified clean span when available. Otherwise it uses
+the unchanged original text and offsets, checked against the original word.
+It records `clean` or `original` as the context basis and never invents clean
+positions. A row without either valid span remains a data-validation failure.
+
+The ordinary per-QID top-80 and source-supported candidate pools remain in use.
+If a reviewed group is absent from every pool and is not exact-matched, its best
+same-page trigram pairing is added. A missing named QID inventory is reported
+explicitly. Pool inclusion does not prove that the correct QID was collected.
+Changed candidate jobs require new model scores; the previous run stays intact.

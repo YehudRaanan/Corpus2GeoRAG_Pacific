@@ -278,7 +278,12 @@ def test_eda_rejects_unexplained_unlinked_mentions_and_bad_clean_slices():
         eda.summarize(tables)
     tables = revised_tables()
     tables["mentions"][0]["clean_end"] = 0
-    with pytest.raises(ValueError, match="clean"):
+    tables["mentions"][0]["matching_context_basis"] = "original"
+    report = eda.summarize(tables)
+    assert report["denominators"]["original_mentions"] == 3
+    tables["mentions"][0]["end"] = 0
+    tables["mentions"][0]["raw"]["end"] = 0
+    with pytest.raises(ValueError, match="context"):
         eda.summarize(tables)
 
 
