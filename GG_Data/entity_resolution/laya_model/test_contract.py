@@ -239,3 +239,155 @@ def test_removal_evidence_drift_is_rejected(tokenizer):
     later["candidates"][0]["context"] = "silently changed evidence"
     with pytest.raises(ValueError, match="evidence"):
         partition_removal_states([initial, later], tokenizer=tokenizer)
+
+
+class RecordingAgent:
+    def __init__(self, tokenizer):
+        self.tok = tokenizer
+        self.questions = []
+
+    def system_one(self, state, questions, **kwargs):
+        self.questions.append(deepcopy((state, questions, kwargs)))
+        keys = list(questions["match"]["criteria"])
+        choice = keys[0] if len(self.questions) == 1 else STOP_KEY
+        return {
+            "answers": {
+                "match": {
+                    "choice": choice,
+                    "probabilities": {key: float(key == choice) for key in keys},
+                }
+            }
+        }
+
+
+@pytest.mark.parametrize("shortened", [False, True])
+def test_cached_chunks_match_uncached_questions_and_traces(tokenizer, shortened):
+    raw = record(1 if shortened else 5, ("c0",))
+    if shortened:
+        raw["entity"]["context"] = "very long original evidence " * 1000
+        raw["candidates"][0]["context"] = "very long candidate context " * 1000
+    original = deepcopy(raw)
+    chunks = partition_record(raw, "forward", tokenizer=tokenizer, max_options=2)
+    uncached, cached = RecordingAgent(tokenizer), RecordingAgent(tokenizer)
+    expected = choose_remaining(uncached, raw, "forward", max_options=2)
+    result = choose_remaining(
+        cached, raw, "forward", max_options=2, prepared_chunks=chunks
+    )
+    assert cached.questions == uncached.questions
+    assert result == expected
+    assert raw == original
+
+
+@pytest.mark.parametrize(
+    "corruption",
+    [
+        "coverage",
+        "reorder",
+        "duplicate",
+        "query_name",
+        "query_type",
+        "query_description",
+        "query_context",
+        "candidate_name",
+        "candidate_type",
+        "candidate_description",
+        "candidate_context",
+        "chunk_index",
+        "chunk_count",
+        "original_ids",
+        "positive_ids",
+        "direction",
+        "invented_shortening",
+    ],
+)
+def test_cached_chunk_corruption_rejects_before_inference(tokenizer, corruption):
+    raw = record(3)
+    chunks = deepcopy(
+        partition_record(raw, "forward", tokenizer=tokenizer, max_options=2)
+    )
+    first = chunks[0]
+    if corruption == "coverage":
+        first["candidates"].pop()
+    elif corruption == "reorder":
+        first["candidates"].reverse()
+    elif corruption == "duplicate":
+        first["candidates"][1] = deepcopy(first["candidates"][0])
+    elif corruption.startswith("query_"):
+        first["entity"][corruption.removeprefix("query_")] = "changed"
+    elif corruption.startswith("candidate_"):
+        first["candidates"][0][corruption.removeprefix("candidate_")] = "changed"
+    elif corruption in ("chunk_index", "chunk_count"):
+        first[corruption] += 1
+    elif corruption == "original_ids":
+        first["original_candidate_ids"] = ["stale"]
+    elif corruption == "positive_ids":
+        first["positive_ids"] = []
+    elif corruption == "direction":
+        first["direction"] = "reverse"
+    else:
+        first["context_shortening"] = [
+            {
+                "identity": "query",
+                "original_tokens": 99,
+                "retained_tokens": 8,
+                "policy": "context_head_tail",
+            }
+        ]
+    agent = RecordingAgent(tokenizer)
+    with pytest.raises(ValueError, match="cache|chunk|evidence|direction|Candidate"):
+        choose_remaining(agent, raw, "forward", max_options=2, prepared_chunks=chunks)
+    assert agent.questions == []
+
+
+def test_cached_shortening_cannot_hide_changed_context(tokenizer):
+    raw = record(1, ("c0",))
+    raw["entity"]["context"] = "very long evidence " * 1000
+    chunks = partition_record(raw, "forward", tokenizer=tokenizer)
+    chunks[0]["entity"]["context"] += " invented evidence"
+    with pytest.raises(ValueError, match="cache|evidence"):
+        choose_remaining(
+            RecordingAgent(tokenizer), raw, "forward", prepared_chunks=chunks
+        )
+
+
+def test_cached_chunks_do_not_bypass_fit_diagnostics(tokenizer, monkeypatch):
+    from GG_Data.entity_resolution.laya_model import model
+
+    raw = record()
+    chunks = partition_record(raw, "forward", tokenizer=tokenizer)
+    monkeypatch.setattr(model, "token_diagnostics", lambda *_a, **_k: {"fits": False})
+    agent = RecordingAgent(tokenizer)
+    with pytest.raises(ValueError, match="truncate|fit"):
+        choose_remaining(agent, raw, "forward", prepared_chunks=chunks)
+    assert agent.questions == []
+
+
+@pytest.mark.parametrize("empty", [False, True])
+def test_cached_chunks_reuse_partition_without_trusting_saved_diagnostics(
+    tokenizer, monkeypatch, empty
+):
+    from GG_Data.entity_resolution.laya_model import model
+
+    raw = record(0 if empty else 3, ())
+    raw.pop("positive_ids")
+    chunks = partition_record(raw, "forward", tokenizer=tokenizer)
+    expected = choose_remaining(RecordingAgent(tokenizer), raw, "forward")
+    chunks[0]["token_diagnostics"] = {"fits": False, "sequence_tokens": -1}
+
+    def unexpected_partition(*args, **kwargs):
+        pytest.fail("Cached inference must reuse the existing partition")
+
+    monkeypatch.setattr(model, "partition_record", unexpected_partition)
+    result = choose_remaining(
+        RecordingAgent(tokenizer), raw, "forward", prepared_chunks=chunks
+    )
+    assert result == expected
+
+
+def test_cached_chunks_are_forward_only(tokenizer):
+    raw = record()
+    chunks = partition_record(raw, "reverse", tokenizer=tokenizer)
+    with pytest.raises(ValueError, match="forward"):
+        choose_remaining(
+            RecordingAgent(tokenizer), raw, "reverse", prepared_chunks=chunks
+        )

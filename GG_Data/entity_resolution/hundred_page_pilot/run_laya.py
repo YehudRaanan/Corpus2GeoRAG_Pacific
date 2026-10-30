@@ -228,6 +228,175 @@ def scoped(rows: list[dict], scopes: dict, scope: int) -> list[dict]:
     return [r for r in rows if (r["page_id"], r["revision_id"]) in allowed]
 
 
+def iter_jsonl(path: Path):
+    with path.open(encoding="utf-8") as stream:
+        for line in stream:
+            if line.strip():
+                yield json.loads(line)
+
+
+def tokenizer_hashes(path: Path) -> dict:
+    if not path.is_dir():
+        raise ValueError("Expected a local tokenizer directory")
+    hashes = {
+        p.relative_to(path).as_posix(): sha256(p)
+        for p in sorted(path.rglob("*"))
+        if p.is_file()
+    }
+    if not hashes:
+        raise ValueError("Local tokenizer directory is empty")
+    return hashes
+
+
+def load_local_tokenizer(path: Path):
+    from transformers import AutoTokenizer
+
+    return AutoTokenizer.from_pretrained(str(path), local_files_only=True)
+
+
+def cache_binding(
+    input_dir: Path, max_options: int, max_len: int, head_max_len: int
+) -> dict:
+    return dict(
+        manifest_sha256=sha256(input_dir / "manifest.json"),
+        model_code_sha256=sha256(Path(__file__).parents[1] / "laya_model/model.py"),
+        max_options=max_options,
+        max_len=max_len,
+        head_max_len=head_max_len,
+    )
+
+
+def prepare_chunk_cache(
+    input_dir: Path,
+    tokenizer_path: Path,
+    output: Path,
+    *,
+    max_options: int = 20,
+    max_len: int = 1024,
+    head_max_len: int = 256,
+) -> dict:
+    """Stream forward partitions on CPU using local tokenizer files, no weights."""
+    from GG_Data.entity_resolution.laya_model.model import partition_record
+
+    if output.exists():
+        raise FileExistsError(f"Preserve existing output: {output}")
+    if max_options < 1 or head_max_len < 32 or max_len <= head_max_len:
+        raise ValueError("Invalid decision token/option budgets")
+    binding = cache_binding(input_dir, max_options, max_len, head_max_len)
+    hashes = tokenizer_hashes(tokenizer_path)
+    source = input_dir / "forward_jobs.jsonl"
+    manifest = json.loads((input_dir / "manifest.json").read_text(encoding="utf-8"))
+    source_hash = manifest["files"]["forward_jobs.jsonl"]
+    if sha256(source) != source_hash:
+        raise ValueError("Prepared forward jobs changed")
+    tokenizer = load_local_tokenizer(tokenizer_path)
+    output.mkdir(parents=True, exist_ok=False)
+    seen, chunks_count, candidate_count = set(), 0, 0
+
+    def progress(status):
+        value = dict(
+            status=status,
+            jobs=len(seen),
+            chunks=chunks_count,
+            candidates=candidate_count,
+        )
+        (output / "progress.json").write_text(
+            json.dumps(value, indent=2), encoding="utf-8"
+        )
+        LOG.info("Forward chunk cache: %s", value)
+
+    with (output / "forward_chunks.jsonl").open("x", encoding="utf-8") as stream:
+        for job in iter_jsonl(source):
+            if job["id"] in seen or job.get("direction") != "forward":
+                raise ValueError("Expected unique forward job IDs")
+            chunks = partition_record(
+                job,
+                "forward",
+                tokenizer=tokenizer,
+                max_options=max_options,
+                max_len=max_len,
+                head_max_len=head_max_len,
+            )
+            stream.write(
+                json.dumps(dict(id=job["id"], chunks=chunks), ensure_ascii=False) + "\n"
+            )
+            seen.add(job["id"])
+            chunks_count += len(chunks)
+            candidate_count += len(job["candidates"])
+            if len(seen) % 100 == 0:
+                stream.flush()
+                progress("running")
+    if (
+        cache_binding(input_dir, max_options, max_len, head_max_len) != binding
+        or tokenizer_hashes(tokenizer_path) != hashes
+        or sha256(source) != source_hash
+    ):
+        raise ValueError("Chunk preparation inputs changed during execution")
+    result = dict(
+        schema_version=1,
+        direction="forward",
+        binding=binding,
+        tokenizer_files=hashes,
+        jobs=len(seen),
+        chunks=chunks_count,
+        candidates=candidate_count,
+        cache_sha256=sha256(output / "forward_chunks.jsonl"),
+    )
+    save_json(output / "manifest.json", result)
+    progress("complete")
+    return result
+
+
+def load_chunk_cache(
+    input_dir: Path,
+    cache_dir: Path,
+    checkpoint_binding: dict,
+    selected_ids: set[str],
+    *,
+    max_options: int = 20,
+    max_len: int = 1024,
+    head_max_len: int = 256,
+) -> dict[str, list[dict]]:
+    """Validate a complete cache once; retain only this scope's forward chunks."""
+    manifest = json.loads((cache_dir / "manifest.json").read_text(encoding="utf-8"))
+    if (
+        manifest.get("schema_version") != 1
+        or manifest.get("direction") != "forward"
+        or manifest["binding"]
+        != cache_binding(input_dir, max_options, max_len, head_max_len)
+    ):
+        raise ValueError("Forward chunk cache binding differs")
+    hashes = {
+        name.removeprefix("tokenizer/"): digest
+        for name, digest in checkpoint_binding.get("checkpoint_files", {}).items()
+        if name.startswith("tokenizer/")
+    }
+    if not hashes or hashes != manifest["tokenizer_files"]:
+        raise ValueError("Forward chunk cache tokenizer differs from loaded checkpoint")
+    path = cache_dir / "forward_chunks.jsonl"
+    if sha256(path) != manifest["cache_sha256"]:
+        raise ValueError("Forward chunk cache hash differs")
+    expected = {job["id"] for job in iter_jsonl(input_dir / "forward_jobs.jsonl")}
+    seen, selected, chunks_count, candidate_count = set(), {}, 0, 0
+    for row in iter_jsonl(path):
+        if row["id"] in seen or row["id"] not in expected:
+            raise ValueError("Forward chunk cache job IDs differ")
+        seen.add(row["id"])
+        chunks_count += len(row["chunks"])
+        candidate_count += sum(len(chunk["candidates"]) for chunk in row["chunks"])
+        if row["id"] in selected_ids:
+            selected[row["id"]] = row["chunks"]
+    if (
+        seen != expected
+        or set(selected) != selected_ids
+        or len(seen) != manifest["jobs"]
+        or chunks_count != manifest["chunks"]
+        or candidate_count != manifest["candidates"]
+    ):
+        raise ValueError("Incomplete forward chunk cache counts/coverage")
+    return selected
+
+
 def run_scope(
     input_dir: Path,
     output: Path,
@@ -240,6 +409,7 @@ def run_scope(
     max_options: int = 20,
     max_len: int = 1024,
     head_max_len: int = 256,
+    chunk_cache: Path | None = None,
 ) -> dict:
     """Save complete question traces after every joint removal loop; resumable."""
     from GG_Data.entity_resolution.laya_model.model import choose_remaining
@@ -275,6 +445,9 @@ def run_scope(
             max_options=max_options,
             max_len=max_len,
             head_max_len=head_max_len,
+            chunk_cache_manifest_sha256=(
+                sha256(chunk_cache / "manifest.json") if chunk_cache else None
+            ),
         ),
     )
     groups = scoped(read_jsonl(input_dir / "forward/groups.jsonl"), scopes, scope)
@@ -282,6 +455,19 @@ def run_scope(
         pq.read_table(input_dir / "entities.parquet").to_pylist(), scopes, scope
     )
     forward = scoped(read_jsonl(input_dir / "forward_jobs.jsonl"), scopes, scope)
+    cached_chunks = (
+        load_chunk_cache(
+            input_dir,
+            chunk_cache,
+            checkpoint_binding,
+            {j["id"] for j in forward},
+            max_options=max_options,
+            max_len=max_len,
+            head_max_len=head_max_len,
+        )
+        if chunk_cache
+        else None
+    )
     exact = scoped(
         pq.read_table(input_dir / "forward/exact_pairs.parquet").to_pylist(),
         scopes,
@@ -337,6 +523,11 @@ def run_scope(
                         max_options=max_options,
                         max_len=max_len,
                         head_max_len=head_max_len,
+                        **(
+                            {"prepared_chunks": cached_chunks[job["id"]]}
+                            if direction == "forward" and cached_chunks is not None
+                            else {}
+                        ),
                     )
                 except TimeoutError:
                     progress("resource_limit", include_ids=True)
@@ -554,6 +745,17 @@ def main() -> None:
     for name in ("mentions", "entities", "scopes", "output"):
         prep.add_argument("--" + name, type=Path, required=True)
     prep.add_argument("--candidate-count", type=int, default=80)
+    cache = commands.add_parser(
+        "prepare-chunks", help="CPU-only forward cache; local tokenizer, no weights"
+    )
+    for name in ("input-dir", "tokenizer", "output"):
+        cache.add_argument("--" + name, type=Path, required=True)
+    for name, default in (
+        ("max-options", 20),
+        ("max-len", 1024),
+        ("head-max-len", 256),
+    ):
+        cache.add_argument("--" + name, type=int, default=default)
     score = commands.add_parser(
         "score", help="Use an already trained local Laya checkpoint"
     )
@@ -566,6 +768,7 @@ def main() -> None:
     score.add_argument("--max-len", type=int, default=1024)
     score.add_argument("--head-max-len", type=int, default=256)
     score.add_argument("--baseline-pairs", type=Path)
+    score.add_argument("--chunk-cache", type=Path)
     args = parser.parse_args()
     if args.action == "score":
         from GG_Data.entity_resolution.laya_model.evaluate import load_local_agent
@@ -579,6 +782,18 @@ def main() -> None:
             max_seconds=args.max_seconds,
             checkpoint_binding=binding,
             baseline=read_jsonl(args.baseline_pairs) if args.baseline_pairs else None,
+            max_options=args.max_options,
+            max_len=args.max_len,
+            head_max_len=args.head_max_len,
+            chunk_cache=args.chunk_cache,
+        )
+        LOG.info("%s", json.dumps(result))
+        return
+    if args.action == "prepare-chunks":
+        result = prepare_chunk_cache(
+            args.input_dir,
+            args.tokenizer,
+            args.output,
             max_options=args.max_options,
             max_len=args.max_len,
             head_max_len=args.head_max_len,

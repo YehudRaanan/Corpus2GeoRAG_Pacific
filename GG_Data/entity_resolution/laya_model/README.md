@@ -34,6 +34,13 @@ observations and three consecutive relative loss changes within 1%, with at most
 40 epochs. Full tuning starts only after that check. Checkpoints preserve model
 weights; exact optimizer resume is not supported.
 
+The benchmark also times a separate FP32 validation sample. Its projection counts
+all full validation passes; it excludes training, calibration and file transfer.
+Do not start a stage whose measured workload cannot fit the approved allowance.
+Saving a checkpoint retains the original tokenizer files only after checking
+that its vocabulary, backend and active settings did not change. This keeps CPU
+cache hashes valid and avoids a loader metadata rewrite.
+
 Use the existing project environment with PyArrow and source-parser dependencies. Preparation does not import Laya or load weights. Use a new output directory.
 
 ```powershell
@@ -41,6 +48,26 @@ Use the existing project environment with PyArrow and source-parser dependencies
 ```
 
 The copied Parquet inputs and all derived files are hashed in `manifest.json`. Full inputs contain 40,070 occurrences, 100 pages and 132 revision scopes. Preparation reuses the existing exact-name/unique-QID/single-Daniel-type rule, grouping, REVIEW eligibility, EXCLUDE rejection, DATE deferral, source-protected candidates and review-coverage additions. A retained top-K pool is retrieval coverage, not complete inventory coverage. `--candidate-count 0` retains all local candidates; it does not bypass token-safe chunking during inference.
+
+Forward token-safe partitions can be prepared on CPU before paid inference. This
+loads a local tokenizer only, streams all forward jobs, and reports progress each
+100 jobs. Use the tokenizer directory from the exact inference checkpoint and
+the same token/option budgets. Use a new cache directory; preparation does not
+change the pilot input manifest.
+
+```powershell
+python -m GG_Data.entity_resolution.hundred_page_pilot.run_laya prepare-chunks --input-dir PILOT_INPUT --tokenizer CHECKPOINT/full/tokenizer --output FORWARD_CHUNK_CACHE --max-options 20 --max-len 1024 --head-max-len 256
+```
+
+The cache has one `forward_chunks.jsonl` row per forward job and a manifest bound
+to the original input manifest, exact `model.py` hash, tokenizer file hashes,
+budgets, cache hash and complete job/chunk/candidate counts. Supply
+`--chunk-cache FORWARD_CHUNK_CACHE` to `score`. Inference validates the cache once,
+keeps the selected scope's chunks, and checks each chunk's evidence and fit.
+Cached and uncached forward questions and decisions are identical. Reverse
+questions remain dynamic and uncached. Tokenizer/model/input/budget changes
+require a new cache. A failed or interrupted preparation has no complete cache
+manifest and cannot be used for inference.
 
 ## Held-out evaluation and pilot inference
 

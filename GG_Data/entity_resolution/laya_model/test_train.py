@@ -7,11 +7,16 @@ from types import SimpleNamespace
 import pytest
 import torch
 
-from GG_Data.entity_resolution.laya_model.train import (BudgetStop, RunGuard,
-                                                        freeze_encoder,
-                                                        select_records,
-                                                        validate_split_pages,
-                                                        validation_metrics)
+from GG_Data.entity_resolution.laya_model.train import (
+    BudgetStop,
+    RunGuard,
+    freeze_encoder,
+    save_model,
+    select_records,
+    validation,
+    validate_split_pages,
+    validation_metrics,
+)
 
 
 def test_freeze_then_unfreeze_changes_encoder_only_after_warmup():
@@ -138,3 +143,55 @@ def test_metrics_do_not_hide_positive_failures_behind_many_stops():
         ]
         == 1
     )
+
+
+def test_checkpoint_preserves_verified_tokenizer_bytes_and_rejects_mutation(tmp_path):
+    """Save metadata can change with Transformers; model token semantics cannot."""
+    from pathlib import Path
+
+    from transformers import AutoTokenizer
+
+    source = Path("Data/external/laya_pilot_20261030/base_checkpoint/tokenizer")
+    tok = AutoTokenizer.from_pretrained(str(source), local_files_only=True)
+
+    def fake_save(model, tokenizer, cfg, destination):
+        path = Path(destination)
+        path.mkdir(parents=True)
+        tokenizer.save_pretrained(path / "tokenizer")
+        (path / "model.safetensors").write_bytes(b"small-test-weight")
+        (path / "rl_agent_config.json").write_text("{}")
+
+    upstream = SimpleNamespace(save_checkpoint=fake_save)
+    output = tmp_path / "valid"
+    save_model(upstream, None, tok, {}, output, source)
+    for original in source.iterdir():
+        assert (
+            output / "tokenizer" / original.name
+        ).read_bytes() == original.read_bytes()
+    tok.padding_side = "left" if tok.padding_side == "right" else "right"
+    with pytest.raises(ValueError, match="tokenizer changed"):
+        save_model(upstream, None, tok, {}, tmp_path / "invalid", source)
+    assert not (tmp_path / "invalid" / "rl_agent_config.json").exists()
+
+
+def test_validation_uses_its_own_batch_size():
+    calls = []
+
+    def records(*args, batch_size):
+        calls.append(batch_size)
+        return [(0, [2.0, 0.0], [1.0, 0.0], 2)]
+
+    upstream = SimpleNamespace(calibration_records=records)
+    args = SimpleNamespace(max_len=1024, head_max_len=256, validation_batch=16)
+    items = [
+        {
+            "q": {
+                "crit": {
+                    "STOP": "None of the remaining mention groups refers to this entity."
+                }
+            }
+        }
+    ]
+    assert validation(upstream, None, None, items, "cpu", args)["positive_correct"] == 1
+    validation(upstream, None, None, items, "cpu", args, batch_size=4)
+    assert calls == [16, 4]

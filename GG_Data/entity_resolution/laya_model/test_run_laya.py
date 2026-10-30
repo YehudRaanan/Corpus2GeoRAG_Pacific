@@ -5,6 +5,62 @@ from __future__ import annotations
 import json
 
 
+def test_forward_chunk_cache_streams_binds_and_rejects_drift(tmp_path, monkeypatch):
+    import pytest
+    from GG_Data.entity_resolution.hundred_page_pilot import run_laya
+    from GG_Data.entity_resolution.laya_model import model
+    from GG_Data.entity_resolution.luke_pilot.data import sha256, write_jsonl
+
+    prepared = tmp_path / "prepared"
+    prepared.mkdir()
+    jobs = [dict(id=str(i), direction="forward", candidates=[]) for i in range(101)]
+    write_jsonl(prepared / "forward_jobs.jsonl", jobs)
+    manifest = dict(
+        files={"forward_jobs.jsonl": sha256(prepared / "forward_jobs.jsonl")}
+    )
+    (prepared / "manifest.json").write_text(json.dumps(manifest))
+    original = (prepared / "manifest.json").read_bytes()
+    tokenizer = tmp_path / "tokenizer"
+    tokenizer.mkdir()
+    (tokenizer / "tokenizer.json").write_text("saved tokenizer")
+    monkeypatch.setattr(run_laya, "load_local_tokenizer", lambda _path: object())
+    monkeypatch.setattr(
+        model,
+        "partition_record",
+        lambda record, direction, **kwargs: [
+            dict(record, chunk_index=0, chunk_count=1)
+        ],
+    )
+    cache = tmp_path / "cache"
+    result = run_laya.prepare_chunk_cache(prepared, tokenizer, cache)
+    assert result["jobs"] == 101 and result["chunks"] == 101
+    assert json.loads((cache / "progress.json").read_text())["status"] == "complete"
+    hashes = {"tokenizer/" + p.name: sha256(p) for p in tokenizer.iterdir()}
+    loaded = run_laya.load_chunk_cache(
+        prepared, cache, {"checkpoint_files": hashes}, {"1", "99"}
+    )
+    assert set(loaded) == {"1", "99"}
+    assert loaded["1"][0]["id"] == "1"
+    assert (prepared / "manifest.json").read_bytes() == original
+    with pytest.raises(FileExistsError):
+        run_laya.prepare_chunk_cache(prepared, tokenizer, cache)
+    with pytest.raises(ValueError, match="binding"):
+        run_laya.load_chunk_cache(
+            prepared, cache, {"checkpoint_files": hashes}, {"1"}, max_options=19
+        )
+    with pytest.raises(ValueError, match="tokenizer"):
+        run_laya.load_chunk_cache(
+            prepared,
+            cache,
+            {"checkpoint_files": {"tokenizer/tokenizer.json": "changed"}},
+            {"1"},
+        )
+    with (cache / "forward_chunks.jsonl").open("a") as stream:
+        stream.write("{}\n")
+    with pytest.raises(ValueError, match="hash"):
+        run_laya.load_chunk_cache(prepared, cache, {"checkpoint_files": hashes}, {"1"})
+
+
 def test_reverse_checks_assigned_groups_and_only_uncovered_qids():
     from GG_Data.entity_resolution.hundred_page_pilot.run_laya import reverse_jobs
 
@@ -171,6 +227,7 @@ def test_full_pipeline_keeps_all_rows_and_adds_reverse_to_assigned_group(
     import pyarrow as pa
     import pyarrow.parquet as pq
     from GG_Data.entity_resolution.hundred_page_pilot.run_laya import (
+        prepare_chunk_cache,
         prepare_run,
         run_scope,
     )
@@ -184,7 +241,11 @@ def test_full_pipeline_keeps_all_rows_and_adds_reverse_to_assigned_group(
     class FakeAgent:
         tok = object()
 
+        def __init__(self):
+            self.questions = []
+
         def system_one(self, state, questions, **_kwargs):
+            self.questions.append((state, questions))
             keys = list(questions["match"]["criteria"])
             choice = (
                 keys[0]
@@ -276,10 +337,11 @@ def test_full_pipeline_keeps_all_rows_and_adds_reverse_to_assigned_group(
     manifest = prepare_run(mentions, inventory, scopes, prepared)
     assert manifest["input_rows"] == 400
     assert manifest["forward_preparation"]["matching_eligible_rows"] == 200
+    uncached_agent = FakeAgent()
     result = run_scope(
         prepared,
         tmp_path / "results",
-        FakeAgent(),
+        uncached_agent,
         3,
         max_seconds=60,
         checkpoint_binding={"fake": "test"},
@@ -309,6 +371,37 @@ def test_full_pipeline_keeps_all_rows_and_adds_reverse_to_assigned_group(
     )
     assert (tmp_path / "results/forward_traces.jsonl").read_bytes() == before
     assert mentions.read_bytes() == original
+
+    from GG_Data.entity_resolution.hundred_page_pilot import run_laya
+    from GG_Data.entity_resolution.luke_pilot.data import sha256
+
+    tokenizer_path = tmp_path / "tokenizer"
+    tokenizer_path.mkdir()
+    (tokenizer_path / "tokenizer.json").write_text("saved tokenizer")
+    monkeypatch.setattr(run_laya, "load_local_tokenizer", lambda _path: object())
+    prepare_chunk_cache(prepared, tokenizer_path, tmp_path / "chunks")
+    cached_agent = FakeAgent()
+    cached = run_scope(
+        prepared,
+        tmp_path / "cached-results",
+        cached_agent,
+        3,
+        max_seconds=60,
+        checkpoint_binding={
+            "checkpoint_files": {
+                "tokenizer/tokenizer.json": sha256(tokenizer_path / "tokenizer.json")
+            }
+        },
+        chunk_cache=tmp_path / "chunks",
+    )
+    assert cached_agent.questions == uncached_agent.questions
+    assert {k: v for k, v in cached.items() if k != "elapsed_seconds"} == {
+        k: v for k, v in result.items() if k != "elapsed_seconds"
+    }
+    for name in ("forward_traces.jsonl", "reverse_traces.jsonl", "proposals.jsonl"):
+        assert read_jsonl(tmp_path / "cached-results" / name) == read_jsonl(
+            tmp_path / "results" / name
+        )
 
 
 def test_evaluate_agent_reports_local_stop_and_source_recovery_with_unknowns(

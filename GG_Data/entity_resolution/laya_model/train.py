@@ -12,6 +12,7 @@ import hashlib
 import json
 import logging
 import math
+import shutil
 import time
 from datetime import datetime, timezone
 from pathlib import Path
@@ -108,10 +109,49 @@ def write_json(path: Path, value: dict) -> None:
     temporary.replace(path)
 
 
-def save_model(upstream, model, tok, cfg: dict, output: Path) -> None:
+def save_model(
+    upstream, model, tok, cfg: dict, output: Path, tokenizer_source: Path | None = None
+) -> None:
     """Write to scratch first; move weights before the final config/receipt."""
     scratch = output.parent / (output.name + "_writing")
     upstream.save_checkpoint(model, tok, cfg, str(scratch))
+    if tokenizer_source is not None:
+        # Transformers rewrites harmless metadata when saving. Keep the verified
+        # original files so both the CPU cache and immutable loader can use them.
+        from transformers import AutoTokenizer
+
+        original = AutoTokenizer.from_pretrained(
+            str(tokenizer_source), local_files_only=True
+        )
+        attributes = (
+            "special_tokens_map",
+            "padding_side",
+            "truncation_side",
+            "model_max_length",
+            "model_input_names",
+            "clean_up_tokenization_spaces",
+            "split_special_tokens",
+            "add_prefix_space",
+        )
+        if (
+            type(tok) is not type(original)
+            or tok.backend_tokenizer.to_str() != original.backend_tokenizer.to_str()
+            or any(
+                getattr(tok, a, None) != getattr(original, a, None) for a in attributes
+            )
+        ):
+            raise ValueError("Training tokenizer changed; original cache is invalid")
+        saved = scratch / "tokenizer"
+        source_files = {
+            p.relative_to(tokenizer_source)
+            for p in tokenizer_source.rglob("*")
+            if p.is_file()
+        }
+        saved_files = {p.relative_to(saved) for p in saved.rglob("*") if p.is_file()}
+        if saved_files != source_files:
+            raise ValueError("Saved tokenizer file inventory changed")
+        for name in source_files:
+            shutil.copy2(tokenizer_source / name, saved / name)
     output.mkdir(parents=True, exist_ok=True)
     paths = sorted(scratch.rglob("*"), key=lambda p: p.name == "rl_agent_config.json")
     for path in paths:
@@ -128,7 +168,7 @@ def token_binding(base: Path, args) -> dict:
         "head_max_len": args.head_max_len,
         "max_options": args.max_options,
         "tokenizer": {
-            str(p.relative_to(base)): sha256(p)
+            p.relative_to(base).as_posix(): sha256(p)
             for p in sorted((base / "tokenizer").rglob("*"))
             if p.is_file()
         },
@@ -137,7 +177,10 @@ def token_binding(base: Path, args) -> dict:
 
 def build_items(rows: list[dict], tokenizer, args) -> tuple[list[dict], list[dict]]:
     from GG_Data.entity_resolution.laya_model.model import (
-        make_question, partition_removal_states, strict_items_from_rows)
+        make_question,
+        partition_removal_states,
+        strict_items_from_rows,
+    )
 
     raw_chunks = partition_removal_states(
         rows,
@@ -155,7 +198,7 @@ def build_items(rows: list[dict], tokenizer, args) -> tuple[list[dict], list[dic
     return items, raw_chunks
 
 
-def validation(upstream, model, tok, items, device, args) -> dict:
+def validation(upstream, model, tok, items, device, args, *, batch_size=None) -> dict:
     records = upstream.calibration_records(
         model,
         tok,
@@ -163,7 +206,7 @@ def validation(upstream, model, tok, items, device, args) -> dict:
         device,
         args.max_len,
         args.head_max_len,
-        batch_size=args.micro_batch,
+        batch_size=batch_size or args.validation_batch,
     )
     result = validation_metrics(records)
     result["by_direction"] = {
@@ -365,12 +408,68 @@ def run(args) -> dict:
             torch.cuda.synchronize()
             seconds = time.monotonic() - begin
             guard.check()
+            # Validation uses upstream FP32, unlike AMP training. Measure it
+            # separately; full validation dominates the four-observation gate.
+            sample_validation = val_items[:: max(1, len(val_items) // 64)][:64]
+            validation_benchmarks = []
+            reference_logits = None
+            for batch_size in dict.fromkeys((args.micro_batch, args.validation_batch)):
+                torch.cuda.reset_peak_memory_stats()
+                begin_validation = time.monotonic()
+                measured = upstream.calibration_records(
+                    model,
+                    tok,
+                    sample_validation,
+                    device,
+                    args.max_len,
+                    args.head_max_len,
+                    batch_size=batch_size,
+                )
+                torch.cuda.synchronize()
+                validation_seconds = time.monotonic() - begin_validation
+                guard.check()
+                import numpy as np
+
+                logits = [np.asarray(record[1]) for record in measured]
+                if not all(np.isfinite(row).all() for row in logits):
+                    raise ValueError("Non-finite benchmark validation logits")
+                if reference_logits is None:
+                    reference_logits = logits
+                validation_benchmarks.append(
+                    dict(
+                        batch_size=batch_size,
+                        items=len(sample_validation),
+                        seconds=validation_seconds,
+                        items_per_second=len(sample_validation) / validation_seconds,
+                        metrics=validation_metrics(measured),
+                        choices_changed_from_first_batch=sum(
+                            int(a.argmax()) != int(b.argmax())
+                            for a, b in zip(reference_logits, logits, strict=True)
+                        ),
+                        maximum_logit_change=max(
+                            float(np.max(np.abs(a - b)))
+                            for a, b in zip(reference_logits, logits, strict=True)
+                        ),
+                        peak_cuda_bytes=torch.cuda.max_memory_allocated(),
+                    )
+                )
             result.update(
                 status="BENCHMARK_COMPLETE",
                 benchmark_items=len(sample),
                 benchmark_seconds=seconds,
                 items_per_second=len(sample) / seconds,
                 benchmark_stage="frozen_head_only",
+                validation_benchmark_items=len(sample_validation),
+                validation_benchmark_seconds=validation_seconds,
+                validation_benchmarks=validation_benchmarks,
+                validation_items_per_second=len(sample_validation) / validation_seconds,
+                full_validation_items=len(val_items),
+                minimum_validation_passes=1 + 4 + args.full_epochs,
+                projected_validation_seconds=(1 + 4 + args.full_epochs)
+                * len(val_items)
+                * validation_seconds
+                / len(sample_validation),
+                projection_basis="Measured FP32 validation sample; excludes training, calibration, setup, saves and transfer. Not a guaranteed lower bound.",
                 peak_cuda_bytes=torch.cuda.max_memory_allocated(),
             )
         else:
@@ -396,7 +495,14 @@ def run(args) -> dict:
                     }
                 )
                 write_json(args.output / "history.json", {"observations": history})
-                save_model(upstream, model, tok, cfg, args.output / "latest")
+                save_model(
+                    upstream,
+                    model,
+                    tok,
+                    cfg,
+                    args.output / "latest",
+                    args.base / "tokenizer",
+                )
                 if result["stage"] == "frozen" and stable_head(losses):
                     result["head_stable"] = True
                     raise StageComplete()
@@ -422,7 +528,14 @@ def run(args) -> dict:
                 result["status"] = "WARMUP_NOT_STABLE"
             else:
                 guard.check()
-                save_model(upstream, model, tok, cfg, args.output / "frozen")
+                save_model(
+                    upstream,
+                    model,
+                    tok,
+                    cfg,
+                    args.output / "frozen",
+                    args.base / "tokenizer",
+                )
                 result["stage"] = "full"
                 config.freeze_encoder = False
                 config.epochs = args.full_epochs
@@ -443,9 +556,9 @@ def run(args) -> dict:
                 )
                 if not result["encoder_tuned"]:
                     raise ValueError("Full stage did not change the encoder")
-                result["after_validation"] = validation(
-                    upstream, model, tok, val_items, device, args
-                )
+                # The final callback measured these exact weights on the full
+                # validation split. No update occurs after it; reuse its result.
+                result["after_validation"] = history[-1]["validation"]
                 if args.prepared_items:
                     calibration = torch.load(
                         args.prepared_items / "calibration_items.pt", weights_only=False
@@ -459,7 +572,7 @@ def run(args) -> dict:
                     device,
                     args.max_len,
                     args.head_max_len,
-                    batch_size=args.micro_batch,
+                    batch_size=args.validation_batch,
                 )
                 guard.check()
                 fitted = upstream.fit_temperature_map(records)
@@ -490,12 +603,26 @@ def run(args) -> dict:
                 result["calibration"]["choice"][
                     "confidence_basis"
                 ] = "runtime option-bucket temperature"
-                save_model(upstream, model, tok, cfg, args.output / "full")
+                save_model(
+                    upstream,
+                    model,
+                    tok,
+                    cfg,
+                    args.output / "full",
+                    args.base / "tokenizer",
+                )
                 guard.check()
                 result["status"] = "TRAINING_COMPLETE"
     except BudgetStop as error:
         result.update(status="RESOURCE_LIMIT", reason=str(error))
-        save_model(upstream, model, tok, cfg, args.output / "interrupted")
+        save_model(
+            upstream,
+            model,
+            tok,
+            cfg,
+            args.output / "interrupted",
+            args.base / "tokenizer",
+        )
     except Exception as error:
         result.update(status="FAILED", error=f"{type(error).__name__}: {error}")
         raise
@@ -522,6 +649,7 @@ def main() -> None:
     parser.add_argument("--max-len", type=int, default=1024)
     parser.add_argument("--head-max-len", type=int, default=256)
     parser.add_argument("--micro-batch", type=int, default=4)
+    parser.add_argument("--validation-batch", type=int, default=16)
     parser.add_argument("--grad-accum", type=int, default=16)
     parser.add_argument("--full-epochs", type=int, default=2)
     args = parser.parse_args()

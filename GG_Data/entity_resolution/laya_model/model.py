@@ -406,6 +406,81 @@ def strict_items_from_rows(
     return items
 
 
+def validate_prepared_chunks(
+    record: dict,
+    direction: str,
+    chunks: list[dict],
+    *,
+    tokenizer: Any,
+    max_options: int = 20,
+    max_len: int = 1024,
+    head_max_len: int = 256,
+) -> None:
+    """Validate cached forward partitions against the complete current job.
+
+    Token diagnostics stored in a cache are never trusted. The inference loop
+    checks the actual encoded input again before every model call.
+    """
+    if direction != "forward":
+        raise ValueError("Prepared chunks are supported only for forward jobs")
+    ids = _validate_record(record, direction)
+    if max_options < 1 or head_max_len < 32 or max_len <= head_max_len:
+        raise ValueError("Invalid decision token/option budgets")
+    if (
+        not isinstance(chunks, list)
+        or not chunks
+        or any(
+            not isinstance(chunk, dict)
+            or not isinstance(chunk.get("candidates"), list)
+            or any(not isinstance(c, dict) for c in chunk["candidates"])
+            for chunk in chunks
+        )
+    ):
+        raise ValueError("Invalid prepared chunk cache")
+    if [c.get("id") for chunk in chunks for c in chunk["candidates"]] != ids:
+        raise ValueError("Prepared chunk cache lost or reordered candidate identities")
+    original = {candidate["id"]: candidate for candidate in record["candidates"]}
+    full_positive = record.get(
+        "remaining_full_positive_ids",
+        set(record.get("full_positive_ids", record.get("positive_ids", [])))
+        - set(record.get("removed_ids", [])),
+    )
+    for index, chunk in enumerate(chunks):
+        candidates = chunk["candidates"]
+        if len(candidates) > max_options or (not candidates and ids):
+            raise ValueError("Prepared chunk cache violates option coverage/budget")
+        if not ids and len(chunks) != 1:
+            raise ValueError("Empty job requires exactly one prepared STOP chunk")
+        expected = _chunk(record, [original[c["id"]] for c in candidates])
+        if chunk.get("context_shortening") != expected.get("context_shortening"):
+            # Only the existing singleton context policy may change evidence.
+            if len(candidates) != 1:
+                raise ValueError("Prepared chunk cache changed original evidence")
+            for limit in (128, 64, 32, 16, 8, 0):
+                shortened = _shorten_contexts(expected, tokenizer, limit)
+                if all(
+                    chunk.get(field) == shortened.get(field)
+                    for field in ("entity", "candidates", "context_shortening")
+                ):
+                    expected = shortened
+                    break
+            else:
+                raise ValueError("Prepared chunk cache has invalid context shortening")
+        expected.update(
+            chunk_index=index,
+            chunk_count=len(chunks),
+            original_candidate_ids=ids,
+            original_positive_ids=record.get("positive_ids"),
+            retrieval_missing_positive_ids=sorted(set(full_positive) - set(ids)),
+        )
+        # Bind provenance, labels and all evidence, not just displayed names.
+        if {k: v for k, v in chunk.items() if k != "token_diagnostics"} != {
+            k: v for k, v in expected.items() if k != "token_diagnostics"
+        }:
+            raise ValueError("Prepared chunk cache does not match current job/evidence")
+        _validate_record(chunk, direction)
+
+
 def choose_remaining(
     agent: Any,
     record: dict,
@@ -414,16 +489,29 @@ def choose_remaining(
     max_options: int = 20,
     max_len: int = 1024,
     head_max_len: int = 256,
+    prepared_chunks: list[dict] | None = None,
 ) -> list[dict]:
     """Rescore after each removal; a STOP ends its chunk and all chunks run."""
-    chunks = partition_record(
-        record,
-        direction,
-        tokenizer=agent.tok,
-        max_len=max_len,
-        head_max_len=head_max_len,
-        max_options=max_options,
-    )
+    if prepared_chunks is None:
+        chunks = partition_record(
+            record,
+            direction,
+            tokenizer=agent.tok,
+            max_len=max_len,
+            head_max_len=head_max_len,
+            max_options=max_options,
+        )
+    else:
+        validate_prepared_chunks(
+            record,
+            direction,
+            prepared_chunks,
+            tokenizer=agent.tok,
+            max_options=max_options,
+            max_len=max_len,
+            head_max_len=head_max_len,
+        )
+        chunks = prepared_chunks
     traces = []
     total = len(record["candidates"])
     presented = set()
