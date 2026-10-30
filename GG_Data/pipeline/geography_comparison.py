@@ -138,15 +138,10 @@ def prepare(
         raise ValueError("Model entities differ from the saved manifest")
     targets = read_json(files[0])
     sample = (
-        targets
-        if all_targets
-        else (
-            read_json(frozen_sample)
-            if frozen_sample
-            else sample_targets(
-                targets, read_json(base / "geography_sample/sample.json")
-            )
-        )
+        read_json(frozen_sample)
+        if frozen_sample
+        else targets if all_targets
+        else sample_targets(targets, read_json(base / "geography_sample/sample.json"))
     )
     if frozen_sample:
         # S2T 9: a wider test uses existing LOC rows, never invented identities.

@@ -7,6 +7,49 @@ import pytest
 from geo_agent.graph_store import GraphStore
 
 
+def test_enriched_acceptance_checks_native_geometry_and_unknown_locations(tmp_path):
+    from geo_agent.compact_format import write_graph
+    from geo_agent.verify_compact import verify
+
+    polygon = dict(type="Polygon", coordinates=[[[0, 0], [1, 0], [1, 1], [0, 0]]])
+    nodes = [
+        dict(
+            id=key,
+            name=key,
+            type=kind,
+            geometry=geometry,
+            attributes=dict(page_count=1, page_indices=[0], geography_status=status),
+        )
+        for key, kind, geometry, status in [
+            ("island", "location", polygon, "RESOLVED"),
+            ("unknown", "location", None, "UNRESOLVED_NO_ELIGIBLE_SOURCE_GEOMETRY"),
+            ("person", "person", None, None),
+        ]
+    ]
+    path = tmp_path / "enriched.json.gz"
+    write_graph(
+        path,
+        dict(
+            node_count=3,
+            pair_count=3,
+            raw_shared_page_count_sum=3,
+            page_scope_id="fixture",
+            geography_status="COMPLETE_WITH_UNRESOLVED",
+        ),
+        nodes,
+        [[0, 1, 1, 1.0, 1.0], [0, 2, 1, 1.0, 1.0], [1, 2, 1, 1.0, 1.0]],
+    )
+    result = verify(path, tmp_path / "acceptance.json")
+    assert result["geography"]["locations"] == 2
+    assert result["geography"]["geometry_types"] == {"Polygon": 1}
+    assert len(result["geography"]["geometry_rows_sha256"]) == 64
+    assert result["geography"]["spatial_checks"][0]["geometry_type"] == "Polygon"
+    assert (
+        result["geography"]["status_counts"]["UNRESOLVED_NO_ELIGIBLE_SOURCE_GEOMETRY"]
+        == 1
+    )
+
+
 def fixture_graph(tmp_path, invalid=False):
     from geo_agent.compact_format import write_graph
 

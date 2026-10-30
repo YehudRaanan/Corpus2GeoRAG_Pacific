@@ -521,15 +521,16 @@ def run(
         pid = p["place_id"]
         ev = evidence[pid]
         mention = by_mid[ev["mention_id"]]
-        ev["same_page_location_names"] = sorted(
-            {
-                m["word"]
-                for m in mentions
-                if m["entity_group"] == "LOC"
-                and (m["wiki_site"], m["wiki_page_id"])
-                == (mention["wiki_site"], mention["wiki_page_id"])
-            }
-        )
+        if "same_page_location_names" not in ev:
+            ev["same_page_location_names"] = sorted(
+                {
+                    m["word"]
+                    for m in mentions
+                    if m["entity_group"] == "LOC"
+                    and (m["wiki_site"], m["wiki_page_id"])
+                    == (mention["wiki_site"], mention["wiki_page_id"])
+                }
+            )
         ev["start"] = mention["start"]
         linked = {
             r["id"].split(":")[-1]
@@ -1014,7 +1015,11 @@ def run(
             dict(status="RANKING", completed_inputs=index, total_inputs=len(sample)),
         )
     path = output / "proposed_geometries.parquet"
-    frame = gpd.GeoDataFrame(proposals, geometry="geometry", crs="EPSG:4326")
+    frame = gpd.GeoDataFrame(
+        proposals,
+        columns=["place_id", "name", "source", "source_id", "total", "geometry"],
+        geometry="geometry", crs="EPSG:4326",
+    )
     frame.to_parquet(path, index=False)
     restored = gpd.read_parquet(path)
     assert len(restored) == len(proposals)

@@ -5,6 +5,7 @@ from __future__ import annotations
 import argparse
 import gzip
 import hashlib
+import json
 import logging
 import os
 import struct
@@ -16,7 +17,8 @@ import ijson
 import pyarrow.parquet as pq
 
 from GG_Data.pipeline.poc import digest, read_json
-from GG_Data.pipeline.simplified_agent import entity_id, write_array, write_object
+from GG_Data.pipeline.simplified_agent import (entity_id, write_array,
+                                               write_object)
 
 LOG = logging.getLogger(__name__)
 
@@ -95,6 +97,52 @@ def verify_population(prepared: Path, model: Path) -> dict:
     )
 
 
+def verify_geography(model: Path, acceptance: dict) -> dict:
+    """Independently compare all model LOC shapes/statuses to the loaded Agent."""
+    places = {
+        r["entity_id"]
+        for r in read_json(model / "entities.json.gz")
+        if r["type"] == "LOC"
+    }
+    rows = read_json(model / "geography.json.gz")
+    by_id = {r["place_id"]: r for r in rows}
+    if len(rows) != len(places) or set(by_id) != places:
+        raise ValueError("Geography does not account for every exact LOC key")
+    status = read_json(model / "manifest.json").get(
+        "geography_status", "PENDING_LAST_STAGE"
+    )
+    if acceptance["geography_status"] != status:
+        raise ValueError("Agent and model Geography stage differ")
+    row_sha = hashlib.sha256()
+    for key, row in sorted(by_id.items()):
+        if status.startswith("COMPLETE") and (
+            "PENDING" in row["status"] or not row["status"]
+        ):
+            raise ValueError("Geography still contains pending targets")
+        row_sha.update(
+            json.dumps(
+                [key, row.get("geometry"), row["status"]],
+                sort_keys=True,
+                separators=(",", ":"),
+                ensure_ascii=False,
+                allow_nan=False,
+            ).encode("utf-8")
+        )
+    checked = acceptance["geography"]
+    if (
+        checked["locations"] != len(places)
+        or checked["geometry_rows_sha256"] != row_sha.hexdigest()
+    ):
+        raise ValueError("Agent Geography differs from complete model Geography")
+    return dict(
+        status=status,
+        locations=len(places),
+        status_counts=dict(Counter(r["status"] for r in rows)),
+        geometry_rows_sha256=row_sha.hexdigest(),
+        spatial_checks=checked["spatial_checks"],
+    )
+
+
 def verify_and_package(prepared: Path, model: Path, graph: Path, output: Path) -> dict:
     """Publish immutable JSON files only after full model and Agent checks pass."""
     if output.exists():
@@ -105,6 +153,7 @@ def verify_and_package(prepared: Path, model: Path, graph: Path, output: Path) -
         if digest(graph / name) != sha:
             raise ValueError(f"Changed graph artifact: {name}")
     acceptance = read_json(graph / "agent_acceptance.json")
+    geography = verify_geography(model, acceptance)
     raw_report = read_json(prepared.parent / "raw_verification.json")
     if (
         acceptance["status"] != "PASS"
@@ -138,7 +187,11 @@ def verify_and_package(prepared: Path, model: Path, graph: Path, output: Path) -
             if (
                 path.is_file()
                 and not path.name.endswith(".sqlite.json")
-                and (path.name.endswith(".json") or path.name.endswith(".json.gz"))
+                and (
+                    destination == "model"
+                    or path.name.endswith(".json")
+                    or path.name.endswith(".json.gz")
+                )
             ):
                 os.link(path, target / path.name)
     os.link(prepared.parent / "raw_verification.json", output / "raw_verification.json")
@@ -189,13 +242,18 @@ def verify_and_package(prepared: Path, model: Path, graph: Path, output: Path) -
         ],
     )
     result = dict(
-        stage="CORE_RELEASE_GEOGRAPHY_PENDING",
+        stage=(
+            "ENRICHED_RELEASE"
+            if geography["status"].startswith("COMPLETE")
+            else "CORE_RELEASE_GEOGRAPHY_PENDING"
+        ),
         population_verification=population,
         raw_verification=raw_report,
         agent_graph="agent/agent_graph.json.gz",
         relation_count=count,
         directed_view_count=2 * count,
-        geography_status="PENDING_LAST_STAGE",
+        geography_status=geography["status"],
+        geography_verification=geography,
         relation_rule="shared_page_count / distinct_pages_containing_source",
         exclusions=[
             "DATE entities",
