@@ -1,6 +1,6 @@
 # Simplified full-population Agent export
 
-> For execution: use superpowers:executing-plans. One implementer (/root); no delegation or concurrent writers. Functional scope approved in this conversation. Full execution awaits the OWNER's required approval of the elapsed-time estimate.
+> For execution: use superpowers:executing-plans. One implementer (/root); no delegation or concurrent writers. OWNER approved the full task and 24–240 elapsed-hour range in this conversation on 30 October 2026. Execution start reference: 06:45 Asia/Jerusalem (UTC+02:00).
 
 **Goal:** Deliver a separate populated data model and final Agent JSON from Daniel's complete 29 October input, without waiting for the decision model.
 
@@ -63,7 +63,8 @@ Full execution **not started**. OWNER's `yes, go` confirms functional scope, but
 ## Current handoff
 
 - Completed: isolated worktree; raw-input hash and counts; complete Daniel-only relation sizing; narrow existing-helper baseline; saved reviewable plan.
-- Pending: all five implementation/run tasks; final JSON does not yet exist.
+- E1 complete: exact identities and binary memberships prepared from all 2,235,432 original rows; 267,979 entities, 5,693 source keys, 979,801 memberships and 443,190 excluded DATE rows. Saved at `Data/external/simplified_agent_20261030/prepared`. Four new tests passed RED-to-GREEN; combined new/existing membership checks: 15 passed. Independent full JSON replay remains part of E4.
+- Pending: E2 page Events, E3 Relations/Agent, E4 core verification/delivery, E5 Geography last. Final Agent JSON does not yet exist. Timed execution approval is now granted; old pending-approval text in the estimate history is superseded by this handoff.
 - Denominator confirmed by OWNER on 30 October 2026: distinct pages containing the source entity. No denominator question remains. Directionality and Geography-last ordering are confirmed. Full execution still awaits the required elapsed-time approval. This plan-only confirmation update has a 2-3 minute estimate and checkpoint 30 October 2026 06:47 Asia/Jerusalem (UTC+02:00).
 - Environment waits: worktree checkout completed; no source acquisition or full export is pending. Bounded sizing process completed successfully.
 - Backup: local checkpoint only after the plan commit; generated data are not yet present. Both known GitHub repositories are public or have no verified private target, so do not claim private off-device protection.
