@@ -32,10 +32,10 @@ Task dependencies2->4 (corrected population),3->4 (Agent date interface); shared
 
 Model-derived total2/4/8 elapsed hours, start30Oct2026 13:30 Asia/Jerusalem UTC+02, completion range15:30-21:30. Epoch8f43a0bb-2962-434d-9f0e-b2d19c415449: raw PERT4.33h; no empirical probability claim. Superpowers breakdown and Epoch use the same no-geography scope, root ownership, source waits included, elapsed hours; agreement after one exchange. Active_work unknown; approval_wait zero for this already-authorized correction; source environment_wait measured when applicable. Next checkpoint13:40, then13:50.
 
-- [ ] Evidence census and correction rules.
-- [ ] Event/source/quality correction, RED->GREEN.
-- [ ] Agent date filters, RED->GREEN.
-- [ ] Full new population, graph, checks and release.
+- [x] Evidence census and correction rules.
+- [x] Event/source/quality correction, RED->GREEN.
+- [x] Agent date filters, RED->GREEN.
+- [x] Full new population, graph, checks and release.
 
 Ruling: Native Event source identity takes precedence over the old exact-name Event collision rule when names identify distinct Events; OWNER explicitly requested separation. Ordinary NER entity identity remains exact name/type. Clear invalid keys are excluded from the new graph with an audit, while original raw rows remain present.
 Ruling: Missing P31 is an unresolved classification, not proof that a linked item is an Event or that it is irrelevant. Refresh metadata and preserve remaining uncertainty visibly.
@@ -103,3 +103,42 @@ checked. No date repair is guessed. This correction also passed RED -> GREEN.
 The first failed population remains immutable; the new accepted candidate path
 is core_correction_v2/population_date_integrity_v1. Actual invalid-key exclusion
 count is 64 (48 punctuation and 16 fragment keys), superseding provisional 65.
+
+## Completed delivery, 30 October 2026 17:34 Asia/Jerusalem UTC+02
+
+The corrected immutable core release is
+`Data/external/simplified_agent_20261030/core_correction_v2/core_release`.
+Its manifest SHA256 is
+`f2277a370964af79b6b21e434798b8f49b3a25a88f6ff23f27e424faa7e9f8c4`.
+The accepted population contains 268,703 nodes, including 788 Events, and
+131,034,512 unordered page-co-occurrence pairs (262,069,024 directional views).
+Full population/source/node checks, every Relations row, the fresh actual Agent
+pair scan, and 11 date queries passed. Focused suites passed: 53 source tests
+and 90 Agent tests, with 3 existing expected R6 failures. Original raw input,
+the first release, and the failed intermediate population remain unchanged.
+
+The separately authorized offline arbitrary-point extension is complete at
+`core_correction_v2/xy_release_v1`, manifest SHA256
+`7923e8439fec32d6fc3b921b7bca8a1e29873830d1a385fc5a2796810976ccd4`.
+It binds 26,228 files and retains the accepted core model unchanged. All nodes
+and non-XY fields, exact edge-tail bytes, a new full Agent scan/index, 11 date
+queries, and 4 actual LOC/Event near/bbox checks passed. The graph contains
+13,723 LOC points and 427 Event points; 27,683 LOC and 361 Events have explicit
+missing-point records. These are partial arbitrary source points, without
+identity verification. R6 `what_happened_at` spatial date filtering remains OPEN.
+The selector and attachment focused suites passed 9 and 8 tests respectively.
+
+XY elapsed execution was 46.223 minutes from 16:48:20 through 17:34:34, including
+local process waits; active work and separate contention waits are unknown.
+Epoch actual was recorded once against replan
+`5c9db7ef-fdaf-4a7e-a147-33ca8e46207e`. New XY physical allocation is
+4,665,558,429 bytes, below the 8 GiB cap; free space remained above 15 GiB.
+
+The corrected core WITHOUT XY is separately Protected on GitHub as a lossless
+588,030,417-byte Parquet delivery in draft PR31:
+<https://github.com/EtzionR/Corpus2GeoRAG_Pacific/pull/31>.
+Final shared commit is `ce0243f03a08a93c0a1d0332b51245a2d9e2d209`.
+A fresh independent-cache clone recovered the LFS payload and verified all
+14 delivery-file hashes. The source task branch has a local checkpoint only;
+the full core and XY package trees remain local. No task-branch push, merge,
+source deletion, or worktree removal is authorized for this checkpoint.
