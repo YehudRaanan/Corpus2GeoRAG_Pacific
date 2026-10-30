@@ -25,7 +25,7 @@
 1. Join every source occurrence by `(page_id, revision_id, qid)`. Classify exact raw anchors with the existing `source_intervals` and `classify_span`. Include original direct-link and recovered-template evidence.
 2. Keep a QID if any support is KEEP or REVIEW. Keep verified page identity. Remove only when all recorded support is proved EXCLUDE and evidence coverage is complete. Incomplete support stays UNKNOWN_KEEP, with its reason; this is not proof of article presence.
 3. Pair-level type rules: PER people; ORG organisations/military units; LOC places/geographic facilities using existing roots; MISC unrestricted; DATE deferred. Multiple categories are allowed. Missing or incomplete ancestry remains eligible and marked unknown. Never infer incompatibility from label text.
-4. Use native P31 plus cached P279 traversal. Record both snapshots: hierarchy cache 2026-10-18 and inventory native metadata 2026-10-25. The hierarchy cache has 544,375 records, SHA256 `0032e97cf9af90f56dae231071dbdd2bed8d9c379708a029c4a53b407a9378f8`.
+4. Use native P31 plus cached P279 traversal. Record both snapshots: hierarchy cache 2026-10-18 and inventory native metadata retrieved on2026-10-25 and2026-10-29. These are retrieval snapshots, not historical type proof. The hierarchy cache has 544,375 records, SHA256 `0032e97cf9af90f56dae231071dbdd2bed8d9c379708a029c4a53b407a9378f8`.
 5. Feed the filtered inventory into exact matching before uniqueness checks, normal candidate preparation before trigram/protection/coverage, reverse pools, and final accepted-pair validation. Previously saved decisions cannot restore banned pairs.
 6. Exact matching retains the agreed literal-name/one-QID/one-Daniel-type rule. Changes caused by filtering are reported separately; no historical assignment is overwritten.
 7. CORRECTED SEQUENCE: normal direction runs ONLY the 7,277 newly admitted review occurrences (QID query, compatible mention options, existing trigram policy and iterative stop rule). Reverse population is the 5,852 prior unresolved occurrences PLUS only new forward failures. Reverse uses every compatible QID on the exact page/revision, no trigram cutoff. Never reverse all 13,129 up front. Preserve direction-specific proposals and all previous assignments.
@@ -47,35 +47,35 @@
 - [x] Verify local hierarchy cache and offline type coverage.
 - [x] Run independent type-count diagnostics. One gives 1,009,027 candidate-plus-stop scores (43.64% reduction); a second, corrected to start from inventory P31, gives 1,004,481. These disagree by 4,546 scores and are provisional, not an agreed final count. The inventory coverage check found 981 records with missing/incomplete type data; these must remain eligible.
 - [x] Complete source-only count: 599 of 13,470 page/revision/QID records excluded; 12,871 retained (12,707 KEEP and 164 REVIEW_KEEP). Distinct QIDs decrease from 5,072 to 4,874. Verified 132 revision files, raw hashes, source offsets and page-own supports; no unknown source-support gaps were found.
-- [ ] Complete combined pool counts and persist the case-level exclusion ledger during implementation.
-- [ ] Freeze input hashes, cohort definitions and estimate basis in the new output manifest.
+- [x] Complete combined pool counts and persist the case-level exclusion ledger during implementation.
+- [x] Freeze input hashes, cohort definitions and estimate basis in the new output manifest.
 
 ### 2. Shared filtering — implementation owner A; depends on task 1
 Create `GG_Data/entity_resolution/hundred_page_pilot/filter_qid_inventory.py` and `test_filter_qid_inventory.py`.
-Interfaces: `filter_inventory(entities, evidence, raw_root, type_metadata)` produces retained rows plus source/type audit; `compatible(entity, mention_type)` returns eligibility and reason. Use existing records/dicts, not a new framework.
-- [ ] Add failing tests for mixed body/reference support, excluded-only support, unknown evidence, template anchors, page identity, complete/incomplete ancestry, overlapping categories and broad MISC.
-- [ ] Run focused pytest, implement minimal functions and CLI, rerun tests.
-- [ ] Write fresh filtered inventory and ledger; compare each removal against raw evidence. Check independently labelled examples and report any conflict before promotion.
+Interfaces: `filter_inventory(entities, evidence, raw_root, type_metadata)` produces retained rows plus source/type audit; `compatible(entity, mention_type)` returns a boolean; the enriched inventory and case ledgers retain the evidence and reasons. Use existing records/dicts, not a new framework.
+- [x] Add failing tests for mixed body/reference support, excluded-only support, unknown evidence, template anchors, page identity, complete/incomplete ancestry, overlapping categories and broad MISC.
+- [x] Run focused pytest, implement minimal functions and CLI, rerun tests.
+- [x] Write fresh filtered inventory and ledger; compare each removal against raw evidence. Check independently labelled examples and report any conflict before promotion.
 
 ### 3. Pipeline wiring — root, depends on task 2; test preparation can run in parallel
 Modify `match_exact.py`, `prepare_candidates.py`, the existing workflow entry points and `GG_Data/pipeline/post_qid_entities.py` only where needed. Reuse existing tests in `test_revised_input_candidates.py`, `test_source_candidates.py` and `GG_Data/pipeline/test_post_qid_entities.py`.
-- [ ] Add failing tests: incompatible exact pair rejected, filtering before ranking, coverage cannot restore banned pair, final validator rejects stale banned pair, unknown remains eligible, REVIEW admitted and DATE deferred.
-- [ ] Wire the common inventory and predicate, with an explicit manifest policy version. No independent per-direction rules.
-- [ ] Run focused pytest and installed lint/format checks on touched files.
+- [x] Add failing tests: incompatible exact pair rejected, filtering before ranking, coverage cannot restore banned pair, final validator rejects stale banned pair, unknown remains eligible, REVIEW admitted and DATE deferred.
+- [x] Wire the common inventory and predicate, with an explicit manifest policy version. No independent per-direction rules.
+- [x] Run focused pytest and installed lint/format checks on touched files.
 
 ### 4. Bidirectional experiment — root sole GPU owner; depends on tasks 2–3 and approval
 Reuse normal scorer/decision loop and the reverse ordering in `decision_model/probe_reverse.py`. Add one focused batch experiment runner if existing orchestration cannot express both directions safely.
-- [ ] Build immutable normal/reverse jobs from remaining-only groups. Verify exact page/revision boundaries and counts; distinguish empty pools from model rejection.
-- [ ] Prove exact-text forward reuse where possible; record reused versus newly scored counts. Never resume an old changed-hash job manifest.
-- [ ] Check current VM state, disk/model inputs, aggregate budget and STOP limit; restart only within approved bounds.
-- [ ] Run retained three-page slice, verify proposals/provenance and resource rate, then expand to 10 and 100 within the same approved limits. Report revised runtime before expanding if measurements differ materially.
-- [ ] Save all candidate/stop scores and direction-specific proposals, transfer and verify results, stop the VM. On a cap, save progress and report remaining work; do not claim completion.
+- [x] Build immutable normal/reverse jobs from remaining-only groups. Verify exact page/revision boundaries and counts; distinguish empty pools from model rejection.
+- [x] Prove exact-text forward reuse where possible; record reused versus newly scored counts. Never resume an old changed-hash job manifest.
+- [x] Check current VM state, disk/model inputs, aggregate budget and STOP limit; restart only within approved bounds.
+- [x] Run retained three-page slice, verify proposals/provenance and resource rate, then expand to 10 and 100 within the same approved limits. Report revised runtime before expanding if measurements differ materially.
+- [x] Save all candidate/stop scores and direction-specific proposals, transfer and verify results, stop the VM. On a cap, save progress and report remaining work; do not claim completion.
 
 ### 5. Compare and report — independent reviewer plus root; depends on task 4
-- [ ] Report counts by direction, type and old/new cohort: source removals, type removals, unknown retained, exact changes, offered groups, selected proposals, stop decisions and no-compatible-QID cases.
-- [ ] Compare common proposals, direction disagreements, multiple-QID possibilities and source-supported examples. Selection rate is not accuracy.
-- [ ] Preserve current assignments and list possible previous assignments affected by the new filters; do not silently remove them.
-- [ ] Review targeted diff, commit only relevant code/docs, report local backup status. No push without standing permission.
+- [x] Report counts by direction, type and old/new cohort: source removals, type removals, unknown retained, exact changes, offered groups, selected proposals, stop decisions and no-compatible-QID cases.
+- [x] Compare common proposals, direction disagreements, multiple-QID possibilities and source-supported examples. Selection rate is not accuracy.
+- [x] Preserve current assignments and list possible previous assignments affected by the new filters; do not silently remove them.
+- [x] Review targeted diff, commit only relevant code/docs, report local backup status. No push without standing permission.
 
 ## Estimate and checkpoints
 
@@ -103,7 +103,7 @@ Preflight started 2026-10-30 02:56:25 Asia/Jerusalem (UTC+02); local check check
 
 ## State
 
-APPROVED, executing corrected scope. Pre-existing unrelated working-tree changes are preserved. Root owns plan, integration, experiment runner and GPU; worker A owns shared inventory/type filter and tests; worker B owns exact/candidate/final-validator wiring and tests; independent reader owns count reconciliation/review. Disjoint implementation files permit parallel work per OWNER's explicit parallelism request.
+COMPLETED EXPERIMENTAL, corrected scope executed and verified. See final report for identity conflicts and limits. Pre-existing unrelated working-tree changes are preserved. Root owns plan, integration, experiment runner and GPU; worker A owns shared inventory/type filter and tests; worker B owns exact/candidate/final-validator wiring and tests; independent reader owns count reconciliation/review. Disjoint implementation files permit parallel work per OWNER's explicit parallelism request.
 
 Execution estimate version 2: Epoch `1cf52ee8-52f2-4f78-98e9-ecf68e6a404e`, 2/3/4 elapsed hours O/M/P. Same task breakdown/dependencies/time basis as above, corrected populations and sequential forward-to-reverse dependency. The scope and basis agree; calibration fields are not used. First absolute checkpoint 2026-10-30 03:21 Asia/Jerusalem. Track approval_wait separately; active_work remains unknown unless measured. Ruling: reuse existing isolated worktree and this tracked plan as the ledger; no new tracker or framework.
 
@@ -136,3 +136,55 @@ Execution estimate version 2: Epoch `1cf52ee8-52f2-4f78-98e9-ecf68e6a404e`, 2/3/
 - Eventsourcefilter bypass closed and independently reviewed: corebindsinventoryandusedrevisions; bothEventpathsusesharedsourceinventory; assemblyrequiresarticleboundphaseandmatchedinventory/revisions. 13 invalidguardcases plus validcase; unknown/REVIEW/template/pageown retained. NoEventdata run inthisexperiment.
 - Pool audit final: reverseupperbound1790387 ->1706546sourceonly ->978727source+type; removals83841source+727819type;144382unknown-typecandidatepairsretained. 29titlefallbackrowsremain. Forwardactual378005scores. Saved artifacts pool_counts.json, source_audit_3, prior_assignment_audit. No assignmentschanged.
 - Nextcheckpoint04:00Asia/Jerusalem. Pending: full100 scoring, transferhashverification, finalcase/outcomecomparison, STOP confirmation, report. No addedcloudresource or spendingapproval requested.
+
+### Verified correction and code checkpoint 2026-10-30 03:56 Asia/Jerusalem
+
+- `qid_filter/summary.json` type_unknown_rows=1208 is across ALL input rows; retained unknown-type rows=1149, excluded unknown-type rows=59. The 03:34 statement that1208 were retained is corrected here. The retained-pair count144382 is unchanged.
+- Root reviewed staged paths, diff checks and credential-pattern check; committed only relevant17code/test/plan files as3a90a0a. 902tests passed before checkpoint. No push. Pre-existing unrelated changes remain unstaged. Backup status:Local checkpoint only; ignored experiment data remain local.
+- Prior-assignment audit field corrected to has_passing_saved_qid_for_occurrence. Counts unchanged:9833links,8344pass,1489fail across1213occurrences. Cases SHA25664db7453a1a9f6d68b608fefed986b72eeb9987890ea105ddfc9dcbfeb6691eb; summary3be57415cb72f156bc17e9fb3b5b88995fa03717eb1a636a8cc74462d7a8d6a0. Original sources and assignments unchanged.
+- Forward100 active; next formal checkpoint04:10. Final transfer, full100 validation, STOP and final report pending. Independent report drafting and type-filter caveat audit run locally in parallel; no additional cloud resource.
+
+### Checkpoint 2026-10-30 04:00 Asia/Jerusalem
+
+- Scope100 forward exceeds8800/10644questions; reverse still waits on forward completion. No resourcecapreached.
+- Typefilter audit confirms Kumano source row1470383 is original DanielORG, expectedQ1791961 sourceKEEP, nativeP31Q898771heavycruiser, categories[], type_unknownfalse. Complete cached41nodeancestry has noapprovedORGroot; this is typepolicy mismatch, notmissingmetadata. No policychanged.
+- Forwardsourcecheck found Brooklynshipclassmentions selectingBrooklyncity and Yugoslavian selectingYugoslavia ratherthanKingdomofYugoslavia. Cases/hashreport pending; no generalaccuracyclaim. Bothdirectionsremainexperimental.
+- 3a90a0a localcodecheckpoint saved. Next formalcheckpoint04:10. Pending:full100scores, transfer/hashchecks, casecomparison, STOP/budgetreceipt, finalreport/commit. Alloriginalassignmentsunchanged.
+
+### Forward completion 2026-10-30 04:02 Asia/Jerusalem
+
+- Scope100 forward complete10644nonemptyquestions. Reverseprepared10043occurrences,6789groups,688201candidate-plus-STOPscores. Thusforwardselected3086of7277distinctoccurrences and4191newfailures; reversepopulation=5852prior+4191newfailures exactly.
+- Forwardaudit completed10traceablemodelselectedoccurrences:7sourceagreements,3conflicts; notrandomsample/notaccuracy. TwoBrooklynshipclasstargetQ929294candidatesremovedbyDanielLOCfilter, modelselectedcityQ18419. YugoslavianexpectedQ191077wasofferedbutQ36704selected. EarlierdescriptionofBrooklynmodelerrorclarified:filterlossprecededchoice. Savedsource_audit_forwardcases/summarywith33hashes; noassignmentschanged.
+- Typecaveataudit savedtype_filter_caveats.jsonwith12hashes. Next:reversecompletion,verifiedtransfer,STOP,finalcomparison. Nextformalcheckpoint04:10.
+
+### Checkpoint 2026-10-30 04:11 Asia/Jerusalem
+
+- Forwardlocalcopy:3086distinctoccurrences,3613occurrence/QIDlinks,2453group/QIDpairs (2448model+5exact). 285occurrences have multipleQIDs; max18. Counts and top10multiple-QIDgroups savedforward_100_checkpoint. Fullfinalremotehashpending.
+- Partial reverseprogress snapshot contains2243completegroups/294398scores of688201 total; finalcountsnotclaimed. DirectSCPofgrowingreverse_scores triggeredPuTTYpscp assertion actuallen<=len; a partiallocalcopy exists and is explicitlylabelledPARTIAL_PROGRESS_NOT_FINAL_OUTPUT. No input or remoterunchanged. Finaltransfer must use completed immutable outputs, ideally a stablearchive and SHA256. No retry ofactive-scorecopy.
+- A separate read-only progress SSHcommand was rejectedlocally due WindowsCLIquoting; no remoteactionoccurred. Normal scoringSSHsession57278 continues.
+- Nextformalcheckpoint04:20Asia/Jerusalem; resourcecapandSTOPguardunchanged. GPUactualbillingunknown. No assignschanged.
+
+### Checkpoint 2026-10-30 04:20 Asia/Jerusalem
+
+- Scope100 reverse exceeds6350/6789groups; finalcandidate-richpages~0.6s/group inlast200groups. Remaining~440groups plus stabletransfer/hashchecks, STOP, finalreport. Expectedcompletion04:30-04:40Asia/Jerusalem; nextcheckpoint04:30. Sameapproved2-4hscope and90minVMcap; no addedwork.
+- Codeverification and savedsource/typeauditcomplete. Sourcechecks show forward/reverseidentityconflicts; no generalaccuracyclaim. No assignsortrainingchanged. Partialgrowing-scorecopyisnotfinalresult andmustnotbeusedforoutputverification.
+- Parallelworkersfinished; rootsoleownerGPUsession57278. active_workunknown; wallclockruntime notcalledactivework. Actualbillingunknown.
+
+### Verified completion checkpoint 2026-10-30 04:28 Asia/Jerusalem
+
+- Scope100 complete1970.592s elapsed,03:47:45.932–04:20:36.524. Forward3086selectedof7277,4191newfailures. Reverseinput10043=5852prior+4191newfailures,6789groups,688201scores. Reverse7792selected,2251STOP,0emptycompatiblepools. Total10878distinctoccurrenceswithproposals,11405occurrence/QIDrecords. Selectionnotaccuracy; no assignmentschanged.
+- Stablearchive33456143bytes SHA256d2267bc15b93cf24bf73ec336e545138308374d15dae563786b5311d02d8c43e. All13remote/localfilehashesverified. Forwardcheckpointbyteidentical. Localreportreplaypreservesall13files. Original13poolinputhashesunchanged. Savedtransfer/integrityreceipts.
+- VMverifiedTERMINATED. Start03:33:03.660,stop04:23:47.593Asia/Jerusalem,3043.933seconds/50.73minnew; aggregate18871.944seconds/5.242h. ConservativeaggregateUS$7.3422,notbilling. LimitsUS$10,90newmin,6aggregatehpass. Automaticrestartfalse;existingdisk/VMretained,no deletion.
+- Independentfinalreaderrehashedall13filesandcounted1066206scores. Correctedreportmetadataprovenance:11850retainedBigQueryrows snapshot2026-10-25 retrieved2026-10-28;943APIrows2026-10-29;78APIrowsretrieved2026-10-28withnullsnapshot. HistoricalarticleversiondoesnotprovehistoricalWikidatatype.
+- Existingoldforwardscalarreuse0. Scoresrecomputedfornewcontexts/options/bindings. Staged3/10/100runsareseparateverificationoutputs,notadditivepopulations. Sourceaudits/CPUcomparisonremainbounded,notgeneralaccuracy.
+- Pending:independentfullcohort/subsetoutcomeaudit,finalreportappend/localdoccommit. Nextcheckpoint04:30. Activework/approvalwait/environmentwaittotalsunknown; do notsendincompatibleEpochactual. VerifiedmodelruntimeandVMtimeareseparateelapsedmeasurements.
+
+
+### Final outcome audit and handoff 2026-10-30 04:29 Asia/Jerusalem
+
+- Outcome audit verifies all 19 input bindings and complete finite option/STOP coverage. Old cohort: 4,540 reverse proposals, 1,312 still unselected. New cohort: 3,086 forward plus 3,252 reverse proposals, 939 still unselected. Selected sets are disjoint. Full total: 10,878 distinct occurrences, 11,405 links, 2,251 still unselected.
+- Distinct selected/remaining by type: LOC 3,769/912; MISC 3,448/93; ORG 2,284/787; PER 1,377/459. All 285 multiple-QID occurrences are forward, 527 extra links, maximum 18. Summary proposal_occurrences_by_type counts links; final audit/report provide distinct counts.
+- Three-page 128 proposal links and ten-page 1,040 links exactly match full-run subsets. This is output consistency, not accuracy. Existing assignments remain unchanged. DATE/source exclusions unchanged.
+- No remaining execution task. All outputs experimental. Source/type policy conflicts and model ranking errors remain research findings, not hidden failures. No retraining, paidBQ, collection, Geography or Event data run.
+- Model-derived Epoch total estimate version2 was2–4h elapsed execution excluding approval/capacity waits. Resume03:10:58 to this handoff about78min wall time; preflight started02:56:25. Exact comparable active_work, approval_wait and environment_wait totals are unknown. Actual model and VM elapsed times are separately verified. Do not fabricate calibrated accuracy or incompatible actual feedback.
+- Final report: docs/reports/2026-10-30-filtered-bidirectional-100-page.md. Root owns final documentation checkpoint. Code commit3a90a0a; no push. Backup status Local checkpoint only. Ignored local data are not Git-protected. Existing unrelated changes preserved.
