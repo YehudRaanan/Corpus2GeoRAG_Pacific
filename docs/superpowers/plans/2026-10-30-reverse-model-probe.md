@@ -29,3 +29,9 @@ Model restore/scoring/hash runtime: 43.31 seconds total, CPU only, cloud $0.
 Elapsed through final verification at 02:36:22: 7m07s. Active work unknown;
 download wait approximately 12.9s overlapped independent work, not additive.
 No approval wait. Final Git checkpoint follows; no push is authorized.
+
+Final checkpoint d68f940 completed at 02:36:36: total elapsed 7m21s (0.1225h).
+Epoch actual recording issue: input 7.35 with unit minutes was returned as
+7.35 hours. A correction to 0.1225 hours was rejected because an actual already
+exists. Do not use that Epoch actual for calibration; this local timing is the
+verified record. No further estimate/feedback loop was started.
