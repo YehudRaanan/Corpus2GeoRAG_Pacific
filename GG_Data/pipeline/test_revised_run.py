@@ -145,8 +145,10 @@ def test_core_uses_manifest_stage_paths_instead_of_old_run_names(
     assert result["counts"]["mentions"] == 4
 
 
+@pytest.mark.parametrize("inventory_state", [None, "valid", "stale"])
 def test_pending_and_exact_snapshots_do_not_invent_unresolved_nodes(
     core_inputs,
+    inventory_state,
 ):  # noqa: F811
     import gzip
 
@@ -189,10 +191,52 @@ def test_pending_and_exact_snapshots_do_not_invent_unresolved_nodes(
     manifest = json.loads(manifest_path.read_text())
     manifest["inputs"] = {name: sha256(source / name) for name in manifest["inputs"]}
     manifest_path.write_text(json.dumps(manifest))
-    pending = write_stage(source, scope, output / "pending", "3", "pending")
-    exact = write_stage(
-        source, scope, output / "exact", "3", "exact", native_dir=native
+    scope_kwargs = {}
+    if inventory_state is not None:
+        inventory = source / "inventory.parquet"
+        pq.write_table(
+            pa.Table.from_pylist(
+                [
+                    dict(
+                        page_id=2,
+                        revision_id=21 if inventory_state == "stale" else 20,
+                        qid="Q1",
+                        type_categories=["PER"],
+                        type_unknown=False,
+                        qid_source_status="KEEP",
+                    )
+                ]
+            ),
+            inventory,
+        )
+        scope_kwargs["scoped_inventory_path"] = inventory
+    pending = write_stage(
+        source, scope, output / "pending", "3", "pending", **scope_kwargs
     )
+    if inventory_state == "stale":
+        with pytest.raises(ValueError, match="inventory"):
+            write_stage(
+                source,
+                scope,
+                output / "exact",
+                "3",
+                "exact",
+                native_dir=native,
+                **scope_kwargs,
+            )
+        assert not (output / "exact").exists()
+        return
+    exact = write_stage(
+        source, scope, output / "exact", "3", "exact", native_dir=native, **scope_kwargs
+    )
+    if inventory_state == "valid":
+        assert exact["inputs"][str(inventory.resolve())] == sha256(inventory)
+        assert exact["scoped_qid_inventory"] == dict(
+            path=str(inventory.resolve()),
+            sha256=sha256(inventory),
+            policy_version="qid-source-native-types-v1",
+        )
+        assert exact["used_revisions"] == [[1, 10], [1, 11], [2, 20], [3, 30]]
     assert pending["counts"]["mentions"] == 4 and pending["counts"]["entities"] == 0
     assert exact["counts"]["entities"] == exact["counts"]["mention_entity_links"] == 1
     with gzip.open(output / "exact/mentions.json.gz", "rt") as stream:
@@ -208,7 +252,10 @@ def test_pending_and_exact_snapshots_do_not_invent_unresolved_nodes(
     eda(output / "exact", output / "exact_eda")
 
 
-def test_revised_core_final_keeps_dates_out_of_entity_table(core_inputs):  # noqa: F811
+@pytest.mark.parametrize("inventory_state", [None, "valid", "stale"])
+def test_revised_core_final_keeps_dates_out_of_entity_table(
+    core_inputs, inventory_state
+):  # noqa: F811
     import gzip
 
     from GG_Data.entity_resolution.hundred_page_pilot import readiness
@@ -319,9 +366,65 @@ def test_revised_core_final_keeps_dates_out_of_entity_table(core_inputs):  # noq
     manifest = json.loads(manifest_path.read_text())
     manifest["inputs"] = {name: sha256(source / name) for name in manifest["inputs"]}
     save(manifest_path, manifest)
+    scope_kwargs = {}
+    if inventory_state is not None:
+        inventory = source / "inventory.parquet"
+        pq.write_table(
+            pa.Table.from_pylist(
+                [
+                    dict(
+                        page_id=2,
+                        revision_id=20,
+                        qid="Q1",
+                        type_categories=["PER"],
+                        type_unknown=False,
+                        qid_source_status="KEEP",
+                    ),
+                    dict(
+                        page_id=3,
+                        revision_id=31 if inventory_state == "stale" else 30,
+                        qid="Q1",
+                        type_categories=["LOC"],
+                        type_unknown=False,
+                        qid_source_status="KEEP",
+                    ),
+                ]
+            ),
+            inventory,
+        )
+        scope_kwargs["scoped_inventory_path"] = inventory
+    if inventory_state == "stale":
+        with pytest.raises(ValueError, match="inventory"):
+            build_core(
+                source,
+                scope,
+                inference,
+                native,
+                output,
+                model_dir=model,
+                stage="final",
+                **scope_kwargs,
+            )
+        assert not output.exists()
+        return
     result = build_core(
-        source, scope, inference, native, output, model_dir=model, stage="final"
+        source,
+        scope,
+        inference,
+        native,
+        output,
+        model_dir=model,
+        stage="final",
+        **scope_kwargs,
     )
+    if inventory_state == "valid":
+        assert result["inputs"][str(inventory.resolve())] == sha256(inventory)
+        assert result["scoped_qid_inventory"] == dict(
+            path=str(inventory.resolve()),
+            sha256=sha256(inventory),
+            policy_version="qid-source-native-types-v1",
+        )
+        assert result["used_revisions"] == [[1, 10], [1, 11], [2, 20], [3, 30]]
     assert result["counts"]["mentions"] == 4
     assert result["counts"]["entities"] == 2
     with gzip.open(output / "mentions.json.gz", "rt") as stream:
@@ -364,6 +467,7 @@ def test_assembly_validates_event_endpoints_before_publish(tmp_path):
     save(events, "relations", [])
     receipt = dict(
         status="NATIVE_EVENT_RELATIONS_READY",
+        phase="ARTICLE_EVENT_BOUNDARY",
         scope="3",
         inputs={
             str((core / "manifest.json").resolve()): sha256(core / "manifest.json")
@@ -391,6 +495,113 @@ def test_assembly_validates_event_endpoints_before_publish(tmp_path):
     (core / "manifest.json").write_text(json.dumps(manifest))
     with pytest.raises(ValueError, match="must be final"):
         assemble(core, events, tmp_path / "pending")
+
+
+@pytest.mark.parametrize(
+    "bypass",
+    [
+        None,
+        "public",
+        "unfiltered_public",
+        "missing_phase",
+        "unbound",
+        "hash",
+        "revisions",
+        "outside",
+        "excluded",
+        "stale",
+        "policy",
+        "unenriched",
+        "duplicate",
+        "invalid_status",
+    ],
+)
+def test_scoped_assembly_rejects_event_filter_bypasses(tmp_path, bypass):
+    import gzip
+
+    from GG_Data.pipeline.post_qid_run import assemble
+    from GG_Data.pipeline.test_post_qid_eda import tables as example_tables
+
+    core, events = tmp_path / "core", tmp_path / "events"
+    core.mkdir()
+    events.mkdir()
+    tables = example_tables.__wrapped__()
+
+    def save(directory, name, value):
+        with gzip.open(directory / f"{name}.json.gz", "wt") as stream:
+            json.dump(value, stream)
+
+    for name, value in tables.items():
+        save(core, name, value)
+    revisions = [[1, 10], [1, 11], [2, 20]]
+    inventory = tmp_path / "inventory.parquet"
+    pq.write_table(
+        pa.Table.from_pylist(
+            [
+                dict(
+                    page_id=1,
+                    revision_id=99 if bypass == "stale" else 10,
+                    qid="Q98" if bypass == "outside" else "Q99",
+                    type_categories=[],
+                    type_unknown=None if bypass == "unenriched" else False,
+                    qid_source_status=(
+                        "EXCLUDE"
+                        if bypass == "excluded"
+                        else "invalid" if bypass == "invalid_status" else "KEEP"
+                    ),
+                    qid_filter_policy_version=(
+                        "wrong" if bypass == "policy" else "qid-source-native-types-v1"
+                    ),
+                )
+            ]
+        ),
+        inventory,
+    )
+    if bypass == "duplicate":
+        rows = pq.read_table(inventory).to_pylist()
+        pq.write_table(pa.Table.from_pylist(rows + rows), inventory)
+    manifest = dict(
+        scope="3",
+        outputs={p.name: sha256(p) for p in core.glob("*.json.gz")},
+        used_revisions=revisions,
+        scoped_qid_inventory=dict(
+            path=str(inventory.resolve()),
+            sha256="wrong" if bypass == "hash" else sha256(inventory),
+            policy_version="qid-source-native-types-v1",
+        ),
+    )
+    if bypass in {"unfiltered_public", "missing_phase"}:
+        manifest.pop("scoped_qid_inventory")
+    (core / "manifest.json").write_text(json.dumps(manifest))
+    save(events, "event_entities", [dict(entity_id="Q99", type="event")])
+    save(events, "events", [dict(event_id="Q99")])
+    save(events, "relations", [])
+    receipt = dict(
+        status="NATIVE_EVENT_RELATIONS_READY",
+        phase=(
+            "PUBLIC_APPLY"
+            if bypass in {"public", "unfiltered_public"}
+            else "CACHED_ARTICLE_EVENT_RELATIONS"
+        ),
+        scope="3",
+        used_revisions=[[1, 10]] if bypass == "revisions" else revisions,
+        inputs={
+            str((core / "manifest.json").resolve()): sha256(core / "manifest.json")
+        },
+        outputs={p.name: sha256(p) for p in events.glob("*.json.gz")},
+    )
+    if bypass == "missing_phase":
+        receipt.pop("phase")
+    if bypass != "unbound":
+        receipt["inputs"][str(inventory.resolve())] = sha256(inventory)
+    (events / "receipt.json").write_text(json.dumps(receipt))
+    output = tmp_path / "complete"
+    if bypass is None:
+        assert assemble(core, events, output)["counts"]["events"] == 1
+    else:
+        with pytest.raises(ValueError):
+            assemble(core, events, output)
+        assert not output.exists()
 
 
 @pytest.mark.parametrize(

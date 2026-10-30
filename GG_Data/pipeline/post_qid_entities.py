@@ -27,9 +27,40 @@ def finalization(stage: str, finalize: bool | None) -> bool:
 
 
 def accepted_pair_evidence(
-    by_group: dict, pairs: list[dict], *, stage: str = "legacy"
+    by_group: dict,
+    pairs: list[dict],
+    *,
+    stage: str = "legacy",
+    scoped_inventory: list[dict] | None = None,
 ) -> dict:
     """Validate one accepted-pair contract for entity and bridge exports."""
+    inventory = None
+    if scoped_inventory is not None:
+        from GG_Data.entity_resolution.hundred_page_pilot.filter_qid_inventory import (
+            compatible,
+        )
+
+        inventory = {}
+        for entity in scoped_inventory:
+            if (
+                not {"type_categories", "type_unknown", "qid_source_status"}
+                <= entity.keys()
+                or type(entity.get("type_unknown")) is not bool
+                or not isinstance(entity.get("type_categories"), list)
+                or not all(
+                    isinstance(category, str) for category in entity["type_categories"]
+                )
+                or not isinstance(entity.get("qid_source_status"), str)
+                or entity["qid_source_status"]
+                not in {"KEEP", "REVIEW_KEEP", "UNKNOWN_KEEP", "EXCLUDE"}
+            ):
+                raise ValueError("Scoped inventory requires enriched QID rows")
+            key = (entity["page_id"], entity["revision_id"], entity["qid"])
+            if key in inventory:
+                raise ValueError(
+                    "Scoped inventory has duplicate page/revision/QID rows"
+                )
+            inventory[key] = entity
     accepted = defaultdict(lambda: defaultdict(dict))
     model_identities = set()
     for pair in pairs:
@@ -41,6 +72,10 @@ def accepted_pair_evidence(
         ):
             raise ValueError("Unknown accepted group or invalid QID")
         group = by_group[gid]
+        if inventory is not None:
+            entity = inventory.get((group["page_id"], group["revision_id"], qid))
+            if entity is None or not compatible(entity, group["type"]):
+                raise ValueError("Accepted pair is outside compatible scoped inventory")
         expected = dict(
             page_id=group["page_id"],
             wiki_page_id=group["page_id"],
@@ -133,6 +168,7 @@ def populate(
     stage: str = "legacy",
     finalize: bool | None = None,
     eligible_group_ids: set[str] | None = None,
+    scoped_inventory: list[dict] | None = None,
 ) -> list[dict]:
     closed = finalization(stage, finalize)
     mention_id(input_sha256, 0)
@@ -167,7 +203,10 @@ def populate(
                 raise ValueError("Entity group is not eligible for matching")
         if any(pair["group_id"] not in eligible_group_ids for pair in accepted_pairs):
             raise ValueError("Accepted pair refers to an ineligible group")
-        accepted_pair_evidence(by_group, accepted_pairs, stage=stage)
+    if stage != "legacy" or scoped_inventory is not None:
+        accepted_pair_evidence(
+            by_group, accepted_pairs, stage=stage, scoped_inventory=scoped_inventory
+        )
     seen_rows = set()
     for group in groups:
         indices = group["source_row_indices"]
@@ -370,6 +409,7 @@ def run(
     stage: str = "legacy",
     finalize: bool | None = None,
     eligible_group_ids: set[str] | None = None,
+    scoped_inventory_path: Path | None = None,
 ) -> dict:
     import pyarrow.parquet as pq
 
@@ -407,6 +447,11 @@ def run(
         stage=stage,
         finalize=finalize,
         eligible_group_ids=eligible_group_ids,
+        scoped_inventory=(
+            pq.read_table(scoped_inventory_path).to_pylist()
+            if scoped_inventory_path is not None
+            else None
+        ),
     )
     output.mkdir(parents=True, exist_ok=False)
     with gzip.open(output / "entities.json.gz", "wt", encoding="utf-8") as stream:
@@ -424,6 +469,7 @@ def run(
                 native_path,
                 metadata_path,
                 provenance_path,
+                scoped_inventory_path,
             )
             if p
         },
@@ -454,6 +500,7 @@ def main() -> None:
         "--finalize", action=argparse.BooleanOptionalAction, default=None
     )
     parser.add_argument("--eligible-group-ids", nargs="*")
+    parser.add_argument("--scoped-inventory", type=Path)
     args = parser.parse_args()
     run(
         args.groups,
@@ -467,9 +514,12 @@ def main() -> None:
         page_ids=set(args.page_ids) if args.page_ids else None,
         stage=args.stage,
         finalize=args.finalize,
-        eligible_group_ids=set(args.eligible_group_ids)
-        if args.eligible_group_ids is not None
-        else None,
+        eligible_group_ids=(
+            set(args.eligible_group_ids)
+            if args.eligible_group_ids is not None
+            else None
+        ),
+        scoped_inventory_path=args.scoped_inventory,
     )
 
 

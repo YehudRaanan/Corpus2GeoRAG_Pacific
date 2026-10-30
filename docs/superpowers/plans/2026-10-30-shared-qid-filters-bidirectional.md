@@ -12,7 +12,7 @@
 
 ## Global constraints
 
-- This is a plan awaiting explicit duration/resource approval; no full inference is authorized yet. The preceding unfiltered reverse run was declined.
+- OWNER approved the corrected sequence on 2026-10-30, execution resumed 03:10:58 Asia/Jerusalem. The preceding unfiltered reverse run was declined and is superseded, not resumed.
 - Scope: saved 100 pages and exact revisions. Remaining cohort: 13,129 occurrences in 9,016 groups; 5,852 previously unresolved and 7,277 newly admitted review occurrences. Do not mix assigned occurrences back into these groups.
 - Preserve original rows, existing assignments, all source evidence and old outputs. New outputs are experimental proposals, not reference labels.
 - DATE deferred. REVIEW is advisory, never a veto. No retraining, Geography, paid BigQuery, new collection, full-corpus rerun or new VM.
@@ -28,7 +28,7 @@
 4. Use native P31 plus cached P279 traversal. Record both snapshots: hierarchy cache 2026-10-18 and inventory native metadata 2026-10-25. The hierarchy cache has 544,375 records, SHA256 `0032e97cf9af90f56dae231071dbdd2bed8d9c379708a029c4a53b407a9378f8`.
 5. Feed the filtered inventory into exact matching before uniqueness checks, normal candidate preparation before trigram/protection/coverage, reverse pools, and final accepted-pair validation. Previously saved decisions cannot restore banned pairs.
 6. Exact matching retains the agreed literal-name/one-QID/one-Daniel-type rule. Changes caused by filtering are reported separately; no historical assignment is overwritten.
-7. Normal direction: QID query, compatible mention options, existing trigram policy and iterative stop rule. Reverse: remaining mention query, every compatible QID on that exact page/revision, no trigram cutoff. Keep both directions' proposals separate; no automatic conflict resolution.
+7. CORRECTED SEQUENCE: normal direction runs ONLY the 7,277 newly admitted review occurrences (QID query, compatible mention options, existing trigram policy and iterative stop rule). Reverse population is the 5,852 prior unresolved occurrences PLUS only new forward failures. Reverse uses every compatible QID on the exact page/revision, no trigram cutoff. Never reverse all 13,129 up front. Preserve direction-specific proposals and all previous assignments.
 8. Preserve checkpoint, text formatting and stop rules. Reverse stop is untrained: `This mention does not refer to any of the remaining entities.` Report this limitation.
 9. Reuse a saved forward scalar only for the identical ordered encoded pair, checkpoint, tokenizer and encoding settings. IDs alone are insufficient. Changed contexts need scoring; forward scores cannot replace reverse scores.
 
@@ -103,4 +103,36 @@ Preflight started 2026-10-30 02:56:25 Asia/Jerusalem (UTC+02); local check check
 
 ## State
 
-Planning/evidence only. No current-scope model inference, cloud restart, assignment changes or implementation edits have occurred. Pre-existing unrelated working-tree changes are preserved. Plan file is an uncommitted local artifact until checkpointed.
+APPROVED, executing corrected scope. Pre-existing unrelated working-tree changes are preserved. Root owns plan, integration, experiment runner and GPU; worker A owns shared inventory/type filter and tests; worker B owns exact/candidate/final-validator wiring and tests; independent reader owns count reconciliation/review. Disjoint implementation files permit parallel work per OWNER's explicit parallelism request.
+
+Execution estimate version 2: Epoch `1cf52ee8-52f2-4f78-98e9-ecf68e6a404e`, 2/3/4 elapsed hours O/M/P. Same task breakdown/dependencies/time basis as above, corrected populations and sequential forward-to-reverse dependency. The scope and basis agree; calibration fields are not used. First absolute checkpoint 2026-10-30 03:21 Asia/Jerusalem. Track approval_wait separately; active_work remains unknown unless measured. Ruling: reuse existing isolated worktree and this tracked plan as the ledger; no new tracker or framework.
+
+
+### Execution checkpoint 2026-10-30 03:34 Asia/Jerusalem
+
+- Shared inventory written and independently checked: 13,470 input rows; 12,871 retained; 599 excluded; 1,208 retained rows have incomplete native-type ancestry. Original rows and assignments remain unchanged.
+- Count reconciliation: 29 empty-English-label rows have saved title fallbacks. Dropping these explained exactly 4,546 provisional scores. Final code also correctly treats metadata `missing:true` as incomplete evidence; old provisional totals are not final totals.
+- Frozen populations: 7,277 forward occurrences, 5,852 previous unresolved. Forward has 5,546 groups and 367,361 compatible candidate pairs; 10,644 nonempty questions add 10,644 stops, for 378,005 actual scores. All groups have exposure. Worst-case reverse if every forward occurrence fails: 978,727 candidate-plus-stop scores. Actual reverse population depends on forward results.
+- Focused runner/integration verification: 60 tests pass. Independent static review cleared launch blockers. Existing worker suites also passed (433 pilot tests and 94 caller tests; overlapping suites, not additive totals).
+- Run checks now bind exact revision scopes, formatting helpers, tokenizer vocabulary/BPE/backend assets, package versions and full derived job texts. Orphan scores fail. Runtime history is append-only; aggregate cloud limits belong to the root launcher and VM STOP guard.
+- Two L4 starts failed with ZONE_RESOURCE_POOL_EXHAUSTED_WITH_DETAILS; third request issued. Existing VM only. No alternative VM authorized. Capacity wait is environment_wait, not active_work.
+- Three-page CPU stage started 03:31 while waiting: 85 forward plus 67 previous occurrences. Fixed checkpoint, no training, no cloud cost. Output scope_3_cpu; 900-second local execution cap. Full 100-page run still pending.
+- Existing saved-link audit: 1,489 of 9,833 distinct occurrence/QID/type links would fail new policy (74 source exclusions; 1,415 type conflicts), across 1,213 occurrences. These are policy conflicts, not verified identity errors. Do not change assignments. 469 affected occurrences also have a passing saved link; 744 have only failing links.
+- Review found a downstream Event bypass beyond this proposal-only run. Add a minimal article-bound assembly guard and make Event article evidence consume the same scoped inventory. Disjoint owners: worker B post_qid_run + its test; worker A post_qid_events + its test. Interface scoped_qid_inventory={path,sha256,policy_version}. Root integrates. Dependencies: shared inventory -> core binding -> Event evidence -> final assembly; GPU scoring independent.
+- Incremental Event guard estimate: 8-15 elapsed execution minutes, in parallel with capacity wait/CPU smoke. Epoch PERT 0.13/0.20/0.25 hours, expected0.20h, feedbackRef ccfa1910-ec8c-4e0a-87c9-261aa1fccc18. Model-derived, no empirical calibration. Same approved filter-throughout objective; total approved 2-4h unchanged. Workers checkpoint03:45. Next root status03:40.
+- active_work unknown; elapsed execution and environment_wait are recorded by timestamps, not invented active hours. No model acceptance count is an accuracy result.
+
+
+### Execution checkpoint 2026-10-30 03:52 Asia/Jerusalem
+
+- Third existing-VM start succeeded. Verified lastStartTimestamp 2026-10-30 03:33:03.660 Asia/Jerusalem. 5400-second STOP guard remains set; root owns the sole VM. Conservative budget gate passes, actual billing unknown.
+- Payload SHA256 verified remotely; fixed checkpoint SHA256 matches approved full_best.pt. Missing runtime imports found before scoring: installed PyArrow23.0.1, mwparserfromhell0.7.2, pandas2.3.3, beautifulsoup4.14.3 in the existing task venv. No training or model changes.
+- Three-page GPU stage complete: forward35/85 occurrences; reverse93/117; 24 still unselected. All13 transferred file hashes checked. Ten-page stage complete: forward326/725; reverse702/866; 164 still unselected. All13 hashes checked; three-page proposals agree exactly within ten-page output.
+- Reverse source audit found2 agreements and4 conflicts in six selected traceable cases. Urakaze/Hizen/Pacific had correct source QIDs offered yet lost. Kumano correctQID blocked by ORG type rule. This selected subset is not accuracy. No proposals are promoted; continue approved full100 measurement as experimental only.
+- CPU three-page check reached900-second cap (actual902.094s) during reverse. Forward124questions complete, reverse44 complete. CPU/GPU forward choices differ in1/124questions; reverse differs in3/43commonquestions. Retain partialCPU evidence, do not claimCPUstagecomplete. BF16/float32 sensitivity noted, no threshold changes.
+- A report/restart writer defect found on actual three-page replay was fixed: identical derived records are kept, changed ones rejected. Resume test passes; final GPU10/100 use corrected runner. Oldthreepage receipts/source hashes retained.
+- Full100 GPU stage started after ten-page verification. Scope100 input7277forward+5852old. Rootresourcegate cap3946s available; passed3900s, leaving at least600s for transfer/STOP. No reverse scoring starts until allnewforward decisions complete.
+- Complete affected-subsystem check: `pytest --import-mode=importlib GG_Data/entity_resolution/hundred_page_pilot GG_Data/pipeline -q`:902passed in37.71s. Default combined collection hadduplicate test_pipeline module names; importlib mode resolves collection without deleting files or changing code. Ruff touchedfiles clean.
+- Eventsourcefilter bypass closed and independently reviewed: corebindsinventoryandusedrevisions; bothEventpathsusesharedsourceinventory; assemblyrequiresarticleboundphaseandmatchedinventory/revisions. 13 invalidguardcases plus validcase; unknown/REVIEW/template/pageown retained. NoEventdata run inthisexperiment.
+- Pool audit final: reverseupperbound1790387 ->1706546sourceonly ->978727source+type; removals83841source+727819type;144382unknown-typecandidatepairsretained. 29titlefallbackrowsremain. Forwardactual378005scores. Saved artifacts pool_counts.json, source_audit_3, prior_assignment_audit. No assignmentschanged.
+- Nextcheckpoint04:00Asia/Jerusalem. Pending: full100 scoring, transferhashverification, finalcase/outcomecomparison, STOP confirmation, report. No addedcloudresource or spendingapproval requested.

@@ -322,3 +322,168 @@ def test_article_boundary_uses_exact_revision_raw_links_and_keeps_corpus_events(
     write(summary, {"outputs": {table.name: sha(table)}})
     with pytest.raises(ValueError, match="raw link"):
         api.restrict_events_to_articles(*args, tmp_path / "bad")
+
+
+def shared_article_fixture(tmp_path):
+    import pyarrow as pa
+    import pyarrow.parquet as pq
+
+    from GG_Data.entity_resolution.hundred_page_pilot.filter_qid_inventory import (
+        POLICY_VERSION,
+    )
+    from GG_Data.pipeline.test_revised_enrichment import article_fixture
+
+    core, table, collection = article_fixture(tmp_path)
+    rows = [
+        dict(
+            page_id=1,
+            revision_id=20,
+            qid=q,
+            qid_source_status=status,
+            qid_filter_policy_version=POLICY_VERSION,
+            type_categories=["DATE"],
+            type_unknown=False,
+            link_origin=[origin],
+        )
+        for q, status, origin in [
+            ("Q3", "KEEP", "RAW_DIRECT_LINK"),
+            ("Q7", "REVIEW_KEEP", "RAW_SHIP_TEMPLATE"),
+            ("Q8", "UNKNOWN_KEEP", "RAW_DIRECT_LINK"),
+            ("Q9", "KEEP", "PAGE_OWN_QID"),
+        ]
+    ]
+    rows.append(dict(rows[0], qid="Q99", revision_id=21))
+    inventory = tmp_path / "shared_inventory.parquet"
+    pq.write_table(pa.Table.from_pylist(rows), inventory)
+    manifest = api.read_json(core / "manifest.json")
+    manifest.update(
+        used_revisions=[[p, 20] for p in (1, 2, 3)],
+        scoped_qid_inventory=dict(
+            path=str(inventory.resolve()),
+            sha256=sha(inventory),
+            policy_version=POLICY_VERSION,
+        ),
+    )
+    write(core / "manifest.json", manifest)
+    return core, table, collection, inventory
+
+
+def test_shared_inventory_drives_event_presence_without_daniel_type_veto(tmp_path):
+    core, table, collection, inventory = shared_article_fixture(tmp_path)
+    _, _, presence, inputs = api._article_evidence(core, table, collection)
+    assert {r["qid"] for r in presence if r["retained_content_link"]} == {
+        "Q3",
+        "Q7",
+        "Q8",
+        "Q9",
+    }
+    assert inputs[str(inventory.resolve())] == sha(inventory)
+    assert {r["qid_source_status"] for r in presence} == {
+        "KEEP",
+        "REVIEW_KEEP",
+        "UNKNOWN_KEEP",
+    }
+
+
+@pytest.mark.parametrize(
+    "corruption",
+    ["hash", "policy", "row_policy", "excluded", "types", "scope", "null_binding"],
+)
+def test_shared_event_inventory_rejects_changed_or_invalid_scope(tmp_path, corruption):
+    import pyarrow as pa
+    import pyarrow.parquet as pq
+
+    core, table, collection, inventory = shared_article_fixture(tmp_path)
+    manifest = api.read_json(core / "manifest.json")
+    if corruption == "null_binding":
+        manifest["scoped_qid_inventory"] = None
+    elif corruption == "hash":
+        manifest["scoped_qid_inventory"]["sha256"] = "0" * 64
+    elif corruption == "policy":
+        manifest["scoped_qid_inventory"]["policy_version"] = "unknown-policy"
+    elif corruption == "scope":
+        manifest["used_revisions"][0][1] = 999
+    else:
+        rows = pq.read_table(inventory).to_pylist()
+        key, value = {
+            "row_policy": ("qid_filter_policy_version", "unknown-policy"),
+            "excluded": ("qid_source_status", "EXCLUDE"),
+            "types": ("type_unknown", None),
+        }[corruption]
+        rows[0][key] = value
+        pq.write_table(pa.Table.from_pylist(rows), inventory)
+        manifest["scoped_qid_inventory"]["sha256"] = sha(inventory)
+    write(core / "manifest.json", manifest)
+    with pytest.raises(ValueError, match="hash differs|shared|scoped|revision"):
+        api._article_evidence(core, table, collection)
+
+
+def test_cached_event_receipt_binds_shared_inventory_and_keeps_review_gaps(
+    tmp_path, monkeypatch
+):
+    core, table, collection, inventory = shared_article_fixture(tmp_path)
+    native = tmp_path / "native"
+    raw = write(tmp_path / "native_raw.json", {})
+    api._write_stage(
+        native,
+        {"full_records.json.gz": {}, "sources.json": {}},
+        dict(
+            phase="NATIVE_CONSOLIDATION",
+            inputs={str(raw): sha(raw)},
+            source_files={str(raw.resolve()): sha(raw)},
+        ),
+    )
+    h = hierarchy(tmp_path)
+    monkeypatch.setattr(api, "_mapping", lambda *args: ({}, {}))
+    receipt = api.apply_cached_events(
+        core_dir=core,
+        native_dir=native,
+        link_table=table,
+        collection_manifest=collection,
+        hierarchy=h,
+        approval_sha256=sha(h / "recognition_approval.json"),
+        mapping_dir=tmp_path,
+        mapping_manifest=collection,
+        mapping_manifest_sha256=sha(collection),
+        output=tmp_path / "events",
+    )
+    assert receipt["inputs"][str(inventory.resolve())] == sha(inventory)
+    assert receipt["missing_article_qids"] == ["Q3", "Q7", "Q8", "Q9"]
+    assert receipt["used_revisions"] == [[1, 20], [2, 20], [3, 20]]
+
+
+def test_restricted_event_receipt_binds_shared_inventory_and_exact_revisions(
+    tmp_path, monkeypatch
+):
+    core, table, collection, inventory = shared_article_fixture(tmp_path)
+    qids = ("Q1", "Q2", "Q7", "Q99")
+    broad = tmp_path / "broad"
+    api._write_stage(
+        broad,
+        {
+            "full_records.json.gz": {
+                q: dict(requested_qid=q, entity=dict(id=q, claims={})) for q in qids
+            },
+            "sources.json": {q: {"provider": "FIXTURE"} for q in qids},
+            "events.json.gz": [{"event_id": q} for q in qids],
+            "event_entities.json.gz": [{"entity_id": q} for q in qids],
+            "event_decisions.json": [{"qid": q, "keep_event": True} for q in qids],
+        },
+        dict(scope="3", temporal_basis="MIXED"),
+    )
+    monkeypatch.setattr(api, "_mapping", lambda *args: ({}, {}))
+    receipt = api.restrict_events_to_articles(
+        core,
+        broad,
+        table,
+        collection,
+        tmp_path,
+        collection,
+        sha(collection),
+        tmp_path / "events",
+    )
+    assert receipt["inputs"][str(inventory.resolve())] == sha(inventory)
+    assert receipt["used_revisions"] == [[1, 20], [2, 20], [3, 20]]
+    assert {
+        r["event_id"] for r in api.read_json(tmp_path / "events/events.json.gz")
+    } == {"Q1", "Q2", "Q7"}

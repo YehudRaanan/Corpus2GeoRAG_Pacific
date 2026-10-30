@@ -15,10 +15,16 @@ from collections import Counter, defaultdict
 from datetime import datetime, timezone
 from pathlib import Path
 
+from GG_Data.entity_resolution.hundred_page_pilot.filter_qid_inventory import (
+    compatible,
+    source_allowed,
+)
 from GG_Data.entity_resolution.hundred_page_pilot.filter_source_content import (
     LEGACY_POLICY,
     SUPPORTED_POLICIES,
     is_eligible,
+)
+from GG_Data.entity_resolution.hundred_page_pilot.filter_source_content import (
     source_policy as validate_source_policy,
 )
 from GG_Data.entity_resolution.hundred_page_pilot.match_exact import (
@@ -253,6 +259,7 @@ def prepare(
     keys = [(e["page_id"], e["revision_id"], e["qid"]) for e in entities]
     if len(set(keys)) != len(keys):
         raise ValueError("Entity table must have unique page/revision/QID rows")
+    entities = [entity for entity in entities if source_allowed(entity)]
     computed = exact_pairs(groups, entities)
     exact = (
         pq.read_table(exact_path).to_pylist() if exact_path is not None else computed
@@ -275,12 +282,22 @@ def prepare(
     best_review_pair = {}
     counts = {str(k): 0 for k in (10, 20, 40, 80, 0)}
     for entity in entities:
-        if not entity.get("label"):
+        model_name = entity.get("model_name") or entity.get("label")
+        if not model_name:
             missing_names += 1
             continue
+        model_aliases = entity.get("model_aliases")
+        if model_aliases is None:
+            model_aliases = entity.get("aliases") or []
         key = (entity["page_id"], entity["revision_id"], entity["qid"])
-        local = [g for g in by_page[key[:2]] if g["id"] not in accepted[key]]
-        ranked = rank_candidates(entity, local)
+        local = [
+            g
+            for g in by_page[key[:2]]
+            if g["id"] not in accepted[key] and compatible(entity, g["type"])
+        ]
+        ranked = rank_candidates(
+            entity | {"label": model_name, "aliases": model_aliases}, local
+        )
         for group in ranked:
             if group["id"] in review_ids:
                 choice = (-group["trigram"], key[2], len(jobs))
@@ -306,8 +323,8 @@ def prepare(
                 "revision_id": key[1],
                 "qid": key[2],
                 "entity": {
-                    "name": entity["label"],
-                    "aliases": entity.get("aliases") or [],
+                    "name": model_name,
+                    "aliases": model_aliases,
                     "description": entity.get("description") or "",
                 },
                 "candidates": [

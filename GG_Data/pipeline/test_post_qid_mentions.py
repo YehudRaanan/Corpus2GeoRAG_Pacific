@@ -277,3 +277,62 @@ def test_file_run_subset_jsonl_pairs_and_no_overwrite(tmp_path):
             dataset_namespace="frozen-100",
         )
     assert not (tmp_path / "bad-stage").exists()
+
+
+@pytest.mark.parametrize("stale", [False, True])
+def test_file_run_scoped_inventory_rejects_stale_before_write_and_binds_valid(
+    tmp_path, stale
+):
+    import pyarrow as pa
+    import pyarrow.parquet as pq
+
+    from GG_Data.entity_resolution.luke_pilot.data import sha256
+
+    rows, groups, pairs = inputs()
+    for row in rows:
+        row["entity_group"] = "PER"
+    for group in groups:
+        group["type"] = "PER"
+    source, group_path, pair_path, inventory = [
+        tmp_path / name
+        for name in (
+            "mentions.parquet",
+            "groups.jsonl",
+            "pairs.jsonl",
+            "inventory.parquet",
+        )
+    ]
+    pq.write_table(pa.Table.from_pylist(rows), source)
+    group_path.write_text("\n".join(map(json.dumps, groups)), encoding="utf-8")
+    pair_path.write_text("\n".join(map(json.dumps, pairs)), encoding="utf-8")
+    pq.write_table(
+        pa.Table.from_pylist(
+            [
+                dict(
+                    page_id=1,
+                    revision_id=11 if stale else 10,
+                    qid=qid,
+                    type_categories=["PER"],
+                    type_unknown=False,
+                    qid_source_status="KEEP",
+                )
+                for qid in ("Q1", "Q2")
+            ]
+        ),
+        inventory,
+    )
+    output = tmp_path / "output"
+    kwargs = dict(
+        input_sha256="a" * 64,
+        dataset_namespace="frozen-100",
+        page_ids={1},
+        scoped_inventory_path=inventory,
+    )
+    if stale:
+        with pytest.raises(ValueError, match="inventory"):
+            mentions.run(source, group_path, pair_path, output, **kwargs)
+        assert not output.exists()
+    else:
+        result = mentions.run(source, group_path, pair_path, output, **kwargs)
+        assert result["counts"]["mention_entity_links"] == 4
+        assert result["inputs"][str(inventory)] == sha256(inventory)

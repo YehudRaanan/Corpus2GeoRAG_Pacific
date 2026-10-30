@@ -9,6 +9,10 @@ from pathlib import Path
 import pyarrow as pa
 import pyarrow.parquet as pq
 
+from GG_Data.entity_resolution.hundred_page_pilot.filter_qid_inventory import (
+    compatible,
+    source_allowed,
+)
 from GG_Data.entity_resolution.luke_pilot.data import sha256, write_jsonl
 
 EXACT_SCHEMA = pa.schema(
@@ -27,24 +31,27 @@ EXACT_SCHEMA = pa.schema(
 def exact_pairs(groups: list[dict], entities: list[dict]) -> list[dict]:
     """Exact means literal label, one Daniel type and one QID on that revision."""
     names = defaultdict(set)
-    qids = defaultdict(set)
+    qids = defaultdict(dict)
     for g in groups:
         names[g["page_id"], g["revision_id"], g["name"]].add(g["type"])
     for e in entities:
-        if e.get("label") and e.get("qid"):
-            qids[int(e["page_id"]), int(e["revision_id"]), e["label"]].add(e["qid"])
+        if e.get("label") and e.get("qid") and source_allowed(e):
+            qids[int(e["page_id"]), int(e["revision_id"]), e["label"]][e["qid"]] = e
     result = []
     for g in groups:
         key = (g["page_id"], g["revision_id"], g["name"])
         if g.get("repaired_source_row_indices") or g.get("source_review_statuses"):
             continue
         if len(names[key]) == len(qids[key]) == 1:
+            qid, entity = next(iter(qids[key].items()))
+            if not compatible(entity, g["type"]):
+                continue
             result.append(
                 {
                     "page_id": g["page_id"],
                     "revision_id": g["revision_id"],
                     "group_id": g["id"],
-                    "qid": next(iter(qids[key])),
+                    "qid": qid,
                     "name": g["name"],
                     "entity_group": g["type"],
                     "method": "exact",

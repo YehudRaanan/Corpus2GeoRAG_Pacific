@@ -59,6 +59,7 @@ def populate(
     dataset_namespace: str,
     stage: str = "legacy",
     finalize: bool | None = None,
+    scoped_inventory: list[dict] | None = None,
 ) -> dict:
     """Reject lost or conflicting source rows; never propagate a match to a name."""
     mention_id(input_sha256, 0)
@@ -153,7 +154,9 @@ def populate(
     }
     if not required <= group_for_row.keys():
         raise ValueError("Original mention has no saved group")
-    accepted = accepted_pair_evidence(by_group, pairs, stage=stage)
+    accepted = accepted_pair_evidence(
+        by_group, pairs, stage=stage, scoped_inventory=scoped_inventory
+    )
     mentions, links = [], []
     for source in rows:
         index = source["source_row_index"]
@@ -248,6 +251,7 @@ def run(
     page_ids: set[int] | None = None,
     stage: str = "legacy",
     finalize: bool | None = None,
+    scoped_inventory_path: Path | None = None,
 ) -> dict:
     rows, groups, pairs = (
         _records(path) for path in (mentions_path, groups_path, pairs_path)
@@ -270,6 +274,11 @@ def run(
         dataset_namespace=dataset_namespace,
         stage=stage,
         finalize=finalize,
+        scoped_inventory=(
+            _records(scoped_inventory_path)
+            if scoped_inventory_path is not None
+            else None
+        ),
     )
     output.mkdir(parents=True, exist_ok=False)
     for name, records in tables.items():
@@ -284,7 +293,9 @@ def run(
         stage=stage,
         finalized=finalization(stage, finalize),
         inputs={
-            str(path): digest(path) for path in (mentions_path, groups_path, pairs_path)
+            str(path): digest(path)
+            for path in (mentions_path, groups_path, pairs_path, scoped_inventory_path)
+            if path is not None
         },
         counts={name: len(records) for name, records in tables.items()},
         outputs={
@@ -304,6 +315,7 @@ def main() -> None:
     parser.add_argument("--input-sha256", required=True)
     parser.add_argument("--dataset-namespace", required=True)
     parser.add_argument("--page-ids", type=int, nargs="+")
+    parser.add_argument("--scoped-inventory", type=Path)
     parser.add_argument(
         "--stage",
         choices=("legacy", "pending", "exact", "model", "final"),
@@ -323,6 +335,7 @@ def main() -> None:
         page_ids=set(args.page_ids) if args.page_ids else None,
         stage=args.stage,
         finalize=args.finalize,
+        scoped_inventory_path=args.scoped_inventory,
     )
 
 

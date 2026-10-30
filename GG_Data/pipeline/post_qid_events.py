@@ -75,7 +75,7 @@ def _occurrence_types(
 def _article_evidence(
     core_dir: Path, link_table: Path, collection_manifest: Path
 ) -> tuple:
-    """Separate verified raw inventories from links that survive source cleaning."""
+    """Use the pinned shared source inventory, or legacy retained raw links."""
     import pyarrow.parquet as pq
 
     from GG_Data.entity_resolution.hundred_page_pilot.clean_source_text import (
@@ -101,15 +101,70 @@ def _article_evidence(
     collection = read_json(collection_manifest)
     _pin(link_table, _manifest_hash(collection, "outputs", link_table.name))
     parsed, cleaned, starts, raw_inputs = {}, {}, {}, {}
+    shared = core.get("scoped_qid_inventory")
     for key, page in pages.items():
         raw = page["raw_reference"]
         path = Path(raw["wikitext_path"])
         _pin(path, raw["sha256"])
         raw_inputs[str(path.resolve())] = raw["sha256"]
+        if "scoped_qid_inventory" in core:
+            continue
         text = path.read_text(encoding="utf-8")
         parsed[key] = {(r["raw_start"], r["raw_end"]): r for r in raw_links(text)}
         cleaned[key] = _clean_page(text)
         starts[key] = [a for a, _ in cleaned[key].origins]
+    if "scoped_qid_inventory" in core:
+        from GG_Data.entity_resolution.hundred_page_pilot.filter_qid_inventory import (
+            POLICY_VERSION,
+            source_allowed,
+        )
+
+        if (
+            not isinstance(shared, dict)
+            or not isinstance(shared.get("path"), str)
+            or not Path(shared["path"]).is_absolute()
+            or shared.get("policy_version") != POLICY_VERSION
+        ):
+            raise ValueError("Invalid shared scoped QID inventory binding")
+        if core.get("used_revisions") != [list(key) for key in sorted(pages)]:
+            raise ValueError(
+                "Shared inventory core used revisions differ from article pages"
+            )
+        inventory = Path(shared["path"])
+        _pin(inventory, shared.get("sha256"))
+        presence, seen = [], set()
+        for row in pq.read_table(inventory).to_pylist():
+            if (
+                row.get("qid_filter_policy_version") != POLICY_VERSION
+                or row.get("qid_source_status")
+                not in {"KEEP", "REVIEW_KEEP", "UNKNOWN_KEEP"}
+                or not source_allowed(row)
+                or type(row.get("type_unknown")) is not bool
+                or not isinstance(row.get("type_categories"), list)
+                or not all(isinstance(t, str) for t in row["type_categories"])
+                or type(row.get("page_id")) is not int
+                or type(row.get("revision_id")) is not int
+                or not re.fullmatch(r"Q[1-9]\d*", row.get("qid") or "")
+            ):
+                raise ValueError("Invalid retained shared scoped QID inventory row")
+            key = row["page_id"], row["revision_id"], row["qid"]
+            if key in seen:
+                raise ValueError("Duplicate shared scoped QID inventory row")
+            seen.add(key)
+            if key[:2] in pages:
+                # Event recognition has its own rules, independent of Daniel types.
+                presence.append(
+                    dict(
+                        row,
+                        retained_content_link=True,
+                        clean_link_status="shared_source_inventory",
+                        clean_link_reason=row["qid_source_status"],
+                        clean_policy_version=POLICY_VERSION,
+                    )
+                )
+        _pin(inventory, shared["sha256"])
+        raw_inputs[str(inventory.resolve())] = shared["sha256"]
+        return core, entity_scope, presence, raw_inputs
     rows = pq.read_table(
         link_table, filters=[("page_id", "in", sorted({k[0] for k in pages}))]
     ).to_pylist()
@@ -522,20 +577,28 @@ def apply_cached_events(
         *recognition_inputs,
     ]
     receipt = dict(
-        status="ARTICLE_NATIVE_CACHE_INCOMPLETE"
-        if missing_corpus or missing_article
-        else "NATIVE_EVENT_RELATIONS_READY",
+        status=(
+            "ARTICLE_NATIVE_CACHE_INCOMPLETE"
+            if missing_corpus or missing_article
+            else "NATIVE_EVENT_RELATIONS_READY"
+        ),
         phase="CACHED_ARTICLE_EVENT_RELATIONS",
         scope=scope,
         missing_corpus_qids=missing_corpus,
         missing_article_qids=missing_article,
         inputs={**raw_inputs, **{str(p.resolve()): digest(p) for p in inputs}},
-        article_policy="ACCEPTED_CORPUS_OR_RETAINED_DIRECT_LINK_IN_EXACT_USED_REVISIONS",
+        article_policy=(
+            "ACCEPTED_CORPUS_OR_SHARED_SOURCE_QID_IN_EXACT_USED_REVISIONS"
+            if "scoped_qid_inventory" in core
+            else "ACCEPTED_CORPUS_OR_RETAINED_DIRECT_LINK_IN_EXACT_USED_REVISIONS"
+        ),
         qid_mapping_temporal_basis="SAVED_CACHED_OR_CURRENT_ASSIGNMENTS_NOT_HISTORICAL_IDENTITY_PROOF",
         temporal_basis="MIXED_WHOLE_RECORD_VERSIONS_NO_COMMON_SNAPSHOT",
         event_discovery_completeness="PROVIDED_CACHE_AND_RETAINED_ARTICLE_LINKS_ONLY",
         acquisition_executed=False,
     )
+    if "scoped_qid_inventory" in core:
+        receipt["used_revisions"] = core["used_revisions"]
     values = {
         "article_presence_evidence.json": presence,
         "native_cache_gaps.json": dict(
@@ -564,7 +627,11 @@ def apply_cached_events(
         decision["article_presence_reason"] = (
             "ACCEPTED_CORPUS_QID"
             if qid in corpus
-            else "RETAINED_DIRECT_LINK_IN_USED_REVISION"
+            else (
+                "RETAINED_SHARED_SOURCE_QID_IN_USED_REVISION"
+                if "scoped_qid_inventory" in core
+                else "RETAINED_DIRECT_LINK_IN_USED_REVISION"
+            )
         )
         if decision["keep_event"]:
             entity, event = _event_tables(records[qid], sources[qid], decision)
@@ -600,7 +667,13 @@ def apply_cached_events(
         counts=dict(
             corpus_qids=len(corpus),
             retained_link_qids=len(linked),
-            verified_raw_link_rows=len(presence),
+            **{
+                (
+                    "verified_shared_inventory_rows"
+                    if "scoped_qid_inventory" in core
+                    else "verified_raw_link_rows"
+                ): len(presence)
+            },
             retained_content_link_rows=sum(
                 r["retained_content_link"] for r in presence
             ),
@@ -656,9 +729,17 @@ def restrict_events_to_articles(
             "ACCEPTED_CORPUS_QID"
             if qid in corpus
             else (
-                "RETAINED_DIRECT_LINK_IN_USED_REVISION"
+                (
+                    "RETAINED_SHARED_SOURCE_QID_IN_USED_REVISION"
+                    if "scoped_qid_inventory" in core
+                    else "RETAINED_DIRECT_LINK_IN_USED_REVISION"
+                )
                 if qid in linked
-                else "NO_DIRECT_LINK_IN_USED_REVISIONS"
+                else (
+                    "NO_SHARED_SOURCE_QID_IN_USED_REVISIONS"
+                    if "scoped_qid_inventory" in core
+                    else "NO_DIRECT_LINK_IN_USED_REVISIONS"
+                )
             )
         )
         decisions.append(decision)
@@ -712,7 +793,13 @@ def restrict_events_to_articles(
                 corpus_events=len(retained & corpus),
                 added_events=len(retained - corpus),
                 excluded_broad_events=len(broad_qids - retained),
-                verified_raw_link_rows=len(presence),
+                **{
+                    (
+                        "verified_shared_inventory_rows"
+                        if "scoped_qid_inventory" in core
+                        else "verified_raw_link_rows"
+                    ): len(presence)
+                },
                 retained_content_link_rows=sum(
                     r["retained_content_link"] for r in presence
                 ),
@@ -721,12 +808,21 @@ def restrict_events_to_articles(
                 exported_edges=len(edges),
             ),
             inputs={**raw_inputs, **{str(p.resolve()): digest(p) for p in inputs}},
-            article_policy="ACCEPTED_CORPUS_OR_RETAINED_DIRECT_LINK_IN_EXACT_USED_REVISIONS",
+            article_policy=(
+                "ACCEPTED_CORPUS_OR_SHARED_SOURCE_QID_IN_EXACT_USED_REVISIONS"
+                if "scoped_qid_inventory" in core
+                else "ACCEPTED_CORPUS_OR_RETAINED_DIRECT_LINK_IN_EXACT_USED_REVISIONS"
+            ),
             qid_mapping_temporal_basis="SAVED_CACHED_OR_CURRENT_ASSIGNMENTS_NOT_HISTORICAL_IDENTITY_PROOF",
             temporal_basis=broad["temporal_basis"],
             sparql_observed_at=broad.get("sparql_observed_at"),
             event_discovery_completeness="BROAD_NATIVE_ELIGIBILITY_RESTRICTED_TO_VERIFIED_ARTICLE_PRESENCE",
             relation_policy=relations["policy_version"],
             acquisition_executed=False,
+            **(
+                {"used_revisions": core["used_revisions"]}
+                if "scoped_qid_inventory" in core
+                else {}
+            ),
         ),
     )

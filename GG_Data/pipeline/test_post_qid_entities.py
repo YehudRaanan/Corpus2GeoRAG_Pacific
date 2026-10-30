@@ -233,3 +233,165 @@ def test_name_fallback_uses_whole_record_then_daniel_and_marks_ambiguity():
         metadata={"Q1": {"label": "Stale compact label"}},
     )
     assert next(r["name"] for r in rows if r["entity_id"] == "Q1") == "May"
+
+
+@pytest.mark.parametrize(
+    "changes",
+    [
+        dict(qid="Q2"),
+        dict(page_id=1),
+        dict(revision_id=21),
+        dict(type_categories=["LOC"]),
+        dict(qid_source_status="EXCLUDE"),
+    ],
+)
+def test_scoped_inventory_rejects_stale_or_incompatible_assignments(changes):
+    inventory = (
+        dict(
+            page_id=2,
+            revision_id=20,
+            qid="Q1",
+            type_categories=["PER"],
+            type_unknown=False,
+            qid_source_status="KEEP",
+        )
+        | changes
+    )
+    with pytest.raises(ValueError, match="inventory"):
+        entities.populate(
+            [groups()[2]],
+            [dict(group_id="c", qid="Q1", method="exact")],
+            dataset_namespace="test",
+            input_sha256="a" * 64,
+            scoped_inventory=[inventory],
+        )
+
+
+@pytest.mark.parametrize(
+    "status,unknown,categories",
+    [
+        ("KEEP", False, ["PER"]),
+        ("REVIEW_KEEP", False, ["PER"]),
+        ("UNKNOWN_KEEP", True, []),
+    ],
+)
+def test_scoped_inventory_accepts_same_revision_compatible_or_unknown(
+    status, unknown, categories
+):
+    inventory = dict(
+        page_id=2,
+        revision_id=20,
+        qid="Q1",
+        type_categories=categories,
+        type_unknown=unknown,
+        qid_source_status=status,
+    )
+    rows = entities.populate(
+        [groups()[2]],
+        [dict(group_id="c", qid="Q1", method="exact")],
+        dataset_namespace="test",
+        input_sha256="a" * 64,
+        scoped_inventory=[inventory],
+    )
+    assert rows[0]["entity_id"] == "Q1"
+
+
+def test_scoped_inventory_rejects_date_even_if_unknown():
+    inventory = dict(
+        page_id=1,
+        revision_id=10,
+        qid="Q1",
+        type_categories=[],
+        type_unknown=True,
+        qid_source_status="REVIEW_KEEP",
+    )
+    with pytest.raises(ValueError, match="inventory"):
+        entities.populate(
+            [groups()[0]],
+            [dict(group_id="a", qid="Q1", method="exact")],
+            dataset_namespace="test",
+            input_sha256="a" * 64,
+            scoped_inventory=[inventory],
+        )
+
+
+@pytest.mark.parametrize(
+    "changes",
+    [
+        dict(type_unknown="false"),
+        dict(type_categories="PER"),
+        dict(type_categories=[1]),
+        dict(qid_source_status=None),
+        dict(qid_source_status="REVIEW"),
+    ],
+)
+def test_scoped_inventory_rejects_malformed_enriched_types(changes):
+    inventory = (
+        dict(
+            page_id=2,
+            revision_id=20,
+            qid="Q1",
+            type_categories=["PER"],
+            type_unknown=False,
+            qid_source_status="KEEP",
+        )
+        | changes
+    )
+    with pytest.raises(ValueError, match="inventory"):
+        entities.populate(
+            [groups()[2]],
+            [dict(group_id="c", qid="Q1", method="exact")],
+            dataset_namespace="test",
+            input_sha256="a" * 64,
+            scoped_inventory=[inventory],
+        )
+
+
+def test_file_run_binds_inventory_and_stops_stale_assignment_before_write(tmp_path):
+    import hashlib
+    import json
+
+    import pyarrow as pa
+    import pyarrow.parquet as pq
+
+    group_path, pairs_path = tmp_path / "groups.jsonl", tmp_path / "pairs.json"
+    inventory_path = tmp_path / "inventory.parquet"
+    group_path.write_text(json.dumps(groups()[2]), encoding="utf-8")
+    pairs_path.write_text(
+        json.dumps([dict(group_id="c", qid="Q1", method="exact")]), encoding="utf-8"
+    )
+    record = dict(
+        page_id=2,
+        revision_id=20,
+        qid="Q1",
+        type_categories=["PER"],
+        type_unknown=False,
+        qid_source_status="KEEP",
+    )
+    pq.write_table(pa.Table.from_pylist([record]), inventory_path)
+    manifest = entities.run(
+        group_path,
+        pairs_path,
+        tmp_path / "good",
+        dataset_namespace="test",
+        input_sha256="a" * 64,
+        scoped_inventory_path=inventory_path,
+    )
+    assert manifest["row_count"] == 1
+    assert (
+        manifest["inputs"][str(inventory_path)]
+        == hashlib.sha256(inventory_path.read_bytes()).hexdigest()
+    )
+    pq.write_table(
+        pa.Table.from_pylist([record | dict(revision_id=21)]), inventory_path
+    )
+    with pytest.raises(ValueError, match="inventory"):
+        entities.run(
+            group_path,
+            pairs_path,
+            tmp_path / "stale",
+            dataset_namespace="test",
+            input_sha256="a" * 64,
+            scoped_inventory_path=inventory_path,
+        )
+    assert not (tmp_path / "stale").exists()

@@ -10,6 +10,7 @@ import argparse
 import gzip
 import hashlib
 import json
+import re
 import runpy
 import sys
 import tempfile
@@ -172,6 +173,7 @@ def write_stage(
     stage: str,
     *,
     native_dir: Path | None = None,
+    scoped_inventory_path: Path | None = None,
 ) -> dict:
     """Save pending or exact tables together, before model decisions exist.
 
@@ -180,8 +182,8 @@ def write_stage(
     """
     import pyarrow.parquet as pq
 
-    from GG_Data.pipeline.post_qid_entities import populate as entities_populate
     from GG_Data.pipeline.post_qid_eda import summarize
+    from GG_Data.pipeline.post_qid_entities import populate as entities_populate
     from GG_Data.pipeline.post_qid_mentions import populate as mentions_populate
     from GG_Data.pipeline.post_qid_pages import run as pages_run
 
@@ -190,6 +192,10 @@ def write_stage(
     manifest_path = scope_dir / "scope_manifest.json"
     manifest = read_json(manifest_path)
     bindings = {str(manifest_path.resolve()): sha256(manifest_path)}
+    scoped_inventory = None
+    if scoped_inventory_path is not None:
+        bindings[str(scoped_inventory_path.resolve())] = sha256(scoped_inventory_path)
+        scoped_inventory = pq.read_table(scoped_inventory_path).to_pylist()
     for name, expected in manifest["inputs"].items():
         path = input_dir / name
         if sha256(path) != expected:
@@ -231,7 +237,13 @@ def write_stage(
             raise ValueError("Exact snapshot native acquisition is incomplete")
     digest = manifest["original_input_sha256"]
     tables = mentions_populate(
-        rows, groups, pairs, input_sha256=digest, dataset_namespace=digest, stage=stage
+        rows,
+        groups,
+        pairs,
+        input_sha256=digest,
+        dataset_namespace=digest,
+        stage=stage,
+        scoped_inventory=scoped_inventory,
     )
     tables["entities"] = entities_populate(
         groups,
@@ -242,6 +254,7 @@ def write_stage(
         eligible_group_ids=gids,
         native_records=records,
         provenance=sources,
+        scoped_inventory=scoped_inventory,
     )
     with tempfile.TemporaryDirectory(prefix="geoai-stage-pages-") as directory:
         pages_run(input_dir, Path(directory) / "pages", pages)
@@ -259,6 +272,7 @@ def write_stage(
             run_id=sha256(manifest_path),
             inputs=bindings,
             pending=["model", "finalization", "Events", "Relations", "Geography"],
+            **_scoped_manifest(scoped_inventory_path, tables),
         ),
     )
 
@@ -287,6 +301,23 @@ def _save_tables(output: Path, tables: dict, result: dict) -> dict:
         )
         stage_dir.rename(output)
     return result
+
+
+def _scoped_manifest(path: Path | None, tables: dict) -> dict:
+    if path is None:
+        return {}
+    from GG_Data.entity_resolution.hundred_page_pilot.filter_qid_inventory import (
+        POLICY_VERSION,
+    )
+
+    return dict(
+        scoped_qid_inventory=dict(
+            path=str(path.resolve()), sha256=sha256(path), policy_version=POLICY_VERSION
+        ),
+        used_revisions=sorted(
+            [p["wiki_page_id"], p["revision_id"]] for p in tables["wiki_pages"]
+        ),
+    )
 
 
 def _set_importance(tables: dict) -> None:
@@ -332,6 +363,11 @@ def assemble(core_dir: Path, event_dir: Path, output: Path) -> dict:
         "scope"
     ) != core.get("scope"):
         raise ValueError("Event enrichment is incomplete or has a different scope")
+    if receipt.get("phase") not in {
+        "ARTICLE_EVENT_BOUNDARY",
+        "CACHED_ARTICLE_EVENT_RELATIONS",
+    }:
+        raise ValueError("Final assembly requires article-bound Event enrichment")
     core_manifest = core_dir / "manifest.json"
     if receipt.get("inputs", {}).get(str(core_manifest.resolve())) != sha256(
         core_manifest
@@ -341,7 +377,11 @@ def assemble(core_dir: Path, event_dir: Path, output: Path) -> dict:
         if sha256(Path(name)) != expected:
             raise ValueError("Enrichment input changed before assembly")
     tables = {name: read_json(core_dir / f"{name}.json.gz") for name in CORE_TABLES}
-    tables["entities"] += read_json(event_dir / "event_entities.json.gz")
+    event_entities = read_json(event_dir / "event_entities.json.gz")
+    event_rows = read_json(event_dir / "events.json.gz")
+    if "scoped_qid_inventory" in core:
+        _validate_scoped_events(core, receipt, tables, event_entities, event_rows)
+    tables["entities"] += event_entities
     tables.update(
         {
             name: read_json(event_dir / f"{name}.json.gz")
@@ -365,6 +405,66 @@ def assemble(core_dir: Path, event_dir: Path, output: Path) -> dict:
     }
     summarize(tables, result)
     return _save_tables(output, tables, result)
+
+
+def _validate_scoped_events(
+    core: dict, receipt: dict, tables: dict, event_entities: list, events: list
+) -> None:
+    """Keep final Event identities inside the exact retained article inventory."""
+    import pyarrow.parquet as pq
+
+    from GG_Data.entity_resolution.hundred_page_pilot.filter_qid_inventory import (
+        POLICY_VERSION,
+        source_allowed,
+    )
+
+    inventory = core["scoped_qid_inventory"]
+    if (
+        not isinstance(inventory, dict)
+        or not isinstance(inventory.get("path"), str)
+        or not Path(inventory["path"]).is_absolute()
+        or inventory.get("policy_version") != POLICY_VERSION
+    ):
+        raise ValueError("Invalid scoped QID inventory binding")
+    path = Path(inventory["path"])
+    if sha256(path) != inventory.get("sha256") or receipt.get("inputs", {}).get(
+        str(path.resolve())
+    ) != inventory.get("sha256"):
+        raise ValueError("Event receipt must bind the unchanged scoped QID inventory")
+    revisions = sorted(
+        [p["wiki_page_id"], p["revision_id"]] for p in tables["wiki_pages"]
+    )
+    if (
+        core.get("used_revisions") != revisions
+        or receipt.get("used_revisions") != revisions
+    ):
+        raise ValueError("Event receipt must use the exact core used revisions")
+    revision_keys = {tuple(pair) for pair in revisions}
+    allowed, seen = set(), set()
+    for row in pq.read_table(path).to_pylist():
+        if (
+            row.get("qid_filter_policy_version") != POLICY_VERSION
+            or row.get("qid_source_status")
+            not in {"KEEP", "REVIEW_KEEP", "UNKNOWN_KEEP"}
+            or not source_allowed(row)
+            or not isinstance(row.get("type_categories"), list)
+            or not all(isinstance(t, str) for t in row["type_categories"])
+            or type(row.get("type_unknown")) is not bool
+            or type(row.get("page_id")) is not int
+            or type(row.get("revision_id")) is not int
+            or not isinstance(row.get("qid"), str)
+            or not re.fullmatch(r"Q[1-9]\d*", row["qid"])
+        ):
+            raise ValueError("Event inventory must contain retained enriched QIDs")
+        key = row["page_id"], row["revision_id"], row["qid"]
+        if key in seen:
+            raise ValueError("Duplicate scoped QID inventory row")
+        seen.add(key)
+        if key[:2] in revision_keys:
+            allowed.add(row["qid"])
+    added = {r["entity_id"] for r in event_entities} | {r["event_id"] for r in events}
+    if not added <= allowed:
+        raise ValueError("Event QID is outside the retained inventory used revisions")
 
 
 def validate_approval_input(manifest_path: Path, scope_path: Path) -> None:
@@ -393,6 +493,7 @@ def build_core(
     experimental_approval_path: Path | None = None,
     approval_manifest_path: Path | None = None,
     stage: str = "legacy",
+    scoped_inventory_path: Path | None = None,
 ) -> dict:
     """Verify archived decisions, then write the four core tables; no inference."""
     import pyarrow.parquet as pq
@@ -419,6 +520,10 @@ def build_core(
         bindings[str(path.resolve())] = actual
         return actual
 
+    scoped_inventory = None
+    if scoped_inventory_path is not None:
+        bind(scoped_inventory_path)
+        scoped_inventory = pq.read_table(scoped_inventory_path).to_pylist()
     bind(scope_dir / "scope_manifest.json")
     manifest = read_json(scope_dir / "scope_manifest.json")
     matching = manifest.get("matching_subdir", "matching_k80_v2")
@@ -667,6 +772,7 @@ def build_core(
         input_sha256=manifest["original_input_sha256"],
         dataset_namespace=manifest["original_input_sha256"],
         stage=stage,
+        scoped_inventory=scoped_inventory,
     )
     records_path, sources_path = (
         native_dir / "full_records.json.gz",
@@ -688,6 +794,7 @@ def build_core(
         native_records=records,
         provenance=sources,
         stage=stage,
+        scoped_inventory=scoped_inventory,
         **(
             {"eligible_group_ids": {g["id"] for g in groups}}
             if stage != "legacy"
@@ -752,6 +859,7 @@ def build_core(
             run_id=run_id,
             inputs=bindings,
             pending=["Events", "Relations", "Geography", "seven-table acceptance"],
+            **_scoped_manifest(scoped_inventory_path, tables),
         ),
     )
 
@@ -765,6 +873,7 @@ def main() -> None:
     parser.add_argument("--events-dir", type=Path)
     parser.add_argument("--inference-dir", type=Path)
     parser.add_argument("--native-dir", type=Path)
+    parser.add_argument("--scoped-inventory", type=Path)
     parser.add_argument("--model-dir", type=Path)
     parser.add_argument("--training-dir", type=Path)
     parser.add_argument("--readiness-dir", type=Path)
@@ -793,6 +902,7 @@ def main() -> None:
             args.scope,
             args.stage,
             native_dir=args.native_dir,
+            scoped_inventory_path=args.scoped_inventory,
         )
     elif args.inference_dir is not None:
         if args.scope_dir is None or args.native_dir is None:
@@ -810,6 +920,7 @@ def main() -> None:
             experimental_approval_path=args.experimental_approval,
             approval_manifest_path=args.approval_manifest,
             stage=args.stage,
+            scoped_inventory_path=args.scoped_inventory,
         )
     else:
         prepare(
