@@ -45,7 +45,7 @@
 ### 1. Freeze evidence and count pools — root, read-only workers
 - [x] Inspect source-support insertion points and score reuse requirements.
 - [x] Verify local hierarchy cache and offline type coverage.
-- [x] Count type-only reverse pools: 1,790,387 -> 1,009,027 candidate-plus-stop scores (43.64% reduction); 981 inventory records have missing/incomplete type data and remain eligible.
+- [x] Run independent type-count diagnostics. One gives 1,009,027 candidate-plus-stop scores (43.64% reduction); a second, corrected to start from inventory P31, gives 1,004,481. These disagree by 4,546 scores and are provisional, not an agreed final count. The inventory coverage check found 981 records with missing/incomplete type data; these must remain eligible.
 - [x] Complete source-only count: 599 of 13,470 page/revision/QID records excluded; 12,871 retained (12,707 KEEP and 164 REVIEW_KEEP). Distinct QIDs decrease from 5,072 to 4,874. Verified 132 revision files, raw hashes, source offsets and page-own supports; no unknown source-support gaps were found.
 - [ ] Complete combined pool counts and persist the case-level exclusion ledger during implementation.
 - [ ] Freeze input hashes, cohort definitions and estimate basis in the new output manifest.
@@ -79,7 +79,7 @@ Reuse normal scorer/decision loop and the reverse ordering in `decision_model/pr
 
 ## Estimate and checkpoints
 
-Preflight type-only score counts, before source exclusions (candidate scores plus one stop per group):
+First diagnostic's provisional type-only score counts, before source exclusions (candidate scores plus one stop per group); the two implementations are not yet reconciled:
 
 | Daniel type | Groups | Before | After |
 | --- | ---: | ---: | ---: |
@@ -90,6 +90,8 @@ Preflight type-only score counts, before source exclusions (candidate scores plu
 | Total | 9,016 | 1,790,387 | 1,009,027 |
 
 All groups retain candidates in this type-only check. There are 133,588 candidate pairs retained because type evidence is incomplete. Groups containing prior-eligible occurrences: 3,856, scoring 731,578 -> 413,688. Newly-admitted-only groups: 5,160, scoring 1,058,809 -> 595,339. These group cohorts partition 9,016; occurrence cohorts remain 5,852 and 7,277 because 386 groups contain both kinds of occurrence.
+
+Second diagnostic: corrected inventory-P31 plus cached-P279 gives type-only 1,004,481 and source-plus-type 967,222 (958,206 candidates plus 9,016 stops). It retains 99,666 unknown-type pairs after source filtering. Neither result is final until shared-predicate tests reconcile the 4,546 type-only difference. An earlier 1,038,805 combined result is withdrawn: it incorrectly started from older cached P31. No inference was based on any diagnostic. Next task is one reproducible predicate with per-pair reasons; report the exact difference rather than select a convenient number.
 
 Time basis: total elapsed execution hours, including current preflight; approval_wait and environment_wait excluded. Active work is tracked separately and remains unknown unless measured.
 
