@@ -77,6 +77,11 @@ def build_graph(model: Path, output: Path) -> dict:
     by_source = {r["source_key"]: r for r in page_rows}
     by_id = {r["entity_id"]: r for r in entities}
     first_mentions = {}
+    excluded = (
+        {r["entity_id"] for r in read_json(model / "entity_exclusions.json.gz")}
+        if (model / "entity_exclusions.json.gz").exists()
+        else set()
+    )
     source = manifest.get("input")
     if source:
         input_path = Path(source["path"])
@@ -90,6 +95,11 @@ def build_graph(model: Path, output: Path) -> dict:
                 if raw["entity_group"] != "DATE":
                     key = entity_id(raw["word"], raw["entity_group"])
                     if key not in by_id:
+                        from GG_Data.pipeline.simplified_correction import invalid_key
+
+                        if key in excluded and invalid_key(raw["word"]):
+                            index += 1
+                            continue
                         raise ValueError("Raw mention identity absent from graph")
                     first_mentions.setdefault(key, dict(row=index, raw=raw))
                 index += 1
@@ -132,6 +142,15 @@ def build_graph(model: Path, output: Path) -> dict:
                 event_detail=events[key],
                 semantics="EVENT_RECOGNIZED_FROM_SOURCE_PAGE_SUBJECT_OR_DIRECT_LINK",
             )
+            for field in [
+                "event_dates",
+                "planned_dates",
+                "date_status",
+                "date_selection",
+                "date_normalization",
+            ]:
+                if field in events[key]:
+                    attrs[field] = events[key][field]
             sources = [
                 dict(
                     page=pages[i]["title"],

@@ -16,6 +16,20 @@ from GG_Data.pipeline.simplified_relations import build_graph
 from GG_Data.pipeline.simplified_verify import verify_and_package, verify_raw_rows
 
 
+def test_population_rejects_changed_rule_evidence(tmp_path):
+    from GG_Data.pipeline.simplified_verify import verify_population
+
+    rule = tmp_path / "rule.py"
+    rule.write_text("# pinned rule\n", encoding="utf-8")
+    write_object(
+        tmp_path / "manifest.json",
+        dict(outputs={}, event_rule=[dict(path=str(rule), sha256=digest(rule))]),
+    )
+    rule.write_text("# changed rule\n", encoding="utf-8")
+    with pytest.raises(ValueError, match="Changed Event rule"):
+        verify_population(tmp_path / "prepared", tmp_path)
+
+
 def test_complete_release_loads_real_agent_and_contains_all_model_and_adapter_files(
     tmp_path,
 ):
@@ -242,3 +256,136 @@ def test_complete_release_loads_real_agent_and_contains_all_model_and_adapter_fi
         result["geography_verification"]["spatial_checks"][0]["geometry_type"]
         == "Polygon"
     )
+
+
+def test_corrected_population_dates_and_native_identity_load_real_agent(tmp_path):
+    """Use the existing complete fixture, then export a separate corrected release."""
+    test_complete_release_loads_real_agent_and_contains_all_model_and_adapter_files(
+        tmp_path
+    )
+    from GG_Data.pipeline.simplified_correction import assemble_corrected
+    from GG_Data.pipeline.simplified_verify import verify_graph_nodes, verify_population
+
+    correction = tmp_path / "correction"
+    (correction / "content").mkdir(parents=True)
+    day = dict(
+        time="+1941-12-08T00:00:00Z",
+        precision=11,
+        calendarmodel="http://www.wikidata.org/entity/Q1985727",
+    )
+    facts = {
+        "Q99": dict(
+            label="Event",
+            native_types=["Q1190554"],
+            description="Fixture",
+            metadata_revision=1,
+            metadata_status="AVAILABLE",
+            dates={"point_date": [day]},
+        )
+    }
+    write_object(correction / "source_facts_v4.json", facts)
+    write_object(
+        correction / "event_native_records_v2.json",
+        {
+            "Q99": dict(
+                id="Q99",
+                claims={
+                    "P361": [
+                        dict(
+                            id="fixture",
+                            mainsnak=dict(datavalue=dict(value=dict(id="Q362"))),
+                        )
+                    ],
+                    "P585": [dict(mainsnak=dict(datavalue=dict(value=day)))],
+                },
+            )
+        },
+    )
+    write_object(
+        correction / "own_scope_audit_v3.json",
+        {"Q99": dict(concrete_event_infobox=True, dates={})},
+    )
+    write_object(
+        correction / "event_partof_graph_v2.json",
+        {
+            "Q99": dict(
+                parents=[dict(qid="Q362", property="P361", statement_id="fixture")]
+            )
+        },
+    )
+    (correction / "war_wiki_ancestors").mkdir()
+    write_object(correction / "war_wiki_ancestors/title_mapping.json", {})
+    write_object(correction / "type_ancestors_final.json", {"Q1190554": ["Q1190554"]})
+    shutil.copyfile(
+        tmp_path / "page_acquisition/page_sources.json.gz",
+        correction / "content/page_sources.json.gz",
+    )
+    write_object(
+        correction / "content/manifest.json",
+        dict(
+            outputs={
+                "page_sources.json.gz": digest(
+                    correction / "content/page_sources.json.gz"
+                )
+            }
+        ),
+    )
+    # The original fixture model remains intact; the second model has a new ID.
+    shutil.copytree(tmp_path / "model", tmp_path / "population")
+    model, graph = tmp_path / "corrected_model", tmp_path / "corrected_graph"
+    assemble_corrected(tmp_path, correction, model)
+    assert verify_population(tmp_path / "prepared", model)["events"] == 1
+    assert (
+        next(r for r in read_json(model / "entities.json.gz") if r["type"] == "event")[
+            "entity_id"
+        ]
+        == "event:Q99"
+    )
+    build_graph(model, graph)
+    assert verify_graph_nodes(model, graph / "agent_graph.json.gz")["status"] == "PASS"
+    python = Path(os.environ["GEOAI_AGENT_PYTHON"])
+    code = """import json
+from pathlib import Path
+from geo_agent.compact_store import CompactGraphStore
+from geo_agent.tools import build_tools
+store=CompactGraphStore.load(Path(__import__('sys').argv[1]))
+tool=next(t for t in build_tools(store) if t.name=='find_relations')
+inside=json.loads(tool.invoke(dict(source_id='event:Q99',date_from='1941',date_to='1941')))
+assert inside and all(r['temporal_semantics']=='EVENT_ENDPOINT_DATES; EDGE_DATE_UNKNOWN' for r in inside)
+assert json.loads(tool.invoke(dict(source_id='event:Q99',date_from='1942',date_to='1942'))) == {'result':'no matching relations in graph'}
+store.connection.close()
+"""
+    env = dict(os.environ, PYTHONPATH=str(ROOT / "Agent"))
+    checked = subprocess.run(
+        [str(python), "-B", "-c", code, str(graph / "agent_graph.json.gz")],
+        cwd=ROOT,
+        env=env,
+        capture_output=True,
+        text=True,
+    )
+    assert checked.returncode == 0, checked.stderr
+    checked = subprocess.run(
+        [
+            str(python),
+            "-B",
+            "-m",
+            "geo_agent.verify_compact",
+            str(graph / "agent_graph.json.gz"),
+            str(graph / "agent_acceptance.json"),
+        ],
+        cwd=ROOT,
+        env=env,
+        capture_output=True,
+        text=True,
+    )
+    assert checked.returncode == 0, checked.stderr
+    release = tmp_path / "corrected_release"
+    verify_and_package(tmp_path / "prepared", model, graph, release)
+    contract = read_json(release / "agent_contract.json")
+    assert contract["date_policy"] == "OWNER_FIRST_DAY_SINGLE_DATE_AND_WWII_DEFAULT_V1"
+    evidence = read_json(release / "correction_evidence/index.json")
+    assert any(
+        r["artifact_path"].endswith("event_native_records_v2.json") for r in evidence
+    )
+    for row in evidence:
+        assert digest(release / row["artifact_path"]) == row["sha256"]

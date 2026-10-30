@@ -24,8 +24,142 @@ from GG_Data.pipeline.simplified_agent import entity_id, write_array, write_obje
 LOG = logging.getLogger(__name__)
 
 
+def verify_corrected_sources(
+    model: Path, pages: list[dict], events: list[dict]
+) -> dict:
+    """Rebuild page candidates and verify each retained Event against source facts."""
+    from Agent.geo_agent.compact_dates import date_bounds
+    from GG_Data.pipeline.post_qid_events import _occurrence_types
+    from GG_Data.pipeline.simplified_correction import (
+        event_date_payload,
+        native_dates,
+        scoped_decision,
+    )
+    from GG_Data.pipeline.simplified_war_scope import war_paths, wiki_partof
+
+    manifest = read_json(model / "manifest.json")
+    inputs = {
+        Path(r["path"]).name: Path(r["path"]) for r in manifest["correction_inputs"]
+    }
+    for row in manifest["correction_inputs"]:
+        if digest(Path(row["path"])) != row["sha256"]:
+            raise ValueError("Changed correction source: " + row["path"])
+    root = inputs["source_facts_v4.json"].parent
+    facts = read_json(inputs["source_facts_v4.json"])
+    own = read_json(inputs["own_scope_audit_v3.json"])
+    native = read_json(inputs["event_native_records_v2.json"])
+    graph = read_json(inputs["event_partof_graph_v2.json"])
+    mapping = read_json(root / "war_wiki_ancestors/title_mapping.json")
+    paths = war_paths(graph, own, mapping)
+    titles = {
+        r["target_title"]: r.get("qid")
+        for r in read_json(root.parent / "page_link_metadata/title_mapping.json.gz")
+    }
+    candidates = {
+        (p["page_index"], q)
+        for p in pages
+        for q in (
+            {titles[t] for t in p["links"] if titles.get(t)}
+            | ({p["source_subject_qid"]} if p.get("source_subject_qid") else set())
+        )
+    }
+    audit = read_json(model / "event_recognition_audit.json.gz")
+    if (
+        len(audit) != len(candidates)
+        or {(a["page_index"], a["qid"]) for a in audit} != candidates
+    ):
+        raise ValueError("Event candidate audit does not cover source pages")
+    ancestors = read_json(inputs["type_ancestors_final.json"])
+    hierarchy = Path(manifest["event_rule"][0]["path"]).parent
+    types, _ = _occurrence_types(hierarchy, manifest["event_approval_sha256"])
+    decisions = {
+        q: scoped_decision(q, facts.get(q, {}), own.get(q, {}), ancestors, types, paths)
+        for q in {q for _, q in candidates}
+    }
+    for row in audit:
+        if (
+            row.get("decision") != decisions[row["qid"]]
+            or row["status"] != decisions[row["qid"]]["status"]
+        ):
+            raise ValueError("Event recognition differs from pinned source decision")
+    accepted = {q for q, d in decisions.items() if d["status"] == "EVENT"}
+    if {r["native_records"][0]["qid"] for r in events} != accepted:
+        raise ValueError("WWII Event population differs from source decisions")
+    checked_sources = set()
+    for q in accepted:
+        for edge in paths[q]:
+            prop = edge["property"]
+            if prop in {"P361", "P527_INVERSE"}:
+                source = edge["source_qid"]
+                target = edge["to"] if prop == "P361" else edge["from"]
+                p = "P361" if prop == "P361" else "P527"
+                statements = native.get(source, {}).get("claims", {}).get(p, [])
+                if not any(
+                    s.get("rank") != "deprecated"
+                    and s.get("id") == edge.get("statement_id")
+                    and s.get("mainsnak", {})
+                    .get("datavalue", {})
+                    .get("value", {})
+                    .get("id")
+                    == target
+                    for s in statements
+                ):
+                    raise ValueError("WWII path has no native source statement")
+            elif prop == "WIKI_INFOBOX_PARTOF":
+                source = own[edge["from"]]["source"]
+                path = Path(source["path"])
+                if source["path"] not in checked_sources:
+                    if digest(path) != source["sha256"]:
+                        raise ValueError("WWII Wiki source changed")
+                    checked_sources.add(source["path"])
+                parts = wiki_partof(read_json(path).get("raw", ""))
+                if not any(
+                    all(
+                        part.get(k) == edge.get(k)
+                        for k in ["target_title", "field", "raw_value", "template"]
+                    )
+                    and mapping.get(part["target_title"]) == edge["to"]
+                    for part in parts
+                ):
+                    raise ValueError("WWII path is absent from own infobox")
+            else:
+                raise ValueError("Unsupported war connection proof")
+
+    def check_dates(values):
+        for period in values.get("periods", []):
+            check_dates(period)
+        for key in ["start_date", "end_date", "point_date"]:
+            for value in values.get(key, []):
+                date_bounds(value)
+
+    for event in events:
+        q = event["native_records"][0]["qid"]
+        if q not in native or native_dates(native[q]) != facts[q]["dates"]:
+            raise ValueError("Event dates are not bound to native records")
+        expected = event_date_payload(
+            facts[q]["dates"],
+            own.get(q, {}),
+            cancelled="Q114350932" in facts[q]["native_types"],
+            owner_policy=True,
+        )
+        if any(event.get(k) != v for k, v in expected.items()):
+            raise ValueError("Event dates differ from source payload")
+        check_dates(event["event_dates"])
+        check_dates(event["planned_dates"])
+    return dict(
+        status="PASS",
+        source_page_candidates=len(candidates),
+        wwii_events=len(accepted),
+        connection_rule="P361; INVERSE_P527; OWN_WIKI_INFOBOX_PARTOF; ROOT_Q362",
+        date_statuses=dict(Counter(e["date_status"] for e in events)),
+    )
+
+
 def verify_population(prepared: Path, model: Path) -> dict:
     manifest = read_json(model / "manifest.json")
+    for rule in manifest.get("event_rule", []):
+        if digest(Path(rule["path"])) != rule["sha256"]:
+            raise ValueError("Changed Event rule: " + rule["path"])
     for name, sha in manifest["outputs"].items():
         if digest(model / name) != sha:
             raise ValueError(f"Changed model artifact: {name}")
@@ -34,14 +168,42 @@ def verify_population(prepared: Path, model: Path) -> dict:
     entities = read_json(model / "entities.json.gz")
     by_id = {r["entity_id"]: r for r in entities}
     original = read_json(prepared / "entities.json.gz")
+    corrected = (
+        manifest.get("event_identity")
+        == "NATIVE_SOURCE_QID; NER_EXACT_NAME_TYPE_UNCHANGED"
+    )
+    exclusions = read_json(model / "entity_exclusions.json.gz") if corrected else []
+    excluded = {r["entity_id"]: r for r in exclusions}
+    original_by_id = {r["entity_id"]: r for r in original}
+    from GG_Data.pipeline.simplified_correction import invalid_reason
+
+    if len(excluded) != len(exclusions) or any(
+        r["entity_id"] not in original_by_id
+        or invalid_reason(r["name"]) is None
+        or r.get("reason") != invalid_reason(r["name"])
+        or any(
+            r.get(k) != original_by_id[r["entity_id"]][k]
+            for k in ["name", "type", "mention_count"]
+        )
+        or r["entity_id"] in by_id
+        for r in exclusions
+    ):
+        raise ValueError("Unproved original Entity exclusion")
     if len(by_id) != len(entities) or any(
         r["node_index"] != i
         or r["type"] == "DATE"
-        or entity_id(r["name"], r["type"]) != r["entity_id"]
+        or (
+            len(r.get("native_ids", [])) != 1
+            or r["entity_id"] != "event:" + r["native_ids"][0]
+            if corrected and r["type"] == "event"
+            else entity_id(r["name"], r["type"]) != r["entity_id"]
+        )
         for i, r in enumerate(entities)
     ):
         raise ValueError("Invalid full exact-key population")
     for row in original:
+        if row["entity_id"] in excluded:
+            continue
         saved = by_id.get(row["entity_id"], {})
         if any(saved.get(k) != row[k] for k in ["name", "type", "mention_count"]):
             raise ValueError("Original exact-key entity changed or disappeared")
@@ -55,9 +217,14 @@ def verify_population(prepared: Path, model: Path) -> dict:
     expected = {
         (m["entity_id"], canonical[m["page_index"]])
         for m in read_json(prepared / "memberships.json.gz")
+        if m["entity_id"] not in excluded
     }
     qid_to_id = {}
-    for event in read_json(model / "event_events.json.gz"):
+    event_rows = read_json(model / "event_events.json.gz")
+    source_verification = (
+        verify_corrected_sources(model, pages, event_rows) if corrected else None
+    )
+    for event in event_rows:
         key = event["entity_id"]
         if key not in by_id or by_id[key]["type"] != "event":
             raise ValueError("Event foreign key failed")
@@ -67,7 +234,11 @@ def verify_population(prepared: Path, model: Path) -> dict:
     for row in read_json(model / "event_recognition_audit.json.gz"):
         statuses[row["status"]] += 1
         if row["status"] == "EVENT":
-            if row["qid"] not in qid_to_id or not row["recognized_types"]:
+            if row["qid"] not in qid_to_id or (
+                not row["recognized_types"]
+                and row.get("decision", {}).get("reason")
+                != "OWN_EVENT_INFOBOX_NO_NATIVE_TYPE"
+            ):
                 raise ValueError("Recognized page event missing from population")
             expected.add((qid_to_id[row["qid"]], canonical[row["page_index"]]))
     memberships = read_json(model / "memberships.json.gz")
@@ -98,12 +269,15 @@ def verify_population(prepared: Path, model: Path) -> dict:
     return dict(
         status="PASS",
         exact_original_entities=len(original),
+        excluded_invalid_entity_keys=len(excluded),
+        retained_original_entities=len(original) - len(excluded),
         entities=len(entities),
         events=sum(r["type"] == "event" for r in entities),
         memberships=len(actual),
         event_recognition_statuses=dict(statuses),
         raw_shared_page_count_sum=sum(c * (c - 1) // 2 for c in page_sizes.values()),
         source_revision_status="DANIEL_EXACT_REVISION_UNKNOWN",
+        corrected_source_verification=source_verification,
     )
 
 
@@ -113,6 +287,7 @@ def verify_graph_nodes(model: Path, graph: Path) -> dict:
     from GG_Data.pipeline.simplified_relations import TYPES
 
     entities = read_json(model / "entities.json.gz")
+    events = {e["entity_id"]: e for e in read_json(model / "event_events.json.gz")}
     memberships = defaultdict(set)
     for row in read_json(model / "memberships.json.gz"):
         memberships[row["node_index"]].add(row["page_index"])
@@ -144,6 +319,19 @@ def verify_graph_nodes(model: Path, graph: Path) -> dict:
                 raise ValueError(
                     f"Graph node differs from verified model: {row['entity_id']}"
                 )
+            if row["entity_id"] in events:
+                event = events[row["entity_id"]]
+                if any(
+                    attrs.get(field) != event.get(field)
+                    for field in [
+                        "event_dates",
+                        "planned_dates",
+                        "date_status",
+                        "date_selection",
+                        "date_normalization",
+                    ]
+                ):
+                    raise ValueError("Graph Event dates differ from the model")
         manifest = read_json(model / "manifest.json")
         pages = {
             r["canonical_page_index"]: r
@@ -268,6 +456,74 @@ def verify_geography(model: Path, acceptance: dict) -> dict:
     )
 
 
+def package_correction_sources(model: Path, output: Path) -> list[dict]:
+    """Preserve exact correction evidence with portable path/hash bindings."""
+    manifest = read_json(model / "manifest.json")
+    pinned = manifest.get("correction_inputs", [])
+    if not pinned:
+        return []
+    root = Path(pinned[0]["path"]).parent
+    paths = {Path(row["path"]).resolve() for row in pinned}
+    own = read_json(root / "own_scope_audit_v3.json")
+    for row in own.values():
+        source = row.get("source", {})
+        if source.get("path"):
+            path = Path(source["path"]).resolve()
+            if digest(path) != source["sha256"]:
+                raise ValueError("Correction own-page source changed")
+            paths.add(path)
+    for name in [
+        "class_graph.json.gz",
+        "class_graph_manifest.json",
+        "fragment_mention_evidence.json.gz",
+        "fragment_quality_census.json",
+    ]:
+        if (root / name).is_file():
+            paths.add((root / name).resolve())
+    for folder in [
+        "content",
+        "native_refresh",
+        "maxlag_resume_1",
+        "type_refresh",
+        "event_own_pages",
+        "event_own_pages_dated",
+        "event_own_pages_link_titles",
+        "event_own_pages_new_candidates",
+        "untyped_own_pages",
+        "war_wiki_ancestors",
+        "war_parent_sources",
+    ]:
+        if (root / folder).is_dir():
+            paths.update(
+                p.resolve()
+                for p in (root / folder).rglob("*")
+                if p.is_file()
+                and (p.name.endswith(".json") or p.name.endswith(".json.gz"))
+            )
+    bundle = output / "correction_evidence"
+    bundle.mkdir()
+    entries = []
+    for path in sorted(paths):
+        relative = (
+            path.relative_to(root.resolve())
+            if path.is_relative_to(root.resolve())
+            else Path("external")
+            / (hashlib.sha256(str(path).encode()).hexdigest()[:16] + "_" + path.name)
+        )
+        target = bundle / relative
+        target.parent.mkdir(parents=True, exist_ok=True)
+        os.link(path, target)
+        entries.append(
+            dict(
+                original_path=str(path),
+                artifact_path=target.relative_to(output).as_posix(),
+                sha256=digest(target),
+            )
+        )
+    write_object(bundle / "index.json", entries)
+    return entries
+
+
 def verify_and_package(prepared: Path, model: Path, graph: Path, output: Path) -> dict:
     """Publish immutable JSON files only after full model and Agent checks pass."""
     if output.exists():
@@ -310,6 +566,8 @@ def verify_and_package(prepared: Path, model: Path, graph: Path, output: Path) -
     ):
         raise ValueError("Relations JSON differs from the fully verified Agent graph")
     output.mkdir()
+    correction_evidence = package_correction_sources(model, output)
+    model_manifest = read_json(model / "manifest.json")
     for folder, destination in [(model, "model"), (graph, "agent")]:
         target = output / destination
         target.mkdir()
@@ -351,6 +609,13 @@ def verify_and_package(prepared: Path, model: Path, graph: Path, output: Path) -
             derived_index="Read-only SQLite index is built locally on first load; it is not required for interchange",
             edge_count_semantics="Integer shared-page count; fractional weights use each endpoint's distinct-page denominator",
             relation_semantics="PAGE_CO_OCCURRENCE_ONLY",
+            date_policy=model_manifest.get("date_policy", "SOURCE_DATE_UNKNOWN"),
+            event_scope=model_manifest.get("event_scope", "SOURCE_PAGES"),
+            deferred_reviews=model_manifest.get("deferred_reviews", []),
+            temporal_semantics="Date filters use exported Event endpoint ranges, including explicitly marked OWNER defaults and planned dates; coappearance edges have no occurrence date",
+            correction_evidence=(
+                "correction_evidence/index.json" if correction_evidence else None
+            ),
             geography_status=geography["status"],
             geography_evidence=(
                 dict(

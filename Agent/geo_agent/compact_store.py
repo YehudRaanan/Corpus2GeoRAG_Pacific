@@ -13,6 +13,7 @@ import threading
 from collections import Counter
 from pathlib import Path
 
+from .compact_dates import event_in_range, query_bounds
 from .compact_format import records, sha256
 from .graph_store import GraphStore, Node
 
@@ -211,7 +212,27 @@ class CompactGraphStore(GraphStore):
                 ).fetchone()[0]
         return result
 
-    def _query(self, source_id=None, target_id=None, neighbor_type=None, limit=50):
+    def _query(
+        self,
+        source_id=None,
+        target_id=None,
+        neighbor_type=None,
+        limit=50,
+        date_from=None,
+        date_to=None,
+    ):
+        dated = date_from is not None or date_to is not None
+        date_ids = []
+        if dated:
+            low, high = query_bounds(date_from, date_to)
+            date_ids = [
+                i
+                for i, key in enumerate(self.node_ids)
+                if self.nodes[key].type == "event"
+                and event_in_range(
+                    self.nodes[key].attributes.get("event_dates", {}), low, high
+                )
+            ]
         if any(k is not None and k not in self.indices for k in [source_id, target_id]):
             return []
         selects, parameters = [], []
@@ -230,16 +251,52 @@ class CompactGraphStore(GraphStore):
             + " UNION ALL ".join(selects)
             + ") v JOIN nodes ns ON ns.i=v.source JOIN nodes nt ON nt.i=v.target"
         )
+        filters = []
         if neighbor_type:
-            sql += " WHERE " + ("ns.type=?" if target_id else "nt.type=?")
+            filters.append("ns.type=?" if target_id else "nt.type=?")
             parameters.append(neighbor_type)
+        if dated:
+            if not date_ids:
+                return []
+            # Only trusted integer node indices enter SQL, never user strings.
+            indices = ",".join(map(str, date_ids))
+            filters.extend(
+                [
+                    "(ns.type='event' OR nt.type='event')",
+                    f"(ns.type<>'event' OR ns.i IN ({indices}))",
+                    f"(nt.type<>'event' OR nt.i IN ({indices}))",
+                ]
+            )
+        if filters:
+            sql += " WHERE " + " AND ".join(filters)
         sql += " ORDER BY CAST(v.n AS REAL)/ns.c DESC,v.n DESC,v.source,v.target"
         if limit is not None:
             sql += " LIMIT ?"
             parameters.append(max(0, limit))
         with self.query_lock:
             rows = self.connection.execute(sql, parameters).fetchall()
-        return [self._relation(*r) for r in rows]
+        result = [self._relation(*r) for r in rows]
+        if dated:
+            for row in result:
+                row.update(
+                    temporal_semantics="EVENT_ENDPOINT_DATES; EDGE_DATE_UNKNOWN",
+                    event_date_context={
+                        key: dict(
+                            dates=self.nodes[key].attributes.get("event_dates", {}),
+                            normalization=self.nodes[key].attributes.get(
+                                "date_normalization", {}
+                            ),
+                        )
+                        for key in [row["source"]["id"], row["target"]["id"]]
+                        if self.nodes[key].type == "event"
+                    },
+                    date_filter=dict(
+                        date_from=date_from,
+                        date_to=date_to,
+                        policy="POSSIBLE_OVERLAP_ALL_EVENT_ENDPOINTS",
+                    ),
+                )
+        return result
 
     def _relation(self, s, t, n, source_count, target_count):
         a, b = self.node_ids[s], self.node_ids[t]
@@ -281,13 +338,11 @@ class CompactGraphStore(GraphStore):
         include_sublocations=True,
         limit=50,
     ):
-        if (
-            date_from
-            or date_to
-            or (relation_type and relation_type.upper() != RELATION)
-        ):
+        if relation_type and relation_type.upper() != RELATION:
             return []
-        return self._query(source_id, target_id, limit=limit)
+        return self._query(
+            source_id, target_id, limit=limit, date_from=date_from, date_to=date_to
+        )
 
     def neighbors(
         self,
@@ -301,25 +356,29 @@ class CompactGraphStore(GraphStore):
     ):
         if direction not in {"out", "in", "both"}:
             raise ValueError("Invalid query direction")
-        if (
-            date_from
-            or date_to
-            or (relation_types and RELATION not in {r.upper() for r in relation_types})
-        ):
+        if relation_types and RELATION not in {r.upper() for r in relation_types}:
             return []
         rows = []
         if direction in {"out", "both"}:
             rows.extend(
                 dict(r, neighbor=r["target"])
                 for r in self._query(
-                    source_id=entity_id, neighbor_type=neighbor_type, limit=limit
+                    source_id=entity_id,
+                    neighbor_type=neighbor_type,
+                    limit=limit,
+                    date_from=date_from,
+                    date_to=date_to,
                 )
             )
         if direction in {"in", "both"}:
             rows.extend(
                 dict(r, neighbor=r["source"])
                 for r in self._query(
-                    target_id=entity_id, neighbor_type=neighbor_type, limit=limit
+                    target_id=entity_id,
+                    neighbor_type=neighbor_type,
+                    limit=limit,
+                    date_from=date_from,
+                    date_to=date_to,
                 )
             )
         return sorted(rows, key=lambda r: (-r["strength"], -r["count"], r["id"]))[

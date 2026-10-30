@@ -14,16 +14,17 @@ from __future__ import annotations
 import json
 from typing import Any, Literal
 
-from langchain_core.tools import BaseTool, tool
-
 from geo_agent.graph_store import GraphStore
+from langchain_core.tools import BaseTool, tool
 
 
 def _json(data: Any) -> str:
     return json.dumps(data, ensure_ascii=False)
 
 
-def _year_range(year: int | None, date_from: str | None, date_to: str | None) -> tuple[str | None, str | None]:
+def _year_range(
+    year: int | None, date_from: str | None, date_to: str | None
+) -> tuple[str | None, str | None]:
     """`year` is shorthand for date_from=date_to=<year>; explicit dates win."""
     if year is not None:
         return date_from or str(year), date_to or str(year)
@@ -63,13 +64,18 @@ def build_tools(store: GraphStore) -> list[BaseTool]:
           settles it (year, type or context).
         - no results: the graph has no such entity; say so.
         """
-        return _json(store.search_entities(query, type, limit) or {"result": "no matching entity in graph"})
+        return _json(
+            store.search_entities(query, type, limit)
+            or {"result": "no matching entity in graph"}
+        )
 
     @tool
     def get_entity(entity_id: str) -> str:
         """Get full details of one entity: aliases, attributes (e.g. dates),
         GeoJSON geometry, Wikipedia sources and a raw-text excerpt."""
-        return _json(store.get_entity(entity_id) or {"error": f"unknown entity_id {entity_id}"})
+        return _json(
+            store.get_entity(entity_id) or {"error": f"unknown entity_id {entity_id}"}
+        )
 
     @tool
     def get_neighbors(
@@ -93,7 +99,9 @@ def build_tools(store: GraphStore) -> list[BaseTool]:
                 are dropped when a date filter is set.
         """
         f, t = _year_range(year, date_from, date_to)
-        return _json(store.neighbors(entity_id, relation_types, direction, neighbor_type, f, t))
+        return _json(
+            store.neighbors(entity_id, relation_types, direction, neighbor_type, f, t)
+        )
 
     @tool
     def find_relations(
@@ -115,7 +123,9 @@ def build_tools(store: GraphStore) -> list[BaseTool]:
         Results are sorted by mention count (higher = better supported).
         """
         f, t = _year_range(year, date_from, date_to)
-        rows = store.find_relations(source_id, target_id, relation_type, f, t, include_sublocations)
+        rows = store.find_relations(
+            source_id, target_id, relation_type, f, t, include_sublocations
+        )
         return _json(rows or {"result": "no matching relations in graph"})
 
     @tool
@@ -126,17 +136,31 @@ def build_tools(store: GraphStore) -> list[BaseTool]:
         are the places it attacked, captured, occupied, etc.; for a location it is
         the location itself.
         """
-        return _json(store.locations_of(entity_id) or {"result": "no geolocated places linked to this entity"})
+        return _json(
+            store.locations_of(entity_id)
+            or {"result": "no geolocated places linked to this entity"}
+        )
 
     @tool
-    def entities_near(lat: float, lon: float, radius_km: float = 50, type: str | None = None) -> str:
+    def entities_near(
+        lat: float, lon: float, radius_km: float = 50, type: str | None = None
+    ) -> str:
         """Find geolocated entities within `radius_km` kilometres of a point,
         nearest first. lat/lon are in decimal degrees (WGS84). Areas (polygons)
         match when the point is inside or within the radius of their edge."""
-        return _json(store.near(lat, lon, radius_km, type) or {"result": "nothing in graph within radius"})
+        return _json(
+            store.near(lat, lon, radius_km, type)
+            or {"result": "nothing in graph within radius"}
+        )
 
     @tool
-    def entities_in_bbox(min_lon: float, min_lat: float, max_lon: float, max_lat: float, type: str | None = None) -> str:
+    def entities_in_bbox(
+        min_lon: float,
+        min_lat: float,
+        max_lon: float,
+        max_lat: float,
+        type: str | None = None,
+    ) -> str:
         """Find geolocated entities intersecting a bounding box (decimal degrees),
         e.g. the area currently visible or selected on the map.
 
@@ -144,7 +168,10 @@ def build_tools(store: GraphStore) -> list[BaseTool]:
         date line, e.g. Fiji or the Aleutians), pass min_lon > max_lon:
         min_lon=170, max_lon=-170 means 170°E eastward to 170°W.
         """
-        return _json(store.in_bbox(min_lon, min_lat, max_lon, max_lat, type) or {"result": "nothing in graph inside bbox"})
+        return _json(
+            store.in_bbox(min_lon, min_lat, max_lon, max_lat, type)
+            or {"result": "nothing in graph inside bbox"}
+        )
 
     @tool
     def what_happened_at(lat: float, lon: float, radius_km: float = 50) -> str:
@@ -157,11 +184,15 @@ def build_tools(store: GraphStore) -> list[BaseTool]:
         return _json(store.what_happened_at(lat, lon, radius_km))
 
     @tool
-    def search_source_text(query: str, entity_ids: list[str] | None = None, k: int = 5) -> str:
+    def search_source_text(
+        query: str, entity_ids: list[str] | None = None, k: int = 5
+    ) -> str:
         """Keyword search over the raw Wikipedia text behind the graph. Returns
         paragraphs with their entity and source page, which you can quote as
         evidence. Optionally restrict to specific entity_ids."""
-        return _json(store.search_text(query, entity_ids, k) or {"result": "no matching text"})
+        return _json(
+            store.search_text(query, entity_ids, k) or {"result": "no matching text"}
+        )
 
     @tool
     def to_geojson(entity_ids: list[str]) -> str:
@@ -183,10 +214,14 @@ def build_tools(store: GraphStore) -> list[BaseTool]:
         search_source_text,
         to_geojson,
     ]
-    if getattr(store, "metadata", {}).get("relation_semantics") == "PAGE_CO_OCCURRENCE_ONLY" or getattr(store, "metadata", {}).get("edge_columns"):
+    if getattr(store, "metadata", {}).get(
+        "relation_semantics"
+    ) == "PAGE_CO_OCCURRENCE_ONLY" or getattr(store, "metadata", {}).get(
+        "edge_columns"
+    ):
         descriptions = {
-            "get_neighbors": "List page co-occurrence neighbours. direction selects the source denominator. Sorted by directional strength; count is the integer number of distinct shared pages. This does not establish a factual relation. Date filters exclude these undated relations.",
-            "find_relations": "Query directed CO_OCCURS_ON_PAGE views. strength = distinct shared pages / distinct pages containing the source. Sorted by strength. count remains the integer shared-page count. This does not establish participation, causality or location. Dates on co-occurrence edges are unknown.",
+            "get_neighbors": "List page co-occurrence neighbours. direction selects the source denominator. Sorted by directional strength; count is the integer number of distinct shared pages. This does not establish a factual relation. Date filters select possible overlap of Event endpoint dates before limiting results. At least one endpoint must be an Event and every Event endpoint must match; unknown dates do not match. Edge dates remain unknown.",
+            "find_relations": "Query directed CO_OCCURS_ON_PAGE views. strength = distinct shared pages / distinct pages containing the source. Sorted by strength. count remains the integer shared-page count. This does not establish participation, causality or location. Date filters select possible overlap of Event endpoint dates before limiting results. At least one endpoint must be an Event and every Event endpoint must match; unknown dates do not match. Query dates use the Gregorian calendar. Dates on co-occurrence edges remain unknown.",
             "get_locations": "Return geolocated places sharing a source page with this entity. Co-appearance does not establish where an event happened or where a person was. A location can return its own supported geometry.",
             "what_happened_at": "Return nearby geolocated places and page-linked Events as co-occurrence evidence. This does not establish what happened at these coordinates. Event dates remain native metadata; this spatial tool has no date filter.",
             "to_geojson": "Show supported location geometry and co-appearing entities on a map. A shared page does not establish an entity's physical location.",

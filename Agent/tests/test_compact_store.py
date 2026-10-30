@@ -88,6 +88,68 @@ def fixture_graph(tmp_path, invalid=False):
     return path
 
 
+def test_date_filter_selects_event_endpoints_before_limit_in_both_directions(tmp_path):
+    from geo_agent.compact_format import write_graph
+
+    original = fixture_graph(tmp_path)
+    with gzip.open(original, "rt", encoding="utf-8") as stream:
+        data = json.load(stream)
+    for node, year in zip(data["nodes"][2:], [1941, 1945]):
+        node["attributes"]["event_dates"] = {
+            "point_date": [
+                dict(
+                    time=f"+{year}-12-07T00:00:00Z",
+                    precision=11,
+                    calendarmodel="http://www.wikidata.org/entity/Q1985727",
+                )
+            ]
+        }
+        node["attributes"]["date_normalization"] = dict(
+            basis="OWNER_WWII_DEFAULT", date_role="OWNER_DEFAULT"
+        )
+    path = tmp_path / "dated.json.gz"
+    write_graph(path, data["metadata"], data["nodes"], data["edges"])
+    store = GraphStore.from_json(path)
+    try:
+        assert (
+            store.find_relations(
+                source_id="b", date_from="1941", date_to="1941", limit=1
+            )[0]["target"]["id"]
+            == "e"
+        )
+        assert (
+            store.neighbors(
+                "b", direction="in", date_from="1941", date_to="1941", limit=1
+            )[0]["neighbor"]["id"]
+            == "e"
+        )
+        assert (
+            store.find_relations(
+                source_id="e", target_id="f", date_from="1941", date_to="1941"
+            )
+            == []
+        )
+        assert (
+            store.find_relations(source_id="a", target_id="b", date_from="1941") == []
+        )
+        assert (
+            store.find_relations(
+                source_id="a", target_id="e", date_from="1941", date_to="1941"
+            )[0]["temporal_semantics"]
+            == "EVENT_ENDPOINT_DATES; EDGE_DATE_UNKNOWN"
+        )
+        assert (
+            store.find_relations(source_id="e", date_from="1941")[0][
+                "event_date_context"
+            ]["e"]["normalization"]["basis"]
+            == "OWNER_WWII_DEFAULT"
+        )
+        with pytest.raises(ValueError, match="reversed"):
+            store.find_relations(date_from="1945", date_to="1941")
+    finally:
+        store.connection.close()
+
+
 def test_compact_tools_work_in_async_agent_worker_threads(tmp_path):
     import asyncio
 

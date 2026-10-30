@@ -35,6 +35,29 @@ from GG_Data.pipeline.simplified_agent import (
 LOG = logging.getLogger(__name__)
 
 
+def content_links(raw: str) -> list[dict]:
+    """Classify literal links using the existing article-source-v3 policy."""
+    from GG_Data.entity_resolution.hundred_page_pilot.filter_source_content import (
+        classify_span,
+        source_intervals,
+    )
+
+    spans, headings = source_intervals(raw)
+    return [
+        dict(
+            link,
+            **{
+                k: v
+                for k, v in classify_span(
+                    link["anchor_start"], link["anchor_end"], spans, headings
+                ).items()
+                if k != "evidence"
+            },
+        )
+        for link in raw_links(raw)
+    ]
+
+
 def merge_population(entities, memberships, pages, extra):
     """Keep all source keys, but count a resolved physical page only once."""
     canonical = {}
@@ -605,7 +628,13 @@ def collect_pages(prepared: Path, output: Path, metadata_path: Path, client) -> 
 
 
 def event_population(
-    pages: list[dict], mapping: dict, records: dict, event_types: set[str]
+    pages: list[dict],
+    mapping: dict,
+    records: dict,
+    event_types: set[str],
+    *,
+    native_identity: bool = False,
+    decisions: dict | None = None,
 ) -> dict:
     """Recognize only page subjects/direct links, without native neighbour gates."""
     if len({p["page_index"] for p in pages}) != len(pages):
@@ -636,6 +665,10 @@ def event_population(
                     else "NON_EVENT" if meta["native_types"] else "UNKNOWN_NO_P31"
                 )
             )
+            decision = decisions.get(qid) if decisions is not None else None
+            if decision is not None:
+                status = decision["status"]
+                matched = decision.get("recognized_types", matched)
             audit.append(
                 dict(
                     page_index=page["page_index"],
@@ -645,12 +678,18 @@ def event_population(
                     recognized_types=matched,
                     methods=sorted(methods),
                     evidence=page["evidence"],
+                    **({"decision": decision} if decision is not None else {}),
                 )
             )
             if status != "EVENT":
                 continue
             name = meta["label"] or qid
-            key = entity_id(name, "event")
+            if native_identity:
+                from GG_Data.pipeline.simplified_correction import native_event_id
+
+                key = native_event_id(qid)
+            else:
+                key = entity_id(name, "event")
             if key not in entities:
                 entities[key] = dict(
                     entity_id=key,
