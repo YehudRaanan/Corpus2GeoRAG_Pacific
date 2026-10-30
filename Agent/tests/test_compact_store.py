@@ -19,7 +19,14 @@ def fixture_graph(tmp_path, invalid=False):
             ("f", "event", 2, [0, 6]),
         ]
     ]
-    pairs = [[0, 1, 2, 0.5, 0.4], [0, 2, 1, 0.25, 1.0], [2, 3, 1, 1.0, 0.5]]
+    pairs = [
+        [0, 1, 2, 0.5, 0.4],
+        [0, 2, 1, 0.25, 1.0],
+        [0, 3, 1, 0.25, 0.5],
+        [1, 2, 1, 0.2, 1.0],
+        [1, 3, 2, 0.4, 1.0],
+        [2, 3, 1, 1.0, 0.5],
+    ]
     if invalid:
         pairs[0][1] = 9
     path = tmp_path / "graph.json.gz"
@@ -27,7 +34,8 @@ def fixture_graph(tmp_path, invalid=False):
         path,
         dict(
             node_count=4,
-            pair_count=3,
+            pair_count=6,
+            raw_shared_page_count_sum=8,
             page_scope_id="fixture",
             geography_status="PENDING_LAST_STAGE",
         ),
@@ -40,10 +48,10 @@ def fixture_graph(tmp_path, invalid=False):
 def test_compact_graph_loads_complete_directed_queries_and_integer_counts(tmp_path):
     path = fixture_graph(tmp_path)
     with gzip.open(path, "rt", encoding="utf-8") as stream:
-        assert len(json.load(stream)["edges"]) == 3
+        assert len(json.load(stream)["edges"]) == 6
     store = GraphStore.from_json(path)
-    assert store.schema()["edge_count"] == 6
-    assert store.schema()["assertion_count"] == 3
+    assert store.schema()["edge_count"] == 12
+    assert store.schema()["assertion_count"] == 6
     forward = store.find_relations(source_id="a", target_id="b")[0]
     reverse = store.find_relations(source_id="b", target_id="a")[0]
     assert forward["strength"] == 0.5 and reverse["strength"] == 0.4
@@ -57,8 +65,8 @@ def test_compact_graph_loads_complete_directed_queries_and_integer_counts(tmp_pa
     assert store.find_relations(source_id="e", target_id="a")[0]["strength"] == 1
     assert store.find_relations(relation_type="PARTICIPATED_IN") == []
     assert store.find_relations(date_from="1941") == []
-    assert store.get_entity("a")["degree"] == 2
-    assert len(store.edges) == 0  # All three logical pairs are held by the disk index.
+    assert store.get_entity("a")["degree"] == 3
+    assert len(store.edges) == 0  # All logical pairs are held by the disk index.
     again = GraphStore.from_json(path)
     assert again.find_relations(source_id="a", target_id="b") == [forward]
 
@@ -69,7 +77,7 @@ def test_compact_graph_rejects_bad_endpoints_and_invalid_json_tail(tmp_path):
         GraphStore.from_json(path)
 
 
-@pytest.mark.parametrize("damage", ["tail", "strength", "count"])
+@pytest.mark.parametrize("damage", ["tail", "strength", "count", "missing_pair"])
 def test_compact_graph_rejects_corrupt_evidence(tmp_path, damage):
     path = fixture_graph(tmp_path)
     with gzip.open(path, "rt", encoding="utf-8") as stream:
@@ -78,8 +86,12 @@ def test_compact_graph_rejects_corrupt_evidence(tmp_path, damage):
         raw += "{}"
     elif damage == "strength":
         raw = raw.replace("[0,1,2,0.5,0.4]", "[0,1,2,0.8,0.4]")
-    else:
+    elif damage == "count":
         raw = raw.replace("[0,1,2,0.5,0.4]", "[0,1,3,0.75,0.6]")
+    else:
+        raw = raw.replace("[0,1,2,0.5,0.4],\n", "").replace(
+            '"pair_count":6', '"pair_count":5'
+        )
     with gzip.open(path, "wt", encoding="utf-8") as stream:
         stream.write(raw)
     with pytest.raises(ValueError):
@@ -100,3 +112,19 @@ def test_compact_graph_tools_return_directional_strength(tmp_path):
     from geo_agent.agent import SYSTEM_PROMPT
 
     assert "PAGE_CO_OCCURRENCE_ONLY" in SYSTEM_PROMPT
+
+
+def test_complete_graph_verification_report(tmp_path):
+    from geo_agent.verify_compact import verify
+
+    path = fixture_graph(tmp_path)
+    report = tmp_path / "acceptance.json"
+    result = verify(path, report)
+    assert result["status"] == "PASS"
+    assert result["coverage"]["pair_count"] == 6
+    assert result["coverage"]["raw_shared_page_count_sum"] == 8
+    assert sum(result["coverage"]["pair_categories"].values()) == 6
+    assert len(result["tool_checks"]) == 8  # Four type categories, both directions.
+    assert json.loads(report.read_text())["graph_sha256"] == result["graph_sha256"]
+    with pytest.raises(FileExistsError):
+        verify(path, report)

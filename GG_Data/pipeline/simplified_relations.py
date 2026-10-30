@@ -221,7 +221,13 @@ def main():
     logging.basicConfig(
         level=logging.INFO, format="%(asctime)s %(levelname)s %(message)s"
     )
-    LOG.info("Finished: %s", build_graph(args.model, args.output))
+    result = build_graph(args.model, args.output)
+    LOG.info(
+        "Finished: nodes=%s pairs=%s directed_views=%s",
+        result["node_count"],
+        result["pair_count"],
+        result["directed_view_count"],
+    )
 
 
 if __name__ == "__main__":

@@ -9,6 +9,7 @@ from __future__ import annotations
 import gzip
 import hashlib
 import json
+import logging
 from pathlib import Path
 
 FORMAT = "simplified-cooccurrence-v1"
@@ -20,6 +21,7 @@ COLUMNS = [
     "strength_source_target",
     "strength_target_source",
 ]
+LOG = logging.getLogger(__name__)
 
 
 def opener(path, mode):
@@ -71,6 +73,8 @@ def write_graph(path, metadata, nodes, pairs):
                     )
                 )
                 stream.write(",\n" if written < count else "\n")
+                if written % 10000000 == 0:
+                    LOG.info("Graph rows written %s/%s", written, count)
             if written != count:
                 raise ValueError("Graph row count differs from metadata")
             stream.write(closing)

@@ -2,16 +2,21 @@
 
 from __future__ import annotations
 
+import hashlib
 import itertools
 import json
+import logging
 import math
 import sqlite3
+import struct
+from collections import Counter
 from pathlib import Path
 
 from .compact_format import records, sha256
 from .graph_store import GraphStore, Node
 
 RELATION = "CO_OCCURS_ON_PAGE"
+LOG = logging.getLogger(__name__)
 
 
 class CompactGraphStore(GraphStore):
@@ -32,12 +37,24 @@ class CompactGraphStore(GraphStore):
             Node.model_validate(row)
             for kind, row in itertools.islice(reader, metadata["node_count"])
         ]
+        LOG.info(
+            "Compact graph loaded %s nodes; %s pairs pending/indexed",
+            len(nodes),
+            metadata["pair_count"],
+        )
         counts = [n.attributes.get("page_count") for n in nodes]
         pages = [set(n.attributes.get("page_indices", [])) for n in nodes]
         if any(
             type(c) is not int or c <= 0 or c != len(p) for c, p in zip(counts, pages)
         ):
             raise ValueError("Invalid entity page denominator")
+        page_sizes = Counter(p for group in pages for p in group)
+        expected_raw_sum = sum(c * (c - 1) // 2 for c in page_sizes.values())
+        node_types = [n.type for n in nodes]
+        type_set = set(node_types)
+        category_keys = {
+            (a, b): "|".join(sorted((a, b))) for a in type_set for b in type_set
+        }
         if not cached:
             if index.exists() or receipt.exists():
                 raise FileExistsError("Incomplete existing derived index")
@@ -62,6 +79,10 @@ class CompactGraphStore(GraphStore):
                 )
                 batch = []
                 seen = 0
+                raw_sum = 0
+                categories = Counter()
+                samples = {}
+                pair_digest = hashlib.sha256()
                 for kind, row in reader:
                     if kind != "pair" or not isinstance(row, list) or len(row) != 5:
                         raise ValueError("Invalid compact pair")
@@ -87,13 +108,50 @@ class CompactGraphStore(GraphStore):
                     ):
                         raise ValueError("Invalid directional strength")
                     batch.append((s, t, n))
+                    pair_digest.update(struct.pack("<qqqdd", *row))
                     seen += 1
+                    raw_sum += n
+                    category = category_keys[node_types[s], node_types[t]]
+                    categories[category] += 1
+                    if category not in samples:
+                        samples[category] = [s, t]
+                    if seen % 1000000 == 0:
+                        LOG.info(
+                            "Pairs validated and indexed %s/%s",
+                            seen,
+                            metadata["pair_count"],
+                        )
                     if len(batch) >= 16384:
                         db.executemany("INSERT INTO pairs VALUES(?,?,?)", batch)
                         batch.clear()
                 db.executemany("INSERT INTO pairs VALUES(?,?,?)", batch)
                 if seen != metadata["pair_count"]:
                     raise ValueError("Incomplete compact pair population")
+                if (
+                    raw_sum != expected_raw_sum
+                    or raw_sum != metadata["raw_shared_page_count_sum"]
+                ):
+                    raise ValueError(
+                        "Incomplete co-occurrence population: raw shared-page count conservation failed"
+                    )
+                db.execute("CREATE TABLE audit(key TEXT PRIMARY KEY,value TEXT)")
+                db.execute(
+                    "INSERT INTO audit VALUES(?,?)",
+                    (
+                        "coverage",
+                        json.dumps(
+                            dict(
+                                pair_count=seen,
+                                raw_shared_page_count_sum=raw_sum,
+                                expected_raw_shared_page_count_sum=expected_raw_sum,
+                                pair_categories=dict(categories),
+                                category_samples=samples,
+                                pair_rows_sha256=pair_digest.hexdigest(),
+                            )
+                        ),
+                    ),
+                )
+                LOG.info("Building reverse query index for %s pairs", seen)
                 db.execute("CREATE INDEX pairs_target ON pairs(t,s)")
                 db.commit()
             finally:
@@ -105,6 +163,7 @@ class CompactGraphStore(GraphStore):
             )
         else:
             reader.close()
+        LOG.info("Building Agent name and first-paragraph text indexes")
         store = cls(nodes, [])
         store.metadata = metadata
         store.connection = sqlite3.connect(

@@ -285,6 +285,12 @@ def test_assemble_publishes_portable_tables_with_pinned_event_rule(tmp_path):
         read_json(out / "event_events.json.gz")[0]["native_records"][0]["qid"] == "Q99"
     )
     assert (out / "geography.json.gz").is_file()
+    from GG_Data.pipeline.simplified_verify import verify_population
+
+    check = verify_population(prepared, out)
+    assert check["status"] == "PASS" and check["events"] == 1
+    assert check["memberships"] == 7
+    assert check["raw_shared_page_count_sum"] == 5
 
 
 def test_merge_population_counts_distinct_physical_pages_and_keeps_source_keys():
