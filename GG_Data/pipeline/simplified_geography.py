@@ -17,6 +17,7 @@ from contextlib import contextmanager
 from datetime import datetime, timezone
 from pathlib import Path
 
+import ijson
 import pyarrow.parquet as pq
 
 from .geography import selection_value
@@ -634,12 +635,14 @@ def candidate_records(comparison: Path, metadata: Path, client) -> dict:
         }
     )
     metadata_sha = digest(metadata)
-    saved = read_json(metadata)
-    records = {
-        q: dict(requested_qid=q, entity=saved[q])
-        for q in wanted
-        if q in saved and "claims" in saved[q] and "missing" not in saved[q]
-    }
+    wanted_set = set(wanted)
+    # Keep only this batch's candidates from the multi-gigabyte snapshot.
+    with metadata.open("rb") as stream:
+        records = {
+            q: dict(requested_qid=q, entity=native)
+            for q, native in ijson.kvitems(stream, "", use_float=True)
+            if q in wanted_set and "claims" in native and "missing" not in native
+        }
     evidence = {
         q: dict(path=str(metadata.resolve()), sha256=metadata_sha) for q in records
     }

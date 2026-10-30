@@ -362,7 +362,10 @@ def test_nominatim_pacing_persists_across_batches(tmp_path):
     assert read_json(state)["network_requests"] == 2
 
 
-def test_candidate_coordinates_are_provenance_and_do_not_assign_entity_qids(tmp_path):
+def test_candidate_coordinates_are_provenance_and_do_not_assign_entity_qids(
+    tmp_path, monkeypatch
+):
+    from GG_Data.pipeline import simplified_geography as geography
     from GG_Data.pipeline.simplified_geography import candidate_records
 
     (tmp_path / "sources").mkdir()
@@ -394,6 +397,12 @@ def test_candidate_coordinates_are_provenance_and_do_not_assign_entity_qids(tmp_
         def query(self, *args):
             raise AssertionError("All eligible native records are cached")
 
+    def bounded_read(path):
+        if path == metadata:
+            raise AssertionError("Native metadata must be streamed, not loaded whole")
+        return read_json(path)
+
+    monkeypatch.setattr(geography, "read_json", bounded_read)
     result = candidate_records(tmp_path, metadata, Client())
     assert result["candidate_qids"] == 1 and result["identities_added"] == 0
     assert set(read_json(tmp_path / "candidate_records.json.gz")) == {"Q90"}

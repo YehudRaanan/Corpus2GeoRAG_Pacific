@@ -1,4 +1,5 @@
 /Data/external/
 /GG_Data/mapping/outputs/
+/GG_Data/geocoding/cache/
 __pycache__/
 *.pyc
