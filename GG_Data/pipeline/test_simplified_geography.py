@@ -10,6 +10,54 @@ from GG_Data.pipeline import simplified_agent as source
 from GG_Data.pipeline.poc import digest, read_json
 
 
+def test_source_setup_reuses_raw_responses_without_copying_settings_or_assignments(
+    tmp_path, monkeypatch
+):
+    import importlib
+    from GG_Data.pipeline import poc
+    from GG_Data.pipeline.geography_sample import tools
+    from GG_Data.pipeline.simplified_geography import configure_sources
+
+    client = tools()
+    legacy = importlib.import_module("GEO_OBJECT_EXTRACTION_POC")
+    monkeypatch.setattr(legacy, "ENV_FILE", legacy.ENV_FILE)
+    task = tmp_path / "task"
+    monkeypatch.setattr(poc, "ROOT", task)
+    original = tmp_path / "original"
+    original.mkdir()
+    (original / ".env").write_text("test-only-placeholder")
+    archives = original / "GG_Data/geocoding/cache/geonames"
+    archives.mkdir(parents=True)
+    (archives / "XX.zip").write_bytes(b"unchanged native archive")
+    folder = original / "GG_Data/pipeline/outputs/geography_saved/sources"
+    folder.mkdir(parents=True)
+    source.write_object(
+        folder / "raw.json",
+        dict(
+            url=client.NOMINATIM["OpenStreetMap"] + "/search",
+            params={"q": "Paris"},
+            response=[],
+        ),
+    )
+    source.write_object(
+        folder.parent / "audit.json", dict(accepted_identity="DO_NOT_IMPORT")
+    )
+    before = {p: digest(p) for p in original.rglob("*") if p.is_file()}
+    base = task / "geo"
+    base.mkdir(parents=True)
+    result = configure_sources(base, original)
+    assert (
+        result["raw_response_files_added"] == 1 and result["identities_imported"] == 0
+    )
+    assert legacy.ENV_FILE == (original / ".env").resolve()
+    assert not (task / ".env").exists()
+    assert (
+        task / "GG_Data/geocoding/cache/geonames/XX.zip"
+    ).read_bytes() == b"unchanged native archive"
+    assert {p: digest(p) for p in before} == before
+    assert len(list((base / "response_cache/sources").iterdir())) == 1
+
+
 def test_population_worker_stops_failed_source_and_does_not_repeat_it(
     tmp_path, monkeypatch
 ):

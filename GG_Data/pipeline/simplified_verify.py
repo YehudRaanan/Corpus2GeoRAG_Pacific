@@ -8,6 +8,7 @@ import hashlib
 import json
 import logging
 import os
+import shutil
 import struct
 from collections import Counter, defaultdict
 from itertools import zip_longest
@@ -17,8 +18,7 @@ import ijson
 import pyarrow.parquet as pq
 
 from GG_Data.pipeline.poc import digest, read_json
-from GG_Data.pipeline.simplified_agent import (entity_id, write_array,
-                                               write_object)
+from GG_Data.pipeline.simplified_agent import entity_id, write_array, write_object
 
 LOG = logging.getLogger(__name__)
 
@@ -154,6 +154,10 @@ def verify_and_package(prepared: Path, model: Path, graph: Path, output: Path) -
             raise ValueError(f"Changed graph artifact: {name}")
     acceptance = read_json(graph / "agent_acceptance.json")
     geography = verify_geography(model, acceptance)
+    agent_root = Path(__file__).resolve().parents[2] / "Agent"
+    code_paths = sorted((agent_root / "geo_agent").glob("*.py"))
+    if {p.name: digest(p) for p in code_paths} != acceptance["agent_code_sha256"]:
+        raise ValueError("Agent adapter differs from the fully verified code")
     raw_report = read_json(prepared.parent / "raw_verification.json")
     if (
         acceptance["status"] != "PASS"
@@ -195,6 +199,38 @@ def verify_and_package(prepared: Path, model: Path, graph: Path, output: Path) -
             ):
                 os.link(path, target / path.name)
     os.link(prepared.parent / "raw_verification.json", output / "raw_verification.json")
+    adapter = output / "agent_adapter"
+    (adapter / "geo_agent").mkdir(parents=True)
+    for path in code_paths:
+        # Copy code: later development must not mutate the release via a hard link.
+        shutil.copyfile(path, adapter / "geo_agent" / path.name)
+    for name in ["pyproject.toml", "README.md"]:
+        shutil.copyfile(agent_root / name, adapter / name)
+    write_object(
+        output / "agent_contract.json",
+        dict(
+            format="simplified-cooccurrence-v1",
+            graph="agent/agent_graph.json.gz",
+            adapter="agent_adapter/geo_agent",
+            loader="geo_agent.graph_store.GraphStore.from_json",
+            edge_columns=[
+                "source_index",
+                "target_index",
+                "shared_page_count",
+                "strength_source_target",
+                "strength_target_source",
+            ],
+            entity_index="model/entities.json.gz node_index",
+            complete_pair_population=True,
+            derived_index="Read-only SQLite index is built locally on first load; it is not required for interchange",
+            edge_count_semantics="Integer shared-page count; fractional weights use each endpoint's distinct-page denominator",
+            relation_semantics="PAGE_CO_OCCURRENCE_ONLY",
+            geography_status=geography["status"],
+            source_revision_status="DANIEL_EXACT_REVISION_UNKNOWN",
+            llm_invoked=False,
+            agent_code_sha256=acceptance["agent_code_sha256"],
+        ),
+    )
     provenance = output / "provenance"
     provenance.mkdir()
     for folder_name, names in [

@@ -11,6 +11,7 @@ from collections import Counter
 from datetime import datetime, timezone
 from pathlib import Path
 
+from .compact_format import sha256
 from .compact_store import CompactGraphStore
 from .tools import build_tools
 
@@ -90,6 +91,8 @@ def verify(path: Path, report: Path) -> dict:
     temporary = report.with_name(report.name + ".part")
     if report.exists() or temporary.exists():
         raise FileExistsError(report)
+    code_paths = sorted(Path(__file__).parent.glob("*.py"))
+    code_hashes = {p.name: sha256(p) for p in code_paths}
     store = CompactGraphStore.load(path)
     try:
         coverage = json.loads(
@@ -139,7 +142,10 @@ def verify(path: Path, report: Path) -> dict:
             llm_invoked=False,
             geography_status=store.metadata.get("geography_status"),
             geography=verify_geography(store),
+            agent_code_sha256=code_hashes,
         )
+        if {p.name: sha256(p) for p in code_paths} != code_hashes:
+            raise ValueError("Agent code changed during full verification")
         report.parent.mkdir(parents=True, exist_ok=True)
         with temporary.open("x", encoding="utf-8") as stream:
             json.dump(result, stream, ensure_ascii=False, indent=2)

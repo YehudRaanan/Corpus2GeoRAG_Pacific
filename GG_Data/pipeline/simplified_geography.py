@@ -32,6 +32,7 @@ def complete_geography(
     output: Path,
     metadata: Path,
     agent_python: Path,
+    source_project: Path,
 ) -> dict:
     """Run the last population phase and publish a new, fully checked release."""
     from .poc import ROOT
@@ -44,6 +45,7 @@ def complete_geography(
     output.mkdir()
     base = output / "geography_work"
     prepare_geography(model, core_release, base)
+    configure_sources(base, source_project)
     run_population(base, metadata)
     geography = output / "geography.json.gz"
     aggregate_geography(base, geography)
@@ -63,6 +65,74 @@ def complete_geography(
     return verify_and_package(
         prepared, enriched_model, enriched_graph, output / "release"
     )
+
+
+def configure_sources(base: Path, source_project: Path) -> dict:
+    """Reuse the existing scoped credential accessor and original source caches."""
+    import importlib
+
+    from .geography_sample import tools
+    from .poc import ROOT
+
+    client = tools()
+    legacy = importlib.import_module("GEO_OBJECT_EXTRACTION_POC")
+    setting = source_project / ".env"
+    if not setting.is_file():
+        raise FileNotFoundError("Existing WHG service setting file is required")
+    # Do not copy, display or read other settings. The established accessor
+    # reads only the WHG setting at the actual request stage.
+    legacy.ENV_FILE = setting.resolve()
+    archives = ROOT / "GG_Data/geocoding/cache/geonames"
+    archives.mkdir(parents=True, exist_ok=True)
+    evidence = {}
+    for path in sorted(
+        (source_project / "GG_Data/geocoding/cache/geonames").glob("*.zip")
+    ):
+        sha = digest(path)
+        destination = archives / path.name
+        if not destination.exists():
+            os.link(path, destination)
+        if digest(destination) != sha or digest(path) != sha:
+            raise ValueError("Native GeoNames cache changed")
+        evidence[str(path.resolve())] = sha
+    cache = base / "response_cache/sources"
+    cache.mkdir(parents=True, exist_ok=True)
+    count = 0
+    for folder in sorted(
+        (source_project / "GG_Data/pipeline/outputs").glob("geography*")
+    ):
+        for path in sorted(folder.rglob("*.json")):
+            if path.parent.name != "sources":
+                continue
+            saved = read_json(path)
+            if (
+                not isinstance(saved, dict)
+                or not {"url", "params", "response"} <= saved.keys()
+            ):
+                continue
+            if not any(
+                saved["url"].startswith(endpoint + "/")
+                for endpoint in client.NOMINATIM.values()
+            ):
+                continue
+            sha = digest(path)
+            destination = cache / (sha + ".json")
+            if not destination.exists():
+                os.link(path, destination)
+                count += 1
+            if digest(destination) != sha or digest(path) != sha:
+                raise ValueError("Original exact-request cache changed")
+            evidence[str(path.resolve())] = sha
+    result = dict(
+        status="EXISTING_SOURCE_CACHES_READY",
+        new_source_requests=0,
+        raw_response_files_added=count,
+        service_setting_path=str(setting.resolve()),
+        identities_imported=0,
+        original_source_sha256=evidence,
+    )
+    write_object(base / "source_cache_manifest.json", result)
+    return result
 
 
 def run_population(base: Path, metadata: Path, *, batch_size: int = 250) -> dict:
@@ -682,6 +752,7 @@ if __name__ == "__main__":
     run.add_argument("--base", type=Path, required=True)
     run.add_argument("--metadata", type=Path, required=True)
     run.add_argument("--batch-size", type=int, default=250)
+    run.add_argument("--source-project", type=Path, required=True)
     aggregate = commands.add_parser("aggregate")
     aggregate.add_argument("--base", type=Path, required=True)
     aggregate.add_argument("--output", type=Path, required=True)
@@ -697,6 +768,7 @@ if __name__ == "__main__":
         "output",
         "metadata",
         "agent-python",
+        "source-project",
     ]:
         complete.add_argument("--" + name, type=Path, required=True)
     args = parser.parse_args()
@@ -706,6 +778,16 @@ if __name__ == "__main__":
     if args.command == "prepare":
         result = prepare_geography(args.model, args.core_release, args.output)
     elif args.command == "run":
+        if not (args.base / "source_cache_manifest.json").exists():
+            configure_sources(args.base, args.source_project)
+        else:
+            import importlib
+            from .geography_sample import tools
+
+            tools()
+            importlib.import_module("GEO_OBJECT_EXTRACTION_POC").ENV_FILE = (
+                args.source_project / ".env"
+            )
         result = run_population(args.base, args.metadata, batch_size=args.batch_size)
     elif args.command == "aggregate":
         result = aggregate_geography(args.base, args.output)
@@ -726,5 +808,6 @@ if __name__ == "__main__":
             args.output,
             args.metadata,
             args.agent_python,
+            args.source_project,
         )
     LOG.info("Geography %s", {k: v for k, v in result.items() if k != "outputs"})
