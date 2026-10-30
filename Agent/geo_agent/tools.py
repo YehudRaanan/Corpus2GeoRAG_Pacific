@@ -170,7 +170,7 @@ def build_tools(store: GraphStore) -> list[BaseTool]:
         what will be shown on the map."""
         return _json(store.to_geojson(entity_ids))
 
-    return [
+    tools = [
         graph_schema,
         search_entities,
         get_entity,
@@ -183,3 +183,16 @@ def build_tools(store: GraphStore) -> list[BaseTool]:
         search_source_text,
         to_geojson,
     ]
+    if getattr(store, "metadata", {}).get("relation_semantics") == "PAGE_CO_OCCURRENCE_ONLY" or getattr(store, "metadata", {}).get("edge_columns"):
+        descriptions = {
+            "get_neighbors": "List page co-occurrence neighbours. direction selects the source denominator. Sorted by directional strength; count is the integer number of distinct shared pages. This does not establish a factual relation. Date filters exclude these undated relations.",
+            "find_relations": "Query directed CO_OCCURS_ON_PAGE views. strength = distinct shared pages / distinct pages containing the source. Sorted by strength. count remains the integer shared-page count. This does not establish participation, causality or location. Dates on co-occurrence edges are unknown.",
+            "get_locations": "Return geolocated places sharing a source page with this entity. Co-appearance does not establish where an event happened or where a person was. A location can return its own supported geometry.",
+            "what_happened_at": "Return nearby geolocated places and page-linked Events as co-occurrence evidence. This does not establish what happened at these coordinates. Event dates remain native metadata; this spatial tool has no date filter.",
+            "to_geojson": "Show supported location geometry and co-appearing entities on a map. A shared page does not establish an entity's physical location.",
+            "search_source_text": "Search each entity's first original mention paragraph. All original rows remain in the separate Mentions JSON; this search is not the full source corpus.",
+        }
+        for item in tools:
+            if item.name in descriptions:
+                item.description = descriptions[item.name]
+    return tools

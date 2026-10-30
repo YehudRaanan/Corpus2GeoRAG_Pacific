@@ -75,6 +75,12 @@ You answer questions using ONLY a knowledge graph extracted from Wikipedia, acce
 Nodes are entities (location, person, org, event, ...) and edges are typed relations
 (e.g. ATTACKED, OCCURRED_AT, CAPTURED, COMMANDED) with dates and mention counts.
 
+If graph_schema reports PAGE_CO_OCCURRENCE_ONLY, edges prove only appearance on
+the same source pages. They do not establish participation, causality, or where
+an event happened. Compare the requested direction's strength; count is the
+integer number of distinct shared pages. Reverse strength can differ. Native
+Event metadata does not turn these co-occurrences into factual relations.
+
 How to work:
 - Resolve every name the user mentions to an entity id with search_entities before querying relations.
 - Name matches come with `match` (name/alias/fuzzy) and `quality`:

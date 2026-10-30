@@ -235,6 +235,14 @@ class GraphStore:
         cls, path: str | Path, *, model_dir: str | Path | None = None
     ) -> "GraphStore":
         """Load a graph from a JSON file shaped like {"nodes": [...], "edges": [...]}."""
+        from .compact_format import HEADER, opener
+
+        with opener(path, "rt") as stream:
+            compact = stream.readline() == HEADER
+        if compact:
+            from .compact_store import CompactGraphStore
+
+            return CompactGraphStore.load(path, model_dir=model_dir)
         data = json.loads(Path(path).read_text(encoding="utf-8"))
         store = cls(
             [Node.model_validate(n) for n in data.get("nodes", [])],
