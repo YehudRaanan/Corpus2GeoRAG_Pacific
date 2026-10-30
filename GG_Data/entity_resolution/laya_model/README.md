@@ -61,7 +61,12 @@ python -m GG_Data.entity_resolution.hundred_page_pilot.run_laya prepare-chunks -
 
 The cache has one `forward_chunks.jsonl` row per forward job and a manifest bound
 to the original input manifest, exact `model.py` hash, tokenizer file hashes,
-budgets, cache hash and complete job/chunk/candidate counts. Supply
+budgets and cache hash. Schema 2 stores either successful `chunks` or an explicit
+`error` row with `status=NOT_RUN_INPUT_CAPACITY`, job/candidate ID, page/revision,
+reason and job hash. Its counts separate all jobs/candidates from successful
+jobs/candidates and rejected jobs. Schema 1 successful caches remain supported.
+All original jobs and candidates remain in the unchanged prepared inputs; a
+capacity error does not remove or shorten their names or other evidence. Supply
 `--chunk-cache FORWARD_CHUNK_CACHE` to `score`. Inference validates the cache once,
 keeps the selected scope's chunks, and checks each chunk's evidence and fit.
 Cached and uncached forward questions and decisions are identical. Reverse
@@ -69,7 +74,29 @@ questions remain dynamic and uncached. Tokenizer/model/input/budget changes
 require a new cache. A failed or interrupted preparation has no complete cache
 manifest and cannot be used for inference.
 
+An interrupted successful prefix can be reused into a **new** cache directory.
+`--prefix-cache` checks original job order and validates every reused chunk
+against the current job. Its original `inputs.json` must bind the same input
+manifest, model hash, tokenizer hashes and budgets. If that start receipt does
+not exist, `--prefix-receipt` requires an explicit retrospective receipt with
+`kind=retrospective_verified_prefix`, matching `binding` and `tokenizer_files`,
+the exact `cache_sha256`, and completed row count `jobs`. The new manifest records
+the prefix and receipt hashes and identifies the receipt kind. The source prefix
+is never overwritten; a retrospective receipt is not an original start receipt.
+
+```powershell
+python -m GG_Data.entity_resolution.hundred_page_pilot.run_laya prepare-chunks --input-dir PILOT_INPUT --tokenizer CHECKPOINT/full/tokenizer --output NEW_FORWARD_CHUNK_CACHE --prefix-cache INCOMPLETE_CACHE --prefix-receipt PREFIX_PROVENANCE.json --max-options 20 --max-len 1024 --head-max-len 256
+```
+
 ## Held-out evaluation and pilot inference
+
+**GPU status, 30 October 2026:** the original AMP benchmark failed with CUDA
+errors in the saved L4 environment. A separate, discarded diagnostic succeeded
+with FP32, gradient checkpointing disabled, Math attention and fused MHA
+disabled. These overrides are not yet the production trainer's configuration.
+Measured validation speed also failed the approved two-hour resource gate.
+No fitted Laya checkpoint or new pilot predictions exist. See
+[pilot evidence](../../../docs/reports/2026-10-30-laya-joint-pilot.md).
 
 Use the pinned upstream source on `PYTHONPATH` and an approved environment. These commands load a complete local **Laya** checkpoint (`model.safetensors`, `rl_agent_config.json`, encoder and tokenizer). The loader hashes artifacts before loading, detects byte changes, and rejects device fallback. Cloud start, dependency installation and GPU resource approval are separate root tasks.
 
@@ -86,6 +113,22 @@ Forward inference first applies exact pairs and Laya to retained same-page/revis
 
 Evaluation saves `inputs.json`, `chunk_records.jsonl`, `predictions.jsonl`, and `report.json`. It reports chunk valid-set accuracy, non-STOP precision, STOP precision/recall, original candidate-pool coverage, Wilson 95% intervals, complete denominators and explicit source/chunk not-run IDs. Per-source-state recovery means at least one selected first choice is a known positive; terminal success requires every chunk to STOP. These are conditional labelled-state results, not complete model rollout accuracy. Extra unannotated selections are reported separately, including success without such extra selections. Chunk decision accuracy is not directly comparable with the old LUKE whole-pool 551/608 result.
 
-Pilot outputs include bound inputs, resumable forward/reverse traces, separate pair proposals, dynamic reverse jobs, progress and final accounting. Counts include assigned/unresolved occurrences, excluded/DATE-deferred rows, not-presented groups/occurrences, covered/uncovered QID-revision rows, retrieval-omitted pairs, REVIEW/previously eligible groups and many-to-many pairs. A budget stop preserves completed question traces, reports remaining IDs, and raises `TimeoutError`; it is not a complete scope result. A completed scope has `summary.json` with `status=complete`.
+Pilot outputs include bound inputs, resumable forward/reverse traces, separate pair proposals, dynamic reverse jobs, progress and final accounting. Counts include assigned/unresolved occurrences, excluded/DATE-deferred rows, not-presented groups/occurrences, covered/uncovered QID-revision rows, retrieval-omitted pairs, REVIEW/previously eligible groups and many-to-many pairs. A budget stop preserves completed question traces, reports remaining IDs, and raises `TimeoutError`; it is not a complete scope result. A completed scope has `summary.json` with `status=complete`, or `status=complete_with_not_run` when input-capacity failures remain.
+
+Only the recognized pre-inference `partition_record` capacity errors become
+`NOT_RUN_INPUT_CAPACITY`; other errors, including model/GPU errors, still raise.
+Cached and uncached paths record the same failure without a model call, STOP,
+prediction or pair for that job. Separate `forward_not_run.jsonl` and
+`reverse_not_run.jsonl` files preserve the reason and provenance; bound resume
+validates these records without retrying them. Summary counts and IDs distinguish
+completed from not-run jobs. Not-run pools do not count as model exposure.
+
+The frozen 100-page inputs contain 99 affected forward jobs across two Daniel
+groups: page/revision `9015878/1375591308` (20 jobs) and
+`52153047/1380085784` (79 jobs). Their rendered option names exceed the upstream
+48-token option limit even with empty context. Both groups are absent from the
+saved 3-page and 10-page scopes. These are explicit input-capacity exclusions
+from inference, not model decisions; every original candidate remains available
+in the prepared inputs.
 
 Public annotations are incomplete. An unannotated selection is not verified false; synthetic STOP means no annotated positive remains. Intervals are state-level Wilson intervals, not page-cluster-adjusted intervals. Pilot proposals have no verified gold. Lower unresolved counts do not establish improved accuracy or authorize production promotion. Real CUDA restore, throughput, warmup stability, tuning and complete 3/10/100 outputs require separate measured execution.

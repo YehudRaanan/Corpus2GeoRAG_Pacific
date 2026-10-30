@@ -5,6 +5,135 @@ from __future__ import annotations
 import json
 
 
+def test_cache_preserves_capacity_failures_and_reuses_only_valid_prefix(
+    tmp_path, monkeypatch
+):
+    import pytest
+    from GG_Data.entity_resolution.hundred_page_pilot import run_laya
+    from GG_Data.entity_resolution.laya_model import model
+    from GG_Data.entity_resolution.luke_pilot.data import sha256, write_jsonl
+
+    prepared = tmp_path / "prepared"
+    prepared.mkdir()
+    jobs = [
+        dict(
+            id=i,
+            direction="forward",
+            page_id=1,
+            revision_id=2,
+            entity=dict(name="query"),
+            candidates=[dict(id="candidate", name="Name")],
+        )
+        for i in ("first", "bad", "last")
+    ]
+    write_jsonl(prepared / "forward_jobs.jsonl", jobs)
+    (prepared / "manifest.json").write_text(
+        json.dumps(
+            dict(files={"forward_jobs.jsonl": sha256(prepared / "forward_jobs.jsonl")})
+        )
+    )
+    tokenizer = tmp_path / "tokenizer"
+    tokenizer.mkdir()
+    (tokenizer / "tokenizer.json").write_text("saved")
+    monkeypatch.setattr(run_laya, "load_local_tokenizer", lambda _path: object())
+    monkeypatch.setattr(model, "token_diagnostics", lambda *a, **k: {"fits": True})
+    original = model.partition_record
+    prefix = tmp_path / "prefix"
+    prefix.mkdir()
+    first = dict(id="first", chunks=original(jobs[0], "forward", tokenizer=object()))
+    (prefix / "forward_chunks.jsonl").write_text(
+        json.dumps(first) + "\n", encoding="utf-8"
+    )
+    calls = []
+
+    def partition_record(record, direction, **kwargs):
+        calls.append(record["id"])
+        if record["id"] == "bad":
+            raise ValueError(
+                "Candidate 'candidate' cannot fit without losing option name, instruction or non-context evidence"
+            )
+        return original(record, direction, **kwargs)
+
+    monkeypatch.setattr(model, "partition_record", partition_record)
+    receipt = tmp_path / "prefix_provenance.json"
+    provenance = dict(
+        kind="retrospective_verified_prefix",
+        binding=run_laya.cache_binding(prepared, 20, 1024, 256),
+        tokenizer_files=run_laya.tokenizer_hashes(tokenizer),
+        cache_sha256=sha256(prefix / "forward_chunks.jsonl"),
+        jobs=1,
+    )
+    receipt.write_text(json.dumps(provenance))
+    output = tmp_path / "cache"
+    result = run_laya.prepare_chunk_cache(
+        prepared, tokenizer, output, prefix_cache=prefix, prefix_receipt=receipt
+    )
+    assert calls == ["bad", "last"]
+    assert (
+        result["jobs"] == 3
+        and result["successful_jobs"] == 2
+        and result["rejected_jobs"] == 1
+    )
+    assert result["candidates"] == 3 and result["successful_candidates"] == 2
+    loaded = run_laya.load_chunk_cache(
+        prepared,
+        output,
+        {
+            "checkpoint_files": {
+                "tokenizer/tokenizer.json": sha256(tokenizer / "tokenizer.json")
+            }
+        },
+        {"first", "bad", "last"},
+    )
+    assert loaded["bad"]["status"] == "NOT_RUN_INPUT_CAPACITY"
+    assert loaded["bad"]["candidate_id"] == "candidate"
+    provenance["binding"]["max_options"] = 19
+    receipt.write_text(json.dumps(provenance))
+    with pytest.raises(ValueError, match="binding"):
+        run_laya.prepare_chunk_cache(
+            prepared,
+            tokenizer,
+            tmp_path / "wrong-budget",
+            prefix_cache=prefix,
+            prefix_receipt=receipt,
+        )
+    assert not (tmp_path / "wrong-budget").exists()
+    provenance["binding"]["max_options"] = 20
+    provenance["tokenizer_files"]["tokenizer.json"] = "different"
+    receipt.write_text(json.dumps(provenance))
+    with pytest.raises(ValueError, match="tokenizer"):
+        run_laya.prepare_chunk_cache(
+            prepared,
+            tokenizer,
+            tmp_path / "wrong-tokenizer",
+            prefix_cache=prefix,
+            prefix_receipt=receipt,
+        )
+    assert not (tmp_path / "wrong-tokenizer").exists()
+    provenance["tokenizer_files"] = run_laya.tokenizer_hashes(tokenizer)
+    first["chunks"][0]["entity"]["name"] = "stale"
+    (prefix / "forward_chunks.jsonl").write_text(
+        json.dumps(first) + "\n", encoding="utf-8"
+    )
+    provenance["cache_sha256"] = sha256(prefix / "forward_chunks.jsonl")
+    receipt.write_text(json.dumps(provenance))
+    with pytest.raises(ValueError, match="evidence|match"):
+        run_laya.prepare_chunk_cache(
+            prepared,
+            tokenizer,
+            tmp_path / "stale",
+            prefix_cache=prefix,
+            prefix_receipt=receipt,
+        )
+
+    def broken(*args, **kwargs):
+        raise ValueError("unrelated defect")
+
+    monkeypatch.setattr(model, "partition_record", broken)
+    with pytest.raises(ValueError, match="unrelated defect"):
+        run_laya.prepare_chunk_cache(prepared, tokenizer, tmp_path / "broken")
+
+
 def test_forward_chunk_cache_streams_binds_and_rejects_drift(tmp_path, monkeypatch):
     import pytest
     from GG_Data.entity_resolution.hundred_page_pilot import run_laya
@@ -13,7 +142,10 @@ def test_forward_chunk_cache_streams_binds_and_rejects_drift(tmp_path, monkeypat
 
     prepared = tmp_path / "prepared"
     prepared.mkdir()
-    jobs = [dict(id=str(i), direction="forward", candidates=[]) for i in range(101)]
+    jobs = [
+        dict(id=str(i), direction="forward", candidates=[dict(id="candidate")])
+        for i in range(101)
+    ]
     write_jsonl(prepared / "forward_jobs.jsonl", jobs)
     manifest = dict(
         files={"forward_jobs.jsonl": sha256(prepared / "forward_jobs.jsonl")}
@@ -41,6 +173,26 @@ def test_forward_chunk_cache_streams_binds_and_rejects_drift(tmp_path, monkeypat
     )
     assert set(loaded) == {"1", "99"}
     assert loaded["1"][0]["id"] == "1"
+    legacy = dict(result, schema_version=1)
+    (cache / "manifest.json").write_text(json.dumps(legacy))
+    assert (
+        run_laya.load_chunk_cache(
+            prepared, cache, {"checkpoint_files": hashes}, {"1", "99"}
+        )
+        == loaded
+    )
+    original_cache = (cache / "forward_chunks.jsonl").read_bytes()
+    broken_rows = [json.loads(line) for line in original_cache.decode().splitlines()]
+    broken_rows[0]["chunks"][0]["candidates"] = []
+    (cache / "forward_chunks.jsonl").write_text(
+        "\n".join(json.dumps(r) for r in broken_rows) + "\n", encoding="utf-8"
+    )
+    legacy["cache_sha256"] = sha256(cache / "forward_chunks.jsonl")
+    (cache / "manifest.json").write_text(json.dumps(legacy))
+    with pytest.raises(ValueError, match="coverage|counts"):
+        run_laya.load_chunk_cache(prepared, cache, {"checkpoint_files": hashes}, set())
+    (cache / "forward_chunks.jsonl").write_bytes(original_cache)
+    (cache / "manifest.json").write_text(json.dumps(result))
     assert (prepared / "manifest.json").read_bytes() == original
     with pytest.raises(FileExistsError):
         run_laya.prepare_chunk_cache(prepared, tokenizer, cache)
@@ -401,6 +553,96 @@ def test_full_pipeline_keeps_all_rows_and_adds_reverse_to_assigned_group(
     for name in ("forward_traces.jsonl", "reverse_traces.jsonl", "proposals.jsonl"):
         assert read_jsonl(tmp_path / "cached-results" / name) == read_jsonl(
             tmp_path / "results" / name
+        )
+
+    import pytest
+
+    original_partition = model.partition_record
+    failed_job = read_jsonl(prepared / "forward_jobs.jsonl")[0]
+    reason = f"Candidate {failed_job['candidates'][0]['id']!r} cannot fit without losing option name, instruction or non-context evidence"
+    failed_attempts = []
+
+    def partition_record(record, direction, **kwargs):
+        if record["id"] == failed_job["id"]:
+            failed_attempts.append(record["id"])
+            raise ValueError(reason)
+        return original_partition(record, direction, **kwargs)
+
+    monkeypatch.setattr(model, "partition_record", partition_record)
+    failed_agent = FakeAgent()
+    incomplete = run_scope(
+        prepared,
+        tmp_path / "with-capacity",
+        failed_agent,
+        3,
+        max_seconds=60,
+        checkpoint_binding={"fake": "test"},
+    )
+    assert incomplete["status"] == "complete_with_not_run"
+    assert incomplete["not_run_questions"] == 1
+    assert incomplete["not_run_ids"] == [failed_job["id"]]
+    assert len(failed_agent.questions) == len(uncached_agent.questions) - 1
+    assert all(
+        r["id"] != failed_job["id"]
+        for r in read_jsonl(tmp_path / "with-capacity/forward_traces.jsonl")
+    )
+    assert failed_attempts == [failed_job["id"]]
+    assert (
+        run_scope(
+            prepared,
+            tmp_path / "with-capacity",
+            FakeAgent(),
+            3,
+            max_seconds=60,
+            checkpoint_binding={"fake": "test"},
+        )
+        == incomplete
+    )
+    assert failed_attempts == [failed_job["id"]]  # Do not retry recorded failures.
+    prepare_chunk_cache(prepared, tokenizer_path, tmp_path / "capacity-chunks")
+    cached_incomplete = run_scope(
+        prepared,
+        tmp_path / "cached-capacity",
+        FakeAgent(),
+        3,
+        max_seconds=60,
+        checkpoint_binding={
+            "checkpoint_files": {
+                "tokenizer/tokenizer.json": sha256(tokenizer_path / "tokenizer.json")
+            }
+        },
+        chunk_cache=tmp_path / "capacity-chunks",
+    )
+    assert {k: v for k, v in cached_incomplete.items() if k != "elapsed_seconds"} == {
+        k: v for k, v in incomplete.items() if k != "elapsed_seconds"
+    }
+    failure_path = tmp_path / "with-capacity/forward_not_run.jsonl"
+    damaged = read_jsonl(failure_path)[0]
+    damaged["error_reason"] += " damaged"
+    failure_path.write_text(json.dumps(damaged) + "\n", encoding="utf-8")
+    with pytest.raises(ValueError, match="failure"):
+        run_scope(
+            prepared,
+            tmp_path / "with-capacity",
+            FakeAgent(),
+            3,
+            max_seconds=60,
+            checkpoint_binding={"fake": "test"},
+        )
+    monkeypatch.setattr(model, "partition_record", original_partition)
+
+    class BrokenAgent(FakeAgent):
+        def system_one(self, state, questions, **kwargs):
+            raise ValueError(reason)
+
+    with pytest.raises(ValueError, match="cannot fit"):
+        run_scope(
+            prepared,
+            tmp_path / "agent-error",
+            BrokenAgent(),
+            3,
+            max_seconds=60,
+            checkpoint_binding={"fake": "test"},
         )
 
 

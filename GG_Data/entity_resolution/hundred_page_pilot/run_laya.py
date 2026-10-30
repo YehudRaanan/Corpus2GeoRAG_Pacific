@@ -7,6 +7,7 @@ reverse coverage checks every eligible group, including assigned groups.
 from __future__ import annotations
 
 import argparse
+import hashlib
 import json
 import logging
 import math
@@ -266,6 +267,49 @@ def cache_binding(
     )
 
 
+def value_hash(value: dict) -> str:
+    return hashlib.sha256(
+        json.dumps(value, sort_keys=True, ensure_ascii=False).encode()
+    ).hexdigest()
+
+
+def capacity_failure(job: dict, direction: str, error: ValueError) -> dict | None:
+    """Only the two canonical partition capacity errors are recoverable."""
+    reason = str(error)
+    candidate_id = None
+    if reason != "Empty decision/query cannot fit token budget":
+        matches = [
+            c["id"]
+            for c in job["candidates"]
+            if reason
+            == (
+                f"Candidate {c['id']!r} cannot fit without losing option name, instruction or non-context evidence"
+            )
+        ]
+        if len(matches) != 1:
+            return None
+        candidate_id = matches[0]
+    record = dict(
+        id=job["id"],
+        direction=direction,
+        page_id=job.get("page_id"),
+        revision_id=job.get("revision_id"),
+        status="NOT_RUN_INPUT_CAPACITY",
+        candidate_id=candidate_id,
+        error_reason=reason,
+        job_sha256=value_hash(job),
+    )
+    return dict(record, failure_sha256=value_hash(record))
+
+
+def validate_failure(job: dict, direction: str, record: dict) -> None:
+    expected = capacity_failure(
+        job, direction, ValueError(record.get("error_reason", ""))
+    )
+    if expected is None or expected != record:
+        raise ValueError("Saved capacity failure differs from original job/reason")
+
+
 def prepare_chunk_cache(
     input_dir: Path,
     tokenizer_path: Path,
@@ -274,9 +318,14 @@ def prepare_chunk_cache(
     max_options: int = 20,
     max_len: int = 1024,
     head_max_len: int = 256,
+    prefix_cache: Path | None = None,
+    prefix_receipt: Path | None = None,
 ) -> dict:
     """Stream forward partitions on CPU using local tokenizer files, no weights."""
-    from GG_Data.entity_resolution.laya_model.model import partition_record
+    from GG_Data.entity_resolution.laya_model.model import (
+        partition_record,
+        validate_prepared_chunks,
+    )
 
     if output.exists():
         raise FileExistsError(f"Preserve existing output: {output}")
@@ -290,8 +339,32 @@ def prepare_chunk_cache(
     if sha256(source) != source_hash:
         raise ValueError("Prepared forward jobs changed")
     tokenizer = load_local_tokenizer(tokenizer_path)
+    prefix_path = prefix_cache / "forward_chunks.jsonl" if prefix_cache else None
+    prefix_hash = sha256(prefix_path) if prefix_path else None
+    receipt_path = None
+    prefix_provenance = None
+    if prefix_path is not None:
+        receipt_path = prefix_receipt or prefix_cache / "inputs.json"
+        prefix_provenance = json.loads(receipt_path.read_text(encoding="utf-8"))
+        if prefix_provenance.get("binding") != binding:
+            raise ValueError(
+                "Prefix original binding differs from current inputs/code/budgets"
+            )
+        if prefix_provenance.get("tokenizer_files") != hashes:
+            raise ValueError("Prefix original tokenizer differs")
+        if prefix_receipt is not None and (
+            prefix_provenance.get("kind") != "retrospective_verified_prefix"
+            or prefix_provenance.get("cache_sha256") != prefix_hash
+            or not isinstance(prefix_provenance.get("jobs"), int)
+        ):
+            raise ValueError("Retrospective prefix receipt hash/count/kind differs")
+    elif prefix_receipt is not None:
+        raise ValueError("Prefix receipt requires a prefix cache")
+    prefix = iter(iter_jsonl(prefix_path)) if prefix_path else iter(())
     output.mkdir(parents=True, exist_ok=False)
+    save_json(output / "inputs.json", dict(binding=binding, tokenizer_files=hashes))
     seen, chunks_count, candidate_count = set(), 0, 0
+    rejected_jobs = successful_candidates = prefix_jobs = 0
 
     def progress(status):
         value = dict(
@@ -299,6 +372,7 @@ def prepare_chunk_cache(
             jobs=len(seen),
             chunks=chunks_count,
             candidates=candidate_count,
+            rejected_jobs=rejected_jobs,
         )
         (output / "progress.json").write_text(
             json.dumps(value, indent=2), encoding="utf-8"
@@ -309,37 +383,86 @@ def prepare_chunk_cache(
         for job in iter_jsonl(source):
             if job["id"] in seen or job.get("direction") != "forward":
                 raise ValueError("Expected unique forward job IDs")
-            chunks = partition_record(
-                job,
-                "forward",
-                tokenizer=tokenizer,
-                max_options=max_options,
-                max_len=max_len,
-                head_max_len=head_max_len,
-            )
-            stream.write(
-                json.dumps(dict(id=job["id"], chunks=chunks), ensure_ascii=False) + "\n"
-            )
+            cached = next(prefix, None)
+            if cached is not None:
+                if cached.get("id") != job["id"] or "error" in cached:
+                    raise ValueError(
+                        "Prefix does not match original job order/successful evidence"
+                    )
+                chunks = cached["chunks"]
+                validate_prepared_chunks(
+                    job,
+                    "forward",
+                    chunks,
+                    tokenizer=tokenizer,
+                    max_options=max_options,
+                    max_len=max_len,
+                    head_max_len=head_max_len,
+                )
+                value = cached
+                prefix_jobs += 1
+            else:
+                try:
+                    chunks = partition_record(
+                        job,
+                        "forward",
+                        tokenizer=tokenizer,
+                        max_options=max_options,
+                        max_len=max_len,
+                        head_max_len=head_max_len,
+                    )
+                    value = dict(id=job["id"], chunks=chunks)
+                except ValueError as error:
+                    failure = capacity_failure(job, "forward", error)
+                    if failure is None:
+                        raise
+                    chunks = []
+                    value = dict(id=job["id"], error=failure)
+                    rejected_jobs += 1
+            stream.write(json.dumps(value, ensure_ascii=False) + "\n")
             seen.add(job["id"])
             chunks_count += len(chunks)
             candidate_count += len(job["candidates"])
+            if "error" not in value:
+                successful_candidates += len(job["candidates"])
             if len(seen) % 100 == 0:
                 stream.flush()
                 progress("running")
+    if next(prefix, None) is not None:
+        raise ValueError("Prefix has extra rows beyond original jobs")
+    if prefix_receipt is not None and prefix_jobs != prefix_provenance["jobs"]:
+        raise ValueError("Retrospective prefix receipt job count differs")
     if (
         cache_binding(input_dir, max_options, max_len, head_max_len) != binding
         or tokenizer_hashes(tokenizer_path) != hashes
         or sha256(source) != source_hash
+        or (prefix_path is not None and sha256(prefix_path) != prefix_hash)
+        or (
+            receipt_path is not None
+            and json.loads(receipt_path.read_text(encoding="utf-8"))
+            != prefix_provenance
+        )
     ):
         raise ValueError("Chunk preparation inputs changed during execution")
     result = dict(
-        schema_version=1,
+        schema_version=2,
         direction="forward",
         binding=binding,
         tokenizer_files=hashes,
         jobs=len(seen),
         chunks=chunks_count,
         candidates=candidate_count,
+        successful_jobs=len(seen) - rejected_jobs,
+        rejected_jobs=rejected_jobs,
+        successful_candidates=successful_candidates,
+        prefix_jobs=prefix_jobs,
+        prefix_sha256=prefix_hash,
+        prefix_receipt_sha256=sha256(receipt_path) if receipt_path else None,
+        prefix_receipt_kind=(
+            prefix_provenance.get("kind", "original_start_receipt")
+            if prefix_provenance
+            else None
+        ),
         cache_sha256=sha256(output / "forward_chunks.jsonl"),
     )
     save_json(output / "manifest.json", result)
@@ -356,11 +479,11 @@ def load_chunk_cache(
     max_options: int = 20,
     max_len: int = 1024,
     head_max_len: int = 256,
-) -> dict[str, list[dict]]:
+) -> dict[str, list[dict] | dict]:
     """Validate a complete cache once; retain only this scope's forward chunks."""
     manifest = json.loads((cache_dir / "manifest.json").read_text(encoding="utf-8"))
     if (
-        manifest.get("schema_version") != 1
+        manifest.get("schema_version") not in (1, 2)
         or manifest.get("direction") != "forward"
         or manifest["binding"]
         != cache_binding(input_dir, max_options, max_len, head_max_len)
@@ -376,22 +499,46 @@ def load_chunk_cache(
     path = cache_dir / "forward_chunks.jsonl"
     if sha256(path) != manifest["cache_sha256"]:
         raise ValueError("Forward chunk cache hash differs")
-    expected = {job["id"] for job in iter_jsonl(input_dir / "forward_jobs.jsonl")}
+    jobs = iter(iter_jsonl(input_dir / "forward_jobs.jsonl"))
     seen, selected, chunks_count, candidate_count = set(), {}, 0, 0
+    rejected_jobs = successful_candidates = 0
     for row in iter_jsonl(path):
-        if row["id"] in seen or row["id"] not in expected:
+        job = next(jobs, None)
+        if job is None or row["id"] in seen or row["id"] != job["id"]:
             raise ValueError("Forward chunk cache job IDs differ")
         seen.add(row["id"])
-        chunks_count += len(row["chunks"])
-        candidate_count += sum(len(chunk["candidates"]) for chunk in row["chunks"])
+        candidate_count += len(job["candidates"])
+        if "error" in row:
+            if manifest["schema_version"] == 1:
+                raise ValueError("Schema1 cache cannot contain capacity error rows")
+            validate_failure(job, "forward", row["error"])
+            rejected_jobs += 1
+            value = row["error"]
+        else:
+            chunks_count += len(row["chunks"])
+            successful_candidates += sum(
+                len(chunk["candidates"]) for chunk in row["chunks"]
+            )
+            value = row["chunks"]
         if row["id"] in selected_ids:
-            selected[row["id"]] = row["chunks"]
+            selected[row["id"]] = value
     if (
-        seen != expected
+        next(jobs, None) is not None
         or set(selected) != selected_ids
         or len(seen) != manifest["jobs"]
         or chunks_count != manifest["chunks"]
         or candidate_count != manifest["candidates"]
+        or (
+            manifest["schema_version"] == 1 and successful_candidates != candidate_count
+        )
+        or (
+            manifest["schema_version"] == 2
+            and (
+                successful_candidates != manifest["successful_candidates"]
+                or rejected_jobs != manifest["rejected_jobs"]
+                or len(seen) - rejected_jobs != manifest["successful_jobs"]
+            )
+        )
     ):
         raise ValueError("Incomplete forward chunk cache counts/coverage")
     return selected
@@ -421,6 +568,8 @@ def run_scope(
         for name in (
             "forward_traces.jsonl",
             "reverse_traces.jsonl",
+            "forward_not_run.jsonl",
+            "reverse_not_run.jsonl",
             "proposals.jsonl",
             "summary.json",
         )
@@ -480,18 +629,41 @@ def run_scope(
         if (output / "STOP").exists() or time.monotonic() - started >= max_seconds:
             raise TimeoutError("Execution cap/STOP reached; completed traces preserved")
 
+    job_model_called = False
+
     def guarded_score(*args, **kwargs):
+        nonlocal job_model_called
         check_budget()
+        job_model_called = True
         return agent.system_one(*args, **kwargs)
 
     bounded_agent = SimpleNamespace(tok=agent.tok, system_one=guarded_score)
 
     def decisions(jobs: list[dict], direction: str) -> list[dict]:
+        nonlocal job_model_called
         path = output / f"{direction}_traces.jsonl"
+        failure_path = output / f"{direction}_not_run.jsonl"
         saved = read_score_records(path)
         by_id = {r["id"]: r for r in saved}
+        failures = read_score_records(failure_path)
+        failed = {r["id"]: r for r in failures}
+        job_by_id = {j["id"]: j for j in jobs}
         if len(by_id) != len(saved) or not by_id.keys() <= {j["id"] for j in jobs}:
             raise ValueError("Saved traces differ from current jobs")
+        if (
+            len(failed) != len(failures)
+            or not failed.keys() <= job_by_id.keys()
+            or by_id.keys() & failed.keys()
+        ):
+            raise ValueError("Saved failures differ from current jobs/traces")
+        for job_id, failure in failed.items():
+            validate_failure(job_by_id[job_id], direction, failure)
+            if (
+                direction == "forward"
+                and cached_chunks is not None
+                and cached_chunks[job_id] != failure
+            ):
+                raise ValueError("Saved failure differs from bound cache reason")
 
         def progress(status, include_ids=False):
             state = dict(
@@ -500,6 +672,8 @@ def run_scope(
                 questions=len(jobs),
                 completed_questions=len(by_id),
                 not_run_questions=len(jobs) - len(by_id),
+                input_capacity_not_run_questions=len(failed),
+                pending_questions=len(jobs) - len(by_id) - len(failed),
                 elapsed_seconds=time.monotonic() - started,
                 active_work_seconds=None,
             )
@@ -510,10 +684,24 @@ def run_scope(
             )
 
         progress("running")
-        with path.open("a", encoding="utf-8") as stream:
+        with path.open("a", encoding="utf-8") as stream, failure_path.open(
+            "a", encoding="utf-8"
+        ) as failure_stream:
             for job in jobs:
-                if job["id"] in by_id:
+                if job["id"] in by_id or job["id"] in failed:
                     continue
+                cached = (
+                    cached_chunks[job["id"]]
+                    if direction == "forward" and cached_chunks is not None
+                    else None
+                )
+                if isinstance(cached, dict):
+                    validate_failure(job, direction, cached)
+                    failure_stream.write(json.dumps(cached, ensure_ascii=False) + "\n")
+                    failure_stream.flush()
+                    failed[job["id"]] = cached
+                    continue
+                job_model_called = False
                 try:
                     check_budget()
                     trace = choose_remaining(
@@ -523,15 +711,31 @@ def run_scope(
                         max_options=max_options,
                         max_len=max_len,
                         head_max_len=head_max_len,
-                        **(
-                            {"prepared_chunks": cached_chunks[job["id"]]}
-                            if direction == "forward" and cached_chunks is not None
-                            else {}
-                        ),
+                        **({"prepared_chunks": cached} if cached is not None else {}),
                     )
                 except TimeoutError:
                     progress("resource_limit", include_ids=True)
                     raise
+                except ValueError as error:
+                    failure = (
+                        capacity_failure(job, direction, error)
+                        if not job_model_called
+                        else None
+                    )
+                    # Capacity recovery is limited to partition_record, before inference.
+                    traceback = error.__traceback__
+                    partition_error = False
+                    while traceback is not None:
+                        partition_error |= (
+                            traceback.tb_frame.f_code.co_name == "partition_record"
+                        )
+                        traceback = traceback.tb_next
+                    if failure is None or not partition_error:
+                        raise
+                    failure_stream.write(json.dumps(failure, ensure_ascii=False) + "\n")
+                    failure_stream.flush()
+                    failed[job["id"]] = failure
+                    continue
                 value = dict(
                     id=job["id"],
                     direction=direction,
@@ -547,12 +751,15 @@ def run_scope(
                     progress("running")
         progress("direction_complete", include_ids=True)
         for job in jobs:
-            validate_trace(job, by_id[job["id"]])
-        return [by_id[j["id"]] for j in jobs]
+            if job["id"] in by_id:
+                validate_trace(job, by_id[job["id"]])
+        return [by_id[j["id"]] if j["id"] in by_id else failed[j["id"]] for j in jobs]
 
     def proposals(jobs: list[dict], traces: list[dict], direction: str) -> list[dict]:
         pairs = []
         for job, trace in zip(jobs, traces):
+            if trace.get("status") == "NOT_RUN_INPUT_CAPACITY":
+                continue
             for step in trace["trace"]:
                 candidate_id = step["candidate_id"]
                 if candidate_id is None:
@@ -587,7 +794,8 @@ def run_scope(
     save_rows(output / "forward_pairs.jsonl", forward_pairs)
     reverse = reverse_jobs(groups, entities, forward_pairs)
     save_rows(output / "reverse_jobs.jsonl", reverse)
-    reverse_pairs = proposals(reverse, decisions(reverse, "reverse"), "reverse")
+    reverse_traces = decisions(reverse, "reverse")
+    reverse_pairs = proposals(reverse, reverse_traces, "reverse")
     save_rows(output / "reverse_pairs.jsonl", reverse_pairs)
     combined = {pair_key(p): p for p in forward_pairs + reverse_pairs}
     pairs = [combined[k] for k in sorted(combined)]
@@ -595,16 +803,33 @@ def run_scope(
     rows = scoped(
         pq.read_table(input_dir / "mentions.parquet").to_pylist(), scopes, scope
     )
+    failures = [
+        r
+        for r in forward_traces + reverse_traces
+        if r.get("status") == "NOT_RUN_INPUT_CAPACITY"
+    ]
+    not_run_ids = {r["id"] for r in failures}
     result = accounting(
-        rows, groups, entities, forward, reverse, pairs, manifest["source_policy"]
+        rows,
+        groups,
+        entities,
+        forward,
+        reverse,
+        pairs,
+        manifest["source_policy"],
+        not_run_ids,
     )
     result.update(
         scope=scope,
-        status="complete",
+        status="complete_with_not_run" if failures else "complete",
         assignments_changed=False,
         elapsed_seconds=time.monotonic() - started,
         active_work_seconds=None,
         inference_questions=len(forward) + len(reverse),
+        completed_questions=len(forward) + len(reverse) - len(failures),
+        not_run_questions=len(failures),
+        not_run_ids=sorted(not_run_ids),
+        not_run_by_direction=dict(Counter(r["direction"] for r in failures)),
         comparison=(
             compare_pairs(pairs, scoped(baseline, scopes, scope))
             if baseline is not None
@@ -623,7 +848,14 @@ def run_scope(
         return saved
     save_json(summary_path, result)
     (output / "progress.json").write_text(
-        json.dumps(dict(status="complete", not_run_questions=0)), encoding="utf-8"
+        json.dumps(
+            dict(
+                status=result["status"],
+                not_run_questions=len(failures),
+                not_run_ids=sorted(not_run_ids),
+            )
+        ),
+        encoding="utf-8",
     )
     return result
 
@@ -687,10 +919,21 @@ def validate_trace(job: dict, value: dict) -> None:
         raise ValueError("Incomplete retained-pool coverage")
 
 
-def accounting(rows, groups, entities, forward, reverse, pairs, source_policy):
+def accounting(
+    rows,
+    groups,
+    entities,
+    forward,
+    reverse,
+    pairs,
+    source_policy,
+    not_run_ids=frozenset(),
+):
     assigned = {p["group_id"] for p in pairs}
-    exposed_forward = {c["id"] for j in forward for c in j["candidates"]}
-    exposed_reverse = {j["group_id"] for j in reverse}
+    exposed_forward = {
+        c["id"] for j in forward if j["id"] not in not_run_ids for c in j["candidates"]
+    }
+    exposed_reverse = {j["group_id"] for j in reverse if j["id"] not in not_run_ids}
     exposed = exposed_forward | exposed_reverse | assigned
     eligible_indices = {i for g in groups for i in g["source_row_indices"]}
     assigned_indices = {
@@ -750,6 +993,8 @@ def main() -> None:
     )
     for name in ("input-dir", "tokenizer", "output"):
         cache.add_argument("--" + name, type=Path, required=True)
+    cache.add_argument("--prefix-cache", type=Path)
+    cache.add_argument("--prefix-receipt", type=Path)
     for name, default in (
         ("max-options", 20),
         ("max-len", 1024),
@@ -797,6 +1042,8 @@ def main() -> None:
             max_options=args.max_options,
             max_len=args.max_len,
             head_max_len=args.head_max_len,
+            prefix_cache=args.prefix_cache,
+            prefix_receipt=args.prefix_receipt,
         )
         LOG.info("%s", json.dumps(result))
         return

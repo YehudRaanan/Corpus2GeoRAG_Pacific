@@ -132,6 +132,32 @@ No new orchestration framework. Root owns integration/GPU; independent adapter a
 - [x] Inspect upstream training/format APIs and pin source/checkpoint revisions without installing or downloading weights.
 - [x] Coordinate Superpowers task scope and Epoch estimate; self-review interfaces, coverage and resource limits.
 - [x] OWNER duration/resource approval.
-- [ ] Implementation, local checks, GPU benchmark/training, evaluation and report.
+- [x] Implement adapters, pipeline integration and local tests.
+- [x] Verify inputs and complete a bounded GPU benchmark; retain failed diagnostics.
+- [x] Stop the existing VM, verify transferred diagnostics and record actual runtime.
+- [ ] Frozen warmup/full tuning, held-out evaluation and 3/10/100-page predictions: blocked by measured throughput under the approved resource cap.
+- [x] Finish and verify local forward cache; report the resource blocker and save a local code checkpoint.
 
 Primary references: [Laya fine-tuning guide](https://github.com/NandhaKishorM/laya/blob/9afa7f3d4af18f8fa0c25517a440a05d10395b99/docs/finetune.md), [upstream trainer](https://github.com/NandhaKishorM/laya/blob/9afa7f3d4af18f8fa0c25517a440a05d10395b99/laya/train.py), [checkpoint](https://huggingface.co/convaiinnovations/laya/tree/7b928d828b7b0e022f929d9bd2e44165aa270148).
+
+## Conditional capacity exception, proposed 06:59 on 30 October Asia/Jerusalem
+
+Not approved and not started. Three failed requests left the existing VM TERMINATED; the last GCP response named us-central1-a as available. Read-only checks found no machine image or disk with the proposed names.
+
+Ponytail full: reuse the stopped VM environment through one native machine image; do not rebuild dependencies or create an orchestration layer. Superpowers affected task breakdown: root exclusively creates image -> creates one guarded temporary VM -> verifies copied environment and payload hashes -> runs the existing benchmark gate. The existing training and 3/10/100 tasks are unchanged. After verified local result transfer, delete only the approved temporary VM/boot disk and image. Original VM/disk remain stopped and retained. Independent local input diagnosis can continue in parallel.
+
+Exact proposed resources: machine image `geoai-laya-pilot-20261030-image`, VM and boot disk `geoai-laya-pilot-20261030`, zone `us-central1-a`, same g2-standard-4/L4/100GiB. No simultaneous running GPU. Maximum aggregate new running time remains7200seconds; aggregate26100seconds and US$10 unchanged. Configure7200second STOP guard before use and set a shorter remaining-time deadline if any previous successful new interval exists.
+
+Bounded incremental storage allowance US$0.23 for at most8h: 100GiB balanced disk at0.000136986/GiB-hour plus a conservative100GiB machine-image allowance at0.00014/GiB-hour =US$0.2216, rounded upward toUS$0.23. Require total conservative estimate <=US$9.58 before creation, leavingUS$0.42 belowbudget. Same-region copy; existing transfer reserve retained; billing is unknown. Fail closed if the image/disk/transfer estimate cannot fit.
+
+Epoch affected setup scope O0.16/M0.25/P0.42hours, rawexpected0.26h (10–25minutes), feedbackRef827adc91-f2f1-4ba4-bf21-77ebf9ab8b65. Same Superpowers dependencies, elapsed execution basis, excludes approval/capacity waits; overall4–8h unchanged. No unresolved planning disagreement. Estimated remaining3–7h execution; if approved07:05, completion10:05–14:05 on30October Asia/Jerusalem, excluding further waits. First checkpoint10min after approval. The approved plan's existing-VM-only restriction requires OWNER approval for this exception.
+
+
+### Capacity update, 07:00 on 30 October Asia/Jerusalem
+The fourth start of the approved existing VM succeeded. The temporary-resource exception above is withdrawn and must not be executed. No alternative resources were created. The original7200second STOP guard remains active; outer working deadline08:59local, including transfer and shutdown.
+
+### Measured stop, 07:23 on 30 October Asia/Jerusalem
+
+The bounded FP32 diagnostic passed only with native AMP/checkpointing disabled, Math SDPA and MHA fastpath disabled. Frozen sample32items7.093s; validation64items batch4=11.520s, batch16=11.827s. Seven unchanged full validation passes project9.88h atbatch16, excluding all training/calibration/evaluation/pageinference. Original4–8h planning estimate did not establish resource feasibility. The resource admission gate failed; do not start training or silently reduce validation/stability requirements. Full-encoder capacity remains unmeasured.
+
+Existing VM verified TERMINATED, successful interval07:00:02.855–07:21:31.396Asia/Jerusalem,1288.541s. Aggregate runtime20160.485s; conservative aggregate estimateUS$7.7001347 including prior reserve, not billing. Root transferred24diagnostics and hash-verified all files. No alternate resources or new fitted predictions. Local CPU cache and verification finish without cloud cost. Final report: docs/reports/2026-10-30-laya-joint-pilot.md. A reduced experiment or additional resources require a new concrete, measured plan; neither is authorized by this status note.
