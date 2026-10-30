@@ -11,6 +11,27 @@ from GG_Data.pipeline import simplified_agent as subject
 from GG_Data.pipeline.poc import digest, read_json
 
 
+def test_interrupted_source_request_is_not_silently_issued_again(tmp_path, monkeypatch):
+    from GG_Data.pipeline.simplified_page_events import PageEvidenceClient
+
+    calls = []
+
+    def get(*args, **kwargs):
+        calls.append(1)
+        raise KeyboardInterrupt("unknown in-flight outcome")
+
+    for attempt in range(2):
+        client = PageEvidenceClient(tmp_path, True, 10, time.monotonic() + 60)
+        monkeypatch.setattr(client.session, "get", get)
+        if attempt == 0:
+            with pytest.raises(KeyboardInterrupt):
+                client.query("https://example.test", {"action": "query"})
+        else:
+            with pytest.raises(RuntimeError, match="INCOMPLETE_REQUEST"):
+                client.query("https://example.test", {"action": "query"})
+    assert len(calls) == 1
+
+
 def test_rate_limited_reads_wait_for_explicit_resume_and_preserve_receipt(
     tmp_path, monkeypatch
 ):

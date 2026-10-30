@@ -88,6 +88,30 @@ def fixture_graph(tmp_path, invalid=False):
     return path
 
 
+def test_compact_tools_work_in_async_agent_worker_threads(tmp_path):
+    import asyncio
+
+    from geo_agent.tools import build_tools
+
+    store = GraphStore.from_json(fixture_graph(tmp_path))
+    tools = {tool.name: tool for tool in build_tools(store)}
+
+    async def invoke():
+        return await asyncio.gather(
+            tools["find_relations"].ainvoke(dict(source_id="a", target_id="b")),
+            tools["get_entity"].ainvoke(dict(entity_id="a")),
+            tools["get_neighbors"].ainvoke(dict(entity_id="a", direction="in")),
+        )
+
+    try:
+        pair, entity, neighbors = map(json.loads, asyncio.run(invoke()))
+        assert pair[0]["strength"] == 0.5 and pair[0]["count"] == 2
+        assert entity["id"] == "a" and entity["degree"] == 3
+        assert neighbors[0]["neighbor"]["id"] == "e"
+    finally:
+        store.connection.close()
+
+
 def test_compact_graph_loads_complete_directed_queries_and_integer_counts(tmp_path):
     path = fixture_graph(tmp_path)
     with gzip.open(path, "rt", encoding="utf-8") as stream:

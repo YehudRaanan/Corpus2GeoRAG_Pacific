@@ -3,6 +3,7 @@
 from __future__ import annotations
 
 import argparse
+import asyncio
 import hashlib
 import json
 import logging
@@ -127,6 +128,24 @@ def verify(path: Path, report: Path) -> dict:
                         "Agent directional tool result differs from membership"
                     )
                 checks.append(dict(category=category, **row))
+
+        async def async_queries():
+            return await asyncio.gather(
+                *(
+                    tool.ainvoke(
+                        dict(source_id=r["source"]["id"], target_id=r["target"]["id"])
+                    )
+                    for r in checks
+                )
+            )
+
+        async_rows = asyncio.run(async_queries())
+        if any(
+            json.loads(actual)
+            != [{k: v for k, v in expected.items() if k != "category"}]
+            for actual, expected in zip(async_rows, checks)
+        ):
+            raise ValueError("Async Agent tool differs from verified directional query")
         index = path.with_name(path.name + ".sqlite")
         receipt = json.loads(index.with_name(index.name + ".json").read_text())
         result = dict(
@@ -139,6 +158,7 @@ def verify(path: Path, report: Path) -> dict:
             coverage=coverage,
             schema=store.schema(),
             tool_checks=checks,
+            asynchronous_tool_checks=len(async_rows),
             llm_invoked=False,
             geography_status=store.metadata.get("geography_status"),
             geography=verify_geography(store),

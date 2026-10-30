@@ -3,7 +3,9 @@
 from __future__ import annotations
 
 import argparse
+import base64
 import gzip
+import hashlib
 import json
 import logging
 import os
@@ -24,6 +26,43 @@ from .simplified_agent import entity_id, write_array, write_object
 LOG = logging.getLogger(__name__)
 
 
+def bundle_geography_evidence(base: Path, output: Path) -> dict:
+    """Portable exact-byte receipts and audits; no settings or archive copies."""
+    count = 0
+
+    def artifacts():
+        nonlocal count
+        for path in sorted(base.rglob("*")):
+            relative = path.relative_to(base)
+            if (
+                not path.is_file()
+                or relative.parts[0] == "model"
+                or not path.name.endswith(
+                    (".json", ".json.gz", ".response", ".csv", ".txt")
+                )
+            ):
+                continue
+            sha = digest(path)
+            content = path.read_bytes()
+            if hashlib.sha256(content).hexdigest() != sha or digest(path) != sha:
+                raise ValueError("Geography evidence changed during packaging")
+            count += 1
+            yield dict(
+                original_path=str(path.resolve()),
+                artifact_path="geography_work/" + relative.as_posix(),
+                sha256=sha,
+                encoding="base64",
+                content_base64=base64.b64encode(content).decode("ascii"),
+            )
+
+    write_array(output, artifacts())
+    return dict(
+        artifact_count=count,
+        sha256=digest(output),
+        format="geography-evidence-base64-v1",
+    )
+
+
 def complete_geography(
     model: Path,
     core_graph: Path,
@@ -38,6 +77,28 @@ def complete_geography(
     from .poc import ROOT
     from .simplified_verify import verify_and_package
 
+    (
+        model,
+        core_graph,
+        core_release,
+        prepared,
+        output,
+        metadata,
+        agent_python,
+        source_project,
+    ) = (
+        p.resolve()
+        for p in (
+            model,
+            core_graph,
+            core_release,
+            prepared,
+            output,
+            metadata,
+            agent_python,
+            source_project,
+        )
+    )
     if output.exists():
         raise FileExistsError(output)
     if not agent_python.is_file():
@@ -291,6 +352,11 @@ def aggregate_geography(base: Path, output: Path) -> dict:
             ):
                 raise ValueError("Duplicate or changed Geography exact key")
             chosen = result["proposed"]
+            selection = (
+                {k: v for k, v in chosen.items() if k != "geometry"} if chosen else None
+            )
+            if selection and selection.get("receipt"):
+                selection["receipt"] = str(Path(selection["receipt"]).resolve())
             rows[key] = dict(
                 place_id=key,
                 name=place["name"],
@@ -299,14 +365,12 @@ def aggregate_geography(base: Path, output: Path) -> dict:
                 ),
                 geometry=chosen["geometry"] if chosen else None,
                 crs="EPSG:4326" if chosen else None,
-                selection=(
-                    {k: v for k, v in chosen.items() if k != "geometry"}
-                    if chosen
-                    else None
-                ),
+                selection=selection,
                 candidate_count=len(result["ranking"]),
                 selection_rule="EXISTING_45_30_15_7_3_HIGHEST_AVAILABLE_NATIVE_GEOMETRY",
-                evidence=dict(path=str(folder / "audit.json"), sha256=audit_sha),
+                evidence=dict(
+                    path=str((folder / "audit.json").resolve()), sha256=audit_sha
+                ),
                 identities_added=0,
             )
     if set(rows) != set(expected):
@@ -320,6 +384,7 @@ def aggregate_geography(base: Path, output: Path) -> dict:
     if len(rows) != report["all_loc_targets"]:
         raise ValueError("Full LOC denominator mismatch")
     write_array(output, (rows[k] for k in sorted(rows)))
+    bundle_geography_evidence(base, output.with_name(output.name + ".evidence.json.gz"))
     return dict(
         processed=len(rows),
         resolved=sum(r["status"] == "RESOLVED" for r in rows.values()),
@@ -404,6 +469,9 @@ def populate_geography(
         if name != "geography.json.gz":
             os.link(model / name, output_model / name)
     os.link(geography, output_model / "geography.json.gz")
+    bundle = geography.with_name(geography.name + ".evidence.json.gz")
+    if bundle.is_file():
+        os.link(bundle, output_model / "geography_evidence.json.gz")
     status = "COMPLETE" if resolved == len(rows) else "COMPLETE_WITH_UNRESOLVED"
     report = dict(
         manifest,
@@ -782,6 +850,7 @@ if __name__ == "__main__":
             configure_sources(args.base, args.source_project)
         else:
             import importlib
+
             from .geography_sample import tools
 
             tools()

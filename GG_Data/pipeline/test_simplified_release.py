@@ -1,6 +1,7 @@
 """Cross-environment smoke test of model -> real Agent -> portable release."""
 
 import os
+import shutil
 import subprocess
 from pathlib import Path
 
@@ -130,3 +131,114 @@ def test_complete_release_loads_real_agent_and_contains_all_model_and_adapter_fi
         assert digest(release / name) == sha
     with pytest.raises(FileExistsError):
         verify_and_package(prepared, model, graph, release)
+
+    # A valid pair population must not conceal a changed entity name.
+    from Agent.geo_agent.compact_format import records, write_graph
+
+    reader = records(graph / "agent_graph.json.gz")
+    _, metadata = next(reader)
+    nodes = [next(reader)[1] for _ in range(metadata["node_count"])]
+    pairs = [row for kind, row in reader]
+    nodes[0]["name"] = "Wrong exact entity name"
+    damaged = tmp_path / "damaged_graph"
+    damaged.mkdir()
+    write_graph(damaged / "agent_graph.json.gz", metadata, nodes, pairs)
+    for name in ["relations.json.gz", "relations_schema.json"]:
+        shutil.copyfile(graph / name, damaged / name)
+    manifest = read_json(graph / "manifest.json")
+    manifest["outputs"]["agent_graph.json.gz"] = digest(damaged / "agent_graph.json.gz")
+    write_object(damaged / "manifest.json", manifest)
+    acceptance = read_json(graph / "agent_acceptance.json")
+    acceptance["graph_sha256"] = digest(damaged / "agent_graph.json.gz")
+    write_object(damaged / "agent_acceptance.json", acceptance)
+    with pytest.raises(ValueError, match="Graph node differs"):
+        verify_and_package(prepared, model, damaged, tmp_path / "damaged_release")
+
+    damaged_model = tmp_path / "damaged_model"
+    shutil.copytree(model, damaged_model)
+    binary = pq.read_table(damaged_model / "memberships.parquet").to_pylist()
+    binary[0]["page_index"] += 99
+    pq.write_table(pa.Table.from_pylist(binary), damaged_model / "memberships.parquet")
+    manifest = read_json(damaged_model / "manifest.json")
+    manifest["outputs"]["memberships.parquet"] = digest(
+        damaged_model / "memberships.parquet"
+    )
+    (damaged_model / "manifest.json").write_text(__import__("json").dumps(manifest))
+    from GG_Data.pipeline.simplified_verify import verify_population
+
+    with pytest.raises(ValueError, match="Binary memberships differ"):
+        verify_population(prepared, damaged_model)
+
+    from GG_Data.pipeline.simplified_geography import (
+        aggregate_geography,
+        populate_geography,
+    )
+
+    geo_work = tmp_path / "geography_work"
+    (geo_work / "geography_inputs").mkdir(parents=True)
+    location = next(
+        r for r in read_json(model / "entities.json.gz") if r["type"] == "LOC"
+    )
+    target = dict(place_id=location["entity_id"], name=location["name"])
+    write_object(geo_work / "geography_inputs/report.json", dict(all_loc_targets=1))
+    write_object(geo_work / "geography_inputs/targets.json", [target])
+    write_object(geo_work / "geography_inputs/failed_inputs.json", [])
+    ranking = geo_work / "batches/000000/ranking"
+    (ranking / "sources").mkdir(parents=True)
+    receipt = ranking / "sources/native.json"
+    geometry = dict(type="Polygon", coordinates=[[[0, 0], [1, 0], [1, 1], [0, 0]]])
+    write_object(receipt, dict(response=[geometry]))
+    chosen = dict(
+        geometry=geometry,
+        receipt=str(receipt.resolve()),
+        source="OpenStreetMap",
+        total=75,
+    )
+    write_object(
+        ranking / "audit.json",
+        dict(results=[dict(input=target, proposed=chosen, ranking=[chosen])]),
+    )
+    write_object(
+        ranking / "verification.json",
+        dict(
+            status="VERIFIED_RANKING_PROPOSALS",
+            inputs=1,
+            outputs={
+                "audit.json": digest(ranking / "audit.json"),
+                "sources/native.json": digest(receipt),
+            },
+        ),
+    )
+    geography = tmp_path / "geography.json.gz"
+    aggregate_geography(geo_work, geography)
+    enriched_model, enriched_graph = (
+        tmp_path / "enriched_model",
+        tmp_path / "enriched_graph",
+    )
+    populate_geography(
+        model, graph / "agent_graph.json.gz", geography, enriched_model, enriched_graph
+    )
+    checked = subprocess.run(
+        [
+            str(python),
+            "-m",
+            "geo_agent.verify_compact",
+            str(enriched_graph / "agent_graph.json.gz"),
+            str(enriched_graph / "agent_acceptance.json"),
+        ],
+        cwd=ROOT / "Agent",
+        capture_output=True,
+        text=True,
+    )
+    assert checked.returncode == 0, checked.stderr
+    geo_work.rename(tmp_path / "moved_source_work")
+    enriched_release = tmp_path / "enriched_release"
+    result = verify_and_package(
+        prepared, enriched_model, enriched_graph, enriched_release
+    )
+    assert result["stage"] == "ENRICHED_RELEASE"
+    assert result["geography_verification"]["evidence_bundle"]["status"] == "PASS"
+    assert (
+        result["geography_verification"]["spatial_checks"][0]["geometry_type"]
+        == "Polygon"
+    )

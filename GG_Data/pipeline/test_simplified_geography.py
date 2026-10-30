@@ -10,10 +10,42 @@ from GG_Data.pipeline import simplified_agent as source
 from GG_Data.pipeline.poc import digest, read_json
 
 
+def test_geography_evidence_bundle_resolves_receipts_after_relocation(tmp_path):
+    import base64
+    import hashlib
+
+    from GG_Data.pipeline.simplified_geography import bundle_geography_evidence
+
+    base = tmp_path / "work"
+    folder = base / "batches/000000/ranking"
+    (folder / "sources").mkdir(parents=True)
+    receipt = folder / "sources/native.json"
+    source.write_object(
+        receipt,
+        dict(response=[dict(geometry={"type": "Point", "coordinates": [1, 2]})]),
+    )
+    source.write_object(folder / "audit.json", dict(receipt=str(receipt.resolve())))
+    (folder / "sources/raw.response").write_bytes(b'{"native":true}')
+    (base / ".env").write_text("MUST_NOT_BE_EXPORTED")
+    bundle = tmp_path / "geography_evidence.json.gz"
+    result = bundle_geography_evidence(base, bundle)
+    base.rename(tmp_path / "old_work")
+    artifacts = {r["original_path"]: r for r in read_json(bundle)}
+    row = artifacts[str(receipt.resolve())]
+    assert (
+        hashlib.sha256(base64.b64decode(row["content_base64"])).hexdigest()
+        == row["sha256"]
+    )
+    assert row["artifact_path"].endswith("sources/native.json")
+    assert result["artifact_count"] == 3
+    assert not any(".env" in r["artifact_path"] for r in artifacts.values())
+
+
 def test_source_setup_reuses_raw_responses_without_copying_settings_or_assignments(
     tmp_path, monkeypatch
 ):
     import importlib
+
     from GG_Data.pipeline import poc
     from GG_Data.pipeline.geography_sample import tools
     from GG_Data.pipeline.simplified_geography import configure_sources

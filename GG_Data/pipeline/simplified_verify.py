@@ -3,6 +3,7 @@
 from __future__ import annotations
 
 import argparse
+import base64
 import gzip
 import hashlib
 import json
@@ -81,6 +82,15 @@ def verify_population(prepared: Path, model: Path) -> dict:
         raise ValueError(
             "Full membership population differs from original and page events"
         )
+    binary = [
+        (r["node_index"], r["page_index"])
+        for batch in pq.ParquetFile(model / "memberships.parquet").iter_batches()
+        for r in batch.to_pylist()
+    ]
+    if len(binary) != len(memberships) or set(binary) != {
+        (r["node_index"], r["page_index"]) for r in memberships
+    }:
+        raise ValueError("Binary memberships differ from verified JSON memberships")
     entity_counts = Counter(k for k, _ in actual)
     if any(r["page_count"] != entity_counts[r["entity_id"]] for r in entities):
         raise ValueError("Full entity denominator differs from membership")
@@ -95,6 +105,74 @@ def verify_population(prepared: Path, model: Path) -> dict:
         raw_shared_page_count_sum=sum(c * (c - 1) // 2 for c in page_sizes.values()),
         source_revision_status="DANIEL_EXACT_REVISION_UNKNOWN",
     )
+
+
+def verify_graph_nodes(model: Path, graph: Path) -> dict:
+    """Bind every Agent endpoint and denominator to the independent JSON model."""
+    from Agent.geo_agent.compact_format import records
+    from GG_Data.pipeline.simplified_relations import TYPES
+
+    entities = read_json(model / "entities.json.gz")
+    memberships = defaultdict(set)
+    for row in read_json(model / "memberships.json.gz"):
+        memberships[row["node_index"]].add(row["page_index"])
+    reader = records(graph)
+    try:
+        _, metadata = next(reader)
+        if metadata["node_count"] != len(entities):
+            raise ValueError("Graph node count differs from model")
+        for row in entities:
+            kind, node = next(reader)
+            attrs = node.get("attributes", {})
+            if kind != "node" or (
+                node["id"],
+                node["name"],
+                node["type"],
+                attrs.get("entity_group"),
+                attrs.get("page_count"),
+                attrs.get("page_indices"),
+                attrs.get("mention_count"),
+            ) != (
+                row["entity_id"],
+                row["name"],
+                TYPES.get(row["type"], row["type"]),
+                row["type"],
+                row["page_count"],
+                sorted(memberships[row["node_index"]]),
+                row["mention_count"],
+            ):
+                raise ValueError(
+                    f"Graph node differs from verified model: {row['entity_id']}"
+                )
+        manifest = read_json(model / "manifest.json")
+        pages = {
+            r["canonical_page_index"]: r
+            for r in reversed(read_json(model / "wiki_pages.json.gz"))
+        }
+        expected_pages = [
+            {
+                k: r[k]
+                for k in [
+                    "page_index",
+                    "source_key",
+                    "title",
+                    "wiki_page_id",
+                    "revision_id",
+                ]
+            }
+            for r in pages.values()
+        ]
+        if metadata["page_scope_id"] != manifest["page_scope_id"] or sorted(
+            metadata["pages"], key=lambda r: r["page_index"]
+        ) != sorted(expected_pages, key=lambda r: r["page_index"]):
+            raise ValueError("Agent page scope differs from model")
+        return dict(
+            status="PASS",
+            nodes_verified=len(entities),
+            complete_membership_binding=True,
+        )
+    finally:
+        reader.close()
 
 
 def verify_geography(model: Path, acceptance: dict) -> dict:
@@ -134,12 +212,59 @@ def verify_geography(model: Path, acceptance: dict) -> dict:
         or checked["geometry_rows_sha256"] != row_sha.hexdigest()
     ):
         raise ValueError("Agent Geography differs from complete model Geography")
+    bundle_check = None
+    if status.startswith("COMPLETE"):
+        bundle = model / "geography_evidence.json.gz"
+        artifacts = {}
+        with gzip.open(bundle, "rb") as stream:
+            for record in ijson.items(stream, "item", use_float=True):
+                if (
+                    record["original_path"] in artifacts
+                    or record["encoding"] != "base64"
+                ):
+                    raise ValueError("Duplicate or unsupported Geography evidence")
+                if (
+                    hashlib.sha256(
+                        base64.b64decode(record["content_base64"], validate=True)
+                    ).hexdigest()
+                    != record["sha256"]
+                ):
+                    raise ValueError("Portable Geography evidence hash differs")
+                artifacts[record["original_path"]] = (
+                    record["artifact_path"],
+                    record["sha256"],
+                )
+        for row in rows:
+            evidence = row.get("evidence")
+            if evidence and (
+                evidence["path"] not in artifacts
+                or artifacts[evidence["path"]][1] != evidence["sha256"]
+            ):
+                raise ValueError("Geography audit is not portable")
+            receipt = (row.get("selection") or {}).get("receipt")
+            if (
+                receipt
+                and not receipt.endswith(".zip")
+                and receipt not in artifacts
+                and not any(
+                    p.startswith(receipt.rstrip("/\\") + os.sep) for p in artifacts
+                )
+            ):
+                raise ValueError("Selected Geography receipt is not portable")
+        bundle_check = dict(
+            status="PASS",
+            artifact_count=len(artifacts),
+            sha256=digest(bundle),
+            format="geography-evidence-base64-v1",
+            original_paths_resolve_without_source_files=True,
+        )
     return dict(
         status=status,
         locations=len(places),
         status_counts=dict(Counter(r["status"] for r in rows)),
         geometry_rows_sha256=row_sha.hexdigest(),
         spatial_checks=checked["spatial_checks"],
+        evidence_bundle=bundle_check,
     )
 
 
@@ -148,6 +273,7 @@ def verify_and_package(prepared: Path, model: Path, graph: Path, output: Path) -
     if output.exists():
         raise FileExistsError(output)
     population = verify_population(prepared, model)
+    graph_nodes = verify_graph_nodes(model, graph / "agent_graph.json.gz")
     graph_manifest = read_json(graph / "manifest.json")
     for name, sha in graph_manifest["outputs"].items():
         if digest(graph / name) != sha:
@@ -226,6 +352,15 @@ def verify_and_package(prepared: Path, model: Path, graph: Path, output: Path) -
             edge_count_semantics="Integer shared-page count; fractional weights use each endpoint's distinct-page denominator",
             relation_semantics="PAGE_CO_OCCURRENCE_ONLY",
             geography_status=geography["status"],
+            geography_evidence=(
+                dict(
+                    path="model/geography_evidence.json.gz",
+                    format="geography-evidence-base64-v1",
+                    decoding="Each array item maps original_path to artifact_path and contains exact source bytes in content_base64; verify sha256 after decoding. Native GeoNames rows and archive hashes are retained in the audits.",
+                )
+                if geography["evidence_bundle"]
+                else None
+            ),
             source_revision_status="DANIEL_EXACT_REVISION_UNKNOWN",
             llm_invoked=False,
             agent_code_sha256=acceptance["agent_code_sha256"],
@@ -284,6 +419,7 @@ def verify_and_package(prepared: Path, model: Path, graph: Path, output: Path) -
             else "CORE_RELEASE_GEOGRAPHY_PENDING"
         ),
         population_verification=population,
+        graph_node_verification=graph_nodes,
         raw_verification=raw_report,
         agent_graph="agent/agent_graph.json.gz",
         relation_count=count,

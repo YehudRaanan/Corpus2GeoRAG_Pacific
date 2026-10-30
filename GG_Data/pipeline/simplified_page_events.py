@@ -190,19 +190,34 @@ class PageEvidenceClient(EvidenceClient):
         self.next_request = 0.0
 
     def _once(self, endpoint, params):
+        merged = {"format": "json", "formatversion": 2, "maxlag": 5, **params}
+        key = hashlib.sha256(
+            json.dumps([endpoint, merged], sort_keys=True).encode()
+        ).hexdigest()
+        started = self.directory / f"{key}.started.json"
+        completed = self.directory / f"{key}.json.gz"
+        if (
+            started.exists() or started.with_name(started.name + ".part").exists()
+        ) and not completed.exists():
+            raise RuntimeError(f"INCOMPLETE_REQUEST_REQUIRES_REVIEW: {started}")
         original_get = self.session.get
 
         def paced_get(*args, **kwargs):
             pause = max(0.0, self.next_request - time.monotonic())
             if pause:
                 time.sleep(pause)
+            write_object(
+                started,
+                dict(
+                    status="STARTED",
+                    endpoint=endpoint,
+                    params=merged,
+                    started_utc=datetime.now(timezone.utc).isoformat(),
+                ),
+            )
             response = original_get(*args, **kwargs)
             self.next_request = time.monotonic() + self.min_interval
             if response.status_code == 429:
-                merged = {"format": "json", "formatversion": 2, "maxlag": 5, **params}
-                key = hashlib.sha256(
-                    json.dumps([endpoint, merged], sort_keys=True).encode()
-                ).hexdigest()
                 path = self.directory / f"{key}.rate_limit.json"
                 if not path.exists():
                     write_object(

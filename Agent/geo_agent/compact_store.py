@@ -9,6 +9,7 @@ import logging
 import math
 import sqlite3
 import struct
+import threading
 from collections import Counter
 from pathlib import Path
 
@@ -166,8 +167,14 @@ class CompactGraphStore(GraphStore):
         LOG.info("Building Agent name and first-paragraph text indexes")
         store = cls(nodes, [])
         store.metadata = metadata
+        store.query_lock = threading.Lock()
+        if sqlite3.threadsafety != 3:
+            raise RuntimeError(
+                "Compact Agent requires serialized SQLite thread support"
+            )
+        # SQLite serializes this read-only connection across async tool workers.
         store.connection = sqlite3.connect(
-            index.resolve().as_uri() + "?mode=ro", uri=True
+            index.resolve().as_uri() + "?mode=ro", uri=True, check_same_thread=False
         )
         store.indices = {n.id: i for i, n in enumerate(nodes)}
         store.node_ids = [n.id for n in nodes]
@@ -197,10 +204,11 @@ class CompactGraphStore(GraphStore):
         result = super().get_entity(entity_id, text_chars)
         if result is not None:
             i = self.indices[entity_id]
-            result["degree"] = self.connection.execute(
-                "SELECT (SELECT count(*) FROM pairs WHERE s=?)+(SELECT count(*) FROM pairs WHERE t=?)",
-                (i, i),
-            ).fetchone()[0]
+            with self.query_lock:
+                result["degree"] = self.connection.execute(
+                    "SELECT (SELECT count(*) FROM pairs WHERE s=?)+(SELECT count(*) FROM pairs WHERE t=?)",
+                    (i, i),
+                ).fetchone()[0]
         return result
 
     def _query(self, source_id=None, target_id=None, neighbor_type=None, limit=50):
@@ -229,7 +237,9 @@ class CompactGraphStore(GraphStore):
         if limit is not None:
             sql += " LIMIT ?"
             parameters.append(max(0, limit))
-        return [self._relation(*r) for r in self.connection.execute(sql, parameters)]
+        with self.query_lock:
+            rows = self.connection.execute(sql, parameters).fetchall()
+        return [self._relation(*r) for r in rows]
 
     def _relation(self, s, t, n, source_count, target_count):
         a, b = self.node_ids[s], self.node_ids[t]
