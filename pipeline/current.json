@@ -1,0 +1,19 @@
+{
+  "automatic_dataset_switch": false,
+  "automatic_processing": false,
+  "code_checkpoint": "63b669ddc5fd83916025639d1812a2a1ba9183ca",
+  "code_root": "C:\\Users\\User\\Documents\\Codex\\2026-11-02\\task-2\\geoai_integration\\candidate_p05",
+  "entrypoint_sha256": "4834eb8a56f2e3b4f42726d8a2f44782045197523af2810c94225f84e68820db",
+  "implementation": "organized",
+  "legacy_archive": "D:\\Projects\\GeoAI\\archive\\geoai_pipeline_legacy_20261103_01.zip",
+  "legacy_archive_sha256": "40c9bc91e194112188651266c8d347e74a7a2a592378a784b9adec60a03a354d",
+  "legacy_source_paths_preserved": true,
+  "publication": false,
+  "runtime": {
+    "python_executable": "C:\\Users\\User\\anaconda3\\python.exe",
+    "python_paths": [
+      "D:\\Projects\\GeoAI-luke-pilot-20261028\\.venv-template-pilot\\Lib\\site-packages"
+    ]
+  },
+  "schema": "geoai-project-pipeline-selector-v1"
+}

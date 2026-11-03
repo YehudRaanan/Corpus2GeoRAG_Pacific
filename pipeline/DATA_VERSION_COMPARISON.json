@@ -1,0 +1,670 @@
+{
+  "CPU_scoring_reexecuted": false,
+  "QID_changes": {
+    "new_CPU_assigned_QID_count": 59,
+    "new_CPU_assigned_QIDs": [
+      "Q1150557",
+      "Q1151727",
+      "Q11600468",
+      "Q116263081",
+      "Q12064210",
+      "Q1248725",
+      "Q1345258",
+      "Q1378653",
+      "Q146889",
+      "Q1564961",
+      "Q16155683",
+      "Q208164",
+      "Q208485",
+      "Q2106985",
+      "Q2431480",
+      "Q24746",
+      "Q2991418",
+      "Q2997796",
+      "Q315528",
+      "Q3270502",
+      "Q3337215",
+      "Q3365438",
+      "Q358051",
+      "Q375720",
+      "Q4031021",
+      "Q42515",
+      "Q4412440",
+      "Q4539663",
+      "Q4635942",
+      "Q4646343",
+      "Q4744430",
+      "Q532587",
+      "Q5379090",
+      "Q5630522",
+      "Q5631448",
+      "Q5979",
+      "Q6132174",
+      "Q6141175",
+      "Q6141277",
+      "Q6578896",
+      "Q6713818",
+      "Q691273",
+      "Q707088",
+      "Q708772",
+      "Q710100",
+      "Q711969",
+      "Q714924",
+      "Q717809",
+      "Q7287782",
+      "Q746938",
+      "Q750633",
+      "Q759925",
+      "Q7806955",
+      "Q7866984",
+      "Q7870948",
+      "Q7873175",
+      "Q7873445",
+      "Q88827404",
+      "Q930940"
+    ],
+    "new_public_QID_count": 18,
+    "new_public_QIDs": [
+      {
+        "name": "Bradford G. Chynoweth",
+        "previous_CPU_assigned": true,
+        "qid": "Q116144994"
+      },
+      {
+        "name": "Walter Krueger",
+        "previous_CPU_assigned": true,
+        "qid": "Q1362101"
+      },
+      {
+        "name": "Vietnamese Independence League",
+        "previous_CPU_assigned": true,
+        "qid": "Q190949"
+      },
+      {
+        "name": "Armistice of Cassibile",
+        "previous_CPU_assigned": true,
+        "qid": "Q196502"
+      },
+      {
+        "name": "HNLMS Gouden Leeuw",
+        "previous_CPU_assigned": true,
+        "qid": "Q2435733"
+      },
+      {
+        "name": "Ho Chi Minh",
+        "previous_CPU_assigned": true,
+        "qid": "Q36014"
+      },
+      {
+        "name": "HMS Ameer",
+        "previous_CPU_assigned": true,
+        "qid": "Q4346542"
+      },
+      {
+        "name": "81st (West Africa) Division",
+        "previous_CPU_assigned": true,
+        "qid": "Q4644541"
+      },
+      {
+        "name": "9th Fleet",
+        "previous_CPU_assigned": true,
+        "qid": "Q4646555"
+      },
+      {
+        "name": "Bataan Memorial Death March",
+        "previous_CPU_assigned": true,
+        "qid": "Q4868507"
+      },
+      {
+        "name": "British Far East Command",
+        "previous_CPU_assigned": true,
+        "qid": "Q4969959"
+      },
+      {
+        "name": "USS Paddle",
+        "previous_CPU_assigned": false,
+        "qid": "Q6141277"
+      },
+      {
+        "name": "Battle of Toungoo",
+        "previous_CPU_assigned": false,
+        "qid": "Q691273"
+      },
+      {
+        "name": "banzai charge",
+        "previous_CPU_assigned": true,
+        "qid": "Q696497"
+      },
+      {
+        "name": "15th Army",
+        "previous_CPU_assigned": true,
+        "qid": "Q702313"
+      },
+      {
+        "name": "comfort woman",
+        "previous_CPU_assigned": true,
+        "qid": "Q713540"
+      },
+      {
+        "name": "USS Eldorado",
+        "previous_CPU_assigned": true,
+        "qid": "Q7869095"
+      },
+      {
+        "name": "USS Ommaney Bay",
+        "previous_CPU_assigned": false,
+        "qid": "Q930940"
+      }
+    ],
+    "previous_public_QIDs_absent_from_new_count": 1162
+  },
+  "data_modified": false,
+  "events": [
+    {
+      "name": "Operation Matterhorn",
+      "new_kind": [
+        {
+          "entity-type": "item",
+          "id": "Q645883",
+          "numeric-id": 645883
+        }
+      ],
+      "old_kind": [
+        {
+          "entity-type": "item",
+          "id": "Q645883",
+          "numeric-id": 645883
+        }
+      ],
+      "qid": "Q1645012",
+      "same_kind": true
+    },
+    {
+      "name": "World War II",
+      "new_kind": [
+        {
+          "entity-type": "item",
+          "id": "Q103495",
+          "numeric-id": 103495
+        },
+        {
+          "entity-type": "item",
+          "id": "Q11514315",
+          "numeric-id": 11514315
+        }
+      ],
+      "old_kind": [
+        {
+          "entity-type": "item",
+          "id": "Q103495",
+          "numeric-id": 103495
+        },
+        {
+          "entity-type": "item",
+          "id": "Q11514315",
+          "numeric-id": 11514315
+        }
+      ],
+      "qid": "Q362",
+      "same_kind": true
+    },
+    {
+      "name": "Attack on Pearl Harbor",
+      "new_kind": [
+        {
+          "entity-type": "item",
+          "id": "Q6982012",
+          "numeric-id": 6982012
+        },
+        {
+          "entity-type": "item",
+          "id": "Q178561",
+          "numeric-id": 178561
+        },
+        {
+          "entity-type": "item",
+          "id": "Q4698343",
+          "numeric-id": 4698343
+        },
+        {
+          "entity-type": "item",
+          "id": "Q133868917",
+          "numeric-id": 133868917
+        }
+      ],
+      "old_kind": [
+        {
+          "entity-type": "item",
+          "id": "Q6982012",
+          "numeric-id": 6982012
+        },
+        {
+          "entity-type": "item",
+          "id": "Q178561",
+          "numeric-id": 178561
+        },
+        {
+          "entity-type": "item",
+          "id": "Q4698343",
+          "numeric-id": 4698343
+        },
+        {
+          "entity-type": "item",
+          "id": "Q133868917",
+          "numeric-id": 133868917
+        }
+      ],
+      "qid": "Q52418",
+      "same_kind": true
+    },
+    {
+      "name": "Doolittle Raid",
+      "new_kind": [
+        {
+          "entity-type": "item",
+          "id": "Q2380335",
+          "numeric-id": 2380335
+        }
+      ],
+      "old_kind": [
+        {
+          "entity-type": "item",
+          "id": "Q2380335",
+          "numeric-id": 2380335
+        }
+      ],
+      "qid": "Q713516",
+      "same_kind": true
+    }
+  ],
+  "evidence": {
+    "new_counts": {
+      "path": "C:\\Users\\User\\Documents\\Codex\\2026-11-02\\task-2\\geoai_integration\\candidate_p05\\runs\\jobs\\partof521_organized_resume1\\counts-1\\native\\counts_snapshot.json",
+      "sha256": "9ef89709386bc4b25b9828ad52cdd7174f7dcf7612aa6bc4a10f3a270fccc71f"
+    },
+    "new_handoff": {
+      "path": "C:\\Users\\User\\Documents\\Codex\\2026-11-02\\task-2\\geoai_integration\\partof_comparison100\\FULL_CORPUS_HANDOFF.json",
+      "sha256": "f6a4de518503cbf5f3091d57a6f480da1269ec4ea67114fbc6f0336747f9cc4a"
+    },
+    "old_counts": {
+      "path": "C:\\Users\\User\\Documents\\Codex\\2026-11-01\\task-4\\downstream_stage_outputs\\counts\\bbebe4035e1ead72_autochain-C-v1\\compact_counts\\count_receipt.json",
+      "sha256": "b8325a51b9e5f4c19a9dafc357e2caddd8fbbaa13ae78475ba1a56f406249a3b"
+    },
+    "old_frontier": {
+      "path": "C:\\Users\\User\\Documents\\Codex\\2026-11-01\\task-4\\cpu_downstream_frontiers\\automatic_5747_1793693719019631400\\receipt.json",
+      "sha256": "bbebe4035e1ead727f0bca048ed3849fb5c8afdba926094e552e97d19015f550"
+    },
+    "old_frozen_audit": {
+      "path": "C:\\Users\\User\\Documents\\Codex\\2026-11-02\\task-2\\geoai_integration\\FROZEN5747_PROJECTION_HANDOFF.json",
+      "sha256": "9c95637f9304965dd458e04c591bc1880bdc52ce948b1a283caad4541aa32670"
+    },
+    "old_native": {
+      "path": "C:\\Users\\User\\Documents\\Codex\\2026-11-01\\task-4\\publisher_downstream_v2\\bbebe4035e1ead72_autochain-C-v1\\VERIFIED_HANDOFF.json",
+      "sha256": "b8e17aeed6fa104d1fc871757d6282fb0bc77025829df05dff9c088b2a26e1b3"
+    },
+    "old_seal": {
+      "path": "D:\\Projects\\GeoAI-incremental-dev-20261101\\review_treatments\\first_run_input_20261101_v1\\seal.json",
+      "sha256": "03cd6fd90d609815c431ea234d9c32f0c10e98287b60d515439f15305b5e4089"
+    }
+  },
+  "limits": [
+    "Corpora and retained mention populations differ even on shared pages; these are coverage rates, not accuracy/recall estimates.",
+    "Event routing currently has four explicitly supplied QID routes; unchanged event counts do not prove no undiscovered events.",
+    "Geometry success means approved active geometry under existing scope/position rules, not independent geospatial ground truth.",
+    "Old source omission categories and new pending-source rows are not interchangeable.",
+    "The controlled old/new-code comparison used the same 100 new inputs and passed; cross-version differences cannot be attributed to refactoring alone."
+  ],
+  "metric_definitions": {
+    "assigned": "CPU identity decisions, not ground-truth accuracy",
+    "declared_shared_pages": "521, including 3 new pages whose input is held before CPU admission",
+    "explicit_unmatched": "Explicit NONE; separate from PENDING",
+    "public_unique_QIDs": "Distinct entity_id among exported typed nodes",
+    "shared": "Same 518 physical pages with admitted rows in both; mention populations still differ",
+    "typed_entities": "Distinct QID + supplied type roles"
+  },
+  "new": {
+    "CPU": {
+      "admitted_match_rate": {
+        "denominator": 106853,
+        "numerator": 54773,
+        "percent": 51.26
+      },
+      "admitted_mentions": 106853,
+      "admitted_pending_rate": {
+        "denominator": 106853,
+        "numerator": 46310,
+        "percent": 43.34
+      },
+      "admitted_unmatched_rate": {
+        "denominator": 106853,
+        "numerator": 5770,
+        "percent": 5.4
+      },
+      "assigned": 54773,
+      "explicit_unmatched": 5770,
+      "full_input_QID_coverage": {
+        "denominator": 170508,
+        "numerator": 54773,
+        "percent": 32.123
+      },
+      "pending": 46310
+    },
+    "dataset_version": "daniel_partof_20261103",
+    "input_rows": 170508,
+    "located_QID_coverage": {
+      "denominator": 2099,
+      "numerator": 542,
+      "percent": 25.822
+    },
+    "native_event_observations": 94,
+    "physical_pages": 521,
+    "processing_units": 521,
+    "public_model": {
+      "entity_types": {
+        "LOC": 542,
+        "MISC": 333,
+        "ORG": 232,
+        "PER": 83,
+        "event": 4
+      },
+      "event_qids": [
+        "Q1645012",
+        "Q362",
+        "Q52418",
+        "Q713516"
+      ],
+      "located_places": 542,
+      "native_relation_observations": 450,
+      "typed_entities": 1194,
+      "unique_entity_qids": 841,
+      "unique_events": 4
+    },
+    "six_table_model_status": "POPULATED_WITH_UNKNOWN_FIELDS_PRESERVED",
+    "source_pending": 63655,
+    "unique_CPU_assigned_qids": 4821
+  },
+  "new_root": "C:\\Users\\User\\Documents\\Codex\\2026-11-02\\task-2\\geoai_integration\\candidate_p05\\runs\\jobs\\partof521_organized_resume1\\create_file-1\\consumer",
+  "old": {
+    "CPU": {
+      "admitted_match_rate": {
+        "denominator": 1301119,
+        "numerator": 509045,
+        "percent": 39.124
+      },
+      "admitted_mentions": 1301119,
+      "admitted_pending_rate": {
+        "denominator": 1301119,
+        "numerator": 700416,
+        "percent": 53.832
+      },
+      "admitted_unmatched_rate": {
+        "denominator": 1301119,
+        "numerator": 91658,
+        "percent": 7.045
+      },
+      "assigned": 509045,
+      "explicit_unmatched": 91658,
+      "full_input_QID_coverage": {
+        "denominator": 2235432,
+        "numerator": 509045,
+        "percent": 22.772
+      },
+      "pending": 700416
+    },
+    "dataset_version": "legacy_full_47141678ff0f",
+    "located_QID_coverage": {
+      "denominator": 7744,
+      "numerator": 883,
+      "percent": 11.402
+    },
+    "native_event_observations": 127,
+    "original_input_rows_from_seal": 2235432,
+    "physical_pages": 5693,
+    "processing_units": 5747,
+    "public_model": {
+      "entity_types": {
+        "LOC": 883,
+        "MISC": 1108,
+        "ORG": 1059,
+        "PER": 475,
+        "event": 4
+      },
+      "event_qids": [
+        "Q1645012",
+        "Q362",
+        "Q52418",
+        "Q713516"
+      ],
+      "located_places": 883,
+      "native_relation_observations": 731,
+      "typed_entities": 3529,
+      "unique_entity_qids": 1985,
+      "unique_events": 4
+    },
+    "six_table_model_status": "NOT_POPULATED",
+    "source_omissions_are_not_all_confirmed_pending": true,
+    "source_omitted": 934313,
+    "unique_CPU_assigned_qids": 19285
+  },
+  "old_model_backfill": {
+    "CPU_reprocessing_required_for_future_backfill": false,
+    "available_C_GiB": 16.792,
+    "backfill_status": "BLOCKED_BY_CURRENT_WRITER_CAPACITY_PREFLIGHT",
+    "basis": "Existing project_units writes Text both as a mapped Mention field and in raw; other fields and JSON escaping only increase the component size. Existing writer preflight requires 10GiB reserve + 8x component bytes + 256MiB.",
+    "existing_six_table_versions": [
+      {
+        "data_version": "daniel_partof_20261103",
+        "database": "C:\\Users\\User\\Documents\\Codex\\2026-11-02\\task-2\\geoai_integration\\candidate_p05\\runs\\models\\daniel_partof_20261103\\batch_000000\\model.sqlite",
+        "wiki_pages": 521
+      },
+      {
+        "data_version": "fixture_connected_acceptance22_only",
+        "database": "C:\\Users\\User\\Documents\\Codex\\2026-11-02\\task-2\\geoai_integration\\candidate_p05\\runs\\models\\fixture_connected_acceptance22_only\\batch_000000\\model.sqlite",
+        "wiki_pages": 22
+      },
+      {
+        "data_version": "review_partof100_organized",
+        "database": "C:\\Users\\User\\Documents\\Codex\\2026-11-02\\task-2\\geoai_integration\\candidate_p05\\runs\\models\\review_partof100_organized\\batch_000000\\model.sqlite",
+        "wiki_pages": 100
+      }
+    ],
+    "expanded_original_Text_bytes": 1039189250,
+    "files_deleted": 0,
+    "full_backfill_mapping_and_readback_not_yet_validated": true,
+    "minimum_component_Text_copies": 2,
+    "minimum_required_free_GiB": 25.735,
+    "native_model_preserved": {
+      "path": "C:\\Users\\User\\Documents\\Codex\\2026-11-01\\task-4\\publisher_downstream_v2\\bbebe4035e1ead72_autochain-C-v1\\VERIFIED_HANDOFF.json",
+      "sha256": "b8e17aeed6fa104d1fc871757d6282fb0bc77025829df05dff9c088b2a26e1b3"
+    },
+    "old_CPU_database_tables": [
+      "active",
+      "contributions",
+      "refreshes"
+    ],
+    "old_model_writer_evidence": {
+      "path": "C:\\Users\\User\\Documents\\Codex\\2026-11-02\\task-2\\geoai_integration\\FROZEN5747_PROJECTION_HANDOFF.json",
+      "sha256": "9c95637f9304965dd458e04c591bc1880bdc52ce948b1a283caad4541aa32670"
+    },
+    "old_physical_pages": 5693,
+    "old_processing_units": 5747,
+    "old_six_table_model_populated": false,
+    "old_source_seal": {
+      "path": "D:\\Projects\\GeoAI-incremental-dev-20261101\\review_treatments\\first_run_input_20261101_v1\\seal.json",
+      "sha256": "03cd6fd90d609815c431ea234d9c32f0c10e98287b60d515439f15305b5e4089"
+    },
+    "old_version": "legacy_full_47141678ff0f",
+    "publication": false,
+    "source_CPU_preserved": {
+      "path": "C:\\Users\\User\\Documents\\Codex\\2026-11-01\\task-4\\cpu_downstream_frontiers\\automatic_5747_1793693719019631400\\receipt.json",
+      "sha256": "bbebe4035e1ead727f0bca048ed3849fb5c8afdba926094e552e97d19015f550"
+    }
+  },
+  "old_root": "C:\\Users\\User\\Documents\\Codex\\2026-11-01\\task-4\\publisher_downstream_v2\\bbebe4035e1ead72_autochain-C-v1\\components",
+  "publication": false,
+  "shared_pages": {
+    "common_identified_LOC_qids": 2043,
+    "count": 521,
+    "new": {
+      "LOC_mention_match_rate": {
+        "denominator": 33918,
+        "numerator": 22114,
+        "percent": 65.198
+      },
+      "admitted_mentions": 106853,
+      "assigned": 54773,
+      "conflicts": 0,
+      "explicit_unmatched": 5770,
+      "match_rate": {
+        "denominator": 106853,
+        "numerator": 54773,
+        "percent": 51.26
+      },
+      "pending": 46310,
+      "pending_rate": {
+        "denominator": 106853,
+        "numerator": 46310,
+        "percent": 43.34
+      },
+      "physical_pages": 518,
+      "processing_units": 521,
+      "unique_assigned_qids": 4821,
+      "unmatched_rate": {
+        "denominator": 106853,
+        "numerator": 5770,
+        "percent": 5.4
+      }
+    },
+    "new_common_LOC_geometry_coverage": {
+      "denominator": 2043,
+      "numerator": 534,
+      "percent": 26.138
+    },
+    "newly_geolocated_common_LOC": [],
+    "no_longer_geolocated_common_LOC": [],
+    "old": {
+      "LOC_mention_match_rate": {
+        "denominator": 52503,
+        "numerator": 32847,
+        "percent": 62.562
+      },
+      "admitted_mentions": 167023,
+      "assigned": 80703,
+      "conflicts": 0,
+      "explicit_unmatched": 6770,
+      "match_rate": {
+        "denominator": 167023,
+        "numerator": 80703,
+        "percent": 48.318
+      },
+      "pending": 79550,
+      "pending_rate": {
+        "denominator": 167023,
+        "numerator": 79550,
+        "percent": 47.628
+      },
+      "physical_pages": 521,
+      "processing_units": 537,
+      "unique_assigned_qids": 5611,
+      "unmatched_rate": {
+        "denominator": 167023,
+        "numerator": 6770,
+        "percent": 4.053
+      }
+    },
+    "old_common_LOC_geometry_coverage": {
+      "denominator": 2043,
+      "numerator": 534,
+      "percent": 26.138
+    }
+  },
+  "status": "READ_ONLY_COMPARISON_APPROVED_OLD_FULL_VS_NEW_PART_OF",
+  "strict_shared_nonempty_pages": {
+    "CPU_scoring_reexecuted": false,
+    "baseline": {
+      "path": "C:\\Users\\User\\Documents\\Codex\\2026-11-02\\task-2\\pipeline_activation_20261103\\DATA_VERSION_COMPARISON.json",
+      "sha256": "de446aec0611663ac975f00fc135e7218ab72d64d5ad2aa27ca0c2149d8d2d73"
+    },
+    "controlled_input_note": "Pages match; retained mention populations still differ. No accuracy improvement is established.",
+    "declared_shared_pages": 521,
+    "empty_new_pages_preserved_in_Wiki_Pages_and_held_ledger": [
+      {
+        "Source": "Q1423570",
+        "page_id": 21189406,
+        "wiki_site": "enwiki"
+      },
+      {
+        "Source": "Q15279321",
+        "page_id": 82497378,
+        "wiki_site": "enwiki"
+      },
+      {
+        "Source": "Q16056966",
+        "page_id": 31571955,
+        "wiki_site": "enwiki"
+      }
+    ],
+    "new": {
+      "LOC_mention_match_rate": {
+        "denominator": 33918,
+        "numerator": 22114,
+        "percent": 65.198
+      },
+      "admitted_mentions": 106853,
+      "assigned": 54773,
+      "conflicts": 0,
+      "explicit_unmatched": 5770,
+      "match_rate": {
+        "denominator": 106853,
+        "numerator": 54773,
+        "percent": 51.26
+      },
+      "pending": 46310,
+      "pending_rate": {
+        "denominator": 106853,
+        "numerator": 46310,
+        "percent": 43.34
+      },
+      "physical_pages": 518,
+      "processing_units": 518,
+      "unique_assigned_qids": 4821,
+      "unmatched_rate": {
+        "denominator": 106853,
+        "numerator": 5770,
+        "percent": 5.4
+      }
+    },
+    "nonempty_shared_pages": 518,
+    "old": {
+      "LOC_mention_match_rate": {
+        "denominator": 52436,
+        "numerator": 32796,
+        "percent": 62.545
+      },
+      "admitted_mentions": 166773,
+      "assigned": 80585,
+      "conflicts": 0,
+      "explicit_unmatched": 6768,
+      "match_rate": {
+        "denominator": 166773,
+        "numerator": 80585,
+        "percent": 48.32
+      },
+      "pending": 79420,
+      "pending_rate": {
+        "denominator": 166773,
+        "numerator": 79420,
+        "percent": 47.622
+      },
+      "physical_pages": 518,
+      "processing_units": 534,
+      "unique_assigned_qids": 5609,
+      "unmatched_rate": {
+        "denominator": 166773,
+        "numerator": 6768,
+        "percent": 4.058
+      }
+    },
+    "status": "COMPLETE_STRICT_SHARED_NONEMPTY_SCOPE"
+  }
+}

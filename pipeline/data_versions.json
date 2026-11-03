@@ -1,0 +1,117 @@
+{
+  "default_dataset_version": null,
+  "explicit_selection_required": true,
+  "schema": "geoai-local-data-version-registry-v1",
+  "versions": {
+    "daniel_partof_20261103": {
+      "admitted_mentions": 106853,
+      "all_records_resolved": false,
+      "artifact_kind": "COMMITTED_SIX_TABLE_MODEL_AND_EXPORT",
+      "authoritative_handoff": {
+        "path": "C:\\Users\\User\\Documents\\Codex\\2026-11-02\\task-2\\geoai_integration\\partof_comparison100\\FULL_CORPUS_HANDOFF.json",
+        "sha256": "f6a4de518503cbf5f3091d57a6f480da1269ec4ea67114fbc6f0336747f9cc4a"
+      },
+      "batch_no": 0,
+      "data_version": "daniel_partof_20261103",
+      "label": "Daniel PART_OF corpus uploaded 2026-11-03",
+      "model": {
+        "batch_no": 0,
+        "coverage": {
+          "path": "C:\\Users\\User\\Documents\\Codex\\2026-11-02\\task-2\\geoai_integration\\candidate_p05\\runs\\models\\daniel_partof_20261103\\batch_000000\\coverage.json",
+          "sha256": "7ebc2272182c84ff0821a4f579c26248092d90f87b3592efd32e190d8ffbdf50"
+        },
+        "data_version": "daniel_partof_20261103",
+        "database": {
+          "path": "C:\\Users\\User\\Documents\\Codex\\2026-11-02\\task-2\\geoai_integration\\candidate_p05\\runs\\models\\daniel_partof_20261103\\batch_000000\\model.sqlite",
+          "sha256": "4ba896f136ecb1573655405ca0ec66e06cc1e0b0f6c698525371a123dbde9ef9"
+        },
+        "frontier_sha256": "30a3824ad5f39c12cfcf1bcdf30b749693b2f02e727df66c5a084d3fc9a5dff4",
+        "geometry": {
+          "path": "C:\\Users\\User\\Documents\\Codex\\2026-11-02\\task-2\\geoai_integration\\candidate_p05\\runs\\jobs\\partof521_organized_resume1\\native_model-1\\native\\components\\model\\geometries.parquet",
+          "sha256": "f9078b31a6828edeb219dec2cd6bc27b7627bba23efd3cdb11940424a24e097b"
+        },
+        "manifest": {
+          "path": "C:\\Users\\User\\Documents\\Codex\\2026-11-02\\task-2\\geoai_integration\\candidate_p05\\runs\\models\\daniel_partof_20261103\\batch_000000\\manifest.json",
+          "sha256": "c7ff3db667b8b53d66a37785d9f7dbd1e3b1e5e51df7b14d2836cf9a03e170b7"
+        },
+        "parent_batch_no": null,
+        "schema_version": "geoai-six-table-v1"
+      },
+      "physical_pages": 521,
+      "processing_units": 521,
+      "public_model_root": "C:\\Users\\User\\Documents\\Codex\\2026-11-02\\task-2\\geoai_integration\\candidate_p05\\runs\\jobs\\partof521_organized_resume1\\create_file-1\\consumer",
+      "public_tables": {
+        "entities": {
+          "path": "C:\\Users\\User\\Documents\\Codex\\2026-11-02\\task-2\\geoai_integration\\candidate_p05\\runs\\jobs\\partof521_organized_resume1\\create_file-1\\consumer\\model\\entities.json.gz",
+          "sha256": "05a5d3eeda766adc640d8d5ae195717c618642c15fe418c7c61fca6bcc3decf9"
+        },
+        "events": {
+          "path": "C:\\Users\\User\\Documents\\Codex\\2026-11-02\\task-2\\geoai_integration\\candidate_p05\\runs\\jobs\\partof521_organized_resume1\\create_file-1\\consumer\\model\\events.json.gz",
+          "sha256": "0d023c4b946c18584f024ab6e11112b23880ef9885e4d364ff88a995ee595a07"
+        },
+        "geography": {
+          "path": "C:\\Users\\User\\Documents\\Codex\\2026-11-02\\task-2\\geoai_integration\\candidate_p05\\runs\\jobs\\partof521_organized_resume1\\create_file-1\\consumer\\model\\geography.json.gz",
+          "sha256": "e5042ef7950d6fe3acda7e6d44df224b630001f5862c7f2e3aba5cc8705a92a4"
+        },
+        "relations": {
+          "path": "C:\\Users\\User\\Documents\\Codex\\2026-11-02\\task-2\\geoai_integration\\candidate_p05\\runs\\jobs\\partof521_organized_resume1\\create_file-1\\consumer\\model\\relations.json.gz",
+          "sha256": "c2822911a5232c80c9b6f6e54ce04e7b4a66370281d2a08a20570995cb0f93af"
+        }
+      },
+      "schema_version": "geoai-six-table-v1",
+      "six_table_model_status": "POPULATED_WITH_UNKNOWN_FIELDS_PRESERVED",
+      "source_pending_mentions": 63655
+    },
+    "legacy_full_47141678ff0f": {
+      "CPU_frontier": {
+        "path": "C:\\Users\\User\\Documents\\Codex\\2026-11-01\\task-4\\cpu_downstream_frontiers\\automatic_5747_1793693719019631400\\receipt.json",
+        "sha256": "bbebe4035e1ead727f0bca048ed3849fb5c8afdba926094e552e97d19015f550"
+      },
+      "admitted_mentions": 1301119,
+      "all_pipeline_stages_complete": false,
+      "artifact_kind": "APPROVED_LEGACY_CONSUMER_PLUS_CPU_STATE",
+      "authoritative_native_handoff": {
+        "path": "C:\\Users\\User\\Documents\\Codex\\2026-11-01\\task-4\\publisher_downstream_v2\\bbebe4035e1ead72_autochain-C-v1\\VERIFIED_HANDOFF.json",
+        "sha256": "b8e17aeed6fa104d1fc871757d6282fb0bc77025829df05dff9c088b2a26e1b3"
+      },
+      "coverage_evidence": {
+        "path": "C:\\Users\\User\\Documents\\Codex\\2026-11-02\\task-2\\geoai_integration\\FROZEN5747_PROJECTION_HANDOFF.json",
+        "sha256": "9c95637f9304965dd458e04c591bc1880bdc52ce948b1a283caad4541aa32670"
+      },
+      "data_version": "legacy_full_47141678ff0f",
+      "graph": {
+        "path": "C:\\Users\\User\\Documents\\Codex\\2026-11-01\\task-4\\publisher_downstream_v2\\bbebe4035e1ead72_autochain-C-v1\\components\\graph.json",
+        "sha256": "d51004596cbfa8ac54ca60908c75bfd2ae1b8a54d393844fd6ad1abe0b7f1549"
+      },
+      "label": "Previous full corpus: 5,693 pages / 5,747 processing units",
+      "physical_pages": 5693,
+      "processing_units": 5747,
+      "public_model_root": "C:\\Users\\User\\Documents\\Codex\\2026-11-01\\task-4\\publisher_downstream_v2\\bbebe4035e1ead72_autochain-C-v1\\components",
+      "public_tables": {
+        "entities": {
+          "path": "C:\\Users\\User\\Documents\\Codex\\2026-11-01\\task-4\\publisher_downstream_v2\\bbebe4035e1ead72_autochain-C-v1\\components\\model\\entities.json.gz",
+          "sha256": "8d92e4730e500f6e009c1213edf84e8e7a5101734a1da28cc5707539dd052769"
+        },
+        "events": {
+          "path": "C:\\Users\\User\\Documents\\Codex\\2026-11-01\\task-4\\publisher_downstream_v2\\bbebe4035e1ead72_autochain-C-v1\\components\\model\\events.json.gz",
+          "sha256": "eabcbf7e93979e61048fbe6bde2faa092a5b84ee0bed80f839b01688ac67f0aa"
+        },
+        "geography": {
+          "path": "C:\\Users\\User\\Documents\\Codex\\2026-11-01\\task-4\\publisher_downstream_v2\\bbebe4035e1ead72_autochain-C-v1\\components\\model\\geography.json.gz",
+          "sha256": "27465465b03835cf84b1560223dceb7d99b654d8ccf5967320afa99f21ba9a08"
+        },
+        "relations": {
+          "path": "C:\\Users\\User\\Documents\\Codex\\2026-11-01\\task-4\\publisher_downstream_v2\\bbebe4035e1ead72_autochain-C-v1\\components\\model\\relations.json.gz",
+          "sha256": "cc478ee43815506834cb08bd9f696e8ca3e6093b6bf23c9fec09101a25a3a557"
+        }
+      },
+      "schema_version": null,
+      "six_table_model_status": "NOT_POPULATED",
+      "source_omitted_mentions": 934313,
+      "source_seal": {
+        "path": "D:\\Projects\\GeoAI-incremental-dev-20261101\\review_treatments\\first_run_input_20261101_v1\\seal.json",
+        "sha256": "03cd6fd90d609815c431ea234d9c32f0c10e98287b60d515439f15305b5e4089"
+      }
+    }
+  }
+}
